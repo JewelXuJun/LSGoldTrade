@@ -1,10 +1,14 @@
 package com.jme.lsgoldtrade.ui.main;
 
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
+import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
+import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.TabHost;
+import android.widget.TextView;
 
 import com.jme.common.network.DTRequest;
 import com.jme.common.network.Head;
@@ -21,6 +25,8 @@ import rx.Subscription;
 public class MainActivity extends JMEBaseActivity implements TabHost.OnTabChangeListener, View.OnTouchListener {
 
     private ActivityMainBinding mBinding;
+
+    private long exitTime = 0;
 
     private Subscription mRxbus;
 
@@ -71,7 +77,7 @@ public class MainActivity extends JMEBaseActivity implements TabHost.OnTabChange
     @Override
     public boolean onTouch(View view, MotionEvent event) {
         /*if (event.getAction() == MotionEvent.ACTION_DOWN) {
-            if (view.equals(mBinding.tabhost.getTabWidget().getChildAt(*//*MainTab.PERSONAL.getIdx()*//*))) {
+            if (view.equals(mBinding.tabhost.getTabWidget().getChildAt(MainTab.PERSONAL.getIdx()))) {
 
             } else if (view.equals(mBinding.tabhost.getTabWidget().getChildAt(MainTab.BALANCE.getIdx()))) {
                 if (!mUser.isLogin()) {
@@ -103,6 +109,41 @@ public class MainActivity extends JMEBaseActivity implements TabHost.OnTabChange
     @Override
     protected void DataReturn(DTRequest request, Head head, Object response) {
         super.DataReturn(request, head, response);
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (KeyEvent.KEYCODE_BACK == keyCode) {
+            if (System.currentTimeMillis() - exitTime > 2000) {
+                Snackbar snackbar = Snackbar.make(mBinding.fragmentlayout, getString(R.string.text_exit_app), Snackbar.LENGTH_SHORT);
+                snackbar.setAction(getString(R.string.text_cancel), v -> exitTime = 0)
+                        .setActionTextColor(ContextCompat.getColor(this, R.color.white));
+                View snakebarView = snackbar.getView();
+                TextView textView = snakebarView.findViewById(android.support.design.R.id.snackbar_text);
+                textView.setTextColor(getResources().getColor(R.color.common_font_content_white));
+                snackbar.show();
+
+                exitTime = System.currentTimeMillis();
+            } else {
+                finish();
+
+                new Thread() {
+                    @Override
+                    public void run() {
+                        try {
+                            Thread.sleep(500);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                        System.exit(0);
+                    }
+                }.start();
+            }
+
+            return true;
+        }
+
+        return super.onKeyDown(keyCode, event);
     }
 
     @Override

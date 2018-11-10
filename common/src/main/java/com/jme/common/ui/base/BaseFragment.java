@@ -44,7 +44,7 @@ public abstract class BaseFragment<T> extends Fragment implements View.OnTouchLi
     protected ViewDataBinding mBindingUtil;
 
     protected boolean mHide = true;
-    protected boolean mUseBinding = false;
+    protected boolean mUseBinding = true;
     protected boolean mVisible = false;
 
     protected T mBinding;

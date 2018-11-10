@@ -41,7 +41,7 @@ public abstract class BaseActivity extends AppCompatActivity implements OnResult
     protected ToolbarHelper mToolbarHelper;
     protected ViewDataBinding mBindingUtil;
 
-    protected boolean mUseBinding = false;
+    protected boolean mUseBinding = true;
 
     private static final int MSG_ERROR_MSG_REPET = 1000;
 

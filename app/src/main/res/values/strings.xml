@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">莱斯金行家</string>
+
+    <!-- Common -->
+    <string name="text_cancel">取消</string>
+
+    <!--首页-->
+    <string name="text_exit_app">再按一次退出程序</string>
+
 </resources>
