@@ -1,0 +1,121 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- loadingDialog 样式 -->
+    <style name="LoadingDialog" parent="@android:style/Theme.Dialog">
+        <!--<item name="android:windowFrame">@null</item>-->
+        <!--<item name="android:windowIsFloating">true</item>-->
+        <!--<item name="android:windowIsTranslucent">true</item>-->
+        <!--<item name="android:windowNoTitle">true</item>-->
+        <!--<item name="android:background">@null</item>-->
+        <!--<item name="android:windowBackground">@null</item>-->
+        <!--<item name="android:backgroundDimEnabled">false</item>-->
+        <!-- 背景颜色及透明程度 -->
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <!-- 是否有标题 -->
+        <item name="android:windowNoTitle">true</item>
+        <!-- 是否浮现在activity之上 -->
+        <item name="android:windowIsFloating">true</item>
+        <!-- 是否模糊 -->
+        <item name="android:backgroundDimEnabled">false</item>
+    </style>
+
+    <style name="Text">
+        <item name="android:textStyle">normal</item>
+    </style>
+
+    <style name="Text.Hint" parent="@style/Text">
+        <item name="android:textSize">@dimen/common_font_size_content_small</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:background">@null</item>
+        <item name="android:textColor">@color/common_font_content</item>
+        <item name="android:textColorHint">@color/common_font_gray</item>
+    </style>
+
+    <style name="Text.AccountHint" parent="@style/Text.Hint">
+        <item name="android:inputType">number</item>
+        <item name="android:paddingLeft">@dimen/common_text_padding</item>
+    </style>
+
+    <style name="Text.PasswordHint" parent="@style/Text.Hint">
+        <item name="android:password">true</item>
+        <item name="android:paddingLeft">@dimen/common_page_padding</item>
+    </style>
+
+    <style name="Text.PuerContent" parent="@style/Text">
+        <item name="android:textColor">@color/common_font_content</item>
+        <item name="android:textSize">@dimen/common_font_size_content_small</item>
+    </style>
+
+    <style name="Text.PuerGray" parent="@style/Text.PuerContent">
+        <item name="android:textColor">@color/common_font_gray</item>
+        <item name="android:textSize">@dimen/common_font_size_content_small</item>
+    </style>
+
+    <style name="Text.PuerWhite" parent="@style/Text">
+        <item name="android:textColor">@color/common_font_content_white</item>
+        <item name="android:textSize">@dimen/common_font_size_content_tiny</item>
+    </style>
+
+    <style name="Text.More" parent="@style/Text">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/common_font_content</item>
+        <item name="android:textSize">@dimen/common_font_size_content</item>
+        <item name="android:layout_marginLeft">@dimen/common_page_margin</item>
+    </style>
+
+    <style name="Button">
+        <item name="android:layout_width">@dimen/common_btn_width</item>
+        <item name="android:layout_height">@dimen/common_btn_height</item>
+        <item name="android:layout_gravity">center</item>
+        <item name="android:textSize">@dimen/common_font_size_button</item>
+        <item name="android:background">@drawable/selector_btn</item>
+        <item name="android:textColor">@color/common_font_button</item>
+    </style>
+
+    <style name="Button.Hollow" parent="@style/Button" >
+        <item name="android:background">@drawable/shape_btn_hollow</item>
+    </style>
+
+
+    <style name="Button.Gray" parent="@style/Button">
+        <item name="android:background">@drawable/selector_btn_gray</item>
+    </style>
+
+    <style name="Icon">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginLeft">@dimen/common_page_margin</item>
+        <item name="android:layout_gravity">center</item>
+    </style>
+
+    <style name="PopupAnimation" parent="android:Animation" mce_bogus="1">
+        <item name="android:windowEnterAnimation">@animator/popup_in</item>
+        <item name="android:windowExitAnimation">@animator/popup_out</item>
+    </style>
+
+    <style name="TextViewItalic" >
+        <item name="android:fontFamily" tools:targetApi="jelly_bean">sans-serif</item>
+        <item name="android:textStyle">italic</item>
+    </style>
+    
+    <style name="TextViewLight">
+        <!--<item name="android:fontFamily" tools:targetApi="jelly_bean">sans-serif-light</item>-->
+        <!--<item name="android:textStyle">normal</item>-->
+    </style>
+
+    <style name="TextViewThin">
+        <item name="android:fontFamily" tools:targetApi="jelly_bean">sans-serif</item>
+        <item name="android:textStyle">italic</item>
+    </style>
+
+    <style name="CheckboxTheme" parent="@android:style/Widget.CompoundButton.CheckBox">
+        <item name="android:button">@drawable/checkbox_style</item>
+    </style>
+
+    <style name="mToolbarTheme" parent="@style/ThemeOverlay.AppCompat.ActionBar">
+        <!-- Toolbar 标题文字颜色 包括navigation search等icon颜色-->
+        <item name="android:textColorPrimary">@android:color/white</item>
+        <item name="android:padding">0dp</item>
+    </style>
+
+</resources>

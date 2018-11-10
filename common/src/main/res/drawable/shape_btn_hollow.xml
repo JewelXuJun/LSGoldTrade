@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <solid android:color="@color/common_item_background" />
+    <corners android:radius="@dimen/common_btn_corner" />
+    <stroke
+        android:width="2px"
+        android:color="@color/common_app_main_color"
+        android:dashGap="0dp" />
+</shape>

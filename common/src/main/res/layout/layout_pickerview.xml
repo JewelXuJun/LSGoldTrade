@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/common_item_background"
+    android:orientation="horizontal">
+
+    <com.jme.common.ui.view.pickerview.WheelView
+        android:id="@+id/wheelview_left"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="5" />
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_weight="1"
+        android:gravity="center">
+
+        <RelativeLayout
+            android:layout_width="33dp"
+            android:layout_height="33dp"
+            android:layout_gravity="center">
+
+            <View
+                android:id="@+id/top"
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:layout_alignParentTop="true"
+                android:background="@color/pickerview_text_divider" />
+
+            <View
+                android:id="@+id/bottom"
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:layout_alignParentBottom="true"
+                android:background="@color/pickerview_text_divider" />
+
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_above="@+id/bottom"
+                android:layout_below="@+id/top"
+                android:layout_centerInParent="true"
+                android:src="@drawable/ic_common_arrow" />
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
+    <com.jme.common.ui.view.pickerview.WheelView
+        android:id="@+id/wheelview_right"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="5" />
+
+</LinearLayout>

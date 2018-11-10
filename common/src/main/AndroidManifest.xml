@@ -1,0 +1,15 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.jme.common">
+
+    <application
+        android:allowBackup="true"
+        android:label="@string/app_name"
+        android:supportsRtl="true">
+
+        <!--<activity-->
+            <!--android:name="com.jme.trade.ui.base.WebViewActivity"-->
+            <!--android:screenOrientation="portrait" />-->
+
+    </application>
+
+</manifest>

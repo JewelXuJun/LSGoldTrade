@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:state_checked="true">
+        <layer-list>
+            <!--<item android:drawable="@color/radiobuttion_bg"></item>-->
+
+            <item android:top="23dp">
+
+                <shape android:shape="rectangle">
+                    <solid android:color="@color/radio_button_line_divider" />
+                </shape>
+            </item>
+            <item android:top="23dp">
+
+                <shape android:shape="rectangle">
+                    <solid android:color="@color/radio_button_text_press" />
+                </shape>
+            </item>
+        </layer-list>
+    </item>
+
+    <item android:state_checked="false">
+        <layer-list>
+            <!--<item android:drawable="@color/radiobuttion_bg"></item>-->
+            <item android:top="23dp">
+
+                <shape android:shape="rectangle">
+                    <solid android:color="#CCCCCC" />
+                </shape>
+            </item>
+            <!--<item android:padding="2dp" android:top="38dp">-->
+
+            <!--<shape android:shape="rectangle">-->
+            <!--<solid android:color="#ff0000" />-->
+            <!--</shape>-->
+            <!--</item>-->
+        </layer-list>
+    </item>
+
+</selector>

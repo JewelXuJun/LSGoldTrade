@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- 界面所有Font字体的颜色配置-->
+    <color name="white">#FFFFFF</color>
+    <color name="black">#333333</color>
+
+    <!--标题及标题（未选）的颜色-->
+    <color name="common_font_title">#222222</color>
+    <color name="common_font_title_unchecked">#CEF5B4B8</color>
+    <!--副标题的颜色-->
+    <color name="common_font_subtitle">@android:color/white</color>
+    <!--List的列表头的颜色-->
+    <color name="common_font_item_title">#222222</color>
+    <!--正文主体-->
+    <color name="common_font_content">#222222</color>
+    <color name="common_font_content_white">@android:color/white</color>
+    <!--正文主体灰色，非重要信息或者hint-->
+    <color name="common_font_content_hint">#BBBBBB</color>
+    <color name="common_font_gray">#999999</color>
+    <!--按键上默认文字颜色-->
+    <color name="common_font_button">@android:color/white</color>
+    <color name="common_font_button_gray">#C4201F</color>
+    <!--钱上的赚赔-->
+    <color name="common_font_increase_dark">#E64020</color>
+    <color name="common_font_decrease_dark">#00B767</color>
+    <!--行情上的涨跌-->
+    <color name="common_font_increase">#E64020</color>
+    <color name="common_font_decrease">#00B767</color>
+    <color name="common_font_stable">#222222</color>
+    <color name="common_hq_bg_default">#8D959A</color>
+    <color name="common_hq_bg_increase">@color/common_font_increase</color>
+    <color name="common_hq_bg_decrease">@color/common_font_decrease</color>
+
+    <color name="common_font_telephone">#157EFB</color>
+    <!-- 界面所有字体的颜色配置 End-->
+
+    <!-- 程序主色调 -->
+    <color name="common_app_main_color">#FFFFFF</color>
+    <color name="common_background">#ECECEC</color>
+    <color name="common_item_background">#FFFFFF</color>
+
+    <!--分割线颜色-->
+    <color name="common_line_divider">#d4d4d4</color>
+    <color name="common_line_divider2">#E3BCB5</color>
+
+    <!-- 下拉刷新时，颜色值 -->
+    <color name="common_swiperefresh_1">#ffc4201f</color>
+    <color name="common_swiperefresh_2">#ffffbb33</color>
+    <color name="common_swiperefresh_3">#ff00ddff</color>
+    <color name="common_swiperefresh_4">#ffaa66cc</color>
+
+    <!-- 按钮的三种状态下的颜色 -->
+    <color name="common_btn_normal">#bd132b</color>
+    <color name="common_btn_pressed">#760a19</color>
+    <color name="common_btn_disable">#cccccc</color>
+
+    <color name="common_btn_gray_normal">#666666</color>
+    <color name="common_btn_gray_pressed">#333333</color>
+
+    <color name="common_btn_yellow_normal">#FFB237</color>
+    <color name="common_btn_yellow_pressed">#FFCC68</color>
+
+    <!-- 按钮的三种状态下的颜色 -->
+    <color name="common_font_warning_text">#999999</color>
+    
+    <!-- 出入金文字灰色 -->
+    <color name="common_text_pink">#E8B9B8</color>
+    <color name="common_text_black_light">#5B5B5B</color>#
+
+    <color name="pickerview_text_out">#999999</color>
+    <color name="pickerview_text_center">#222222</color>
+    <color name="pickerview_text_center_right">#999999</color>
+    <color name="pickerview_text_divider">#d4d4d4</color>
+
+    //add new color
+    <color name="common_container_bg">#f2f2f2</color>
+
+    <!-- 文字颜色-->
+    <color name="common_label_text_color">#666666</color>
+    <color name="common_hq_list_label_text_color">#bd132b</color>
+    <color name="common_Item_main_text_color">#222222</color>
+    <color name="common_Item_sub_text_color">#999999</color>
+    <color name="common_toast_text_color">@color/common_hq_list_label_text_color</color>
+    <color name="tab_text_selected_color">@color/common_hq_list_label_text_color</color>
+    <color name="tab_text_unselected_color">#333333</color>
+
+    <color name="common_btn_border_buy_normal">@color/common_font_increase</color>
+    <color name="common_btn_border_buy_pressed">#A42B14</color>
+    <color name="common_btn_border_sell_normal">@color/common_font_decrease</color>
+    <color name="common_btn_border_sell_pressed">#006D3D</color>
+    <color name="common_btn_border_warning_normal">#999999</color>
+    <color name="common_btn_border_warning_pressed">#333333</color>
+
+    <color name="common_btn_bg_nomral">@color/tab_text_selected_color</color>
+    <color name="common_btn_bg_pressed">#760a19</color>
+    <color name="common_btn_bg_disable">#cccccc</color>
+    <color name="common_btn_border_nomral">@color/tab_text_selected_color</color>
+    <color name="common_btn_border_pressed">@color/common_btn_bg_pressed</color>
+    <color name="common_hq_line_color">#33000000</color>
+
+    <!--hq标题的颜色-->
+    <color name="common_hq_font_subtitle">@android:color/white</color>
+
+    <!-- 一些label 背景色-->
+    <color name="common_label_hot_bg">#f39826</color>
+    <color name="common_label_import_bg">#f15a4a</color>
+    <color name="common_label_latest">#1d8fe1</color>
+    <color name="common_label_end">#8d959a</color>
+    <color name="common_label_doing">@color/common_label_import_bg</color>
+    <color name="common_label_soon">@color/common_label_hot_bg</color>
+
+    <!--checkbox bg -->
+    <color name="common_checkbox_selected_bg">@color/tab_text_selected_color</color>
+    <color name="common_checkbox_unselected_bg">#ffffff</color>
+    <color name="common_switch_selected_bg">#e64020</color>
+    <color name="common_switch_unselected_bg">#ffffff</color>
+
+    <color name="common_gray_light">#e2e2e2</color>
+
+    <color name="colorStart">#eb5d36</color>
+    <color name="colorEnd">#e1314a</color>
+
+    <color name="crowdfunding_bg_color">#fadf9d</color>
+    <color name="crowdfunding_text_color">#d58f21</color>
+
+</resources>

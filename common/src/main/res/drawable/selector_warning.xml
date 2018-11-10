@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:state_pressed="true">
+        <layer-list>
+            <item>
+                <shape>
+                    <solid android:color="@color/common_item_background" />
+                    <corners android:radius="@dimen/common_btn_corner"/>
+                    <stroke
+                        android:dashGap="0dp"
+                        android:width="1dp"
+                        android:color="@color/common_btn_border_warning_pressed" />
+                </shape>
+            </item>
+            <item android:left="@dimen/common_area_margin_middle"
+                android:right="@dimen/common_area_margin_middle"
+                android:top="@dimen/common_area_margin_middle"
+                android:bottom="@dimen/common_area_margin_middle"
+                android:drawable="@drawable/warning_pressed">
+            </item>
+        </layer-list>
+    </item>
+    <item >
+        <layer-list>
+            <item>
+                <shape >
+                    <solid android:color="@color/common_item_background" />
+                    <corners android:radius="@dimen/common_btn_corner"/>
+                    <stroke
+                        android:dashGap="0dp"
+                        android:width="1dp"
+                        android:color="@color/common_btn_border_warning_normal" />
+                </shape>
+            </item>
+            <item  android:left="@dimen/common_area_margin_middle"
+                android:right="@dimen/common_area_margin_middle"
+                android:top="@dimen/common_area_margin_middle"
+                android:bottom="@dimen/common_area_margin_middle"
+                android:drawable="@drawable/warning_normal">
+            </item>
+        </layer-list>
+    </item>
+</selector>

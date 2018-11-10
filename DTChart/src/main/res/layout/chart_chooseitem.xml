@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/chart_layout"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/radio_button_height"
+    android:background="@color/radio_button_bg"
+    android:visibility="visible">
+
+    <RadioGroup
+        android:id="@+id/chart_group"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <RadioButton
+            android:id="@+id/chart_time"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/radiobutton_bg_selector"
+            android:button="@null"
+            android:checked="true"
+            android:gravity="center"
+            android:text="分时"
+            android:textColor="@drawable/radiobutton_text_selector"
+            android:textSize="@dimen/radio_button_font_size_title" />
+
+        <RadioButton
+            android:id="@+id/chart_day"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/radiobutton_bg_selector"
+            android:button="@null"
+            android:checked="false"
+            android:gravity="center"
+            android:text="日线"
+            android:textColor="@drawable/radiobutton_text_selector"
+            android:textSize="@dimen/radio_button_font_size_title" />
+
+        <RadioButton
+            android:id="@+id/chart_week"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/radiobutton_bg_selector"
+            android:button="@null"
+            android:checked="false"
+            android:gravity="center"
+            android:text="周线"
+            android:textColor="@drawable/radiobutton_text_selector"
+            android:textSize="@dimen/radio_button_font_size_title" />
+
+        <RadioButton
+            android:id="@+id/chart_month"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/radiobutton_bg_selector"
+            android:button="@null"
+            android:checked="false"
+            android:gravity="center"
+            android:text="月线"
+            android:textColor="@drawable/radiobutton_text_selector"
+            android:textSize="@dimen/radio_button_font_size_title" />
+
+        <RadioButton
+            android:id="@+id/chart_minute"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/radiobutton_bg_selector"
+            android:button="@null"
+            android:checked="false"
+            android:gravity="center"
+            android:text="分钟"
+            android:textColor="@drawable/radiobutton_text_selector"
+            android:textSize="@dimen/radio_button_font_size_title" />
+
+    </RadioGroup>
+
+</LinearLayout>
