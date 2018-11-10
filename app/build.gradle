@@ -89,7 +89,6 @@ dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation project(':common')
     implementation project(':DTChart')
-    implementation 'com.android.support.constraint:constraint-layout:1.1.3'
 
     implementation 'com.alibaba:arouter-api:1.2.4'
     annotationProcessor 'com.alibaba:arouter-compiler:1.1.4'
