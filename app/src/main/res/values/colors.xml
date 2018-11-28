@@ -1,8 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#008577</color>
-    <color name="colorPrimaryDark">#00574B</color>
+    <color name="colorPrimary">#ffffff</color>
+    <color name="colorPrimaryDark">#ffffff</color>
     <color name="colorAccent">#D81B60</color>
 
     <color name="transparent">#00000000</color>
+
+    <color name="color_tab_pressed">#0070e0</color>
+    <color name="color_tab_normal">#808080</color>
+    <color name="color_tab_line">#d8d8d8</color>
+    <color name="color_toolbar_blue">#0080ff</color>
+
 </resources>

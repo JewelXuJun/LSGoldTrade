@@ -1,10 +1,12 @@
 package com.jme.lsgoldtrade.ui.main;
 
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 import android.view.KeyEvent;
+import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.TabHost;
@@ -13,9 +15,11 @@ import android.widget.TextView;
 import com.jme.common.network.DTRequest;
 import com.jme.common.network.Head;
 import com.jme.common.util.RxBus;
+import com.jme.common.util.StatusBarUtil;
 import com.jme.lsgoldtrade.R;
 import com.jme.lsgoldtrade.base.JMEBaseActivity;
 import com.jme.lsgoldtrade.databinding.ActivityMainBinding;
+import com.jme.lsgoldtrade.tabhost.MainTab;
 
 import rx.Subscription;
 
@@ -40,6 +44,10 @@ public class MainActivity extends JMEBaseActivity implements TabHost.OnTabChange
         super.initView();
 
         mBinding = (ActivityMainBinding) mBindingUtil;
+
+        StatusBarUtil.setStatusBarMode(this, true, R.color.color_toolbar_blue);
+
+        setTabHost();
     }
 
     @Override
@@ -74,23 +82,38 @@ public class MainActivity extends JMEBaseActivity implements TabHost.OnTabChange
         });
     }
 
-    @Override
-    public boolean onTouch(View view, MotionEvent event) {
-        /*if (event.getAction() == MotionEvent.ACTION_DOWN) {
-            if (view.equals(mBinding.tabhost.getTabWidget().getChildAt(MainTab.PERSONAL.getIdx()))) {
+    private void setTabHost() {
+        mBinding.tabhost.setup(this, getSupportFragmentManager(), R.id.fragmentlayout);
+        mBinding.tabhost.getTabWidget().setShowDividers(0);
 
-            } else if (view.equals(mBinding.tabhost.getTabWidget().getChildAt(MainTab.BALANCE.getIdx()))) {
-                if (!mUser.isLogin()) {
-                    ARouter.getInstance()
-                            .build(Constants.ARouterUriConst.LOGIN)
-                            .navigation();
+        initTabs();
 
-                    return true;
-                }
-            }
-        }*/
+        mBinding.tabhost.setCurrentTab(0);
+    }
 
-        return false;
+    private void initTabs() {
+        MainTab[] tabs = MainTab.values();
+
+        int size = tabs.length;
+
+        for (int i = 0; i < size; i++) {
+            MainTab mainTab = tabs[i];
+            TabHost.TabSpec tab = mBinding.tabhost.newTabSpec(getString(mainTab.getName()));
+            View indicator = LayoutInflater.from(getApplicationContext()).inflate(R.layout.tab_indicator, null);
+            TextView title = indicator.findViewById(R.id.tab_title);
+            Drawable drawable = ContextCompat.getDrawable(this, mainTab.getIcon());
+
+            title.setCompoundDrawablesWithIntrinsicBounds(null, drawable, null, null);
+            title.setText(getString(mainTab.getName()));
+            tab.setIndicator(indicator);
+            tab.setContent(tag -> new View(MainActivity.this));
+
+            mBinding.tabhost.addTab(tab, mainTab.getClassRes(), null);
+            mBinding.tabhost.setTag(i);
+            mBinding.tabhost.getTabWidget().getChildAt(i).setOnTouchListener(this);
+        }
+
+        mBinding.tabhost.iniIndexFragment(1);
     }
 
     @Override
@@ -107,6 +130,23 @@ public class MainActivity extends JMEBaseActivity implements TabHost.OnTabChange
     }
 
     @Override
+    public boolean onTouch(View view, MotionEvent event) {
+        if (event.getAction() == MotionEvent.ACTION_DOWN) {
+            if (view.equals(mBinding.tabhost.getTabWidget().getChildAt(MainTab.TRADE.getId()))) {
+                if (!mUser.isLogin()) {
+                    /*ARouter.getInstance()
+                            .build(Constants.ARouterUriConst.LOGIN)
+                            .navigation();*/
+
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    }
+
+    @Override
     protected void DataReturn(DTRequest request, Head head, Object response) {
         super.DataReturn(request, head, response);
     }
@@ -115,7 +155,7 @@ public class MainActivity extends JMEBaseActivity implements TabHost.OnTabChange
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (KeyEvent.KEYCODE_BACK == keyCode) {
             if (System.currentTimeMillis() - exitTime > 2000) {
-                Snackbar snackbar = Snackbar.make(mBinding.fragmentlayout, getString(R.string.text_exit_app), Snackbar.LENGTH_SHORT);
+                Snackbar snackbar = Snackbar.make(mBinding.fragmentlayout, getString(R.string.main_exit_app), Snackbar.LENGTH_SHORT);
                 snackbar.setAction(getString(R.string.text_cancel), v -> exitTime = 0)
                         .setActionTextColor(ContextCompat.getColor(this, R.color.white));
                 View snakebarView = snackbar.getView();

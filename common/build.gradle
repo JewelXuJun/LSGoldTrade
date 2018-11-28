@@ -58,4 +58,7 @@ dependencies {
     api 'com.scwang.smartrefresh:SmartRefreshLayout:1.1.0-alpha-14'
     api 'com.hyman:flowlayout-lib:1.1.2'
     api 'com.nineoldandroids:library:2.4.0+'
+
+    //状态栏颜色修改
+    api 'com.readystatesoftware.systembartint:systembartint:1.0.3'
 }

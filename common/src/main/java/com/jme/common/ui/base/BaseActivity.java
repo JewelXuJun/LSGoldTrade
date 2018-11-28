@@ -4,19 +4,15 @@ import android.content.Context;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.databinding.ViewDataBinding;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.ColorInt;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.StyleRes;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
 import android.widget.Toast;
 
 import com.jme.common.network.API;
@@ -70,9 +66,6 @@ public abstract class BaseActivity extends AppCompatActivity implements OnResult
 
         AppManager.getAppManager().addActivity(this);
 
-        StatusBarUtil.FlymeSetStatusBarLightMode(getWindow(), true);
-        StatusBarUtil.MIUISetStatusBarLightMode(getWindow(), true);
-
         if (mUseBinding)
             mBindingUtil = DataBindingUtil.setContentView(this, getContentViewId());
         else if (getContentViewId() != 0 && !mUseBinding)
@@ -81,6 +74,20 @@ public abstract class BaseActivity extends AppCompatActivity implements OnResult
         initView();
         initData(savedInstanceState);
         initListener();
+    }
+
+    protected abstract int getContentViewId();
+
+    protected void initView() {
+
+    }
+
+    protected void initData(Bundle savedInstanceState) {
+
+    }
+
+    protected void initListener() {
+
     }
 
     @Override
@@ -326,32 +333,4 @@ public abstract class BaseActivity extends AppCompatActivity implements OnResult
         }
     }
 
-    protected abstract int getContentViewId();
-
-    protected void initView() {
-
-    }
-
-    protected void initData(Bundle savedInstanceState) {
-
-    }
-
-    protected void initListener() {
-
-    }
-
-    protected void setWindowStatusBarColor(int color) {
-        try {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                Window window = getWindow();
-                window.setFlags(
-                        WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS,
-                        WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-                window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-                window.setStatusBarColor(ContextCompat.getColor(mContext, color));
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
 }

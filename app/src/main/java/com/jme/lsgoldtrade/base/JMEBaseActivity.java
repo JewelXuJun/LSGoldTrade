@@ -24,12 +24,13 @@ public abstract class JMEBaseActivity<T> extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        if (savedInstanceState != null) {
+        if (null != savedInstanceState) {
             Intent intent = getPackageManager().getLaunchIntentForPackage(getApplication().getPackageName());
             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(intent);
             finish();
             System.exit(0);
+
             return;
         }
 

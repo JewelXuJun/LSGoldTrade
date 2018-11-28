@@ -4,7 +4,9 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/white"
+        android:background="@color/common_background"
+        android:clipToPadding="false"
+        android:fitsSystemWindows="true"
         android:orientation="vertical">
 
         <FrameLayout
@@ -17,14 +19,20 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
-            android:gravity="center">
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/main_tab_line"
+                android:background="@color/color_tab_line" />
 
             <com.jme.lsgoldtrade.tabhost.FragmentTabHost
                 android:id="@+id/tabhost"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/white"
-                android:paddingTop="@dimen/common_area_margin_tiny"
+                android:paddingTop="@dimen/main_tab_margin"
                 android:paddingBottom="@dimen/common_area_margin_tiny" />
 
         </LinearLayout>

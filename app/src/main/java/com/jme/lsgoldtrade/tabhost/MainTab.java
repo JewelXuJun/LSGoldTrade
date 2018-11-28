@@ -1,68 +1,66 @@
 package com.jme.lsgoldtrade.tabhost;
 
+import com.jme.lsgoldtrade.R;
+import com.jme.lsgoldtrade.ui.mainpage.MainPageFragment;
+import com.jme.lsgoldtrade.ui.market.MarketFragment;
+import com.jme.lsgoldtrade.ui.personal.PersonalFragment;
+import com.jme.lsgoldtrade.ui.trade.TradeFragment;
+
 /**
  * Created by XuJun on 2018/11/10.
  */
 public enum MainTab {
 
-   /* HOMEPAGE(0, R.string.main_tab_homepage, R.drawable.selector_tab_homepage,
-            HomePageFragment.class),
+    MAINPAGE(0, R.string.main_page, R.drawable.selector_tab_homepage, MainPageFragment.class),
 
-    MARKET(1, R.string.main_tab_market, R.drawable.selector_tab_market,
-            HomeMarketListFragment.class),
+    MARKET(1, R.string.main_market, R.drawable.selector_tab_market, MarketFragment.class),
 
-    EXCHANGE(2, R.string.main_tab_exchange, R.drawable.selector_tab_exchange,
-            HomeExchangeFragment.class),
+    TRADE(2, R.string.main_trade, R.drawable.selector_tab_trade, TradeFragment.class),
 
-    BALANCE(3, R.string.main_tab_balance, R.drawable.selector_tab_balance,
-            HomeBalanceFragment.class),
+    PERSONAL(3, R.string.main_personal, R.drawable.selector_tab_personal, PersonalFragment.class);
 
-    PERSONAL(4, R.string.main_tab_personal, R.drawable.selector_tab_personal,
-            HomePersonalFragment.class);
+    private int mId;
+    private int mName;
+    private int mIcon;
+    private Class<?> mClassRes;
 
-
-    private int idx;
-    private int resName;
-    private int resIcon;
-    private Class<?> cls;
-
-    MainTab(int idx, int resName, int resIcon, Class<?> cls) {
-        this.idx = idx;
-        this.resName = resName;
-        this.resIcon = resIcon;
-        this.cls = cls;
+    MainTab(int id, int name, int resIcon, Class<?> classRes) {
+        mId = id;
+        mName = name;
+        mIcon = resIcon;
+        mClassRes = classRes;
     }
 
-    public int getIdx() {
-        return idx;
+    public int getId() {
+        return mId;
     }
 
-    public void setIdx(int idx) {
-        this.idx = idx;
+    public void setId(int id) {
+        mId = id;
     }
 
-    public int getResName() {
-        return resName;
+    public int getName() {
+        return mName;
     }
 
-    public void setResName(int resName) {
-        this.resName = resName;
+    public void setName(int name) {
+        mName = name;
     }
 
-    public int getResIcon() {
-        return resIcon;
+    public int getIcon() {
+        return mIcon;
     }
 
-    public void setResIcon(int resIcon) {
-        this.resIcon = resIcon;
+    public void setIcon(int resIcon) {
+        mIcon = resIcon;
     }
 
-    public Class<?> getCls() {
-        return cls;
+    public Class<?> getClassRes() {
+        return mClassRes;
     }
 
-    public void setCls(Class<?> cls) {
-        this.cls = cls;
-    }*/
+    public void setClassRes(Class<?> classRes) {
+        mClassRes = classRes;
+    }
 
 }
