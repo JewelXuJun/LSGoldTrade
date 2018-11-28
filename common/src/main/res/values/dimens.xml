@@ -83,7 +83,7 @@
     <dimen name="common_text_margin">50dp</dimen>
     <dimen name="common_background_height_large">120dp</dimen>
 
-    //spinner
+    <!--spinner -->
     <dimen name="three_grid_unit">10dp</dimen>
     <dimen name="one_and_a_half_grid_unit">5dp</dimen>
 
