@@ -6,23 +6,16 @@ import com.jme.common.network.DTRequest;
 import com.jme.common.network.Head;
 import com.jme.lsgoldtrade.R;
 import com.jme.lsgoldtrade.base.JMEBaseFragment;
-import com.jme.lsgoldtrade.databinding.FragmentMainPageBinding;
 
-public class MainPageFragment extends JMEBaseFragment {
-
-    private FragmentMainPageBinding mBinding;
-
+public class InfoFragment extends JMEBaseFragment {
     @Override
     protected int getContentViewId() {
-        return R.layout.fragment_main_page;
+        return R.layout.fragment_info;
     }
 
     @Override
     protected void initView() {
         super.initView();
-
-        mBinding = (FragmentMainPageBinding) mBindingUtil;
-        mBinding.setHandlers(new ClickHandlers());
     }
 
     @Override
@@ -43,21 +36,5 @@ public class MainPageFragment extends JMEBaseFragment {
     @Override
     protected void DataReturn(DTRequest request, Head head, Object response) {
         super.DataReturn(request, head, response);
-    }
-
-    public class ClickHandlers {
-
-        public void onClickOpenAccount() {
-
-        }
-
-        public void onClickQuickOrder() {
-
-        }
-
-        public void onClickBeginners() {
-
-        }
-
     }
 }

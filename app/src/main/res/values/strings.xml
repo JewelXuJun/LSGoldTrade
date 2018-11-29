@@ -13,4 +13,9 @@
     <string name="main_personal">我的</string>
     <string name="main_app_title">金行家</string>
 
+    <!-- MainPage -->
+    <string name="main_page_open_account">快捷开户</string>
+    <string name="main_page_quick_order">快速下单</string>
+    <string name="main_page_beginners">新手学堂</string>
+
 </resources>
