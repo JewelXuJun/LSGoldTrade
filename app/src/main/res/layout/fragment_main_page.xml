@@ -104,7 +104,10 @@
                         android:id="@+id/tablayout"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/common_item_height_middle"
-                        android:background="@color/white" />
+                        android:background="@color/white"
+                        app:tabIndicatorColor="@color/color_indicator"
+                        app:tabSelectedTextColor="@color/color_indicator_text"
+                        app:tabTextColor="@color/color_text_normal"/>
 
                     <include layout="@layout/item_line_vertical" />
 

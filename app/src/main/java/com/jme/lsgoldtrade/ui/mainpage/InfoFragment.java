@@ -1,13 +1,28 @@
 package com.jme.lsgoldtrade.ui.mainpage;
 
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 
 import com.jme.common.network.DTRequest;
 import com.jme.common.network.Head;
 import com.jme.lsgoldtrade.R;
 import com.jme.lsgoldtrade.base.JMEBaseFragment;
+import com.jme.lsgoldtrade.databinding.FragmentInfoBinding;
 
 public class InfoFragment extends JMEBaseFragment {
+
+    private FragmentInfoBinding mBinding;
+
+    public static Fragment newInstance(String type) {
+        InfoFragment fragment = new InfoFragment();
+
+        Bundle bundle = new Bundle();
+        bundle.putString("InfoType", type);
+        fragment.setArguments(bundle);
+
+        return fragment;
+    }
+
     @Override
     protected int getContentViewId() {
         return R.layout.fragment_info;
@@ -31,6 +46,8 @@ public class InfoFragment extends JMEBaseFragment {
     @Override
     public void initBinding() {
         super.initBinding();
+
+        mBinding = (FragmentInfoBinding) mBindingUtil;
     }
 
     @Override
