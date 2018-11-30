@@ -21,6 +21,15 @@
     <string name="main_page_news">新闻</string>
     <string name="main_page_activity">活动</string>
 
+    <!-- Personal -->
+    <string name="personal_open_account_online">在线开户</string>
+    <string name="personal_customer_service">联系客服</string>
+    <string name="personal_message_center">消息中心</string>
+    <string name="personal_share">分享APP</string>
+    <string name="personal_feedback">问题反馈</string>
+    <string name="personal_setting">设置</string>
+
+
     <!-- Login -->
     <string name="login_title">登录</string>
     <string name="login_account_hint">输入您的交易账号</string>

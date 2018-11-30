@@ -14,6 +14,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/common_background"
+        android:clipToPadding="false"
+        android:fitsSystemWindows="true"
         android:orientation="vertical">
 
         <RelativeLayout
@@ -26,24 +28,24 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/main_app_title"
                 android:layout_centerInParent="true"
+                android:text="@string/main_app_title"
                 android:textColor="@color/white"
-                android:textSize="@dimen/common_font_size_content"/>
+                android:textSize="@dimen/common_font_size_content" />
 
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:padding="@dimen/common_page_padding"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:onClick="@{() -> handlers.onClickNews()}"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:padding="@dimen/common_page_padding">
 
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@mipmap/ic_news_white"/>
+                    android:src="@mipmap/ic_news_white" />
 
             </LinearLayout>
 
@@ -140,7 +142,7 @@
                         android:background="@color/white"
                         app:tabIndicatorColor="@color/color_blue"
                         app:tabSelectedTextColor="@color/color_indicator_text"
-                        app:tabTextColor="@color/color_text_normal"/>
+                        app:tabTextColor="@color/color_text_normal" />
 
                     <include layout="@layout/item_line_vertical" />
 
@@ -148,9 +150,9 @@
                         android:id="@+id/tab_viewpager"
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
+                        android:layout_marginBottom="@dimen/common_page_margin"
                         android:layout_weight="1"
-                        android:background="@color/white"
-                        android:layout_marginBottom="@dimen/common_page_margin"/>
+                        android:background="@color/white" />
 
                 </LinearLayout>
 

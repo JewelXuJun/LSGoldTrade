@@ -1,6 +1,312 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
 
-</LinearLayout>
+    <data>
+
+        <variable
+            name="handlers"
+            type="com.jme.lsgoldtrade.ui.personal.PersonalFragment.ClickHandlers" />
+
+    </data>
+
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clipToPadding="false"
+        android:fillViewport="true"
+        android:fitsSystemWindows="true"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/common_background"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/height_personal_account"
+                android:background="@color/color_blue">
+
+                <ImageView
+                    android:id="@+id/img_head_portrait"
+                    android:layout_width="@dimen/icon_head_portrait"
+                    android:layout_height="@dimen/icon_head_portrait"
+                    android:layout_centerInParent="true"
+                    android:background="@mipmap/ic_head_portrait"
+                    android:onClick="@{() -> handlers.onClickLogin()}" />
+
+                <TextView
+                    android:id="@+id/tv_account"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/img_head_portrait"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="@dimen/common_area_margin"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/size_normal" />
+
+            </RelativeLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/common_page_margin"
+                android:background="@color/white"
+                android:orientation="vertical">
+
+                <include layout="@layout/item_line_vertical" />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/height_personal_item"
+                    android:onClick="@{() -> handlers.onClickOpenAccountOnline()}"
+                    android:paddingLeft="@dimen/common_area_margin_big"
+                    android:paddingRight="@dimen/common_area_margin">
+
+                    <ImageView
+                        android:id="@+id/img_open_account_online"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:background="@mipmap/ic_open_account_online" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="@dimen/common_area_margin"
+                        android:layout_toRightOf="@+id/img_open_account_online"
+                        android:text="@string/personal_open_account_online"
+                        android:textColor="@color/color_text_title"
+                        android:textSize="@dimen/size_normal" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:background="@mipmap/ic_next" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/common_line_height"
+                        android:layout_alignParentBottom="true"
+                        android:layout_marginLeft="@dimen/common_area_margin_tiny"
+                        android:layout_toRightOf="@+id/img_open_account_online"
+                        android:background="@color/common_line_divider" />
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/height_personal_item"
+                    android:onClick="@{() -> handlers.onClickCustomerService()}"
+                    android:paddingLeft="@dimen/common_area_margin_big"
+                    android:paddingRight="@dimen/common_area_margin">
+
+                    <ImageView
+                        android:id="@+id/img_customer_service"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:background="@mipmap/ic_customer_service" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="@dimen/common_area_margin"
+                        android:layout_toRightOf="@+id/img_customer_service"
+                        android:text="@string/personal_customer_service"
+                        android:textColor="@color/color_text_title"
+                        android:textSize="@dimen/size_normal" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:background="@mipmap/ic_next" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/common_line_height"
+                        android:layout_alignParentBottom="true"
+                        android:layout_marginLeft="@dimen/common_area_margin_tiny"
+                        android:layout_toRightOf="@+id/img_customer_service"
+                        android:background="@color/common_line_divider" />
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/height_personal_item"
+                    android:onClick="@{() -> handlers.onClickMessageCenter()}"
+                    android:paddingLeft="@dimen/common_area_margin_big"
+                    android:paddingRight="@dimen/common_area_margin">
+
+                    <ImageView
+                        android:id="@+id/img_message_center"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:background="@mipmap/ic_news" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="@dimen/common_area_margin"
+                        android:layout_toRightOf="@+id/img_message_center"
+                        android:text="@string/personal_message_center"
+                        android:textColor="@color/color_text_title"
+                        android:textSize="@dimen/size_normal" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:background="@mipmap/ic_next" />
+
+                </RelativeLayout>
+
+                <include layout="@layout/item_line_vertical" />
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/common_page_margin"
+                android:background="@color/white"
+                android:orientation="vertical">
+
+                <include layout="@layout/item_line_vertical" />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/height_personal_item"
+                    android:onClick="@{() -> handlers.onClickShare()}"
+                    android:paddingLeft="@dimen/common_area_margin_big"
+                    android:paddingRight="@dimen/common_area_margin">
+
+                    <ImageView
+                        android:id="@+id/img_share"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:background="@mipmap/ic_share" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="@dimen/common_area_margin"
+                        android:layout_toRightOf="@+id/img_share"
+                        android:text="@string/personal_share"
+                        android:textColor="@color/color_text_title"
+                        android:textSize="@dimen/size_normal" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:background="@mipmap/ic_next" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/common_line_height"
+                        android:layout_alignParentBottom="true"
+                        android:layout_marginLeft="@dimen/common_area_margin_tiny"
+                        android:layout_toRightOf="@+id/img_share"
+                        android:background="@color/common_line_divider" />
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/height_personal_item"
+                    android:onClick="@{() -> handlers.onClickFeedback()}"
+                    android:paddingLeft="@dimen/common_area_margin_big"
+                    android:paddingRight="@dimen/common_area_margin">
+
+                    <ImageView
+                        android:id="@+id/img_feedback"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:background="@mipmap/ic_feedback" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="@dimen/common_area_margin"
+                        android:layout_toRightOf="@+id/img_feedback"
+                        android:text="@string/personal_feedback"
+                        android:textColor="@color/color_text_title"
+                        android:textSize="@dimen/size_normal" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:background="@mipmap/ic_next" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/common_line_height"
+                        android:layout_alignParentBottom="true"
+                        android:layout_marginLeft="@dimen/common_area_margin_tiny"
+                        android:layout_toRightOf="@+id/img_feedback"
+                        android:background="@color/common_line_divider" />
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/height_personal_item"
+                    android:onClick="@{() -> handlers.onClickSeeting()}"
+                    android:paddingLeft="@dimen/common_area_margin_big"
+                    android:paddingRight="@dimen/common_area_margin">
+
+                    <ImageView
+                        android:id="@+id/img_setting"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:background="@mipmap/ic_setting" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="@dimen/common_area_margin"
+                        android:layout_toRightOf="@+id/img_setting"
+                        android:text="@string/personal_setting"
+                        android:textColor="@color/color_text_title"
+                        android:textSize="@dimen/size_normal" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:background="@mipmap/ic_next" />
+
+                </RelativeLayout>
+
+                <include layout="@layout/item_line_vertical" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </android.support.v4.widget.NestedScrollView>
+
+</layout>
