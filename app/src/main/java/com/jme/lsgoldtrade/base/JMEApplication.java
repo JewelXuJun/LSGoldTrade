@@ -2,6 +2,7 @@ package com.jme.lsgoldtrade.base;
 
 import android.content.Context;
 
+import com.alibaba.android.arouter.launcher.ARouter;
 import com.jme.common.app.BaseApplication;
 import com.jme.common.network.CustomerSSL;
 import com.jme.common.network.ImageDownLoader;
@@ -33,6 +34,7 @@ public class JMEApplication extends BaseApplication {
         instance = this;
         mContext = this.getApplicationContext();
 
+        ARouter.init(this);
         initPicasso();
     }
 

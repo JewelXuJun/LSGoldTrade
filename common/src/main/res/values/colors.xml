@@ -40,7 +40,7 @@
     <color name="common_item_background">#FFFFFF</color>
 
     <!--分割线颜色-->
-    <color name="common_line_divider">#e6e6e6</color>
+    <color name="common_line_divider">#dcdcdc</color>
     <color name="common_line_divider2">#E3BCB5</color>
 
     <!-- 下拉刷新时，颜色值 -->

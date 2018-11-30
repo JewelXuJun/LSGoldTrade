@@ -21,4 +21,10 @@
     <string name="main_page_news">新闻</string>
     <string name="main_page_activity">活动</string>
 
+    <!-- Login -->
+    <string name="login_title">登录</string>
+    <string name="login_account_hint">输入您的交易账号</string>
+    <string name="login_password_hint">输入您的交易密码</string>
+    <string name="login_register">还没有账号？立即开户</string>
+
 </resources>

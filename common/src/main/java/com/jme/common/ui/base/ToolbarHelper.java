@@ -26,7 +26,7 @@ public class ToolbarHelper {
          *
          * @return <code>true</code> if the event was handled, <code>false</code> otherwise.
          */
-        public void onSingleMenuItemClick();
+        void onSingleMenuItemClick();
     }
 
     private AppCompatActivity mActivity;
@@ -37,19 +37,17 @@ public class ToolbarHelper {
 
     public ToolbarHelper(AppCompatActivity activity, View view) {
         mActivity = activity;
-        mToolbar = (Toolbar) view.findViewById(R.id.toolbar);
-        //mToolbar.setPadding(0, ScreenUtil.getStatusBarHeight(mActivity), 0, 0);
+        mToolbar = view.findViewById(R.id.toolbar);
     }
 
     public ToolbarHelper(AppCompatActivity activity) {
         mActivity = activity;
-        mToolbar = (Toolbar) mActivity.findViewById(R.id.toolbar);
+        mToolbar = mActivity.findViewById(R.id.toolbar);
         mToolbar.setContentInsetStartWithNavigation(0);
-        //mToolbar.setPadding(0, ScreenUtil.getStatusBarHeight(mActivity), 0, 0);
     }
 
     public void initToolbar(View view) {
-        mCenterToolbarView = (LinearLayout) mToolbar.findViewById(R.id.centerToolbarView);
+        mCenterToolbarView = mToolbar.findViewById(R.id.centerToolbarView);
         mCenterToolbarView.addView(view);
         mUserView = view;
     }
@@ -91,14 +89,14 @@ public class ToolbarHelper {
 
     public void setTitle(String title) {
         if (bUserViewIsTitle) {
-            TextView tv_title = (TextView) mUserView.findViewById(R.id.toolbar_title);
+            TextView tv_title = mUserView.findViewById(R.id.toolbar_title);
             tv_title.setText(title);
         }
     }
 
     public void setTitle(String title, @ColorInt int resId) {
         if (bUserViewIsTitle) {
-            TextView tv_title = (TextView) mUserView.findViewById(R.id.toolbar_title);
+            TextView tv_title = mUserView.findViewById(R.id.toolbar_title);
             tv_title.setTextColor(resId);
             tv_title.setText(title);
         }
@@ -106,8 +104,8 @@ public class ToolbarHelper {
 
     public void setTitle(String[] title) {
         if (bUserViewIsTitle) {
-            TextView tv_title = (TextView) mUserView.findViewById(R.id.toolbar_title);
-            TextView tv_title_with_sure = (TextView) mUserView.findViewById(R.id.toolbar_title_with_sure);
+            TextView tv_title = mUserView.findViewById(R.id.toolbar_title);
+            TextView tv_title_with_sure = mUserView.findViewById(R.id.toolbar_title_with_sure);
             tv_title.setText(title[0]);
             tv_title_with_sure.setText(title[1]);
         }
@@ -116,14 +114,8 @@ public class ToolbarHelper {
     public void setBackNavigation(boolean hasBack, View.OnClickListener listener) {
         if (hasBack) {
             mToolbar.setNavigationIcon(R.drawable.ic_back_gray);
-//            mActivity.setSupportActionBar(mToolbar);
-//            mActivity.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-//            mActivity.getSupportActionBar().setDisplayShowTitleEnabled(false);
             mToolbar.setNavigationOnClickListener(listener);
         } else {
-//            mActivity.setSupportActionBar(mToolbar);
-//            mActivity.getSupportActionBar().setDisplayHomeAsUpEnabled(false);
-//            mActivity.getSupportActionBar().setDisplayShowTitleEnabled(false);
             mToolbar.setNavigationIcon(null);
         }
     }

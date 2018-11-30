@@ -58,7 +58,7 @@ public class Constants {
 
     public static final class ARouterUriConst {
         public static final String RFINEXWEBVIEW = "/JMEBase/JMEBaseWebviewActivity";
-        public static final String LOGIN = "/HomePersonalFragment/LoginActivity";
+        public static final String LOGIN = "/PersonalFragment/LoginActivity";
         public static final String MAIN = "/LoginActivity/MainActivity";
     }
 

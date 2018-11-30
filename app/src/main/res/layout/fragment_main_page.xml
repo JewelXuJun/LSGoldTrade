@@ -105,7 +105,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/common_item_height_middle"
                         android:background="@color/white"
-                        app:tabIndicatorColor="@color/color_indicator"
+                        app:tabIndicatorColor="@color/color_blue"
                         app:tabSelectedTextColor="@color/color_indicator_text"
                         app:tabTextColor="@color/color_text_normal"/>
 

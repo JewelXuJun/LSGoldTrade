@@ -12,12 +12,14 @@ import android.view.View;
 import android.widget.TabHost;
 import android.widget.TextView;
 
+import com.alibaba.android.arouter.launcher.ARouter;
 import com.jme.common.network.DTRequest;
 import com.jme.common.network.Head;
 import com.jme.common.util.RxBus;
 import com.jme.common.util.StatusBarUtil;
 import com.jme.lsgoldtrade.R;
 import com.jme.lsgoldtrade.base.JMEBaseActivity;
+import com.jme.lsgoldtrade.config.Constants;
 import com.jme.lsgoldtrade.databinding.ActivityMainBinding;
 import com.jme.lsgoldtrade.tabhost.MainTab;
 
@@ -136,9 +138,9 @@ public class MainActivity extends JMEBaseActivity implements TabHost.OnTabChange
         if (event.getAction() == MotionEvent.ACTION_DOWN) {
             if (view.equals(mBinding.tabhost.getTabWidget().getChildAt(MainTab.TRADE.getId()))) {
                 if (!mUser.isLogin()) {
-                    /*ARouter.getInstance()
+                    ARouter.getInstance()
                             .build(Constants.ARouterUriConst.LOGIN)
-                            .navigation();*/
+                            .navigation();
 
                     return true;
                 }
