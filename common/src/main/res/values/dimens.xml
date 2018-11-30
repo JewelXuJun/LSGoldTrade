@@ -42,12 +42,6 @@
     <dimen name="common_area_margin_small">10dp</dimen>
     <dimen name="common_area_margin_middle">8dp</dimen>
     <dimen name="common_area_margin_tiny">5dp</dimen>
-    <!--界面中，各Item之间的边距（左右方向，注释为reference上的px值）-->
-    <dimen name="common_item_m1">19dp</dimen> <!--40px-->
-    <dimen name="common_item_m2">14dp</dimen> <!--20px-->
-    <dimen name="common_item_m3">10dp</dimen> <!--20px-->
-    <dimen name="common_item_m4">7dp</dimen> <!--15px-->
-    <dimen name="common_item_m5">5dp</dimen> <!--10px-->
     <!--List Item的高度，根据实际的情况选择-->
     <dimen name="common_item_height_tiny">24dp</dimen>
     <dimen name="common_item_height_small">36dp</dimen>

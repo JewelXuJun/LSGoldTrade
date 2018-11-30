@@ -60,7 +60,7 @@
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@mipmap/ic_news" />
+                    android:src="@mipmap/ic_news_blue" />
 
             </LinearLayout>
 
@@ -90,11 +90,13 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/common_area_margin_middle"
                 android:background="@null"
+                android:drawableLeft="@mipmap/ic_account"
+                android:drawablePadding="@dimen/common_area_margin_tiny"
                 android:hint="@string/login_account_hint"
                 android:paddingLeft="@dimen/common_page_padding"
                 android:textColor="@color/color_text_normal"
                 android:textColorHint="@color/color_text_hint"
-                android:textSize="@dimen/common_font_size_content" />
+                android:textSize="@dimen/sp_16" />
 
             <include layout="@layout/item_line_vertical" />
 
@@ -105,11 +107,13 @@
                 android:layout_marginTop="@dimen/common_area_margin_big"
                 android:layout_marginBottom="@dimen/common_area_margin_middle"
                 android:background="@null"
-                android:hint="@string/login_account_hint"
+                android:drawableLeft="@mipmap/ic_password"
+                android:drawablePadding="@dimen/common_area_margin_tiny"
+                android:hint="@string/login_password_hint"
                 android:paddingLeft="@dimen/common_page_padding"
                 android:textColor="@color/color_text_normal"
                 android:textColorHint="@color/color_text_hint"
-                android:textSize="@dimen/common_font_size_content" />
+                android:textSize="@dimen/sp_16" />
 
             <include layout="@layout/item_line_vertical" />
 
@@ -118,9 +122,9 @@
                 android:layout_height="@dimen/height_login_btn"
                 android:layout_marginTop="@dimen/margin_main_page_info"
                 android:background="@drawable/bg_btn_login"
+                android:onClick="@{() -> handlers.onClickLogin()}"
                 android:text="@string/login_title"
                 android:textColor="@color/white"
-                android:onClick="@{() -> handlers.onClickLogin()}"
                 android:textSize="@dimen/common_font_size_content" />
 
             <Button
@@ -128,9 +132,9 @@
                 android:layout_height="@dimen/height_login_btn"
                 android:layout_marginTop="@dimen/common_area_margin_big"
                 android:background="@drawable/bg_btn_register"
+                android:onClick="@{() -> handlers.onClickRegister()}"
                 android:text="@string/login_register"
                 android:textColor="@color/color_blue"
-                android:onClick="@{() -> handlers.onClickRegister()}"
                 android:textSize="@dimen/common_font_size_content" />
 
         </LinearLayout>
