@@ -14,7 +14,7 @@ import com.jme.common.util.DensityUtil;
 /**
  * Created by gengda on 16/9/7.
  */
-public class DividerItemDecoration extends RecyclerView.ItemDecoration {
+public class MarginDividerItemDecoration extends RecyclerView.ItemDecoration {
 
     private Drawable mDrawable;
 
@@ -24,7 +24,7 @@ public class DividerItemDecoration extends RecyclerView.ItemDecoration {
 
     private Context mContext;
 
-    public DividerItemDecoration(Context context, int orientation) {
+    public MarginDividerItemDecoration(Context context, int orientation) {
         this.mContext = context;
         if (orientation != LinearLayoutManager.HORIZONTAL && orientation != LinearLayoutManager.VERTICAL) {
             this.mOrientation = DEFAULT_ORENTATION;

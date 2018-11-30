@@ -1,13 +1,9 @@
 package com.jme.common.util;
 
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
-
 import rx.Observable;
 import rx.subjects.BehaviorSubject;
 import rx.subjects.PublishSubject;
 import rx.subjects.SerializedSubject;
-import rx.subjects.Subject;
 
 /**
  * Created by gengda on 16/11/14.
@@ -64,7 +60,7 @@ public class RxBus {
     }
 
     public void postSticky(Object object, Object object2) {
-        busStick.onNext(new Message(object,object2));
+        busStick.onNext(new Message(object, object2));
     }
 
 

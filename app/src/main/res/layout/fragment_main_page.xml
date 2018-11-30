@@ -55,7 +55,7 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:drawableTop="@mipmap/ic_open_account"
-                            android:drawablePadding="@dimen/common_area_margin_middle"
+                            android:drawablePadding="@dimen/common_area_margin_tiny"
                             android:gravity="center"
                             android:onClick="@{() -> handlers.onClickOpenAccount()}"
                             android:paddingTop="@dimen/common_area_margin"
@@ -69,7 +69,7 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:drawableTop="@mipmap/ic_quick_order"
-                            android:drawablePadding="@dimen/common_area_margin_middle"
+                            android:drawablePadding="@dimen/common_area_margin_tiny"
                             android:gravity="center"
                             android:onClick="@{() -> handlers.onClickQuickOrder()}"
                             android:paddingTop="@dimen/common_area_margin"
@@ -83,7 +83,7 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:drawableTop="@mipmap/ic_beginners"
-                            android:drawablePadding="@dimen/common_area_margin_middle"
+                            android:drawablePadding="@dimen/common_area_margin_tiny"
                             android:gravity="center"
                             android:onClick="@{() -> handlers.onClickBeginners()}"
                             android:paddingTop="@dimen/common_area_margin"
@@ -116,7 +116,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
                         android:layout_weight="1"
-                        android:background="@color/white" />
+                        android:background="@color/white"
+                        android:layout_marginBottom="@dimen/common_page_margin"/>
 
                 </LinearLayout>
 
