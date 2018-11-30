@@ -12,9 +12,8 @@ public class Constants {
     // Http常量配置
     public static final class HttpConst {
 
-        public static final int Test_LAN = 1; // 局域网内测试环境
-        public static final int Test_WAN = 2; // 广域网内测试环境(外部可访问)
-        public static final int Produce = 3;  // 正式生产环境
+        public static final int Test_WAN = 0; // 测试环境
+        public static final int Produce = 1;  // 正式环境
 
         public static int Envi = Produce;
 
@@ -25,9 +24,7 @@ public class Constants {
         public static String URL_BASE;
 
         static {
-            if (Envi == Test_LAN) {
-                URL_BASE = "";
-            } else if (Envi == Test_WAN) {
+            if (Envi == Test_WAN) {
                 URL_BASE = "";
             } else if (Envi == Produce) {
                 URL_BASE = "";

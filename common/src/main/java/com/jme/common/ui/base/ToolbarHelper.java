@@ -12,6 +12,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
 import com.jme.common.R;
 
 /**
@@ -113,7 +114,7 @@ public class ToolbarHelper {
 
     public void setBackNavigation(boolean hasBack, View.OnClickListener listener) {
         if (hasBack) {
-            mToolbar.setNavigationIcon(R.drawable.ic_back_gray);
+            mToolbar.setNavigationIcon(R.drawable.ic_back);
             mToolbar.setNavigationOnClickListener(listener);
         } else {
             mToolbar.setNavigationIcon(null);
