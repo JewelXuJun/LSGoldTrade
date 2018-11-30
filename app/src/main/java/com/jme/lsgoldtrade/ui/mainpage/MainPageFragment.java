@@ -5,11 +5,11 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.content.ContextCompat;
 import android.support.v4.view.PagerAdapter;
 
 import com.jme.common.network.DTRequest;
 import com.jme.common.network.Head;
+import com.jme.common.util.StatusBarUtil;
 import com.jme.lsgoldtrade.R;
 import com.jme.lsgoldtrade.base.JMEBaseFragment;
 import com.jme.lsgoldtrade.databinding.FragmentMainPageBinding;
@@ -34,6 +34,8 @@ public class MainPageFragment extends JMEBaseFragment {
 
         mBinding = (FragmentMainPageBinding) mBindingUtil;
         mBinding.setHandlers(new ClickHandlers());
+
+        StatusBarUtil.setStatusBarMode(mActivity, true, R.color.color_toolbar_blue);
     }
 
     @Override
@@ -85,6 +87,10 @@ public class MainPageFragment extends JMEBaseFragment {
     }
 
     public class ClickHandlers {
+
+        public void onClickNews() {
+
+        }
 
         public void onClickOpenAccount() {
 

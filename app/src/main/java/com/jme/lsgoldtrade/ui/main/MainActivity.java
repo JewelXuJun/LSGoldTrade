@@ -47,8 +47,6 @@ public class MainActivity extends JMEBaseActivity implements TabHost.OnTabChange
 
         mBinding = (ActivityMainBinding) mBindingUtil;
 
-        StatusBarUtil.setStatusBarMode(this, true, R.color.color_toolbar_blue);
-
         setTabHost();
     }
 
@@ -69,8 +67,6 @@ public class MainActivity extends JMEBaseActivity implements TabHost.OnTabChange
     @Override
     protected void initBinding() {
         super.initBinding();
-
-        mBinding.setHandlers(new ClickHandlers());
     }
 
     private void initRxBus() {
@@ -196,14 +192,6 @@ public class MainActivity extends JMEBaseActivity implements TabHost.OnTabChange
 
         if (!mRxbus.isUnsubscribed())
             mRxbus.unsubscribe();
-    }
-
-    public class ClickHandlers {
-
-        public void onClickNews() {
-
-        }
-
     }
 
 }
