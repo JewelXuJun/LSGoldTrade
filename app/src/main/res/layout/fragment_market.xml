@@ -64,6 +64,7 @@
                 android:layout_weight="7"
                 android:gravity="center|left"
                 android:paddingLeft="@dimen/common_area_margin_tiny"
+                android:onClick="@{() -> handlers.onClickSortContract()}"
                 android:text="@string/market_contract"
                 android:textColor="@color/color_text_tabhost"
                 android:textSize="@dimen/sp_12" />
@@ -75,6 +76,7 @@
                 android:layout_weight="8"
                 android:gravity="center|left"
                 android:paddingLeft="@dimen/common_area_margin_tiny"
+                android:onClick="@{() -> handlers.onClickSortLastPrice()}"
                 android:text="@string/market_last_price"
                 android:textColor="@color/color_text_tabhost"
                 android:textSize="@dimen/sp_12" />
@@ -85,6 +87,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="8"
                 android:gravity="center"
+                android:onClick="@{() -> handlers.onClickSortRange()}"
                 android:text="@string/market_range"
                 android:textColor="@color/color_text_tabhost"
                 android:textSize="@dimen/sp_12" />
@@ -96,6 +99,7 @@
                 android:layout_weight="8"
                 android:gravity="center|right"
                 android:paddingRight="@dimen/common_area_margin_tiny"
+                android:onClick="@{() -> handlers.onClickSortVolume()}"
                 android:text="@string/market_volume"
                 android:textColor="@color/color_text_tabhost"
                 android:textSize="@dimen/sp_12" />

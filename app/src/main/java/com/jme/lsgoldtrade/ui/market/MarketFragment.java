@@ -65,5 +65,21 @@ public class MarketFragment extends JMEBaseFragment {
 
         }
 
+        public void onClickSortContract() {
+
+        }
+
+        public void onClickSortLastPrice() {
+
+        }
+
+        public void onClickSortRange() {
+
+        }
+
+        public void onClickSortVolume() {
+
+        }
+
     }
 }

@@ -46,9 +46,9 @@ public abstract class JMEBaseActivity<T> extends BaseActivity {
     protected void initData(Bundle savedInstanceState) {
         super.initData(savedInstanceState);
 
-        initBinding();
-
         mUser = User.getInstance();
+
+        initBinding();
     }
 
     @Override
