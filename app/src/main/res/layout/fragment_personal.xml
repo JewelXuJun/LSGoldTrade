@@ -78,7 +78,7 @@
                         android:layout_marginLeft="@dimen/common_area_margin"
                         android:layout_toRightOf="@+id/img_open_account_online"
                         android:text="@string/personal_open_account_online"
-                        android:textColor="@color/color_text_title"
+                        android:textColor="@color/color_text_black"
                         android:textSize="@dimen/size_normal" />
 
                     <ImageView
@@ -119,7 +119,7 @@
                         android:layout_marginLeft="@dimen/common_area_margin"
                         android:layout_toRightOf="@+id/img_customer_service"
                         android:text="@string/personal_customer_service"
-                        android:textColor="@color/color_text_title"
+                        android:textColor="@color/color_text_black"
                         android:textSize="@dimen/size_normal" />
 
                     <ImageView
@@ -160,7 +160,7 @@
                         android:layout_marginLeft="@dimen/common_area_margin"
                         android:layout_toRightOf="@+id/img_message_center"
                         android:text="@string/personal_message_center"
-                        android:textColor="@color/color_text_title"
+                        android:textColor="@color/color_text_black"
                         android:textSize="@dimen/size_normal" />
 
                     <ImageView
@@ -207,7 +207,7 @@
                         android:layout_marginLeft="@dimen/common_area_margin"
                         android:layout_toRightOf="@+id/img_share"
                         android:text="@string/personal_share"
-                        android:textColor="@color/color_text_title"
+                        android:textColor="@color/color_text_black"
                         android:textSize="@dimen/size_normal" />
 
                     <ImageView
@@ -248,7 +248,7 @@
                         android:layout_marginLeft="@dimen/common_area_margin"
                         android:layout_toRightOf="@+id/img_feedback"
                         android:text="@string/personal_feedback"
-                        android:textColor="@color/color_text_title"
+                        android:textColor="@color/color_text_black"
                         android:textSize="@dimen/size_normal" />
 
                     <ImageView
@@ -289,7 +289,7 @@
                         android:layout_marginLeft="@dimen/common_area_margin"
                         android:layout_toRightOf="@+id/img_setting"
                         android:text="@string/personal_setting"
-                        android:textColor="@color/color_text_title"
+                        android:textColor="@color/color_text_black"
                         android:textSize="@dimen/size_normal" />
 
                     <ImageView

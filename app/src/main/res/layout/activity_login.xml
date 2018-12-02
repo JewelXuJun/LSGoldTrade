@@ -27,7 +27,7 @@
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
                 android:text="@string/login_title"
-                android:textColor="@color/color_text_title"
+                android:textColor="@color/color_text_black"
                 android:textSize="@dimen/common_font_size_content" />
 
             <LinearLayout

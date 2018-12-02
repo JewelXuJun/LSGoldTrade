@@ -23,7 +23,6 @@ public class PersonalFragment extends JMEBaseFragment {
         super.initView();
 
         mBinding = (FragmentPersonalBinding) mBindingUtil;
-        mBinding.setHandlers(new ClickHandlers());
 
         StatusBarUtil.setStatusBarMode(mActivity, true, R.color.color_blue);
     }
@@ -41,6 +40,8 @@ public class PersonalFragment extends JMEBaseFragment {
     @Override
     public void initBinding() {
         super.initBinding();
+
+        mBinding.setHandlers(new ClickHandlers());
     }
 
     @Override

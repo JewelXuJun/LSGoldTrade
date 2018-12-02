@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:orientation="horizontal">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="7"
+        android:orientation="vertical"
+        android:paddingLeft="@dimen/common_area_margin_tiny"
+        android:paddingTop="@dimen/common_page_padding"
+        android:paddingBottom="@dimen/common_page_padding">
+
+        <TextView
+            android:id="@+id/tv_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/text_no_data_default"
+            android:textColor="@color/color_text_black"
+            android:textSize="@dimen/sp_14" />
+
+        <TextView
+            android:id="@+id/tv_code"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/common_area_margin_tiny"
+            android:text="@string/text_no_data_default"
+            android:textColor="@color/common_font_gray"
+            android:textSize="@dimen/size_middle" />
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/tv_last_price"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_weight="8"
+        android:paddingLeft="@dimen/common_area_margin_tiny"
+        android:text="@string/text_no_data_default"
+        android:textColor="@color/color_text_black"
+        android:textSize="@dimen/sp_14" />
+
+    <TextView
+        android:id="@+id/tv_range"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_weight="8"
+        android:gravity="center"
+        android:paddingLeft="@dimen/common_area_margin_tiny"
+        android:text="@string/text_no_data_default"
+        android:textColor="@color/color_text_black"
+        android:textSize="@dimen/sp_14" />
+
+    <TextView
+        android:id="@+id/tv_volume"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_weight="8"
+        android:gravity="right"
+        android:paddingRight="@dimen/common_area_margin_tiny"
+        android:text="@string/text_no_data_default"
+        android:textColor="@color/color_text_black"
+        android:textSize="@dimen/sp_14" />
+
+</LinearLayout>

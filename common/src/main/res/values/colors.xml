@@ -21,11 +21,11 @@
     <color name="common_font_button">@android:color/white</color>
     <color name="common_font_button_gray">#C4201F</color>
     <!--钱上的赚赔-->
-    <color name="common_font_increase_dark">#E64020</color>
-    <color name="common_font_decrease_dark">#00B767</color>
+    <color name="common_font_increase_dark">#e64020</color>
+    <color name="common_font_decrease_dark">#00b767</color>
     <!--行情上的涨跌-->
-    <color name="common_font_increase">#E64020</color>
-    <color name="common_font_decrease">#00B767</color>
+    <color name="common_font_increase">#e64020</color>
+    <color name="common_font_decrease">#00b767</color>
     <color name="common_font_stable">#222222</color>
     <color name="common_hq_bg_default">#8D959A</color>
     <color name="common_hq_bg_increase">@color/common_font_increase</color>

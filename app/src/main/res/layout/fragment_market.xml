@@ -1,6 +1,143 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
 
-</LinearLayout>
+    <data>
+
+        <variable
+            name="handlers"
+            type="com.jme.lsgoldtrade.ui.market.MarketFragment.ClickHandlers" />
+
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/common_background"
+        android:clipToPadding="false"
+        android:fitsSystemWindows="true"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/color_toolbar_blue"
+            android:fitsSystemWindows="true"
+            android:minHeight="?attr/actionBarSize">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:text="@string/main_app_title"
+                android:textColor="@color/white"
+                android:textSize="@dimen/common_font_size_content" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:onClick="@{() -> handlers.onClickNews()}"
+                android:orientation="horizontal"
+                android:padding="@dimen/common_page_padding">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@mipmap/ic_news_white" />
+
+            </LinearLayout>
+
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/height_tabhost"
+            android:orientation="horizontal"
+            android:paddingLeft="@dimen/common_page_padding"
+            android:paddingRight="@dimen/common_page_padding">
+
+            <TextView
+                android:id="@+id/tv_contract"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="7"
+                android:gravity="center|left"
+                android:paddingLeft="@dimen/common_area_margin_tiny"
+                android:text="@string/market_contract"
+                android:textColor="@color/color_text_tabhost"
+                android:textSize="@dimen/sp_12" />
+
+            <TextView
+                android:id="@+id/tv_last_price"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="8"
+                android:gravity="center|left"
+                android:paddingLeft="@dimen/common_area_margin_tiny"
+                android:text="@string/market_last_price"
+                android:textColor="@color/color_text_tabhost"
+                android:textSize="@dimen/sp_12" />
+
+            <TextView
+                android:id="@+id/tv_range"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="8"
+                android:gravity="center"
+                android:text="@string/market_range"
+                android:textColor="@color/color_text_tabhost"
+                android:textSize="@dimen/sp_12" />
+
+            <TextView
+                android:id="@+id/tv_volume"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="8"
+                android:gravity="center|right"
+                android:paddingRight="@dimen/common_area_margin_tiny"
+                android:text="@string/market_volume"
+                android:textColor="@color/color_text_tabhost"
+                android:textSize="@dimen/sp_12" />
+
+        </LinearLayout>
+
+        <include layout="@layout/item_line_vertical" />
+
+        <TextView
+            android:id="@+id/tv_no_data"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="@dimen/margin_no_data"
+            android:drawableTop="@mipmap/ic_no_data"
+            android:drawablePadding="@dimen/common_area_margin_tiny"
+            android:gravity="center|top"
+            android:text="@string/text_no_data"
+            android:textColor="@color/color_text_gray_hint"
+            android:textSize="@dimen/size_normal"
+            android:visibility="gone" />
+
+        <com.scwang.smartrefresh.layout.SmartRefreshLayout
+            android:id="@+id/swipeRefreshLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="visible">
+
+            <com.scwang.smartrefresh.layout.header.ClassicsHeader
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:cacheColorHint="@null"
+                android:paddingLeft="@dimen/common_page_padding"
+                android:paddingRight="@dimen/common_page_padding"
+                android:scrollbars="none" />
+
+        </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+
+    </LinearLayout>
+
+</layout>

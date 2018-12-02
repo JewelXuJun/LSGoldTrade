@@ -35,6 +35,8 @@ public class InfoFragment extends JMEBaseFragment {
     @Override
     protected void initView() {
         super.initView();
+
+        mBinding = (FragmentInfoBinding) mBindingUtil;
     }
 
     @Override

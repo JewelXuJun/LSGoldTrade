@@ -33,7 +33,6 @@ public class MainPageFragment extends JMEBaseFragment {
         super.initView();
 
         mBinding = (FragmentMainPageBinding) mBindingUtil;
-        mBinding.setHandlers(new ClickHandlers());
 
         StatusBarUtil.setStatusBarMode(mActivity, true, R.color.color_toolbar_blue);
     }
@@ -55,6 +54,8 @@ public class MainPageFragment extends JMEBaseFragment {
     @Override
     public void initBinding() {
         super.initBinding();
+
+        mBinding.setHandlers(new ClickHandlers());
     }
 
     private void initInfoTabs() {

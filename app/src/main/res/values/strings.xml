@@ -3,6 +3,8 @@
 
     <!-- Common -->
     <string name="text_cancel">取消</string>
+    <string name="text_no_data">当前没有数据</string>
+    <string name="text_no_data_default">- - -</string>
 
     <!--首页-->
     <string name="main_exit_app">再按一次退出程序</string>
@@ -20,6 +22,12 @@
     <string name="main_page_notice">公告</string>
     <string name="main_page_news">新闻</string>
     <string name="main_page_activity">活动</string>
+    
+    <!-- Market -->
+    <string name="market_contract">合约</string>
+    <string name="market_last_price">最新价</string>
+    <string name="market_range">涨跌幅</string>
+    <string name="market_volume">成交量</string>
 
     <!-- Personal -->
     <string name="personal_open_account_online">在线开户</string>
@@ -28,7 +36,6 @@
     <string name="personal_share">分享APP</string>
     <string name="personal_feedback">问题反馈</string>
     <string name="personal_setting">设置</string>
-
 
     <!-- Login -->
     <string name="login_title">登录</string>
