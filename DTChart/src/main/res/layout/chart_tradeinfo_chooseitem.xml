@@ -23,7 +23,7 @@
             android:gravity="center"
             android:text="五档"
             android:textColor="@drawable/radiobutton_text_selector"
-            android:textSize="@dimen/radio_button_font_size_title_small" />
+            android:textSize="@dimen/radio_button_font_size_title" />
 
         <RadioButton
             android:id="@+id/radiobutton_detail"
@@ -36,7 +36,7 @@
             android:gravity="center"
             android:text="明细"
             android:textColor="@drawable/radiobutton_text_selector"
-            android:textSize="@dimen/radio_button_font_size_title_small" />
+            android:textSize="@dimen/radio_button_font_size_title" />
 
     </RadioGroup>
 

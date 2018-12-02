@@ -300,13 +300,13 @@ public class KChart extends LinearLayout {
     }
 
     private void init() {
-        mFirstChart = (CombinedChart) findViewById(R.id.chart1);
-        mSecondChart = (CombinedChart) findViewById(R.id.chart2);
-        ll_second_chart_title = (LinearLayout) findViewById(R.id.ll_second_chart_title);
-        tv_first_chart = (TextView) findViewById(R.id.tv_first_chart);
-        tv_second_chart = (TextView) findViewById(R.id.tv_second_chart);
-        tv_second_chart_title = (TextView) findViewById(R.id.tv_second_chart_title);
-        iv_landscape = (ImageView) findViewById(R.id.iv_landscape);
+        mFirstChart = findViewById(R.id.chart1);
+        mSecondChart = findViewById(R.id.chart2);
+        ll_second_chart_title = findViewById(R.id.ll_second_chart_title);
+        tv_first_chart = findViewById(R.id.tv_first_chart);
+        tv_second_chart = findViewById(R.id.tv_second_chart);
+        tv_second_chart_title = findViewById(R.id.tv_second_chart_title);
+        iv_landscape = findViewById(R.id.iv_landscape);
 
         mKConfig = new KChartUIConfig(getContext(), mFirstChart, mSecondChart);
         mKChartData = new KChartData();

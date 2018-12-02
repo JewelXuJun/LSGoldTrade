@@ -10,9 +10,9 @@
     <color name="pop_text">#222222</color>
 
     <color name="radio_button_bg">#ECECEC</color>
-    <color name="radio_button_line_divider">#CCCCCC</color>
-    <color name="radio_button_text_normal">#222222</color>
-    <color name="radio_button_text_press">#C4201F</color>
+    <color name="radio_button_line_divider">#d4d4d4</color>
+    <color name="radio_button_text_normal">#1a1a1a</color>
+    <color name="radio_button_text_press">#0080ff</color>
 
     <color name="btn_corner">#CCCCCC</color>
     <color name="layout_border">#000000</color>

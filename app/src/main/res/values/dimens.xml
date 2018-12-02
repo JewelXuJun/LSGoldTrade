@@ -11,6 +11,8 @@
     <dimen name="height_personal_account">170dp</dimen>
     <dimen name="height_personal_item">50dp</dimen>
     <dimen name="height_tabhost">30dp</dimen>
+    <dimen name="height_market_current_detail">90dp</dimen>
+    <dimen name="height_market_current_state">20dp</dimen>
 
     <dimen name="width_main_page_info_img">80dp</dimen>
 
@@ -21,6 +23,7 @@
     <dimen name="size_small">11sp</dimen>
     <dimen name="size_middle">13sp</dimen>
     <dimen name="size_normal">15sp</dimen>
+    <dimen name="size_large">34sp</dimen>
 
     <dimen name="icon_logo">76dp</dimen>
     <dimen name="icon_head_portrait">60dp</dimen>

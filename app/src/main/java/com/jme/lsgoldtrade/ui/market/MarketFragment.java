@@ -3,12 +3,14 @@ package com.jme.lsgoldtrade.ui.market;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 
+import com.alibaba.android.arouter.launcher.ARouter;
 import com.jme.common.network.DTRequest;
 import com.jme.common.network.Head;
 import com.jme.common.ui.view.MarginDividerItemDecoration;
 import com.jme.common.util.StatusBarUtil;
 import com.jme.lsgoldtrade.R;
 import com.jme.lsgoldtrade.base.JMEBaseFragment;
+import com.jme.lsgoldtrade.config.Constants;
 import com.jme.lsgoldtrade.databinding.FragmentMarketBinding;
 
 public class MarketFragment extends JMEBaseFragment {
@@ -62,7 +64,9 @@ public class MarketFragment extends JMEBaseFragment {
     public class ClickHandlers {
 
         public void onClickNews() {
-
+            ARouter.getInstance()
+                    .build(Constants.ARouterUriConst.MARKETDETAIL)
+                    .navigation();
         }
 
         public void onClickSortContract() {

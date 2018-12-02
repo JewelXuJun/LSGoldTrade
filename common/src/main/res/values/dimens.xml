@@ -85,7 +85,7 @@
     <dimen name="common_hq_detail_layout_market">126dp</dimen>
     <dimen name="common_hq_detail_layout_detail">240dp</dimen>
     <dimen name="common_hq_detail_layout_chart">280dp</dimen>
-    <dimen name="common_hq_detail_view_chart">360dp</dimen>
+    <dimen name="common_hq_detail_view_chart">386dp</dimen>
     <dimen name="common_hq_detail_area_margin">3dp</dimen>
     <dimen name="common_hq_detail_item_height">24dp</dimen>
     <dimen name="common_hq_detail_price_height">40dp</dimen>

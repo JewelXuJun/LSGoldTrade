@@ -3,7 +3,7 @@
     android:id="@+id/chart_layout"
     android:layout_width="match_parent"
     android:layout_height="@dimen/radio_button_height"
-    android:background="@color/radio_button_bg"
+    android:background="@color/white"
     android:visibility="visible">
 
     <RadioGroup

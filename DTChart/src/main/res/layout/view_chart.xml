@@ -7,13 +7,6 @@
 
     <include layout="@layout/chart_chooseitem" />
 
-    <!--<include layout="@layout/item_line_vertical" />-->
-    <!--android:layout_marginTop="-2px"-->
-    <!--<LinearLayout-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="2px"-->
-        <!--android:background="#CCCCCC" />-->
-
     <include layout="@layout/chart_textitem" />
 
     <com.datai.common.charts.tchart.TChart

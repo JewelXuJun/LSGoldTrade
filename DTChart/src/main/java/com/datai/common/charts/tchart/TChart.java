@@ -75,11 +75,11 @@ public class TChart extends LinearLayout {
     }
 
     private void init() {
-        mTChart_data = (TextView) findViewById(R.id.tchart_data);
-        mFirstChart = (CombinedChart) findViewById(R.id.tchart);
-        mSecondChart = (CombinedChart) findViewById(R.id.vchart);
-        mTradeInfoChart = (TradeInfoChart) findViewById(R.id.tradeinfochart);
-        iv_landscape = (ImageView) findViewById(R.id.iv_landscape);
+        mTChart_data = findViewById(R.id.tchart_data);
+        mFirstChart = findViewById(R.id.tchart);
+        mSecondChart = findViewById(R.id.vchart);
+        mTradeInfoChart = findViewById(R.id.tradeinfochart);
+        iv_landscape = findViewById(R.id.iv_landscape);
 
         mTConfig = new TChartUIConfig(getContext(), mFirstChart, mSecondChart);
         mTChartData = new TChartData();

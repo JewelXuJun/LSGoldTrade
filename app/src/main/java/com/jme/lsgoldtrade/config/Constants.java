@@ -57,6 +57,7 @@ public class Constants {
         public static final String RFINEXWEBVIEW = "/JMEBase/JMEBaseWebviewActivity";
         public static final String LOGIN = "/PersonalFragment/LoginActivity";
         public static final String MAIN = "/LoginActivity/MainActivity";
+        public static final String MARKETDETAIL = "/MarketFragment/MarketDetailActivity";
     }
 
     public static final class Values {

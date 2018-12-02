@@ -28,6 +28,13 @@
     <string name="market_last_price">最新价</string>
     <string name="market_range">涨跌幅</string>
     <string name="market_volume">成交量</string>
+    <string name="market_declaration_form">报单</string>
+    <string name="market_one_key_order">一键下单</string>
+    <string name="market_open">今开</string>
+    <string name="market_preclose">昨收</string>
+    <string name="market_turn_volume">成交额</string>
+    <string name="market_high">最高</string>
+    <string name="market_low">最低</string>
 
     <!-- Personal -->
     <string name="personal_open_account_online">在线开户</string>

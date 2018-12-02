@@ -71,23 +71,23 @@ public class Chart extends LinearLayout {
     }
 
     private void init() {
-        mTChart = (TChart) findViewById(R.id.view_chart_tchart);
-        mKChart = (KChart) findViewById(R.id.view_chart_kchart);
+        mTChart = findViewById(R.id.view_chart_tchart);
+        mKChart = findViewById(R.id.view_chart_kchart);
 
-        mRadioGroup = (RadioGroup) findViewById(R.id.chart_group);
-        mRadioButton_time = (RadioButton) findViewById(R.id.chart_time);
-        mRadioButton_day = (RadioButton) findViewById(R.id.chart_day);
-        mRadioButton_week = (RadioButton) findViewById(R.id.chart_week);
-        mRadioButton_month = (RadioButton) findViewById(R.id.chart_month);
-        mRadioButton_minute = (RadioButton) findViewById(R.id.chart_minute);
-        mTime = (TextView) findViewById(R.id.chart_textitem_time);
-        mDate = (TextView) findViewById(R.id.chart_textitem_date);
-        mOpen = (TextView) findViewById(R.id.chart_textitem_open);
-        mClose = (TextView) findViewById(R.id.chart_textitem_close);
-        mHigh = (TextView) findViewById(R.id.chart_textitem_high);
-        mLow = (TextView) findViewById(R.id.chart_textitem_low);
-        mRise_value = (TextView) findViewById(R.id.chart_textitem_rise_value);
-        mRise_percent = (TextView) findViewById(R.id.chart_textitem_rise_percent);
+        mRadioGroup = findViewById(R.id.chart_group);
+        mRadioButton_time = findViewById(R.id.chart_time);
+        mRadioButton_day = findViewById(R.id.chart_day);
+        mRadioButton_week = findViewById(R.id.chart_week);
+        mRadioButton_month = findViewById(R.id.chart_month);
+        mRadioButton_minute = findViewById(R.id.chart_minute);
+        mTime = findViewById(R.id.chart_textitem_time);
+        mDate = findViewById(R.id.chart_textitem_date);
+        mOpen = findViewById(R.id.chart_textitem_open);
+        mClose = findViewById(R.id.chart_textitem_close);
+        mHigh = findViewById(R.id.chart_textitem_high);
+        mLow = findViewById(R.id.chart_textitem_low);
+        mRise_value = findViewById(R.id.chart_textitem_rise_value);
+        mRise_percent = findViewById(R.id.chart_textitem_rise_percent);
 
         mDescriptor = new Descriptor();
 
@@ -212,7 +212,7 @@ public class Chart extends LinearLayout {
         mKChart.setOnLandscapeListener(listener);
     }
 
-    public void setLandscapeButtonVisible(boolean visible){
+    public void setLandscapeButtonVisible(boolean visible) {
         mTChart.setLandscapeButtonVisible(visible);
         mKChart.setLandscapeButtonVisible(visible);
     }

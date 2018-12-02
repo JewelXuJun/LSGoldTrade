@@ -50,7 +50,7 @@ public class FChart extends LinearLayout implements AdapterView.OnItemClickListe
     private void init() {
         mDescriptor = new Descriptor();
 
-        mListView = (ListView) findViewById(R.id.listview);
+        mListView =  findViewById(R.id.listview);
 
         mFChartAdapter = new FChartAdapter(mContext, null);
         mListView.setAdapter(mFChartAdapter);
