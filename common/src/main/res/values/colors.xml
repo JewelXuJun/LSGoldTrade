@@ -3,6 +3,9 @@
     <!-- 界面所有Font字体的颜色配置-->
     <color name="white">#FFFFFF</color>
     <color name="black">#000000</color>
+    <color name="black_deep">#333333</color>
+    <color name="black_pale">#666666</color>
+    <color name="gray">#999999</color>
 
     <!--标题及标题（未选）的颜色-->
     <color name="common_font_title">#222222</color>
@@ -54,9 +57,6 @@
     <color name="common_btn_pressed">#760a19</color>
     <color name="common_btn_disable">#cccccc</color>
 
-    <color name="common_btn_gray_normal">#666666</color>
-    <color name="common_btn_gray_pressed">#333333</color>
-
     <color name="common_btn_yellow_normal">#FFB237</color>
     <color name="common_btn_yellow_pressed">#FFCC68</color>
 
@@ -76,7 +76,6 @@
     <color name="common_container_bg">#f2f2f2</color>
 
     <!-- 文字颜色-->
-    <color name="common_label_text_color">#666666</color>
     <color name="common_hq_list_label_text_color">#bd132b</color>
     <color name="common_Item_main_text_color">#222222</color>
     <color name="common_Item_sub_text_color">#999999</color>

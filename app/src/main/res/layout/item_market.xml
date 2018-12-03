@@ -28,7 +28,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/common_area_margin_tiny"
             android:text="@string/text_no_data_default"
-            android:textColor="@color/common_font_gray"
+            android:textColor="@color/gray"
             android:textSize="@dimen/size_middle" />
 
     </LinearLayout>

@@ -48,6 +48,17 @@
     <string name="trade_hold_position">持仓</string>
     <string name="trade_cancel_order">撤单</string>
     <string name="trade_query">查询</string>
+    <string name="trade_total_equity">总权益(元)</string>
+    <string name="trade_risk_rate">风险率</string>
+    <string name="trade_capital_transfer">资金划转</string>
+    <string name="trade_available_funds">可用资金(元)</string>
+    <string name="trade_desirable_capital">可取资金(元)</string>
+    <string name="trade_market_capitalization">持仓市值(元)</string>
+    <string name="trade_floating">浮动盈亏(元)</string>
+    <string name="trade_contract_pupil">合约/多空</string>
+    <string name="trade_available_hold_position">可用/持仓</string>
+    <string name="trade_average_opening_price">开仓均价</string>
+    <string name="trade_floating_rate">盈亏/比例</string>
 
     <!-- Personal -->
     <string name="personal_open_account_online">在线开户</string>

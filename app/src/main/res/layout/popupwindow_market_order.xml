@@ -33,7 +33,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/market_limit_down"
-                    android:textColor="@color/common_btn_gray_pressed"
+                    android:textColor="@color/black_deep"
                     android:textSize="@dimen/size_middle" />
 
                 <TextView
@@ -58,7 +58,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/market_limit_up"
-                    android:textColor="@color/common_btn_gray_pressed"
+                    android:textColor="@color/black_deep"
                     android:textSize="@dimen/size_middle" />
 
                 <TextView
@@ -223,12 +223,12 @@
                 android:layout_marginLeft="@dimen/margin_market_price"
                 android:layout_marginRight="@dimen/margin_market_price"
                 android:layout_weight="1"
-                android:background="@drawable/selector_radio_price"
+                android:background="@drawable/selector_blue"
                 android:button="@null"
                 android:checked="false"
                 android:gravity="center"
                 android:text="@string/market_rival_price"
-                android:textColor="@drawable/selector_radio_text"
+                android:textColor="@drawable/selector_text"
                 android:textSize="@dimen/sp_14" />
 
             <RadioButton
@@ -238,12 +238,12 @@
                 android:layout_marginLeft="@dimen/margin_market_price"
                 android:layout_marginRight="@dimen/margin_market_price"
                 android:layout_weight="1"
-                android:background="@drawable/selector_radio_price"
+                android:background="@drawable/selector_blue"
                 android:button="@null"
                 android:checked="false"
                 android:gravity="center"
                 android:text="@string/market_queuing_price"
-                android:textColor="@drawable/selector_radio_text"
+                android:textColor="@drawable/selector_text"
                 android:textSize="@dimen/sp_14" />
 
             <RadioButton
@@ -253,12 +253,12 @@
                 android:layout_marginLeft="@dimen/margin_market_price"
                 android:layout_marginRight="@dimen/margin_market_price"
                 android:layout_weight="1"
-                android:background="@drawable/selector_radio_price"
+                android:background="@drawable/selector_blue"
                 android:button="@null"
                 android:checked="false"
                 android:gravity="center"
                 android:text="@string/market_last_price"
-                android:textColor="@drawable/selector_radio_text"
+                android:textColor="@drawable/selector_text"
                 android:textSize="@dimen/sp_14" />
 
         </RadioGroup>

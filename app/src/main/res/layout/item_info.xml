@@ -32,7 +32,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/common_page_margin"
             android:maxLines="1"
-            android:textColor="@color/common_font_gray"
+            android:textColor="@color/gray"
             android:textSize="@dimen/size_small" />
 
     </LinearLayout>

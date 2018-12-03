@@ -59,7 +59,7 @@
 
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/height_personal_item"
+                    android:layout_height="@dimen/height_item_normal"
                     android:onClick="@{() -> handlers.onClickOpenAccountOnline()}"
                     android:paddingLeft="@dimen/common_area_margin_big"
                     android:paddingRight="@dimen/common_area_margin">
@@ -100,7 +100,7 @@
 
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/height_personal_item"
+                    android:layout_height="@dimen/height_item_normal"
                     android:onClick="@{() -> handlers.onClickCustomerService()}"
                     android:paddingLeft="@dimen/common_area_margin_big"
                     android:paddingRight="@dimen/common_area_margin">
@@ -141,7 +141,7 @@
 
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/height_personal_item"
+                    android:layout_height="@dimen/height_item_normal"
                     android:onClick="@{() -> handlers.onClickMessageCenter()}"
                     android:paddingLeft="@dimen/common_area_margin_big"
                     android:paddingRight="@dimen/common_area_margin">
@@ -188,7 +188,7 @@
 
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/height_personal_item"
+                    android:layout_height="@dimen/height_item_normal"
                     android:onClick="@{() -> handlers.onClickShare()}"
                     android:paddingLeft="@dimen/common_area_margin_big"
                     android:paddingRight="@dimen/common_area_margin">
@@ -229,7 +229,7 @@
 
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/height_personal_item"
+                    android:layout_height="@dimen/height_item_normal"
                     android:onClick="@{() -> handlers.onClickFeedback()}"
                     android:paddingLeft="@dimen/common_area_margin_big"
                     android:paddingRight="@dimen/common_area_margin">
@@ -270,7 +270,7 @@
 
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/height_personal_item"
+                    android:layout_height="@dimen/height_item_normal"
                     android:onClick="@{() -> handlers.onClickSeeting()}"
                     android:paddingLeft="@dimen/common_area_margin_big"
                     android:paddingRight="@dimen/common_area_margin">

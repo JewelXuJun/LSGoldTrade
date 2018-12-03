@@ -11,12 +11,13 @@
     <color name="color_text_hint">#cacaca</color>
     <color name="color_text_tabhost">#4c4c4c</color>
     <color name="color_text_gray_hint">#cccccc</color>
-
     <color name="color_tab_pressed">#0070e0</color>
     <color name="color_tab_normal">#808080</color>
     <color name="color_tab_line">#d8d8d8</color>
     <color name="color_toolbar_blue">#0080ff</color>
     <color name="color_blue">#4285f4</color>
     <color name="color_indicator_text">#266eff</color>
+    <color name="color_orange">#ffa94c</color>
+    <color name="color_trade_tabhost">#fafafa</color>
 
 </resources>
