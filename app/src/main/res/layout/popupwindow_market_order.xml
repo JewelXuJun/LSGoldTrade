@@ -228,7 +228,7 @@
                 android:checked="false"
                 android:gravity="center"
                 android:text="@string/market_rival_price"
-                android:textColor="@drawable/selector_text"
+                android:textColor="@drawable/selector_text_checked"
                 android:textSize="@dimen/sp_14" />
 
             <RadioButton
@@ -243,7 +243,7 @@
                 android:checked="false"
                 android:gravity="center"
                 android:text="@string/market_queuing_price"
-                android:textColor="@drawable/selector_text"
+                android:textColor="@drawable/selector_text_checked"
                 android:textSize="@dimen/sp_14" />
 
             <RadioButton
@@ -258,7 +258,7 @@
                 android:checked="false"
                 android:gravity="center"
                 android:text="@string/market_last_price"
-                android:textColor="@drawable/selector_text"
+                android:textColor="@drawable/selector_text_checked"
                 android:textSize="@dimen/sp_14" />
 
         </RadioGroup>

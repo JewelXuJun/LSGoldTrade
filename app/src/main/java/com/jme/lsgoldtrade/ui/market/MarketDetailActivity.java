@@ -2,7 +2,9 @@ package com.jme.lsgoldtrade.ui.market;
 
 import android.os.Bundle;
 import android.view.Gravity;
+import android.view.KeyEvent;
 import android.view.MotionEvent;
+import android.view.View;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.jme.common.network.DTRequest;
@@ -80,5 +82,19 @@ public class MarketDetailActivity extends JMEBaseActivity {
             mPopupWindow.showAtLocation(mBinding.layoutFooterview, Gravity.BOTTOM, 0, 0);
         }
 
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (KeyEvent.KEYCODE_BACK == keyCode) {
+            if (null != mPopupWindow && mPopupWindow.isShowing())
+                mPopupWindow.dismiss();
+            else
+                finish();
+
+            return true;
+        }
+
+        return super.onKeyDown(keyCode, event);
     }
 }
