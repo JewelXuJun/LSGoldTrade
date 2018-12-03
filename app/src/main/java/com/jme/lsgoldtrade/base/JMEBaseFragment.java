@@ -132,7 +132,5 @@ public abstract class JMEBaseFragment<T> extends BaseFragment {
             child.setLayoutParams(params);
             child.invalidate();
         }
-
-
     }
 }

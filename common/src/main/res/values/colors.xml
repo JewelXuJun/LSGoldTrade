@@ -8,7 +8,7 @@
     <color name="gray">#999999</color>
 
     <!--标题及标题（未选）的颜色-->
-    <color name="common_font_title">#222222</color>
+    <color name="common_font_title">#1a1a1a</color>
     <color name="common_font_title_unchecked">#CEF5B4B8</color>
     <!--副标题的颜色-->
     <color name="common_font_subtitle">@android:color/white</color>

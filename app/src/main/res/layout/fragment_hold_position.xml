@@ -101,6 +101,7 @@
                                 android:layout_height="@dimen/common_item_height_middle"
                                 android:layout_alignParentRight="true"
                                 android:layout_centerVertical="true"
+                                android:onClick="@{() -> handlers.onClickCapitalTransfer()}"
                                 android:background="@drawable/selector_blue"
                                 android:text="@string/trade_capital_transfer"
                                 android:textColor="@drawable/selector_text" />

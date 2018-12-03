@@ -3,7 +3,6 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_gravity="center"
-    android:text="我的App"
     android:singleLine="true"
     android:textColor="@color/common_font_title"
     android:textSize="@dimen/common_font_size_title" />

@@ -3,11 +3,13 @@ package com.jme.lsgoldtrade.ui.trade;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 
+import com.alibaba.android.arouter.launcher.ARouter;
 import com.jme.common.network.DTRequest;
 import com.jme.common.network.Head;
 import com.jme.common.ui.view.MarginDividerItemDecoration;
 import com.jme.lsgoldtrade.R;
 import com.jme.lsgoldtrade.base.JMEBaseFragment;
+import com.jme.lsgoldtrade.config.Constants;
 import com.jme.lsgoldtrade.databinding.FragmentHoldPositionBinding;
 
 public class HoldPositionFragment extends JMEBaseFragment {
@@ -58,6 +60,12 @@ public class HoldPositionFragment extends JMEBaseFragment {
     }
 
     public class ClickHandlers {
+
+        public void onClickCapitalTransfer() {
+            ARouter.getInstance()
+                    .build(Constants.ARouterUriConst.CAPITALTRANSFER)
+                    .navigation();
+        }
 
     }
 }

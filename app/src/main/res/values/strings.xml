@@ -59,6 +59,9 @@
     <string name="trade_available_hold_position">可用/持仓</string>
     <string name="trade_average_opening_price">开仓均价</string>
     <string name="trade_floating_rate">盈亏/比例</string>
+    <string name="trade_money_in">入金</string>
+    <string name="trade_money_out">出金</string>
+    <string name="trade_turnover">流水</string>
 
     <!-- Personal -->
     <string name="personal_open_account_online">在线开户</string>

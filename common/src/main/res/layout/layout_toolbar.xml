@@ -7,7 +7,7 @@
     android:fitsSystemWindows="true"
     android:minHeight="?attr/actionBarSize"
     android:theme="@style/mToolbarTheme"
-    android:elevation="4dp"
+    android:elevation="0dp"
     app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
 
     <TextView
