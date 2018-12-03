@@ -44,6 +44,11 @@
     <string name="market_equal_more">平多</string>
     <string name="market_equal_empty">平空</string>
 
+    <!-- Trade -->
+    <string name="trade_hold_position">持仓</string>
+    <string name="trade_cancel_order">撤单</string>
+    <string name="trade_query">查询</string>
+
     <!-- Personal -->
     <string name="personal_open_account_online">在线开户</string>
     <string name="personal_customer_service">联系客服</string>

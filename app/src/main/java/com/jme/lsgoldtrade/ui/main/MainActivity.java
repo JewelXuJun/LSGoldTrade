@@ -131,7 +131,7 @@ public class MainActivity extends JMEBaseActivity implements TabHost.OnTabChange
 
     @Override
     public boolean onTouch(View view, MotionEvent event) {
-        if (event.getAction() == MotionEvent.ACTION_DOWN) {
+        /*if (event.getAction() == MotionEvent.ACTION_DOWN) {
             if (view.equals(mBinding.tabhost.getTabWidget().getChildAt(MainTab.TRADE.getId()))) {
                 if (!mUser.isLogin()) {
                     ARouter.getInstance()
@@ -141,7 +141,7 @@ public class MainActivity extends JMEBaseActivity implements TabHost.OnTabChange
                     return true;
                 }
             }
-        }
+        }*/
 
         return false;
     }
