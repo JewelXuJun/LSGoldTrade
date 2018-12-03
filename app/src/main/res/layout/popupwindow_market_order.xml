@@ -81,8 +81,9 @@
                 android:padding="@dimen/common_page_padding">
 
                 <ImageView
-                    android:layout_width="@dimen/icon_cancel"
-                    android:layout_height="@dimen/icon_cancel" />
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@mipmap/ic_cancel" />
 
             </LinearLayout>
 
@@ -103,11 +104,19 @@
                 android:background="@drawable/bg_btn_gray_hollow"
                 android:orientation="horizontal">
 
-                <ImageView
+                <RelativeLayout
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:onClick="@{() -> handlers.onClickPriceMinus()}" />
+                    android:onClick="@{() -> handlers.onClickPriceMinus()}">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:background="@mipmap/ic_minus" />
+
+                </RelativeLayout>
 
                 <include layout="@layout/item_line_horizontal" />
 
@@ -125,11 +134,19 @@
 
                 <include layout="@layout/item_line_horizontal" />
 
-                <ImageView
+                <RelativeLayout
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:onClick="@{() -> handlers.onClickPriceAdd()}" />
+                    android:onClick="@{() -> handlers.onClickPriceAdd()}">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:background="@mipmap/ic_add" />
+
+                </RelativeLayout>
 
             </LinearLayout>
 
@@ -141,12 +158,19 @@
                 android:background="@drawable/bg_btn_gray_hollow"
                 android:orientation="horizontal">
 
-
-                <ImageView
+                <RelativeLayout
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:onClick="@{() -> handlers.onClickAmountMinus()}" />
+                    android:onClick="@{() -> handlers.onClickAmountMinus()}">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:background="@mipmap/ic_minus" />
+
+                </RelativeLayout>
 
                 <include layout="@layout/item_line_horizontal" />
 
@@ -164,11 +188,19 @@
 
                 <include layout="@layout/item_line_horizontal" />
 
-                <ImageView
+                <RelativeLayout
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:onClick="@{() -> handlers.onClickAmountAdd()}" />
+                    android:onClick="@{() -> handlers.onClickAmountAdd()}">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:background="@mipmap/ic_add" />
+
+                </RelativeLayout>
 
             </LinearLayout>
 
