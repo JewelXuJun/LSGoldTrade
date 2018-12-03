@@ -5,6 +5,8 @@
     <string name="text_cancel">取消</string>
     <string name="text_no_data">当前没有数据</string>
     <string name="text_no_data_default">- - -</string>
+    <string name="text_money_unit">元</string>
+    <string name="text_submit">提交</string>
 
     <!--首页-->
     <string name="main_exit_app">再按一次退出程序</string>
@@ -62,6 +64,14 @@
     <string name="trade_money_in">入金</string>
     <string name="trade_money_out">出金</string>
     <string name="trade_turnover">流水</string>
+    <string name="trade_bankcard_number">银行卡号</string>
+    <string name="trade_end_number">尾号</string>
+    <string name="trade_transfer_amount">转账金额</string>
+    <string name="trade_transfer_amount_hint">请输入金额</string>
+    <string name="trade_mobile_number">手机号码</string>
+    <string name="trade_verification_code">验&#160;&#160;证&#160;&#160;码</string>
+    <string name="trade_verification_code_hint">请输入验证码</string>
+    <string name="trade_get_verification_code">获取验证码</string>
 
     <!-- Personal -->
     <string name="personal_open_account_online">在线开户</string>

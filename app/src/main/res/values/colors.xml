@@ -20,4 +20,7 @@
     <color name="color_orange">#ffa94c</color>
     <color name="color_trade_tabhost">#fafafa</color>
 
+    <drawable name="drawable_white">#FFFFFF</drawable>
+    <drawable name="drawable_blue">#4285f4</drawable>
+
 </resources>

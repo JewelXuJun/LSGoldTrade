@@ -41,7 +41,7 @@
                         android:background="@color/white"
                         android:gravity="center"
                         android:orientation="vertical"
-                        android:padding="@dimen/common_page_padding">
+                        android:padding="@dimen/common_area_margin">
 
                         <RelativeLayout
                             android:layout_width="match_parent"
@@ -101,8 +101,8 @@
                                 android:layout_height="@dimen/common_item_height_middle"
                                 android:layout_alignParentRight="true"
                                 android:layout_centerVertical="true"
-                                android:onClick="@{() -> handlers.onClickCapitalTransfer()}"
                                 android:background="@drawable/selector_blue"
+                                android:onClick="@{() -> handlers.onClickCapitalTransfer()}"
                                 android:text="@string/trade_capital_transfer"
                                 android:textColor="@drawable/selector_text" />
 
@@ -135,6 +135,7 @@
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
+                                    android:layout_marginLeft="@dimen/common_area_margin_tiny"
                                     android:text="@string/trade_available_funds"
                                     android:textColor="@color/black_pale"
                                     android:textSize="@dimen/sp_12" />
@@ -143,6 +144,7 @@
                                     android:id="@+id/tv_available_funds"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
+                                    android:layout_marginLeft="@dimen/common_area_margin_tiny"
                                     android:layout_marginTop="@dimen/common_area_margin_tiny"
                                     android:text="@string/text_no_data_default"
                                     android:textColor="@color/black_deep"
@@ -161,6 +163,7 @@
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
+                                    android:layout_marginLeft="@dimen/common_area_margin_tiny"
                                     android:text="@string/trade_desirable_capital"
                                     android:textColor="@color/black_pale"
                                     android:textSize="@dimen/sp_12" />
@@ -169,6 +172,7 @@
                                     android:id="@+id/tv_desirable_capital"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
+                                    android:layout_marginLeft="@dimen/common_area_margin_tiny"
                                     android:layout_marginTop="@dimen/common_area_margin_tiny"
                                     android:text="@string/text_no_data_default"
                                     android:textColor="@color/black_deep"
@@ -196,6 +200,7 @@
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
+                                    android:layout_marginLeft="@dimen/common_area_margin_tiny"
                                     android:text="@string/trade_market_capitalization"
                                     android:textColor="@color/black_pale"
                                     android:textSize="@dimen/sp_12" />
@@ -204,6 +209,7 @@
                                     android:id="@+id/tv_market_capitalization"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
+                                    android:layout_marginLeft="@dimen/common_area_margin_tiny"
                                     android:layout_marginTop="@dimen/common_area_margin_tiny"
                                     android:text="@string/text_no_data_default"
                                     android:textColor="@color/black_deep"
@@ -222,6 +228,7 @@
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
+                                    android:layout_marginLeft="@dimen/common_area_margin_tiny"
                                     android:text="@string/trade_floating"
                                     android:textColor="@color/black_pale"
                                     android:textSize="@dimen/sp_12" />
@@ -230,6 +237,7 @@
                                     android:id="@+id/tv_floating"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
+                                    android:layout_marginLeft="@dimen/common_area_margin_tiny"
                                     android:layout_marginTop="@dimen/common_area_margin_tiny"
                                     android:text="@string/text_no_data_default"
                                     android:textColor="@color/black_deep"
@@ -257,7 +265,7 @@
                                 android:layout_height="match_parent"
                                 android:layout_weight="1"
                                 android:gravity="center|left"
-                                android:paddingLeft="@dimen/common_page_padding"
+                                android:paddingLeft="@dimen/common_area_margin"
                                 android:text="@string/trade_contract_pupil"
                                 android:textColor="@color/black_pale"
                                 android:textSize="@dimen/sp_12" />
@@ -285,7 +293,7 @@
                                 android:layout_height="match_parent"
                                 android:layout_weight="1"
                                 android:gravity="center|right"
-                                android:paddingRight="@dimen/common_page_padding"
+                                android:paddingRight="@dimen/common_area_margin"
                                 android:text="@string/trade_floating_rate"
                                 android:textColor="@color/black_pale"
                                 android:textSize="@dimen/sp_12" />
