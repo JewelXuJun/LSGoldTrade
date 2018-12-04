@@ -1,10 +1,200 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+    <data>
 
-    </LinearLayout>
+        <variable
+            name="handlers"
+            type="com.jme.lsgoldtrade.ui.trade.MoneyOutFragment.ClickHandlers" />
+
+    </data>
+
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/common_background"
+        android:fillViewport="true"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/height_item_big"
+                android:background="@color/white"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingLeft="@dimen/common_area_margin"
+                android:paddingRight="@dimen/common_area_margin">
+
+                <TextView
+                    android:layout_width="@dimen/width_item_title"
+                    android:layout_height="wrap_content"
+                    android:text="@string/trade_bankcard_number"
+                    android:textColor="@color/color_text_normal"
+                    android:textSize="@dimen/sp_14" />
+
+                <TextView
+                    android:id="@+id/tv_end_number_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/common_area_margin_big"
+                    android:text="@string/trade_end_number"
+                    android:textColor="@color/color_text_normal"
+                    android:textSize="@dimen/sp_14" />
+
+                <TextView
+                    android:id="@+id/tv_end_number"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/color_text_black"
+                    android:textSize="@dimen/common_font_size_content"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+
+            <include layout="@layout/item_line_vertical_margin" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/height_item_big"
+                android:background="@color/white"
+                android:paddingLeft="@dimen/common_area_margin"
+                android:paddingRight="@dimen/common_area_margin">
+
+                <TextView
+                    android:id="@+id/tv_transfer_amount_title"
+                    android:layout_width="@dimen/width_item_title"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:text="@string/trade_transfer_amount"
+                    android:textColor="@color/color_text_normal"
+                    android:textSize="@dimen/sp_14" />
+
+                <Button
+                    android:id="@+id/btn_out_all"
+                    android:layout_width="@dimen/width_btn_normal"
+                    android:layout_height="@dimen/common_item_height_middle"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:background="@drawable/selector_blue"
+                    android:onClick="@{() -> handlers.onClickOutAll()}"
+                    android:text="@string/trade_out_all"
+                    android:textColor="@drawable/selector_text"
+                    android:textSize="@dimen/sp_14" />
+
+                <EditText
+                    android:id="@+id/et_transfer_amount"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/common_area_margin_big"
+                    android:layout_marginRight="@dimen/common_page_padding"
+                    android:layout_toLeftOf="@+id/btn_out_all"
+                    android:layout_toRightOf="@+id/tv_transfer_amount_title"
+                    android:background="@null"
+                    android:hint="@string/trade_transfer_amount_out_hint"
+                    android:inputType="numberDecimal"
+                    android:textColor="@color/color_text_normal"
+                    android:textColorHint="@color/color_text_gray_hint"
+                    android:textSize="@dimen/sp_14" />
+
+            </RelativeLayout>
+
+            <include layout="@layout/item_line_vertical_margin" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/height_item_big"
+                android:background="@color/white"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingLeft="@dimen/common_area_margin"
+                android:paddingRight="@dimen/common_area_margin">
+
+                <TextView
+                    android:layout_width="@dimen/width_item_title"
+                    android:layout_height="wrap_content"
+                    android:text="@string/trade_mobile_number"
+                    android:textColor="@color/color_text_normal"
+                    android:textSize="@dimen/sp_14" />
+
+                <TextView
+                    android:id="@+id/tv_mobile_number"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/common_area_margin_big"
+                    android:textColor="@color/color_text_black"
+                    android:textSize="@dimen/common_font_size_content"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+
+            <include layout="@layout/item_line_vertical_margin" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/height_item_big"
+                android:background="@color/white"
+                android:paddingLeft="@dimen/common_area_margin"
+                android:paddingRight="@dimen/common_area_margin">
+
+                <TextView
+                    android:id="@+id/tv_verification_code"
+                    android:layout_width="@dimen/width_item_title"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:text="@string/trade_verification_code"
+                    android:textColor="@color/color_text_normal"
+                    android:textSize="@dimen/sp_14" />
+
+                <Button
+                    android:id="@+id/btn_verification_code"
+                    android:layout_width="@dimen/width_btn_normal"
+                    android:layout_height="@dimen/common_item_height_middle"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:background="@drawable/selector_blue"
+                    android:onClick="@{() -> handlers.onClickGetVerificationCode()}"
+                    android:text="@string/trade_get_verification_code"
+                    android:textColor="@drawable/selector_text"
+                    android:textSize="@dimen/sp_14" />
+
+                <EditText
+                    android:id="@+id/et_verification_code"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/common_area_margin_big"
+                    android:layout_marginRight="@dimen/common_page_padding"
+                    android:layout_toLeftOf="@+id/btn_verification_code"
+                    android:layout_toRightOf="@+id/tv_verification_code"
+                    android:background="@null"
+                    android:hint="@string/trade_verification_code_hint"
+                    android:inputType="numberDecimal"
+                    android:textColor="@color/color_text_normal"
+                    android:textColorHint="@color/color_text_gray_hint"
+                    android:textSize="@dimen/sp_14" />
+
+            </RelativeLayout>
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/height_btn"
+                android:layout_marginLeft="@dimen/common_area_margin"
+                android:layout_marginTop="@dimen/common_page_margin"
+                android:layout_marginRight="@dimen/common_area_margin"
+                android:background="@drawable/bg_btn_blue_solid"
+                android:onClick="@{() -> handlers.onClickSubmit()}"
+                android:text="@string/text_submit"
+                android:textColor="@color/white"
+                android:textSize="@dimen/common_font_size_content" />
+
+        </LinearLayout>
+
+    </android.support.v4.widget.NestedScrollView>
 
 </layout>

@@ -72,6 +72,8 @@
     <string name="trade_verification_code">验&#160;&#160;证&#160;&#160;码</string>
     <string name="trade_verification_code_hint">请输入验证码</string>
     <string name="trade_get_verification_code">获取验证码</string>
+    <string name="trade_transfer_amount_out_hint">最大可提0.00元</string>
+    <string name="trade_out_all">全部转出</string>
 
     <!-- Personal -->
     <string name="personal_open_account_online">在线开户</string>
