@@ -9,6 +9,7 @@
     <dimen name="height_main_page_info_img">45dp</dimen>
     <dimen name="height_login_btn">48dp</dimen>
     <dimen name="height_personal_account">170dp</dimen>
+    <dimen name="height_item_small">25dp</dimen>
     <dimen name="height_item_normal">50dp</dimen>
     <dimen name="height_item_big">70dp</dimen>
     <dimen name="height_tabhost">30dp</dimen>
@@ -17,18 +18,21 @@
     <dimen name="height_trade_hold_position_account_total">110dp</dimen>
     <dimen name="height_trade_hold_position_account_detail">120dp</dimen>
     <dimen name="height_btn">50dp</dimen>
+    <dimen name="height_turnover_time">80dp</dimen>
 
     <dimen name="width_main_page_info_img">80dp</dimen>
     <dimen name="width_market_limit">80dp</dimen>
     <dimen name="width_trade_hold_position_account_item">100dp</dimen>
     <dimen name="width_item_title">58dp</dimen>
     <dimen name="width_btn_normal">90dp</dimen>
+    <dimen name="width_date">100dp</dimen>
 
     <dimen name="margin_main_page_info">40dp</dimen>
     <dimen name="margin_login">35dp</dimen>
     <dimen name="margin_no_data">100dp</dimen>
     <dimen name="margin_market_price">6dp</dimen>
     <dimen name="margin_small">4dp</dimen>
+    <dimen name="margin_normal">25dp</dimen>
 
     <dimen name="size_small">11sp</dimen>
     <dimen name="size_middle">13sp</dimen>

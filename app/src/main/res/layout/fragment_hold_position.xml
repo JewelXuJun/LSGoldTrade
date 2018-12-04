@@ -258,7 +258,7 @@
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="@dimen/height_tabhost"
-                            android:background="@color/color_trade_tabhost">
+                            android:background="@color/color_tabhost">
 
                             <TextView
                                 android:layout_width="match_parent"
