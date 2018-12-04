@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:paddingTop="@dimen/margin_middle"
+    android:paddingBottom="@dimen/margin_middle">
+
+    <TextView
+        android:id="@+id/tv_newest"
+        android:layout_width="@dimen/width_shelves"
+        android:layout_height="wrap_content"
+        android:text="@string/trade_newest"
+        android:textColor="@color/color_text_black"
+        android:textSize="@dimen/size_small" />
+
+    <TextView
+        android:id="@+id/tv_amount"
+        android:layout_width="@dimen/width_amount"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:gravity="right"
+        android:text="@string/text_no_data_default"
+        android:textColor="@color/color_text_black"
+        android:textSize="@dimen/size_small" />
+
+    <TextView
+        android:id="@+id/tv_price"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_toLeftOf="@+id/tv_amount"
+        android:layout_toRightOf="@+id/tv_newest"
+        android:gravity="right"
+        android:text="@string/text_no_data_default"
+        android:textColor="@color/common_font_stable"
+        android:textSize="@dimen/size_small" />
+
+</RelativeLayout>

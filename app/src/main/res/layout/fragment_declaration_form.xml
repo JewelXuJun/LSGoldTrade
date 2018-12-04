@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
 
@@ -9,11 +10,463 @@
 
     </data>
 
-    <LinearLayout
+    <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:background="@color/common_background"
+        android:fillViewport="true"
+        android:scrollbars="none">
 
-    </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="2"
+                    android:orientation="vertical">
+
+                    <Spinner
+                        android:id="@+id/spinner"
+                        style="@style/SpinnerStyle"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/common_item_height_middle"
+                        android:layout_marginLeft="@dimen/common_page_margin"
+                        android:layout_marginRight="@dimen/common_page_margin"
+                        android:dropDownVerticalOffset="@dimen/common_item_height_middle"
+                        android:gravity="center"
+                        android:spinnerMode="dropdown"
+                        android:textColor="@color/color_toolbar_blue"
+                        android:textSize="@dimen/common_font_size_content" />
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/common_page_margin">
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/trade_limit_down_price"
+                                android:textColor="@color/color_text_black"
+                                android:textSize="@dimen/sp_12" />
+
+                            <TextView
+                                android:id="@+id/tv_limit_down_price"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="@dimen/common_area_margin_tiny"
+                                android:text="@string/text_no_data_default"
+                                android:textColor="@color/common_font_decrease"
+                                android:textSize="@dimen/common_font_size_content_hint_tiny" />
+
+                        </LinearLayout>
+
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentRight="true"
+                            android:layout_centerVertical="true"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/trade_limit_up_price"
+                                android:textColor="@color/color_text_black"
+                                android:textSize="@dimen/sp_12" />
+
+                            <TextView
+                                android:id="@+id/tv_limit_up_price"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="@dimen/common_area_margin_tiny"
+                                android:text="@string/text_no_data_default"
+                                android:textColor="@color/common_font_increase"
+                                android:textSize="@dimen/common_font_size_content_hint_tiny" />
+
+                        </LinearLayout>
+
+                    </RelativeLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/common_item_height_middle"
+                        android:layout_marginLeft="@dimen/common_page_margin"
+                        android:layout_marginRight="@dimen/common_page_margin"
+                        android:background="@drawable/bg_btn_gray_hollow"
+                        android:orientation="horizontal">
+
+                        <RelativeLayout
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:onClick="@{() -> handlers.onClickPriceMinus()}">
+
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerInParent="true"
+                                android:background="@mipmap/ic_minus" />
+
+                        </RelativeLayout>
+
+                        <include layout="@layout/item_line_horizontal" />
+
+                        <EditText
+                            android:id="@+id/et_price"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="3"
+                            android:background="@null"
+                            android:gravity="center"
+                            android:inputType="numberDecimal"
+                            android:maxLines="1"
+                            android:textColor="@color/color_toolbar_blue"
+                            android:textSize="@dimen/sp_16" />
+
+                        <include layout="@layout/item_line_horizontal" />
+
+                        <RelativeLayout
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:onClick="@{() -> handlers.onClickPriceAdd()}">
+
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerInParent="true"
+                                android:background="@mipmap/ic_add" />
+
+                        </RelativeLayout>
+
+                    </LinearLayout>
+
+                    <RadioGroup
+                        android:id="@+id/radio_group_price"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/common_item_height_middle"
+                        android:layout_marginLeft="@dimen/common_area_margin_tiny"
+                        android:layout_marginTop="@dimen/common_area_margin"
+                        android:layout_marginRight="@dimen/common_area_margin_tiny"
+                        android:gravity="center"
+                        android:orientation="horizontal">
+
+                        <RadioButton
+                            android:id="@+id/radio_rival_price"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_marginLeft="@dimen/common_area_margin_tiny"
+                            android:layout_marginRight="@dimen/common_area_margin_tiny"
+                            android:layout_weight="1"
+                            android:background="@drawable/selector_blue"
+                            android:button="@null"
+                            android:checked="false"
+                            android:gravity="center"
+                            android:text="@string/market_rival_price"
+                            android:textColor="@drawable/selector_text_checked"
+                            android:textSize="@dimen/sp_12" />
+
+                        <RadioButton
+                            android:id="@+id/radio_queuing_price"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_marginLeft="@dimen/common_area_margin_tiny"
+                            android:layout_marginRight="@dimen/common_area_margin_tiny"
+                            android:layout_weight="1"
+                            android:background="@drawable/selector_blue"
+                            android:button="@null"
+                            android:checked="false"
+                            android:gravity="center"
+                            android:text="@string/market_queuing_price"
+                            android:textColor="@drawable/selector_text_checked"
+                            android:textSize="@dimen/sp_12" />
+
+                        <RadioButton
+                            android:id="@+id/radio_last_price"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_marginLeft="@dimen/common_area_margin_tiny"
+                            android:layout_marginRight="@dimen/common_area_margin_tiny"
+                            android:layout_weight="1"
+                            android:background="@drawable/selector_blue"
+                            android:button="@null"
+                            android:checked="false"
+                            android:gravity="center"
+                            android:text="@string/market_last_price"
+                            android:textColor="@drawable/selector_text_checked"
+                            android:textSize="@dimen/sp_12" />
+
+                    </RadioGroup>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/common_item_height_middle"
+                        android:layout_marginLeft="@dimen/common_page_margin"
+                        android:layout_marginTop="@dimen/common_area_margin"
+                        android:layout_marginRight="@dimen/common_page_margin"
+                        android:background="@drawable/bg_btn_gray_hollow"
+                        android:orientation="horizontal">
+
+                        <RelativeLayout
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:onClick="@{() -> handlers.onClickAmountMinus()}">
+
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerInParent="true"
+                                android:background="@mipmap/ic_minus" />
+
+                        </RelativeLayout>
+
+                        <include layout="@layout/item_line_horizontal" />
+
+                        <EditText
+                            android:id="@+id/et_amount"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="3"
+                            android:background="@null"
+                            android:gravity="center"
+                            android:inputType="numberDecimal"
+                            android:maxLines="1"
+                            android:textColor="@color/color_toolbar_blue"
+                            android:textSize="@dimen/sp_16" />
+
+                        <include layout="@layout/item_line_horizontal" />
+
+                        <RelativeLayout
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:onClick="@{() -> handlers.onClickAmountAdd()}">
+
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerInParent="true"
+                                android:background="@mipmap/ic_add" />
+
+                        </RelativeLayout>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/common_item_height_big"
+                        android:layout_marginLeft="@dimen/common_area_margin_tiny"
+                        android:layout_marginTop="@dimen/common_page_margin"
+                        android:layout_marginRight="@dimen/common_area_margin_tiny"
+                        android:layout_marginBottom="@dimen/common_area_margin"
+                        android:gravity="center"
+                        android:orientation="horizontal">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_marginLeft="@dimen/common_area_margin_tiny"
+                            android:layout_marginRight="@dimen/common_area_margin_tiny"
+                            android:layout_weight="1"
+                            android:background="@drawable/bg_btn_buy_more_solid"
+                            android:gravity="center"
+                            android:onClick="@{() -> handlers.onClickBuyMore()}"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:id="@+id/tv_price_buy_more"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/text_no_data_default"
+                                android:textColor="@color/white"
+                                android:textSize="@dimen/size_normal" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/common_area_margin_tiny"
+                                android:text="@string/market_buy_more"
+                                android:textColor="@color/white"
+                                android:textSize="@dimen/size_normal" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_marginLeft="@dimen/common_area_margin_tiny"
+                            android:layout_marginRight="@dimen/common_area_margin_tiny"
+                            android:layout_weight="1"
+                            android:background="@drawable/bg_btn_sale_empty_solid"
+                            android:gravity="center"
+                            android:onClick="@{() -> handlers.onClickSaleEmpty()}"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:id="@+id/tv_price_sale_empty"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/text_no_data_default"
+                                android:textColor="@color/white"
+                                android:textSize="@dimen/size_normal" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/common_area_margin_tiny"
+                                android:text="@string/market_sale_empty"
+                                android:textColor="@color/white"
+                                android:textSize="@dimen/size_normal" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_marginLeft="@dimen/common_area_margin_tiny"
+                            android:layout_marginRight="@dimen/common_area_margin_tiny"
+                            android:layout_weight="1"
+                            android:background="@drawable/bg_btn_equal_more_solid"
+                            android:gravity="center"
+                            android:onClick="@{() -> handlers.onClickEveningUp()}"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:id="@+id/tv_equal_more"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/text_no_data_default"
+                                android:textColor="@color/white"
+                                android:textSize="@dimen/size_normal" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/common_area_margin_tiny"
+                                android:text="@string/trade_evening_up"
+                                android:textColor="@color/white"
+                                android:textSize="@dimen/size_normal" />
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <include layout="@layout/item_line_horizontal" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="3"
+                    android:orientation="vertical"
+                    android:paddingLeft="@dimen/common_page_padding"
+                    android:paddingRight="@dimen/common_page_padding">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/common_area_margin"
+                        android:layout_marginBottom="@dimen/common_area_margin">
+
+                        <TextView
+                            android:id="@+id/tv_newest"
+                            android:layout_width="@dimen/width_shelves"
+                            android:layout_height="wrap_content"
+                            android:text="@string/trade_newest"
+                            android:textColor="@color/color_text_black"
+                            android:textSize="@dimen/size_small" />
+
+                        <TextView
+                            android:id="@+id/tv_amount"
+                            android:layout_width="@dimen/width_amount"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentRight="true"
+                            android:gravity="right"
+                            android:text="@string/text_no_data_default"
+                            android:textColor="@color/color_text_black"
+                            android:textSize="@dimen/size_small" />
+
+                        <TextView
+                            android:id="@+id/tv_price"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_toLeftOf="@+id/tv_amount"
+                            android:layout_toRightOf="@+id/tv_newest"
+                            android:gravity="right"
+                            android:text="@string/text_no_data_default"
+                            android:textColor="@color/common_font_stable"
+                            android:textSize="@dimen/size_small" />
+
+                    </RelativeLayout>
+
+                    <include layout="@layout/item_line_vertical" />
+
+                    <android.support.v7.widget.RecyclerView
+                        android:id="@+id/recyclerView_sale"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/height_recyclerview"
+                        android:cacheColorHint="@null"
+                        android:scrollbars="none" />
+
+                    <include layout="@layout/item_line_vertical"/>
+
+                    <android.support.v7.widget.RecyclerView
+                        android:id="@+id/recyclerView_buy"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/height_recyclerview"
+                        android:cacheColorHint="@null"
+                        android:scrollbars="none" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/common_page_margin"
+                android:orientation="vertical">
+
+                <android.support.design.widget.TabLayout
+                    android:id="@+id/tablayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/common_item_height_middle"
+                    android:background="@color/white"
+                    app:tabIndicatorColor="@color/color_blue"
+                    app:tabSelectedTextColor="@color/color_toolbar_blue"
+                    app:tabTextColor="@color/color_text_normal" />
+
+                <include layout="@layout/item_line_vertical" />
+
+                <android.support.v4.view.ViewPager
+                    android:id="@+id/tab_viewpager"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </android.support.v4.widget.NestedScrollView>
 
 </layout>

@@ -9,4 +9,8 @@
         <item name="android:backgroundDimEnabled">true</item>
     </style>
 
+    <style name="SpinnerStyle" parent="Base.Widget.AppCompat.Spinner">
+        <!--<item name="android:background">@drawable/selector_spinner</item>-->
+    </style>
+
 </resources>

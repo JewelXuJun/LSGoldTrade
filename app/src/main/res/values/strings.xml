@@ -80,6 +80,12 @@
     <string name="trade_transfer_amount_unit">划转金额(元)</string>
     <string name="trade_business_type">业务类型</string>
     <string name="trade_state">状态</string>
+    <string name="trade_limit_up_price">涨停价</string>
+    <string name="trade_limit_down_price">跌停价</string>
+    <string name="trade_evening_up">平仓</string>
+    <string name="trade_newest">最新</string>
+    <string name="trade_entrust">委托</string>
+    <string name="trade_deal">成交</string>
 
     <!-- Personal -->
     <string name="personal_open_account_online">在线开户</string>
