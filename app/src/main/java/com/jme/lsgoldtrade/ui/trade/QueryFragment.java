@@ -57,27 +57,39 @@ public class QueryFragment extends JMEBaseFragment {
         }
 
         public void onClickQueryCurrentHoldPosition() {
-
+            ARouter.getInstance()
+                    .build(Constants.ARouterUriConst.CURRENTHOLDPOSITION)
+                    .navigation();
         }
 
         public void onClickQueryHistoryHoldPosition() {
-
+            ARouter.getInstance()
+                    .build(Constants.ARouterUriConst.HISTORYHOLDPOSITION)
+                    .navigation();
         }
 
         public void onClickQueryCurrentEntrust() {
-
+            ARouter.getInstance()
+                    .build(Constants.ARouterUriConst.CURRENTENTRUST)
+                    .navigation();
         }
 
         public void onClickQueryHistoryEntrust() {
-
+            ARouter.getInstance()
+                    .build(Constants.ARouterUriConst.HISTORYENTRUST)
+                    .navigation();
         }
 
         public void onClickQueryCurrentDeal() {
-
+            ARouter.getInstance()
+                    .build(Constants.ARouterUriConst.CURRENTDEAL)
+                    .navigation();
         }
 
         public void onClickQueryHistoryDeal() {
-
+            ARouter.getInstance()
+                    .build(Constants.ARouterUriConst.HISTORYDEAL)
+                    .navigation();
         }
     }
 }

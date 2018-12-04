@@ -60,6 +60,12 @@ public class Constants {
         public static final String MARKETDETAIL = "/MarketFragment/MarketDetailActivity";
         public static final String CAPITALTRANSFER = "/FragmentHoldPositionBinding/CapitalTransferActivity";
         public static final String DAILYSTATEMENT = "/QueryFragment/DailyStatementActivity";
+        public static final String CURRENTHOLDPOSITION = "/QueryFragment/CurrentHoldPositionActivity";
+        public static final String HISTORYHOLDPOSITION = "/QueryFragment/HistoryHoldPositionActivity";
+        public static final String CURRENTENTRUST = "/QueryFragment/CurrentEntrustActivity";
+        public static final String HISTORYENTRUST = "/QueryFragment/HistoryEntrustActivity";
+        public static final String CURRENTDEAL = "/QueryFragment/CurrentDealActivity";
+        public static final String HISTORYDEAL = "/QueryFragment/HistoryDealActivity";
     }
 
     public static final class Values {
