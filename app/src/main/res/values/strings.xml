@@ -92,6 +92,20 @@
     <string name="trade_turnover_volume">成交数量</string>
     <string name="trade_turnover_money">成交金额</string>
     <string name="trade_check_all">全选</string>
+    <string name="trade_daily_statement">日结单</string>
+    <string name="trade_current_profit_and_loss">当期盈亏</string>
+    <string name="trade_fee">交易手续费</string>
+    <string name="trade_software_service_charge">软件服务费</string>
+    <string name="trade_deferred_charges">递延费</string>
+    <string name="trade_position_query">持仓查询</string>
+    <string name="trade_curren_hold_position">当日持仓</string>
+    <string name="trade_history_hold_position">历史持仓</string>
+    <string name="trade_trade_query">交易查询</string>
+    <string name="trade_current_entrust">当日委托</string>
+    <string name="trade_history_entrust">历史委托</string>
+    <string name="trade_current_deal">当日成交</string>
+    <string name="trade_history_deal">历史成交</string>
+
 
     <!-- Personal -->
     <string name="personal_open_account_online">在线开户</string>

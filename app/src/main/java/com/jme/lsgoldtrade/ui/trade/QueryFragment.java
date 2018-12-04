@@ -48,5 +48,32 @@ public class QueryFragment extends JMEBaseFragment {
 
     public class ClickHandlers {
 
+        public void onClickQueryDailyStatement() {
+
+        }
+
+        public void onClickQueryCurrentHoldPosition() {
+
+        }
+
+        public void onClickQueryHistoryHoldPosition() {
+
+        }
+
+        public void onClickQueryCurrentEntrust() {
+
+        }
+
+        public void onClickQueryHistoryEntrust() {
+
+        }
+
+        public void onClickQueryCurrentDeal() {
+
+        }
+
+        public void onClickQueryHistoryDeal() {
+
+        }
     }
 }
