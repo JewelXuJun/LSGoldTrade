@@ -105,7 +105,21 @@
     <string name="trade_history_entrust">历史委托</string>
     <string name="trade_current_deal">当日成交</string>
     <string name="trade_history_deal">历史成交</string>
-
+    <string name="trade_daily_statement_query">日结单查询</string>
+    <string name="trade_select_date">选择日期</string>
+    <string name="trade_equity">权益(元)</string>
+    <string name="trade_current_client_interest">本期客户权益</string>
+    <string name="trade_previous_customer_interest">上期客户权益</string>
+    <string name="trade_current_available_funds">本期可用资金</string>
+    <string name="trade_profit_and_loss">盈亏(元)</string>
+    <string name="trade_current_daily_profit_and_loss">当日盈亏</string>
+    <string name="trade_bond">保证金(元)</string>
+    <string name="trade_current_hold_position_bond">本期持仓保证金</string>
+    <string name="trade_break_even_fund">保本资金</string>
+    <string name="trade_inoutmoney">出入金(元)</string>
+    <string name="trade_current_outmoney">当期出金</string>
+    <string name="trade_current_inmoney">当期入金</string>
+    <string name="trade_cost">费用(元)</string>
 
     <!-- Personal -->
     <string name="personal_open_account_online">在线开户</string>

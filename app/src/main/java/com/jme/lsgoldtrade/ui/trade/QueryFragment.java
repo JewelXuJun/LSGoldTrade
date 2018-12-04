@@ -2,10 +2,12 @@ package com.jme.lsgoldtrade.ui.trade;
 
 import android.os.Bundle;
 
+import com.alibaba.android.arouter.launcher.ARouter;
 import com.jme.common.network.DTRequest;
 import com.jme.common.network.Head;
 import com.jme.lsgoldtrade.R;
 import com.jme.lsgoldtrade.base.JMEBaseFragment;
+import com.jme.lsgoldtrade.config.Constants;
 import com.jme.lsgoldtrade.databinding.FragmentQueryBinding;
 
 public class QueryFragment extends JMEBaseFragment {
@@ -49,7 +51,9 @@ public class QueryFragment extends JMEBaseFragment {
     public class ClickHandlers {
 
         public void onClickQueryDailyStatement() {
-
+            ARouter.getInstance()
+                    .build(Constants.ARouterUriConst.DAILYSTATEMENT)
+                    .navigation();
         }
 
         public void onClickQueryCurrentHoldPosition() {

@@ -59,6 +59,7 @@ public class Constants {
         public static final String MAIN = "/LoginActivity/MainActivity";
         public static final String MARKETDETAIL = "/MarketFragment/MarketDetailActivity";
         public static final String CAPITALTRANSFER = "/FragmentHoldPositionBinding/CapitalTransferActivity";
+        public static final String DAILYSTATEMENT = "/QueryFragment/DailyStatementActivity";
     }
 
     public static final class Values {

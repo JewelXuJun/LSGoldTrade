@@ -48,7 +48,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:layout_marginTop="@dimen/margin_small"
-                        android:onClick="@{() -> handlers.onClickTime(0)}"
+                        android:onClick="@{() -> handlers.onClickSelectDate(0)}"
                         android:textColor="@color/color_blue"
                         android:textSize="@dimen/common_font_size_content" />
 
@@ -82,7 +82,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:layout_marginTop="@dimen/margin_small"
-                        android:onClick="@{() -> handlers.onClickTime(1)}"
+                        android:onClick="@{() -> handlers.onClickSelectDate(1)}"
                         android:textColor="@color/color_blue"
                         android:textSize="@dimen/common_font_size_content" />
 

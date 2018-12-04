@@ -1,0 +1,463 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+        <variable
+            name="handlers"
+            type="com.jme.lsgoldtrade.ui.trade.DailyStatementActivity.ClickHandlers" />
+
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/common_background"
+        android:orientation="vertical">
+
+        <include layout="@layout/layout_toolbar" />
+
+        <include layout="@layout/item_line_vertical" />
+
+        <android.support.v4.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fillViewport="true"
+            android:scrollbars="none">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:paddingTop="@dimen/common_area_margin_big"
+                    android:paddingBottom="@dimen/margin_normal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/trade_select_date"
+                        android:textColor="@color/black_pale"
+                        android:textSize="@dimen/sp_12" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/margin_tiny"
+                        android:onClick="@{() -> handlers.onClickSelectDate()}"
+                        android:text="2018-11-07"
+                        android:textColor="@color/color_blue"
+                        android:textSize="@dimen/common_font_size_content" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/common_page_margin"
+                    android:background="@color/white"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/common_item_height_small"
+                        android:background="@color/color_tabhost"
+                        android:drawableLeft="@mipmap/ic_trade_query"
+                        android:gravity="center|left"
+                        android:paddingLeft="@dimen/common_area_margin"
+                        android:text="@string/trade_equity"
+                        android:textColor="@color/gray"
+                        android:textSize="@dimen/sp_12" />
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/height_item_normal"
+                        android:paddingLeft="@dimen/common_area_margin"
+                        android:paddingRight="@dimen/common_area_margin">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:text="@string/trade_current_client_interest"
+                            android:textColor="@color/color_text_black"
+                            android:textSize="@dimen/sp_14" />
+
+                        <TextView
+                            android:id="@+id/tv_current_client_interest"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentRight="true"
+                            android:layout_centerVertical="true"
+                            android:text="0.00"
+                            android:textColor="@color/black_deep"
+                            android:textSize="@dimen/common_font_size_content" />
+
+                    </RelativeLayout>
+
+                    <include layout="@layout/item_line_vertical" />
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/height_item_normal"
+                        android:paddingLeft="@dimen/common_area_margin"
+                        android:paddingRight="@dimen/common_area_margin">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:text="@string/trade_previous_customer_interest"
+                            android:textColor="@color/color_text_black"
+                            android:textSize="@dimen/sp_14" />
+
+                        <TextView
+                            android:id="@+id/tv_previous_customer_interest"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentRight="true"
+                            android:layout_centerVertical="true"
+                            android:text="0.00"
+                            android:textColor="@color/black_deep"
+                            android:textSize="@dimen/common_font_size_content" />
+
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/height_item_normal"
+                        android:paddingLeft="@dimen/common_area_margin"
+                        android:paddingRight="@dimen/common_area_margin">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:text="@string/trade_current_available_funds"
+                            android:textColor="@color/color_text_black"
+                            android:textSize="@dimen/sp_14" />
+
+                        <TextView
+                            android:id="@+id/tv_current_available_funds"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentRight="true"
+                            android:layout_centerVertical="true"
+                            android:text="0.00"
+                            android:textColor="@color/black_deep"
+                            android:textSize="@dimen/common_font_size_content" />
+
+                    </RelativeLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/common_page_margin"
+                    android:background="@color/white"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/common_item_height_small"
+                        android:background="@color/color_tabhost"
+                        android:drawableLeft="@mipmap/ic_trade_query"
+                        android:gravity="center|left"
+                        android:paddingLeft="@dimen/common_area_margin"
+                        android:text="@string/trade_profit_and_loss"
+                        android:textColor="@color/gray"
+                        android:textSize="@dimen/sp_12" />
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/height_item_normal"
+                        android:paddingLeft="@dimen/common_area_margin"
+                        android:paddingRight="@dimen/common_area_margin">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:text="@string/trade_current_daily_profit_and_loss"
+                            android:textColor="@color/color_text_black"
+                            android:textSize="@dimen/sp_14" />
+
+                        <TextView
+                            android:id="@+id/tv_current_daily_profit_and_loss"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentRight="true"
+                            android:layout_centerVertical="true"
+                            android:text="0.00"
+                            android:textColor="@color/black_deep"
+                            android:textSize="@dimen/common_font_size_content" />
+
+                    </RelativeLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/common_page_margin"
+                    android:background="@color/white"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/common_item_height_small"
+                        android:background="@color/color_tabhost"
+                        android:drawableLeft="@mipmap/ic_trade_query"
+                        android:gravity="center|left"
+                        android:paddingLeft="@dimen/common_area_margin"
+                        android:text="@string/trade_bond"
+                        android:textColor="@color/gray"
+                        android:textSize="@dimen/sp_12" />
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/height_item_normal"
+                        android:paddingLeft="@dimen/common_area_margin"
+                        android:paddingRight="@dimen/common_area_margin">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:text="@string/trade_current_hold_position_bond"
+                            android:textColor="@color/color_text_black"
+                            android:textSize="@dimen/sp_14" />
+
+                        <TextView
+                            android:id="@+id/tv_current_hold_position_bond"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentRight="true"
+                            android:layout_centerVertical="true"
+                            android:text="0.00"
+                            android:textColor="@color/black_deep"
+                            android:textSize="@dimen/common_font_size_content" />
+
+                    </RelativeLayout>
+
+                    <include layout="@layout/item_line_vertical" />
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/height_item_normal"
+                        android:paddingLeft="@dimen/common_area_margin"
+                        android:paddingRight="@dimen/common_area_margin">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:text="@string/trade_break_even_fund"
+                            android:textColor="@color/color_text_black"
+                            android:textSize="@dimen/sp_14" />
+
+                        <TextView
+                            android:id="@+id/tv_break_even_fund"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentRight="true"
+                            android:layout_centerVertical="true"
+                            android:text="0.00"
+                            android:textColor="@color/black_deep"
+                            android:textSize="@dimen/common_font_size_content" />
+
+                    </RelativeLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/common_page_margin"
+                    android:background="@color/white"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/common_item_height_small"
+                        android:background="@color/color_tabhost"
+                        android:drawableLeft="@mipmap/ic_trade_query"
+                        android:gravity="center|left"
+                        android:paddingLeft="@dimen/common_area_margin"
+                        android:text="@string/trade_inoutmoney"
+                        android:textColor="@color/gray"
+                        android:textSize="@dimen/sp_12" />
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/height_item_normal"
+                        android:paddingLeft="@dimen/common_area_margin"
+                        android:paddingRight="@dimen/common_area_margin">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:text="@string/trade_current_outmoney"
+                            android:textColor="@color/color_text_black"
+                            android:textSize="@dimen/sp_14" />
+
+                        <TextView
+                            android:id="@+id/tv_current_outmoney"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentRight="true"
+                            android:layout_centerVertical="true"
+                            android:text="0.00"
+                            android:textColor="@color/black_deep"
+                            android:textSize="@dimen/common_font_size_content" />
+
+                    </RelativeLayout>
+
+                    <include layout="@layout/item_line_vertical" />
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/height_item_normal"
+                        android:paddingLeft="@dimen/common_area_margin"
+                        android:paddingRight="@dimen/common_area_margin">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:text="@string/trade_current_inmoney"
+                            android:textColor="@color/color_text_black"
+                            android:textSize="@dimen/sp_14" />
+
+                        <TextView
+                            android:id="@+id/tv_current_inmoney"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentRight="true"
+                            android:layout_centerVertical="true"
+                            android:text="0.00"
+                            android:textColor="@color/black_deep"
+                            android:textSize="@dimen/common_font_size_content" />
+
+                    </RelativeLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/common_page_margin"
+                    android:layout_marginBottom="@dimen/common_area_margin"
+                    android:background="@color/white"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/common_item_height_small"
+                        android:background="@color/color_tabhost"
+                        android:drawableLeft="@mipmap/ic_trade_query"
+                        android:gravity="center|left"
+                        android:paddingLeft="@dimen/common_area_margin"
+                        android:text="@string/trade_cost"
+                        android:textColor="@color/gray"
+                        android:textSize="@dimen/sp_12" />
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/height_item_normal"
+                        android:paddingLeft="@dimen/common_area_margin"
+                        android:paddingRight="@dimen/common_area_margin">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:text="@string/trade_fee"
+                            android:textColor="@color/color_text_black"
+                            android:textSize="@dimen/sp_14" />
+
+                        <TextView
+                            android:id="@+id/tv_fee"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentRight="true"
+                            android:layout_centerVertical="true"
+                            android:text="0.00"
+                            android:textColor="@color/black_deep"
+                            android:textSize="@dimen/common_font_size_content" />
+
+                    </RelativeLayout>
+
+                    <include layout="@layout/item_line_vertical" />
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/height_item_normal"
+                        android:paddingLeft="@dimen/common_area_margin"
+                        android:paddingRight="@dimen/common_area_margin">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:text="@string/trade_software_service_charge"
+                            android:textColor="@color/color_text_black"
+                            android:textSize="@dimen/sp_14" />
+
+                        <TextView
+                            android:id="@+id/tv_software_service_charge"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentRight="true"
+                            android:layout_centerVertical="true"
+                            android:text="0.00"
+                            android:textColor="@color/black_deep"
+                            android:textSize="@dimen/common_font_size_content" />
+
+                    </RelativeLayout>
+
+                    <include layout="@layout/item_line_vertical" />
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/height_item_normal"
+                        android:paddingLeft="@dimen/common_area_margin"
+                        android:paddingRight="@dimen/common_area_margin">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:text="@string/trade_deferred_charges"
+                            android:textColor="@color/color_text_black"
+                            android:textSize="@dimen/sp_14" />
+
+                        <TextView
+                            android:id="@+id/tv_deferred_charges"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentRight="true"
+                            android:layout_centerVertical="true"
+                            android:text="0.00"
+                            android:textColor="@color/black_deep"
+                            android:textSize="@dimen/common_font_size_content" />
+
+                    </RelativeLayout>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </android.support.v4.widget.NestedScrollView>
+
+    </LinearLayout>
+
+</layout>

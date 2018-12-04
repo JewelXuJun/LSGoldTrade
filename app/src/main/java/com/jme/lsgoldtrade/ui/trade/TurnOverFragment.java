@@ -62,7 +62,7 @@ public class TurnOverFragment extends JMEBaseFragment {
 
     public class ClickHandlers {
 
-        public void onClickTime(int timeType) {
+        public void onClickSelectDate(int timeType) {
 
         }
 
