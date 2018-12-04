@@ -26,9 +26,11 @@
     <dimen name="width_trade_hold_position_account_item">100dp</dimen>
     <dimen name="width_item_title">58dp</dimen>
     <dimen name="width_btn_normal">90dp</dimen>
+    <dimen name="width_btn_big">150dp</dimen>
     <dimen name="width_date">100dp</dimen>
     <dimen name="width_shelves">25dp</dimen>
     <dimen name="width_amount">60dp</dimen>
+    <dimen name="width_empty">30dp</dimen>
 
     <dimen name="margin_main_page_info">40dp</dimen>
     <dimen name="margin_login">35dp</dimen>
@@ -46,6 +48,7 @@
     <dimen name="icon_logo">76dp</dimen>
     <dimen name="icon_head_portrait">60dp</dimen>
     <dimen name="icon_cancel">10dp</dimen>
+    <dimen name="icon_checkbox">20dp</dimen>
 
     <dimen name="radius_normal">4dp</dimen>
 

@@ -236,7 +236,7 @@
                                     android:textSize="@dimen/common_font_size_content_hint_tiny" />
 
                                 <TextView
-                                    android:id="@+id/tv_turn_volume"
+                                    android:id="@+id/tv_turnover_volume"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:text="@string/text_no_data_default"
