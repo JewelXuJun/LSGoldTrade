@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">莱斯金行家</string>
+    <string name="app_name">泰金所</string>
 
     <!-- Common -->
     <string name="text_cancel">取消</string>
@@ -10,12 +10,11 @@
 
     <!--首页-->
     <string name="main_exit_app">再按一次退出程序</string>
-    <string name="main_title">金行家</string>
+    <string name="main_title">泰金所</string>
     <string name="main_page">首页</string>
     <string name="main_market">行情</string>
     <string name="main_trade">交易</string>
     <string name="main_personal">我的</string>
-    <string name="main_app_title">金行家</string>
 
     <!-- MainPage -->
     <string name="main_page_open_account">快捷开户</string>
