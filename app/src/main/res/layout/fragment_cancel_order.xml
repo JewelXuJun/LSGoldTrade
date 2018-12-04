@@ -9,11 +9,109 @@
 
     </data>
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:background="@color/common_background">
 
-    </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/height_item_normal"
+            android:layout_alignParentBottom="true"
+            android:background="@color/white"
+            android:orientation="vertical">
+
+            <include layout="@layout/item_line_vertical" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <CheckBox
+                    android:id="@+id/checkbox_all"
+                    style="@style/CheckBoxStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/common_page_margin"
+                    android:paddingLeft="@dimen/common_page_padding"
+                    android:text="@string/trade_check_all"
+                    android:textColor="@color/color_text_black"
+                    android:textSize="@dimen/sp_16" />
+
+                <Button
+                    android:layout_width="@dimen/width_btn_big"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentRight="true"
+                    android:onClick="@{() -> handlers.onClickCancel()}"
+                    android:background="@drawable/bg_btn_cancel"
+                    android:text="@string/trade_cancel_order"
+                    android:textColor="@color/gray"
+                    android:textSize="@dimen/sp_16" />
+
+            </RelativeLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/layout_tabhost"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/height_item_small"
+            android:background="@color/color_tabhost">
+
+            <View
+                android:layout_width="@dimen/width_empty"
+                android:layout_height="match_parent" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center|left"
+                android:paddingLeft="@dimen/common_area_margin"
+                android:text="@string/trade_contract_time"
+                android:textColor="@color/black_pale"
+                android:textSize="@dimen/sp_12" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="@string/trade_type_price"
+                android:textColor="@color/black_pale"
+                android:textSize="@dimen/sp_12" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="@string/trade_entrust_surplus"
+                android:textColor="@color/black_pale"
+                android:textSize="@dimen/sp_12" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center|right"
+                android:paddingRight="@dimen/common_page_padding"
+                android:text="@string/trade_state"
+                android:textColor="@color/black_pale"
+                android:textSize="@dimen/sp_12" />
+
+        </LinearLayout>
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/layout_tabhost"
+            android:layout_marginBottom="@dimen/height_item_normal"
+            android:cacheColorHint="@null"
+            android:scrollbars="none" />
+
+    </RelativeLayout>
 
 </layout>

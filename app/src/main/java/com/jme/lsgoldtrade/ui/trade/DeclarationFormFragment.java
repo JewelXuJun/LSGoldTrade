@@ -76,7 +76,7 @@ public class DeclarationFormFragment extends JMEBaseFragment {
         mFragmentArrays[0] = new ItemHoldPositionFragment();
         mFragmentArrays[1] = new ItemEntrustFragment();
         mFragmentArrays[2] = new ItemDealFragment();
-        mFragmentArrays[3] = new ItemCancelOrderFragment();
+        mFragmentArrays[3] = new CancelOrderFragment();
 
         initTabLayout();
     }
