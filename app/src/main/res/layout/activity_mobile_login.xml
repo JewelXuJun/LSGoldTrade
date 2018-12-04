@@ -6,7 +6,7 @@
 
         <variable
             name="handlers"
-            type="com.jme.lsgoldtrade.ui.login.LoginActivity.ClickHandlers" />
+            type="com.jme.lsgoldtrade.ui.login.MobileLoginActivity.ClickHandlers" />
 
     </data>
 
@@ -90,9 +90,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/common_area_margin_middle"
                 android:background="@null"
-                android:drawableLeft="@mipmap/ic_account"
+                android:drawableLeft="@mipmap/ic_mobile"
                 android:drawablePadding="@dimen/common_area_margin_tiny"
-                android:hint="@string/login_account_hint"
+                android:hint="@string/login_mobile_hint"
                 android:paddingLeft="@dimen/common_page_padding"
                 android:textColor="@color/color_text_normal"
                 android:textColorHint="@color/color_text_hint"
@@ -100,22 +100,52 @@
 
             <include layout="@layout/item_line_vertical" />
 
-            <EditText
-                android:id="@+id/et_password"
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/common_area_margin_big"
-                android:layout_marginBottom="@dimen/common_area_margin_middle"
-                android:background="@null"
-                android:drawableLeft="@mipmap/ic_password"
-                android:drawablePadding="@dimen/common_area_margin_tiny"
-                android:hint="@string/login_password_hint"
-                android:paddingLeft="@dimen/common_page_padding"
-                android:textColor="@color/color_text_normal"
-                android:textColorHint="@color/color_text_hint"
-                android:textSize="@dimen/sp_16" />
+                android:layout_marginTop="@dimen/common_area_margin_middle">
 
-            <include layout="@layout/item_line_vertical" />
+                <Button
+                    android:id="@+id/btn_verification_code"
+                    android:layout_width="@dimen/width_login_verification_code"
+                    android:layout_height="@dimen/common_item_height_middle"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:background="@drawable/selector_blue"
+                    android:onClick="@{() -> handlers.onClickGetVerificationCode()}"
+                    android:text="@string/trade_get_verification_code"
+                    android:textColor="@drawable/selector_text"
+                    android:textSize="@dimen/size_normal" />
+
+                <EditText
+                    android:id="@+id/et_password"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/common_area_margin_big"
+                    android:layout_marginRight="@dimen/common_page_margin"
+                    android:layout_marginBottom="@dimen/common_area_margin_middle"
+                    android:layout_toLeftOf="@+id/btn_verification_code"
+                    android:background="@null"
+                    android:drawableLeft="@mipmap/ic_verification_code"
+                    android:drawablePadding="@dimen/common_area_margin_tiny"
+                    android:hint="@string/login_verification_code_hint"
+                    android:paddingLeft="@dimen/common_page_padding"
+                    android:textColor="@color/color_text_normal"
+                    android:textColorHint="@color/color_text_hint"
+                    android:textSize="@dimen/sp_16" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/et_password"
+                    android:layout_marginRight="@dimen/common_page_margin"
+                    android:layout_toLeftOf="@+id/btn_verification_code">
+
+                    <include layout="@layout/item_line_vertical" />
+
+                </LinearLayout>
+
+            </RelativeLayout>
 
             <Button
                 android:layout_width="match_parent"
@@ -127,10 +157,21 @@
                 android:textColor="@color/white"
                 android:textSize="@dimen/common_font_size_content" />
 
+            <TextView
+                android:id="@+id/tv_login_account"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="@dimen/margin_big"
+                android:onClick="@{() -> handlers.onClickLgoinAccount()}"
+                android:text="@string/login_account"
+                android:textColor="@color/color_blue"
+                android:textSize="@dimen/common_font_size_content" />
+
             <Button
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/height_login_btn"
-                android:layout_marginTop="@dimen/common_area_margin_big"
+                android:layout_marginTop="@dimen/margin_large"
                 android:background="@drawable/bg_btn_blue_hollow"
                 android:onClick="@{() -> handlers.onClickRegister()}"
                 android:text="@string/login_register"

@@ -1,30 +1,34 @@
 package com.jme.lsgoldtrade.ui.login;
 
+import android.graphics.Paint;
 import android.os.Bundle;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
+import com.alibaba.android.arouter.launcher.ARouter;
 import com.jme.common.network.DTRequest;
 import com.jme.common.network.Head;
 import com.jme.lsgoldtrade.R;
 import com.jme.lsgoldtrade.base.JMEBaseActivity;
 import com.jme.lsgoldtrade.config.Constants;
-import com.jme.lsgoldtrade.databinding.ActivityLoginBinding;
+import com.jme.lsgoldtrade.databinding.ActivityAccountLoginBinding;
 
-@Route(path = Constants.ARouterUriConst.LOGIN)
-public class LoginActivity extends JMEBaseActivity {
+@Route(path = Constants.ARouterUriConst.ACCOUNTLOGIN)
+public class AccountLoginActivity extends JMEBaseActivity {
 
-    private ActivityLoginBinding mBinding;
+    private ActivityAccountLoginBinding mBinding;
 
     @Override
     protected int getContentViewId() {
-        return R.layout.activity_login;
+        return R.layout.activity_account_login;
     }
 
     @Override
     protected void initView() {
         super.initView();
 
-        mBinding = (ActivityLoginBinding) mBindingUtil;
+        mBinding = (ActivityAccountLoginBinding) mBindingUtil;
+
+        mBinding.tvLoginMobile.getPaint().setFlags(Paint.UNDERLINE_TEXT_FLAG);
     }
 
     @Override
@@ -51,19 +55,27 @@ public class LoginActivity extends JMEBaseActivity {
 
     public class ClickHandlers {
 
+        public void onClickCancel() {
+            finish();
+        }
+
+        public void onClickNews() {
+
+        }
+
         public void onClickLogin() {
 
         }
 
+        public void onClickLoginMobile() {
+            ARouter.getInstance()
+                    .build(Constants.ARouterUriConst.MOBILELOGIN)
+                    .navigation();
+
+            finish();
+        }
+
         public void onClickRegister() {
-
-        }
-
-        public void onClickCancel() {
-
-        }
-
-        public void onClickNews() {
 
         }
 

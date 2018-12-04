@@ -31,6 +31,7 @@
     <dimen name="width_shelves">25dp</dimen>
     <dimen name="width_amount">60dp</dimen>
     <dimen name="width_empty">30dp</dimen>
+    <dimen name="width_login_verification_code">115dp</dimen>
 
     <dimen name="margin_main_page_info">40dp</dimen>
     <dimen name="margin_login">35dp</dimen>
@@ -40,6 +41,8 @@
     <dimen name="margin_small">4dp</dimen>
     <dimen name="margin_middle">13dp</dimen>
     <dimen name="margin_normal">25dp</dimen>
+    <dimen name="margin_big">40dp</dimen>
+    <dimen name="margin_large">70dp</dimen>
 
     <dimen name="size_small">11sp</dimen>
     <dimen name="size_middle">13sp</dimen>

@@ -29,7 +29,10 @@
             android:name=".ui.splash.SplashActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.login.LoginActivity"
+            android:name=".ui.login.AccountLoginActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.login.MobileLoginActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.market.MarketDetailActivity"

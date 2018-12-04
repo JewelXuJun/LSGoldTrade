@@ -135,7 +135,7 @@ public class MainActivity extends JMEBaseActivity implements TabHost.OnTabChange
             if (view.equals(mBinding.tabhost.getTabWidget().getChildAt(MainTab.TRADE.getId()))) {
                 if (!mUser.isLogin()) {
                     ARouter.getInstance()
-                            .build(Constants.ARouterUriConst.LOGIN)
+                            .build(Constants.ARouterUriConst.ACCOUNTLOGIN)
                             .navigation();
 
                     return true;
