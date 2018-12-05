@@ -13,6 +13,15 @@
         <item name="actionMenuTextColor">@color/color_blue</item>
     </style>
 
+    <style name="ColorSwitchStyle">
+        <!-- Active thumb color & Active track color(30% transparency) switch 打开时的拇指按钮的颜色 轨迹颜色默认为30%这个颜色 -->
+        <item name="colorControlActivated">@color/color_blue</item>
+        <!-- Inactive thumb color switch关闭时的拇指按钮的颜色 -->
+        <item name="colorSwitchThumbNormal">@color/white</item>
+        <!-- inactive track color (30% transparency) -->
+        <item name="android:colorForeground">@android:color/darker_gray</item>
+    </style>
+
     <style name="SpinnerStyle" parent="Base.Widget.AppCompat.Spinner">
         <item name="android:background">@drawable/selector_spinner</item>
     </style>

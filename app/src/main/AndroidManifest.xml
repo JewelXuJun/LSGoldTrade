@@ -68,6 +68,15 @@
         <activity
             android:name=".ui.personal.FeedBackActivity"
             android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.personal.SettingActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.personal.MarketRefreshActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.personal.AboutActivity"
+            android:screenOrientation="portrait" />
 
     </application>
 

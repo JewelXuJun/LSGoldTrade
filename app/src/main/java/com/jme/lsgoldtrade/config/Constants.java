@@ -59,6 +59,10 @@ public class Constants {
         public static final String MOBILELOGIN = "/PersonalFragment/MobileLoginActivity";
         public static final String MESSAGECENTER = "/PersonalFragment/MessageCenterActivity";
         public static final String FEEDBACK = "/PersonalFragment/FeedBackActivity";
+        public static final String SETTING = "/PersonalFragment/SettingActivity";
+        public static final String MARKETREFRESH = "/SettingActivity/MarketRefreshActivity";
+        public static final String SPLASH = "/SettingActivity/SplashActivity";
+        public static final String ABOUT = "/SettingActivity/AboutActivity";
         public static final String MAIN = "/AccountLoginActivity/MainActivity";
         public static final String MARKETDETAIL = "/MarketFragment/MarketDetailActivity";
         public static final String CAPITALTRANSFER = "/FragmentHoldPositionBinding/CapitalTransferActivity";
