@@ -21,6 +21,7 @@
     <dimen name="height_btn">50dp</dimen>
     <dimen name="height_turnover_time">80dp</dimen>
     <dimen name="height_recyclerview">140dp</dimen>
+    <dimen name="height_feedback">180dp</dimen>
 
     <dimen name="width_main_page_info_img">80dp</dimen>
     <dimen name="width_market_limit">80dp</dimen>
@@ -41,6 +42,7 @@
     <dimen name="margin_head_portrait">50dp</dimen>
     <dimen name="margin_no_data">100dp</dimen>
     <dimen name="margin_market_price">6dp</dimen>
+    <dimen name="margin_tiny_small">1dp</dimen>
     <dimen name="margin_tiny">2dp</dimen>
     <dimen name="margin_small">4dp</dimen>
     <dimen name="margin_middle">13dp</dimen>

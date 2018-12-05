@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/common_background"
+        android:orientation="vertical">
+
+        <include layout="@layout/layout_toolbar" />
+
+        <include layout="@layout/item_line_vertical" />
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/height_feedback"
+            android:layout_marginTop="@dimen/common_area_margin">
+
+            <EditText
+                android:id="@+id/et_suggestion"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="@dimen/common_page_margin"
+                android:layout_marginRight="@dimen/common_page_margin"
+                android:background="@drawable/bg_feedback"
+                android:gravity="top"
+                android:hint="@string/personal_feedback_hint"
+                android:paddingLeft="@dimen/common_page_padding"
+                android:paddingTop="@dimen/common_page_padding"
+                android:paddingRight="@dimen/common_page_padding"
+                android:paddingBottom="@dimen/common_area_margin_small"
+                android:textColor="@color/gray"
+                android:textColorHint="@color/common_font_content_hint"
+                android:textSize="@dimen/common_font_size_content_minimum" />
+
+            <TextView
+                android:id="@+id/tv_surplus"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right|bottom"
+                android:layout_marginRight="@dimen/common_page_margin"
+                android:paddingRight="@dimen/common_page_padding"
+                android:paddingBottom="@dimen/margin_tiny_small"
+                android:textColor="@color/gray"
+                android:textSize="@dimen/common_font_size_content_hint_tiny" />
+
+        </FrameLayout>
+
+    </LinearLayout>
+
+</layout>

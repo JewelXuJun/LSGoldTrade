@@ -76,7 +76,9 @@ public class PersonalFragment extends JMEBaseFragment {
         }
 
         public void onClickFeedback() {
-
+            ARouter.getInstance()
+                    .build(Constants.ARouterUriConst.FEEDBACK)
+                    .navigation();
         }
 
         public void onClickSeeting() {
