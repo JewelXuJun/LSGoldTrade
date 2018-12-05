@@ -119,6 +119,9 @@
     <string name="trade_current_outmoney">当期出金</string>
     <string name="trade_current_inmoney">当期入金</string>
     <string name="trade_cost">费用(元)</string>
+    <string name="trade_multipoint_nominal">多头/空头</string>
+    <string name="trade_more_open_empty">多开/空开</string>
+    <string name="trade_equal_open_empty">多平/空平</string>
 
     <!-- Personal -->
     <string name="personal_open_account_online">在线开户</string>
