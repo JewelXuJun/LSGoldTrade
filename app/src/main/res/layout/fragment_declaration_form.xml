@@ -40,6 +40,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/common_item_height_middle"
                         android:layout_marginLeft="@dimen/common_page_margin"
+                        android:layout_marginTop="@dimen/common_page_margin"
                         android:layout_marginRight="@dimen/common_page_margin"
                         android:dropDownVerticalOffset="@dimen/common_item_height_middle"
                         android:gravity="center"
@@ -427,7 +428,7 @@
                         android:cacheColorHint="@null"
                         android:scrollbars="none" />
 
-                    <include layout="@layout/item_line_vertical"/>
+                    <include layout="@layout/item_line_vertical" />
 
                     <android.support.v7.widget.RecyclerView
                         android:id="@+id/recyclerView_buy"
