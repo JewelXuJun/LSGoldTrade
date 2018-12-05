@@ -383,7 +383,7 @@
                     <com.datai.common.charts.chart.Chart
                         android:id="@+id/chart"
                         android:layout_width="match_parent"
-                        android:layout_height="@dimen/common_hq_detail_view_chart" />
+                        android:layout_height="@dimen/height_chart" />
 
                 </LinearLayout>
 

@@ -38,6 +38,9 @@
             android:name=".ui.market.MarketDetailActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:name=".ui.market.MarketDetailLandscapeActivity"
+            android:screenOrientation="landscape" />
+        <activity
             android:name=".ui.trade.CapitalTransferActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustUnspecified|stateHidden" />
