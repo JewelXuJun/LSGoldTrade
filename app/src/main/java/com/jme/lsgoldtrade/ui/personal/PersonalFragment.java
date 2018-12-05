@@ -2,11 +2,13 @@ package com.jme.lsgoldtrade.ui.personal;
 
 import android.os.Bundle;
 
+import com.alibaba.android.arouter.launcher.ARouter;
 import com.jme.common.network.DTRequest;
 import com.jme.common.network.Head;
 import com.jme.common.util.StatusBarUtil;
 import com.jme.lsgoldtrade.R;
 import com.jme.lsgoldtrade.base.JMEBaseFragment;
+import com.jme.lsgoldtrade.config.Constants;
 import com.jme.lsgoldtrade.databinding.FragmentPersonalBinding;
 
 public class PersonalFragment extends JMEBaseFragment {
@@ -64,7 +66,9 @@ public class PersonalFragment extends JMEBaseFragment {
         }
 
         public void onClickMessageCenter() {
-
+            ARouter.getInstance()
+                    .build(Constants.ARouterUriConst.MESSAGECENTER)
+                    .navigation();
         }
 
         public void onClickShare() {

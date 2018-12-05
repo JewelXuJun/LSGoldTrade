@@ -62,6 +62,9 @@
         <activity
             android:name=".ui.trade.HistoryDealActivity"
             android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.personal.MessageCenterActivity"
+            android:screenOrientation="portrait" />
 
     </application>
 

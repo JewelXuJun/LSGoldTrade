@@ -7,11 +7,13 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.PagerAdapter;
 
+import com.alibaba.android.arouter.launcher.ARouter;
 import com.jme.common.network.DTRequest;
 import com.jme.common.network.Head;
 import com.jme.common.util.StatusBarUtil;
 import com.jme.lsgoldtrade.R;
 import com.jme.lsgoldtrade.base.JMEBaseFragment;
+import com.jme.lsgoldtrade.config.Constants;
 import com.jme.lsgoldtrade.databinding.FragmentMainPageBinding;
 
 public class MainPageFragment extends JMEBaseFragment {
@@ -90,7 +92,9 @@ public class MainPageFragment extends JMEBaseFragment {
     public class ClickHandlers {
 
         public void onClickNews() {
-
+            ARouter.getInstance()
+                    .build(Constants.ARouterUriConst.MESSAGECENTER)
+                    .navigation();
         }
 
         public void onClickOpenAccount() {
