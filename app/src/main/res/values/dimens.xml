@@ -38,6 +38,7 @@
 
     <dimen name="margin_main_page_info">40dp</dimen>
     <dimen name="margin_login">35dp</dimen>
+    <dimen name="margin_head_portrait">50dp</dimen>
     <dimen name="margin_no_data">100dp</dimen>
     <dimen name="margin_market_price">6dp</dimen>
     <dimen name="margin_tiny">2dp</dimen>

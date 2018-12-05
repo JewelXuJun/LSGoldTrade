@@ -125,6 +125,8 @@
     <string name="trade_success_id">成交编号</string>
 
     <!-- Personal -->
+    <string name="personal_login">登录/注册</string>
+    <string name="personal_login_message">马上登录享受更多服务</string>
     <string name="personal_open_account_online">在线开户</string>
     <string name="personal_customer_service">联系客服</string>
     <string name="personal_message_center">消息中心</string>

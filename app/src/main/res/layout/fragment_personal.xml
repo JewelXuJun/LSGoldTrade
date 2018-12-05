@@ -32,7 +32,8 @@
                     android:id="@+id/img_head_portrait"
                     android:layout_width="@dimen/icon_head_portrait"
                     android:layout_height="@dimen/icon_head_portrait"
-                    android:layout_centerInParent="true"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="@dimen/margin_head_portrait"
                     android:background="@mipmap/ic_head_portrait"
                     android:onClick="@{() -> handlers.onClickLogin()}" />
 
@@ -44,7 +45,38 @@
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="@dimen/common_area_margin"
                     android:textColor="@color/white"
-                    android:textSize="@dimen/size_normal" />
+                    android:textSize="@dimen/size_normal"
+                    android:visibility="gone" />
+
+                <LinearLayout
+                    android:id="@+id/layout_login_message"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/img_head_portrait"
+                    android:layout_centerInParent="true"
+                    android:layout_marginTop="@dimen/common_area_margin_middle"
+                    android:onClick="@{() -> handlers.onClickLogin()}"
+                    android:orientation="vertical"
+                    android:visibility="visible">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:text="@string/personal_login"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/size_normal" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="@dimen/margin_tiny"
+                        android:text="@string/personal_login_message"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/size_middle" />
+
+                </LinearLayout>
 
             </RelativeLayout>
 
