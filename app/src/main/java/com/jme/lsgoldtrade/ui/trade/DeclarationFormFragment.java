@@ -21,8 +21,8 @@ public class DeclarationFormFragment extends JMEBaseFragment {
     private Fragment[] mFragmentArrays;
     private String[] mTabTitles;
 
-    private FiveSpeedAdapter mSaleAdapter;
-    private FiveSpeedAdapter mBuyAdapter;
+    private TenSpeedAdapter mSaleAdapter;
+    private TenSpeedAdapter mBuyAdapter;
     private PagerAdapter mAdapter;
 
     @Override
@@ -42,8 +42,8 @@ public class DeclarationFormFragment extends JMEBaseFragment {
         super.initData(savedInstanceState);
 
         mAdapter = new TabViewPagerAdapter(getChildFragmentManager());
-        mSaleAdapter = new FiveSpeedAdapter(R.layout.item_five_speed, null);
-        mBuyAdapter = new FiveSpeedAdapter(R.layout.item_five_speed, null);
+        mSaleAdapter = new TenSpeedAdapter(R.layout.item_ten_speed, null);
+        mBuyAdapter = new TenSpeedAdapter(R.layout.item_ten_speed, null);
 
         mBinding.recyclerViewSale.setLayoutManager(new LinearLayoutManager(mContext));
         mBinding.recyclerViewSale.setAdapter(mSaleAdapter);

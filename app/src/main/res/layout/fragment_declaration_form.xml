@@ -385,8 +385,8 @@
                     <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/common_area_margin"
-                        android:layout_marginBottom="@dimen/common_area_margin">
+                        android:layout_marginTop="@dimen/common_area_margin_tiny"
+                        android:layout_marginBottom="@dimen/common_area_margin_tiny">
 
                         <TextView
                             android:id="@+id/tv_newest"

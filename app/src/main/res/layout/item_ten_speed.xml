@@ -3,8 +3,8 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@color/white"
-    android:paddingTop="@dimen/margin_middle"
-    android:paddingBottom="@dimen/margin_middle">
+    android:paddingTop="@dimen/margin_tiny"
+    android:paddingBottom="@dimen/margin_tiny">
 
     <TextView
         android:id="@+id/tv_newest"

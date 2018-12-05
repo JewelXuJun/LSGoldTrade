@@ -7,9 +7,9 @@ import com.chad.library.adapter.base.BaseViewHolder;
 
 import java.util.List;
 
-public class FiveSpeedAdapter extends BaseQuickAdapter<String, BaseViewHolder> {
+public class TenSpeedAdapter extends BaseQuickAdapter<String, BaseViewHolder> {
 
-    public FiveSpeedAdapter(int layoutResId, @Nullable List<String> data) {
+    public TenSpeedAdapter(int layoutResId, @Nullable List<String> data) {
         super(layoutResId, data);
     }
 
