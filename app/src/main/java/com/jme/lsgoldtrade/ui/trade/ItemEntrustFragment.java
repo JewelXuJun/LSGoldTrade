@@ -14,7 +14,7 @@ public class ItemEntrustFragment extends JMEBaseFragment {
 
     private FragmentItemEntrustBinding mBinding;
 
-    private EntrustAdapter mAdapter;
+    private ItemEntrustAdapter mAdapter;
 
     @Override
     protected int getContentViewId() {
@@ -32,7 +32,7 @@ public class ItemEntrustFragment extends JMEBaseFragment {
     protected void initData(Bundle savedInstanceState) {
         super.initData(savedInstanceState);
 
-        mAdapter = new EntrustAdapter(R.layout.item_order_entrust, null);
+        mAdapter = new ItemEntrustAdapter(R.layout.item_order_entrust, null);
 
         mBinding.recyclerView.addItemDecoration(new MarginDividerItemDecoration(mContext, LinearLayoutManager.VERTICAL));
         mBinding.recyclerView.setLayoutManager(new LinearLayoutManager(mContext));

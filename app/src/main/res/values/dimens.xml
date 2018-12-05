@@ -9,6 +9,7 @@
     <dimen name="height_main_page_info_img">45dp</dimen>
     <dimen name="height_login_btn">48dp</dimen>
     <dimen name="height_personal_account">170dp</dimen>
+    <dimen name="height_item_tiny">20dp</dimen>
     <dimen name="height_item_small">25dp</dimen>
     <dimen name="height_item_normal">50dp</dimen>
     <dimen name="height_item_big">70dp</dimen>
@@ -31,6 +32,8 @@
     <dimen name="width_shelves">25dp</dimen>
     <dimen name="width_amount">60dp</dimen>
     <dimen name="width_empty">30dp</dimen>
+    <dimen name="width_item">82dp</dimen>
+    <dimen name="width_item_big">90dp</dimen>
     <dimen name="width_login_verification_code">115dp</dimen>
 
     <dimen name="margin_main_page_info">40dp</dimen>
@@ -53,6 +56,7 @@
     <dimen name="icon_head_portrait">60dp</dimen>
     <dimen name="icon_cancel">10dp</dimen>
     <dimen name="icon_checkbox">20dp</dimen>
+    <dimen name="icon_arrow">15dp</dimen>
 
     <dimen name="radius_normal">4dp</dimen>
 

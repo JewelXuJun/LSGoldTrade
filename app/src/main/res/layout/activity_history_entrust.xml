@@ -19,6 +19,188 @@
 
         <include layout="@layout/item_line_vertical" />
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/height_turnover_time"
+            android:background="@color/white"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="@dimen/width_date"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="@string/trade_start_time"
+                    android:textColor="@color/black_pale"
+                    android:textSize="@dimen/sp_12" />
+
+                <TextView
+                    android:id="@+id/tv_start_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="@dimen/margin_small"
+                    android:onClick="@{() -> handlers.onClickSelectDate(0)}"
+                    android:textColor="@color/color_blue"
+                    android:textSize="@dimen/common_font_size_content" />
+
+            </LinearLayout>
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginLeft="@dimen/margin_normal"
+                android:layout_marginRight="@dimen/margin_normal"
+                android:background="@mipmap/ic_arrow_yellow" />
+
+            <LinearLayout
+                android:layout_width="@dimen/width_date"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="@string/trade_end_time"
+                    android:textColor="@color/black_pale"
+                    android:textSize="@dimen/sp_12" />
+
+                <TextView
+                    android:id="@+id/tv_end_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="@dimen/margin_small"
+                    android:onClick="@{() -> handlers.onClickSelectDate(1)}"
+                    android:textColor="@color/color_blue"
+                    android:textSize="@dimen/common_font_size_content" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <HorizontalScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fillViewport="true"
+            android:scrollbars="none">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/height_tabhost"
+                    android:layout_toLeftOf="@+id/layout_arrow_right"
+                    android:background="@color/color_tabhost"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:id="@+id/layout_arrow_left"
+                        android:layout_width="@dimen/icon_arrow"
+                        android:layout_height="@dimen/icon_arrow"
+                        android:layout_gravity="center"
+                        android:layout_marginLeft="@dimen/common_page_margin">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@mipmap/ic_arrow_left" />
+
+                    </LinearLayout>
+
+                    <TextView
+                        android:layout_width="@dimen/width_item"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:text="@string/trade_contract_time"
+                        android:textColor="@color/black_pale"
+                        android:textSize="@dimen/sp_12" />
+
+                    <TextView
+                        android:layout_width="@dimen/width_item"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:text="@string/trade_type_price"
+                        android:textColor="@color/black_pale"
+                        android:textSize="@dimen/sp_12" />
+
+                    <TextView
+                        android:layout_width="@dimen/width_item"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:text="@string/trade_entrust_surplus"
+                        android:textColor="@color/black_pale"
+                        android:textSize="@dimen/sp_12" />
+
+                    <TextView
+                        android:layout_width="@dimen/width_item"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:text="@string/trade_state"
+                        android:textColor="@color/black_pale"
+                        android:textSize="@dimen/sp_12" />
+
+                    <LinearLayout
+                        android:id="@+id/layout_arrow_right"
+                        android:layout_width="@dimen/icon_arrow"
+                        android:layout_height="@dimen/icon_arrow"
+                        android:layout_centerVertical="true"
+                        android:layout_gravity="center"
+                        android:layout_marginLeft="@dimen/common_page_margin">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@mipmap/ic_arrow_right" />
+
+                    </LinearLayout>
+
+                    <TextView
+                        android:layout_width="@dimen/width_item"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:text="@string/trade_success_id"
+                        android:textColor="@color/black_pale"
+                        android:textSize="@dimen/sp_12" />
+
+                </LinearLayout>
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/recyclerView"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:cacheColorHint="@null"
+                    android:scrollbars="none"
+                    android:visibility="visible" />
+
+                <TextView
+                    android:id="@+id/tv_no_data"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="@dimen/margin_no_data"
+                    android:drawableTop="@mipmap/ic_no_data"
+                    android:text="@string/text_no_data"
+                    android:textColor="@color/color_text_gray_hint"
+                    android:textSize="@dimen/size_normal"
+                    android:visibility="gone" />
+
+            </LinearLayout>
+
+        </HorizontalScrollView>
+
     </LinearLayout>
 
 </layout>

@@ -18,6 +18,7 @@
     <color name="color_blue">#4285f4</color>
     <color name="color_orange">#ffa94c</color>
     <color name="color_tabhost">#fafafa</color>
+    <color name="color_date_background">#e9edf2</color>
 
     <drawable name="drawable_white">#FFFFFF</drawable>
     <drawable name="drawable_blue">#4285f4</drawable>
