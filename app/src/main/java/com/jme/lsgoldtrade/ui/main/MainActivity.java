@@ -160,7 +160,7 @@ public class MainActivity extends JMEBaseActivity implements TabHost.OnTabChange
                         .setActionTextColor(ContextCompat.getColor(this, R.color.white));
                 View snakebarView = snackbar.getView();
                 TextView textView = snakebarView.findViewById(android.support.design.R.id.snackbar_text);
-                textView.setTextColor(getResources().getColor(R.color.common_font_content_white));
+                textView.setTextColor(getResources().getColor(R.color.white));
                 snackbar.show();
 
                 exitTime = System.currentTimeMillis();

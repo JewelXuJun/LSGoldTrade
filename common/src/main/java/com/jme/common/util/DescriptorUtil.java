@@ -197,11 +197,11 @@ public class DescriptorUtil {
     }
 
     public int getTextColor(int type) {
-        int color = ContextCompat.getColor(mContext, R.color.common_hq_bg_default);
+        int color = ContextCompat.getColor(mContext, R.color.common_font_stable);
 
         switch (type) {
             case 0:
-                color = ContextCompat.getColor(mContext, R.color.common_hq_bg_default);
+                color = ContextCompat.getColor(mContext, R.color.common_font_stable);
                 break;
 
             case 1:
@@ -213,14 +213,14 @@ public class DescriptorUtil {
                 break;
 
             case 3:
-                color = ContextCompat.getColor(mContext, R.color.common_font_content_white);
+                color = ContextCompat.getColor(mContext, R.color.white);
                 break;
 
             case 4:
-                color = ContextCompat.getColor(mContext, R.color.common_font_content);
+                color = ContextCompat.getColor(mContext, R.color.gray);
                 break;
             case 5:
-                color = ContextCompat.getColor(mContext, R.color.common_font_gray);
+                color = ContextCompat.getColor(mContext, R.color.gray);
                 break;
         }
 

@@ -2,36 +2,14 @@
 <resources>
 
     <!--界面所有Font的Size的配置-->
-    <!--标题及标题（未选）的大小-->
-    <dimen name="common_font_size_title">18sp</dimen>
-    <dimen name="common_font_size_title_unchecked">18sp</dimen>
-    <!--标题的右上角操作的大小-->
-    <dimen name="common_font_size_title_menu">18sp</dimen>
-    <!--副标题的大小-->
-    <dimen name="common_font_size_subtitle">12sp</dimen>
-    <!--List的列表头的大小-->
-    <dimen name="common_font_size_item_title">18sp</dimen>
-    <!--正文主体-->
     <dimen name="common_font_size_content">18sp</dimen>
     <dimen name="common_font_size_content_large">30sp</dimen>
     <dimen name="common_font_size_content_big">20sp</dimen>
     <dimen name="common_font_size_content_small">16sp</dimen>
     <dimen name="common_font_size_content_tiny">14sp</dimen>
     <dimen name="common_font_size_content_minimum">12sp</dimen>
-    <dimen name="common_font_size_content_hint">18sp</dimen>
     <dimen name="common_font_size_content_hint_tiny">10sp</dimen>
-    <!--按键上默认文字颜色-->
-    <dimen name="common_font_size_button">18sp</dimen>
-    <dimen name="common_font_size_button_small">14sp</dimen>
 
-    <!--界面所有Font的Size的配置 End-->
-
-    <dimen name="common_text_padding">20dp</dimen>
-    <dimen name="common_text_padding_normal">10dp</dimen>
-    <dimen name="common_text_padding_small">5dp</dimen>
-
-    <!--Title的标准高度-->
-    <dimen name="common_title_height">48dp</dimen>
     <!--整个界面中，上下左右默认预留的边距-->
     <dimen name="common_page_margin">10dp</dimen>
     <dimen name="common_page_padding">10dp</dimen>
@@ -55,53 +33,8 @@
     <dimen name="common_line_height_small">1dp</dimen>
     <dimen name="common_line_height_big">2dp</dimen>
 
-    <!--Dialog Parameter Setting -->
-    <dimen name="common_dialog_padding">10dp</dimen>
-    <dimen name="common_dialog_padding_big">30dp</dimen>
-
-    <!--Button的默认配置-->
-    <dimen name="common_btn_corner">5dp</dimen>
-    <dimen name="common_btn_width_small">135dp</dimen>
-    <dimen name="common_btn_width">295dp</dimen>
-    <dimen name="common_btn_height_small">30dp</dimen>
-    <dimen name="common_btn_height_middle">34dp</dimen>
-    <dimen name="common_btn_height">40dp</dimen>
-    <dimen name="common_btn_area_margin">40dp</dimen>
-    <dimen name="common_image">40dp</dimen>
-    <dimen name="common_background_height">48dp</dimen>
-    <dimen name="common_background_height_big">60dp</dimen>
-    <dimen name="common_background_height_80">80dp</dimen>
-    <dimen name="common_background_height_100">100dp</dimen>
-    <dimen name="common_edittext_height">260dp</dimen>
-    <dimen name="common_image_margin">40dp</dimen>
-    <dimen name="common_text_margin">50dp</dimen>
-    <dimen name="common_background_height_large">120dp</dimen>
-
     <!--spinner -->
     <dimen name="three_grid_unit">10dp</dimen>
     <dimen name="one_and_a_half_grid_unit">5dp</dimen>
-
-    <!-- hq detail -->
-    <dimen name="common_hq_detail_layout_market">126dp</dimen>
-    <dimen name="common_hq_detail_layout_detail">240dp</dimen>
-    <dimen name="common_hq_detail_layout_chart">280dp</dimen>
-    <dimen name="common_hq_detail_view_chart">386dp</dimen>
-    <dimen name="common_hq_detail_area_margin">3dp</dimen>
-    <dimen name="common_hq_detail_item_height">24dp</dimen>
-    <dimen name="common_hq_detail_price_height">40dp</dimen>
-    <dimen name="common_hq_detail_layout_market_horizontal">60dp</dimen>
-
-    <!--行情指数 -->
-    <dimen name="common_hq_index_layout_height">110dp</dimen>
-
-    <!-- size -->
-    <dimen name="hq_detail_font_price">30sp</dimen>
-    <dimen name="hq_detail_font_price_horizontal">22sp</dimen>
-    <dimen name="inout_records_state_size">10sp</dimen>
-    <!-- Default screen margins, per the Android Design guidelines. -->
-    <dimen name="activity_horizontal_margin">16dp</dimen>
-    <dimen name="activity_vertical_margin">16dp</dimen>
-
-    <dimen name="circle_small">10dp</dimen>
 
 </resources>

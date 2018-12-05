@@ -31,7 +31,7 @@
             android:gravity="center_vertical|right"
             android:maxLines="1"
             android:text="1111"
-            android:textColor="@color/common_font_gray"
+            android:textColor="@color/gray"
             android:textSize="@dimen/sp_12" />
 
     </LinearLayout>
@@ -45,7 +45,7 @@
         android:paddingLeft="@dimen/common_page_padding"
         android:paddingRight="@dimen/common_page_padding"
         android:paddingBottom="@dimen/common_page_padding"
-        android:textColor="@color/common_font_gray"
+        android:textColor="@color/gray"
         android:textSize="@dimen/sp_12" />
 
 </LinearLayout>

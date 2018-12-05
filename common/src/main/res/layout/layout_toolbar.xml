@@ -3,7 +3,7 @@
     android:id="@+id/toolbar"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/common_app_main_color"
+    android:background="@color/white"
     android:fitsSystemWindows="true"
     android:minHeight="?attr/actionBarSize"
     android:theme="@style/mToolbarTheme"
