@@ -15,7 +15,7 @@ public class Constants {
         public static final int Test_WAN = 0; // 测试环境
         public static final int Produce = 1;  // 正式环境
 
-        public static int Envi = Produce;
+        public static int Envi = Test_WAN;
 
         private HttpConst() {
 

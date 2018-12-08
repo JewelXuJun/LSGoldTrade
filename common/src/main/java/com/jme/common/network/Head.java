@@ -15,7 +15,7 @@ public class Head implements Serializable {
     private boolean isSuccess;
 
     public boolean isSuccess() {
-        return code.equals("200");
+        return code.equals("0");
     }
 
     public void setSuccess(boolean success) {

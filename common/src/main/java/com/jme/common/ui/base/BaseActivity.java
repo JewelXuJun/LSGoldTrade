@@ -315,7 +315,7 @@ public abstract class BaseActivity extends AppCompatActivity implements OnResult
     }
 
     private void handleErrorInfo(DTRequest request, Head head) {
-        if (head.getCode() != null && !head.getCode().equals("0") && !head.getCode().equals("107")) {
+        if (head.getCode() != null && !head.getCode().equals("0")) {
             if (!request.isShowErrorMsg()) {
                 return;
             }
@@ -325,6 +325,7 @@ public abstract class BaseActivity extends AppCompatActivity implements OnResult
                     mPrevErrorCode = head.getCode();
                     mErrorHandler.removeMessages(MSG_ERROR_MSG_REPET);
                     mErrorHandler.sendEmptyMessageDelayed(MSG_ERROR_MSG_REPET, 120 * 1000);
+
                     showShortToast(head.getMsg());
                 }
             } else {
