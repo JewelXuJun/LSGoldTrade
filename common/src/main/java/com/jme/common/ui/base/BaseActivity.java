@@ -22,7 +22,6 @@ import com.jme.common.network.Head;
 import com.jme.common.network.OnResultListener;
 import com.jme.common.ui.view.LoadingDialog;
 import com.jme.common.util.AppManager;
-import com.jme.common.util.StatusBarUtil;
 
 import java.util.HashMap;
 

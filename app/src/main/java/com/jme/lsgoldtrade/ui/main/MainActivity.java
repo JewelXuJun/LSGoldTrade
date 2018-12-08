@@ -12,14 +12,11 @@ import android.view.View;
 import android.widget.TabHost;
 import android.widget.TextView;
 
-import com.alibaba.android.arouter.launcher.ARouter;
 import com.jme.common.network.DTRequest;
 import com.jme.common.network.Head;
 import com.jme.common.util.RxBus;
-import com.jme.common.util.StatusBarUtil;
 import com.jme.lsgoldtrade.R;
 import com.jme.lsgoldtrade.base.JMEBaseActivity;
-import com.jme.lsgoldtrade.config.Constants;
 import com.jme.lsgoldtrade.databinding.ActivityMainBinding;
 import com.jme.lsgoldtrade.tabhost.MainTab;
 
@@ -28,6 +25,7 @@ import rx.Subscription;
 /**
  * Created by XuJun on 2018/11/7.
  */
+
 public class MainActivity extends JMEBaseActivity implements TabHost.OnTabChangeListener, View.OnTouchListener {
 
     private ActivityMainBinding mBinding;
@@ -106,7 +104,7 @@ public class MainActivity extends JMEBaseActivity implements TabHost.OnTabChange
             title.setCompoundDrawablesWithIntrinsicBounds(null, drawable, null, null);
             title.setText(getString(mainTab.getName()));
             tab.setIndicator(indicator);
-            tab.setContent(tag -> new View(MainActivity.this));
+            tab.setContent(tag -> new View(this));
 
             mBinding.tabhost.addTab(tab, mainTab.getClassRes(), null);
             mBinding.tabhost.setTag(i);

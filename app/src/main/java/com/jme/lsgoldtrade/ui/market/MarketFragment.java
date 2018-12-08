@@ -62,27 +62,27 @@ public class MarketFragment extends JMEBaseFragment {
     public void onHiddenChanged(boolean hidden) {
         super.onHiddenChanged(hidden);
 
-        bHidden = hidden;
+       /* bHidden = hidden;
 
         if (!bHidden)
             System.out.println("onHiddenChanged 调用");
         else
-            System.out.println("onHiddenChanged 移除");
+            System.out.println("onHiddenChanged 移除");*/
     }
 
     @Override
     public void onResume() {
         super.onResume();
 
-        if (!bHidden)
-            System.out.println("onResume 调用");
+       /* if (!bHidden)
+            System.out.println("onResume 调用");*/
     }
 
     @Override
     public void onPause() {
         super.onPause();
 
-        System.out.println("onPause 移除");
+//        System.out.println("onPause 移除");
     }
 
     @Override

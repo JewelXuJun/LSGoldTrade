@@ -54,6 +54,7 @@ public class Constants {
     }
 
     public static final class ARouterUriConst {
+        public static final String MAIN = "/AccountLoginActivity/MainActivity";
         public static final String RFINEXWEBVIEW = "/JMEBase/JMEBaseWebviewActivity";
         public static final String ACCOUNTLOGIN = "/PersonalFragment/AccountLoginActivity";
         public static final String MOBILELOGIN = "/PersonalFragment/MobileLoginActivity";
@@ -63,7 +64,6 @@ public class Constants {
         public static final String MARKETREFRESH = "/SettingActivity/MarketRefreshActivity";
         public static final String SPLASH = "/SettingActivity/SplashActivity";
         public static final String ABOUT = "/SettingActivity/AboutActivity";
-        public static final String MAIN = "/AccountLoginActivity/MainActivity";
         public static final String MARKETDETAIL = "/MarketFragment/MarketDetailActivity";
         public static final String MARKETDETAILLANDSCAPE = "/MarketDetailActivity/MarketDetailLandscapeActivity";
         public static final String CAPITALTRANSFER = "/FragmentHoldPositionBinding/CapitalTransferActivity";

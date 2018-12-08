@@ -72,8 +72,8 @@ public abstract class JMEBaseActivity<T> extends BaseActivity {
     }
 
     @Override
-    protected void onResume() {
-        super.onResume();
+    protected void onStart() {
+        super.onStart();
     }
 
     @Override
