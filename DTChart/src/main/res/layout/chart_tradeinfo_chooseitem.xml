@@ -21,7 +21,7 @@
             android:button="@null"
             android:checked="true"
             android:gravity="center"
-            android:text="五档"
+            android:text="十档"
             android:textColor="@drawable/radiobutton_text_selector"
             android:textSize="@dimen/radio_button_font_size_title" />
 

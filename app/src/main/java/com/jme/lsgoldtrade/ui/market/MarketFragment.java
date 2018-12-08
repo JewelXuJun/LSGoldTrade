@@ -65,7 +65,7 @@ public class MarketFragment extends JMEBaseFragment {
 
         public void onClickNews() {
             ARouter.getInstance()
-                    .build(Constants.ARouterUriConst.MESSAGECENTER)
+                    .build(Constants.ARouterUriConst.MARKETDETAIL)
                     .navigation();
         }
 

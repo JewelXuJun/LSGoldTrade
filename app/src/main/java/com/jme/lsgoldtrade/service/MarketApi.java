@@ -13,23 +13,30 @@ import retrofit2.http.QueryMap;
 public interface MarketApi {
 
     /**
-     * 实时行情接口
+     * 五档实时行情接口
      *
-     * @param type quotes5 五档、quotes10 十档
      * @param list 合约列表如果有多个用逗号分隔
      * @return
      */
-    @GET("/gold-hq/v1/android/{type}")
-    Call<DTResponse> getRealTimeQuotes(@Path("type") String type, @Query("list") String list);
+    @GET("/gold-hq/v1/android/quotes5")
+    Call<DTResponse> getFiveSpeedQuotes(@Query("list") String list);
+
+    /**
+     * 十档实时行情接口
+     *
+     * @param list 合约列表如果有多个用逗号分隔
+     * @return
+     */
+    @GET("/gold-hq/v1/android/quotes10")
+    Call<DTResponse> getTenSpeedQuotes(@Query("list") String list);
 
     /**
      * 分时行情接口
      *
-     * @param type time1 1分钟、time5 5分钟、time15 15分钟
      * @return
      */
-    @GET("/gold-hq/v1/android/{type}")
-    Call<DTResponse> getTChartQuotes(@Path("type") String type, @QueryMap Map<String, String> map);
+    @GET("/gold-hq/v1/android/time1")
+    Call<DTResponse> getTChartQuotes(@QueryMap Map<String, String> map);
 
     /**
      * K线行情接口

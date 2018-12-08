@@ -4,6 +4,9 @@ import com.jme.common.network.API;
 import com.jme.common.network.DTResponse;
 import com.jme.common.network.IService;
 import com.jme.lsgoldtrade.config.Constants;
+import com.jme.lsgoldtrade.domain.KChartVo;
+import com.jme.lsgoldtrade.domain.TenSpeedVo;
+import com.jme.lsgoldtrade.domain.TChartVo;
 
 import java.util.HashMap;
 
@@ -35,35 +38,44 @@ public class MarketService extends IService<MarketApi> {
     }
 
     /**
-     * 实时行情接口
+     * 五档实时行情接口
      */
-    public API getRealTimeQuotes = new API<String>("GetRealTimeQuotes") {
+    public API getFiveSpeedQuotes = new API<TenSpeedVo>("GetFiveSpeedQuotes") {
         @Override
         public Call<DTResponse> request(HashMap<String, String> params) {
-            String type = params.get("type");
             String list = params.get("list");
 
-            return mApi.getRealTimeQuotes(type, list);
+            return mApi.getFiveSpeedQuotes(list);
+        }
+    };
+
+    /**
+     * 十档实时行情接口
+     */
+    public API getTenSpeedQuotes = new API<TenSpeedVo>("GetTenSpeedQuotes") {
+        @Override
+        public Call<DTResponse> request(HashMap<String, String> params) {
+            String list = params.get("list");
+
+            return mApi.getTenSpeedQuotes(list);
         }
     };
 
     /**
      * 分时行情接口
      */
-    public API getTChartQuotes = new API<String>("GetTChartQuotes") {
+    public API getTChartQuotes = new API<TChartVo>("GetTChartQuotes") {
         @Override
         public Call<DTResponse> request(HashMap<String, String> params) {
-            String type = params.get("type");
-            params.remove("type");
 
-            return mApi.getTChartQuotes(type, params);
+            return mApi.getTChartQuotes(params);
         }
     };
 
     /**
      * K线行情接口
      */
-    public API getKChartQuotes = new API<String>("GetKChartQuotes") {
+    public API getKChartQuotes = new API<KChartVo>("GetKChartQuotes") {
         @Override
         public Call<DTResponse> request(HashMap<String, String> params) {
             String type = params.get("type");
