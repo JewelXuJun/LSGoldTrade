@@ -143,9 +143,8 @@ public abstract class BaseActivity extends AppCompatActivity implements OnResult
     }
 
     public void setTitle(int resId) {
-        if (resId != 0) {
+        if (resId != 0)
             setTitle(getString(resId));
-        }
     }
 
     public void setTitle(String title) {
@@ -155,12 +154,7 @@ public abstract class BaseActivity extends AppCompatActivity implements OnResult
 
     public void setBackNavigation(boolean hasBack) {
         if (mToolbarHelper != null)
-            mToolbarHelper.setBackNavigation(hasBack, new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    onBackPressed();
-                }
-            });
+            mToolbarHelper.setBackNavigation(hasBack, (view) -> onBackPressed());
     }
 
     public void setBackNavigation(@DrawableRes int drawableResId, View.OnClickListener listener) {
@@ -173,7 +167,6 @@ public abstract class BaseActivity extends AppCompatActivity implements OnResult
             mToolbarHelper.setSingleMenu(str, resId, _resId, listener);
     }
 
-
     public void setRightNavigation(String str, @DrawableRes int resId, ToolbarHelper.OnSingleMenuItemClickListener listener) {
         if (mToolbarHelper != null)
             mToolbarHelper.setSingleMenu(str, resId, listener);
@@ -183,11 +176,11 @@ public abstract class BaseActivity extends AppCompatActivity implements OnResult
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                if (mToast == null) {
+                if (mToast == null)
                     mToast = Toast.makeText(mContext, getResources().getString(resId), Toast.LENGTH_SHORT);
-                } else {
+                else
                     mToast.setText(resId);
-                }
+
                 mToast.show();
             }
         });
@@ -213,11 +206,11 @@ public abstract class BaseActivity extends AppCompatActivity implements OnResult
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                if (mToast == null) {
+                if (mToast == null)
                     mToast = Toast.makeText(mContext, getResources().getString(resId), Toast.LENGTH_LONG);
-                } else {
+                else
                     mToast.setText(resId);
-                }
+
                 mToast.show();
             }
         });
@@ -228,11 +221,11 @@ public abstract class BaseActivity extends AppCompatActivity implements OnResult
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    if (mToast == null) {
+                    if (mToast == null)
                         mToast = Toast.makeText(mContext, text, Toast.LENGTH_LONG);
-                    } else {
+                    else
                         mToast.setText(text);
-                    }
+
                     mToast.show();
                 }
             });
@@ -246,9 +239,9 @@ public abstract class BaseActivity extends AppCompatActivity implements OnResult
     protected void startAnimActivity(Class<?> cls, Bundle bundle) {
         Intent intent = new Intent();
         intent.setClass(mContext, cls);
-        if (bundle != null) {
+        if (bundle != null)
             intent.putExtras(bundle);
-        }
+
         startActivity(intent);
     }
 
@@ -259,34 +252,33 @@ public abstract class BaseActivity extends AppCompatActivity implements OnResult
     protected void startAnimActivityForResult(Class<?> cls, Bundle bundle, int requestCode) {
         Intent intent = new Intent();
         intent.setClass(mContext, cls);
-        if (bundle != null) {
+        if (bundle != null)
             intent.putExtras(bundle);
-        }
+
         startActivityForResult(intent, requestCode);
     }
 
     protected void showLoadingDialog(String text) {
-        if (mLoadingDialog == null) {
+        if (mLoadingDialog == null)
             mLoadingDialog = new LoadingDialog(mContext);
-        }
+
         mLoadingDialog.setLoadingText(text);
-        if (!isFinishing() && !mLoadingDialog.isShowing()) {
+
+        if (!isFinishing() && !mLoadingDialog.isShowing())
             mLoadingDialog.show();
-        }
     }
 
     protected void dismissLoadingDialog() {
-        if (mLoadingDialog != null && mLoadingDialog.isShowing()) {
+        if (mLoadingDialog != null && mLoadingDialog.isShowing())
             mLoadingDialog.dismiss();
-        }
     }
 
     protected AsynCommon sendRequest(API api, HashMap<String, String> params, boolean showprogressDialog, boolean showErrorMsgOneTime, boolean showErrorMsg) {
-        if (showprogressDialog) {
+        if (showprogressDialog)
             showLoadingDialog("");
-        }
 
         AsynCommon task = AsynCommon.SendRequest(api, params, showErrorMsgOneTime, showErrorMsg, this, mContext);
+
         return task;
     }
 

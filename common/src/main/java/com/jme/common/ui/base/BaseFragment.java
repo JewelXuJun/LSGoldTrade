@@ -102,7 +102,7 @@ public abstract class BaseFragment<T> extends Fragment implements View.OnTouchLi
 
             if (mBindingUtil == null)
                 view = inflater.inflate(id, container, false);
-             else
+            else
                 view = mBindingUtil.getRoot();
         } else {
             view = inflater.inflate(id, container, false);
@@ -125,16 +125,6 @@ public abstract class BaseFragment<T> extends Fragment implements View.OnTouchLi
         initView();
         initData(savedInstanceState);
         initListener();
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-    }
-
-    @Override
-    public void onStop() {
-        super.onStop();
     }
 
     @Override
@@ -185,12 +175,7 @@ public abstract class BaseFragment<T> extends Fragment implements View.OnTouchLi
 
     public void setBackNavigation(boolean hasBack) {
         if (mToolbarHelper != null)
-            mToolbarHelper.setBackNavigation(hasBack, new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    mActivity.onBackPressed();
-                }
-            });
+            mToolbarHelper.setBackNavigation(hasBack, (view) -> mActivity.onBackPressed());
     }
 
     public void setRightNavigation(String str, @DrawableRes int resId, ToolbarHelper.OnSingleMenuItemClickListener listener) {
@@ -224,7 +209,7 @@ public abstract class BaseFragment<T> extends Fragment implements View.OnTouchLi
             public void run() {
                 if (mToast == null)
                     mToast = Toast.makeText(mActivity, getResources().getString(resId), Toast.LENGTH_SHORT);
-                 else
+                else
                     mToast.setText(resId);
 
                 mToast.show();
@@ -237,11 +222,11 @@ public abstract class BaseFragment<T> extends Fragment implements View.OnTouchLi
             mActivity.runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    if (mToast == null) {
+                    if (mToast == null)
                         mToast = Toast.makeText(mActivity, text, Toast.LENGTH_SHORT);
-                    } else {
+                    else
                         mToast.setText(text);
-                    }
+
                     mToast.show();
                 }
             });
@@ -285,9 +270,9 @@ public abstract class BaseFragment<T> extends Fragment implements View.OnTouchLi
     protected void startAnimActivity(Class<?> cls, Bundle bundle) {
         Intent intent = new Intent();
         intent.setClass(mActivity, cls);
-        if (bundle != null) {
+        if (bundle != null)
             intent.putExtras(bundle);
-        }
+
         startActivity(intent);
     }
 
@@ -298,34 +283,33 @@ public abstract class BaseFragment<T> extends Fragment implements View.OnTouchLi
     protected void startAnimActivityForResult(Class<?> cls, Bundle bundle, int requestCode) {
         Intent intent = new Intent();
         intent.setClass(mActivity, cls);
-        if (bundle != null) {
+        if (bundle != null)
             intent.putExtras(bundle);
-        }
+
         startActivityForResult(intent, requestCode);
     }
 
     protected void showLoadingDialog(String text) {
-        if (mLoadingDialog == null) {
+        if (mLoadingDialog == null)
             mLoadingDialog = new LoadingDialog(mActivity);
-        }
+
         mLoadingDialog.setLoadingText(text);
-        if (!mActivity.isFinishing() && !mLoadingDialog.isShowing()) {
+
+        if (!mActivity.isFinishing() && !mLoadingDialog.isShowing())
             mLoadingDialog.show();
-        }
     }
 
     protected void dismissLoadingDialog() {
-        if (mLoadingDialog != null && mLoadingDialog.isShowing()) {
+        if (mLoadingDialog != null && mLoadingDialog.isShowing())
             mLoadingDialog.dismiss();
-        }
     }
 
     protected AsynCommon sendRequest(API api, HashMap<String, String> params, boolean showprogressDialog, boolean showErrorMsgOneTime, boolean showErrorMsg) {
-        if (showprogressDialog) {
+        if (showprogressDialog)
             showLoadingDialog("");
-        }
 
         AsynCommon task = AsynCommon.SendRequest(api, params, showErrorMsgOneTime, showErrorMsg, this, mContext);
+
         return task;
     }
 
