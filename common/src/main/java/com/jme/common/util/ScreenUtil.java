@@ -27,6 +27,20 @@ public class ScreenUtil {
         return outMetrics.heightPixels;
     }
 
+    /**
+     * 获得屏幕宽度
+     *
+     * @param context
+     * @return
+     */
+    public static int getScreenWidth(Context context) {
+        WindowManager wm = (WindowManager) context
+                .getSystemService(Context.WINDOW_SERVICE);
+        DisplayMetrics outMetrics = new DisplayMetrics();
+        wm.getDefaultDisplay().getMetrics(outMetrics);
+        return outMetrics.widthPixels;
+    }
+
     // 获取手机状态栏高度
     public static int getStatusBarHeight(Context context) {
         Class<?> c = null;

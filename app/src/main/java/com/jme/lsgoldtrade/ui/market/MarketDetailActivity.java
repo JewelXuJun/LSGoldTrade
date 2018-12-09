@@ -24,7 +24,7 @@ public class MarketDetailActivity extends JMEBaseActivity {
 
     private MarketOrderPopUpWindow mPopupWindow;
 
-    private String mMarket;
+    private String mContractId;
 
     private static final String DIRECTION_AFTER = "1";
 
@@ -51,7 +51,7 @@ public class MarketDetailActivity extends JMEBaseActivity {
     protected void initData(Bundle savedInstanceState) {
         super.initData(savedInstanceState);
 
-        mMarket = getIntent().getStringExtra("Market");
+        mContractId = getIntent().getStringExtra("ContractId");
     }
 
     @Override
@@ -78,14 +78,14 @@ public class MarketDetailActivity extends JMEBaseActivity {
 
     private void getTenSpeedQuotes() {
         HashMap<String, String> params = new HashMap<>();
-        params.put("list", mMarket);
+        params.put("list", mContractId);
 
         sendRequest(MarketService.getInstance().getTenSpeedQuotes, params, false, false, false);
     }
 
     private void getTChartQuotes() {
         HashMap<String, String> params = new HashMap<>();
-        params.put("contractId", mMarket);
+        params.put("contractId", mContractId);
         params.put("qryFlag", DIRECTION_AFTER);
         params.put("count", COUNT_TCHART);
 
@@ -95,7 +95,7 @@ public class MarketDetailActivity extends JMEBaseActivity {
     private void getKChartQuotes(String type, String time, String flag) {
         HashMap<String, String> params = new HashMap<>();
         params.put("type", type);
-        params.put("contractId", mMarket);
+        params.put("contractId", mContractId);
         params.put("quoteTime", time);
         params.put("qryFlag", flag);
         params.put("count", COUNT_KCHART);

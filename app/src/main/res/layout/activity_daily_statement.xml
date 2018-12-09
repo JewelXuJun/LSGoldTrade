@@ -52,7 +52,7 @@
                         android:layout_marginTop="@dimen/margin_tiny"
                         android:onClick="@{() -> handlers.onClickSelectDate()}"
                         android:textColor="@color/color_blue"
-                        android:textSize="@dimen/common_font_size_content" />
+                        android:textSize="@dimen/common_font_size" />
 
                 </LinearLayout>
 
@@ -96,7 +96,7 @@
                             android:layout_centerVertical="true"
                             android:text="@string/text_no_data_default"
                             android:textColor="@color/black_deep"
-                            android:textSize="@dimen/common_font_size_content" />
+                            android:textSize="@dimen/common_font_size" />
 
                     </RelativeLayout>
 
@@ -124,7 +124,7 @@
                             android:layout_centerVertical="true"
                             android:text="@string/text_no_data_default"
                             android:textColor="@color/black_deep"
-                            android:textSize="@dimen/common_font_size_content" />
+                            android:textSize="@dimen/common_font_size" />
 
                     </RelativeLayout>
 
@@ -150,7 +150,7 @@
                             android:layout_centerVertical="true"
                             android:text="@string/text_no_data_default"
                             android:textColor="@color/black_deep"
-                            android:textSize="@dimen/common_font_size_content" />
+                            android:textSize="@dimen/common_font_size" />
 
                     </RelativeLayout>
 
@@ -196,7 +196,7 @@
                             android:layout_centerVertical="true"
                             android:text="@string/text_no_data_default"
                             android:textColor="@color/black_deep"
-                            android:textSize="@dimen/common_font_size_content" />
+                            android:textSize="@dimen/common_font_size" />
 
                     </RelativeLayout>
 
@@ -242,7 +242,7 @@
                             android:layout_centerVertical="true"
                             android:text="@string/text_no_data_default"
                             android:textColor="@color/black_deep"
-                            android:textSize="@dimen/common_font_size_content" />
+                            android:textSize="@dimen/common_font_size" />
 
                     </RelativeLayout>
 
@@ -270,7 +270,7 @@
                             android:layout_centerVertical="true"
                             android:text="@string/text_no_data_default"
                             android:textColor="@color/black_deep"
-                            android:textSize="@dimen/common_font_size_content" />
+                            android:textSize="@dimen/common_font_size" />
 
                     </RelativeLayout>
 
@@ -316,7 +316,7 @@
                             android:layout_centerVertical="true"
                             android:text="@string/text_no_data_default"
                             android:textColor="@color/black_deep"
-                            android:textSize="@dimen/common_font_size_content" />
+                            android:textSize="@dimen/common_font_size" />
 
                     </RelativeLayout>
 
@@ -344,7 +344,7 @@
                             android:layout_centerVertical="true"
                             android:text="@string/text_no_data_default"
                             android:textColor="@color/black_deep"
-                            android:textSize="@dimen/common_font_size_content" />
+                            android:textSize="@dimen/common_font_size" />
 
                     </RelativeLayout>
 
@@ -391,7 +391,7 @@
                             android:layout_centerVertical="true"
                             android:text="@string/text_no_data_default"
                             android:textColor="@color/black_deep"
-                            android:textSize="@dimen/common_font_size_content" />
+                            android:textSize="@dimen/common_font_size" />
 
                     </RelativeLayout>
 
@@ -419,7 +419,7 @@
                             android:layout_centerVertical="true"
                             android:text="@string/text_no_data_default"
                             android:textColor="@color/black_deep"
-                            android:textSize="@dimen/common_font_size_content" />
+                            android:textSize="@dimen/common_font_size" />
 
                     </RelativeLayout>
 
@@ -447,7 +447,7 @@
                             android:layout_centerVertical="true"
                             android:text="@string/text_no_data_default"
                             android:textColor="@color/black_deep"
-                            android:textSize="@dimen/common_font_size_content" />
+                            android:textSize="@dimen/common_font_size" />
 
                     </RelativeLayout>
 

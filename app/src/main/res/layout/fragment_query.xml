@@ -48,7 +48,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/margin_tiny"
                         android:textColor="@color/color_blue"
-                        android:textSize="@dimen/common_font_size_content" />
+                        android:textSize="@dimen/common_font_size" />
 
                 </LinearLayout>
 
@@ -89,7 +89,7 @@
                             android:layout_marginTop="@dimen/margin_tiny"
                             android:text="@string/text_no_data_default"
                             android:textColor="@color/black_deep"
-                            android:textSize="@dimen/common_font_size_content" />
+                            android:textSize="@dimen/common_font_size" />
 
                     </LinearLayout>
 
@@ -114,7 +114,7 @@
                             android:layout_marginTop="@dimen/margin_tiny"
                             android:text="@string/text_no_data_default"
                             android:textColor="@color/black_deep"
-                            android:textSize="@dimen/common_font_size_content" />
+                            android:textSize="@dimen/common_font_size" />
 
                     </LinearLayout>
 
@@ -139,7 +139,7 @@
                             android:layout_marginTop="@dimen/margin_tiny"
                             android:text="@string/text_no_data_default"
                             android:textColor="@color/black_deep"
-                            android:textSize="@dimen/common_font_size_content" />
+                            android:textSize="@dimen/common_font_size" />
 
                     </LinearLayout>
 
@@ -166,7 +166,7 @@
                             android:layout_marginRight="@dimen/common_area_margin_big"
                             android:text="@string/text_no_data_default"
                             android:textColor="@color/black_deep"
-                            android:textSize="@dimen/common_font_size_content" />
+                            android:textSize="@dimen/common_font_size" />
 
                     </LinearLayout>
 

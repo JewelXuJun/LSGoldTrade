@@ -27,7 +27,7 @@
                 android:imeOptions="actionSearch"
                 android:inputType="text"
                 android:paddingLeft="@dimen/common_page_padding"
-                android:textSize="@dimen/common_font_size_content_small" />
+                android:textSize="@dimen/common_font_size_small" />
 
             <ImageView
                 android:id="@+id/iv_delete"

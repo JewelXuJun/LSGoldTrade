@@ -13,7 +13,7 @@
         android:paddingRight="@dimen/common_page_padding"
         android:text="确定"
         android:textColor="@color/common_font_title"
-        android:textSize="@dimen/common_font_size_content" />
+        android:textSize="@dimen/common_font_size" />
 
     <TextView
         android:id="@+id/toolbar_title"
@@ -23,6 +23,6 @@
         android:singleLine="true"
         android:text="我的App"
         android:textColor="@color/common_font_title"
-        android:textSize="@dimen/common_font_size_content" />
+        android:textSize="@dimen/common_font_size" />
 
 </RelativeLayout>

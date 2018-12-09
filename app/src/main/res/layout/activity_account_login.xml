@@ -28,7 +28,7 @@
                 android:layout_centerInParent="true"
                 android:text="@string/login_title"
                 android:textColor="@color/color_text_black"
-                android:textSize="@dimen/common_font_size_content" />
+                android:textSize="@dimen/common_font_size" />
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -125,7 +125,7 @@
                 android:onClick="@{() -> handlers.onClickLogin()}"
                 android:text="@string/login_title"
                 android:textColor="@color/white"
-                android:textSize="@dimen/common_font_size_content" />
+                android:textSize="@dimen/common_font_size" />
 
             <TextView
                 android:id="@+id/tv_login_mobile"
@@ -136,7 +136,7 @@
                 android:onClick="@{() -> handlers.onClickLoginMobile()}"
                 android:text="@string/login_mobile"
                 android:textColor="@color/color_blue"
-                android:textSize="@dimen/common_font_size_content" />
+                android:textSize="@dimen/common_font_size" />
 
             <Button
                 android:layout_width="match_parent"
@@ -146,7 +146,7 @@
                 android:onClick="@{() -> handlers.onClickRegister()}"
                 android:text="@string/login_register"
                 android:textColor="@color/color_blue"
-                android:textSize="@dimen/common_font_size_content" />
+                android:textSize="@dimen/common_font_size" />
 
         </LinearLayout>
 

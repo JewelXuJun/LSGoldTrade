@@ -46,7 +46,7 @@
                         android:gravity="center"
                         android:spinnerMode="dropdown"
                         android:textColor="@color/color_toolbar_blue"
-                        android:textSize="@dimen/common_font_size_content" />
+                        android:textSize="@dimen/common_font_size" />
 
                     <RelativeLayout
                         android:layout_width="match_parent"
@@ -73,7 +73,7 @@
                                 android:layout_marginLeft="@dimen/common_area_margin_tiny"
                                 android:text="@string/text_no_data_default"
                                 android:textColor="@color/common_font_decrease"
-                                android:textSize="@dimen/common_font_size_content_hint_tiny" />
+                                android:textSize="@dimen/common_font_size__tiny" />
 
                         </LinearLayout>
 
@@ -99,7 +99,7 @@
                                 android:layout_marginLeft="@dimen/common_area_margin_tiny"
                                 android:text="@string/text_no_data_default"
                                 android:textColor="@color/common_font_increase"
-                                android:textSize="@dimen/common_font_size_content_hint_tiny" />
+                                android:textSize="@dimen/common_font_size__tiny" />
 
                         </LinearLayout>
 

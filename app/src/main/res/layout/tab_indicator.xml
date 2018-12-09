@@ -10,6 +10,6 @@
         android:layout_centerInParent="true"
         android:gravity="center"
         android:textColor="@color/color_tab_icon_text"
-        android:textSize="@dimen/common_font_size_content_hint_tiny" />
+        android:textSize="@dimen/common_font_size__tiny" />
 
 </RelativeLayout>

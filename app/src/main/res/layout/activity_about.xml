@@ -40,7 +40,7 @@
                 android:layout_marginTop="@dimen/common_area_margin"
                 android:layout_marginBottom="@dimen/common_area_margin_big"
                 android:textColor="@color/color_blue"
-                android:textSize="@dimen/common_font_size_content" />
+                android:textSize="@dimen/common_font_size" />
 
         </LinearLayout>
 

@@ -90,5 +90,8 @@ dependencies {
 
     testImplementation 'junit:junit:4.12'
 
+    //首页Banner
     implementation 'com.github.pinguo-zhouwei:MZBannerView:v2.0.2'
+    //首页行情
+    implementation 'com.hhl:gridpagersnaphelper:1.0.0'
 }

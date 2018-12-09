@@ -6,15 +6,24 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.PagerAdapter;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
+import android.text.TextUtils;
 
 import com.alibaba.android.arouter.launcher.ARouter;
+import com.hhl.gridpagersnaphelper.GridPagerSnapHelper;
 import com.jme.common.network.DTRequest;
 import com.jme.common.network.Head;
+import com.jme.common.util.DensityUtil;
+import com.jme.common.util.ScreenUtil;
 import com.jme.common.util.StatusBarUtil;
 import com.jme.lsgoldtrade.R;
 import com.jme.lsgoldtrade.base.JMEBaseFragment;
 import com.jme.lsgoldtrade.config.Constants;
 import com.jme.lsgoldtrade.databinding.FragmentMainPageBinding;
+import com.jme.lsgoldtrade.domain.FiveSpeedVo;
+
+import java.util.List;
 
 public class MainPageFragment extends JMEBaseFragment {
 
@@ -24,6 +33,9 @@ public class MainPageFragment extends JMEBaseFragment {
     private String[] mTabTitles;
 
     private PagerAdapter mAdapter;
+    private RateMarketAdapter mRateMarketAdapter;
+
+    private List<FiveSpeedVo> mList;
 
     @Override
     protected int getContentViewId() {
@@ -44,13 +56,44 @@ public class MainPageFragment extends JMEBaseFragment {
         super.initData(savedInstanceState);
 
         mAdapter = new TabViewPagerAdapter(getChildFragmentManager());
+        mRateMarketAdapter = new RateMarketAdapter(mContext, null,
+                (ScreenUtil.getScreenWidth(mContext) - DensityUtil.dpTopx(mContext, 20)) / 3);
 
         initInfoTabs();
+
+        mBinding.recyclerView.setLayoutManager(new GridLayoutManager(mContext, 1,
+                LinearLayoutManager.HORIZONTAL, false));
+        mBinding.recyclerView.setHasFixedSize(true);
+        mBinding.recyclerView.setAdapter(mRateMarketAdapter);
+
+        GridPagerSnapHelper gridPagerSnapHelper = new GridPagerSnapHelper();
+        gridPagerSnapHelper.setRow(1).setColumn(3);
+        gridPagerSnapHelper.attachToRecyclerView(mBinding.recyclerView);
     }
 
     @Override
     protected void initListener() {
         super.initListener();
+
+        mRateMarketAdapter.setItemClickListener((position) -> {
+            if (null == mList || position >= mList.size())
+                return;
+
+            FiveSpeedVo fiveSpeedVo = mList.get(position);
+
+            if (null == fiveSpeedVo)
+                return;
+
+            String contractId = fiveSpeedVo.getContractId();
+
+            if (TextUtils.isEmpty(contractId))
+                return;
+
+            ARouter.getInstance()
+                    .build(Constants.ARouterUriConst.MARKETDETAIL)
+                    .withString("ContractId", contractId)
+                    .navigation();
+        });
     }
 
     @Override

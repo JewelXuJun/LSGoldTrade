@@ -51,7 +51,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="@color/color_text_black"
-                    android:textSize="@dimen/common_font_size_content"
+                    android:textSize="@dimen/common_font_size"
                     android:textStyle="bold" />
 
             </LinearLayout>
@@ -126,7 +126,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/common_area_margin_big"
                     android:textColor="@color/color_text_black"
-                    android:textSize="@dimen/common_font_size_content"
+                    android:textSize="@dimen/common_font_size"
                     android:textStyle="bold" />
 
             </LinearLayout>
@@ -189,7 +189,7 @@
                 android:onClick="@{() -> handlers.onClickSubmit()}"
                 android:text="@string/text_submit"
                 android:textColor="@color/white"
-                android:textSize="@dimen/common_font_size_content" />
+                android:textSize="@dimen/common_font_size" />
 
         </LinearLayout>
 

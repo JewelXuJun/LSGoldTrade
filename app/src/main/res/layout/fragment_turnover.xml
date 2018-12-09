@@ -50,7 +50,7 @@
                         android:layout_marginTop="@dimen/margin_small"
                         android:onClick="@{() -> handlers.onClickSelectDate(0)}"
                         android:textColor="@color/color_blue"
-                        android:textSize="@dimen/common_font_size_content" />
+                        android:textSize="@dimen/common_font_size" />
 
                 </LinearLayout>
 
@@ -84,7 +84,7 @@
                         android:layout_marginTop="@dimen/margin_small"
                         android:onClick="@{() -> handlers.onClickSelectDate(1)}"
                         android:textColor="@color/color_blue"
-                        android:textSize="@dimen/common_font_size_content" />
+                        android:textSize="@dimen/common_font_size" />
 
                 </LinearLayout>
 

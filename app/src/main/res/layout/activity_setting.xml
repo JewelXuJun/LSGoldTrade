@@ -199,7 +199,7 @@
             android:onClick="@{() -> handlers.onClickLogout()}"
             android:text="@string/setting_logout"
             android:textColor="@color/white"
-            android:textSize="@dimen/common_font_size_content" />
+            android:textSize="@dimen/common_font_size" />
 
     </LinearLayout>
 

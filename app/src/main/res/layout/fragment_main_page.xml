@@ -31,7 +31,7 @@
                 android:layout_centerInParent="true"
                 android:text="@string/main_title"
                 android:textColor="@color/white"
-                android:textSize="@dimen/common_font_size_content" />
+                android:textSize="@dimen/common_font_size" />
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -131,7 +131,17 @@
 
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="@dimen/height_main_page_market">
+                        android:layout_height="@dimen/height_main_page_market"
+                        android:orientation="vertical">
+
+                        <android.support.v7.widget.RecyclerView
+                            android:id="@+id/recyclerView"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_marginLeft="@dimen/margin_main_page_market"
+                            android:layout_marginTop="@dimen/common_area_margin_tiny"
+                            android:layout_marginRight="@dimen/margin_main_page_market"
+                            android:layout_marginBottom="@dimen/common_area_margin_tiny" />
 
                     </LinearLayout>
 
