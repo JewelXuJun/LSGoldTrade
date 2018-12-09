@@ -24,4 +24,7 @@ public class AppConfig {
     public static final long Week = 7 * Day;
     public static final long Month = 30 * Day;
 
+    public static long TimeInterval_NetWork = Second5;
+    public static long TimeInterval_WiFi = Second2;
+
 }

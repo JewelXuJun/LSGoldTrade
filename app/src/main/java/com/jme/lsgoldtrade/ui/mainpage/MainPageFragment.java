@@ -1,6 +1,8 @@
 package com.jme.lsgoldtrade.ui.mainpage;
 
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -15,10 +17,12 @@ import com.hhl.gridpagersnaphelper.GridPagerSnapHelper;
 import com.jme.common.network.DTRequest;
 import com.jme.common.network.Head;
 import com.jme.common.util.DensityUtil;
+import com.jme.common.util.NetWorkUtils;
 import com.jme.common.util.ScreenUtil;
 import com.jme.common.util.StatusBarUtil;
 import com.jme.lsgoldtrade.R;
 import com.jme.lsgoldtrade.base.JMEBaseFragment;
+import com.jme.lsgoldtrade.config.AppConfig;
 import com.jme.lsgoldtrade.config.Constants;
 import com.jme.lsgoldtrade.databinding.FragmentMainPageBinding;
 import com.jme.lsgoldtrade.domain.FiveSpeedVo;
@@ -36,6 +40,25 @@ public class MainPageFragment extends JMEBaseFragment {
     private RateMarketAdapter mRateMarketAdapter;
 
     private List<FiveSpeedVo> mList;
+
+    private boolean bHidden = false;
+
+    private Handler mHandler = new Handler() {
+        public void handleMessage(Message msg) {
+            switch (msg.what) {
+                case Constants.Msg.MSG_MAINPAGE_UPDATE_MARKET:
+                    mHandler.removeMessages(Constants.Msg.MSG_MAINPAGE_UPDATE_MARKET);
+
+                    getMarket();
+
+                    mHandler.sendEmptyMessageDelayed(Constants.Msg.MSG_MAINPAGE_UPDATE_MARKET, getTimeInterval());
+
+                    break;
+            }
+
+            super.handleMessage(msg);
+        }
+    };
 
     @Override
     protected int getContentViewId() {
@@ -69,6 +92,8 @@ public class MainPageFragment extends JMEBaseFragment {
         GridPagerSnapHelper gridPagerSnapHelper = new GridPagerSnapHelper();
         gridPagerSnapHelper.setRow(1).setColumn(3);
         gridPagerSnapHelper.attachToRecyclerView(mBinding.recyclerView);
+
+        getMarket();
     }
 
     @Override
@@ -128,8 +153,59 @@ public class MainPageFragment extends JMEBaseFragment {
     }
 
     @Override
+    public void onHiddenChanged(boolean hidden) {
+        super.onHiddenChanged(hidden);
+
+        bHidden = hidden;
+
+        if (!bHidden)
+            getMarket();
+        else
+            mHandler.removeMessages(Constants.Msg.MSG_MAINPAGE_UPDATE_MARKET);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+
+        mHandler.removeMessages(Constants.Msg.MSG_MAINPAGE_UPDATE_MARKET);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        if (!bHidden)
+            getMarket();
+    }
+
+    private long getTimeInterval() {
+        return NetWorkUtils.isWifiConnected(mContext) ? AppConfig.TimeInterval_WiFi : AppConfig.TimeInterval_NetWork;
+    }
+
+    private void getMarket() {
+       /* HashMap<String, String> params = new HashMap<>();
+        params.put("list", "");
+
+        sendRequest(MarketService.getInstance().getFiveSpeedQuotes, params, true);*/
+    }
+
+    @Override
     protected void DataReturn(DTRequest request, Head head, Object response) {
         super.DataReturn(request, head, response);
+
+        switch (request.getApi().getName()) {
+            case "GetFiveSpeedQuotes":
+                if (head.isSuccess()) {
+
+                } else {
+
+                }
+
+                mHandler.sendEmptyMessageDelayed(Constants.Msg.MSG_MAINPAGE_UPDATE_MARKET, getTimeInterval());
+
+                break;
+        }
     }
 
     public class ClickHandlers {
