@@ -20,7 +20,6 @@ public class SharedPreUtils {
 
     public static final String TimeInterval_NetWork = "TimeInterval_NetWork";
     public static final String TimeInterval_WiFi = "TimeInterval_WiFi";
-    public static final String TimeInterval_Normal = "TimeInterval_Normal";
 
     /**
      * 序列化对象
