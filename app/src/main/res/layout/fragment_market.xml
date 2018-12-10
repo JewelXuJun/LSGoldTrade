@@ -53,56 +53,84 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="@dimen/height_tabhost"
-            android:orientation="horizontal"
-            android:paddingLeft="@dimen/common_page_padding"
-            android:paddingRight="@dimen/common_page_padding">
+            android:orientation="horizontal">
 
-            <TextView
-                android:id="@+id/tv_contract"
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="7"
-                android:gravity="center|left"
-                android:paddingLeft="@dimen/common_area_margin_tiny"
                 android:onClick="@{() -> handlers.onClickSortContract()}"
-                android:text="@string/market_contract"
-                android:textColor="@color/color_text_tabhost"
-                android:textSize="@dimen/sp_12" />
+                android:paddingLeft="@dimen/common_area_margin">
 
-            <TextView
-                android:id="@+id/tv_last_price"
+                <TextView
+                    android:id="@+id/tv_contract"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:drawableRight="@mipmap/ic_asc"
+                    android:drawablePadding="@dimen/margin_small"
+                    android:text="@string/market_contract"
+                    android:textColor="@color/color_text_tabhost"
+                    android:textSize="@dimen/sp_12" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="8"
-                android:gravity="center|left"
-                android:paddingLeft="@dimen/common_area_margin_tiny"
-                android:onClick="@{() -> handlers.onClickSortLastPrice()}"
-                android:text="@string/market_last_price"
-                android:textColor="@color/color_text_tabhost"
-                android:textSize="@dimen/sp_12" />
+                android:onClick="@{() -> handlers.onClickSortLastPrice()}">
 
-            <TextView
-                android:id="@+id/tv_range"
+                <TextView
+                    android:id="@+id/tv_last_price"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:drawablePadding="@dimen/margin_small"
+                    android:paddingLeft="@dimen/common_area_margin_tiny"
+                    android:text="@string/market_last_price"
+                    android:textColor="@color/color_text_tabhost"
+                    android:textSize="@dimen/sp_12" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="8"
-                android:gravity="center"
-                android:onClick="@{() -> handlers.onClickSortRange()}"
-                android:text="@string/market_range"
-                android:textColor="@color/color_text_tabhost"
-                android:textSize="@dimen/sp_12" />
+                android:onClick="@{() -> handlers.onClickSortRange()}">
 
-            <TextView
-                android:id="@+id/tv_volume"
+                <TextView
+                    android:id="@+id/tv_range"
+                    android:layout_width="@dimen/width_market_item"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:drawablePadding="@dimen/margin_small"
+                    android:text="@string/market_range"
+                    android:textColor="@color/color_text_tabhost"
+                    android:textSize="@dimen/sp_12" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="8"
-                android:gravity="center|right"
-                android:paddingRight="@dimen/common_area_margin_tiny"
                 android:onClick="@{() -> handlers.onClickSortVolume()}"
-                android:text="@string/market_volume"
-                android:textColor="@color/color_text_tabhost"
-                android:textSize="@dimen/sp_12" />
+                android:paddingRight="@dimen/common_page_padding">
+
+                <TextView
+                    android:id="@+id/tv_volume"
+                    android:layout_width="@dimen/width_market_item"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:drawablePadding="@dimen/margin_small"
+                    android:text="@string/market_volume"
+                    android:textColor="@color/color_text_tabhost"
+                    android:textSize="@dimen/sp_12" />
+
+            </RelativeLayout>
 
         </LinearLayout>
 

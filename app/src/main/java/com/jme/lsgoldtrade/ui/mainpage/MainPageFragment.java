@@ -42,6 +42,7 @@ public class MainPageFragment extends JMEBaseFragment {
     private List<FiveSpeedVo> mList;
 
     private boolean bHidden = false;
+    private boolean bFlag = true;
 
     private Handler mHandler = new Handler() {
         public void handleMessage(Message msg) {
@@ -158,10 +159,13 @@ public class MainPageFragment extends JMEBaseFragment {
 
         bHidden = hidden;
 
-        if (!bHidden)
+        if (!bHidden) {
+            bFlag = true;
+
             getMarket();
-        else
+        } else {
             mHandler.removeMessages(Constants.Msg.MSG_MAINPAGE_UPDATE_MARKET);
+        }
     }
 
     @Override
@@ -175,8 +179,11 @@ public class MainPageFragment extends JMEBaseFragment {
     public void onResume() {
         super.onResume();
 
-        if (!bHidden)
+        if (!bHidden) {
+            bFlag = true;
+
             getMarket();
+        }
     }
 
     private long getTimeInterval() {
@@ -202,7 +209,11 @@ public class MainPageFragment extends JMEBaseFragment {
 
                 }
 
-                mHandler.sendEmptyMessageDelayed(Constants.Msg.MSG_MAINPAGE_UPDATE_MARKET, getTimeInterval());
+                if (bFlag) {
+                    bFlag = false;
+
+                    mHandler.sendEmptyMessageDelayed(Constants.Msg.MSG_MAINPAGE_UPDATE_MARKET, getTimeInterval());
+                }
 
                 break;
         }

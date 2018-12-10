@@ -50,8 +50,9 @@ public class Constants {
         }
 
         public static final int MSG_MAINPAGE_UPDATE_MARKET = 0;
-        public static final int MSG_UPDATE_DATA = 1;
-        public static final int MSG_RELOAD_DATA = 2;
+        public static final int MSG_MARKET_UPDATE = 1;
+        public static final int MSG_UPDATE_DATA = 2;
+        public static final int MSG_RELOAD_DATA = 3;
     }
 
     public static final class ARouterUriConst {

@@ -4,11 +4,13 @@ import com.jme.common.network.API;
 import com.jme.common.network.DTResponse;
 import com.jme.common.network.IService;
 import com.jme.lsgoldtrade.config.Constants;
+import com.jme.lsgoldtrade.domain.FiveSpeedVo;
 import com.jme.lsgoldtrade.domain.KChartVo;
 import com.jme.lsgoldtrade.domain.TenSpeedVo;
 import com.jme.lsgoldtrade.domain.TChartVo;
 
 import java.util.HashMap;
+import java.util.List;
 
 import okhttp3.Interceptor;
 import okhttp3.Request;
@@ -40,7 +42,7 @@ public class MarketService extends IService<MarketApi> {
     /**
      * 五档实时行情接口
      */
-    public API getFiveSpeedQuotes = new API<TenSpeedVo>("GetFiveSpeedQuotes") {
+    public API getFiveSpeedQuotes = new API<List<FiveSpeedVo>>("GetFiveSpeedQuotes") {
         @Override
         public Call<DTResponse> request(HashMap<String, String> params) {
             String list = params.get("list");
