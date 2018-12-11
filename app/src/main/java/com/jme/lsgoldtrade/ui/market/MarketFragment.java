@@ -7,6 +7,7 @@ import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
+import android.text.TextUtils;
 
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.jme.common.network.DTRequest;
@@ -91,6 +92,23 @@ public class MarketFragment extends JMEBaseFragment implements OnRefreshListener
         super.initListener();
 
         mBinding.swipeRefreshLayout.setOnRefreshListener(this);
+
+        mAdapter.setOnItemClickListener((adapter, view, position) -> {
+            FiveSpeedVo fiveSpeedVo = (FiveSpeedVo) adapter.getItem(position);
+
+            if (null == fiveSpeedVo)
+                return;
+
+            String contractId = fiveSpeedVo.getContractId();
+
+            if (TextUtils.isEmpty(contractId))
+                return;
+
+            ARouter.getInstance()
+                    .build(Constants.ARouterUriConst.MARKETDETAIL)
+                    .withString("ContractId", contractId)
+                    .navigation();
+        });
     }
 
     @Override
@@ -327,9 +345,7 @@ public class MarketFragment extends JMEBaseFragment implements OnRefreshListener
     public class ClickHandlers {
 
         public void onClickNews() {
-            ARouter.getInstance()
-                    .build(Constants.ARouterUriConst.MARKETDETAIL)
-                    .navigation();
+
         }
 
         public void onClickSortContract() {
