@@ -75,7 +75,7 @@ public class MarketFragment extends JMEBaseFragment implements OnRefreshListener
     protected void initData(Bundle savedInstanceState) {
         super.initData(savedInstanceState);
 
-        mAdapter = new MarketAdapter(R.layout.item_market, null);
+        mAdapter = new MarketAdapter(mContext, R.layout.item_market, null);
 
         mBinding.recyclerView.addItemDecoration(new MarginDividerItemDecoration(mContext, LinearLayoutManager.VERTICAL));
         mBinding.recyclerView.setLayoutManager(new LinearLayoutManager(mContext));
