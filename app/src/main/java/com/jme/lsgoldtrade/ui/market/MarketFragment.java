@@ -35,6 +35,8 @@ public class MarketFragment extends JMEBaseFragment implements OnRefreshListener
 
     private MarketAdapter mAdapter;
 
+    private List<FiveSpeedVo> mList;
+
     private boolean bHidden = false;
     private boolean bFlag = true;
 
@@ -159,6 +161,8 @@ public class MarketFragment extends JMEBaseFragment implements OnRefreshListener
         if (null != drawableVolume)
             drawableVolume.setBounds(0, 0, drawableVolume.getMinimumWidth(), drawableVolume.getMinimumHeight());
         mBinding.tvVolume.setCompoundDrawables(null, null, drawableVolume, null);
+
+        sortList(mList);
     }
 
     private void sortList(List<FiveSpeedVo> list) {
@@ -290,17 +294,15 @@ public class MarketFragment extends JMEBaseFragment implements OnRefreshListener
                 mBinding.swipeRefreshLayout.finishRefresh();
 
                 if (head.isSuccess()) {
-                    List<FiveSpeedVo> list;
-
                     try {
-                        list = (List<FiveSpeedVo>) response;
+                        mList = (List<FiveSpeedVo>) response;
                     } catch (Exception e) {
-                        list = null;
+                        mList = null;
 
                         e.getMessage();
                     }
 
-                    sortList(list);
+                    sortList(mList);
                 }
 
                 if (bFlag) {
