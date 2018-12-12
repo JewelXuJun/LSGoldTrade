@@ -7,8 +7,6 @@
     <string name="text_no_data_default">- - -</string>
     <string name="text_money_unit">元</string>
     <string name="text_submit">提交</string>
-    <string name="text_rate_up">+%1$f&#037;</string>
-    <string name="text_rate_down">%1$f&#037;</string>
 
     <!--首页-->
     <string name="main_exit_app">再按一次退出程序</string>

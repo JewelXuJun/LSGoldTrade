@@ -90,7 +90,7 @@ public class MarketUtil {
 
         switch (type) {
             case -1:
-                value = String.format(context.getResources().getString(R.string.text_rate_down), rate);
+                value = String.valueOf(rate) + "%";
 
                 break;
             case 0:
@@ -98,7 +98,7 @@ public class MarketUtil {
 
                 break;
             case 1:
-                value = String.format(context.getResources().getString(R.string.text_rate_up), rate);
+                value = "+" + String.valueOf(rate) + "%";
 
                 break;
             default:
@@ -118,7 +118,7 @@ public class MarketUtil {
         if (value.contains("E")) {
             if (value.contains("-"))
                 valueStr = new BigDecimal(value).negate().toPlainString();
-             else
+            else
                 valueStr = new BigDecimal(value).toPlainString();
         } else {
             valueStr = new BigDecimal(value).toString();

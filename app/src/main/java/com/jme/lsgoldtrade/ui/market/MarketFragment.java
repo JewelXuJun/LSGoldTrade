@@ -21,6 +21,7 @@ import com.jme.lsgoldtrade.config.AppConfig;
 import com.jme.lsgoldtrade.config.Constants;
 import com.jme.lsgoldtrade.databinding.FragmentMarketBinding;
 import com.jme.lsgoldtrade.domain.FiveSpeedVo;
+import com.jme.lsgoldtrade.service.MarketService;
 import com.jme.lsgoldtrade.util.SortUtil;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
@@ -28,6 +29,7 @@ import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import java.math.BigDecimal;
 import java.text.Collator;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 
 public class MarketFragment extends JMEBaseFragment implements OnRefreshListener {
@@ -297,10 +299,10 @@ public class MarketFragment extends JMEBaseFragment implements OnRefreshListener
     }
 
     private void getMarket(boolean enable) {
-       /* HashMap<String, String> params = new HashMap<>();
-        params.put("list", "");
+        HashMap<String, String> params = new HashMap<>();
+        params.put("list", "au9999");
 
-        sendRequest(MarketService.getInstance().getFiveSpeedQuotes, params, enable);*/
+        sendRequest(MarketService.getInstance().getFiveSpeedQuotes, params, enable);
     }
 
     @Override
