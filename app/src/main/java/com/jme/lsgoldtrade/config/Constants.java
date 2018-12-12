@@ -25,7 +25,7 @@ public class Constants {
 
         static {
             if (Envi == Test_WAN) {
-                URL_BASE = "";
+                URL_BASE = "https://222.190.245.2:18012";
             } else if (Envi == Produce) {
                 URL_BASE = "";
             }
