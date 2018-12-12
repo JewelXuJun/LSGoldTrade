@@ -338,7 +338,7 @@ public abstract class BaseFragment<T> extends Fragment implements View.OnTouchLi
     }
 
     private void handleErrorInfo(DTRequest request, Head head) {
-        if (head.getCode() != null && !head.getCode().equals("0") && !head.getCode().equals("107")) {
+        if (head.getCode() != null && !head.getCode().equals("0")) {
             if (!request.isShowErrorMsg()) {
                 return;
             }

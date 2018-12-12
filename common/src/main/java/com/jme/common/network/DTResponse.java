@@ -9,32 +9,37 @@ import java.io.Serializable;
  */
 public class DTResponse<V> implements Serializable {
 
-    // 响应数据头
-    private Head head;
-    // 响应数据体
-    private V body;
+    private String code;
 
-    public DTResponse() {
-        super();
+    private String msg;
+
+    private V value;
+
+    public String getCode() {
+        return code;
     }
 
-    public Head getHead() {
-        return head;
+    public void setCode(String code) {
+        this.code = code;
     }
 
-    public void setHead(Head head) {
-        this.head = head;
+    public String getMsg() {
+        return msg;
     }
 
-    public V getBody() {
-        return body;
+    public void setMsg(String msg) {
+        this.msg = msg;
     }
 
-    public void setBody(V body) {
-        this.body = body;
+    public V getValue() {
+        return value;
+    }
+
+    public void setValue(V value) {
+        this.value = value;
     }
 
     public String getBodyToString(){
-        return new Gson().toJson(body);
+        return new Gson().toJson(value);
     }
 }

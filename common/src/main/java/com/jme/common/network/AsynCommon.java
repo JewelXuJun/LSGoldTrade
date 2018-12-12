@@ -60,7 +60,10 @@ public class AsynCommon {
                         head.setMsg("成功");
                     } else {
                         DTResponse dtResponse = (DTResponse) response.body();
-                        head = dtResponse.getHead();
+
+                        head = new Head();
+                        head.setCode(dtResponse.getCode());
+                        head.setMsg(dtResponse.getMsg());
 
                         try {
                             body = new Gson().fromJson(dtResponse.getBodyToString(),
