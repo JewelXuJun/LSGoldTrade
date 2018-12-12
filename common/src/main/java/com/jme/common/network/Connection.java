@@ -5,9 +5,11 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.security.GeneralSecurityException;
 import java.security.KeyStore;
+import java.security.SecureRandom;
 import java.security.cert.Certificate;
 import java.security.cert.CertificateException;
 import java.security.cert.CertificateFactory;
+import java.security.cert.X509Certificate;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.concurrent.TimeUnit;
@@ -41,10 +43,9 @@ public class Connection {
         try {
             X509TrustManager trustManager;
             SSLSocketFactory sslSocketFactory;
-            // Create a trust manager that does not validate certificate chains
             trustManager = trustManagerForCertificates(trustedCertificatesInputStream());
             SSLContext sslContext = SSLContext.getInstance("TLS");
-            sslContext.init(null, new TrustManager[] { trustManager }, null);
+            sslContext.init(null, new TrustManager[]{ /*trustManager*/ trustManagerForCertificates}, null/*new SecureRandom()*/);
             sslSocketFactory = sslContext.getSocketFactory();
 
             HttpLoggingInterceptor logInterceptor = new HttpLoggingInterceptor();
@@ -55,7 +56,7 @@ public class Connection {
             builder.connectTimeout(60, TimeUnit.SECONDS);
             builder.readTimeout(60, TimeUnit.SECONDS);
             builder.writeTimeout(60, TimeUnit.SECONDS);
-            builder.sslSocketFactory(sslSocketFactory,trustManager);
+            builder.sslSocketFactory(sslSocketFactory, trustManager);
             builder.addInterceptor(new Interceptor() {
                 @Override
                 public Response intercept(Chain chain) throws IOException {
@@ -99,7 +100,8 @@ public class Connection {
 
         @Override
         public java.security.cert.X509Certificate[] getAcceptedIssuers() {
-            return new java.security.cert.X509Certificate[]{};
+            /*return new java.security.cert.X509Certificate[]{};*/
+            return new X509Certificate[0];
         }
     };
 
@@ -148,7 +150,7 @@ public class Connection {
         // https://publicobject.com (Comodo) and https://squareup.com (Entrust). But they aren't
         // sufficient to connect to most HTTPS sites including https://godaddy.com and https://visa.com.
         // Typically developers will need to get a PEM file from their organization's TLS administrator.
-        final  String DZ_INOUT_CERT ="-----BEGIN CERTIFICATE-----\n" +
+        final String DZ_INOUT_CERT = "-----BEGIN CERTIFICATE-----\n" +
                 "MIIDIjCCAgoCCQDLWBYrY5bbJDANBgkqhkiG9w0BAQsFADBTMQswCQYDVQQGEwJD\n" +
                 "TjETMBEGA1UECAwKU29tZS1TdGF0ZTEhMB8GA1UECgwYSW50ZXJuZXQgV2lkZ2l0\n" +
                 "cyBQdHkgTHRkMQwwCgYDVQQDDANqbWUwHhcNMTQxMTI2MDc1MTUyWhcNMjQxMTIz\n" +
