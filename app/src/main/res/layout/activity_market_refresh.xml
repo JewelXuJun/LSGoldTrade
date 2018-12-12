@@ -71,7 +71,7 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
                         android:layout_centerInParent="true"
-                        android:background="@mipmap/ic_next"
+                        android:background="@mipmap/ic_select"
                         android:visibility="gone" />
 
                 </RelativeLayout>
@@ -102,7 +102,7 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
                         android:layout_centerInParent="true"
-                        android:background="@mipmap/ic_next"
+                        android:background="@mipmap/ic_select"
                         android:visibility="gone" />
 
                 </RelativeLayout>
@@ -133,7 +133,7 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
                         android:layout_centerInParent="true"
-                        android:background="@mipmap/ic_next"
+                        android:background="@mipmap/ic_select"
                         android:visibility="gone" />
 
                 </RelativeLayout>
@@ -177,7 +177,7 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
                         android:layout_centerInParent="true"
-                        android:background="@mipmap/ic_next"
+                        android:background="@mipmap/ic_select"
                         android:visibility="gone" />
 
                 </RelativeLayout>
@@ -208,7 +208,7 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
                         android:layout_centerInParent="true"
-                        android:background="@mipmap/ic_next"
+                        android:background="@mipmap/ic_select"
                         android:visibility="gone" />
 
                 </RelativeLayout>
@@ -239,7 +239,7 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
                         android:layout_centerInParent="true"
-                        android:background="@mipmap/ic_next"
+                        android:background="@mipmap/ic_select"
                         android:visibility="gone" />
 
                 </RelativeLayout>
