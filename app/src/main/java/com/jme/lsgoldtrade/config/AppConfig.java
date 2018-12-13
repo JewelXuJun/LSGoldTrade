@@ -27,4 +27,7 @@ public class AppConfig {
     public static long TimeInterval_NetWork = Second5;
     public static long TimeInterval_WiFi = Second2;
 
+    public static final long Price_Divisor = 100;
+    public static final long Rate_Divisor = 1000000;
+
 }

@@ -33,15 +33,19 @@ public class MarketAdapter extends BaseQuickAdapter<FiveSpeedVo, BaseViewHolder>
         if (TextUtils.isEmpty(contractId))
             return;
 
-        long latestPrice = item.getLatestPrice();
-        long upDownRate = item.getUpDownRate();
+        String latestPrice = item.getLatestPriceValue();
+        String upDownRate = item.getUpDownRateValue();
         long turnVolume = item.getTurnVolume();
+        int rateType;
 
-        int rateType = new BigDecimal(upDownRate).compareTo(new BigDecimal(0));
+        if (TextUtils.isEmpty(upDownRate))
+            rateType = 0;
+        else
+            rateType = new BigDecimal(upDownRate).compareTo(new BigDecimal(0));
 
         helper.setText(R.id.tv_contractname_cn, MarketUtil.getContractNameCN(contractId))
                 .setText(R.id.tv_contractname_en, MarketUtil.getContractNameEN(contractId))
-                .setText(R.id.tv_last_price, String.valueOf(latestPrice))
+                .setText(R.id.tv_last_price, latestPrice)
                 .setTextColor(R.id.tv_last_price, MarketUtil.getMarketStateColor(mContext, rateType))
                 .setText(R.id.tv_rate, MarketUtil.getMarketRateValue(mContext, rateType, upDownRate))
                 .setTextColor(R.id.tv_rate, MarketUtil.getMarketStateColor(mContext, rateType))

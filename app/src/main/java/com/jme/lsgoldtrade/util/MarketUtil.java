@@ -5,6 +5,7 @@ import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 
 import com.jme.lsgoldtrade.R;
+import com.jme.lsgoldtrade.config.AppConfig;
 
 import java.math.BigDecimal;
 
@@ -85,12 +86,12 @@ public class MarketUtil {
         return color;
     }
 
-    public static String getMarketRateValue(Context context, int type, long rate) {
+    public static String getMarketRateValue(Context context, int type, String rate) {
         String value;
 
         switch (type) {
             case -1:
-                value = String.valueOf(rate) + "%";
+                value = rate + "%";
 
                 break;
             case 0:
@@ -98,7 +99,7 @@ public class MarketUtil {
 
                 break;
             case 1:
-                value = "+" + String.valueOf(rate) + "%";
+                value = "+" + rate + "%";
 
                 break;
             default:
@@ -230,6 +231,14 @@ public class MarketUtil {
         else
             return new BigDecimal(original.toString()).divide(divisor);
 
+    }
+
+    public static String getPriceValue(long price) {
+        return formatValue(new BigDecimal(price).divide(new BigDecimal(AppConfig.Price_Divisor)).toString(), 2);
+    }
+
+    public static String getRateValue(long rate) {
+        return formatValue(new BigDecimal(rate).divide(new BigDecimal(AppConfig.Rate_Divisor)).toString(), 2);
     }
 
 }

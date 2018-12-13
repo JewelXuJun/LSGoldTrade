@@ -1,5 +1,7 @@
 package com.jme.lsgoldtrade.domain;
 
+import com.jme.lsgoldtrade.util.MarketUtil;
+
 import java.io.Serializable;
 
 public class FiveSpeedVo implements Serializable {
@@ -434,6 +436,14 @@ public class FiveSpeedVo implements Serializable {
 
     public void setQuoteTime(String quoteTime) {
         this.quoteTime = quoteTime;
+    }
+
+    public String getLatestPriceValue() {
+        return MarketUtil.getPriceValue(latestPrice);
+    }
+
+    public String getUpDownRateValue() {
+        return MarketUtil.getRateValue(upDownRate);
     }
 
 }
