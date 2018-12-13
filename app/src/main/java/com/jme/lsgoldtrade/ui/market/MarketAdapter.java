@@ -34,17 +34,15 @@ public class MarketAdapter extends BaseQuickAdapter<FiveSpeedVo, BaseViewHolder>
             return;
 
         long latestPrice = item.getLatestPrice();
-        long closePrice = item.getClosePrice();
         long upDownRate = item.getUpDownRate();
         long turnVolume = item.getTurnVolume();
 
-        int priceType = new BigDecimal(latestPrice).compareTo(new BigDecimal(closePrice));
         int rateType = new BigDecimal(upDownRate).compareTo(new BigDecimal(0));
 
         helper.setText(R.id.tv_contractname_cn, MarketUtil.getContractNameCN(contractId))
                 .setText(R.id.tv_contractname_en, MarketUtil.getContractNameEN(contractId))
                 .setText(R.id.tv_last_price, String.valueOf(latestPrice))
-                .setTextColor(R.id.tv_last_price, MarketUtil.getMarketStateColor(mContext, priceType))
+                .setTextColor(R.id.tv_last_price, MarketUtil.getMarketStateColor(mContext, rateType))
                 .setText(R.id.tv_rate, MarketUtil.getMarketRateValue(mContext, rateType, upDownRate))
                 .setTextColor(R.id.tv_rate, MarketUtil.getMarketStateColor(mContext, rateType))
                 .setText(R.id.tv_volume, MarketUtil.getVolumeValue(String.valueOf(turnVolume), false));
