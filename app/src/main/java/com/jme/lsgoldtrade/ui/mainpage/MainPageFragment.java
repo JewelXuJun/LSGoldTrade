@@ -26,7 +26,9 @@ import com.jme.lsgoldtrade.config.AppConfig;
 import com.jme.lsgoldtrade.config.Constants;
 import com.jme.lsgoldtrade.databinding.FragmentMainPageBinding;
 import com.jme.lsgoldtrade.domain.FiveSpeedVo;
+import com.jme.lsgoldtrade.service.MarketService;
 
+import java.util.HashMap;
 import java.util.List;
 
 public class MainPageFragment extends JMEBaseFragment {
@@ -191,10 +193,10 @@ public class MainPageFragment extends JMEBaseFragment {
     }
 
     private void getMarket() {
-       /* HashMap<String, String> params = new HashMap<>();
+        HashMap<String, String> params = new HashMap<>();
         params.put("list", "");
 
-        sendRequest(MarketService.getInstance().getFiveSpeedQuotes, params, true);*/
+        sendRequest(MarketService.getInstance().getFiveSpeedQuotes, params, false);
     }
 
     @Override
@@ -204,9 +206,16 @@ public class MainPageFragment extends JMEBaseFragment {
         switch (request.getApi().getName()) {
             case "GetFiveSpeedQuotes":
                 if (head.isSuccess()) {
+                    try {
+                        mList = (List<FiveSpeedVo>) response;
+                    } catch (Exception e) {
+                        mList = null;
 
-                } else {
+                        e.printStackTrace();
+                    }
 
+                    if (null != mList)
+                        mRateMarketAdapter.setDataList(mList);
                 }
 
                 if (bFlag) {

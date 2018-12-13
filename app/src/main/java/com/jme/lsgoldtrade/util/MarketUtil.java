@@ -86,7 +86,32 @@ public class MarketUtil {
         return color;
     }
 
-    public static String getMarketRateValue(Context context, int type, String rate) {
+    public static String getMarketRangeValue(int type, String rate) {
+        String value;
+
+        switch (type) {
+            case -1:
+                value = rate;
+
+                break;
+            case 0:
+                value = "0.00";
+
+                break;
+            case 1:
+                value = "+" + rate;
+
+                break;
+            default:
+                value = "";
+
+                break;
+        }
+
+        return value;
+    }
+
+    public static String getMarketRateValue(int type, String rate) {
         String value;
 
         switch (type) {
@@ -238,7 +263,7 @@ public class MarketUtil {
     }
 
     public static String getRateValue(long rate) {
-        return formatValue(new BigDecimal(rate).divide(new BigDecimal(AppConfig.Rate_Divisor)).toString(), 2);
+        return formatValue(new BigDecimal(rate).divide(new BigDecimal(AppConfig.Rate_Divisor)).multiply(new BigDecimal(100)).toString(), 2);
     }
 
 }

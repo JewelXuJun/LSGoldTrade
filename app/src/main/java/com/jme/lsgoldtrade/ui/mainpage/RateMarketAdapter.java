@@ -2,6 +2,7 @@ package com.jme.lsgoldtrade.ui.mainpage;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,7 +10,9 @@ import android.widget.TextView;
 
 import com.jme.lsgoldtrade.R;
 import com.jme.lsgoldtrade.domain.FiveSpeedVo;
+import com.jme.lsgoldtrade.util.MarketUtil;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 
@@ -48,14 +51,14 @@ public class RateMarketAdapter extends RecyclerView.Adapter<RateMarketAdapter.Vi
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         if (null != mList && 0 != mList.size()) {
-            holder.bindData(mList.get(position));
+            holder.bindData(mContext, mList.get(position));
             holder.itemView.setTag(position);
         }
     }
 
     @Override
     public int getItemCount() {
-        return 3;
+        return null == mList ? 0 : mList.size() < 3 ? mList.size() : 3;
     }
 
     @Override
@@ -91,11 +94,26 @@ public class RateMarketAdapter extends RecyclerView.Adapter<RateMarketAdapter.Vi
             tv_rate = itemView.findViewById(R.id.tv_rate);
         }
 
-        public void bindData(FiveSpeedVo fiveSpeedVo) {
+        public void bindData(Context context, FiveSpeedVo fiveSpeedVo) {
             if (null == fiveSpeedVo)
                 return;
 
+            String upDownRate = fiveSpeedVo.getUpDownRateValue();
 
+            int rateType;
+
+            if (TextUtils.isEmpty(upDownRate))
+                rateType = 0;
+            else
+                rateType = new BigDecimal(upDownRate).compareTo(new BigDecimal(0));
+
+            tv_contract.setText(MarketUtil.getContractNameEN(fiveSpeedVo.getContractId()));
+            tv_last_price.setText(fiveSpeedVo.getLatestPriceValue());
+            tv_last_price.setTextColor(MarketUtil.getMarketStateColor(context, rateType));
+            tv_range.setText(MarketUtil.getMarketRangeValue(rateType, fiveSpeedVo.getUpDownValue()));
+            tv_range.setTextColor(MarketUtil.getMarketStateColor(context, rateType));
+            tv_rate.setText(MarketUtil.getMarketRateValue(rateType, upDownRate));
+            tv_rate.setTextColor(MarketUtil.getMarketStateColor(context, rateType));
         }
     }
 

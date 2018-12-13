@@ -442,6 +442,10 @@ public class FiveSpeedVo implements Serializable {
         return MarketUtil.getPriceValue(latestPrice);
     }
 
+    public String getUpDownValue() {
+        return MarketUtil.getPriceValue(upDown);
+    }
+
     public String getUpDownRateValue() {
         return MarketUtil.getRateValue(upDownRate);
     }
