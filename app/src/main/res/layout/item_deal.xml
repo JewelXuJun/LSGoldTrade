@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/height_item_normal"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/tv_date"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/height_item_tiny"
+        android:layout_gravity="center_vertical|left"
+        android:background="@color/color_date_background"
+        android:paddingLeft="@dimen/common_page_padding"
+        android:text="111111"
+        android:textColor="@color/black_pale"
+        android:textSize="@dimen/sp_12"
+        android:visibility="gone" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center|left"
+            android:orientation="vertical"
+            android:paddingLeft="@dimen/common_area_margin">
+
+            <TextView
+                android:id="@+id/tv_contract"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/text_no_data_default"
+                android:textColor="@color/color_text_black"
+                android:textSize="@dimen/size_middle" />
+
+            <TextView
+                android:id="@+id/tv_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/common_area_margin_tiny"
+                android:text="@string/text_no_data_default"
+                android:textColor="@color/color_text_gray_hint"
+                android:textSize="@dimen/sp_12" />
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tv_type"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="@string/text_no_data_default"
+            android:textColor="@color/color_text_black"
+            android:textSize="@dimen/size_middle" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_amount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/text_no_data_default"
+                android:textColor="@color/color_text_black"
+                android:textSize="@dimen/size_middle" />
+
+            <TextView
+                android:id="@+id/tv_deal_price"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/common_area_margin_tiny"
+                android:text="@string/text_no_data_default"
+                android:textColor="@color/color_text_black"
+                android:textSize="@dimen/size_middle" />
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tv_turn_volume"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center|right"
+            android:paddingRight="@dimen/common_page_padding"
+            android:text="@string/text_no_data_default"
+            android:textColor="@color/color_text_black"
+            android:textSize="@dimen/size_middle" />
+
+    </LinearLayout>
+
+</LinearLayout>
