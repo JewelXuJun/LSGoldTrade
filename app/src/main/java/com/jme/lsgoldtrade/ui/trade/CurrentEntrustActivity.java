@@ -28,7 +28,7 @@ public class CurrentEntrustActivity extends JMEBaseActivity {
 
         mBinding = (ActivityCurrentEntrustBinding) mBindingUtil;
 
-        initToolbar(R.string.trade_history_entrust, true);
+        initToolbar(R.string.trade_current_entrust, true);
     }
 
     @Override

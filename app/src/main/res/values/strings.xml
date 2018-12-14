@@ -122,7 +122,8 @@
     <string name="trade_multipoint_nominal">多头/空头</string>
     <string name="trade_more_open_empty">多开/空开</string>
     <string name="trade_equal_open_empty">多平/空平</string>
-    <string name="trade_success_id">成交编号</string>
+    <string name="trade_type">类型</string>
+    <string name="trade_amount_dealprice">数量/成交价</string>
 
     <!-- Personal -->
     <string name="personal_login">登录/注册</string>
