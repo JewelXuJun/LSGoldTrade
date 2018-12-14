@@ -14,7 +14,7 @@ public class ItemDealFragment extends JMEBaseFragment {
 
     private FragmentItemDealBinding mBinding;
 
-    private DealAdapter mAdapter;
+    private ItemDealAdapter mAdapter;
 
     @Override
     protected int getContentViewId() {
@@ -32,7 +32,7 @@ public class ItemDealFragment extends JMEBaseFragment {
     protected void initData(Bundle savedInstanceState) {
         super.initData(savedInstanceState);
 
-        mAdapter = new DealAdapter(R.layout.item_order_deal, null);
+        mAdapter = new ItemDealAdapter(R.layout.item_order_deal, null);
 
         mBinding.recyclerView.addItemDecoration(new MarginDividerItemDecoration(mContext, LinearLayoutManager.VERTICAL));
         mBinding.recyclerView.setLayoutManager(new LinearLayoutManager(mContext));
