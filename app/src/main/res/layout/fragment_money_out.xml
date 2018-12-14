@@ -23,7 +23,7 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/height_item_big"
+                android:layout_height="@dimen/common_item_height_big"
                 android:background="@color/white"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
@@ -31,28 +31,19 @@
                 android:paddingRight="@dimen/common_area_margin">
 
                 <TextView
-                    android:layout_width="@dimen/width_item_title"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/trade_bankcard_number"
+                    android:text="@string/trade_money_out_max"
                     android:textColor="@color/color_text_normal"
                     android:textSize="@dimen/sp_14" />
 
                 <TextView
-                    android:id="@+id/tv_end_number_text"
+                    android:id="@+id/tv_money_out_max"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/common_area_margin_big"
-                    android:text="@string/trade_end_number"
                     android:textColor="@color/color_text_normal"
                     android:textSize="@dimen/sp_14" />
-
-                <TextView
-                    android:id="@+id/tv_end_number"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/color_text_black"
-                    android:textSize="@dimen/common_font_size"
-                    android:textStyle="bold" />
 
             </LinearLayout>
 
@@ -60,7 +51,7 @@
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/height_item_big"
+                android:layout_height="@dimen/common_item_height_big"
                 android:background="@color/white"
                 android:paddingLeft="@dimen/common_area_margin"
                 android:paddingRight="@dimen/common_area_margin">
@@ -96,7 +87,7 @@
                     android:layout_toLeftOf="@+id/btn_out_all"
                     android:layout_toRightOf="@+id/tv_transfer_amount_title"
                     android:background="@null"
-                    android:hint="@string/trade_transfer_amount_out_hint"
+                    android:hint="@string/trade_transfer_amount_hint"
                     android:inputType="numberDecimal"
                     android:textColor="@color/color_text_normal"
                     android:textColorHint="@color/color_text_gray_hint"
@@ -108,7 +99,7 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/height_item_big"
+                android:layout_height="@dimen/common_item_height_big"
                 android:background="@color/white"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
@@ -137,7 +128,7 @@
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/height_item_big"
+                android:layout_height="@dimen/common_item_height_big"
                 android:background="@color/white"
                 android:paddingLeft="@dimen/common_area_margin"
                 android:paddingRight="@dimen/common_area_margin">
@@ -181,11 +172,22 @@
 
             </RelativeLayout>
 
+            <include layout="@layout/item_line_vertical_margin" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/common_item_height_big"
+                android:background="@color/white"
+                android:padding="@dimen/common_area_margin"
+                android:text="@string/trade_money_out_time"
+                android:textColor="@color/gray"
+                android:textSize="@dimen/sp_12" />
+
             <Button
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/height_btn"
                 android:layout_marginLeft="@dimen/common_area_margin"
-                android:layout_marginTop="@dimen/common_page_margin"
+                android:layout_marginTop="@dimen/common_area_margin_large"
                 android:layout_marginRight="@dimen/common_area_margin"
                 android:background="@drawable/bg_btn_blue_solid"
                 android:onClick="@{() -> handlers.onClickSubmit()}"
