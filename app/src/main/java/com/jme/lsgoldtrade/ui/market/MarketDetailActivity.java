@@ -1,6 +1,8 @@
 package com.jme.lsgoldtrade.ui.market;
 
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 import android.view.Gravity;
@@ -11,9 +13,11 @@ import com.alibaba.android.arouter.facade.annotation.Route;
 import com.jme.common.network.DTRequest;
 import com.jme.common.network.Head;
 import com.jme.common.util.DateUtil;
+import com.jme.common.util.NetWorkUtils;
 import com.jme.common.util.StatusBarUtil;
 import com.jme.lsgoldtrade.R;
 import com.jme.lsgoldtrade.base.JMEBaseActivity;
+import com.jme.lsgoldtrade.config.AppConfig;
 import com.jme.lsgoldtrade.config.Constants;
 import com.jme.lsgoldtrade.databinding.ActivityMarketDetailBinding;
 import com.jme.lsgoldtrade.domain.TenSpeedVo;
@@ -34,12 +38,29 @@ public class MarketDetailActivity extends JMEBaseActivity {
     private TenSpeedVo mTenSpeedVo;
 
     private String mContractId;
+    private boolean bFlag = true;
     private boolean bHighlight = false;
 
     private static final String DIRECTION_AFTER = "1";
-
     private static final String COUNT_TCHART = "660";
     private static final String COUNT_KCHART = "200";
+
+    private Handler mHandler = new Handler() {
+        public void handleMessage(Message msg) {
+            switch (msg.what) {
+                case Constants.Msg.MSG_UPDATE_DATA:
+                    mHandler.removeMessages(Constants.Msg.MSG_UPDATE_DATA);
+
+                    getTenSpeedQuotes(false);
+
+                    mHandler.sendEmptyMessageDelayed(Constants.Msg.MSG_UPDATE_DATA, getTimeInterval());
+
+                    break;
+            }
+
+            super.handleMessage(msg);
+        }
+    };
 
     @Override
     protected int getContentViewId() {
@@ -89,8 +110,20 @@ public class MarketDetailActivity extends JMEBaseActivity {
     }
 
     @Override
-    protected void onDestroy() {
-        super.onDestroy();
+    protected void onPause() {
+        super.onPause();
+
+        bFlag = true;
+
+        removeMessage();
+    }
+
+    private long getTimeInterval() {
+        return NetWorkUtils.isWifiConnected(mContext) ? AppConfig.TimeInterval_WiFi : AppConfig.TimeInterval_NetWork;
+    }
+
+    private void removeMessage() {
+        mHandler.removeMessages(Constants.Msg.MSG_UPDATE_DATA);
     }
 
     private void updateMarketData(TenSpeedVo tenSpeedVo) {
@@ -132,7 +165,7 @@ public class MarketDetailActivity extends JMEBaseActivity {
     }
 
     private void setBackGroundColor(int color) {
-        StatusBarUtil.setStatusBarMode(this, true, color);
+//        StatusBarUtil.setStatusBarMode(this, true, color);
         mToolbarHelper.setBackgroundColor(ContextCompat.getColor(this, color));
         mBinding.layoutMarketDetail.setBackgroundColor(ContextCompat.getColor(this, color));
     }
@@ -185,6 +218,12 @@ public class MarketDetailActivity extends JMEBaseActivity {
                         return;
 
                     updateMarketData(list.get(0));
+                }
+
+                if (bFlag) {
+                    bFlag = false;
+
+                    mHandler.sendEmptyMessageDelayed(Constants.Msg.MSG_UPDATE_DATA, getTimeInterval());
                 }
 
                 break;
