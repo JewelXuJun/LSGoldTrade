@@ -2,6 +2,7 @@ package com.jme.lsgoldtrade.ui.market;
 
 import android.content.Context;
 import android.support.annotation.Nullable;
+import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
@@ -35,7 +36,6 @@ public class MarketAdapter extends BaseQuickAdapter<FiveSpeedVo, BaseViewHolder>
 
         String latestPrice = item.getLatestPriceValue();
         String upDownRate = item.getUpDownRateValue();
-        long turnVolume = item.getTurnVolume();
         int rateType;
 
         if (TextUtils.isEmpty(upDownRate))
@@ -46,9 +46,9 @@ public class MarketAdapter extends BaseQuickAdapter<FiveSpeedVo, BaseViewHolder>
         helper.setText(R.id.tv_contractname_cn, MarketUtil.getContractNameCN(contractId))
                 .setText(R.id.tv_contractname_en, MarketUtil.getContractNameEN(contractId))
                 .setText(R.id.tv_last_price, latestPrice)
-                .setTextColor(R.id.tv_last_price, MarketUtil.getMarketStateColor(mContext, rateType))
+                .setTextColor(R.id.tv_last_price, ContextCompat.getColor(mContext, MarketUtil.getMarketStateColor(rateType)))
                 .setText(R.id.tv_rate, MarketUtil.getMarketRateValue(rateType, upDownRate))
-                .setTextColor(R.id.tv_rate, MarketUtil.getMarketStateColor(mContext, rateType))
-                .setText(R.id.tv_volume, MarketUtil.getVolumeValue(String.valueOf(turnVolume), false));
+                .setTextColor(R.id.tv_rate,  ContextCompat.getColor(mContext, MarketUtil.getMarketStateColor(rateType)))
+                .setText(R.id.tv_volume, MarketUtil.getVolumeValue(String.valueOf(item.getTurnVolume()), false));
     }
 }

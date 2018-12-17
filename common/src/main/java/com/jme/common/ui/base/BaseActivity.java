@@ -156,6 +156,11 @@ public abstract class BaseActivity extends AppCompatActivity implements OnResult
             mToolbarHelper.setBackNavigation(hasBack, (view) -> onBackPressed());
     }
 
+    public void setBackNavigation(boolean hasBack, @DrawableRes int drawableResId) {
+        if (mToolbarHelper != null)
+            mToolbarHelper.setBackNavigation(hasBack, drawableResId, (view) -> onBackPressed());
+    }
+
     public void setBackNavigation(@DrawableRes int drawableResId, View.OnClickListener listener) {
         if (mToolbarHelper != null)
             mToolbarHelper.setBackNavigationIcon(drawableResId, listener);

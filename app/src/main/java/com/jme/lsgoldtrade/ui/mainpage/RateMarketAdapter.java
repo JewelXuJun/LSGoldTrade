@@ -1,6 +1,7 @@
 package com.jme.lsgoldtrade.ui.mainpage;
 
 import android.content.Context;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -109,11 +110,11 @@ public class RateMarketAdapter extends RecyclerView.Adapter<RateMarketAdapter.Vi
 
             tv_contract.setText(MarketUtil.getContractNameEN(fiveSpeedVo.getContractId()));
             tv_last_price.setText(fiveSpeedVo.getLatestPriceValue());
-            tv_last_price.setTextColor(MarketUtil.getMarketStateColor(context, rateType));
+            tv_last_price.setTextColor(ContextCompat.getColor(context, MarketUtil.getMarketStateColor(rateType)));
             tv_range.setText(MarketUtil.getMarketRangeValue(rateType, fiveSpeedVo.getUpDownValue()));
-            tv_range.setTextColor(MarketUtil.getMarketStateColor(context, rateType));
+            tv_range.setTextColor(ContextCompat.getColor(context, MarketUtil.getMarketStateColor(rateType)));
             tv_rate.setText(MarketUtil.getMarketRateValue(rateType, upDownRate));
-            tv_rate.setTextColor(MarketUtil.getMarketStateColor(context, rateType));
+            tv_rate.setTextColor(ContextCompat.getColor(context, MarketUtil.getMarketStateColor(rateType)));
         }
     }
 

@@ -121,6 +121,15 @@ public class ToolbarHelper {
         }
     }
 
+    public void setBackNavigation(boolean hasBack, int resId, View.OnClickListener listener) {
+        if (hasBack) {
+            mToolbar.setNavigationIcon(resId);
+            mToolbar.setNavigationOnClickListener(listener);
+        } else {
+            mToolbar.setNavigationIcon(null);
+        }
+    }
+
     public void setBackNavigationIcon(int resId, View.OnClickListener listener) {
         mToolbar.setNavigationIcon(resId);
         mToolbar.setNavigationOnClickListener(listener);
