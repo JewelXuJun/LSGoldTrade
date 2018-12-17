@@ -54,7 +54,7 @@ public class MarketService extends IService<MarketApi> {
     /**
      * 十档实时行情接口
      */
-    public API getTenSpeedQuotes = new API<TenSpeedVo>("GetTenSpeedQuotes") {
+    public API getTenSpeedQuotes = new API<List<TenSpeedVo>>("GetTenSpeedQuotes") {
         @Override
         public Call<DTResponse> request(HashMap<String, String> params) {
             String list = params.get("list");
