@@ -159,6 +159,20 @@ public class DateUtil {
         }
     }
 
+    public static String stringToAllTime(String date) {
+        format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+
+        try {
+            Date dateFormat = format.parse(date);
+
+            return new SimpleDateFormat("MM/dd HH:mm:ss").format(dateFormat.getTime());
+        } catch (ParseException e) {
+            e.printStackTrace();
+
+            return "";
+        }
+    }
+
     public static String dateToStringWithDayofWeek(Long date) {
         String[] weekOfDays = {"周日", "周一", "周二", "周三", "周四", "周五", "周六"};
 

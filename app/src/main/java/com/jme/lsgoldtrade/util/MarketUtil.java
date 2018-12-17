@@ -11,6 +11,8 @@ import java.math.BigDecimal;
 
 public class MarketUtil {
 
+    private static final String DEFAULT = "- - -";
+
     public static String getContractNameCN(String contractId) {
         String contractName;
 
@@ -28,7 +30,7 @@ public class MarketUtil {
 
                 break;
             default:
-                contractName = "";
+                contractName = DEFAULT;
 
                 break;
         }
@@ -53,7 +55,7 @@ public class MarketUtil {
 
                 break;
             default:
-                contractName = "";
+                contractName = DEFAULT;
 
                 break;
         }
@@ -61,24 +63,24 @@ public class MarketUtil {
         return contractName;
     }
 
-    public static int getMarketStateColor(Context context, int type) {
+    public static int getMarketStateColor(int type) {
         int color;
 
         switch (type) {
             case -1:
-                color = ContextCompat.getColor(context, R.color.common_font_decrease);
+                color = R.color.common_font_decrease;
 
                 break;
             case 0:
-                color = ContextCompat.getColor(context, R.color.color_text_black);
+                color = R.color.common_font_stable;
 
                 break;
             case 1:
-                color = ContextCompat.getColor(context, R.color.common_font_increase);
+                color = R.color.common_font_increase;
 
                 break;
             default:
-                color = ContextCompat.getColor(context, R.color.color_text_black);
+                color = R.color.common_font_stable;
 
                 break;
         }
@@ -86,12 +88,19 @@ public class MarketUtil {
         return color;
     }
 
-    public static String getMarketRangeValue(int type, String rate) {
+    public static String getValue(String value) {
+        return TextUtils.isEmpty(value) ? "- - -" : value;
+    }
+
+    public static String getMarketRangeValue(int type, String range) {
+        if (TextUtils.isEmpty(range))
+            return DEFAULT;
+
         String value;
 
         switch (type) {
             case -1:
-                value = rate;
+                value = range;
 
                 break;
             case 0:
@@ -99,7 +108,7 @@ public class MarketUtil {
 
                 break;
             case 1:
-                value = "+" + rate;
+                value = "+" + range;
 
                 break;
             default:
@@ -112,6 +121,9 @@ public class MarketUtil {
     }
 
     public static String getMarketRateValue(int type, String rate) {
+        if (TextUtils.isEmpty(rate))
+            return DEFAULT;
+
         String value;
 
         switch (type) {
@@ -137,6 +149,9 @@ public class MarketUtil {
     }
 
     public static String getVolumeValue(String value, boolean currency) {
+        if (TextUtils.isEmpty(value))
+            return DEFAULT;
+
         String result;
         String valueStr;
         BigDecimal valueDecimal;
@@ -152,11 +167,10 @@ public class MarketUtil {
 
         valueDecimal = new BigDecimal(valueStr);
 
-        if (valueCompare(valueDecimal.abs(), new BigDecimal(10000.0)) == -1) {
+        if (valueDecimal.abs().compareTo(new BigDecimal(10000.0)) == -1)
             result = formatValueNum(valueStr, 2);
-        } else if ((valueCompare(valueDecimal.abs(), new BigDecimal(10000.0)) == 1
-                || valueCompare(valueDecimal.abs(), new BigDecimal(10000.0)) == 0)
-                && valueCompare(valueDecimal.abs(), new BigDecimal(100000000.0)) == -1)
+        else if (valueDecimal.abs().compareTo(new BigDecimal(10000.0)) != -1
+                && valueDecimal.abs().compareTo(new BigDecimal(100000000.0)) == -1)
             result = formatValueNum(valueDivisor(valueDecimal, new BigDecimal(10000.0)).toString(), 2) + "万";
         else
             result = formatValueNum(valueDivisor(valueDecimal, new BigDecimal(100000000.0)).toString(), 2) + "亿";
@@ -167,15 +181,11 @@ public class MarketUtil {
             return result;
     }
 
-    public static int valueCompare(BigDecimal price, BigDecimal availablePrice) {
-        return price.compareTo(availablePrice);
-    }
-
     public static String formatValueNum(String value, int num) {
-        boolean flag = false;
-
         if (TextUtils.isEmpty(value))
             return "";
+
+        boolean flag = false;
 
         if (value.contains("E")) {
             if (value.contains("-")) {
@@ -207,6 +217,9 @@ public class MarketUtil {
     }
 
     public static String formatValue(String value, int num) {
+        if (TextUtils.isEmpty(value))
+            return "";
+
         String result;
 
         if (value.contains(".")) {
@@ -251,7 +264,7 @@ public class MarketUtil {
     }
 
     public static BigDecimal valueDivisor(BigDecimal original, BigDecimal divisor) {
-        if (valueCompare(divisor, new BigDecimal("0")) == 0)
+        if (divisor.compareTo(new BigDecimal("0")) == 0)
             return new BigDecimal("0");
         else
             return new BigDecimal(original.toString()).divide(divisor);
