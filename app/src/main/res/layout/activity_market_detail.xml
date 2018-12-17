@@ -23,37 +23,7 @@
             android:background="@color/common_font_stable"
             android:orientation="vertical">
 
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/common_font_stable"
-                android:fitsSystemWindows="true"
-                android:minHeight="?attr/actionBarSize">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerInParent="true"
-                    android:textColor="@color/white"
-                    android:textSize="@dimen/common_font_size" />
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentLeft="true"
-                    android:layout_centerVertical="true"
-                    android:onClick="@{() -> handlers.onClickBack()}"
-                    android:orientation="horizontal"
-                    android:padding="@dimen/common_page_padding">
-
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@mipmap/ic_back_white" />
-
-                </LinearLayout>
-
-            </RelativeLayout>
+            <include layout="@layout/layout_toolbar" />
 
             <View
                 android:layout_width="match_parent"
@@ -107,6 +77,7 @@
                 android:orientation="vertical">
 
                 <LinearLayout
+                    android:id="@+id/layout_market_detail"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/height_market_current_detail"
                     android:background="@color/common_font_stable"
@@ -236,7 +207,7 @@
                                     android:textSize="@dimen/common_font_size__tiny" />
 
                                 <TextView
-                                    android:id="@+id/tv_turnover_volume"
+                                    android:id="@+id/tv_turn_volume"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:text="@string/text_no_data_default"

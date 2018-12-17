@@ -1,6 +1,8 @@
 package com.jme.lsgoldtrade.ui.market;
 
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
+import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
@@ -8,14 +10,19 @@ import android.view.MotionEvent;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.jme.common.network.DTRequest;
 import com.jme.common.network.Head;
+import com.jme.common.util.DateUtil;
 import com.jme.common.util.StatusBarUtil;
 import com.jme.lsgoldtrade.R;
 import com.jme.lsgoldtrade.base.JMEBaseActivity;
 import com.jme.lsgoldtrade.config.Constants;
 import com.jme.lsgoldtrade.databinding.ActivityMarketDetailBinding;
+import com.jme.lsgoldtrade.domain.TenSpeedVo;
 import com.jme.lsgoldtrade.service.MarketService;
+import com.jme.lsgoldtrade.util.MarketUtil;
 
+import java.math.BigDecimal;
 import java.util.HashMap;
+import java.util.List;
 
 @Route(path = Constants.ARouterUriConst.MARKETDETAIL)
 public class MarketDetailActivity extends JMEBaseActivity {
@@ -24,7 +31,10 @@ public class MarketDetailActivity extends JMEBaseActivity {
 
     private MarketOrderPopUpWindow mPopupWindow;
 
+    private TenSpeedVo mTenSpeedVo;
+
     private String mContractId;
+    private boolean bHighlight = false;
 
     private static final String DIRECTION_AFTER = "1";
 
@@ -42,7 +52,11 @@ public class MarketDetailActivity extends JMEBaseActivity {
 
         mBinding = (ActivityMarketDetailBinding) mBindingUtil;
 
-        StatusBarUtil.setStatusBarMode(this, true, R.color.common_font_stable);
+        mContractId = getIntent().getStringExtra("ContractId");
+
+        initToolbar(MarketUtil.getContractNameEN(mContractId), true, ContextCompat.getColor(this, R.color.white));
+        setBackGroundColor(R.color.common_font_stable);
+        setBackNavigation(true, R.mipmap.ic_back_white);
 
         mPopupWindow = new MarketOrderPopUpWindow(this);
     }
@@ -50,8 +64,6 @@ public class MarketDetailActivity extends JMEBaseActivity {
     @Override
     protected void initData(Bundle savedInstanceState) {
         super.initData(savedInstanceState);
-
-        mContractId = getIntent().getStringExtra("ContractId");
     }
 
     @Override
@@ -69,6 +81,11 @@ public class MarketDetailActivity extends JMEBaseActivity {
     @Override
     protected void onResume() {
         super.onResume();
+
+        if (TextUtils.isEmpty(mContractId))
+            return;
+
+        getTenSpeedQuotes(true);
     }
 
     @Override
@@ -76,11 +93,55 @@ public class MarketDetailActivity extends JMEBaseActivity {
         super.onDestroy();
     }
 
-    private void getTenSpeedQuotes() {
+    private void updateMarketData(TenSpeedVo tenSpeedVo) {
+        if (null == tenSpeedVo)
+            return;
+
+        mTenSpeedVo = tenSpeedVo;
+
+        if (!bHighlight) {
+            String upDownRate = tenSpeedVo.getUpDownRate();
+            String lastSettlePrice = tenSpeedVo.getLastSettlePrice();
+            String highestPrice = tenSpeedVo.getHighestPrice();
+            String lowestPrice = tenSpeedVo.getLowestPrice();
+
+            int rateType;
+
+            if (TextUtils.isEmpty(upDownRate))
+                rateType = 0;
+            else
+                rateType = new BigDecimal(upDownRate).compareTo(new BigDecimal(0));
+
+            setBackGroundColor(MarketUtil.getMarketStateColor(rateType));
+
+            mBinding.tvLastPrice.setText(MarketUtil.getValue(tenSpeedVo.getLatestPrice()));
+            mBinding.tvRange.setText(MarketUtil.getMarketRangeValue(rateType, tenSpeedVo.getUpDown()));
+            mBinding.tvRate.setText(MarketUtil.getMarketRateValue(rateType, upDownRate));
+            mBinding.tvOpen.setText(MarketUtil.getValue(tenSpeedVo.getOpenPrice()));
+            mBinding.tvPreclose.setText(MarketUtil.getValue(tenSpeedVo.getLastClosePrice()));
+            mBinding.tvTurnVolume.setText(MarketUtil.getVolumeValue(String.valueOf(tenSpeedVo.getTurnover()), false));
+            mBinding.tvVolume.setText(MarketUtil.getVolumeValue(String.valueOf(tenSpeedVo.getTurnVolume()), false));
+            mBinding.tvTime.setText(MarketUtil.getValue(DateUtil.stringToAllTime(tenSpeedVo.getQuoteTime())));
+            mBinding.tvHigh.setText(MarketUtil.getValue(highestPrice));
+            mBinding.tvHigh.setTextColor(ContextCompat.getColor(this, MarketUtil.getMarketStateColor(
+                    TextUtils.isEmpty(highestPrice) || TextUtils.isEmpty(lastSettlePrice) ? -2 : new BigDecimal(highestPrice).compareTo(new BigDecimal(lastSettlePrice)))));
+            mBinding.tvLow.setText(MarketUtil.getValue(lowestPrice));
+            mBinding.tvLow.setTextColor(ContextCompat.getColor(this, MarketUtil.getMarketStateColor(
+                    TextUtils.isEmpty(lowestPrice) || TextUtils.isEmpty(lastSettlePrice) ? -2 : new BigDecimal(lowestPrice).compareTo(new BigDecimal(lastSettlePrice)))));
+        }
+    }
+
+    private void setBackGroundColor(int color) {
+        StatusBarUtil.setStatusBarMode(this, true, color);
+        mToolbarHelper.setBackgroundColor(ContextCompat.getColor(this, color));
+        mBinding.layoutMarketDetail.setBackgroundColor(ContextCompat.getColor(this, color));
+    }
+
+    private void getTenSpeedQuotes(boolean enable) {
         HashMap<String, String> params = new HashMap<>();
         params.put("list", mContractId);
 
-        sendRequest(MarketService.getInstance().getTenSpeedQuotes, params, false, false, false);
+        sendRequest(MarketService.getInstance().getTenSpeedQuotes, params, enable, false, false);
     }
 
     private void getTChartQuotes() {
@@ -110,9 +171,20 @@ public class MarketDetailActivity extends JMEBaseActivity {
         switch (request.getApi().getName()) {
             case "GetTenSpeedQuotes":
                 if (head.isSuccess()) {
+                    List<TenSpeedVo> list;
 
-                } else {
+                    try {
+                        list = (List<TenSpeedVo>) response;
+                    } catch (Exception e) {
+                        list = null;
 
+                        e.printStackTrace();
+                    }
+
+                    if (null == list || 0 == list.size())
+                        return;
+
+                    updateMarketData(list.get(0));
                 }
 
                 break;

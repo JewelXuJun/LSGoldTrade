@@ -1,5 +1,7 @@
 package com.jme.lsgoldtrade.domain;
 
+import com.jme.lsgoldtrade.util.MarketUtil;
+
 import java.io.Serializable;
 
 public class TenSpeedVo implements Serializable {
@@ -63,7 +65,7 @@ public class TenSpeedVo implements Serializable {
      * "upDownRate":30000,
      * "turnover":100,
      * "averagePrice":35000,
-     * "quoteTime":”20180103162858”
+     * "quoteTime":”2018-12-18 00:25:29”
      */
 
     private String contractId;
@@ -192,48 +194,48 @@ public class TenSpeedVo implements Serializable {
         this.contractId = contractId;
     }
 
-    public long getLastClosePrice() {
-        return lastClosePrice;
+    public String getLastClosePrice() {
+        return MarketUtil.getPriceValue(lastClosePrice);
     }
 
     public void setLastClosePrice(long lastClosePrice) {
         this.lastClosePrice = lastClosePrice;
     }
 
-    public long getLastSettlePrice() {
-        return lastSettlePrice;
+    public String getLastSettlePrice() {
+        return MarketUtil.getPriceValue(lastSettlePrice);
     }
 
     public void setLastSettlePrice(long lastSettlePrice) {
         this.lastSettlePrice = lastSettlePrice;
     }
 
-    public long getOpenPrice() {
-        return openPrice;
+    public String getOpenPrice() {
+        return MarketUtil.getPriceValue(openPrice);
     }
 
     public void setOpenPrice(long openPrice) {
         this.openPrice = openPrice;
     }
 
-    public long getHighestPrice() {
-        return highestPrice;
+    public String getHighestPrice() {
+        return MarketUtil.getPriceValue(highestPrice);
     }
 
     public void setHighestPrice(long highestPrice) {
         this.highestPrice = highestPrice;
     }
 
-    public long getLowestPrice() {
-        return lowestPrice;
+    public String getLowestPrice() {
+        return MarketUtil.getPriceValue(lowestPrice);
     }
 
     public void setLowestPrice(long lowestPrice) {
         this.lowestPrice = lowestPrice;
     }
 
-    public long getLatestPrice() {
-        return latestPrice;
+    public String getLatestPrice() {
+        return MarketUtil.getPriceValue(latestPrice);
     }
 
     public void setLatestPrice(long latestPrice) {
@@ -616,16 +618,16 @@ public class TenSpeedVo implements Serializable {
         this.position = position;
     }
 
-    public long getUpDown() {
-        return upDown;
+    public String getUpDown() {
+        return MarketUtil.getPriceValue(upDown);
     }
 
     public void setUpDown(long upDown) {
         this.upDown = upDown;
     }
 
-    public long getUpDownRate() {
-        return upDownRate;
+    public String getUpDownRate() {
+        return MarketUtil.getRateValue(upDownRate);
     }
 
     public void setUpDownRate(long upDownRate) {
