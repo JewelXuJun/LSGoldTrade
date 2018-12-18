@@ -31,6 +31,14 @@ public interface MarketApi {
     Call<DTResponse> getTenSpeedQuotes(@Query("list") String list);
 
     /**
+     * 分笔明细
+     *
+     * @return
+     */
+    @GET("/gold-hq/v1.0.0/android/detail")
+    Call<DTResponse> getDetail(@QueryMap Map<String, String> map);
+
+    /**
      * 分时行情接口
      *
      * @return

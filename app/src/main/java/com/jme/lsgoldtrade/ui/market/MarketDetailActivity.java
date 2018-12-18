@@ -21,11 +21,13 @@ import com.jme.lsgoldtrade.base.JMEBaseActivity;
 import com.jme.lsgoldtrade.config.AppConfig;
 import com.jme.lsgoldtrade.config.Constants;
 import com.jme.lsgoldtrade.databinding.ActivityMarketDetailBinding;
+import com.jme.lsgoldtrade.domain.DetailVo;
 import com.jme.lsgoldtrade.domain.TenSpeedVo;
 import com.jme.lsgoldtrade.service.MarketService;
 import com.jme.lsgoldtrade.util.MarketUtil;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -43,6 +45,7 @@ public class MarketDetailActivity extends JMEBaseActivity implements FChart.OnPr
     private boolean bHighlight = false;
 
     private static final String DIRECTION_AFTER = "1";
+    private static final String DIRECTION_BEFORE = "2";
     private static final String COUNT_TCHART = "660";
     private static final String COUNT_KCHART = "200";
 
@@ -52,7 +55,7 @@ public class MarketDetailActivity extends JMEBaseActivity implements FChart.OnPr
                 case Constants.Msg.MSG_UPDATE_DATA:
                     mHandler.removeMessages(Constants.Msg.MSG_UPDATE_DATA);
 
-                    getTenSpeedQuotes(false);
+                    updateData(false);
 
                     mHandler.sendEmptyMessageDelayed(Constants.Msg.MSG_UPDATE_DATA, getTimeInterval());
 
@@ -112,7 +115,7 @@ public class MarketDetailActivity extends JMEBaseActivity implements FChart.OnPr
         if (TextUtils.isEmpty(mContractId))
             return;
 
-        getTenSpeedQuotes(true);
+        updateData(true);
     }
 
     @Override
@@ -136,6 +139,13 @@ public class MarketDetailActivity extends JMEBaseActivity implements FChart.OnPr
         mTChart.setIsStartFromBeginning(true);
         mTChart.setLandscapeButtonVisible(true);
         mTChart.config();
+    }
+
+    private void updateData(boolean enable) {
+        getTenSpeedQuotes(enable);
+
+        //分时显示的时候轮询
+        getDetail();
     }
 
     private long getTimeInterval() {
@@ -191,11 +201,38 @@ public class MarketDetailActivity extends JMEBaseActivity implements FChart.OnPr
         mTChart.loadTradeInfoChartData(tenSpeedVo.getAskLists(), tenSpeedVo.getBidLists());
     }
 
+    private void setDetailData(List<DetailVo> list) {
+        List<String[]> listStr = new ArrayList<>();
+
+        for (DetailVo detailVo : list) {
+            if (null != detailVo) {
+                String[] values = new String[3];
+                values[0] = String.valueOf(DateUtil.dateToLong(detailVo.getQuoteTime(), "yyyy-MM-dd HH:mm:ss"));
+                values[1] = MarketUtil.getPriceValue(detailVo.getLatestPrice());
+                values[2] = String.valueOf(detailVo.getTurnVolume());
+
+                listStr.add(values);
+            }
+        }
+
+        mTChart.loadDealChartData(listStr);
+    }
+
     private void getTenSpeedQuotes(boolean enable) {
         HashMap<String, String> params = new HashMap<>();
         params.put("list", mContractId);
 
         sendRequest(MarketService.getInstance().getTenSpeedQuotes, params, enable, false, false);
+    }
+
+    private void getDetail() {
+        HashMap<String, String> params = new HashMap<>();
+        params.put("contractId", mContractId);
+        params.put("detailId", "");
+        params.put("qryFlag", DIRECTION_BEFORE);
+        params.put("count", String.valueOf(AppConfig.PageSize_10));
+
+        sendRequest(MarketService.getInstance().getDetail, params, false, false, false);
     }
 
     private void getTChartQuotes() {
@@ -245,6 +282,25 @@ public class MarketDetailActivity extends JMEBaseActivity implements FChart.OnPr
                     bFlag = false;
 
                     mHandler.sendEmptyMessageDelayed(Constants.Msg.MSG_UPDATE_DATA, getTimeInterval());
+                }
+
+                break;
+            case "GetDetail":
+                if (head.isSuccess()) {
+                    List<DetailVo> list;
+
+                    try {
+                        list = (List<DetailVo>) response;
+                    } catch (Exception e) {
+                        list = null;
+
+                        e.printStackTrace();
+                    }
+
+                    if (null == list || 0 == list.size())
+                        return;
+
+                    setDetailData(list);
                 }
 
                 break;
