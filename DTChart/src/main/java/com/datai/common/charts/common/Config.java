@@ -75,10 +75,10 @@ public class Config {
                 X_Text_Color = Color.rgb(34, 34, 34);//Color.RED;
                 Y_Text_Color = Color.rgb(34, 34, 34);
                 Candle_Shadow_Color = Color.rgb(84, 102, 18);
-                Increasing_Color = Color.rgb(233, 48, 48);//Color.RED;
-                Decreasing_Color = Color.rgb(0, 163, 0);//Color.rgb(84, 102, 18);
+                Increasing_Color = Color.rgb(230, 64, 32);//Color.RED;
+                Decreasing_Color = Color.rgb(0, 183, 103);//Color.rgb(84, 102, 18);
 //                Time_Color = Color.rgb(34, 34, 34);
-                Default_Color = Color.rgb(34, 34, 34);
+                Default_Color = Color.rgb(26, 26, 26);
                 Current_Color = Color.rgb(75, 148, 250);
                 Average_Color = Color.rgb(255, 191, 2);
                 Current_Fill_Color = Color.rgb(227, 239, 255);

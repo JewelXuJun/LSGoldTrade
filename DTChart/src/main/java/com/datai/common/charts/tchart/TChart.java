@@ -155,6 +155,18 @@ public class TChart extends LinearLayout {
         setTradeInfoChartData();
     }
 
+    public void loadTradeInfoChartData(List<String[]> offerGrpList, List<String[]> bidGrpList) {
+        mFData.setTradeData(offerGrpList, bidGrpList);
+
+        setTradeChartData();
+    }
+
+    public void loadDealChartData(List<String[]> tickData) {
+        mFData.setDealData(tickData);
+
+        setDealData();
+    }
+
     public void setPriceFormatDigit(int digits) {
         mTConfig.setPriceFormatDigit(digits);
     }
@@ -390,6 +402,15 @@ public class TChart extends LinearLayout {
     private void setTradeInfoChartData() {
         mTradeInfoChart.getFChart(FData.TYPE_BUY).setData(mFData.getBidGrp(), FData.TYPE_BUY, mTChartData.getPreclose());
         mTradeInfoChart.getFChart(FData.TYPE_SELL).setData(mFData.getOfferGrp(), FData.TYPE_SELL, mTChartData.getPreclose());
+        mTradeInfoChart.getFChart(FData.TYPE_TICK).setData(mFData.getTickData(), FData.TYPE_TICK, mTChartData.getPreclose());
+    }
+
+    private void setTradeChartData() {
+        mTradeInfoChart.getFChart(FData.TYPE_BUY).setData(mFData.getBidGrp(), FData.TYPE_BUY, mTChartData.getPreclose());
+        mTradeInfoChart.getFChart(FData.TYPE_SELL).setData(mFData.getOfferGrp(), FData.TYPE_SELL, mTChartData.getPreclose());
+    }
+
+    private void setDealData() {
         mTradeInfoChart.getFChart(FData.TYPE_TICK).setData(mFData.getTickData(), FData.TYPE_TICK, mTChartData.getPreclose());
     }
 }

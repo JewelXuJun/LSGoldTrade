@@ -63,4 +63,13 @@ public class FData {
         mTickData = tickData;
     }
 
+    public void setTradeData(List<String[]> offerGrpList, List<String[]> bidGrpList) {
+        mOfferGrpList = offerGrpList;
+        mBidGrpList = bidGrpList;
+    }
+
+    public void setDealData(List<String[]> tickData) {
+        mTickData = tickData;
+    }
+
 }

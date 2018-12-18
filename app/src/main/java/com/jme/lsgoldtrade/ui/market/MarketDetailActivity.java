@@ -10,11 +10,12 @@ import android.view.KeyEvent;
 import android.view.MotionEvent;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
+import com.datai.common.charts.fchart.FChart;
+import com.datai.common.charts.tchart.TChart;
 import com.jme.common.network.DTRequest;
 import com.jme.common.network.Head;
 import com.jme.common.util.DateUtil;
 import com.jme.common.util.NetWorkUtils;
-import com.jme.common.util.StatusBarUtil;
 import com.jme.lsgoldtrade.R;
 import com.jme.lsgoldtrade.base.JMEBaseActivity;
 import com.jme.lsgoldtrade.config.AppConfig;
@@ -29,13 +30,13 @@ import java.util.HashMap;
 import java.util.List;
 
 @Route(path = Constants.ARouterUriConst.MARKETDETAIL)
-public class MarketDetailActivity extends JMEBaseActivity {
+public class MarketDetailActivity extends JMEBaseActivity implements FChart.OnPriceClickListener {
 
     private ActivityMarketDetailBinding mBinding;
 
-    private MarketOrderPopUpWindow mPopupWindow;
-
     private TenSpeedVo mTenSpeedVo;
+    private MarketOrderPopUpWindow mPopupWindow;
+    private TChart mTChart;
 
     private String mContractId;
     private boolean bFlag = true;
@@ -80,6 +81,11 @@ public class MarketDetailActivity extends JMEBaseActivity {
         setBackNavigation(true, R.mipmap.ic_back_white);
 
         mPopupWindow = new MarketOrderPopUpWindow(this);
+        mTChart = mBinding.chart.getTChart();
+
+        mBinding.chart.setPriceFormatDigit(2);
+
+        initTChart();
     }
 
     @Override
@@ -118,6 +124,20 @@ public class MarketDetailActivity extends JMEBaseActivity {
         removeMessage();
     }
 
+    private void setBackGroundColor(int color) {
+//        StatusBarUtil.setStatusBarMode(this, true, color);
+        mToolbarHelper.setBackgroundColor(ContextCompat.getColor(this, color));
+        mBinding.layoutMarketDetail.setBackgroundColor(ContextCompat.getColor(this, color));
+    }
+
+    private void initTChart() {
+        mTChart.setScaleXEnabled(false);
+        mTChart.setIsNeedSupplement(false);
+        mTChart.setIsStartFromBeginning(true);
+        mTChart.setLandscapeButtonVisible(true);
+        mTChart.config();
+    }
+
     private long getTimeInterval() {
         return NetWorkUtils.isWifiConnected(mContext) ? AppConfig.TimeInterval_WiFi : AppConfig.TimeInterval_NetWork;
     }
@@ -132,9 +152,13 @@ public class MarketDetailActivity extends JMEBaseActivity {
 
         mTenSpeedVo = tenSpeedVo;
 
+        String lastSettlePrice = tenSpeedVo.getLastSettlePrice();
+
+        if (TextUtils.isEmpty(lastSettlePrice))
+            return;
+
         if (!bHighlight) {
             String upDownRate = tenSpeedVo.getUpDownRate();
-            String lastSettlePrice = tenSpeedVo.getLastSettlePrice();
             String highestPrice = tenSpeedVo.getHighestPrice();
             String lowestPrice = tenSpeedVo.getLowestPrice();
 
@@ -162,12 +186,9 @@ public class MarketDetailActivity extends JMEBaseActivity {
             mBinding.tvLow.setTextColor(ContextCompat.getColor(this, MarketUtil.getMarketStateColor(
                     TextUtils.isEmpty(lowestPrice) || TextUtils.isEmpty(lastSettlePrice) ? -2 : new BigDecimal(lowestPrice).compareTo(new BigDecimal(lastSettlePrice)))));
         }
-    }
 
-    private void setBackGroundColor(int color) {
-//        StatusBarUtil.setStatusBarMode(this, true, color);
-        mToolbarHelper.setBackgroundColor(ContextCompat.getColor(this, color));
-        mBinding.layoutMarketDetail.setBackgroundColor(ContextCompat.getColor(this, color));
+        mTChart.setPreClose(lastSettlePrice);
+        mTChart.loadTradeInfoChartData(tenSpeedVo.getAskLists(), tenSpeedVo.getBidLists());
     }
 
     private void getTenSpeedQuotes(boolean enable) {
@@ -244,6 +265,11 @@ public class MarketDetailActivity extends JMEBaseActivity {
 
                 break;
         }
+    }
+
+    @Override
+    public void OnPriceClick(String price, String title) {
+
     }
 
     public class ClickHandlers {

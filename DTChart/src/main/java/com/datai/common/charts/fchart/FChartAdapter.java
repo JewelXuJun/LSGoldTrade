@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
+
 import com.datai.common.R;
 import com.datai.common.charts.common.Descriptor;
 
@@ -31,8 +32,8 @@ public class FChartAdapter extends BaseAdapter {
 
     private int mType = FData.TYPE_BUY;
 
-    private String[] mSell = {"卖5", "卖4", "卖3", "卖2", "卖1"};
-    private String[] mBuy = {"买1", "买2", "买3", "买4", "买5"};
+    private String[] mSell = {"卖10", "卖9", "卖8", "卖7", "卖6", "卖5", "卖4", "卖3", "卖2", "卖1"};
+    private String[] mBuy = {"买1", "买2", "买3", "买4", "买5", "买6", "买7", "买8", "买9", "买10"};
 
     public FChartAdapter(Context context, List<String[]> list) {
         mContext = context;
@@ -66,13 +67,7 @@ public class FChartAdapter extends BaseAdapter {
 
     @Override
     public int getCount() {
-//        if (mList == null)
-//            return 0;
-
-        if (mType == FData.TYPE_TICK)
-            return 10;
-
-        return 5;
+        return 10;
     }
 
     @Override
@@ -100,16 +95,16 @@ public class FChartAdapter extends BaseAdapter {
 
             convertView = inflater.inflate(R.layout.item_fchart, null);
 
-            holder.tv_item_first = (TextView) convertView.findViewById(R.id.tv_item_first);
-            holder.tv_item_second = (TextView) convertView.findViewById(R.id.tv_item_second);
-            holder.tv_item_third = (TextView) convertView.findViewById(R.id.tv_item_third);
+            holder.tv_item_first = convertView.findViewById(R.id.tv_item_first);
+            holder.tv_item_second = convertView.findViewById(R.id.tv_item_second);
+            holder.tv_item_third = convertView.findViewById(R.id.tv_item_third);
 
             convertView.setTag(holder);
         } else {
             holder = (ViewHolder) convertView.getTag();
         }
 
-        AbsListView.LayoutParams params = new AbsListView.LayoutParams(AbsListView.LayoutParams.WRAP_CONTENT, parent.getHeight() / getCount());
+        AbsListView.LayoutParams params = new AbsListView.LayoutParams(AbsListView.LayoutParams.MATCH_PARENT, parent.getHeight() / getCount());
         convertView.setLayoutParams(params);
 
         if (mList != null && mList.size() > 0) {
@@ -134,9 +129,9 @@ public class FChartAdapter extends BaseAdapter {
                                 Float.parseFloat(mPreClose))));
 
                         if (new BigDecimal(second).compareTo(new BigDecimal(1000)) == -1) {
-                            holder.tv_item_second.setTextSize(TypedValue.COMPLEX_UNIT_SP, 12);
+                            holder.tv_item_second.setTextSize(TypedValue.COMPLEX_UNIT_SP, 11);
                         } else {
-                            holder.tv_item_second.setTextSize(TypedValue.COMPLEX_UNIT_SP, 10);
+                            holder.tv_item_second.setTextSize(TypedValue.COMPLEX_UNIT_SP, 9);
                         }
                     }
 
@@ -148,9 +143,9 @@ public class FChartAdapter extends BaseAdapter {
                         holder.tv_item_third.setText(mDescriptor.floatValue(third, 0));
 
                         if (new BigDecimal(third).compareTo(new BigDecimal(1000)) == -1) {
-                            holder.tv_item_third.setTextSize(TypedValue.COMPLEX_UNIT_SP, 12);
+                            holder.tv_item_third.setTextSize(TypedValue.COMPLEX_UNIT_SP, 11);
                         } else {
-                            holder.tv_item_third.setTextSize(TypedValue.COMPLEX_UNIT_SP, 10);
+                            holder.tv_item_third.setTextSize(TypedValue.COMPLEX_UNIT_SP, 9);
                         }
                     }
                 }
@@ -160,7 +155,7 @@ public class FChartAdapter extends BaseAdapter {
                 holder.tv_item_first.setText(mSell[position]);
             } else if (mType == FData.TYPE_BUY) {
                 holder.tv_item_first.setText(mBuy[position]);
-            }else {
+            } else {
                 holder.tv_item_first.setText("   - -   ");
             }
 

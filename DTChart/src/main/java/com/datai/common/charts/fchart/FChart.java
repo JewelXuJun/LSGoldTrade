@@ -15,7 +15,7 @@ import java.util.List;
 
 /**
  * Created by XuJun on 2016/5/4.
- * Fields Chart 五档实时行情
+ * Fields Chart 十档实时行情
  */
 public class FChart extends LinearLayout implements AdapterView.OnItemClickListener {
 

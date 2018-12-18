@@ -46,13 +46,13 @@ public class TradeInfoChart extends LinearLayout {
     }
 
     private void init() {
-        mFChart_buy = (FChart) findViewById(R.id.fchart_buy);
-        mFChart_sell = (FChart) findViewById(R.id.fchart_sell);
-        mFChart_tick = (FChart) findViewById(R.id.fchart_tick);
-        mLayout_fields = (LinearLayout) findViewById(R.id.layout_fields);
-        mRadioGroup = (RadioGroup) findViewById(R.id.chart_group);
-        mRadioButton_fields = (RadioButton) findViewById(R.id.radiobutton_fields);
-        mRadioButton_detail = (RadioButton) findViewById(R.id.radiobutton_detail);
+        mFChart_buy = findViewById(R.id.fchart_buy);
+        mFChart_sell = findViewById(R.id.fchart_sell);
+        mFChart_tick = findViewById(R.id.fchart_tick);
+        mLayout_fields = findViewById(R.id.layout_fields);
+        mRadioGroup = findViewById(R.id.chart_group);
+        mRadioButton_fields = findViewById(R.id.radiobutton_fields);
+        mRadioButton_detail = findViewById(R.id.radiobutton_detail);
     }
 
     private void setListener() {
@@ -62,7 +62,7 @@ public class TradeInfoChart extends LinearLayout {
             }
         });
 
-       /* mRadioButton_fields.setOnClickListener(new OnClickListener() {
+        mRadioButton_fields.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
                 mLayout_fields.setVisibility(View.VISIBLE);
@@ -78,7 +78,7 @@ public class TradeInfoChart extends LinearLayout {
                 mFChart_tick.setVisibility(View.VISIBLE);
                 mRadioButton_detail.setChecked(true);
             }
-        });*/
+        });
     }
 
     public FChart getFChart(int type) {
@@ -118,6 +118,6 @@ public class TradeInfoChart extends LinearLayout {
     }
 
     public interface DoRadioButtonFunction {
-         void Request();
+        void Request();
     }
 }

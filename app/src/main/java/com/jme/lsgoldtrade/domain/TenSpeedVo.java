@@ -3,6 +3,8 @@ package com.jme.lsgoldtrade.domain;
 import com.jme.lsgoldtrade.util.MarketUtil;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 public class TenSpeedVo implements Serializable {
 
@@ -126,45 +128,45 @@ public class TenSpeedVo implements Serializable {
 
     private long bidVolume10;
 
-    private long askingPrice1;
+    private long askPrice1;
 
-    private long askingVolume1;
+    private long askVolume1;
 
-    private long askingPrice2;
+    private long askPrice2;
 
-    private long askingVolume2;
+    private long askVolume2;
 
-    private long askingPrice3;
+    private long askPrice3;
 
-    private long askingVolume3;
+    private long askVolume3;
 
-    private long askingPrice4;
+    private long askPrice4;
 
-    private long askingVolume4;
+    private long askVolume4;
 
-    private long askingPrice5;
+    private long askPrice5;
 
-    private long askingVolume5;
+    private long askVolume5;
 
-    private long askingPrice6;
+    private long askPrice6;
 
-    private long askingVolume6;
+    private long askVolume6;
 
-    private long askingPrice7;
+    private long askPrice7;
 
-    private long askingVolume7;
+    private long askVolume7;
 
-    private long askingPrice8;
+    private long askPrice8;
 
-    private long askingVolume8;
+    private long askVolume8;
 
-    private long askingPrice9;
+    private long askPrice9;
 
-    private long askingVolume9;
+    private long askVolume9;
 
-    private long askingPrice10;
+    private long askPrice10;
 
-    private long askingVolume10;
+    private long askVolume10;
 
     private long turnVolume;
 
@@ -418,164 +420,164 @@ public class TenSpeedVo implements Serializable {
         this.bidVolume10 = bidVolume10;
     }
 
-    public long getAskingPrice1() {
-        return askingPrice1;
+    public long getAskPrice1() {
+        return askPrice1;
     }
 
-    public void setAskingPrice1(long askingPrice1) {
-        this.askingPrice1 = askingPrice1;
+    public void setAskPrice1(long askPrice1) {
+        this.askPrice1 = askPrice1;
     }
 
-    public long getAskingVolume1() {
-        return askingVolume1;
+    public long getAskVolume1() {
+        return askVolume1;
     }
 
-    public void setAskingVolume1(long askingVolume1) {
-        this.askingVolume1 = askingVolume1;
+    public void setAskVolume1(long askVolume1) {
+        this.askVolume1 = askVolume1;
     }
 
-    public long getAskingPrice2() {
-        return askingPrice2;
+    public long getAskPrice2() {
+        return askPrice2;
     }
 
-    public void setAskingPrice2(long askingPrice2) {
-        this.askingPrice2 = askingPrice2;
+    public void setAskPrice2(long askPrice2) {
+        this.askPrice2 = askPrice2;
     }
 
-    public long getAskingVolume2() {
-        return askingVolume2;
+    public long getAskVolume2() {
+        return askVolume2;
     }
 
-    public void setAskingVolume2(long askingVolume2) {
-        this.askingVolume2 = askingVolume2;
+    public void setAskVolume2(long askVolume2) {
+        this.askVolume2 = askVolume2;
     }
 
-    public long getAskingPrice3() {
-        return askingPrice3;
+    public long getAskPrice3() {
+        return askPrice3;
     }
 
-    public void setAskingPrice3(long askingPrice3) {
-        this.askingPrice3 = askingPrice3;
+    public void setAskPrice3(long askPrice3) {
+        this.askPrice3 = askPrice3;
     }
 
-    public long getAskingVolume3() {
-        return askingVolume3;
+    public long getAskVolume3() {
+        return askVolume3;
     }
 
-    public void setAskingVolume3(long askingVolume3) {
-        this.askingVolume3 = askingVolume3;
+    public void setAskVolume3(long askVolume3) {
+        this.askVolume3 = askVolume3;
     }
 
-    public long getAskingPrice4() {
-        return askingPrice4;
+    public long getAskPrice4() {
+        return askPrice4;
     }
 
-    public void setAskingPrice4(long askingPrice4) {
-        this.askingPrice4 = askingPrice4;
+    public void setAskPrice4(long askPrice4) {
+        this.askPrice4 = askPrice4;
     }
 
-    public long getAskingVolume4() {
-        return askingVolume4;
+    public long getAskVolume4() {
+        return askVolume4;
     }
 
-    public void setAskingVolume4(long askingVolume4) {
-        this.askingVolume4 = askingVolume4;
+    public void setAskVolume4(long askVolume4) {
+        this.askVolume4 = askVolume4;
     }
 
-    public long getAskingPrice5() {
-        return askingPrice5;
+    public long getAskPrice5() {
+        return askPrice5;
     }
 
-    public void setAskingPrice5(long askingPrice5) {
-        this.askingPrice5 = askingPrice5;
+    public void setAskPrice5(long askPrice5) {
+        this.askPrice5 = askPrice5;
     }
 
-    public long getAskingVolume5() {
-        return askingVolume5;
+    public long getAskVolume5() {
+        return askVolume5;
     }
 
-    public void setAskingVolume5(long askingVolume5) {
-        this.askingVolume5 = askingVolume5;
+    public void setAskVolume5(long askVolume5) {
+        this.askVolume5 = askVolume5;
     }
 
-    public long getAskingPrice6() {
-        return askingPrice6;
+    public long getAskPrice6() {
+        return askPrice6;
     }
 
-    public void setAskingPrice6(long askingPrice6) {
-        this.askingPrice6 = askingPrice6;
+    public void setAskPrice6(long askPrice6) {
+        this.askPrice6 = askPrice6;
     }
 
-    public long getAskingVolume6() {
-        return askingVolume6;
+    public long getAskVolume6() {
+        return askVolume6;
     }
 
-    public void setAskingVolume6(long askingVolume6) {
-        this.askingVolume6 = askingVolume6;
+    public void setAskVolume6(long askVolume6) {
+        this.askVolume6 = askVolume6;
     }
 
-    public long getAskingPrice7() {
-        return askingPrice7;
+    public long getAskPrice7() {
+        return askPrice7;
     }
 
-    public void setAskingPrice7(long askingPrice7) {
-        this.askingPrice7 = askingPrice7;
+    public void setAskPrice7(long askPrice7) {
+        this.askPrice7 = askPrice7;
     }
 
-    public long getAskingVolume7() {
-        return askingVolume7;
+    public long getAskVolume7() {
+        return askVolume7;
     }
 
-    public void setAskingVolume7(long askingVolume7) {
-        this.askingVolume7 = askingVolume7;
+    public void setAskVolume7(long askVolume7) {
+        this.askVolume7 = askVolume7;
     }
 
-    public long getAskingPrice8() {
-        return askingPrice8;
+    public long getAskPrice8() {
+        return askPrice8;
     }
 
-    public void setAskingPrice8(long askingPrice8) {
-        this.askingPrice8 = askingPrice8;
+    public void setAskPrice8(long askPrice8) {
+        this.askPrice8 = askPrice8;
     }
 
-    public long getAskingVolume8() {
-        return askingVolume8;
+    public long getAskVolume8() {
+        return askVolume8;
     }
 
-    public void setAskingVolume8(long askingVolume8) {
-        this.askingVolume8 = askingVolume8;
+    public void setAskVolume8(long askVolume8) {
+        this.askVolume8 = askVolume8;
     }
 
-    public long getAskingPrice9() {
-        return askingPrice9;
+    public long getAskPrice9() {
+        return askPrice9;
     }
 
-    public void setAskingPrice9(long askingPrice9) {
-        this.askingPrice9 = askingPrice9;
+    public void setAskPrice9(long askPrice9) {
+        this.askPrice9 = askPrice9;
     }
 
-    public long getAskingVolume9() {
-        return askingVolume9;
+    public long getAskVolume9() {
+        return askVolume9;
     }
 
-    public void setAskingVolume9(long askingVolume9) {
-        this.askingVolume9 = askingVolume9;
+    public void setAskVolume9(long askVolume9) {
+        this.askVolume9 = askVolume9;
     }
 
-    public long getAskingPrice10() {
-        return askingPrice10;
+    public long getAskPrice10() {
+        return askPrice10;
     }
 
-    public void setAskingPrice10(long askingPrice10) {
-        this.askingPrice10 = askingPrice10;
+    public void setAskPrice10(long askPrice10) {
+        this.askPrice10 = askPrice10;
     }
 
-    public long getAskingVolume10() {
-        return askingVolume10;
+    public long getAskVolume10() {
+        return askVolume10;
     }
 
-    public void setAskingVolume10(long askingVolume10) {
-        this.askingVolume10 = askingVolume10;
+    public void setAskVolume10(long askVolume10) {
+        this.askVolume10 = askVolume10;
     }
 
     public long getTurnVolume() {
@@ -657,4 +659,137 @@ public class TenSpeedVo implements Serializable {
     public void setQuoteTime(String quoteTime) {
         this.quoteTime = quoteTime;
     }
+
+    public List<String[]> getAskLists() {
+        List<String[]> list = new ArrayList<>();
+
+        String[] askValue10 = new String[3];
+        askValue10[0] = "卖10";
+        askValue10[1] = MarketUtil.getPriceValue(askPrice10);
+        askValue10[2] = String.valueOf(askVolume10);
+        list.add(askValue10);
+
+        String[] askValue9 = new String[3];
+        askValue9[0] = "卖9";
+        askValue9[1] = MarketUtil.getPriceValue(askPrice9);
+        askValue9[2] = String.valueOf(askVolume9);
+        list.add(askValue9);
+
+        String[] askValue8 = new String[3];
+        askValue8[0] = "卖8";
+        askValue8[1] = MarketUtil.getPriceValue(askPrice8);
+        askValue8[2] = String.valueOf(askVolume8);
+        list.add(askValue8);
+
+        String[] askValue7 = new String[3];
+        askValue7[0] = "卖7";
+        askValue7[1] = MarketUtil.getPriceValue(askPrice7);
+        askValue7[2] = String.valueOf(askVolume7);
+        list.add(askValue7);
+
+        String[] askValue6 = new String[3];
+        askValue6[0] = "卖6";
+        askValue6[1] = MarketUtil.getPriceValue(askPrice6);
+        askValue6[2] = String.valueOf(askVolume6);
+        list.add(askValue6);
+
+        String[] askValue5 = new String[3];
+        askValue5[0] = "卖5";
+        askValue5[1] = MarketUtil.getPriceValue(askPrice5);
+        askValue5[2] = String.valueOf(askVolume5);
+        list.add(askValue5);
+
+        String[] askValue4 = new String[3];
+        askValue4[0] = "卖4";
+        askValue4[1] = MarketUtil.getPriceValue(askPrice4);
+        askValue4[2] = String.valueOf(askVolume4);
+        list.add(askValue4);
+
+        String[] askValue3 = new String[3];
+        askValue3[0] = "卖3";
+        askValue3[1] = MarketUtil.getPriceValue(askPrice3);
+        askValue3[2] = String.valueOf(askVolume3);
+        list.add(askValue3);
+
+        String[] askValue2 = new String[3];
+        askValue2[0] = "卖2";
+        askValue2[1] = MarketUtil.getPriceValue(askPrice2);
+        askValue2[2] = String.valueOf(askVolume2);
+        list.add(askValue2);
+
+        String[] askValue1 = new String[3];
+        askValue1[0] = "卖1";
+        askValue1[1] = MarketUtil.getPriceValue(askPrice1);
+        askValue1[2] = String.valueOf(askVolume1);
+        list.add(askValue1);
+
+        return list;
+    }
+
+    public List<String[]> getBidLists() {
+        List<String[]> list = new ArrayList<>();
+
+        String[] bidValue1 = new String[3];
+        bidValue1[0] = "买1";
+        bidValue1[1] = MarketUtil.getPriceValue(bidPrice1);
+        bidValue1[2] = String.valueOf(bidVolume1);
+        list.add(bidValue1);
+
+        String[] bidValue2 = new String[3];
+        bidValue2[0] = "买2";
+        bidValue2[1] = MarketUtil.getPriceValue(bidPrice2);
+        bidValue2[2] = String.valueOf(bidVolume2);
+        list.add(bidValue2);
+
+        String[] bidValue3 = new String[3];
+        bidValue3[0] = "买3";
+        bidValue3[1] = MarketUtil.getPriceValue(bidPrice3);
+        bidValue3[2] = String.valueOf(bidVolume3);
+        list.add(bidValue3);
+
+        String[] bidValue4 = new String[3];
+        bidValue4[0] = "买4";
+        bidValue4[1] = MarketUtil.getPriceValue(bidPrice4);
+        bidValue4[2] = String.valueOf(bidVolume4);
+        list.add(bidValue4);
+
+        String[] bidValue5 = new String[3];
+        bidValue5[0] = "买5";
+        bidValue5[1] = MarketUtil.getPriceValue(bidPrice5);
+        bidValue5[2] = String.valueOf(bidVolume5);
+        list.add(bidValue5);
+
+        String[] bidValue6 = new String[3];
+        bidValue6[0] = "买6";
+        bidValue6[1] = MarketUtil.getPriceValue(bidPrice6);
+        bidValue6[2] = String.valueOf(bidVolume6);
+        list.add(bidValue6);
+
+        String[] bidValue7 = new String[3];
+        bidValue7[0] = "买7";
+        bidValue7[1] = MarketUtil.getPriceValue(bidPrice7);
+        bidValue7[2] = String.valueOf(bidVolume7);
+        list.add(bidValue7);
+
+        String[] bidValue8 = new String[3];
+        bidValue8[0] = "买8";
+        bidValue8[1] = MarketUtil.getPriceValue(bidPrice8);
+        bidValue8[2] = String.valueOf(bidVolume8);
+        list.add(bidValue8);
+
+        String[] bidValue9 = new String[3];
+        bidValue9[0] = "买9";
+        bidValue9[1] = MarketUtil.getPriceValue(bidPrice9);
+        bidValue9[2] = String.valueOf(bidVolume9);
+        list.add(bidValue9);
+
+        String[] bidValue10 = new String[3];
+        bidValue10[0] = "买10";
+        bidValue10[1] = MarketUtil.getPriceValue(bidPrice10);
+        bidValue10[2] = String.valueOf(bidVolume10);
+        list.add(bidValue10);
+
+        return list;
+    }
+
 }
