@@ -10,11 +10,18 @@ import android.view.KeyEvent;
 import android.view.MotionEvent;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
+import com.alibaba.android.arouter.launcher.ARouter;
+import com.datai.common.charts.chart.Chart;
 import com.datai.common.charts.fchart.FChart;
+import com.datai.common.charts.kchart.KChart;
+import com.datai.common.charts.kchart.KData;
+import com.datai.common.charts.kchart.OnKChartListener;
+import com.datai.common.charts.kchart.OnKChartSelectedListener;
 import com.datai.common.charts.tchart.TChart;
 import com.jme.common.network.DTRequest;
 import com.jme.common.network.Head;
 import com.jme.common.util.DateUtil;
+import com.jme.common.util.KChartVo;
 import com.jme.common.util.NetWorkUtils;
 import com.jme.lsgoldtrade.R;
 import com.jme.lsgoldtrade.base.JMEBaseActivity;
@@ -27,27 +34,38 @@ import com.jme.lsgoldtrade.service.MarketService;
 import com.jme.lsgoldtrade.util.MarketUtil;
 
 import java.math.BigDecimal;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
 @Route(path = Constants.ARouterUriConst.MARKETDETAIL)
-public class MarketDetailActivity extends JMEBaseActivity implements FChart.OnPriceClickListener {
+public class MarketDetailActivity extends JMEBaseActivity implements FChart.OnPriceClickListener, OnKChartSelectedListener {
 
     private ActivityMarketDetailBinding mBinding;
 
     private TenSpeedVo mTenSpeedVo;
     private MarketOrderPopUpWindow mPopupWindow;
+    private Chart mChart;
     private TChart mTChart;
+    private KChart mKChart;
 
-    private String mContractId;
-    private boolean bFlag = true;
-    private boolean bHighlight = false;
-
+    private static final int NONE = 0;
+    private static final int INIT = 1;
+    private static final int NEWEST = 2;
+    private static final int MORE = 3;
     private static final String DIRECTION_AFTER = "1";
     private static final String DIRECTION_BEFORE = "2";
     private static final String COUNT_TCHART = "660";
     private static final String COUNT_KCHART = "200";
+
+    private String mContractId;
+    private boolean bFlag = true;
+    private boolean bHighlight = false;
+    private boolean bHasMoreKDataFlag = true;
+    private boolean bRequestTDataFlag = false;
+    private int iRequestKDataFlag = NONE;
 
     private Handler mHandler = new Handler() {
         public void handleMessage(Message msg) {
@@ -58,6 +76,14 @@ public class MarketDetailActivity extends JMEBaseActivity implements FChart.OnPr
                     updateData(false);
 
                     mHandler.sendEmptyMessageDelayed(Constants.Msg.MSG_UPDATE_DATA, getTimeInterval());
+
+                    break;
+                case Constants.Msg.MSG_RELOAD_DATA:
+                    mHandler.removeMessages(Constants.Msg.MSG_RELOAD_DATA);
+
+                    getTenSpeedQuotes(false);
+
+                    getInitKChartData();
 
                     break;
             }
@@ -84,11 +110,14 @@ public class MarketDetailActivity extends JMEBaseActivity implements FChart.OnPr
         setBackNavigation(true, R.mipmap.ic_back_white);
 
         mPopupWindow = new MarketOrderPopUpWindow(this);
-        mTChart = mBinding.chart.getTChart();
+        mChart = mBinding.chart;
+        mTChart = mChart.getTChart();
+        mKChart = mChart.getKChart();
 
-        mBinding.chart.setPriceFormatDigit(2);
+        mChart.setPriceFormatDigit(2);
 
         initTChart();
+        initKChart();
     }
 
     @Override
@@ -99,6 +128,25 @@ public class MarketDetailActivity extends JMEBaseActivity implements FChart.OnPr
     @Override
     protected void initListener() {
         super.initListener();
+
+        mChart.setOnLandscapeListener((view) -> ARouter.getInstance().build(Constants.ARouterUriConst.MARKETDETAILLANDSCAPE).navigation());
+
+        mChart.setOnChartListener((showTChart, unit) -> sendChartRefreshMessage(showTChart));
+
+        mKChart.setOnKChartListener(new OnKChartListener() {
+            @Override
+            public void onEnding(long oldestTime, KData.Unit unit) {
+                getMoreKChartData(oldestTime, unit);
+            }
+
+            @Override
+            public void onChartSingleTapped(MotionEvent me) {
+
+            }
+        });
+
+        mTChart.getTradeInfoChart().setDoRadioButtonFunction(() -> {
+        });
     }
 
     @Override
@@ -112,17 +160,12 @@ public class MarketDetailActivity extends JMEBaseActivity implements FChart.OnPr
     protected void onResume() {
         super.onResume();
 
-        if (TextUtils.isEmpty(mContractId))
-            return;
-
-        updateData(true);
+        initRawData();
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-
-        bFlag = true;
 
         removeMessage();
     }
@@ -141,19 +184,112 @@ public class MarketDetailActivity extends JMEBaseActivity implements FChart.OnPr
         mTChart.config();
     }
 
+    private void initKChart() {
+        mKChart.setIsFromServerMAs(false);
+        mKChart.setHasTradeVolume(true);
+        mKChart.setLandscapeButtonVisible(true);
+        mKChart.setOnKChartSelectedListener(this);
+        mKChart.config();
+    }
+
+    public void initRawData() {
+        if (TextUtils.isEmpty(mContractId))
+            return;
+
+        bFlag = true;
+
+        updateData(true);
+    }
+
     private void updateData(boolean enable) {
         getTenSpeedQuotes(enable);
 
-        //分时显示的时候轮询
-        getDetail();
+        if (mChart.isShowTChart())
+            getDetail();
+        else
+            getNewestKChartData();
     }
 
     private long getTimeInterval() {
         return NetWorkUtils.isWifiConnected(mContext) ? AppConfig.TimeInterval_WiFi : AppConfig.TimeInterval_NetWork;
     }
 
+    public void sendChartRefreshMessage(boolean showTChart) {
+        if (showTChart)
+            mHandler.sendEmptyMessage(Constants.Msg.MSG_UPDATE_DATA);
+        else
+            mHandler.sendEmptyMessage(Constants.Msg.MSG_RELOAD_DATA);
+    }
+
     private void removeMessage() {
         mHandler.removeMessages(Constants.Msg.MSG_UPDATE_DATA);
+        mHandler.removeMessages(Constants.Msg.MSG_RELOAD_DATA);
+    }
+
+    public void getInitKChartData() {
+        if (iRequestKDataFlag != NONE) {
+            mHandler.sendEmptyMessageDelayed(Constants.Msg.MSG_RELOAD_DATA, 100);
+
+            return;
+        }
+
+        KData.Unit unit = mKChart.getUnit();
+
+        if (null == unit)
+            return;
+
+        mKChart.switchKDataToCurrentUnit();
+
+        if (mKChart.hasKDataInCurrentUnit()) {
+            mHandler.sendEmptyMessage(Constants.Msg.MSG_UPDATE_DATA);
+        } else {
+            bHasMoreKDataFlag = true;
+            iRequestKDataFlag = INIT;
+
+            getKChartQuotes(unit.getCode(), "", DIRECTION_BEFORE);
+        }
+    }
+
+    public void getNewestKChartData() {
+        if (mKChart.getDataCount() == 0) {
+            getInitKChartData();
+
+            return;
+        }
+
+        if (iRequestKDataFlag != NONE)
+            return;
+
+        if (mHandler.hasMessages(Constants.Msg.MSG_RELOAD_DATA))
+            return;
+
+        KData.Unit unit = mKChart.getUnit();
+
+        if (null == unit)
+            return;
+
+        long tick = mKChart.getNewestTimeTick(2);
+        Date date = new Date(tick);
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmm");
+
+        iRequestKDataFlag = NEWEST;
+
+        getKChartQuotes(unit.getCode(), sdf.format(date), DIRECTION_AFTER);
+    }
+
+    public void getMoreKChartData(long oldestTime, KData.Unit unit) {
+        if (iRequestKDataFlag != NONE)
+            return;
+
+        if (bHasMoreKDataFlag == false)
+            return;
+
+        Date date = new Date(oldestTime - 1);
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmm");
+
+        iRequestKDataFlag = MORE;
+
+        getKChartQuotes(unit.getCode(), sdf.format(date), DIRECTION_BEFORE);
     }
 
     private void updateMarketData(TenSpeedVo tenSpeedVo) {
@@ -199,6 +335,21 @@ public class MarketDetailActivity extends JMEBaseActivity implements FChart.OnPr
 
         mTChart.setPreClose(lastSettlePrice);
         mTChart.loadTradeInfoChartData(tenSpeedVo.getAskLists(), tenSpeedVo.getBidLists());
+    }
+
+    public void updateKChartData(List<KChartVo> list, KData.Unit unit) {
+        if (iRequestKDataFlag == INIT) {
+            if (null != list && list.size() > 0)
+                mKChart.loadInitialData(list, unit);
+        } else if (iRequestKDataFlag == MORE) {
+            if (null != list && list.size() > 0)
+                mKChart.loadMoreData(list, unit);
+            else
+                bHasMoreKDataFlag = false;
+        } else if (iRequestKDataFlag == NEWEST) {
+            if (null != list && list.size() > 0)
+                mKChart.loadNewestData(list, unit);
+        }
     }
 
     private void setDetailData(List<DetailVo> list) {
@@ -314,10 +465,29 @@ public class MarketDetailActivity extends JMEBaseActivity implements FChart.OnPr
                 break;
             case "GetKChartQuotes":
                 if (head.isSuccess()) {
+                    List<KChartVo> list;
 
-                } else {
+                    try {
+                        list = (List<KChartVo>) response;
+                    } catch (Exception e) {
+                        list = null;
 
+                        e.printStackTrace();
+                    }
+
+                    if (null == list)
+                        return;
+
+                    KData.Unit unit = mKChart.getUnit();
+
+                    if (null == unit)
+                        return;
+
+                    if (unit.getCode().equals(request.getParams().get("type")))
+                        updateKChartData(list, unit);
                 }
+
+                iRequestKDataFlag = NONE;
 
                 break;
         }
@@ -325,6 +495,16 @@ public class MarketDetailActivity extends JMEBaseActivity implements FChart.OnPr
 
     @Override
     public void OnPriceClick(String price, String title) {
+
+    }
+
+    @Override
+    public void onValueSelected(HashMap<String, Object> entry, int index, float prev) {
+
+    }
+
+    @Override
+    public void onNothingSelected() {
 
     }
 

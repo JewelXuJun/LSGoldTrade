@@ -3,10 +3,10 @@ package com.jme.lsgoldtrade.service;
 import com.jme.common.network.API;
 import com.jme.common.network.DTResponse;
 import com.jme.common.network.IService;
+import com.jme.common.util.KChartVo;
 import com.jme.lsgoldtrade.config.Constants;
 import com.jme.lsgoldtrade.domain.DetailVo;
 import com.jme.lsgoldtrade.domain.FiveSpeedVo;
-import com.jme.lsgoldtrade.domain.KChartVo;
 import com.jme.lsgoldtrade.domain.TenSpeedVo;
 import com.jme.lsgoldtrade.domain.TChartVo;
 
@@ -89,11 +89,10 @@ public class MarketService extends IService<MarketApi> {
     /**
      * K线行情接口
      */
-    public API getKChartQuotes = new API<KChartVo>("GetKChartQuotes") {
+    public API getKChartQuotes = new API<List<KChartVo>>("GetKChartQuotes") {
         @Override
         public Call<DTResponse> request(HashMap<String, String> params) {
             String type = params.get("type");
-            params.remove("type");
 
             return mApi.getKChartQuotes(type, params);
         }

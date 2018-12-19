@@ -2,14 +2,15 @@ package com.datai.common.charts.kchart;
 
 import android.os.Environment;
 
-import com.datai.common.charts.common.Config;
 import com.datai.common.charts.indicator.Indicator;
-import com.google.gson.JsonArray;
+import com.jme.common.util.DateUtil;
+import com.jme.common.util.KChartVo;
 
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -20,17 +21,15 @@ import java.util.List;
 public class KData {
 
     public enum Unit {
-        TIME("time", "HHmm", "分时", "time"),
-        DAY("day", "yyyyMMdd", "日线", "6"),
-        WEEK("week", "yyyyMMdd", "周线", "7"),
-        MONTH("month", "yyyyMMdd", "月线", "8"),
-        MIN1("min", "yyyyMMddHHmm", "1分钟", "1"),
-        MIN5("5min", "yyyyMMddHHmm", "5分钟", "2"),
-        MIN15("15min", "yyyyMMddHHmm", "15分钟", "3"),
-        MIN30("30min", "yyyyMMddHHmm", "30分钟", "4"),
-        MIN60("60min", "yyyyMMddHHmm", "60分钟", "5"),
-        HOUR2("2h", "yyyyMMddHH", "2小时", "2h"),
-        HOUR4("4h", "yyyyMMddHH", "4小时", "4h");
+        TIME("time", "HHmm", "分时", "time1"),
+        DAY("day", "yyyyMMdd", "日线", "dayK"),
+        WEEK("week", "yyyyMMdd", "周线", "weekK"),
+        MONTH("month", "yyyyMMdd", "月线", "monthK"),
+        MIN1("min", "yyyyMMddHHmm", "1分钟", "1minK"),
+        MIN5("5min", "yyyyMMddHHmm", "5分钟", "5minK"),
+        MIN15("15min", "yyyyMMddHHmm", "15分钟", "15minK"),
+        MIN30("30min", "yyyyMMddHHmm", "30分钟", "30minK"),
+        MIN60("60min", "yyyyMMddHHmm", "60分钟", "60minK");
 
         private String describe;
         private String format;
@@ -112,75 +111,65 @@ public class KData {
         mDataUnit = unit;
     }
 
-    public void loadInitialData(JsonArray jsonArray) {
+    public void loadInitialData(List<KChartVo> list) {
         mDataList.clear();
         HashMap<String, Object> entry;
-        JsonArray elements;
-        int j = 0;
 
-        for (int i = 0; i < jsonArray.size(); i++) {
-            j = 0;
-            elements = jsonArray.get(i).getAsJsonArray();
-            entry = new HashMap<>();
+        int size = list.size();
 
-            entry.put(Indicator.K_TIME, elements.get(j++).getAsLong());
-            entry.put(Indicator.K_OPEN, elements.get(j++).getAsFloat());
-            entry.put(Indicator.K_HIGH, elements.get(j++).getAsFloat());
-            entry.put(Indicator.K_LOW, elements.get(j++).getAsFloat());
-            entry.put(Indicator.K_CLOSE, elements.get(j++).getAsFloat());
-            if (bFromServerMAs) {
-                entry.put(Config.MARanks[0].KEY(), elements.get(j++).getAsFloat());
-                entry.put(Config.MARanks[1].KEY(), elements.get(j++).getAsFloat());
-                entry.put(Config.MARanks[2].KEY(), elements.get(j++).getAsFloat());
+        for (int i = 0; i < size; i++) {
+            KChartVo kChartVo = list.get(size -1 -i);
+
+            if (null != kChartVo) {
+                entry = new HashMap<>();
+
+                entry.put(Indicator.K_TIME, DateUtil.dateToLong(kChartVo.getQuoteTime(), "yyyy-MM-dd HH:mm:ss").longValue());
+                entry.put(Indicator.K_OPEN, new BigDecimal(kChartVo.getOpenPrice()).divide(new BigDecimal(100)).floatValue());
+                entry.put(Indicator.K_HIGH, new BigDecimal(kChartVo.getHighestPrice()).divide(new BigDecimal(100)).floatValue());
+                entry.put(Indicator.K_LOW, new BigDecimal(kChartVo.getLowestPrice()).divide(new BigDecimal(100)).floatValue());
+                entry.put(Indicator.K_CLOSE, new BigDecimal(kChartVo.getClosePrice()).divide(new BigDecimal(100)).floatValue());
+                entry.put(Indicator.K_VOL, Float.parseFloat(String.valueOf(kChartVo.getTurnVolumn())));
+
+                mDataList.add(entry);
             }
-            if (bHasTradeVolume) {
-                entry.put(Indicator.K_VOL, elements.get(j++).getAsFloat());
-                entry.put(Indicator.K_VOL_MONEY, elements.get(j++).getAsFloat());
-            }
-
-            mDataList.add(entry);
         }
     }
 
-    public void loadMoreData(JsonArray jsonArray) {
+    public void loadMoreData(List<KChartVo> list) {
         HashMap<String, Object> entry;
-        JsonArray elements;
-        int j = 0;
 
-        for (int i = 0; i < jsonArray.size(); i++) {
-            j = 0;
-            elements = jsonArray.get(i).getAsJsonArray();
-            entry = new HashMap<>();
+        int size = list.size();
 
-            entry.put(Indicator.K_TIME, elements.get(j++).getAsLong());
-            entry.put(Indicator.K_OPEN, elements.get(j++).getAsFloat());
-            entry.put(Indicator.K_HIGH, elements.get(j++).getAsFloat());
-            entry.put(Indicator.K_LOW, elements.get(j++).getAsFloat());
-            entry.put(Indicator.K_CLOSE, elements.get(j++).getAsFloat());
-            if (bFromServerMAs) {
-                entry.put(Config.MARanks[0].KEY(), elements.get(j++).getAsFloat());
-                entry.put(Config.MARanks[1].KEY(), elements.get(j++).getAsFloat());
-                entry.put(Config.MARanks[2].KEY(), elements.get(j++).getAsFloat());
+        for (int i = 0; i < list.size(); i++) {
+            KChartVo kChartVo = list.get(size - 1 - i);
+
+            if (null != kChartVo) {
+                entry = new HashMap<>();
+
+                entry.put(Indicator.K_TIME, DateUtil.dateToLong(kChartVo.getQuoteTime(), "yyyy-MM-dd HH:mm:ss").longValue());
+                entry.put(Indicator.K_OPEN, new BigDecimal(kChartVo.getOpenPrice()).divide(new BigDecimal(100)).floatValue());
+                entry.put(Indicator.K_HIGH, new BigDecimal(kChartVo.getHighestPrice()).divide(new BigDecimal(100)).floatValue());
+                entry.put(Indicator.K_LOW, new BigDecimal(kChartVo.getLowestPrice()).divide(new BigDecimal(100)).floatValue());
+                entry.put(Indicator.K_CLOSE, new BigDecimal(kChartVo.getClosePrice()).divide(new BigDecimal(100)).floatValue());
+                entry.put(Indicator.K_VOL, Float.parseFloat(String.valueOf(kChartVo.getTurnVolumn())));
+
+                mDataList.add(i, entry);
             }
-            if (bHasTradeVolume) {
-                entry.put(Indicator.K_VOL, elements.get(j++).getAsFloat());
-                entry.put(Indicator.K_VOL_MONEY, elements.get(j++).getAsFloat());
-            }
-
-            mDataList.add(i, entry);
         }
     }
 
-    public int loadNewestData(JsonArray jsonArray) {
-        if (jsonArray == null || jsonArray.size() == 0) {
+    public int loadNewestData(List<KChartVo> list) {
+        if (list == null || list.size() == 0) {
             return -1;
         }
 
-        long startTime = jsonArray.get(0).getAsJsonArray().get(0).getAsLong();
-        HashMap<String, Object> entry;
-        JsonArray elements;
-        int j = 0;
+        KChartVo startKChartVo = list.get(0);
 
+        if (null == startKChartVo)
+            return -1;
+
+        long startTime = DateUtil.dateToLong(startKChartVo.getQuoteTime(), "yyyy-MM-dd HH:mm:ss").longValue();
+        HashMap<String, Object> entry;
         int startIndex = (mDataList == null) ? 0 : mDataList.size() - 1;
 
         while (startIndex >= 0) {
@@ -196,9 +185,8 @@ public class KData {
 
         int s_index = startIndex;
 
-        for (int i = 0; i < jsonArray.size(); i++) {
-            elements = jsonArray.get(i).getAsJsonArray();
-            j = 0;
+        for (int i = 0; i < list.size(); i++) {
+            KChartVo kChartVo = list.get(i);
 
             if (s_index >= mDataList.size()) {
                 entry = new HashMap<>();
@@ -208,20 +196,12 @@ public class KData {
                 entry.clear();
             }
 
-            entry.put(Indicator.K_TIME, elements.get(j++).getAsLong());
-            entry.put(Indicator.K_OPEN, elements.get(j++).getAsFloat());
-            entry.put(Indicator.K_HIGH, elements.get(j++).getAsFloat());
-            entry.put(Indicator.K_LOW, elements.get(j++).getAsFloat());
-            entry.put(Indicator.K_CLOSE, elements.get(j++).getAsFloat());
-            if (bFromServerMAs) {
-                entry.put(Config.MARanks[0].KEY(), elements.get(j++).getAsFloat());
-                entry.put(Config.MARanks[1].KEY(), elements.get(j++).getAsFloat());
-                entry.put(Config.MARanks[2].KEY(), elements.get(j++).getAsFloat());
-            }
-            if (bHasTradeVolume) {
-                entry.put(Indicator.K_VOL, elements.get(j++).getAsFloat());
-                entry.put(Indicator.K_VOL_MONEY, elements.get(j++).getAsFloat());
-            }
+            entry.put(Indicator.K_TIME, DateUtil.dateToLong(kChartVo.getQuoteTime(), "yyyy-MM-dd HH:mm:ss").longValue());
+            entry.put(Indicator.K_OPEN, new BigDecimal(kChartVo.getOpenPrice()).divide(new BigDecimal(100)).floatValue());
+            entry.put(Indicator.K_HIGH, new BigDecimal(kChartVo.getHighestPrice()).divide(new BigDecimal(100)).floatValue());
+            entry.put(Indicator.K_LOW, new BigDecimal(kChartVo.getLowestPrice()).divide(new BigDecimal(100)).floatValue());
+            entry.put(Indicator.K_CLOSE, new BigDecimal(kChartVo.getClosePrice()).divide(new BigDecimal(100)).floatValue());
+            entry.put(Indicator.K_VOL, Float.parseFloat(String.valueOf(kChartVo.getTurnVolumn())));
 
             s_index++;
         }

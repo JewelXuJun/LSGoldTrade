@@ -31,7 +31,7 @@ import com.github.mikephil.charting.highlight.Highlight;
 import com.github.mikephil.charting.listener.ChartTouchListener;
 import com.github.mikephil.charting.listener.OnChartGestureListener;
 import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
-import com.google.gson.JsonArray;
+import com.jme.common.util.KChartVo;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -130,7 +130,7 @@ public class KChart extends LinearLayout {
         }
     }
 
-    public void loadInitialData(JsonArray jsonArray, KData.Unit unit) {
+    public void loadInitialData(List<KChartVo> list, KData.Unit unit) {
         if (mKChartData.getEntryDataUnit() != unit) {
             // 更新的数据与当前指向数据Unit不相符，故忽略
             return;
@@ -148,7 +148,7 @@ public class KChart extends LinearLayout {
             visibleCount = mLastVisibleCount;
         }
 
-        mKChartData.loadInitialData(jsonArray);
+        mKChartData.loadInitialData(list);
         setCandleChartData();
         setSecondChartData();
         int newCount = mKChartData.getEntryCount();
@@ -163,7 +163,7 @@ public class KChart extends LinearLayout {
         mSecondChart.animateX(500);
     }
 
-    public void loadMoreData(JsonArray jsonArray, KData.Unit unit) {
+    public void loadMoreData(List<KChartVo> list, KData.Unit unit) {
         if (mKChartData.getEntryDataUnit() != unit) {
             // 更新的数据与当前指向数据Unit不相符，故忽略
             return;
@@ -174,7 +174,7 @@ public class KChart extends LinearLayout {
         float oriLowIndex = mFirstChart.getLowestVisibleX();
         float visibleCount = oriCount / oriScaleX;
 
-        mKChartData.loadMoreData(jsonArray);
+        mKChartData.loadMoreData(list);
         setCandleChartData();
         setSecondChartData();
 
@@ -185,7 +185,7 @@ public class KChart extends LinearLayout {
         setTextOnUnHighlight();
     }
 
-    public void loadNewestData(JsonArray jsonArray, KData.Unit unit) {
+    public void loadNewestData(List<KChartVo> list, KData.Unit unit) {
         if (mKChartData.getEntryDataUnit() != unit) {
             // 更新的数据与当前指向数据Unit不相符，故忽略
 //            Toast.makeText(mContext, "切换太快", Toast.LENGTH_SHORT).show();
@@ -198,7 +198,7 @@ public class KChart extends LinearLayout {
         float oriHighIndex = mFirstChart.getHighestVisibleX();
         float visibleCount = oriCount / oriScaleX;
 
-        mKChartData.loadNewestData(jsonArray);
+        mKChartData.loadNewestData(list);
         setCandleChartData();
         setSecondChartData();
 

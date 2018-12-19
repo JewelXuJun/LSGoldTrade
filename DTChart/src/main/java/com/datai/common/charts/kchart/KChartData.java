@@ -16,7 +16,7 @@ import com.datai.common.charts.indicator.WR;
 import com.github.mikephil.charting.data.BarEntry;
 import com.github.mikephil.charting.data.CandleEntry;
 import com.github.mikephil.charting.data.Entry;
-import com.google.gson.JsonArray;
+import com.jme.common.util.KChartVo;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -190,21 +190,21 @@ public class KChartData {
         prepareCandleEntry(0);
     }
 
-    public void loadInitialData(JsonArray jsonArray) {
-        mKData.loadInitialData(jsonArray);
+    public void loadInitialData(List<KChartVo> list) {
+        mKData.loadInitialData(list);
         prepareCandleEntry(0);
         calculate(0);
     }
 
-    public void loadMoreData(JsonArray jsonArray) {
-        mKData.loadMoreData(jsonArray);
+    public void loadMoreData(List<KChartVo> list) {
+        mKData.loadMoreData(list);
         prepareCandleEntry(0);
         calculate(0);
     }
 
-    public void loadNewestData(JsonArray jsonArray) {
+    public void loadNewestData(List<KChartVo> list) {
 //        int oriCount = mKData.getDataCount();
-        int startIndex = mKData.loadNewestData(jsonArray);
+        int startIndex = mKData.loadNewestData(list);
 //        int newCount = mKData.getDataCount();
         prepareCandleEntry(startIndex);
         calculate(startIndex);

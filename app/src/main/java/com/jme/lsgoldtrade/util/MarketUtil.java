@@ -1,7 +1,5 @@
 package com.jme.lsgoldtrade.util;
 
-import android.content.Context;
-import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 
 import com.jme.lsgoldtrade.R;
