@@ -381,7 +381,7 @@ public class MarketDetailActivity extends JMEBaseActivity implements FChart.OnPr
         float highesPrice = (float) entry.get(Indicator.K_HIGH);
         float lowestPrice = (float) entry.get(Indicator.K_LOW);
         float turnVolume = (float) entry.get(Indicator.K_VOL);
-        long turnover = (long) entry.get(Indicator.K_VOL_MONEY);
+        float turnover = (float) entry.get(Indicator.K_VOL_MONEY);
         long time = (long) entry.get(Indicator.K_TIME);
         int rateType = new BigDecimal(upDownRate).compareTo(new BigDecimal(0));
 
