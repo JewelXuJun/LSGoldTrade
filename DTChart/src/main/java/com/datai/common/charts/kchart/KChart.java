@@ -488,8 +488,8 @@ public class KChart extends LinearLayout {
         mFirstChart.zoom((1 / originalScaleX) * scaleX, 1f, 1, 1);
         mSecondChart.zoom((1 / originalScaleX) * scaleX, 1f, 1, 1);
 
-        mFirstChart.moveViewToXSync(xIndex);
-        mSecondChart.moveViewToXSync(xIndex);
+        mFirstChart.moveViewToXSync(xIndex / (1 / originalScaleX) * scaleX);
+        mSecondChart.moveViewToXSync(xIndex / (1 / originalScaleX) * scaleX);
     }
 
     private void clearChartData() {
