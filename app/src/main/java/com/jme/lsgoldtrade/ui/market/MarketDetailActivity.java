@@ -376,11 +376,12 @@ public class MarketDetailActivity extends JMEBaseActivity implements FChart.OnPr
 
         float laststPirce = (float) entry.get(Indicator.K_CLOSE);
         float updown = new BigDecimal(laststPirce).subtract(new BigDecimal(preClose)).setScale(2, BigDecimal.ROUND_DOWN).floatValue();
-        float upDownRate = new BigDecimal(updown).divide(new BigDecimal(preClose), 4, BigDecimal.ROUND_DOWN).multiply(new BigDecimal(100)).setScale(2).floatValue();
+        float upDownRate = new BigDecimal(updown).divide(new BigDecimal(preClose), 4, BigDecimal.ROUND_UP).multiply(new BigDecimal(100)).setScale(2).floatValue();
         float openPrice = (float) entry.get(Indicator.K_OPEN);
-        float turnVolume = (float) entry.get(Indicator.K_VOL);
         float highesPrice = (float) entry.get(Indicator.K_HIGH);
         float lowestPrice = (float) entry.get(Indicator.K_LOW);
+        float turnVolume = (float) entry.get(Indicator.K_VOL);
+        long turnover = (long) entry.get(Indicator.K_VOL_MONEY);
         long time = (long) entry.get(Indicator.K_TIME);
         int rateType = new BigDecimal(upDownRate).compareTo(new BigDecimal(0));
 
@@ -393,7 +394,7 @@ public class MarketDetailActivity extends JMEBaseActivity implements FChart.OnPr
         mBinding.tvRate.setText(MarketUtil.getMarketRateValue(rateType, MarketUtil.formatValue(String.valueOf(upDownRate), 2)));
         mBinding.tvOpen.setText(MarketUtil.formatValue(String.valueOf(openPrice), 2));
         mBinding.tvPreclose.setText(MarketUtil.formatValue(String.valueOf(preClose), 2));
-//        mBinding.tvTurnVolume.setText(MarketUtil.getVolumeValue(String.valueOf(turnover), false));
+        mBinding.tvTurnVolume.setText(MarketUtil.getVolumeValue(String.valueOf(turnover), false));
         mBinding.tvVolume.setText(MarketUtil.getVolumeValue(String.valueOf(turnVolume), false));
         mBinding.tvStateTime.setText(unit == KData.Unit.DAY || unit == KData.Unit.WEEK || unit == KData.Unit.MONTH
                 ? DateUtil.dataToStringWithData(time) : DateUtil.dataToStringWithDataTime2(time));

@@ -10,7 +10,8 @@ public class KChartVo implements Serializable {
      * "highestPrice ":30000,
      * "lowestPrice ":30000,
      * "closePrice":30000,
-     * "turnVolumn ":30000
+     * "turnover": 18870597
+     * "turnVolume ":30000
      */
 
     private String quoteTime;
@@ -22,6 +23,8 @@ public class KChartVo implements Serializable {
     private long lowestPrice;
 
     private long closePrice;
+
+    private long turnover;
 
     private long turnVolume;
 
@@ -65,11 +68,20 @@ public class KChartVo implements Serializable {
         this.closePrice = closePrice;
     }
 
-    public long getTurnVolumn() {
+    public long getTurnover() {
+        return turnover;
+    }
+
+    public void setTurnover(long turnover) {
+        this.turnover = turnover;
+    }
+
+    public long getTurnVolume() {
         return turnVolume;
     }
 
-    public void setTurnVolumn(long turnVolumn) {
-        this.turnVolume = turnVolumn;
+    public void setTurnVolume(long turnVolume) {
+        this.turnVolume = turnVolume;
     }
+
 }

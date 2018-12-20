@@ -128,7 +128,8 @@ public class KData {
                 entry.put(Indicator.K_HIGH, new BigDecimal(kChartVo.getHighestPrice()).divide(new BigDecimal(100)).floatValue());
                 entry.put(Indicator.K_LOW, new BigDecimal(kChartVo.getLowestPrice()).divide(new BigDecimal(100)).floatValue());
                 entry.put(Indicator.K_CLOSE, new BigDecimal(kChartVo.getClosePrice()).divide(new BigDecimal(100)).floatValue());
-                entry.put(Indicator.K_VOL, Float.parseFloat(String.valueOf(kChartVo.getTurnVolumn())));
+                entry.put(Indicator.K_VOL, Float.parseFloat(String.valueOf(kChartVo.getTurnVolume())));
+                entry.put(Indicator.K_VOL_MONEY, kChartVo.getTurnover());
 
                 mDataList.add(entry);
             }
@@ -151,7 +152,8 @@ public class KData {
                 entry.put(Indicator.K_HIGH, new BigDecimal(kChartVo.getHighestPrice()).divide(new BigDecimal(100)).floatValue());
                 entry.put(Indicator.K_LOW, new BigDecimal(kChartVo.getLowestPrice()).divide(new BigDecimal(100)).floatValue());
                 entry.put(Indicator.K_CLOSE, new BigDecimal(kChartVo.getClosePrice()).divide(new BigDecimal(100)).floatValue());
-                entry.put(Indicator.K_VOL, Float.parseFloat(String.valueOf(kChartVo.getTurnVolumn())));
+                entry.put(Indicator.K_VOL, Float.parseFloat(String.valueOf(kChartVo.getTurnVolume())));
+                entry.put(Indicator.K_VOL_MONEY, kChartVo.getTurnover());
 
                 mDataList.add(i, entry);
             }
@@ -201,7 +203,8 @@ public class KData {
             entry.put(Indicator.K_HIGH, new BigDecimal(kChartVo.getHighestPrice()).divide(new BigDecimal(100)).floatValue());
             entry.put(Indicator.K_LOW, new BigDecimal(kChartVo.getLowestPrice()).divide(new BigDecimal(100)).floatValue());
             entry.put(Indicator.K_CLOSE, new BigDecimal(kChartVo.getClosePrice()).divide(new BigDecimal(100)).floatValue());
-            entry.put(Indicator.K_VOL, Float.parseFloat(String.valueOf(kChartVo.getTurnVolumn())));
+            entry.put(Indicator.K_VOL, Float.parseFloat(String.valueOf(kChartVo.getTurnVolume())));
+            entry.put(Indicator.K_VOL_MONEY, kChartVo.getTurnover());
 
             s_index++;
         }
