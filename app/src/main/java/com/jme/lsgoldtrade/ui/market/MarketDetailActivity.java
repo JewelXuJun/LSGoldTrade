@@ -13,6 +13,7 @@ import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.datai.common.charts.chart.Chart;
 import com.datai.common.charts.fchart.FChart;
+import com.datai.common.charts.indicator.Indicator;
 import com.datai.common.charts.kchart.KChart;
 import com.datai.common.charts.kchart.KData;
 import com.datai.common.charts.kchart.OnKChartListener;
@@ -324,7 +325,7 @@ public class MarketDetailActivity extends JMEBaseActivity implements FChart.OnPr
             mBinding.tvPreclose.setText(MarketUtil.getValue(tenSpeedVo.getLastClosePrice()));
             mBinding.tvTurnVolume.setText(MarketUtil.getVolumeValue(String.valueOf(tenSpeedVo.getTurnover()), false));
             mBinding.tvVolume.setText(MarketUtil.getVolumeValue(String.valueOf(tenSpeedVo.getTurnVolume()), false));
-            mBinding.tvTime.setText(MarketUtil.getValue(DateUtil.stringToAllTime(tenSpeedVo.getQuoteTime())));
+            mBinding.tvStateTime.setText("- - -" + MarketUtil.getValue(DateUtil.stringToAllTime(tenSpeedVo.getQuoteTime())));
             mBinding.tvHigh.setText(MarketUtil.getValue(highestPrice));
             mBinding.tvHigh.setTextColor(ContextCompat.getColor(this, MarketUtil.getMarketStateColor(
                     TextUtils.isEmpty(highestPrice) || TextUtils.isEmpty(lastSettlePrice) ? -2 : new BigDecimal(highestPrice).compareTo(new BigDecimal(lastSettlePrice)))));
@@ -367,6 +368,40 @@ public class MarketDetailActivity extends JMEBaseActivity implements FChart.OnPr
         }
 
         mTChart.loadDealChartData(listStr);
+    }
+
+    private void setDataFromKChart(HashMap<String, Object> entry, float preClose) {
+        if (null == entry || 0 == preClose)
+            return;
+
+        float laststPirce = (float) entry.get(Indicator.K_CLOSE);
+        float updown = new BigDecimal(laststPirce).subtract(new BigDecimal(preClose)).setScale(2, BigDecimal.ROUND_DOWN).floatValue();
+        float upDownRate = new BigDecimal(updown).divide(new BigDecimal(preClose), 4, BigDecimal.ROUND_DOWN).multiply(new BigDecimal(100)).setScale(2).floatValue();
+        float openPrice = (float) entry.get(Indicator.K_OPEN);
+        float turnVolume = (float) entry.get(Indicator.K_VOL);
+        float highesPrice = (float) entry.get(Indicator.K_HIGH);
+        float lowestPrice = (float) entry.get(Indicator.K_LOW);
+        long time = (long) entry.get(Indicator.K_TIME);
+        int rateType = new BigDecimal(upDownRate).compareTo(new BigDecimal(0));
+
+        setBackGroundColor(MarketUtil.getMarketStateColor(rateType));
+
+        KData.Unit unit = mKChart.getUnit();
+
+        mBinding.tvLastPrice.setText(MarketUtil.formatValue(String.valueOf(laststPirce), 2));
+        mBinding.tvRange.setText(MarketUtil.getMarketRangeValue(rateType, MarketUtil.formatValue(String.valueOf(updown), 2)));
+        mBinding.tvRate.setText(MarketUtil.getMarketRateValue(rateType, MarketUtil.formatValue(String.valueOf(upDownRate), 2)));
+        mBinding.tvOpen.setText(MarketUtil.formatValue(String.valueOf(openPrice), 2));
+        mBinding.tvPreclose.setText(MarketUtil.formatValue(String.valueOf(preClose), 2));
+//        mBinding.tvTurnVolume.setText(MarketUtil.getVolumeValue(String.valueOf(turnover), false));
+        mBinding.tvVolume.setText(MarketUtil.getVolumeValue(String.valueOf(turnVolume), false));
+        mBinding.tvStateTime.setText(unit == KData.Unit.DAY || unit == KData.Unit.WEEK || unit == KData.Unit.MONTH
+                ? DateUtil.dataToStringWithData(time) : DateUtil.dataToStringWithDataTime2(time));
+        mBinding.tvHigh.setText(MarketUtil.formatValue(String.valueOf(highesPrice), 2));
+        mBinding.tvHigh.setTextColor(ContextCompat.getColor(this,
+                MarketUtil.getMarketStateColor(new BigDecimal(highesPrice).compareTo(new BigDecimal(preClose)))));
+        mBinding.tvLow.setText(MarketUtil.formatValue(String.valueOf(lowestPrice), 2));
+        mBinding.tvLow.setTextColor(ContextCompat.getColor(this, MarketUtil.getMarketStateColor(new BigDecimal(lowestPrice).compareTo(new BigDecimal(preClose)))));
     }
 
     private void getTenSpeedQuotes(boolean enable) {
@@ -499,13 +534,17 @@ public class MarketDetailActivity extends JMEBaseActivity implements FChart.OnPr
     }
 
     @Override
-    public void onValueSelected(HashMap<String, Object> entry, int index, float prev) {
+    public void onValueSelected(HashMap<String, Object> entry, int index, float preClose) {
+        bHighlight = true;
 
+        setDataFromKChart(entry, preClose);
     }
 
     @Override
     public void onNothingSelected() {
+        bHighlight = false;
 
+        updateMarketData(mTenSpeedVo);
     }
 
     public class ClickHandlers {

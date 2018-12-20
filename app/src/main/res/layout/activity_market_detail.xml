@@ -260,18 +260,7 @@
                         android:orientation="horizontal">
 
                         <TextView
-                            android:id="@+id/tv_state"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:paddingRight="@dimen/common_area_margin_tiny"
-                            android:text="@string/text_no_data_default"
-                            android:textColor="@color/color_text_tabhost"
-                            android:textSize="@dimen/common_font_size__tiny"
-                            android:visibility="visible" />
-
-                        <TextView
-                            android:id="@+id/tv_time"
+                            android:id="@+id/tv_state_time"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
