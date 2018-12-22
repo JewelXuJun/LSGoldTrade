@@ -160,8 +160,8 @@ public class TChart extends LinearLayout {
 //        mTData.setData(jsonArray);
         bAverageFlag = isAverage;
         boolean animate = !mTChartData.hasData();
-        mTChartData.loadData(list);
         mTChartData.setIsSingleVol(isSingleVol);
+        mTChartData.loadData(list);
 
         setFirstChartData();
         setSecondChartData();
