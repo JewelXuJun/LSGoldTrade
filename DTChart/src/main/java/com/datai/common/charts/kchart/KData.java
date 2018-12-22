@@ -123,7 +123,7 @@ public class KData {
             if (null != kChartVo) {
                 entry = new HashMap<>();
 
-                entry.put(Indicator.K_TIME, DateUtil.dateToLong(kChartVo.getQuoteTime(), "yyyy-MM-dd HH:mm:ss").longValue());
+                entry.put(Indicator.K_TIME, DateUtil.dateToLong(kChartVo.getQuoteTime()).longValue());
                 entry.put(Indicator.K_OPEN, new BigDecimal(kChartVo.getOpenPrice()).divide(new BigDecimal(100)).floatValue());
                 entry.put(Indicator.K_HIGH, new BigDecimal(kChartVo.getHighestPrice()).divide(new BigDecimal(100)).floatValue());
                 entry.put(Indicator.K_LOW, new BigDecimal(kChartVo.getLowestPrice()).divide(new BigDecimal(100)).floatValue());
@@ -147,7 +147,7 @@ public class KData {
             if (null != kChartVo) {
                 entry = new HashMap<>();
 
-                entry.put(Indicator.K_TIME, DateUtil.dateToLong(kChartVo.getQuoteTime(), "yyyy-MM-dd HH:mm:ss").longValue());
+                entry.put(Indicator.K_TIME, DateUtil.dateToLong(kChartVo.getQuoteTime()).longValue());
                 entry.put(Indicator.K_OPEN, new BigDecimal(kChartVo.getOpenPrice()).divide(new BigDecimal(100)).floatValue());
                 entry.put(Indicator.K_HIGH, new BigDecimal(kChartVo.getHighestPrice()).divide(new BigDecimal(100)).floatValue());
                 entry.put(Indicator.K_LOW, new BigDecimal(kChartVo.getLowestPrice()).divide(new BigDecimal(100)).floatValue());
@@ -170,7 +170,7 @@ public class KData {
         if (null == startKChartVo)
             return -1;
 
-        long startTime = DateUtil.dateToLong(startKChartVo.getQuoteTime(), "yyyy-MM-dd HH:mm:ss").longValue();
+        long startTime = DateUtil.dateToLong(startKChartVo.getQuoteTime()).longValue();
         HashMap<String, Object> entry;
         int startIndex = (mDataList == null) ? 0 : mDataList.size() - 1;
 
@@ -198,7 +198,7 @@ public class KData {
                 entry.clear();
             }
 
-            entry.put(Indicator.K_TIME, DateUtil.dateToLong(kChartVo.getQuoteTime(), "yyyy-MM-dd HH:mm:ss").longValue());
+            entry.put(Indicator.K_TIME, DateUtil.dateToLong(kChartVo.getQuoteTime()).longValue());
             entry.put(Indicator.K_OPEN, new BigDecimal(kChartVo.getOpenPrice()).divide(new BigDecimal(100)).floatValue());
             entry.put(Indicator.K_HIGH, new BigDecimal(kChartVo.getHighestPrice()).divide(new BigDecimal(100)).floatValue());
             entry.put(Indicator.K_LOW, new BigDecimal(kChartVo.getLowestPrice()).divide(new BigDecimal(100)).floatValue());

@@ -188,6 +188,10 @@ public class XAxisRenderer extends AxisRenderer {
 
         int average = mXAxis.mAxisLabelModulus /*- 1*/;
 
+        List<long[]> timeLists = mXAxis.getMoreCloseTime();
+        long timeListsCount = 0;
+        int timeListsPosition = 0;
+
         for (int i = 0; i < count; i++) {
             if (i > mMaxX) {
                 position[0] = count - (mXAxis.mAxisLabelModulus - mMaxX % mXAxis.mAxisLabelModulus);
@@ -202,21 +206,43 @@ public class XAxisRenderer extends AxisRenderer {
 
                 if (mXAxis.isOnlyShowFirstLastValue()) {
                     if (mXAxis.isHaveCloseTime()) {
-                        if (i == 0) {
-                            label = sdf.format(mXAxis.getFirstValue());
+                        if (mXAxis.isHaveMoreCloaseTime()) {
+                            if (i == 0) {
+                                label = sdf.format(timeLists.get(0)[0]);
 
-                            position[0] = position[0] + Utils.calcTextWidth(mAxisLabelPaint, label) / 2;  //Add by XuJun 使X轴首数值显示靠左对齐
-                        } else if (i == count - 1) {
-                            label = sdf.format(mXAxis.getLastValue());
+                                position[0] = position[0] + Utils.calcTextWidth(mAxisLabelPaint, label) / 2;  //Add by XuJun 使X轴首数值显示靠左对齐
+                            } else if (i == count - 1) {
+                                label = sdf.format(timeLists.get(timeLists.size() - 1)[1]);
 
-                            position[0] = position[0] - Utils.calcTextWidth(mAxisLabelPaint, label) / 2;  //Add by XuJun 使X轴尾数值显示靠右对齐
-                        } else if (i == count / 2) {
-                            label = sdf.format(mXAxis.getFirstValue() + Config.TimeInterval_OneMinute * i)
-                                    + "/" + sdf.format(mXAxis.getFirstValue() + Config.TimeInterval_OneMinute * i + mXAxis.getClostValue());
+                                position[0] = position[0] - Utils.calcTextWidth(mAxisLabelPaint, label) / 2;  //Add by XuJun 使X轴尾数值显示靠右对齐
+                            } else if (i == (timeLists.get(timeListsPosition)[1] - timeLists.get(timeListsPosition)[0]) / Config.TimeInterval_OneMinute + timeListsCount
+                                    && timeListsPosition < timeLists.size() - 1) {
+                                label = sdf.format(timeLists.get(timeListsPosition)[1]) + "/" + sdf.format(timeLists.get(timeListsPosition + 1)[0]);
+                                timeListsCount = timeListsCount + (timeLists.get(timeListsPosition)[1] - timeLists.get(timeListsPosition)[0]) / Config.TimeInterval_OneMinute;
 
-                            position[0] = position[0] + 8;
+                                timeListsPosition++;
+
+                                position[0] = position[0] + 1;
+                            } else {
+                                label = "";
+                            }
                         } else {
-                            label = "";
+                            if (i == 0) {
+                                label = sdf.format(mXAxis.getFirstValue());
+
+                                position[0] = position[0] + Utils.calcTextWidth(mAxisLabelPaint, label) / 2;  //Add by XuJun 使X轴首数值显示靠左对齐
+                            } else if (i == count - 1) {
+                                label = sdf.format(mXAxis.getLastValue());
+
+                                position[0] = position[0] - Utils.calcTextWidth(mAxisLabelPaint, label) / 2;  //Add by XuJun 使X轴尾数值显示靠右对齐
+                            } else if (i == count / 2) {
+                                label = sdf.format(mXAxis.getFirstValue() + Config.TimeInterval_OneMinute * i)
+                                        + "/" + sdf.format(mXAxis.getFirstValue() + Config.TimeInterval_OneMinute * i + mXAxis.getClostValue());
+
+                                position[0] = position[0] + 8;
+                            } else {
+                                label = "";
+                            }
                         }
                     } else {
                         if (i == 0) {
@@ -292,22 +318,44 @@ public class XAxisRenderer extends AxisRenderer {
         Path gridLinePath = new Path();
 
         // Modify by yanmin:不画最左最右的两条线，防止跟边框重合
-        for (int i = mMinX + mXAxis.mAxisLabelModulus; i < mMaxX; i += mXAxis.mAxisLabelModulus) {
+        if (mXAxis.bNotAverage) {
+            long[] value = mXAxis.getAxisLabelModulusList();
+            long time = 0;
 
-            position[0] = i;
-            mTrans.pointValuesToPixel(position);
+            for (int i = 0; i < value.length - 1; i++) {
+                time = time + value[i];
+                position[0] = time;
+                mTrans.pointValuesToPixel(position);
 
-            if (position[0] >= mViewPortHandler.offsetLeft()
-                    && position[0] <= mViewPortHandler.getChartWidth()) {
+                if (position[0] >= mViewPortHandler.offsetLeft()
+                        && position[0] <= mViewPortHandler.getChartWidth()) {
+                    gridLinePath.moveTo(position[0], mViewPortHandler.contentBottom());
+                    gridLinePath.lineTo(position[0], mViewPortHandler.contentTop());
 
-                gridLinePath.moveTo(position[0], mViewPortHandler.contentBottom());
-                gridLinePath.lineTo(position[0], mViewPortHandler.contentTop());
+                    // draw a path because lines don't support dashing on lower android versions
+                    c.drawPath(gridLinePath, mGridPaint);
+                }
 
-                // draw a path because lines don't support dashing on lower android versions
-                c.drawPath(gridLinePath, mGridPaint);
+                gridLinePath.reset();
             }
+        } else {
+            for (int i = mMinX + mXAxis.mAxisLabelModulus; i < mMaxX; i += mXAxis.mAxisLabelModulus) {
 
-            gridLinePath.reset();
+                position[0] = i;
+                mTrans.pointValuesToPixel(position);
+
+                if (position[0] >= mViewPortHandler.offsetLeft()
+                        && position[0] <= mViewPortHandler.getChartWidth()) {
+
+                    gridLinePath.moveTo(position[0], mViewPortHandler.contentBottom());
+                    gridLinePath.lineTo(position[0], mViewPortHandler.contentTop());
+
+                    // draw a path because lines don't support dashing on lower android versions
+                    c.drawPath(gridLinePath, mGridPaint);
+                }
+
+                gridLinePath.reset();
+            }
         }
     }
 
@@ -322,7 +370,7 @@ public class XAxisRenderer extends AxisRenderer {
         mGridPaint.setStrokeWidth(mXAxis.getGridLineWidth());
         mGridPaint.setPathEffect(mXAxis.getGridDashPathEffect());
 
-        Path gridLinePath = new Path();
+       /* Path gridLinePath = new Path();
         int count = 3;
         float itemWidth = mViewPortHandler.getChartWidth() / (count + 1);
 
@@ -338,7 +386,7 @@ public class XAxisRenderer extends AxisRenderer {
             c.drawPath(gridLinePath, mGridPaint);
 
             gridLinePath.reset();
-        }
+        }*/
     }
 
     /**

@@ -5,6 +5,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
@@ -12,6 +13,7 @@ import android.view.MotionEvent;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.datai.common.charts.chart.Chart;
+import com.datai.common.charts.common.Config;
 import com.datai.common.charts.fchart.FChart;
 import com.datai.common.charts.indicator.Indicator;
 import com.datai.common.charts.kchart.KChart;
@@ -24,12 +26,14 @@ import com.jme.common.network.Head;
 import com.jme.common.util.DateUtil;
 import com.jme.common.util.KChartVo;
 import com.jme.common.util.NetWorkUtils;
+import com.jme.common.util.TChartVo;
 import com.jme.lsgoldtrade.R;
 import com.jme.lsgoldtrade.base.JMEBaseActivity;
 import com.jme.lsgoldtrade.config.AppConfig;
 import com.jme.lsgoldtrade.config.Constants;
 import com.jme.lsgoldtrade.databinding.ActivityMarketDetailBinding;
 import com.jme.lsgoldtrade.domain.DetailVo;
+import com.jme.lsgoldtrade.domain.SectionVo;
 import com.jme.lsgoldtrade.domain.TenSpeedVo;
 import com.jme.lsgoldtrade.service.MarketService;
 import com.jme.lsgoldtrade.util.MarketUtil;
@@ -66,6 +70,7 @@ public class MarketDetailActivity extends JMEBaseActivity implements FChart.OnPr
     private boolean bHighlight = false;
     private boolean bHasMoreKDataFlag = true;
     private boolean bRequestTDataFlag = false;
+    private boolean bGetTradeDateFlag = false;
     private int iRequestKDataFlag = NONE;
 
     private Handler mHandler = new Handler() {
@@ -198,15 +203,17 @@ public class MarketDetailActivity extends JMEBaseActivity implements FChart.OnPr
             return;
 
         bFlag = true;
+        bGetTradeDateFlag = false;
 
         updateData(true);
     }
 
     private void updateData(boolean enable) {
         getTenSpeedQuotes(enable);
+        getDetail();
 
         if (mChart.isShowTChart())
-            getDetail();
+            getTChartData();
         else
             getNewestKChartData();
     }
@@ -216,15 +223,34 @@ public class MarketDetailActivity extends JMEBaseActivity implements FChart.OnPr
     }
 
     public void sendChartRefreshMessage(boolean showTChart) {
-        if (showTChart)
+        if (showTChart) {
+            bGetTradeDateFlag = false;
+
             mHandler.sendEmptyMessage(Constants.Msg.MSG_UPDATE_DATA);
-        else
+        } else {
             mHandler.sendEmptyMessage(Constants.Msg.MSG_RELOAD_DATA);
+        }
     }
 
     private void removeMessage() {
         mHandler.removeMessages(Constants.Msg.MSG_UPDATE_DATA);
         mHandler.removeMessages(Constants.Msg.MSG_RELOAD_DATA);
+    }
+
+    public void getTChartData() {
+        if (bRequestTDataFlag)
+            return;
+
+        if (!bGetTradeDateFlag) {
+            getContractSection();
+
+            return;
+        }
+
+        bRequestTDataFlag = true;
+        bFlag = false;
+
+        getTChartQuotes();
     }
 
     public void getInitKChartData() {
@@ -293,10 +319,32 @@ public class MarketDetailActivity extends JMEBaseActivity implements FChart.OnPr
         getKChartQuotes(unit.getCode(), sdf.format(date), DIRECTION_BEFORE);
     }
 
-    private void updateMarketData(TenSpeedVo tenSpeedVo) {
-        if (null == tenSpeedVo)
-            return;
+    private void getTradeTime(List<SectionVo> list) {
+        List<long[]> timeLists = new ArrayList<>();
 
+        for (SectionVo sectionVo : list) {
+            if (null != sectionVo && sectionVo.getSectionType() == 2) {
+                String startTime = sectionVo.getStartTime();
+                String endTime = sectionVo.getEndTime();
+
+                if (!TextUtils.isEmpty(startTime) && !TextUtils.isEmpty(endTime)) {
+                    long[] timeValue = new long[2];
+                    timeValue[0] = DateUtil.dateToLong(sectionVo.getStartTime()).longValue();
+                    timeValue[1] = DateUtil.dateToLong(sectionVo.getEndTime()).longValue();
+
+                    timeLists.add(timeValue);
+                }
+            }
+        }
+
+        if (null != timeLists && timeLists.size() > 0) {
+            bGetTradeDateFlag = true;
+
+            mTChart.setTChartXAxisTime(timeLists, AppConfig.Minute);
+        }
+    }
+
+    private void updateMarketData(TenSpeedVo tenSpeedVo) {
         mTenSpeedVo = tenSpeedVo;
 
         String lastSettlePrice = tenSpeedVo.getLastSettlePrice();
@@ -334,7 +382,9 @@ public class MarketDetailActivity extends JMEBaseActivity implements FChart.OnPr
                     TextUtils.isEmpty(lowestPrice) || TextUtils.isEmpty(lastSettlePrice) ? -2 : new BigDecimal(lowestPrice).compareTo(new BigDecimal(lastSettlePrice)))));
         }
 
-        mTChart.setPreClose(lastSettlePrice);
+        if (!TextUtils.isEmpty(lastSettlePrice))
+            mTChart.setPreClose(lastSettlePrice);
+
         mTChart.loadTradeInfoChartData(tenSpeedVo.getAskLists(), tenSpeedVo.getBidLists());
     }
 
@@ -359,7 +409,7 @@ public class MarketDetailActivity extends JMEBaseActivity implements FChart.OnPr
         for (DetailVo detailVo : list) {
             if (null != detailVo) {
                 String[] values = new String[3];
-                values[0] = String.valueOf(DateUtil.dateToLong(detailVo.getQuoteTime(), "yyyy-MM-dd HH:mm:ss"));
+                values[0] = String.valueOf(DateUtil.dateToLong(detailVo.getQuoteTime()));
                 values[1] = MarketUtil.getPriceValue(detailVo.getLatestPrice());
                 values[2] = String.valueOf(detailVo.getTurnVolume());
 
@@ -406,6 +456,9 @@ public class MarketDetailActivity extends JMEBaseActivity implements FChart.OnPr
     }
 
     private void getTenSpeedQuotes(boolean enable) {
+        if (TextUtils.isEmpty(mContractId))
+            return;
+
         HashMap<String, String> params = new HashMap<>();
         params.put("list", mContractId);
 
@@ -413,6 +466,9 @@ public class MarketDetailActivity extends JMEBaseActivity implements FChart.OnPr
     }
 
     private void getDetail() {
+        if (TextUtils.isEmpty(mContractId))
+            return;
+
         HashMap<String, String> params = new HashMap<>();
         params.put("contractId", mContractId);
         params.put("detailId", "");
@@ -422,7 +478,20 @@ public class MarketDetailActivity extends JMEBaseActivity implements FChart.OnPr
         sendRequest(MarketService.getInstance().getDetail, params, false, false, false);
     }
 
+    private void getContractSection() {
+        if (TextUtils.isEmpty(mContractId))
+            return;
+
+        HashMap<String, String> params = new HashMap<>();
+        params.put("contractId", mContractId);
+
+        sendRequest(MarketService.getInstance().getContractSection, params, false, false, false);
+    }
+
     private void getTChartQuotes() {
+        if (TextUtils.isEmpty(mContractId))
+            return;
+
         HashMap<String, String> params = new HashMap<>();
         params.put("contractId", mContractId);
         params.put("qryFlag", DIRECTION_AFTER);
@@ -432,6 +501,9 @@ public class MarketDetailActivity extends JMEBaseActivity implements FChart.OnPr
     }
 
     private void getKChartQuotes(String type, String time, String flag) {
+        if (TextUtils.isEmpty(mContractId))
+            return;
+
         HashMap<String, String> params = new HashMap<>();
         params.put("type", type);
         params.put("contractId", mContractId);
@@ -462,7 +534,12 @@ public class MarketDetailActivity extends JMEBaseActivity implements FChart.OnPr
                     if (null == list || 0 == list.size())
                         return;
 
-                    updateMarketData(list.get(0));
+                    TenSpeedVo tenSpeedVo = list.get(0);
+
+                    if (null == tenSpeedVo)
+                        return;
+
+                    updateMarketData(tenSpeedVo);
                 }
 
                 if (bFlag) {
@@ -491,12 +568,44 @@ public class MarketDetailActivity extends JMEBaseActivity implements FChart.OnPr
                 }
 
                 break;
+            case "GetContractSection":
+                if (head.isSuccess()) {
+                    List<SectionVo> list;
+
+                    try {
+                        list = (List<SectionVo>) response;
+                    } catch (Exception e) {
+                        list = null;
+
+                        e.printStackTrace();
+                    }
+
+                    if (null == list || 0 == list.size())
+                        return;
+
+                    getTradeTime(list);
+                }
+
+                break;
             case "GetTChartQuotes":
                 if (head.isSuccess()) {
+                    List<TChartVo> list;
 
-                } else {
+                    try {
+                        list = (List<TChartVo>) response;
+                    } catch (Exception e) {
+                        list = null;
 
+                        e.printStackTrace();
+                    }
+
+                    if (null == list)
+                        return;
+
+                    mTChart.loadTChartData(list);
                 }
+
+                bRequestTDataFlag = false;
 
                 break;
             case "GetKChartQuotes":
@@ -549,10 +658,6 @@ public class MarketDetailActivity extends JMEBaseActivity implements FChart.OnPr
     }
 
     public class ClickHandlers {
-
-        public void onClickBack() {
-            finish();
-        }
 
         public void onClickDeclarationForm() {
 

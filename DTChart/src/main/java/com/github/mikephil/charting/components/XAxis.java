@@ -64,6 +64,10 @@ public class XAxis extends AxisBase {
      */
     public int mAxisLabelModulus = 1;
 
+    public boolean bNotAverage = false;
+
+    public long[] mAxisLabelModulusList;
+
     /**
      * Is axisLabelModulus a custom value or auto calculated? If false, then
      * it's auto, if true, then custom. default: false (automatic modulus)
@@ -102,6 +106,7 @@ public class XAxis extends AxisBase {
      * 是否包含中午休市时间
      */
     private boolean mIsHaveCloseTime = false;
+    private boolean mIsHaveMoreCloaseTime = false;
 
     /**
      * 显示的首尾数值
@@ -109,6 +114,7 @@ public class XAxis extends AxisBase {
     private long mFirstValue;
     private long mLastValue;
     private long mCloseTime;
+    private List<long[]> mMoreCloseTime;
 
     /**
      * enum for the position of the x-labels relative to the chart
@@ -179,6 +185,13 @@ public class XAxis extends AxisBase {
         mCloseTime = clostTime;
     }
 
+    public void setOnlyShowFirstLastValue(boolean enable, boolean bHaveCloseTime, boolean bHaveMoreCloseTime, List<long[]> moreCloseTime) {
+        mOnlyShowFirstLastValue = enable;
+        mIsHaveCloseTime = bHaveCloseTime;
+        mIsHaveMoreCloaseTime = bHaveMoreCloseTime;
+        mMoreCloseTime = moreCloseTime;
+    }
+
     /**
      * add by XuJun
      * 获取是否只显示首尾值以及首尾的数值
@@ -191,6 +204,10 @@ public class XAxis extends AxisBase {
         return mIsHaveCloseTime;
     }
 
+    public boolean isHaveMoreCloaseTime() {
+        return mIsHaveMoreCloaseTime;
+    }
+
     public long getFirstValue() {
         return mFirstValue;
     }
@@ -201,6 +218,14 @@ public class XAxis extends AxisBase {
 
     public long getClostValue() {
         return mCloseTime;
+    }
+
+    public List<long[]> getMoreCloseTime() {
+        return mMoreCloseTime;
+    }
+
+    public long[] getAxisLabelModulusList() {
+        return mAxisLabelModulusList;
     }
 
     /**
@@ -219,6 +244,12 @@ public class XAxis extends AxisBase {
 
         mIsAxisModulusCustom = true;
         mAxisLabelModulus = count/* + 1*/;
+    }
+
+    public void setLabelsToSkip(long[] averageValues, boolean notAverage) {
+        bNotAverage = notAverage;
+        mIsAxisModulusCustom = true;
+        mAxisLabelModulusList = averageValues;
     }
 
     /**

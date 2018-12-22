@@ -39,6 +39,14 @@ public interface MarketApi {
     Call<DTResponse> getDetail(@QueryMap Map<String, String> map);
 
     /**
+     * 合约交易节
+     *
+     * @return
+     */
+    @GET("/gold-hq/v1.0.0/android/contractSection")
+    Call<DTResponse> getContractSection(@QueryMap Map<String, String> map);
+
+    /**
      * 分时行情接口
      *
      * @return

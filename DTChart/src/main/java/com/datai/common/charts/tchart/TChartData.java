@@ -3,7 +3,10 @@ package com.datai.common.charts.tchart;
 import com.github.mikephil.charting.data.BarEntry;
 import com.github.mikephil.charting.data.Entry;
 import com.google.gson.JsonArray;
+import com.jme.common.util.DateUtil;
+import com.jme.common.util.TChartVo;
 
+import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -63,7 +66,7 @@ public class TChartData {
     public void loadData(JsonArray jsonArray) {
         int mArrayCount = jsonArray.size();
 
-        if(mArrayCount <= 0)
+        if (mArrayCount <= 0)
             return;
 
         mTimeVals = new ArrayList<>();
@@ -133,7 +136,7 @@ public class TChartData {
 
             if (index < allCount) {
                 mCurrentVals.add(new Entry(current, index));
-                mRiseRangeVals.add(new Entry((current - preclose)/preclose * 100, index));
+                mRiseRangeVals.add(new Entry((current - preclose) / preclose * 100, index));
                 mAverageVals.add(new Entry(average, index));
                 mRiseVals.add(isRise(current - last_current));
                 mVolVals.add(new BarEntry(bIsSingleVol ? vol : vol - last_vol, index));//服务器传过来的成交量是增量，所以需要减去前一个周期值
@@ -146,6 +149,79 @@ public class TChartData {
             mEmptyVals.add(new Entry(jsonArray.get(0).getAsJsonArray().get(2).getAsFloat(), i));//i + 1
         }
 
+    }
+
+    public void loadData(List<TChartVo> list) {
+        if (null == list)
+            return;
+
+        int mArrayCount = list.size();
+
+        if (mArrayCount <= 0)
+            return;
+
+        mTimeVals = new ArrayList<>();
+        mCurrentVals = new ArrayList<>();
+        mRiseRangeVals = new ArrayList<>();
+        mAverageVals = new ArrayList<>();
+        mVolVals = new ArrayList<>();
+        mRiseVals = new ArrayList<>();
+        mEmptyVals = new ArrayList<>();
+
+        long tradeTimeAverage = 0;
+
+        if (null == mTradeTimeList)
+            return;
+
+        for (int i = 0; i < mTradeTimeList.size(); i++) {
+            long[] time = mTradeTimeList.get(i);
+
+            tradeTimeAverage = tradeTimeAverage + (time[1] - time[0]);
+        }
+
+        long allCount = tradeTimeAverage / mTimeInterval + 1;
+        long xAverage = mTimeInterval;
+
+        for (int i = 0; i < allCount; i++) {
+            long time;
+
+            if (i < mArrayCount)
+                time = DateUtil.dateToLong(list.get(i).getQuoteTime()).longValue();
+             else
+                time = DateUtil.dateToLong(list.get(mArrayCount - 1).getQuoteTime()).longValue() + xAverage * (i - (mArrayCount - 1));
+
+            mTimeVals.add(mSdf.format(time));
+        }
+
+        float last_vol = 0f;
+        float last_current = 0f;
+        float preclose = Float.parseFloat(mPreclose);
+
+        for (int i = 0; i < mArrayCount; i++) {
+            TChartVo tChartVo = list.get(i);
+
+            if (null != tChartVo) {
+                float current = new BigDecimal(tChartVo.getClosePrice()).divide(new BigDecimal(100)).floatValue();
+                float average = new BigDecimal(tChartVo.getAveragePrice()).divide(new BigDecimal(100)).floatValue();
+                float vol = tChartVo.getTurnVolume();
+
+                if (i < allCount) {
+                    mCurrentVals.add(new Entry(current, i));
+                    mRiseRangeVals.add(new Entry((new BigDecimal(current).subtract(new BigDecimal(preclose))).
+                            divide(new BigDecimal(preclose), 4, BigDecimal.ROUND_UP).multiply(new BigDecimal(100)).floatValue(), i));
+                    mAverageVals.add(new Entry(average, i));
+                    mRiseVals.add(isRise(new BigDecimal(current).subtract(new BigDecimal(last_current)).floatValue()));
+                    mVolVals.add(new BarEntry(bIsSingleVol ? vol : new BigDecimal(vol).subtract(new BigDecimal(last_vol)).floatValue(), i));//服务器传过来的成交量是增量，所以需要减去前一个周期值
+                }
+
+                last_vol = vol;
+                last_current = current;
+            }
+        }
+
+        for (int i = 0; i < allCount; i++) {
+            mEmptyVals.add(new Entry(new BigDecimal(list.get(0).getAveragePrice()).divide(new BigDecimal(100)).floatValue(), i));//i + 1
+        }
     }
 
     public boolean hasData() {

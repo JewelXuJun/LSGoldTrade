@@ -75,7 +75,7 @@ public class KChartUIConfig {
         xAxis.setDrawLabels(false);//不画X轴标尺数值
         xAxis.setXOffset(0);//设置x轴数值X轴偏移
         xAxis.setYOffset(3);//设置x轴数值X轴偏移
-        xAxis.setTextSize(12f);
+        xAxis.setTextSize(10f);
         xAxis.setTypeface(mTypeface);//设置X轴文字的字体
         xAxis.setDrawGridLines(false);//画X轴值线
         xAxis.setGridColor(Config.Grid_Color);//设置X轴值线颜色
@@ -137,7 +137,7 @@ public class KChartUIConfig {
         xAxis.setDrawLabels(true);//画X轴标尺数值
         xAxis.setXOffset(0);//设置x轴数值X轴偏移
         xAxis.setYOffset(3);//设置x轴数值X轴偏移
-        xAxis.setTextSize(12f);
+        xAxis.setTextSize(10f);
         xAxis.setTypeface(mTypeface);//设置X轴文字的字体
         xAxis.setDrawGridLines(false);//画X轴值线
         xAxis.setTextColor(Config.X_Text_Color);//设置X轴值线的数值的颜色

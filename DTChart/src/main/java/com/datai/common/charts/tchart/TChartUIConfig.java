@@ -14,6 +14,7 @@ import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.listener.ChartTouchListener;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by XuJun on 2016/1/20.
@@ -75,6 +76,7 @@ public class TChartUIConfig {
         xAxis.setTextColor(Config.X_Text_Color);//设置X轴值线的数值的颜色
         xAxis.setTypeface(mTypeface);//设置X轴文字的字体
         xAxis.setDrawGridLines(true);//画X轴值线
+        xAxis.setTextSize(8f);
         xAxis.setGridColor(Config.Grid_Color);//设置X轴值线颜色
         xAxis.setGridLineWidth(Config.Grid_Line_Width);//设置X轴值线宽度
         xAxis.enableGridDashedLine(5.0f, 5.0f, 1);//设置X轴值线成虚线
@@ -214,6 +216,10 @@ public class TChartUIConfig {
 
     public void setXAxisTime(boolean enable, long startTime, long endTime, long closeTime) {
         mFirstChart.getXAxis().setOnlyShowFirstLastValue(true, enable, startTime, endTime, closeTime);
+    }
+
+    public void setXAxisTime(boolean enable, boolean haveMoreCloseTime, List<long[]> moreCloseTime) {
+        mFirstChart.getXAxis().setOnlyShowFirstLastValue(true, enable, haveMoreCloseTime, moreCloseTime);
     }
 
     public void setLineDataSet(LineDataSet set) {

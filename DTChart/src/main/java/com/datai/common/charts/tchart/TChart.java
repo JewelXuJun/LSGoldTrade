@@ -29,6 +29,7 @@ import com.github.mikephil.charting.listener.ChartTouchListener;
 import com.github.mikephil.charting.listener.OnChartGestureListener;
 import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
 import com.google.gson.JsonArray;
+import com.jme.common.util.TChartVo;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -53,7 +54,10 @@ public class TChart extends LinearLayout {
 
     private Descriptor mDescriptor = new Descriptor();
 
+    private List<long[]> mTimeLists;
+
     private boolean bFlag = false;
+    private boolean bAverageFlag = true;
 
     public TChart(Context context) {
         super(context);
@@ -126,10 +130,37 @@ public class TChart extends LinearLayout {
         loadTChartData(jsonArray, false);
     }
 
+    public void loadTChartData(List<TChartVo> list) {
+        loadTChartData(list, true, false);
+    }
+
     public void loadTChartData(JsonArray jsonArray, boolean isSingleVol) {
 //        mTData.setData(jsonArray);
         boolean animate = !mTChartData.hasData();
         mTChartData.loadData(jsonArray);
+        mTChartData.setIsSingleVol(isSingleVol);
+
+        setFirstChartData();
+        setSecondChartData();
+
+        if (!bFlag)
+            setTextOnUnHighlight(mTChartData.getCurrentVals().size() - 1);
+
+        if (mLandscapeVisible) {
+            iv_landscape.setVisibility(View.VISIBLE);
+        }
+
+        if (animate) {
+            mFirstChart.animateX(500);
+            mSecondChart.animateX(500);
+        }
+    }
+
+    public void loadTChartData(List<TChartVo> list, boolean isSingleVol, boolean isAverage) {
+//        mTData.setData(jsonArray);
+        bAverageFlag = isAverage;
+        boolean animate = !mTChartData.hasData();
+        mTChartData.loadData(list);
         mTChartData.setIsSingleVol(isSingleVol);
 
         setFirstChartData();
@@ -191,13 +222,20 @@ public class TChart extends LinearLayout {
 
     public void setTChartXAxisTime(List<long[]> list, long timeInterval) {
         if (list != null && list.size() != 0) {
-            boolean bHaveCloseTime = false;
+            boolean bHaveCloseTime;
 
-            if (list.size() > 1) {
+            mTimeLists = list;
+
+            int size = list.size();
+
+            if (size > 1) {
                 bHaveCloseTime = true;
-            }
 
-            mTConfig.setXAxisTime(bHaveCloseTime, list.get(0)[0], list.get(list.size() - 1)[1], list.get(list.size() - 1)[0] - list.get(0)[1]);
+                if (size > 2)
+                    mTConfig.setXAxisTime(bHaveCloseTime, true, list);
+                else
+                    mTConfig.setXAxisTime(bHaveCloseTime, list.get(0)[0], list.get(list.size() - 1)[1], list.get(list.size() - 1)[0] - list.get(0)[1]);
+            }
 
             mTChartData.setTradeTime(list, timeInterval);
         }
@@ -359,7 +397,18 @@ public class TChart extends LinearLayout {
         combinedData.setData(lineData);
 
         mFirstChart.setData(combinedData);
-        mFirstChart.getXAxis().setLabelsToSkip(mFirstChart.getXValCount() / 4);
+        if (bAverageFlag) {
+            mFirstChart.getXAxis().setLabelsToSkip(mFirstChart.getXValCount() / 4);
+        } else {
+           long[] timeValues = new long[mTimeLists.size()];
+
+           for (int i = 0; i < mTimeLists.size(); i++) {
+               timeValues[i] = (mTimeLists.get(i)[1] - mTimeLists.get(i)[0]) / Config.TimeInterval_OneMinute;
+           }
+
+            mFirstChart.getXAxis().setLabelsToSkip(timeValues, true);
+        }
+
         mFirstChart.invalidate();
     }
 

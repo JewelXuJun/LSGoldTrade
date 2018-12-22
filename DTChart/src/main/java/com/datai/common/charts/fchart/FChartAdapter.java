@@ -129,9 +129,9 @@ public class FChartAdapter extends BaseAdapter {
                                 Float.parseFloat(mPreClose))));
 
                         if (new BigDecimal(second).compareTo(new BigDecimal(1000)) == -1) {
-                            holder.tv_item_second.setTextSize(TypedValue.COMPLEX_UNIT_SP, 11);
+                            holder.tv_item_second.setTextSize(TypedValue.COMPLEX_UNIT_SP, 10);
                         } else {
-                            holder.tv_item_second.setTextSize(TypedValue.COMPLEX_UNIT_SP, 9);
+                            holder.tv_item_second.setTextSize(TypedValue.COMPLEX_UNIT_SP, 8);
                         }
                     }
 
@@ -143,9 +143,9 @@ public class FChartAdapter extends BaseAdapter {
                         holder.tv_item_third.setText(mDescriptor.floatValue(third, 0));
 
                         if (new BigDecimal(third).compareTo(new BigDecimal(1000)) == -1) {
-                            holder.tv_item_third.setTextSize(TypedValue.COMPLEX_UNIT_SP, 11);
+                            holder.tv_item_third.setTextSize(TypedValue.COMPLEX_UNIT_SP, 10);
                         } else {
-                            holder.tv_item_third.setTextSize(TypedValue.COMPLEX_UNIT_SP, 9);
+                            holder.tv_item_third.setTextSize(TypedValue.COMPLEX_UNIT_SP, 8);
                         }
                     }
                 }

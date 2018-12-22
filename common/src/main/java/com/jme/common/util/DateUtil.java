@@ -148,8 +148,8 @@ public class DateUtil {
         return format.format(date);
     }
 
-    public static Long dateToLong(String date, String formatStr) {
-        format = new SimpleDateFormat(formatStr);
+    public static Long dateToLong(String date) {
+        format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         try {
             Date dateFormat = format.parse(date);
             return dateFormat.getTime();

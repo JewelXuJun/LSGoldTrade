@@ -4,11 +4,12 @@ import com.jme.common.network.API;
 import com.jme.common.network.DTResponse;
 import com.jme.common.network.IService;
 import com.jme.common.util.KChartVo;
+import com.jme.common.util.TChartVo;
 import com.jme.lsgoldtrade.config.Constants;
 import com.jme.lsgoldtrade.domain.DetailVo;
 import com.jme.lsgoldtrade.domain.FiveSpeedVo;
+import com.jme.lsgoldtrade.domain.SectionVo;
 import com.jme.lsgoldtrade.domain.TenSpeedVo;
-import com.jme.lsgoldtrade.domain.TChartVo;
 
 import java.util.HashMap;
 import java.util.List;
@@ -76,9 +77,20 @@ public class MarketService extends IService<MarketApi> {
     };
 
     /**
+     * 合约交易节
+     */
+    public API getContractSection = new API<List<SectionVo>>("GetContractSection") {
+        @Override
+        public Call<DTResponse> request(HashMap<String, String> params) {
+
+            return mApi.getContractSection(params);
+        }
+    };
+
+    /**
      * 分时行情接口
      */
-    public API getTChartQuotes = new API<TChartVo>("GetTChartQuotes") {
+    public API getTChartQuotes = new API<List<TChartVo>>("GetTChartQuotes") {
         @Override
         public Call<DTResponse> request(HashMap<String, String> params) {
 
