@@ -146,7 +146,7 @@ public class MarketDetailActivity extends JMEBaseActivity implements FChart.OnPr
 
             @Override
             public void onChartSingleTapped(MotionEvent me) {
-
+                //切换VOL等选项
             }
         });
 
