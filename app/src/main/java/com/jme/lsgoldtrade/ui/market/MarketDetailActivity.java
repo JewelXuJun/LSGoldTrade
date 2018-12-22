@@ -5,7 +5,6 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
@@ -13,7 +12,6 @@ import android.view.MotionEvent;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.datai.common.charts.chart.Chart;
-import com.datai.common.charts.common.Config;
 import com.datai.common.charts.fchart.FChart;
 import com.datai.common.charts.indicator.Indicator;
 import com.datai.common.charts.kchart.KChart;
@@ -135,14 +133,15 @@ public class MarketDetailActivity extends JMEBaseActivity implements FChart.OnPr
     protected void initListener() {
         super.initListener();
 
-        mChart.setOnLandscapeListener((view) -> ARouter.getInstance().build(Constants.ARouterUriConst.MARKETDETAILLANDSCAPE).navigation());
+        mChart.setOnLandscapeListener((view) -> gotoMarketDetailLandscapeActivity());
 
         mChart.setOnChartListener((showTChart, unit) -> sendChartRefreshMessage(showTChart));
 
         mKChart.setOnKChartListener(new OnKChartListener() {
             @Override
             public void onEnding(long oldestTime, KData.Unit unit) {
-                getMoreKChartData(oldestTime, unit);
+                if (mKChart.getDataCount() >= 200)
+                    getMoreKChartData(oldestTime, unit);
             }
 
             @Override
@@ -216,6 +215,14 @@ public class MarketDetailActivity extends JMEBaseActivity implements FChart.OnPr
             getTChartData();
         else
             getNewestKChartData();
+    }
+
+    private void gotoMarketDetailLandscapeActivity() {
+        ARouter.getInstance()
+                .build(Constants.ARouterUriConst.MARKETDETAILLANDSCAPE)
+                .withString("ContractId", mContractId)
+                .withString("ChartUnit", mChart.getChartUnit().getCode())
+                .navigation(this, Constants.IntentConst.CODE_REQUEST_LANDSCAPE);
     }
 
     private long getTimeInterval() {
