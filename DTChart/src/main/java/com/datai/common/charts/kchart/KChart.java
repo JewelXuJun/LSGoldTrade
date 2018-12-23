@@ -181,7 +181,7 @@ public class KChart extends LinearLayout {
         int newCount = mKChartData.getEntryCount();
         oriLowIndex += (newCount - oriCount);
 
-        setVisibleEntry(visibleCount, oriLowIndex);
+        setVisibleMoreEntry(visibleCount, oriLowIndex);
         setTextOnUnHighlight();
     }
 
@@ -490,6 +490,19 @@ public class KChart extends LinearLayout {
 
         mFirstChart.moveViewToXSync(xIndex / (1 / originalScaleX) * scaleX);
         mSecondChart.moveViewToXSync(xIndex / (1 / originalScaleX) * scaleX);
+    }
+
+    private void setVisibleMoreEntry(float visibleCount, float xIndex) {
+        mFirstChart.setVisibleXRange(mMinXRange, mMaxXRange);
+        mSecondChart.setVisibleXRange(mMinXRange, mMaxXRange);
+        float originalScaleX = mFirstChart.getScaleX();
+
+        float scaleX = mKChartData.getEntryCount() / visibleCount;
+        mFirstChart.zoom((1 / originalScaleX) * scaleX, 1f, 1, 1);
+        mSecondChart.zoom((1 / originalScaleX) * scaleX, 1f, 1, 1);
+
+        mFirstChart.moveViewToXSync(xIndex);
+        mSecondChart.moveViewToXSync(xIndex);
     }
 
     private void clearChartData() {
