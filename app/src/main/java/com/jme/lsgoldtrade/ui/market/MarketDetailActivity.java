@@ -383,10 +383,10 @@ public class MarketDetailActivity extends JMEBaseActivity implements FChart.OnPr
             mBinding.tvStateTime.setText("- - -" + MarketUtil.getValue(DateUtil.stringToAllTime(tenSpeedVo.getQuoteTime())));
             mBinding.tvHigh.setText(MarketUtil.getValue(highestPrice));
             mBinding.tvHigh.setTextColor(ContextCompat.getColor(this, MarketUtil.getMarketStateColor(
-                    TextUtils.isEmpty(highestPrice) || TextUtils.isEmpty(lastSettlePrice) ? -2 : new BigDecimal(highestPrice).compareTo(new BigDecimal(lastSettlePrice)))));
+                    TextUtils.isEmpty(highestPrice) ? -2 : new BigDecimal(highestPrice).compareTo(new BigDecimal(lastSettlePrice)))));
             mBinding.tvLow.setText(MarketUtil.getValue(lowestPrice));
             mBinding.tvLow.setTextColor(ContextCompat.getColor(this, MarketUtil.getMarketStateColor(
-                    TextUtils.isEmpty(lowestPrice) || TextUtils.isEmpty(lastSettlePrice) ? -2 : new BigDecimal(lowestPrice).compareTo(new BigDecimal(lastSettlePrice)))));
+                    TextUtils.isEmpty(lowestPrice) ? -2 : new BigDecimal(lowestPrice).compareTo(new BigDecimal(lastSettlePrice)))));
         }
 
         if (!TextUtils.isEmpty(lastSettlePrice))
