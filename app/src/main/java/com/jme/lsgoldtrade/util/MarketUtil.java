@@ -86,6 +86,31 @@ public class MarketUtil {
         return color;
     }
 
+    public static int getMarketStateBackgroundColor(int type) {
+        int drawable;
+
+        switch (type) {
+            case -1:
+                drawable = R.drawable.bg_decrease;
+
+                break;
+            case 0:
+                drawable = R.drawable.bg_stable;
+
+                break;
+            case 1:
+                drawable = R.drawable.bg_increase;
+
+                break;
+            default:
+                drawable = R.drawable.bg_stable;
+
+                break;
+        }
+
+        return drawable;
+    }
+
     public static String getValue(String value) {
         return TextUtils.isEmpty(value) ? "- - -" : value;
     }
