@@ -1,5 +1,7 @@
 package com.jme.lsgoldtrade.ui.market;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -674,6 +676,27 @@ public class MarketDetailActivity extends JMEBaseActivity implements FChart.OnPr
             mPopupWindow.showAtLocation(mBinding.layoutFooterview, Gravity.BOTTOM, 0, 0);
         }
 
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
+        super.onActivityResult(requestCode, resultCode, intent);
+
+        if (null == intent)
+            return;
+
+        switch (requestCode) {
+            case Constants.IntentConst.CODE_REQUEST_LANDSCAPE:
+                if (resultCode == Activity.RESULT_OK) {
+                    String contractId = intent.getStringExtra("ContractId");
+                    String chartUnit = intent.getStringExtra("ChartUnit");
+
+                    if (contractId.equals(mContractId))
+                        mChart.setUnit(chartUnit);
+                }
+
+                break;
+        }
     }
 
     @Override

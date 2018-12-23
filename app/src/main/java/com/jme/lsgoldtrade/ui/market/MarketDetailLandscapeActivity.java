@@ -125,7 +125,7 @@ public class MarketDetailLandscapeActivity extends JMEBaseActivity implements FC
 
         mBinding.tvName.setText(MarketUtil.getContractNameEN(mContractId));
 
-        setUnit();
+        mChart.setUnit(mUnitCode);
     }
 
     @Override
@@ -186,50 +186,6 @@ public class MarketDetailLandscapeActivity extends JMEBaseActivity implements FC
         mKChart.setHasTradeVolume(true);
         mKChart.setLandscapeButtonVisible(false);
         mKChart.setOnKChartSelectedListener(this);
-    }
-
-    private void setUnit() {
-        if (TextUtils.isEmpty(mUnitCode))
-            return;
-
-        switch (mUnitCode) {
-            case "time1":
-                mChart.setChartUnit(KData.Unit.TIME);
-
-                break;
-            case "dayK":
-                mChart.setChartUnit(KData.Unit.DAY);
-
-                break;
-            case "weekK":
-                mChart.setChartUnit(KData.Unit.WEEK);
-
-                break;
-            case "monthK":
-                mChart.setChartUnit(KData.Unit.MONTH);
-
-                break;
-            case "1minK":
-                mChart.setChartUnit(KData.Unit.MIN1);
-
-                break;
-            case "5minK":
-                mChart.setChartUnit(KData.Unit.MIN5);
-
-                break;
-            case "15minK":
-                mChart.setChartUnit(KData.Unit.MIN15);
-
-                break;
-            case "30minK":
-                mChart.setChartUnit(KData.Unit.MIN30);
-
-                break;
-            case "60minK":
-                mChart.setChartUnit(KData.Unit.MIN60);
-
-                break;
-        }
     }
 
     public void initRawData() {

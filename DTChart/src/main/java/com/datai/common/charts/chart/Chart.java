@@ -1,6 +1,7 @@
 package com.datai.common.charts.chart;
 
 import android.content.Context;
+import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -215,6 +216,54 @@ public class Chart extends LinearLayout {
     public void setLandscapeButtonVisible(boolean visible) {
         mTChart.setLandscapeButtonVisible(visible);
         mKChart.setLandscapeButtonVisible(visible);
+    }
+
+    public void setUnit(String unitCode) {
+        if (TextUtils.isEmpty(unitCode))
+            return;
+
+        switch (unitCode) {
+            case "time1":
+                setChartUnit(KData.Unit.TIME);
+
+                break;
+            case "dayK":
+                setChartUnit(KData.Unit.DAY);
+
+                break;
+            case "weekK":
+                setChartUnit(KData.Unit.WEEK);
+
+                break;
+            case "monthK":
+                setChartUnit(KData.Unit.MONTH);
+
+                break;
+            case "1minK":
+                setChartUnit(KData.Unit.MIN1);
+
+                break;
+            case "5minK":
+                setChartUnit(KData.Unit.MIN5);
+
+                break;
+            case "15minK":
+                setChartUnit(KData.Unit.MIN15);
+
+                break;
+            case "30minK":
+                setChartUnit(KData.Unit.MIN30);
+
+                break;
+            case "60minK":
+                setChartUnit(KData.Unit.MIN60);
+
+                break;
+            default:
+                setChartUnit(KData.Unit.TIME);
+
+                break;
+        }
     }
 
     private void setRadioButtonEnable() {
