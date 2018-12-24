@@ -84,6 +84,9 @@
         <activity
             android:name=".ui.personal.AboutActivity"
             android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.news.NewsActivity"
+            android:screenOrientation="portrait" />
 
     </application>
 
