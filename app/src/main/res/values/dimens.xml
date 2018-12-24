@@ -37,7 +37,7 @@
     <dimen name="width_empty">30dp</dimen>
     <dimen name="width_item">82dp</dimen>
     <dimen name="width_item_big">90dp</dimen>
-    <dimen name="width_login_verification_code">115dp</dimen>
+    <dimen name="width_login_verification_code">100dp</dimen>
     <dimen name="width_market_detail_landscape_close">66dp</dimen>
 
     <dimen name="margin_main_page_info">40dp</dimen>
