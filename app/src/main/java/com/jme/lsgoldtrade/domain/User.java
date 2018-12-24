@@ -10,7 +10,7 @@ public class User {
 
     private UserInfoVo mUserInfoVo;
 
-    private String token = "";
+    private String mToken = "";
 
     public static User getInstance() {
         if (null == mUser)
@@ -24,12 +24,13 @@ public class User {
             return;
 
         mUserInfoVo = userInfoVo;
-    }
 
+        mToken = userInfoVo.getToken();
+    }
 
     public void logout() {
         mUserInfoVo = null;
-        token = "";
+        mToken = "";
     }
 
     public boolean isLogin() {
@@ -41,6 +42,6 @@ public class User {
     }
 
     public String getToken() {
-        return token;
+        return mToken;
     }
 }

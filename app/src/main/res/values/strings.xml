@@ -155,14 +155,20 @@
     <string name="setting_about_contact">联系我们</string>
     <string name="setting_about_version">泰金所&#160;&#160;%1$s版</string>
 
+    <!-- News -->
+    <string name="news_title">消息中心</string>
+
     <!-- Login -->
     <string name="login_title">登录</string>
     <string name="login_account_hint">输入您的交易账号</string>
     <string name="login_password_hint">输入您的交易密码</string>
+    <string name="login_account_error">请输入正确的交易账号</string>
+    <string name="login_password_error">输入正确的交易密码</string>
     <string name="login_mobile_hint">输入您的手机号</string>
     <string name="login_verification_code_hint">输入验证码</string>
-    <string name="login_mobile">使用手机号登录</string>
+    <string name="login_mobile">使用手机验证码登录</string>
     <string name="login_account">使用账号密码登录</string>
     <string name="login_register">还没有账号？立即开户</string>
+    <string name="login_success">登录成功</string>
 
 </resources>

@@ -130,22 +130,6 @@ public class StringUtils {
             return "";
     }
 
-    /**
-     * 判断密码6-12位字母和数字的组合
-     *
-     * @param password
-     * @return
-     */
-    public static boolean isPasswordRight(String password) {
-//        String REGEX_PASSWORD = "^[a-z0-9]{6,12}$";
-//
-//        return Pattern.matches(REGEX_PASSWORD, password);
-        if (password.length() < 6 || password.length() > 24)
-            return false;
-        else
-            return true;
-    }
-
     public static boolean checkBankCardLength(String bankCard) {
         int length = bankCard.length();
 
@@ -203,12 +187,6 @@ public class StringUtils {
         }
 
         return (luhmSum % 10 == 0) ? '0' : (char) ((10 - luhmSum % 10) + '0');
-    }
-
-    public static boolean isPhoneNumber(String mobile) {
-        String REGEX_MOBILE = "^[1][3,4,5,7,8][0-9]{9}$";
-
-        return Pattern.matches(REGEX_MOBILE, mobile);
     }
 
     public static String formatPriceEachTree(double price) {

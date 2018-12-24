@@ -54,7 +54,9 @@ public class PersonalFragment extends JMEBaseFragment {
     public class ClickHandlers {
 
         public void onClickLogin() {
-
+            ARouter.getInstance()
+                    .build(Constants.ARouterUriConst.ACCOUNTLOGIN)
+                    .navigation();
         }
 
         public void onClickOpenAccountOnline() {

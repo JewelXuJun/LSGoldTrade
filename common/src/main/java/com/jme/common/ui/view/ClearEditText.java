@@ -50,7 +50,7 @@ public class ClearEditText extends EditText implements View.OnFocusChangeListene
             mClearDrawable = getResources().getDrawable(R.drawable.selector_edit_clear);
         }
 
-        mClearDrawable.setBounds(0, 0, mClearDrawable.getIntrinsicWidth(), mClearDrawable.getIntrinsicHeight());
+        mClearDrawable.setBounds(0, 0, 48, 48);
         //默认设置隐藏图标
         setClearIconVisible(false);
         //设置焦点改变的监听

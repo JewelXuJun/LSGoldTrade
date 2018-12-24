@@ -17,37 +17,6 @@ import java.util.Enumeration;
 public class NetWorkUtils {
 
     /**
-     * 获取本地内网IP
-     * @return
-     */
-    public static String getLocalIPAddress() {
-        try {
-            for (Enumeration<NetworkInterface> mEnumeration = NetworkInterface
-                    .getNetworkInterfaces(); mEnumeration.hasMoreElements();) {
-                NetworkInterface intf = mEnumeration.nextElement();
-                for (Enumeration<InetAddress> enumIPAddr = intf
-                        .getInetAddresses(); enumIPAddr.hasMoreElements();) {
-                    InetAddress inetAddress = enumIPAddr.nextElement();
-                    // 如果不是回环地址
-                    // 判断是否是IPV4地址的方法
-                    // 1. inetAddress instanceof Inet4Address
-                    // 2. InetAddressUtils.isIPv4Address(inetAddress.getHostAddress())
-                    if (!inetAddress.isLoopbackAddress() && inetAddress instanceof Inet4Address) {
-                        // 直接返回本地IP地址
-                        return inetAddress.getHostAddress().toString();
-                    }
-                }
-            }
-        } catch (SocketException ex) {
-            Log.e("NetWorkUtils", "获取手机内网IP地址失败！(SocketException)");
-        } catch (Exception e) {
-            Log.e("NetWorkUtils", "获取手机内网IP地址失败！(Exception)");
-        }
-        return null;
-    }
-
-
-    /**
      * 获取当前网络类型
      *
      * @param context
