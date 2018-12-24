@@ -1,6 +1,7 @@
 package com.jme.lsgoldtrade.ui.personal;
 
 import android.os.Bundle;
+import android.view.View;
 
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.jme.common.network.DTRequest;
@@ -47,6 +48,20 @@ public class PersonalFragment extends JMEBaseFragment {
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+
+        if (null == mUser || !mUser.isLogin()) {
+            mBinding.tvAccount.setVisibility(View.GONE);
+            mBinding.layoutLoginMessage.setVisibility(View.VISIBLE);
+        } else {
+            mBinding.tvAccount.setText(mUser.getCurrentUser().getTradeName());
+            mBinding.tvAccount.setVisibility(View.VISIBLE);
+            mBinding.layoutLoginMessage.setVisibility(View.GONE);
+        }
+    }
+
+    @Override
     protected void DataReturn(DTRequest request, Head head, Object response) {
         super.DataReturn(request, head, response);
     }
@@ -54,9 +69,10 @@ public class PersonalFragment extends JMEBaseFragment {
     public class ClickHandlers {
 
         public void onClickLogin() {
-            ARouter.getInstance()
-                    .build(Constants.ARouterUriConst.ACCOUNTLOGIN)
-                    .navigation();
+            if (null == mUser || !mUser.isLogin())
+                ARouter.getInstance()
+                        .build(Constants.ARouterUriConst.ACCOUNTLOGIN)
+                        .navigation();
         }
 
         public void onClickOpenAccountOnline() {
@@ -68,9 +84,12 @@ public class PersonalFragment extends JMEBaseFragment {
         }
 
         public void onClickMessageCenter() {
-            ARouter.getInstance()
-                    .build(Constants.ARouterUriConst.MESSAGECENTER)
-                    .navigation();
+            if (null == mUser || !mUser.isLogin())
+                showNeedLoginDialog();
+            else
+                ARouter.getInstance()
+                        .build(Constants.ARouterUriConst.MESSAGECENTER)
+                        .navigation();
         }
 
         public void onClickShare() {
@@ -78,9 +97,12 @@ public class PersonalFragment extends JMEBaseFragment {
         }
 
         public void onClickFeedback() {
-            ARouter.getInstance()
-                    .build(Constants.ARouterUriConst.FEEDBACK)
-                    .navigation();
+            if (null == mUser || !mUser.isLogin())
+                showNeedLoginDialog();
+            else
+                ARouter.getInstance()
+                        .build(Constants.ARouterUriConst.FEEDBACK)
+                        .navigation();
         }
 
         public void onClickSeeting() {

@@ -34,7 +34,7 @@ public class User {
     }
 
     public boolean isLogin() {
-        return mUserInfoVo != null;
+        return null != mUserInfoVo;
     }
 
     public UserInfoVo getCurrentUser() {

@@ -7,6 +7,8 @@
     <string name="text_no_data_default">- - -</string>
     <string name="text_money_unit">元</string>
     <string name="text_submit">提交</string>
+    <string name="text_tips">操作提示</string>
+    <string name="text_login">登录</string>
 
     <!--首页-->
     <string name="main_exit_app">再按一次退出程序</string>
@@ -173,5 +175,6 @@
     <string name="login_account">使用账号密码登录</string>
     <string name="login_register">还没有账号？立即开户</string>
     <string name="login_success">登录成功</string>
+    <string name="login_message">该功能需要登录泰金所才能使用,去登录?</string>
 
 </resources>

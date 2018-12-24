@@ -1,6 +1,8 @@
 package com.jme.lsgoldtrade.base;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
@@ -8,9 +10,13 @@ import android.util.TypedValue;
 import android.view.View;
 import android.widget.LinearLayout;
 
+import com.alibaba.android.arouter.launcher.ARouter;
 import com.jme.common.network.DTRequest;
 import com.jme.common.network.Head;
 import com.jme.common.ui.base.BaseFragment;
+import com.jme.common.util.RxBus;
+import com.jme.lsgoldtrade.R;
+import com.jme.lsgoldtrade.config.Constants;
 import com.jme.lsgoldtrade.domain.User;
 
 import java.lang.reflect.Field;
@@ -25,6 +31,8 @@ public abstract class JMEBaseFragment<T> extends BaseFragment {
     protected T mBinding;
 
     protected User mUser;
+
+    private AlertDialog.Builder mDialog;
 
     @Override
     public void onAttach(Context context) {
@@ -101,6 +109,19 @@ public abstract class JMEBaseFragment<T> extends BaseFragment {
     @Override
     protected void DataReturn(DTRequest request, Head head, Object response) {
         super.DataReturn(request, head, response);
+    }
+
+    protected void showNeedLoginDialog() {
+        if (null == mDialog) {
+            mDialog = new AlertDialog.Builder(mContext);
+            mDialog.setTitle(mContext.getResources().getString(R.string.text_tips));
+            mDialog.setMessage(mContext.getResources().getString(R.string.login_message));
+            mDialog.setPositiveButton(mContext.getResources().getString(R.string.text_login), (dialog, which) -> ARouter.getInstance().build(Constants.ARouterUriConst.ACCOUNTLOGIN).navigation());
+            mDialog.setNegativeButton(mContext.getResources().getString(R.string.text_cancel), null);
+            mDialog.show();
+        } else {
+            mDialog.show();
+        }
     }
 
     public void setIndicator(TabLayout tabs, int leftDip, int rightDip) {
