@@ -48,22 +48,6 @@
 
             </LinearLayout>
 
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:onClick="@{() -> handlers.onClickNews()}"
-                android:orientation="horizontal"
-                android:padding="@dimen/common_page_padding">
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@mipmap/ic_news_blue" />
-
-            </LinearLayout>
-
         </RelativeLayout>
 
         <include layout="@layout/item_line_vertical" />

@@ -165,12 +165,6 @@ public class MobileLoginActivity extends JMEBaseActivity {
             finish();
         }
 
-        public void onClickNews() {
-            ARouter.getInstance()
-                    .build(Constants.ARouterUriConst.NEWSACTIVITY)
-                    .navigation();
-        }
-
         public void onClickGetVerificationCode() {
             String account = mBinding.etAccount.getText().toString();
 

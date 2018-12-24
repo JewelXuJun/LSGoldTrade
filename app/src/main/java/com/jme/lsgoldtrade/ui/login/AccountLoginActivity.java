@@ -141,12 +141,6 @@ public class AccountLoginActivity extends JMEBaseActivity {
             finish();
         }
 
-        public void onClickNews() {
-            ARouter.getInstance()
-                    .build(Constants.ARouterUriConst.NEWSACTIVITY)
-                    .navigation();
-        }
-
         public void onClickLogin() {
             doLogin();
         }
