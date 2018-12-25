@@ -1,13 +1,19 @@
 package com.jme.lsgoldtrade.ui.personal;
 
 import android.os.Bundle;
+import android.view.View;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
+import com.jme.common.network.DTRequest;
+import com.jme.common.network.Head;
 import com.jme.lsgoldtrade.R;
 import com.jme.lsgoldtrade.base.JMEBaseActivity;
 import com.jme.lsgoldtrade.config.Constants;
 import com.jme.lsgoldtrade.databinding.ActivitySettingBinding;
+import com.jme.lsgoldtrade.service.UserService;
+
+import java.util.HashMap;
 
 @Route(path = Constants.ARouterUriConst.SETTING)
 public class SettingActivity extends JMEBaseActivity {
@@ -26,6 +32,8 @@ public class SettingActivity extends JMEBaseActivity {
         mBinding = (ActivitySettingBinding) mBindingUtil;
 
         initToolbar(R.string.personal_setting, true);
+
+        mBinding.btnLogout.setVisibility(null == mUser || !mUser.isLogin() ? View.GONE : View.VISIBLE);
     }
 
     @Override
@@ -43,6 +51,28 @@ public class SettingActivity extends JMEBaseActivity {
         super.initBinding();
 
         mBinding.setHandlers(new ClickHandlers());
+    }
+
+    private void logout() {
+        sendRequest(UserService.getInstance().logout, new HashMap<>(), true);
+    }
+
+    @Override
+    protected void DataReturn(DTRequest request, Head head, Object response) {
+        super.DataReturn(request, head, response);
+
+        switch (request.getApi().getName()) {
+            case "Logout":
+                if (head.isSuccess()) {
+                    mBinding.btnLogout.setVisibility(View.GONE);
+
+                    mUser.logout();
+
+                    showShortToast(R.string.setting_logout_success);
+                }
+
+                break;
+        }
     }
 
     public class ClickHandlers {
@@ -70,7 +100,8 @@ public class SettingActivity extends JMEBaseActivity {
         }
 
         public void onClickLogout() {
-
+            if (null != mUser && mUser.isLogin())
+                logout();
         }
     }
 }

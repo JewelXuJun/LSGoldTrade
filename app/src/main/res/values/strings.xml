@@ -156,6 +156,7 @@
     <string name="setting_about_function">功能介绍</string>
     <string name="setting_about_contact">联系我们</string>
     <string name="setting_about_version">泰金所&#160;&#160;%1$s版</string>
+    <string name="setting_logout_success">退出成功</string>
 
     <!-- News -->
     <string name="news_title">消息中心</string>

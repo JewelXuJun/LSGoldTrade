@@ -190,6 +190,7 @@
         <include layout="@layout/item_line_vertical" />
 
         <Button
+            android:id="@+id/btn_logout"
             android:layout_width="match_parent"
             android:layout_height="@dimen/height_login_btn"
             android:layout_marginLeft="@dimen/common_area_margin"

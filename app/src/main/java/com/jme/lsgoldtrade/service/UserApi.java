@@ -13,4 +13,7 @@ public interface UserApi {
     @POST("/gold-trade/v1.0.0/android/login")
     Call<DTResponse> login(@QueryMap Map<String, String> map);
 
+    @POST("/gold-trade/v1.0.0/android/logout")
+    Call<DTResponse> logout(@QueryMap Map<String, String> map);
+
 }

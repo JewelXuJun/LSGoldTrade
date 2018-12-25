@@ -4,6 +4,7 @@ import com.jme.common.network.API;
 import com.jme.common.network.DTResponse;
 import com.jme.common.network.IService;
 import com.jme.lsgoldtrade.config.Constants;
+import com.jme.lsgoldtrade.domain.User;
 import com.jme.lsgoldtrade.domain.UserInfoVo;
 
 import java.util.HashMap;
@@ -25,8 +26,15 @@ public class UserService extends IService<UserApi> {
 
     protected Interceptor addHeader() {
         Interceptor interceptor = chain -> {
-            Request.Builder builder = chain.request().newBuilder();
-            Request request = builder.build();
+            Request request = chain.request();
+
+            User user = User.getInstance();
+
+            if (user.isLogin())
+                request = request.newBuilder().addHeader("token", user.getToken()).build();
+            else
+                request = request.newBuilder().build();
+
             Response response = chain.proceed(request);
 
             return response;
@@ -40,6 +48,14 @@ public class UserService extends IService<UserApi> {
         public Call<DTResponse> request(HashMap<String, String> params) {
 
             return mApi.login(params);
+        }
+    };
+
+    public API logout = new API<String>("Logout") {
+        @Override
+        public Call<DTResponse> request(HashMap<String, String> params) {
+
+            return mApi.logout(params);
         }
     };
 
