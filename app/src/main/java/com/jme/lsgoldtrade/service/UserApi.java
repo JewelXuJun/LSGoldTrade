@@ -5,10 +5,14 @@ import com.jme.common.network.DTResponse;
 import java.util.Map;
 
 import retrofit2.Call;
+import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.QueryMap;
 
 public interface UserApi {
+
+    @GET("/gold-trade/v1.0.0/android/kaptcha")
+    Call<DTResponse> kaptcha();
 
     @POST("/gold-trade/v1.0.0/android/login")
     Call<DTResponse> login(@QueryMap Map<String, String> map);

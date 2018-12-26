@@ -4,6 +4,7 @@ import com.jme.common.network.API;
 import com.jme.common.network.DTResponse;
 import com.jme.common.network.IService;
 import com.jme.lsgoldtrade.config.Constants;
+import com.jme.lsgoldtrade.domain.ImageVerifyCodeVo;
 import com.jme.lsgoldtrade.domain.User;
 import com.jme.lsgoldtrade.domain.UserInfoVo;
 
@@ -42,6 +43,14 @@ public class UserService extends IService<UserApi> {
 
         return interceptor;
     }
+
+    public API kaptcha = new API<ImageVerifyCodeVo>("Kaptcha") {
+        @Override
+        public Call<DTResponse> request(HashMap<String, String> params) {
+
+            return mApi.kaptcha();
+        }
+    };
 
     public API login = new API<UserInfoVo>("Login") {
         @Override
