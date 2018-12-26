@@ -16,7 +16,6 @@ import com.jme.common.network.DTRequest;
 import com.jme.common.network.Head;
 import com.jme.common.ui.adapter.TextWatcherAdapter;
 import com.jme.common.util.Base64;
-import com.jme.common.util.DateUtil;
 import com.jme.common.util.SharedPreUtils;
 import com.jme.lsgoldtrade.R;
 import com.jme.lsgoldtrade.base.JMEBaseActivity;
@@ -52,14 +51,6 @@ public class AccountLoginActivity extends JMEBaseActivity {
 
         mBinding.etAccount.setText(SharedPreUtils.getString(this, SharedPreUtils.Login_Account));
         mBinding.tvLoginMobile.getPaint().setFlags(Paint.UNDERLINE_TEXT_FLAG);
-
-        if (SharedPreUtils.getBoolean(this, DateUtil.dataToStringWithData(System.currentTimeMillis()), false)) {
-            bShowImgVerifyCode = true;
-
-            mBinding.layoutImgVerifyCode.setVisibility(View.VISIBLE);
-
-            kaptcha();
-        }
     }
 
     @Override
@@ -94,7 +85,9 @@ public class AccountLoginActivity extends JMEBaseActivity {
     }
 
     private void updateUIWithValidation() {
-        mBinding.btnLogin.setEnabled(populated(mBinding.etAccount) && populated(mBinding.etPassword));
+        mBinding.btnLogin.setEnabled(bShowImgVerifyCode
+                ? populated(mBinding.etAccount) && populated(mBinding.etPassword) && populated(mBinding.etImgVerifyCode)
+                : populated(mBinding.etAccount) && populated(mBinding.etPassword));
     }
 
     private boolean populated(final EditText editText) {
@@ -157,8 +150,6 @@ public class AccountLoginActivity extends JMEBaseActivity {
                     finish();
                 } else {
                     kaptcha();
-
-                    SharedPreUtils.setBoolean(this, DateUtil.dataToStringWithData(System.currentTimeMillis()), true);
                 }
 
                 break;
