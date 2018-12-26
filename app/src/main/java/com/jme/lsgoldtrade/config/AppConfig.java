@@ -2,14 +2,6 @@ package com.jme.lsgoldtrade.config;
 
 public class AppConfig {
 
-    public static final String TYPE_1MINK = "1minK";
-    public static final String TYPE_15MINK = "15minK";
-    public static final String TYPE_30MINK = "30minK";
-    public static final String TYPE_60MINK = "60minK";
-    public static final String TYPE_DAYK = "dayK";
-    public static final String TYPE_WEEKK = "weekK";
-    public static final String TYPE_MONTHK = "monthK";
-
     public static final int PageSize_10 = 10;
     public static final int PageSize_20 = 20;
 

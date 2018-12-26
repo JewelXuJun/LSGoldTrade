@@ -6,13 +6,17 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.PagerAdapter;
+import android.text.TextUtils;
 
 import com.alibaba.android.arouter.launcher.ARouter;
+import com.jme.common.util.RxBus;
 import com.jme.common.util.StatusBarUtil;
 import com.jme.lsgoldtrade.R;
 import com.jme.lsgoldtrade.base.JMEBaseFragment;
 import com.jme.lsgoldtrade.config.Constants;
 import com.jme.lsgoldtrade.databinding.FragmentTradeBinding;
+
+import rx.Subscription;
 
 public class TradeFragment extends JMEBaseFragment {
 
@@ -22,6 +26,8 @@ public class TradeFragment extends JMEBaseFragment {
     private String[] mTabTitles;
 
     private PagerAdapter mAdapter;
+
+    private Subscription mRxbus;
 
     @Override
     protected int getContentViewId() {
@@ -49,6 +55,8 @@ public class TradeFragment extends JMEBaseFragment {
     @Override
     protected void initListener() {
         super.initListener();
+
+        initRxBus();
     }
 
     @Override
@@ -84,11 +92,27 @@ public class TradeFragment extends JMEBaseFragment {
         mBinding.tablayout.post(() -> setIndicator(mBinding.tablayout, 30, 30));
     }
 
+    private void initRxBus() {
+        mRxbus = RxBus.getInstance().toObserverable(RxBus.Message.class).subscribe(message -> {
+            String callType = message.getObject().toString();
+
+            if (TextUtils.isEmpty(callType))
+                return;
+
+            switch (callType) {
+                case Constants.RxBusConst.RxBus_TradeFragment:
+                    mActivity.runOnUiThread(() -> mBinding.tabViewpager.setCurrentItem(1));
+
+                    break;
+            }
+        });
+    }
+
     public class ClickHandlers {
 
         public void onClickNews() {
             ARouter.getInstance()
-                    .build(Constants.ARouterUriConst.MESSAGECENTER)
+                    .build(Constants.ARouterUriConst.NEWSACTIVITY)
                     .navigation();
         }
 
@@ -113,6 +137,14 @@ public class TradeFragment extends JMEBaseFragment {
         public CharSequence getPageTitle(int position) {
             return mTabTitles[position];
         }
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+
+        if (!mRxbus.isUnsubscribed())
+            mRxbus.unsubscribe();
     }
 
 }

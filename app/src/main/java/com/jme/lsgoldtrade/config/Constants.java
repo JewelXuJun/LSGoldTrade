@@ -40,7 +40,7 @@ public class Constants {
 
         }
 
-        public static final String LOGOUT = "logout";
+        public static final String RxBus_TradeFragment = "TradeFragment";
     }
 
     public static final class Msg {
@@ -62,7 +62,6 @@ public class Constants {
         public static final String RFINEXWEBVIEW = "/JMEBase/JMEBaseWebviewActivity";
         public static final String ACCOUNTLOGIN = "/PersonalFragment/AccountLoginActivity";
         public static final String MOBILELOGIN = "/PersonalFragment/MobileLoginActivity";
-        public static final String MESSAGECENTER = "/PersonalFragment/MessageCenterActivity";
         public static final String FEEDBACK = "/PersonalFragment/FeedBackActivity";
         public static final String SETTING = "/PersonalFragment/SettingActivity";
         public static final String MARKETREFRESH = "/SettingActivity/MarketRefreshActivity";
@@ -79,17 +78,6 @@ public class Constants {
         public static final String CURRENTDEAL = "/QueryFragment/CurrentDealActivity";
         public static final String HISTORYDEAL = "/QueryFragment/HistoryDealActivity";
         public static final String NEWSACTIVITY = "/JME/NewsActivity";
-    }
-
-    public static final class Values {
-        public static long Second = 1000;
-        public static long Minute = 60 * Second;
-
-        public static long TimeInterval_WiFi = 2 * Second;
-        public static long TimeInterval_NetWork = 5 * Second;
-        public static long TimeInterval_Normal = 3 * Second;
-
-        public static long Multiplier = 1000;
     }
 
     public static final long SPLASH_DELAY_MILLIS = 1000;

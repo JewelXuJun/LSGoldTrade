@@ -17,6 +17,7 @@ import com.jme.common.network.Head;
 import com.jme.common.util.RxBus;
 import com.jme.lsgoldtrade.R;
 import com.jme.lsgoldtrade.base.JMEBaseActivity;
+import com.jme.lsgoldtrade.config.Constants;
 import com.jme.lsgoldtrade.databinding.ActivityMainBinding;
 import com.jme.lsgoldtrade.tabhost.MainTab;
 
@@ -75,7 +76,10 @@ public class MainActivity extends JMEBaseActivity implements TabHost.OnTabChange
                 return;
 
             switch (callType) {
+                case Constants.RxBusConst.RxBus_TradeFragment:
+                    runOnUiThread(() -> mBinding.tabhost.setCurrentTab(2));
 
+                    break;
             }
         });
     }
@@ -111,7 +115,7 @@ public class MainActivity extends JMEBaseActivity implements TabHost.OnTabChange
             mBinding.tabhost.getTabWidget().getChildAt(i).setOnTouchListener(this);
         }
 
-        mBinding.tabhost.iniIndexFragment(1);
+        mBinding.tabhost.iniIndexFragment(2);
     }
 
     @Override

@@ -88,7 +88,7 @@ public class PersonalFragment extends JMEBaseFragment {
                 showNeedLoginDialog();
             else
                 ARouter.getInstance()
-                        .build(Constants.ARouterUriConst.MESSAGECENTER)
+                        .build(Constants.ARouterUriConst.NEWSACTIVITY)
                         .navigation();
         }
 

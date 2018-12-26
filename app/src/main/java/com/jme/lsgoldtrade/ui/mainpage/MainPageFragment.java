@@ -18,6 +18,7 @@ import com.jme.common.network.DTRequest;
 import com.jme.common.network.Head;
 import com.jme.common.util.DensityUtil;
 import com.jme.common.util.NetWorkUtils;
+import com.jme.common.util.RxBus;
 import com.jme.common.util.ScreenUtil;
 import com.jme.common.util.StatusBarUtil;
 import com.jme.lsgoldtrade.R;
@@ -231,9 +232,12 @@ public class MainPageFragment extends JMEBaseFragment {
     public class ClickHandlers {
 
         public void onClickNews() {
-            ARouter.getInstance()
-                    .build(Constants.ARouterUriConst.MESSAGECENTER)
-                    .navigation();
+            if (null == mUser || !mUser.isLogin())
+                showNeedLoginDialog();
+            else
+                ARouter.getInstance()
+                        .build(Constants.ARouterUriConst.NEWSACTIVITY)
+                        .navigation();
         }
 
         public void onClickOpenAccount() {
@@ -241,7 +245,10 @@ public class MainPageFragment extends JMEBaseFragment {
         }
 
         public void onClickQuickOrder() {
-
+            if (null == mUser || !mUser.isLogin())
+                showNeedLoginDialog();
+            else
+                RxBus.getInstance().post(Constants.RxBusConst.RxBus_TradeFragment, null);
         }
 
         public void onClickBeginners() {
