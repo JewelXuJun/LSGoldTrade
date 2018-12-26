@@ -1,9 +1,13 @@
 package com.jme.lsgoldtrade.ui.login;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Paint;
 import android.os.Bundle;
 import android.text.Editable;
+import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.view.View;
 import android.widget.EditText;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
@@ -12,11 +16,13 @@ import com.jme.common.network.DTRequest;
 import com.jme.common.network.Head;
 import com.jme.common.ui.adapter.TextWatcherAdapter;
 import com.jme.common.ui.base.JMECountDownTimer;
+import com.jme.common.util.Base64;
 import com.jme.common.util.SharedPreUtils;
 import com.jme.lsgoldtrade.R;
 import com.jme.lsgoldtrade.base.JMEBaseActivity;
 import com.jme.lsgoldtrade.config.Constants;
 import com.jme.lsgoldtrade.databinding.ActivityMobileLoginBinding;
+import com.jme.lsgoldtrade.domain.ImageVerifyCodeVo;
 import com.jme.lsgoldtrade.domain.UserInfoVo;
 import com.jme.lsgoldtrade.service.UserService;
 import com.jme.lsgoldtrade.util.ValueUtils;
@@ -29,6 +35,8 @@ public class MobileLoginActivity extends JMEBaseActivity {
     private ActivityMobileLoginBinding mBinding;
 
     private boolean bFlag = false;
+    private boolean bShowImgVerifyCode = false;
+    private String mKaptchaId;
 
     private TextWatcher mWatcher;
     private JMECountDownTimer mCountDownTimer;
@@ -44,7 +52,7 @@ public class MobileLoginActivity extends JMEBaseActivity {
 
         mBinding = (ActivityMobileLoginBinding) mBindingUtil;
 
-        mBinding.etAccount.setText(SharedPreUtils.getString(this, SharedPreUtils.Login_Account));
+        mBinding.etMobile.setText(SharedPreUtils.getString(this, SharedPreUtils.Login_Account));
         mBinding.tvLoginAccount.getPaint().setFlags(Paint.UNDERLINE_TEXT_FLAG);
     }
 
@@ -62,7 +70,7 @@ public class MobileLoginActivity extends JMEBaseActivity {
 
         mWatcher = validationTextWatcher();
 
-        mBinding.etAccount.addTextChangedListener(mWatcher);
+        mBinding.etMobile.addTextChangedListener(mWatcher);
         mBinding.etVerifyCode.addTextChangedListener(mWatcher);
     }
 
@@ -91,7 +99,9 @@ public class MobileLoginActivity extends JMEBaseActivity {
     }
 
     private void updateUIWithValidation() {
-        mBinding.btnLogin.setEnabled(populated(mBinding.etAccount) && populated(mBinding.etVerifyCode));
+        mBinding.btnLogin.setEnabled(bShowImgVerifyCode
+                ? populated(mBinding.etMobile) && populated(mBinding.etVerifyCode) && populated(mBinding.etImgVerifyCode)
+                : populated(mBinding.etMobile) && populated(mBinding.etVerifyCode));
     }
 
     private boolean populated(final EditText editText) {
@@ -99,33 +109,43 @@ public class MobileLoginActivity extends JMEBaseActivity {
     }
 
     private void doLogin() {
-        String account = mBinding.etAccount.getText().toString();
+        String mobile = mBinding.etMobile.getText().toString();
         String verifyCode = mBinding.etVerifyCode.getText().toString();
+        String imgVerifyCode = mBinding.etImgVerifyCode.getText().toString();
 
-        if (!ValueUtils.isPhoneNumber(account))
+        if (!ValueUtils.isPhoneNumber(mobile))
             showShortToast(R.string.login_mobile_error);
         else if (!bFlag)
             showShortToast(R.string.login_verification_code_unget);
         else if (verifyCode.length() < 6)
             showShortToast(R.string.login_verification_code_error);
+        else if (bShowImgVerifyCode && TextUtils.isEmpty(imgVerifyCode))
+            showShortToast(R.string.login_img_verify_code_error);
         else
-            login(account, verifyCode);
+            login(mobile, verifyCode, imgVerifyCode);
     }
 
-    private void login(String account, String verifyCode) {
+    private void login(String mobile, String verifyCode, String imgVerifyCode) {
         HashMap<String, String> params = new HashMap<>();
-        params.put("traderid", account);
-        params.put("password", ValueUtils.MD5(account + verifyCode));
+        params.put("loginName", mobile);
+        params.put("password", verifyCode);
         params.put("ip", null == ValueUtils.getLocalIPAddress() ? "" : ValueUtils.getLocalIPAddress());
+        params.put("loginType", "2");
 
         sendRequest(UserService.getInstance().login, params, true);
     }
 
-    private void sendVerifyCode(String account) {
+    private void loginMsg(String mobile) {
         bFlag = true;
 
-        if (null != mCountDownTimer)
-            mCountDownTimer.start();
+        HashMap<String, String> params = new HashMap<>();
+        params.put("mobile", mobile);
+
+        sendRequest(UserService.getInstance().loginMsg, params, true);
+    }
+
+    private void kaptcha() {
+        sendRequest(UserService.getInstance().kaptcha, new HashMap<>(), false);
     }
 
     @Override
@@ -151,8 +171,50 @@ public class MobileLoginActivity extends JMEBaseActivity {
                     mUser.login(userInfoVo);
 
                     showShortToast(R.string.login_success);
-                    SharedPreUtils.setString(this, SharedPreUtils.Login_Account, mBinding.etAccount.getText().toString());
+                    SharedPreUtils.setString(this, SharedPreUtils.Login_Account, mBinding.etMobile.getText().toString());
+
                     finish();
+                } else {
+                    kaptcha();
+                }
+
+                break;
+            case "LoginMsg":
+                if (head.isSuccess()) {
+                    if (null != mCountDownTimer)
+                        mCountDownTimer.start();
+                }
+
+                break;
+            case "Kaptcha":
+                if (head.isSuccess()) {
+                    ImageVerifyCodeVo imageVerifyCodeVo;
+
+                    try {
+                        imageVerifyCodeVo = (ImageVerifyCodeVo) response;
+                    } catch (Exception e) {
+                        imageVerifyCodeVo = null;
+
+                        e.printStackTrace();
+                    }
+
+                    if (null == imageVerifyCodeVo)
+                        return;
+
+                    String kaptchaImg = imageVerifyCodeVo.getKaptchaImg();
+
+                    if (TextUtils.isEmpty(kaptchaImg))
+                        return;
+
+                    byte[] decodedString = Base64.decode(kaptchaImg.getBytes());
+                    Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+
+                    mBinding.imgVerifyCode.setImageBitmap(decodedByte);
+                    mBinding.layoutImgVerifyCode.setVisibility(View.VISIBLE);
+
+                    bShowImgVerifyCode = true;
+
+                    mKaptchaId = imageVerifyCodeVo.getKaptchaId();
                 }
 
                 break;
@@ -166,12 +228,16 @@ public class MobileLoginActivity extends JMEBaseActivity {
         }
 
         public void onClickGetVerificationCode() {
-            String account = mBinding.etAccount.getText().toString();
+            String mobile = mBinding.etMobile.getText().toString();
 
-            if (!ValueUtils.isPhoneNumber(account))
+            if (!ValueUtils.isPhoneNumber(mobile))
                 showShortToast(R.string.login_mobile_error);
             else
-                sendVerifyCode(account);
+                loginMsg(mobile);
+        }
+
+        public void onClickLoadImageVerifyCode() {
+            kaptcha();
         }
 
         public void onClickLogin() {

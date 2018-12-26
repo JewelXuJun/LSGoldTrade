@@ -52,6 +52,14 @@ public class UserService extends IService<UserApi> {
         }
     };
 
+    public API loginMsg = new API<String>("LoginMsg") {
+        @Override
+        public Call<DTResponse> request(HashMap<String, String> params) {
+
+            return mApi.loginMsg(params);
+        }
+    };
+
     public API login = new API<UserInfoVo>("Login") {
         @Override
         public Call<DTResponse> request(HashMap<String, String> params) {

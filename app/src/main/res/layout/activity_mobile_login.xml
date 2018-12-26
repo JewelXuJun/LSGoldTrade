@@ -52,125 +52,187 @@
 
         <include layout="@layout/item_line_vertical" />
 
-        <ImageView
-            android:id="@+id/img_logo"
-            android:layout_width="@dimen/icon_logo"
-            android:layout_height="@dimen/icon_logo"
-            android:layout_gravity="center"
-            android:layout_marginTop="@dimen/common_area_margin_big"
-            android:layout_marginBottom="@dimen/common_area_margin_big" />
-
-        <LinearLayout
+        <android.support.v4.widget.NestedScrollView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/margin_login"
-            android:layout_marginTop="@dimen/common_area_margin"
-            android:layout_marginRight="@dimen/margin_login"
-            android:orientation="vertical">
+            android:layout_height="match_parent"
+            android:scrollbars="none">
 
-            <com.jme.common.ui.view.ClearEditText
-                android:id="@+id/et_account"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/common_area_margin_middle"
-                android:background="@null"
-                android:drawableLeft="@mipmap/ic_mobile"
-                android:drawablePadding="@dimen/common_area_margin_tiny"
-                android:hint="@string/login_mobile_hint"
-                android:inputType="number"
-                android:maxLength="11"
-                android:maxLines="1"
-                android:paddingLeft="@dimen/common_page_padding"
-                android:textColor="@color/color_text_normal"
-                android:textColorHint="@color/color_text_hint"
-                android:textSize="@dimen/size_normal" />
+                android:layout_height="match_parent"
+                android:orientation="vertical">
 
-            <include layout="@layout/item_line_vertical" />
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/common_area_margin_middle">
-
-                <Button
-                    android:id="@+id/btn_verification_code"
-                    android:layout_width="@dimen/width_login_verification_code"
-                    android:layout_height="@dimen/common_item_height_middle"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:background="@drawable/selector_blue"
-                    android:onClick="@{() -> handlers.onClickGetVerificationCode()}"
-                    android:text="@string/trade_get_verification_code"
-                    android:textColor="@drawable/selector_text"
-                    android:textSize="@dimen/sp_14" />
-
-                <com.jme.common.ui.view.ClearEditText
-                    android:id="@+id/et_verify_code"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                <ImageView
+                    android:id="@+id/img_logo"
+                    android:layout_width="@dimen/icon_logo"
+                    android:layout_height="@dimen/icon_logo"
+                    android:layout_gravity="center"
                     android:layout_marginTop="@dimen/common_area_margin_big"
-                    android:layout_marginRight="@dimen/common_page_margin"
-                    android:layout_marginBottom="@dimen/common_area_margin_middle"
-                    android:layout_toLeftOf="@+id/btn_verification_code"
-                    android:background="@null"
-                    android:digits="0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
-                    android:drawableLeft="@mipmap/ic_verification_code"
-                    android:drawablePadding="@dimen/common_area_margin_tiny"
-                    android:hint="@string/login_verification_code_hint"
-                    android:maxLength="6"
-                    android:maxLines="1"
-                    android:paddingLeft="@dimen/common_page_padding"
-                    android:textColor="@color/color_text_normal"
-                    android:textColorHint="@color/color_text_hint"
-                    android:textSize="@dimen/sp_16" />
+                    android:layout_marginBottom="@dimen/common_area_margin_big" />
 
                 <LinearLayout
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/et_verify_code"
-                    android:layout_marginRight="@dimen/common_page_margin"
-                    android:layout_toLeftOf="@+id/btn_verification_code">
+                    android:layout_marginLeft="@dimen/margin_login"
+                    android:layout_marginTop="@dimen/common_area_margin"
+                    android:layout_marginRight="@dimen/margin_login"
+                    android:orientation="vertical">
+
+                    <com.jme.common.ui.view.ClearEditText
+                        android:id="@+id/et_mobile"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/common_area_margin_middle"
+                        android:background="@null"
+                        android:drawableLeft="@mipmap/ic_mobile"
+                        android:drawablePadding="@dimen/common_area_margin_tiny"
+                        android:hint="@string/login_mobile_hint"
+                        android:inputType="number"
+                        android:maxLength="11"
+                        android:maxLines="1"
+                        android:paddingLeft="@dimen/common_page_padding"
+                        android:textColor="@color/color_text_normal"
+                        android:textColorHint="@color/color_text_hint"
+                        android:textSize="@dimen/size_normal" />
 
                     <include layout="@layout/item_line_vertical" />
 
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/common_area_margin_middle">
+
+                        <Button
+                            android:id="@+id/btn_verification_code"
+                            android:layout_width="@dimen/width_login_verification_code"
+                            android:layout_height="@dimen/common_item_height_middle"
+                            android:layout_alignParentRight="true"
+                            android:layout_centerVertical="true"
+                            android:background="@drawable/selector_blue"
+                            android:onClick="@{() -> handlers.onClickGetVerificationCode()}"
+                            android:text="@string/trade_get_verification_code"
+                            android:textColor="@drawable/selector_text"
+                            android:textSize="@dimen/sp_14" />
+
+                        <com.jme.common.ui.view.ClearEditText
+                            android:id="@+id/et_verify_code"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/common_area_margin_big"
+                            android:layout_marginRight="@dimen/common_page_margin"
+                            android:layout_marginBottom="@dimen/common_area_margin_middle"
+                            android:layout_toLeftOf="@+id/btn_verification_code"
+                            android:background="@null"
+                            android:digits="0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
+                            android:drawableLeft="@mipmap/ic_verification_code"
+                            android:drawablePadding="@dimen/common_area_margin_tiny"
+                            android:hint="@string/login_verification_code_hint"
+                            android:maxLength="6"
+                            android:maxLines="1"
+                            android:paddingLeft="@dimen/common_page_padding"
+                            android:textColor="@color/color_text_normal"
+                            android:textColorHint="@color/color_text_hint"
+                            android:textSize="@dimen/sp_16" />
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/et_verify_code"
+                            android:layout_marginRight="@dimen/common_page_margin"
+                            android:layout_toLeftOf="@+id/btn_verification_code">
+
+                            <include layout="@layout/item_line_vertical" />
+
+                        </LinearLayout>
+
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:id="@+id/layout_img_verify_code"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/common_area_margin_middle"
+                        android:visibility="gone">
+
+                        <ImageView
+                            android:id="@+id/img_verify_code"
+                            android:layout_width="@dimen/width_login_verification_code"
+                            android:layout_height="@dimen/common_item_height_middle"
+                            android:layout_alignParentRight="true"
+                            android:layout_centerVertical="true"
+                            android:onClick="@{() -> handlers.onClickLoadImageVerifyCode()}" />
+
+                        <com.jme.common.ui.view.ClearEditText
+                            android:id="@+id/et_img_verify_code"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/common_area_margin_big"
+                            android:layout_marginRight="@dimen/common_page_margin"
+                            android:layout_marginBottom="@dimen/common_area_margin_middle"
+                            android:layout_toLeftOf="@+id/img_verify_code"
+                            android:background="@null"
+                            android:drawableLeft="@mipmap/ic_img_verify_code"
+                            android:drawablePadding="@dimen/common_area_margin_tiny"
+                            android:hint="@string/login_img_verify_code_hint"
+                            android:inputType="none"
+                            android:maxLines="1"
+                            android:paddingLeft="@dimen/common_page_padding"
+                            android:textColor="@color/color_text_normal"
+                            android:textColorHint="@color/color_text_hint"
+                            android:textSize="@dimen/sp_16" />
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/et_img_verify_code"
+                            android:layout_marginRight="@dimen/common_page_margin"
+                            android:layout_toLeftOf="@+id/img_verify_code">
+
+                            <include layout="@layout/item_line_vertical" />
+
+                        </LinearLayout>
+
+                    </RelativeLayout>
+
+                    <Button
+                        android:id="@+id/btn_login"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/height_login_btn"
+                        android:layout_marginTop="@dimen/margin_main_page_info"
+                        android:background="@drawable/selector_btn"
+                        android:enabled="false"
+                        android:onClick="@{() -> handlers.onClickLogin()}"
+                        android:text="@string/login_title"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/common_font_size" />
+
+                    <TextView
+                        android:id="@+id/tv_login_account"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="@dimen/margin_big"
+                        android:onClick="@{() -> handlers.onClickLgoinAccount()}"
+                        android:text="@string/login_account"
+                        android:textColor="@color/color_blue"
+                        android:textSize="@dimen/sp_16" />
+
+                    <Button
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/height_login_btn"
+                        android:layout_marginTop="@dimen/margin_large"
+                        android:layout_marginBottom="@dimen/common_area_margin_big"
+                        android:background="@drawable/bg_btn_blue_hollow"
+                        android:onClick="@{() -> handlers.onClickRegister()}"
+                        android:text="@string/login_register"
+                        android:textColor="@color/color_blue"
+                        android:textSize="@dimen/common_font_size" />
+
                 </LinearLayout>
 
-            </RelativeLayout>
+            </LinearLayout>
 
-            <Button
-                android:id="@+id/btn_login"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/height_login_btn"
-                android:layout_marginTop="@dimen/margin_main_page_info"
-                android:background="@drawable/selector_btn"
-                android:enabled="false"
-                android:onClick="@{() -> handlers.onClickLogin()}"
-                android:text="@string/login_title"
-                android:textColor="@color/white"
-                android:textSize="@dimen/common_font_size" />
-
-            <TextView
-                android:id="@+id/tv_login_account"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginTop="@dimen/margin_big"
-                android:onClick="@{() -> handlers.onClickLgoinAccount()}"
-                android:text="@string/login_account"
-                android:textColor="@color/color_blue"
-                android:textSize="@dimen/sp_16" />
-
-            <Button
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/height_login_btn"
-                android:layout_marginTop="@dimen/margin_large"
-                android:background="@drawable/bg_btn_blue_hollow"
-                android:onClick="@{() -> handlers.onClickRegister()}"
-                android:text="@string/login_register"
-                android:textColor="@color/color_blue"
-                android:textSize="@dimen/common_font_size" />
-
-        </LinearLayout>
+        </android.support.v4.widget.NestedScrollView>
 
     </LinearLayout>
 

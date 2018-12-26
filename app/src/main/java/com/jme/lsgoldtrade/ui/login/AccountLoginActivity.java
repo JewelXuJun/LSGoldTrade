@@ -33,10 +33,10 @@ public class AccountLoginActivity extends JMEBaseActivity {
 
     private ActivityAccountLoginBinding mBinding;
 
-    private TextWatcher mWatcher;
-
     private boolean bShowImgVerifyCode = false;
     private String mKaptchaId;
+
+    private TextWatcher mWatcher;
 
     @Override
     protected int getContentViewId() {
@@ -147,6 +147,7 @@ public class AccountLoginActivity extends JMEBaseActivity {
 
                     showShortToast(R.string.login_success);
                     SharedPreUtils.setString(this, SharedPreUtils.Login_Account, mBinding.etAccount.getText().toString());
+
                     finish();
                 } else {
                     kaptcha();
