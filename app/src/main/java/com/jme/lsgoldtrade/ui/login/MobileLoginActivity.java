@@ -145,6 +145,10 @@ public class MobileLoginActivity extends JMEBaseActivity {
         params.put("password", verifyCode);
         params.put("ip", null == ValueUtils.getLocalIPAddress() ? "" : ValueUtils.getLocalIPAddress());
         params.put("loginType", "2");
+        if (bShowImgVerifyCode) {
+            params.put("kaptchaId", mKaptchaId);
+            params.put("kaptchaCode", imgVerifyCode);
+        }
 
         sendRequest(UserService.getInstance().login, params, true);
     }
@@ -195,6 +199,8 @@ public class MobileLoginActivity extends JMEBaseActivity {
                 break;
             case "LoginMsg":
                 if (head.isSuccess()) {
+                    showShortToast(R.string.login_verification_code_success);
+
                     if (null != mCountDownTimer)
                         mCountDownTimer.start();
                 }

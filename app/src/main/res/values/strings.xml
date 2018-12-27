@@ -171,6 +171,7 @@
     <string name="login_img_verify_code_error">请输入图形验证码</string>
     <string name="login_mobile_hint">输入您的手机号</string>
     <string name="login_mobile_error">请输入正确的手机号</string>
+    <string name="login_verification_code_success">发送成功</string>
     <string name="login_verification_code_hint">输入验证码</string>
     <string name="login_verification_code_unget">您还没有获取验证码</string>
     <string name="login_verification_code_error">请输入6位验证码</string>

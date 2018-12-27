@@ -14,7 +14,7 @@ public interface UserApi {
     @GET("/gold-trade/v1.0.0/android/kaptcha")
     Call<DTResponse> kaptcha();
 
-    @POST("/gold-trade/v1.0.0/android/loginMsg")
+    @GET("/gold-trade/v1.0.0/android/loginMsg")
     Call<DTResponse> loginMsg(@QueryMap Map<String, String> map);
 
     @POST("/gold-trade/v1.0.0/android/login")

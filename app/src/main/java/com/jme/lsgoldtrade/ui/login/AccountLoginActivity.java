@@ -129,6 +129,10 @@ public class AccountLoginActivity extends JMEBaseActivity {
         params.put("password", ValueUtils.MD5(account + password));
         params.put("ip", null == ValueUtils.getLocalIPAddress() ? "" : ValueUtils.getLocalIPAddress());
         params.put("loginType", "1");
+        if (bShowImgVerifyCode) {
+            params.put("kaptchaId", mKaptchaId);
+            params.put("kaptchaCode", imgVerifyCode);
+        }
 
         sendRequest(UserService.getInstance().login, params, true);
     }

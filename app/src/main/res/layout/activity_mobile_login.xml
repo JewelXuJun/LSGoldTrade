@@ -154,22 +154,22 @@
                         android:layout_marginTop="@dimen/common_area_margin_middle"
                         android:visibility="gone">
 
-                        <LinearLayout
+                        <RelativeLayout
                             android:id="@+id/layout_img"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
+                            android:layout_width="@dimen/width_login_verification_code"
+                            android:layout_height="@dimen/common_item_height_middle"
                             android:layout_alignParentRight="true"
                             android:layout_alignParentBottom="true"
                             android:onClick="@{() -> handlers.onClickLoadImageVerifyCode()}">
 
                             <ImageView
                                 android:id="@+id/img_verify_code"
-                                android:padding="@dimen/margin_tiny"
-                                android:layout_width="@dimen/width_login_verification_code"
-                                android:scaleType="fitCenter"
-                                android:layout_height="@dimen/common_item_height_middle" />
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerInParent="true"
+                                android:padding="@dimen/common_area_margin_tiny" />
 
-                        </LinearLayout>
+                        </RelativeLayout>
 
                         <com.jme.common.ui.view.ClearEditText
                             android:id="@+id/et_img_verify_code"
