@@ -32,13 +32,13 @@ public class SettingActivity extends JMEBaseActivity {
         mBinding = (ActivitySettingBinding) mBindingUtil;
 
         initToolbar(R.string.personal_setting, true);
-
-        mBinding.btnLogout.setVisibility(null == mUser || !mUser.isLogin() ? View.GONE : View.VISIBLE);
     }
 
     @Override
     protected void initData(Bundle savedInstanceState) {
         super.initData(savedInstanceState);
+
+        mBinding.btnLogout.setVisibility(null == mUser || !mUser.isLogin() ? View.GONE : View.VISIBLE);
     }
 
     @Override
