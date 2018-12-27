@@ -21,6 +21,7 @@ public class SharedPreUtils {
     public static final String TimeInterval_NetWork = "TimeInterval_NetWork";
     public static final String TimeInterval_WiFi = "TimeInterval_WiFi";
     public static final String Login_Account = "Login_Account";
+    public static final String Login_Mobile = "Login_Mobile";
 
     /**
      * 序列化对象

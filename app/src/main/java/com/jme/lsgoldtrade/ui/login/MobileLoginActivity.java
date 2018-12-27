@@ -52,7 +52,10 @@ public class MobileLoginActivity extends JMEBaseActivity {
 
         mBinding = (ActivityMobileLoginBinding) mBindingUtil;
 
-        mBinding.etMobile.setText(SharedPreUtils.getString(this, SharedPreUtils.Login_Account));
+        String mobile = SharedPreUtils.getString(this, SharedPreUtils.Login_Mobile);
+
+        mBinding.etMobile.setText(mobile);
+        mBinding.etMobile.setSelection(TextUtils.isEmpty(mobile) ? 0 : mobile.length());
         mBinding.tvLoginAccount.getPaint().setFlags(Paint.UNDERLINE_TEXT_FLAG);
     }
 
@@ -72,6 +75,7 @@ public class MobileLoginActivity extends JMEBaseActivity {
 
         mBinding.etMobile.addTextChangedListener(mWatcher);
         mBinding.etVerifyCode.addTextChangedListener(mWatcher);
+        mBinding.etImgVerifyCode.addTextChangedListener(mWatcher);
     }
 
     @Override
@@ -189,7 +193,7 @@ public class MobileLoginActivity extends JMEBaseActivity {
                     mUser.login(userInfoVo);
 
                     showShortToast(R.string.login_success);
-                    SharedPreUtils.setString(this, SharedPreUtils.Login_Account, mBinding.etMobile.getText().toString());
+                    SharedPreUtils.setString(this, SharedPreUtils.Login_Mobile, mBinding.etMobile.getText().toString());
 
                     finish();
                 } else {
@@ -231,6 +235,8 @@ public class MobileLoginActivity extends JMEBaseActivity {
 
                     mBinding.imgVerifyCode.setImageBitmap(getBitmap(kaptchaImg));
                     mBinding.layoutImgVerifyCode.setVisibility(View.VISIBLE);
+                    mBinding.etImgVerifyCode.setText("");
+                    mBinding.btnLogin.setEnabled(false);
 
                     bShowImgVerifyCode = true;
 
