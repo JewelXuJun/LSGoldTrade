@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.util.Base64;
 import android.view.View;
 import android.widget.EditText;
 
@@ -16,7 +17,6 @@ import com.jme.common.network.DTRequest;
 import com.jme.common.network.Head;
 import com.jme.common.ui.adapter.TextWatcherAdapter;
 import com.jme.common.ui.base.JMECountDownTimer;
-import com.jme.common.util.Base64;
 import com.jme.common.util.SharedPreUtils;
 import com.jme.lsgoldtrade.R;
 import com.jme.lsgoldtrade.base.JMEBaseActivity;
@@ -106,6 +106,20 @@ public class MobileLoginActivity extends JMEBaseActivity {
 
     private boolean populated(final EditText editText) {
         return editText.length() > 0;
+    }
+
+    private Bitmap getBitmap(String kaptchaImg) {
+        Bitmap bitmap = null;
+
+        try {
+            byte[] bitmapArray = Base64.decode(kaptchaImg, Base64.DEFAULT);
+
+            bitmap = BitmapFactory.decodeByteArray(bitmapArray, 0, bitmapArray.length);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return bitmap;
     }
 
     private void doLogin() {
@@ -206,10 +220,10 @@ public class MobileLoginActivity extends JMEBaseActivity {
                     if (TextUtils.isEmpty(kaptchaImg))
                         return;
 
-                    byte[] decodedString = Base64.decode(kaptchaImg.getBytes());
-                    Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+                    if (kaptchaImg.contains(","))
+                        kaptchaImg = kaptchaImg.split(",")[1];
 
-                    mBinding.imgVerifyCode.setImageBitmap(decodedByte);
+                    mBinding.imgVerifyCode.setImageBitmap(getBitmap(kaptchaImg));
                     mBinding.layoutImgVerifyCode.setVisibility(View.VISIBLE);
 
                     bShowImgVerifyCode = true;

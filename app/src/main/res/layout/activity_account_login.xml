@@ -122,25 +122,33 @@
                         android:id="@+id/layout_img_verify_code"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/common_area_margin_middle"
                         android:visibility="gone">
 
-                        <ImageView
-                            android:id="@+id/img_verify_code"
-                            android:layout_width="@dimen/width_login_verification_code"
-                            android:layout_height="@dimen/common_item_height_middle"
+                        <LinearLayout
+                            android:id="@+id/layout_img"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
                             android:layout_alignParentRight="true"
-                            android:layout_centerVertical="true"
-                            android:onClick="@{() -> handlers.onClickLoadImageVerifyCode()}" />
+                            android:layout_alignParentBottom="true"
+                            android:onClick="@{() -> handlers.onClickLoadImageVerifyCode()}">
+
+                            <ImageView
+                                android:id="@+id/img_verify_code"
+                                android:padding="@dimen/margin_tiny"
+                                android:layout_width="@dimen/width_login_verification_code"
+                                android:scaleType="fitCenter"
+                                android:layout_height="@dimen/common_item_height_middle" />
+
+                        </LinearLayout>
 
                         <com.jme.common.ui.view.ClearEditText
                             android:id="@+id/et_img_verify_code"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/common_area_margin_big"
+                            android:layout_marginTop="@dimen/common_area_margin"
                             android:layout_marginRight="@dimen/common_page_margin"
                             android:layout_marginBottom="@dimen/common_area_margin_middle"
-                            android:layout_toLeftOf="@+id/img_verify_code"
+                            android:layout_toLeftOf="@+id/layout_img"
                             android:background="@null"
                             android:drawableLeft="@mipmap/ic_img_verify_code"
                             android:drawablePadding="@dimen/common_area_margin_tiny"
@@ -150,14 +158,14 @@
                             android:paddingLeft="@dimen/common_page_padding"
                             android:textColor="@color/color_text_normal"
                             android:textColorHint="@color/color_text_hint"
-                            android:textSize="@dimen/sp_16" />
+                            android:textSize="@dimen/size_normal" />
 
                         <LinearLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_below="@+id/et_img_verify_code"
                             android:layout_marginRight="@dimen/common_page_margin"
-                            android:layout_toLeftOf="@+id/img_verify_code">
+                            android:layout_toLeftOf="@+id/layout_img">
 
                             <include layout="@layout/item_line_vertical" />
 
