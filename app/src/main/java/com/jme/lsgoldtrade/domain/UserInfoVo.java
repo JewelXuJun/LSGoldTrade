@@ -11,15 +11,15 @@ public class UserInfoVo {
      * "tradeName": "张三"
      */
 
+    private String traderId;
+
     private String token;
 
-    private String firmId;
+    private String account;
 
     private String lastIP;
 
-    private String lastTime;
-
-    private boolean forceChangePwd;
+    private int forceChangePwd;
 
     private String tradeName;
 
@@ -31,12 +31,20 @@ public class UserInfoVo {
         this.token = token;
     }
 
-    public String getFirmId() {
-        return firmId;
+    public String getTraderId() {
+        return traderId;
     }
 
-    public void setFirmId(String firmId) {
-        this.firmId = firmId;
+    public void setTraderId(String traderId) {
+        this.traderId = traderId;
+    }
+
+    public String getAccount() {
+        return account;
+    }
+
+    public void setAccount(String account) {
+        this.account = account;
     }
 
     public String getLastIP() {
@@ -47,19 +55,11 @@ public class UserInfoVo {
         this.lastIP = lastIP;
     }
 
-    public String getLastTime() {
-        return lastTime;
-    }
-
-    public void setLastTime(String lastTime) {
-        this.lastTime = lastTime;
-    }
-
-    public boolean isForceChangePwd() {
+    public int getForceChangePwd() {
         return forceChangePwd;
     }
 
-    public void setForceChangePwd(boolean forceChangePwd) {
+    public void setForceChangePwd(int forceChangePwd) {
         this.forceChangePwd = forceChangePwd;
     }
 

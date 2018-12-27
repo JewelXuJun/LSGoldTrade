@@ -87,9 +87,6 @@
                         android:drawableLeft="@mipmap/ic_account"
                         android:drawablePadding="@dimen/common_area_margin_tiny"
                         android:hint="@string/login_account_hint"
-                        android:inputType="number"
-                        android:maxLength="11"
-                        android:maxLines="1"
                         android:paddingLeft="@dimen/common_page_padding"
                         android:textColor="@color/color_text_normal"
                         android:textColorHint="@color/color_text_hint"
@@ -134,8 +131,8 @@
 
                             <ImageView
                                 android:id="@+id/img_verify_code"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
                                 android:layout_centerInParent="true"
                                 android:padding="@dimen/common_area_margin_tiny" />
 

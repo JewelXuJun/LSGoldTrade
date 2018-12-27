@@ -76,4 +76,12 @@ public class UserService extends IService<UserApi> {
         }
     };
 
+    public API changeloginpassword = new API<String>("Changeloginpassword") {
+        @Override
+        public Call<DTResponse> request(HashMap<String, String> params) {
+
+            return mApi.changeloginpassword(params);
+        }
+    };
+
 }

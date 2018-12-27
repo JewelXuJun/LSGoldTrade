@@ -49,7 +49,10 @@ public class AccountLoginActivity extends JMEBaseActivity {
 
         mBinding = (ActivityAccountLoginBinding) mBindingUtil;
 
-        mBinding.etAccount.setText(SharedPreUtils.getString(this, SharedPreUtils.Login_Account));
+        String account = SharedPreUtils.getString(this, SharedPreUtils.Login_Account);
+
+        mBinding.etAccount.setText(account);
+        mBinding.etAccount.setSelection(TextUtils.isEmpty(account) ? 0 : account.length());
         mBinding.tvLoginMobile.getPaint().setFlags(Paint.UNDERLINE_TEXT_FLAG);
     }
 
@@ -66,6 +69,7 @@ public class AccountLoginActivity extends JMEBaseActivity {
 
         mBinding.etAccount.addTextChangedListener(mWatcher);
         mBinding.etPassword.addTextChangedListener(mWatcher);
+        mBinding.etImgVerifyCode.addTextChangedListener(mWatcher);
     }
 
     @Override
@@ -113,11 +117,10 @@ public class AccountLoginActivity extends JMEBaseActivity {
         String password = mBinding.etPassword.getText().toString();
         String imgVerifyCode = mBinding.etImgVerifyCode.getText().toString();
 
-        if (!ValueUtils.isPhoneNumber(account))
-            showShortToast(R.string.login_account_error);
-        else if (!ValueUtils.isPasswordRight(password))
+       /* if (!ValueUtils.isPasswordRight(password))
             showShortToast(R.string.login_password_error);
-        else if (bShowImgVerifyCode && TextUtils.isEmpty(imgVerifyCode))
+        else*/
+        if (bShowImgVerifyCode && TextUtils.isEmpty(imgVerifyCode))
             showShortToast(R.string.login_img_verify_code_error);
         else
             login(account, password, imgVerifyCode);
@@ -126,7 +129,7 @@ public class AccountLoginActivity extends JMEBaseActivity {
     private void login(String account, String password, String imgVerifyCode) {
         HashMap<String, String> params = new HashMap<>();
         params.put("loginName", account);
-        params.put("password", ValueUtils.MD5(account + password));
+        params.put("password", ValueUtils.MD5(account + password).toUpperCase());
         params.put("ip", null == ValueUtils.getLocalIPAddress() ? "" : ValueUtils.getLocalIPAddress());
         params.put("loginType", "1");
         if (bShowImgVerifyCode) {
@@ -197,6 +200,8 @@ public class AccountLoginActivity extends JMEBaseActivity {
 
                     mBinding.imgVerifyCode.setImageBitmap(getBitmap(kaptchaImg));
                     mBinding.layoutImgVerifyCode.setVisibility(View.VISIBLE);
+                    mBinding.etImgVerifyCode.setText("");
+                    mBinding.btnLogin.setEnabled(false);
 
                     bShowImgVerifyCode = true;
 
