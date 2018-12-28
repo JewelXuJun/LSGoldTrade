@@ -51,4 +51,12 @@ public class TradeService extends IService<TradeApi> {
         }
     };
 
+    public API inoutmoney = new API<String>("InoutMoney") {
+        @Override
+        public Call<DTResponse> request(HashMap<String, String> params) {
+
+            return mApi.inoutmoney(params);
+        }
+    };
+
 }

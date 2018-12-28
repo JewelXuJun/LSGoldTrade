@@ -127,6 +127,11 @@
     <string name="trade_equal_open_empty">多平/空平</string>
     <string name="trade_type">类型</string>
     <string name="trade_amount_dealprice">数量/成交价</string>
+    <string name="trade_mobile_error">当前签约银行手机号码异常，请查询后再操作</string>
+    <string name="trade_amount_error">您的账户余额不足</string>
+    <string name="trade_money_int_min_error">您的转账金额必须大于0元</string>
+    <string name="trade_money_int_max_error">您的转账金额大于当前最大可入金额</string>
+    <string name="trade_money_in_success">入金成功</string>
 
     <!-- Personal -->
     <string name="personal_login">登录/注册</string>

@@ -59,32 +59,6 @@ public class BigDecimalUtil {
         return formatMoneyNum(value, 2) + "%";
     }
 
-    public static String decimalFormatMoney(String money) {
-        boolean flag;
-
-        String value = formatMoneyNum(money, 2);
-
-        if (TextUtils.isEmpty(value))
-            return "";
-
-        DecimalFormat format = new DecimalFormat();
-
-        if (money.startsWith("-")) {
-            flag = true;
-
-            value = money.substring(1);
-        } else {
-            flag = false;
-        }
-
-        if (Double.parseDouble(value) < 1.0)
-            format.applyPattern("0.00");
-        else
-            format.applyPattern("#,###,###.00");
-
-        return format.format(new BigDecimal(flag ? ("-" + value) : value));
-    }
-
     /**
      * 将数字进行格式化.
      * <br>

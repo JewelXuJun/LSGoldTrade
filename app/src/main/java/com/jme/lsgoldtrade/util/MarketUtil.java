@@ -6,6 +6,7 @@ import com.jme.lsgoldtrade.R;
 import com.jme.lsgoldtrade.config.AppConfig;
 
 import java.math.BigDecimal;
+import java.text.DecimalFormat;
 
 public class MarketUtil {
 
@@ -284,6 +285,32 @@ public class MarketUtil {
         }
 
         return result;
+    }
+
+    public static String decimalFormatMoney(String money) {
+        boolean flag;
+
+        String value = formatValueNum(money, 2);
+
+        if (TextUtils.isEmpty(value))
+            return "";
+
+        DecimalFormat format = new DecimalFormat();
+
+        if (money.startsWith("-")) {
+            flag = true;
+
+            value = money.substring(1);
+        } else {
+            flag = false;
+        }
+
+        if (Double.parseDouble(value) < 1.0)
+            format.applyPattern("0.00");
+        else
+            format.applyPattern("#,###,###.00");
+
+        return format.format(new BigDecimal(flag ? ("-" + value) : value));
     }
 
     public static BigDecimal valueDivisor(BigDecimal original, BigDecimal divisor) {
