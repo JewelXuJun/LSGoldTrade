@@ -29,7 +29,6 @@ public class MoneyInFragment extends JMEBaseFragment implements OnRefreshListene
 
     private FragmentMoneyInBinding mBinding;
 
-    private boolean bHidden = false;
     private boolean bVisibleToUser = false;
     private boolean bFlag = false;
     private String mCurAccountBalance;
@@ -180,10 +179,10 @@ public class MoneyInFragment extends JMEBaseFragment implements OnRefreshListene
             showShortToast(R.string.trade_amount_error);
         else if (TextUtils.isEmpty(mobile))
             showShortToast(R.string.trade_mobile_error);
-        else if (new BigDecimal(amount).compareTo(new BigDecimal(0)) == 0)
-            showShortToast(R.string.trade_money_int_min_error);
+        else if (new BigDecimal(amount).compareTo(new BigDecimal(0)) != 1)
+            showShortToast(R.string.trade_money_min_error);
         else if (new BigDecimal(amount).compareTo(new BigDecimal(mCurAccountBalance)) == 1)
-            showShortToast(R.string.trade_money_int_max_error);
+            showShortToast(R.string.trade_money_in_max_error);
         else if (!bFlag)
             showShortToast(R.string.login_verification_code_unget);
         else if (verifyCode.length() < 6)
