@@ -15,6 +15,7 @@ import com.jme.lsgoldtrade.base.JMEBaseFragment;
 import com.jme.lsgoldtrade.config.AppConfig;
 import com.jme.lsgoldtrade.databinding.FragmentMoneyInBinding;
 import com.jme.lsgoldtrade.domain.AccountVo;
+import com.jme.lsgoldtrade.domain.UserInfoVo;
 import com.jme.lsgoldtrade.service.TradeService;
 import com.jme.lsgoldtrade.service.UserService;
 import com.jme.lsgoldtrade.util.MarketUtil;
@@ -53,6 +54,13 @@ public class MoneyInFragment extends JMEBaseFragment implements OnRefreshListene
 
         mCountDownTimer = new JMECountDownTimer(60000, 1000,
                 mBinding.btnVerificationCode, getString(R.string.trade_get_verification_code));
+
+        if (null != mUser) {
+            UserInfoVo userInfoVo = mUser.getCurrentUser();
+
+            mBinding.tvMobileNumber.setText(null == userInfoVo ? "" : userInfoVo.getMobile());
+        }
+
     }
 
     @Override
@@ -188,13 +196,10 @@ public class MoneyInFragment extends JMEBaseFragment implements OnRefreshListene
         sendRequest(TradeService.getInstance().account, new HashMap<>(), enable);
     }
 
-    private void loginMsg() {
+    private void fundInoutMsg() {
         bFlag = true;
 
-        HashMap<String, String> params = new HashMap<>();
-        params.put("mobile", "13611569194");
-
-        sendRequest(UserService.getInstance().loginMsg, params, true);
+        sendRequest(UserService.getInstance().fundInoutMsg, new HashMap<>(), true);
     }
 
     private void inoutMoney(String amount) {
@@ -231,7 +236,7 @@ public class MoneyInFragment extends JMEBaseFragment implements OnRefreshListene
                 }
 
                 break;
-            case "LoginMsg":
+            case "FundInoutMsg":
                 if (head.isSuccess()) {
                     showShortToast(R.string.login_verification_code_success);
 
@@ -261,7 +266,7 @@ public class MoneyInFragment extends JMEBaseFragment implements OnRefreshListene
             if (TextUtils.isEmpty(mBinding.tvMobileNumber.getText().toString()))
                 showShortToast(R.string.trade_mobile_error);
             else
-                loginMsg();
+                fundInoutMsg();
         }
 
         public void onClickSubmit() {

@@ -114,6 +114,7 @@
                         android:background="@null"
                         android:hint="@string/trade_transfer_amount_hint"
                         android:inputType="numberDecimal"
+                        android:maxLines="1"
                         android:textColor="@color/color_text_normal"
                         android:textColorHint="@color/color_text_gray_hint"
                         android:textSize="@dimen/sp_14" />
@@ -144,8 +145,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="@dimen/common_area_margin"
                         android:textColor="@color/color_text_black"
-                        android:textSize="@dimen/common_font_size"
-                        android:textStyle="bold" />
+                        android:textSize="@dimen/common_font_size" />
 
                 </LinearLayout>
 
