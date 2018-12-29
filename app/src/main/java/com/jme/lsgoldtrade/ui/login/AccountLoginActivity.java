@@ -130,7 +130,7 @@ public class AccountLoginActivity extends JMEBaseActivity {
         HashMap<String, String> params = new HashMap<>();
         params.put("loginName", account);
         params.put("password", ValueUtils.MD5(account + password).toUpperCase());
-        params.put("ip", null == ValueUtils.getLocalIPAddress() ? "" : ValueUtils.getLocalIPAddress());
+        params.put("loginIP", null == ValueUtils.getLocalIPAddress() ? "" : ValueUtils.getLocalIPAddress());
         params.put("loginType", "1");
         if (bShowImgVerifyCode) {
             params.put("kaptchaId", mKaptchaId);

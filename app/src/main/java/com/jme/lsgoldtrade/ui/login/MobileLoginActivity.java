@@ -147,7 +147,7 @@ public class MobileLoginActivity extends JMEBaseActivity {
         HashMap<String, String> params = new HashMap<>();
         params.put("loginName", mobile);
         params.put("password", verifyCode);
-        params.put("ip", null == ValueUtils.getLocalIPAddress() ? "" : ValueUtils.getLocalIPAddress());
+        params.put("loginIP", null == ValueUtils.getLocalIPAddress() ? "" : ValueUtils.getLocalIPAddress());
         params.put("loginType", "2");
         if (bShowImgVerifyCode) {
             params.put("kaptchaId", mKaptchaId);
