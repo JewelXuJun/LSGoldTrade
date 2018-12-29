@@ -1,5 +1,6 @@
 package com.jme.lsgoldtrade.util;
 
+import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 
 import com.jme.lsgoldtrade.R;
@@ -168,6 +169,59 @@ public class MarketUtil {
 
                 break;
         }
+
+        return value;
+    }
+
+    public static String getInOutMoneyDirection(String direction) {
+        if (TextUtils.isEmpty(direction))
+            return "";
+
+        String value;
+
+        if (direction.equals("0"))
+            value = "入金";
+        else if (direction.equals("1"))
+            value = "出金";
+        else
+            value = "";
+
+        return value;
+    }
+
+    public static int getInOutMoneyDirectionColor(String direction) {
+        int color;
+
+        if (TextUtils.isEmpty(direction)) {
+            color = R.color.color_text_black;
+        } else {
+            if (direction.equals("0"))
+                color = R.color.common_font_increase;
+            else if (direction.equals("1"))
+                color = R.color.common_font_decrease;
+            else
+                color = R.color.color_text_black;
+        }
+
+        return color;
+    }
+
+    public static String getInOutMoneyState(String depositFlag) {
+        if (TextUtils.isEmpty(depositFlag))
+            return "";
+
+        String value;
+
+        if (depositFlag.equals("0"))
+            value = "未入账";
+        else if (depositFlag.equals("1"))
+            value = "已入账";
+        else if (depositFlag.equals("2"))
+            value = "入账失败";
+        else if (depositFlag.equals("3"))
+            value = "入账冲正";
+        else
+            value = "";
 
         return value;
     }

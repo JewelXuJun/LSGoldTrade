@@ -104,7 +104,6 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="right"
-                android:paddingRight="@dimen/common_page_padding"
                 android:text="@string/trade_transfer_amount_unit"
                 android:textColor="@color/black_pale"
                 android:textSize="@dimen/sp_12" />
