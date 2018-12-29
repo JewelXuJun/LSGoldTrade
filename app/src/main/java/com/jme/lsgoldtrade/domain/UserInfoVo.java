@@ -9,6 +9,7 @@ public class UserInfoVo {
      * "lastTime":"2014-09-17 10:00:00",
      * "forceChangePwd":1, // 2-无需更改密码 1-需要更改密码
      * "tradeName": "张三"
+     * "mobile": "138****5915"
      */
 
     private String traderId;
@@ -22,6 +23,8 @@ public class UserInfoVo {
     private int forceChangePwd;
 
     private String tradeName;
+
+    private String mobile;
 
     public String getToken() {
         return token;
@@ -69,5 +72,13 @@ public class UserInfoVo {
 
     public void setTradeName(String tradeName) {
         this.tradeName = tradeName;
+    }
+
+    public String getMobile() {
+        return mobile;
+    }
+
+    public void setMobile(String mobile) {
+        this.mobile = mobile;
     }
 }
