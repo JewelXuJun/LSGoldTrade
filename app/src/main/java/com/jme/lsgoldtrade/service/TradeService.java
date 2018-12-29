@@ -5,6 +5,7 @@ import com.jme.common.network.DTResponse;
 import com.jme.common.network.IService;
 import com.jme.lsgoldtrade.config.Constants;
 import com.jme.lsgoldtrade.domain.AccountVo;
+import com.jme.lsgoldtrade.domain.InOutTurnOverVo;
 import com.jme.lsgoldtrade.domain.User;
 
 import java.util.HashMap;
@@ -56,6 +57,14 @@ public class TradeService extends IService<TradeApi> {
         public Call<DTResponse> request(HashMap<String, String> params) {
 
             return mApi.inoutmoney(params);
+        }
+    };
+
+    public API transpage = new API<InOutTurnOverVo>("Transpage") {
+        @Override
+        public Call<DTResponse> request(HashMap<String, String> params) {
+
+            return mApi.transpage(params);
         }
     };
 
