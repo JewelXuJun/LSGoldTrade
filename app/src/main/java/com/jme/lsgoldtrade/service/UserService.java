@@ -84,4 +84,12 @@ public class UserService extends IService<UserApi> {
         }
     };
 
+    public API fundInoutMsg = new API<String>("FundInoutMsg") {
+        @Override
+        public Call<DTResponse> request(HashMap<String, String> params) {
+
+            return mApi.fundInoutMsg();
+        }
+    };
+
 }

@@ -27,4 +27,7 @@ public interface UserApi {
     @POST("/gold-trade/v1.0.0/android/changeloginpassword")
     Call<DTResponse> changeloginpassword(@Body Map<String, String> map);
 
+    @GET("/gold-trade/v1.0.0/android/fundInoutMsg")
+    Call<DTResponse> fundInoutMsg();
+
 }
