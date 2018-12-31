@@ -5,6 +5,7 @@ import com.jme.common.network.DTResponse;
 import com.jme.common.network.IService;
 import com.jme.lsgoldtrade.config.Constants;
 import com.jme.lsgoldtrade.domain.AccountVo;
+import com.jme.lsgoldtrade.domain.DailyStatementVo;
 import com.jme.lsgoldtrade.domain.InOutTurnOverVo;
 import com.jme.lsgoldtrade.domain.User;
 
@@ -65,6 +66,14 @@ public class TradeService extends IService<TradeApi> {
         public Call<DTResponse> request(HashMap<String, String> params) {
 
             return mApi.transpage(params);
+        }
+    };
+
+    public API dailystatement = new API<DailyStatementVo>("DailyStatement") {
+        @Override
+        public Call<DTResponse> request(HashMap<String, String> params) {
+
+            return mApi.dailystatement(params);
         }
     };
 
