@@ -5,6 +5,7 @@ import android.os.Bundle;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.jme.common.network.DTRequest;
 import com.jme.common.network.Head;
+import com.jme.common.util.DateUtil;
 import com.jme.lsgoldtrade.R;
 import com.jme.lsgoldtrade.base.JMEBaseFragment;
 import com.jme.lsgoldtrade.config.Constants;
@@ -29,6 +30,8 @@ public class QueryFragment extends JMEBaseFragment {
     @Override
     protected void initData(Bundle savedInstanceState) {
         super.initData(savedInstanceState);
+
+        mBinding.tvTime.setText(DateUtil.dateToString(System.currentTimeMillis()));
     }
 
     @Override
