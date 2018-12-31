@@ -30,4 +30,7 @@ public interface UserApi {
     @GET("/gold-trade/v1.0.0/android/fundInoutMsg")
     Call<DTResponse> fundInoutMsg();
 
+    @GET("/gold-trade/v1.0.0/android/noticepage")
+    Call<DTResponse> noticepage();
+
 }
