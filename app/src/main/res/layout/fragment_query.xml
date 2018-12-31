@@ -30,26 +30,34 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:background="@color/white"
                     android:gravity="center"
-                    android:onClick="@{() -> handlers.onClickQueryDailyStatement()}"
-                    android:orientation="vertical"
                     android:paddingTop="@dimen/common_area_margin_big"
-                    android:paddingBottom="@dimen/margin_normal">
+                    android:paddingBottom="@dimen/common_area_margin_big">
 
-                    <TextView
+                    <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/trade_daily_statement"
-                        android:textColor="@color/black_pale"
-                        android:textSize="@dimen/sp_12" />
+                        android:gravity="center"
+                        android:onClick="@{() -> handlers.onClickQueryDailyStatement()}"
+                        android:orientation="vertical">
 
-                    <TextView
-                        android:id="@+id/tv_time"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/margin_tiny"
-                        android:textColor="@color/color_blue"
-                        android:textSize="@dimen/common_font_size" />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/trade_daily_statement"
+                            android:textColor="@color/black_pale"
+                            android:textSize="@dimen/sp_12" />
+
+                        <TextView
+                            android:id="@+id/tv_time"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/common_area_margin_tiny"
+                            android:textColor="@color/color_blue"
+                            android:textSize="@dimen/common_font_size" />
+
+                    </LinearLayout>
 
                 </LinearLayout>
 
