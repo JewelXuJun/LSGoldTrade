@@ -477,7 +477,7 @@ public class MarketDetailLandscapeActivity extends JMEBaseActivity implements FC
         params.put("contractId", mContractId);
         params.put("detailId", "");
         params.put("qryFlag", DIRECTION_BEFORE);
-        params.put("count", String.valueOf(AppConfig.PageSize_10));
+        params.put("count", AppConfig.PageSize_10);
 
         sendRequest(MarketService.getInstance().getDetail, params, false, false, false);
     }

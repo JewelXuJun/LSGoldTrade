@@ -31,6 +31,6 @@ public interface UserApi {
     Call<DTResponse> fundInoutMsg();
 
     @GET("/gold-trade/v1.0.0/android/noticepage")
-    Call<DTResponse> noticepage();
+    Call<DTResponse> noticepage(@QueryMap Map<String, String> map);
 
 }

@@ -97,7 +97,7 @@ public class UserService extends IService<UserApi> {
         @Override
         public Call<DTResponse> request(HashMap<String, String> params) {
 
-            return mApi.noticepage();
+            return mApi.noticepage(params);
         }
     };
 
