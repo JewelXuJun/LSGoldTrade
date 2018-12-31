@@ -347,12 +347,9 @@ public class MarketFragment extends JMEBaseFragment implements OnRefreshListener
     public class ClickHandlers {
 
         public void onClickNews() {
-            if (null == mUser || !mUser.isLogin())
-                showNeedLoginDialog();
-            else
-                ARouter.getInstance()
-                        .build(Constants.ARouterUriConst.NEWSACTIVITY)
-                        .navigation();
+            ARouter.getInstance()
+                    .build(Constants.ARouterUriConst.NEWSACTIVITY)
+                    .navigation();
         }
 
         public void onClickSortContract() {

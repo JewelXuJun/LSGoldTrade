@@ -84,12 +84,9 @@ public class PersonalFragment extends JMEBaseFragment {
         }
 
         public void onClickMessageCenter() {
-            if (null == mUser || !mUser.isLogin())
-                showNeedLoginDialog();
-            else
-                ARouter.getInstance()
-                        .build(Constants.ARouterUriConst.NEWSACTIVITY)
-                        .navigation();
+            ARouter.getInstance()
+                    .build(Constants.ARouterUriConst.NEWSACTIVITY)
+                    .navigation();
         }
 
         public void onClickShare() {
