@@ -3,6 +3,7 @@ package com.jme.lsgoldtrade.ui.mainpage;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.annotation.NonNull;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -28,18 +29,20 @@ import com.jme.lsgoldtrade.config.Constants;
 import com.jme.lsgoldtrade.databinding.FragmentMainPageBinding;
 import com.jme.lsgoldtrade.domain.FiveSpeedVo;
 import com.jme.lsgoldtrade.service.MarketService;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 
 import java.util.HashMap;
 import java.util.List;
 
-public class MainPageFragment extends JMEBaseFragment {
+public class MainPageFragment extends JMEBaseFragment implements OnRefreshListener {
 
     private FragmentMainPageBinding mBinding;
 
     private Fragment[] mFragmentArrays;
     private String[] mTabTitles;
 
-    private PagerAdapter mAdapter;
+    private TabViewPagerAdapter mAdapter;
     private RateMarketAdapter mRateMarketAdapter;
 
     private List<FiveSpeedVo> mList;
@@ -169,6 +172,9 @@ public class MainPageFragment extends JMEBaseFragment {
         } else {
             mHandler.removeMessages(Constants.Msg.MSG_MAINPAGE_UPDATE_MARKET);
         }
+
+        if (null != mBinding && null != mBinding.tabViewpager && null != mAdapter)
+            mAdapter.getItem(mBinding.tabViewpager.getCurrentItem()).onHiddenChanged(hidden);
     }
 
     @Override
@@ -227,6 +233,11 @@ public class MainPageFragment extends JMEBaseFragment {
 
                 break;
         }
+    }
+
+    @Override
+    public void onRefresh(@NonNull RefreshLayout refreshLayout) {
+
     }
 
     public class ClickHandlers {
