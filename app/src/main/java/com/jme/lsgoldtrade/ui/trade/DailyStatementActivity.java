@@ -12,9 +12,12 @@ import com.jme.lsgoldtrade.R;
 import com.jme.lsgoldtrade.base.JMEBaseActivity;
 import com.jme.lsgoldtrade.config.Constants;
 import com.jme.lsgoldtrade.databinding.ActivityDailyStatementBinding;
+import com.jme.lsgoldtrade.domain.DailyStatementVo;
+import com.jme.lsgoldtrade.service.TradeService;
 
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 
 @Route(path = Constants.ARouterUriConst.DAILYSTATEMENT)
 public class DailyStatementActivity extends JMEBaseActivity {
@@ -60,6 +63,13 @@ public class DailyStatementActivity extends JMEBaseActivity {
         mBinding.setHandlers(new ClickHandlers());
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        dailystatement();
+    }
+
     private void getTodayCalendar() {
         Calendar calendar = Calendar.getInstance();
         mYear = calendar.get(Calendar.YEAR);
@@ -80,9 +90,42 @@ public class DailyStatementActivity extends JMEBaseActivity {
         mBinding.tvTime.setText(DateUtil.dateToString(calendar.getTimeInMillis()));
     }
 
+    private void setDailyStatementData(DailyStatementVo dailyStatementVo) {
+
+    }
+
+    private void dailystatement() {
+        HashMap<String, String> params = new HashMap<>();
+        params.put("tradeDate", "");
+
+        sendRequest(TradeService.getInstance().dailystatement, params, true);
+    }
+
     @Override
     protected void DataReturn(DTRequest request, Head head, Object response) {
         super.DataReturn(request, head, response);
+
+        switch (request.getApi().getName()) {
+            case "DailyStatement":
+                if (head.isSuccess()) {
+                    DailyStatementVo dailyStatementVo;
+
+                    try {
+                        dailyStatementVo = (DailyStatementVo) response;
+                    } catch (Exception e) {
+                        dailyStatementVo = null;
+
+                        e.printStackTrace();
+                    }
+
+                    if (null == dailyStatementVo)
+                        return;
+
+                    setDailyStatementData(dailyStatementVo);
+                }
+
+                break;
+        }
     }
 
     public class ClickHandlers {
