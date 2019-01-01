@@ -25,7 +25,7 @@ public class TradeFragment extends JMEBaseFragment {
     private Fragment[] mFragmentArrays;
     private String[] mTabTitles;
 
-    private PagerAdapter mAdapter;
+    private TabViewPagerAdapter mAdapter;
 
     private Subscription mRxbus;
 
@@ -106,6 +106,14 @@ public class TradeFragment extends JMEBaseFragment {
                     break;
             }
         });
+    }
+
+    @Override
+    public void onHiddenChanged(boolean hidden) {
+        super.onHiddenChanged(hidden);
+
+        if (null != mBinding && null != mBinding.tabViewpager && null != mAdapter)
+            mAdapter.getItem(mBinding.tabViewpager.getCurrentItem()).onHiddenChanged(hidden);
     }
 
     public class ClickHandlers {

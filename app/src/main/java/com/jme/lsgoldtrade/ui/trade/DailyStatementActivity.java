@@ -3,6 +3,7 @@ package com.jme.lsgoldtrade.ui.trade;
 import android.annotation.TargetApi;
 import android.app.DatePickerDialog;
 import android.os.Bundle;
+import android.text.TextUtils;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.jme.common.network.DTRequest;
@@ -94,9 +95,23 @@ public class DailyStatementActivity extends JMEBaseActivity {
 
     }
 
+    private String getTradeDate() {
+        String date = mBinding.tvTime.getText().toString();
+        String value;
+
+        if (TextUtils.isEmpty(date))
+            value = "";
+        else if (date.contains("-"))
+            value = date.replace("-", "");
+        else
+            value = date;
+
+        return value;
+    }
+
     private void dailystatement() {
         HashMap<String, String> params = new HashMap<>();
-        params.put("tradeDate", "");
+        params.put("tradeDate", getTradeDate());
 
         sendRequest(TradeService.getInstance().dailystatement, params, true);
     }
