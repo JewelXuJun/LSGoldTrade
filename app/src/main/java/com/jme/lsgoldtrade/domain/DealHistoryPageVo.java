@@ -1,5 +1,7 @@
 package com.jme.lsgoldtrade.domain;
 
+import com.jme.lsgoldtrade.util.MarketUtil;
+
 import java.io.Serializable;
 import java.util.List;
 
@@ -192,6 +194,14 @@ public class DealHistoryPageVo implements Serializable {
 
         public void setTransactionFee(long transactionFee) {
             this.transactionFee = transactionFee;
+        }
+
+        public String getMatchPriceStr() {
+            return MarketUtil.getPriceValue(matchPrice);
+        }
+
+        public String getAmountStr() {
+            return MarketUtil.getPriceValue(amount);
         }
     }
 
