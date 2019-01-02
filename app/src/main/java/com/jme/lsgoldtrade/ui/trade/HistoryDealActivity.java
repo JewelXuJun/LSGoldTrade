@@ -21,6 +21,7 @@ import com.jme.lsgoldtrade.config.Constants;
 import com.jme.lsgoldtrade.databinding.ActivityHistoryDealBinding;
 import com.jme.lsgoldtrade.databinding.ActivityHistoryEntrustBinding;
 import com.jme.lsgoldtrade.domain.DealHistoryPageVo;
+import com.jme.lsgoldtrade.domain.DealPageVo;
 import com.jme.lsgoldtrade.domain.InOutTurnOverVo;
 import com.jme.lsgoldtrade.service.TradeService;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
@@ -36,7 +37,7 @@ public class HistoryDealActivity extends JMEBaseActivity implements OnRefreshLis
 
     private ActivityHistoryDealBinding mBinding;
 
-    private DealHistoryAdapter mAdapter;
+    private DealAdapter mAdapter;
     private DatePickerDialog mDatePickerDialog;
     private View mEmptyView;
 
@@ -69,7 +70,7 @@ public class HistoryDealActivity extends JMEBaseActivity implements OnRefreshLis
     protected void initData(Bundle savedInstanceState) {
         super.initData(savedInstanceState);
 
-        mAdapter = new DealHistoryAdapter(R.layout.item_deal_history, null);
+        mAdapter = new DealAdapter(R.layout.item_deal, null, "History");
         mAdapter.clearDate();
 
         mBinding.recyclerView.setHasFixedSize(false);
@@ -220,7 +221,7 @@ public class HistoryDealActivity extends JMEBaseActivity implements OnRefreshLis
                         setEmptyData();
                     } else {
                         mSearchKey = dealHistoryPageVo.getSeachKey();
-                        List<DealHistoryPageVo.DealHistoryBean> dealHistoryBeanList = dealHistoryPageVo.getList();
+                        List<DealPageVo.DealBean> dealHistoryBeanList = dealHistoryPageVo.getList();
 
                         if (TextUtils.isEmpty(mSearchKey)) {
                             if (mCurrentPage == 1) {

@@ -12,8 +12,17 @@ import java.util.List;
 
 public class DealAdapter extends BaseQuickAdapter<DealPageVo.DealBean, BaseViewHolder> {
 
-    public DealAdapter(int layoutResId, @Nullable List<DealPageVo.DealBean> data) {
+    private String mType = "";
+    private String mDate = "";
+
+    public DealAdapter(int layoutResId, @Nullable List<DealPageVo.DealBean> data, String type) {
         super(layoutResId, data);
+
+        mType = type;
+    }
+
+    public void clearDate() {
+        mDate = "";
     }
 
     @Override
@@ -21,14 +30,19 @@ public class DealAdapter extends BaseQuickAdapter<DealPageVo.DealBean, BaseViewH
         if (null == item)
             return;
 
+        String date = item.getMatchDate();
         int bsFlag = item.getBsFlag();
 
-        helper.setText(R.id.tv_contract, item.getContractId())
+        helper.setText(R.id.tv_date, date)
+                .setVisible(R.id.tv_date, mType.equals("History") && !mDate.equals(date))
+                .setText(R.id.tv_contract, item.getContractId())
                 .setText(R.id.tv_time, item.getMatchTime())
                 .setText(R.id.tv_type, MarketUtil.getTradeDirection(bsFlag) + MarketUtil.getOCState(item.getOcFlag()))
                 .setTextColor(R.id.tv_type, MarketUtil.getTradeDirectionColor(bsFlag))
                 .setText(R.id.tv_amount, String.valueOf(item.getMatchHand()))
                 .setText(R.id.tv_price, MarketUtil.decimalFormatMoney(item.getMatchPriceStr()))
                 .setText(R.id.tv_turn_volume, MarketUtil.decimalFormatMoney(item.getAmountStr()));
+
+        mDate = date;
     }
 }

@@ -52,7 +52,7 @@ public class CurrentDealActivity extends JMEBaseActivity implements OnRefreshLis
     protected void initData(Bundle savedInstanceState) {
         super.initData(savedInstanceState);
 
-        mAdapter = new DealAdapter(R.layout.item_deal, null);
+        mAdapter = new DealAdapter(R.layout.item_deal, null, "Current");
 
         mBinding.recyclerView.setHasFixedSize(false);
         mBinding.recyclerView.addItemDecoration(new MarginDividerItemDecoration(this, LinearLayoutManager.VERTICAL));
