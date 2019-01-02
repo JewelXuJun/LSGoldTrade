@@ -4,17 +4,18 @@ import android.support.annotation.Nullable;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
+import com.jme.lsgoldtrade.domain.PositionPageVo;
 
 import java.util.List;
 
-public class HoldPositionAdapter extends BaseQuickAdapter<String, BaseViewHolder> {
+public class HoldPositionAdapter extends BaseQuickAdapter<PositionPageVo.PositionBean, BaseViewHolder> {
 
-    public HoldPositionAdapter(int layoutResId, @Nullable List<String> data) {
+    public HoldPositionAdapter(int layoutResId, @Nullable List<PositionPageVo.PositionBean> data) {
         super(layoutResId, data);
     }
 
     @Override
-    protected void convert(BaseViewHolder helper, String item) {
+    protected void convert(BaseViewHolder helper, PositionPageVo.PositionBean item) {
 
     }
 }
