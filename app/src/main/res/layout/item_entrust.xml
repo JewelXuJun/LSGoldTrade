@@ -110,7 +110,7 @@
             android:paddingRight="@dimen/common_page_padding"
             android:text="@string/text_no_data_default"
             android:textColor="@color/color_text_black"
-            android:textSize="@dimen/size_middle" />
+            android:textSize="@dimen/sp_12" />
 
     </LinearLayout>
 

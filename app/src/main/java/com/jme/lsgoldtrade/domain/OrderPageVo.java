@@ -1,5 +1,7 @@
 package com.jme.lsgoldtrade.domain;
 
+import com.jme.lsgoldtrade.util.MarketUtil;
+
 import java.io.Serializable;
 import java.util.List;
 
@@ -203,6 +205,10 @@ public class OrderPageVo implements Serializable {
 
         public void setRevocationTime(String revocationTime) {
             this.revocationTime = revocationTime;
+        }
+
+        public String getMatchPriceStr() {
+            return MarketUtil.getPriceValue(matchPrice);
         }
     }
 

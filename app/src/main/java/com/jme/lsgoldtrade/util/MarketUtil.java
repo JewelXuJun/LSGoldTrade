@@ -226,6 +226,45 @@ public class MarketUtil {
         return value;
     }
 
+    public static String getTradeDirection(int direction) {
+        String value;
+
+        if (direction == 1)
+            value = "买入";
+        else if (direction == 2)
+            value = "卖出";
+        else
+            value = "";
+
+        return value;
+    }
+
+    public static String getOCState(int state) {
+        String value;
+
+        if (state == 0)
+            value = "开仓";
+        else if (state == 1)
+            value = "平仓";
+        else
+            value = "";
+
+        return value;
+    }
+
+    public static int getTradeDirectionColor(int direction) {
+        int color;
+
+        if (direction == 1)
+            color = R.color.common_font_increase;
+        else if (direction == 2)
+            color = R.color.common_font_decrease;
+        else
+            color = R.color.color_text_black;
+
+        return color;
+    }
+
     public static String getVolumeValue(String value, boolean currency) {
         if (TextUtils.isEmpty(value))
             return DEFAULT;
@@ -365,6 +404,42 @@ public class MarketUtil {
             format.applyPattern("#,###,###.00");
 
         return format.format(new BigDecimal(flag ? ("-" + value) : value));
+    }
+
+    public static String getEntrustState(int state) {
+        String value;
+
+        if (state == 1)
+            value = "委托已报入";
+        else if (state == 2)
+            value = "委托失败";
+        else if (state == 3)
+            value = "未成交";
+        else if (state == 4)
+            value = "部分成交";
+        else if (state == 5)
+            value = "完全成交";
+        else if (state == 6)
+            value = "撤单已报入";
+        else if (state == 7)
+            value = "撤单失败";
+        else if (state == 8)
+            value = "用户删除";
+        else if (state ==9)
+            value = "系统删除";
+        else if (state == 10)
+            value = "委托应答";
+        else if (state == 11)
+            value = "撤单应答";
+        else if (state == 12)
+            value = "发送失败";
+        else if (state == 15)
+            value = "应急撤单";
+        else
+            value = "";
+
+        return value;
+
     }
 
     public static BigDecimal valueDivisor(BigDecimal original, BigDecimal divisor) {
