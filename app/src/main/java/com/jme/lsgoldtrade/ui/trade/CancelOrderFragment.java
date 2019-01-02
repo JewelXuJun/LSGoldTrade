@@ -32,7 +32,7 @@ public class CancelOrderFragment extends JMEBaseFragment {
     protected void initData(Bundle savedInstanceState) {
         super.initData(savedInstanceState);
 
-        mAdapter = new CancelOrderAdapter(R.layout.item_order_cancel_order, null);
+        mAdapter = new CancelOrderAdapter(R.layout.item_cancel_order, null);
 
         mBinding.recyclerView.addItemDecoration(new MarginDividerItemDecoration(mContext, LinearLayoutManager.VERTICAL));
         mBinding.recyclerView.setLayoutManager(new LinearLayoutManager(mContext));

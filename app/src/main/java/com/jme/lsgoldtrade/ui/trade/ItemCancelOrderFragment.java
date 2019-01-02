@@ -9,40 +9,43 @@ import com.jme.common.network.Head;
 import com.jme.common.ui.view.MarginDividerItemDecoration;
 import com.jme.lsgoldtrade.R;
 import com.jme.lsgoldtrade.base.JMEBaseFragment;
-import com.jme.lsgoldtrade.databinding.FragmentItemHoldPositionBinding;
-import com.jme.lsgoldtrade.domain.PositionPageVo;
+import com.jme.lsgoldtrade.databinding.FragmentItemCancelOrderBinding;
+import com.jme.lsgoldtrade.domain.OrderPageVo;
 import com.jme.lsgoldtrade.service.TradeService;
 
 import java.util.HashMap;
 import java.util.List;
 
-public class ItemHoldPositionFragment extends JMEBaseFragment implements BaseQuickAdapter.RequestLoadMoreListener {
+public class ItemCancelOrderFragment extends JMEBaseFragment implements BaseQuickAdapter.RequestLoadMoreListener {
 
-    private FragmentItemHoldPositionBinding mBinding;
+    private FragmentItemCancelOrderBinding mBinding;
 
-    private HoldPositionAdapter mAdapter;
+    private CancelOrderAdapter mAdapter;
+
+    private static final String PAGE_NEXT = "2";
 
     private boolean bVisibleToUser = false;
     private int mCurrentPage = 1;
     private boolean bHasNext = false;
+    private String mDeclareTime;
 
     @Override
     protected int getContentViewId() {
-        return R.layout.fragment_item_hold_position;
+        return R.layout.fragment_item_cancel_order;
     }
 
     @Override
     protected void initView() {
         super.initView();
 
-        mBinding = (FragmentItemHoldPositionBinding) mBindingUtil;
+        mBinding = (FragmentItemCancelOrderBinding) mBindingUtil;
     }
 
     @Override
     protected void initData(Bundle savedInstanceState) {
         super.initData(savedInstanceState);
 
-        mAdapter = new HoldPositionAdapter(R.layout.item_hold_position, null);
+        mAdapter = new CancelOrderAdapter(R.layout.item_cancel_order, null);
 
         mBinding.recyclerView.setHasFixedSize(false);
         mBinding.recyclerView.addItemDecoration(new MarginDividerItemDecoration(mContext, LinearLayoutManager.VERTICAL));
@@ -61,6 +64,8 @@ public class ItemHoldPositionFragment extends JMEBaseFragment implements BaseQui
     @Override
     public void initBinding() {
         super.initBinding();
+
+        mBinding.setHandlers(new ClickHandlers());
     }
 
     @Override
@@ -70,7 +75,7 @@ public class ItemHoldPositionFragment extends JMEBaseFragment implements BaseQui
         super.setUserVisibleHint(isVisibleToUser);
 
       /*  if (null != mBinding && bVisibleToUser)
-            initPosition();*/
+            initOrderPage();*/
     }
 
     @Override
@@ -85,20 +90,36 @@ public class ItemHoldPositionFragment extends JMEBaseFragment implements BaseQui
         super.onResume();
 
         /*if (bVisibleToUser)
-            initPosition();*/
+            initOrderPage();*/
     }
 
-    private void initPosition() {
+    private void initOrderPage() {
         mCurrentPage = 1;
 
-        position();
+        orderpage();
     }
 
-    private void position() {
+    private void setDeclareTime(List<OrderPageVo.OrderBean> list) {
+        if (null == list || 0 == list.size()) {
+            if (mCurrentPage == 1)
+                mDeclareTime = "";
+        } else {
+            int size = list.size();
+
+            OrderPageVo.OrderBean orderBean = list.get(size - 1);
+
+            if (null != orderBean)
+                mDeclareTime = orderBean.getDeclarTime();
+        }
+    }
+
+    private void orderpage() {
         HashMap<String, String> params = new HashMap<>();
         params.put("pageNo", String.valueOf(mCurrentPage));
+        params.put("pagingDeclareTime", mDeclareTime);
+        params.put("qryFlg", PAGE_NEXT);
 
-        sendRequest(TradeService.getInstance().position, params, false, false, false);
+        sendRequest(TradeService.getInstance().orderpage, params, false, false, false);
     }
 
     @Override
@@ -106,34 +127,36 @@ public class ItemHoldPositionFragment extends JMEBaseFragment implements BaseQui
         super.DataReturn(request, head, response);
 
         switch (request.getApi().getName()) {
-            case "Position":
+            case "OrderPage":
                 if (head.isSuccess()) {
-                    PositionPageVo positionPageVo;
+                    OrderPageVo orderPageVo;
 
                     try {
-                        positionPageVo = (PositionPageVo) response;
+                        orderPageVo = (OrderPageVo) response;
                     } catch (Exception e) {
-                        positionPageVo = null;
+                        orderPageVo = null;
 
                         e.printStackTrace();
                     }
 
-                    if (null == positionPageVo)
+                    if (null == orderPageVo)
                         return;
 
-                    bHasNext = positionPageVo.isHasNext();
+                    bHasNext = orderPageVo.isHasNext();
 
-                    List<PositionPageVo.PositionBean> positionBeanList = positionPageVo.getList();
+                    List<OrderPageVo.OrderBean> orderBeanList = orderPageVo.getList();
 
                     if (mCurrentPage == 1) {
-                        mAdapter.setNewData(positionBeanList);
+                        mAdapter.setNewData(orderBeanList);
 
-                        if (null != positionBeanList && 0 < positionBeanList.size())
+                        if (null != orderBeanList && 0 < orderBeanList.size())
                             mAdapter.loadMoreComplete();
                     } else {
-                        mAdapter.addData(positionBeanList);
+                        mAdapter.addData(orderBeanList);
                         mAdapter.loadMoreComplete();
                     }
+
+                    setDeclareTime(orderBeanList);
                 }
 
                 break;
@@ -146,10 +169,18 @@ public class ItemHoldPositionFragment extends JMEBaseFragment implements BaseQui
             if (bHasNext) {
                 mCurrentPage++;
 
-                position();
+                orderpage();
             } else {
                 mAdapter.loadMoreEnd();
             }
         }, 0);
+    }
+
+    public class ClickHandlers {
+
+        public void onClickCancel() {
+
+        }
+
     }
 }

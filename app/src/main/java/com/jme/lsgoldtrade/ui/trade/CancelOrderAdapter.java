@@ -4,17 +4,18 @@ import android.support.annotation.Nullable;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
+import com.jme.lsgoldtrade.domain.OrderPageVo;
 
 import java.util.List;
 
-public class CancelOrderAdapter extends BaseQuickAdapter<String, BaseViewHolder> {
+public class CancelOrderAdapter extends BaseQuickAdapter<OrderPageVo.OrderBean, BaseViewHolder> {
 
-    public CancelOrderAdapter(int layoutResId, @Nullable List<String> data) {
+    public CancelOrderAdapter(int layoutResId, @Nullable List<OrderPageVo.OrderBean> data) {
         super(layoutResId, data);
     }
 
     @Override
-    protected void convert(BaseViewHolder helper, String item) {
+    protected void convert(BaseViewHolder helper, OrderPageVo.OrderBean item) {
 
     }
 }
