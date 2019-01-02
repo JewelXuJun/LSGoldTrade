@@ -41,6 +41,7 @@ public class TurnOverFragment extends JMEBaseFragment implements OnRefreshListen
     private int mYear;
     private int mMonth;
     private int mDayOfMonth;
+    private int mCurrentPage = 1;
     private String mSearchKey = "";
 
     private static final int TIME_START = 0;
@@ -64,6 +65,7 @@ public class TurnOverFragment extends JMEBaseFragment implements OnRefreshListen
 
         mAdapter = new TurnOverAdapter(R.layout.item_turnover, null);
 
+        mBinding.recyclerView.setHasFixedSize(false);
         mBinding.recyclerView.addItemDecoration(new MarginDividerItemDecoration(mContext, LinearLayoutManager.VERTICAL));
         mBinding.recyclerView.setLayoutManager(new LinearLayoutManager(mContext));
         mBinding.recyclerView.setAdapter(mAdapter);
@@ -74,6 +76,9 @@ public class TurnOverFragment extends JMEBaseFragment implements OnRefreshListen
     @Override
     protected void initListener() {
         super.initListener();
+
+        mAdapter.setOnLoadMoreListener(this, mBinding.recyclerView);
+        mBinding.swipeRefreshLayout.setOnRefreshListener(this);
     }
 
     @Override
@@ -169,6 +174,7 @@ public class TurnOverFragment extends JMEBaseFragment implements OnRefreshListen
     }
 
     private void initTranspage(boolean enablle) {
+        mCurrentPage = 1;
         mSearchKey = "";
 
         transpage(enablle);
@@ -219,12 +225,12 @@ public class TurnOverFragment extends JMEBaseFragment implements OnRefreshListen
                         List<InOutTurnOverVo.TurnOverBean> turnOverBeanList = inOutTurnOverVo.getTurnover();
 
                         if (TextUtils.isEmpty(mSearchKey)) {
-                            if (0 == mAdapter.getItemCount()) {
+                            if (mCurrentPage == 1) {
                                 if (null == turnOverBeanList || 0 == turnOverBeanList.size()) {
                                     mAdapter.setEmptyView(getEmptyView());
                                     mBinding.swipeRefreshLayout.finishRefresh(true);
                                 } else {
-                                    mAdapter.addData(turnOverBeanList);
+                                    mAdapter.setNewData(turnOverBeanList);
                                     mAdapter.loadMoreComplete();
                                 }
                             } else {
@@ -232,7 +238,11 @@ public class TurnOverFragment extends JMEBaseFragment implements OnRefreshListen
                                 mAdapter.loadMoreComplete();
                             }
                         } else {
-                            mAdapter.addData(turnOverBeanList);
+                            if (mCurrentPage == 1)
+                                mAdapter.setNewData(turnOverBeanList);
+                            else
+                                mAdapter.addData(turnOverBeanList);
+
                             mAdapter.loadMoreComplete();
                         }
                     }
@@ -247,10 +257,13 @@ public class TurnOverFragment extends JMEBaseFragment implements OnRefreshListen
     @Override
     public void onLoadMoreRequested() {
         mBinding.recyclerView.postDelayed(() -> {
-            if (TextUtils.isEmpty(mSearchKey))
+            if (TextUtils.isEmpty(mSearchKey)) {
                 mAdapter.loadMoreEnd();
-            else
+            } else {
+                mCurrentPage++;
+
                 transpage(true);
+            }
         }, 0);
     }
 
