@@ -30,6 +30,7 @@
                 android:layout_width="@dimen/width_date"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
+                android:onClick="@{() -> handlers.onClickSelectDate(0)}"
                 android:orientation="vertical">
 
                 <TextView
@@ -46,7 +47,6 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_marginTop="@dimen/margin_small"
-                    android:onClick="@{() -> handlers.onClickSelectDate(0)}"
                     android:textColor="@color/color_blue"
                     android:textSize="@dimen/common_font_size" />
 
@@ -64,6 +64,7 @@
                 android:layout_width="@dimen/width_date"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
+                android:onClick="@{() -> handlers.onClickSelectDate(1)}"
                 android:orientation="vertical">
 
                 <TextView
@@ -80,7 +81,6 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_marginTop="@dimen/margin_small"
-                    android:onClick="@{() -> handlers.onClickSelectDate(1)}"
                     android:textColor="@color/color_blue"
                     android:textSize="@dimen/common_font_size" />
 
@@ -139,25 +139,23 @@
 
             </LinearLayout>
 
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/recyclerView"
+            <com.scwang.smartrefresh.layout.SmartRefreshLayout
+                android:id="@+id/swipeRefreshLayout"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:cacheColorHint="@null"
-                android:scrollbars="none"
-                android:visibility="visible" />
+                android:layout_height="match_parent">
 
-            <TextView
-                android:id="@+id/tv_no_data"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginTop="@dimen/margin_no_data"
-                android:drawableTop="@mipmap/ic_no_data"
-                android:text="@string/text_no_data"
-                android:textColor="@color/color_text_gray_hint"
-                android:textSize="@dimen/size_normal"
-                android:visibility="gone" />
+                <com.scwang.smartrefresh.layout.header.ClassicsHeader
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/recyclerView"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:cacheColorHint="@null"
+                    android:scrollbars="none" />
+
+            </com.scwang.smartrefresh.layout.SmartRefreshLayout>
 
         </LinearLayout>
 
