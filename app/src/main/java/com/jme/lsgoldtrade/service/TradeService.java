@@ -6,6 +6,7 @@ import com.jme.common.network.IService;
 import com.jme.lsgoldtrade.config.Constants;
 import com.jme.lsgoldtrade.domain.AccountVo;
 import com.jme.lsgoldtrade.domain.DailyStatementVo;
+import com.jme.lsgoldtrade.domain.DealHistoryPageVo;
 import com.jme.lsgoldtrade.domain.DealPageVo;
 import com.jme.lsgoldtrade.domain.InOutTurnOverVo;
 import com.jme.lsgoldtrade.domain.OrderPageVo;
@@ -93,6 +94,14 @@ public class TradeService extends IService<TradeApi> {
         public Call<DTResponse> request(HashMap<String, String> params) {
 
             return mApi.dealpage(params);
+        }
+    };
+
+    public API dealhispage = new API<DealHistoryPageVo>("DealHisPage") {
+        @Override
+        public Call<DTResponse> request(HashMap<String, String> params) {
+
+            return mApi.dealhispage(params);
         }
     };
 
