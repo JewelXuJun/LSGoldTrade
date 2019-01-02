@@ -98,7 +98,7 @@ public class ItemHoldPositionFragment extends JMEBaseFragment implements BaseQui
         HashMap<String, String> params = new HashMap<>();
         params.put("pageNo", String.valueOf(mCurrentPage));
 
-        sendRequest(TradeService.getInstance().position, params, false);
+        sendRequest(TradeService.getInstance().position, params, false, false, false);
     }
 
     @Override
