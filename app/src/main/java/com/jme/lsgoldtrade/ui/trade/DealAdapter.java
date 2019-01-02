@@ -12,7 +12,7 @@ import java.util.List;
 
 public class DealAdapter extends BaseQuickAdapter<DealPageVo.DealBean, BaseViewHolder> {
 
-    private String mType = "";
+    private String mType;
     private String mDate = "";
 
     public DealAdapter(int layoutResId, @Nullable List<DealPageVo.DealBean> data, String type) {

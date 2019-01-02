@@ -12,8 +12,17 @@ import java.util.List;
 
 public class EntrustAdapter extends BaseQuickAdapter<OrderPageVo.OrderBean, BaseViewHolder> {
 
-    public EntrustAdapter(int layoutResId, @Nullable List<OrderPageVo.OrderBean> data) {
+    private String mType;
+    private String mDate = "";
+
+    public EntrustAdapter(int layoutResId, @Nullable List<OrderPageVo.OrderBean> data, String type) {
         super(layoutResId, data);
+
+        mType = type;
+    }
+
+    public void clearDate() {
+        mDate = "";
     }
 
     @Override
@@ -21,9 +30,12 @@ public class EntrustAdapter extends BaseQuickAdapter<OrderPageVo.OrderBean, Base
         if (null == item)
             return;
 
+        String date = item.getTradeDate();
         int bsFlag = item.getBsFlag();
 
-        helper.setText(R.id.tv_contract, item.getContractId())
+        helper.setText(R.id.tv_date, date)
+                .setVisible(R.id.tv_date, mType.equals("History") && !mDate.equals(date))
+                .setText(R.id.tv_contract, item.getContractId())
                 .setText(R.id.tv_time, item.getDeclarTime())
                 .setText(R.id.tv_type, MarketUtil.getTradeDirection(bsFlag) + MarketUtil.getOCState(item.getOcFlag()))
                 .setTextColor(R.id.tv_type, MarketUtil.getTradeDirectionColor(bsFlag))
@@ -32,5 +44,7 @@ public class EntrustAdapter extends BaseQuickAdapter<OrderPageVo.OrderBean, Base
                 .setText(R.id.tv_entrust, String.valueOf(item.getEntrustNumber()))
                 .setText(R.id.tv_surplus, String.valueOf(item.getRemnantNumber()))
                 .setText(R.id.tv_state, MarketUtil.getEntrustState(item.getStatus()));
+
+        mDate = date;
     }
 }

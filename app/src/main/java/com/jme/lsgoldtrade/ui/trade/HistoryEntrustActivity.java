@@ -35,7 +35,7 @@ public class HistoryEntrustActivity extends JMEBaseActivity {
     protected void initData(Bundle savedInstanceState) {
         super.initData(savedInstanceState);
 
-        mAdapter = new EntrustAdapter(R.layout.item_entrust, null);
+        mAdapter = new EntrustAdapter(R.layout.item_entrust, null, "History");
     }
 
     @Override
