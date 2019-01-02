@@ -7,6 +7,7 @@ import com.jme.lsgoldtrade.config.Constants;
 import com.jme.lsgoldtrade.domain.AccountVo;
 import com.jme.lsgoldtrade.domain.DailyStatementVo;
 import com.jme.lsgoldtrade.domain.InOutTurnOverVo;
+import com.jme.lsgoldtrade.domain.OrderPageVo;
 import com.jme.lsgoldtrade.domain.User;
 
 import java.util.HashMap;
@@ -74,6 +75,14 @@ public class TradeService extends IService<TradeApi> {
         public Call<DTResponse> request(HashMap<String, String> params) {
 
             return mApi.dailystatement(params);
+        }
+    };
+
+    public API orderpage = new API<OrderPageVo>("OrderPage") {
+        @Override
+        public Call<DTResponse> request(HashMap<String, String> params) {
+
+            return mApi.orderpage(params);
         }
     };
 
