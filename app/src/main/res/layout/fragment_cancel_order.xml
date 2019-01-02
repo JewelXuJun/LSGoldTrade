@@ -43,8 +43,8 @@
                     android:layout_width="@dimen/width_btn_big"
                     android:layout_height="match_parent"
                     android:layout_alignParentRight="true"
-                    android:onClick="@{() -> handlers.onClickCancel()}"
                     android:background="@drawable/bg_btn_cancel"
+                    android:onClick="@{() -> handlers.onClickCancel()}"
                     android:text="@string/trade_cancel_order"
                     android:textColor="@color/gray"
                     android:textSize="@dimen/sp_16" />
@@ -103,14 +103,25 @@
 
         </LinearLayout>
 
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/recyclerView"
+        <com.scwang.smartrefresh.layout.SmartRefreshLayout
+            android:id="@+id/swipeRefreshLayout"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_below="@+id/layout_tabhost"
-            android:layout_marginBottom="@dimen/height_item_normal"
-            android:cacheColorHint="@null"
-            android:scrollbars="none" />
+            android:layout_height="match_parent">
+
+            <com.scwang.smartrefresh.layout.header.ClassicsHeader
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@+id/layout_tabhost"
+                android:layout_marginBottom="@dimen/height_item_normal"
+                android:cacheColorHint="@null"
+                android:scrollbars="none" />
+
+        </com.scwang.smartrefresh.layout.SmartRefreshLayout>
 
     </RelativeLayout>
 
