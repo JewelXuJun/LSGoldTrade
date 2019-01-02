@@ -9,347 +9,358 @@
 
     </data>
 
-    <android.support.v4.widget.NestedScrollView
+    <com.scwang.smartrefresh.layout.SmartRefreshLayout
+        android:id="@+id/swipeRefreshLayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/common_background"
-        android:fillViewport="true"
-        android:scrollbars="none">
+        android:layout_height="match_parent">
 
-        <LinearLayout
+        <com.scwang.smartrefresh.layout.header.ClassicsHeader
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <android.support.v4.widget.NestedScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:background="@color/common_background"
+            android:fillViewport="true"
+            android:scrollbars="none">
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/white"
+                android:layout_height="match_parent"
                 android:orientation="vertical">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@color/white"
-                    android:gravity="center"
-                    android:paddingTop="@dimen/common_area_margin_big"
-                    android:paddingBottom="@dimen/common_area_margin_big">
+                    android:orientation="vertical">
 
                     <LinearLayout
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:background="@color/white"
                         android:gravity="center"
-                        android:onClick="@{() -> handlers.onClickQueryDailyStatement()}"
-                        android:orientation="vertical">
+                        android:paddingTop="@dimen/common_area_margin_big"
+                        android:paddingBottom="@dimen/common_area_margin_big">
 
-                        <TextView
+                        <LinearLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@string/trade_daily_statement"
-                            android:textColor="@color/black_pale"
-                            android:textSize="@dimen/sp_12" />
+                            android:gravity="center"
+                            android:onClick="@{() -> handlers.onClickQueryDailyStatement()}"
+                            android:orientation="vertical">
 
-                        <TextView
-                            android:id="@+id/tv_time"
-                            android:layout_width="wrap_content"
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/trade_daily_statement"
+                                android:textColor="@color/black_pale"
+                                android:textSize="@dimen/sp_12" />
+
+                            <TextView
+                                android:id="@+id/tv_time"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/common_area_margin_tiny"
+                                android:textColor="@color/color_blue"
+                                android:textSize="@dimen/common_font_size" />
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/common_line_height"
+                        android:layout_marginLeft="@dimen/common_area_margin"
+                        android:layout_marginRight="@dimen/common_area_margin"
+                        android:background="@color/common_line_divider" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/common_page_margin"
+                        android:layout_marginBottom="@dimen/common_area_margin"
+                        android:orientation="horizontal">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/common_area_margin_tiny"
-                            android:textColor="@color/color_blue"
-                            android:textSize="@dimen/common_font_size" />
+                            android:layout_weight="1"
+                            android:gravity="center|left"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="@dimen/common_area_margin_big"
+                                android:text="@string/trade_current_profit_and_loss"
+                                android:textColor="@color/black_pale"
+                                android:textSize="@dimen/sp_12" />
+
+                            <TextView
+                                android:id="@+id/tv_current_profit_and_loss"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="@dimen/common_area_margin_big"
+                                android:layout_marginTop="@dimen/margin_tiny"
+                                android:text="@string/text_no_data_default"
+                                android:textColor="@color/black_deep"
+                                android:textSize="@dimen/common_font_size" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/trade_fee"
+                                android:textColor="@color/black_pale"
+                                android:textSize="@dimen/sp_12" />
+
+                            <TextView
+                                android:id="@+id/tv_fee"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/margin_tiny"
+                                android:text="@string/text_no_data_default"
+                                android:textColor="@color/black_deep"
+                                android:textSize="@dimen/common_font_size" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/trade_software_service_charge"
+                                android:textColor="@color/black_pale"
+                                android:textSize="@dimen/sp_12" />
+
+                            <TextView
+                                android:id="@+id/tv_software_service_charge"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/margin_tiny"
+                                android:text="@string/text_no_data_default"
+                                android:textColor="@color/black_deep"
+                                android:textSize="@dimen/common_font_size" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="center|right"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginRight="@dimen/common_area_margin_big"
+                                android:text="@string/trade_deferred_charges"
+                                android:textColor="@color/black_pale"
+                                android:textSize="@dimen/sp_12" />
+
+                            <TextView
+                                android:id="@+id/tv_deferred_charges"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/margin_tiny"
+                                android:layout_marginRight="@dimen/common_area_margin_big"
+                                android:text="@string/text_no_data_default"
+                                android:textColor="@color/black_deep"
+                                android:textSize="@dimen/common_font_size" />
+
+                        </LinearLayout>
 
                     </LinearLayout>
 
                 </LinearLayout>
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/common_line_height"
-                    android:layout_marginLeft="@dimen/common_area_margin"
-                    android:layout_marginRight="@dimen/common_area_margin"
-                    android:background="@color/common_line_divider" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/common_page_margin"
-                    android:layout_marginBottom="@dimen/common_area_margin"
-                    android:orientation="horizontal">
+                    android:background="@color/white"
+                    android:orientation="vertical">
 
-                    <LinearLayout
+                    <TextView
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
+                        android:layout_height="@dimen/common_item_height_small"
+                        android:background="@color/color_tabhost"
+                        android:drawableLeft="@mipmap/ic_position_query"
                         android:gravity="center|left"
-                        android:orientation="vertical">
+                        android:paddingLeft="@dimen/common_area_margin"
+                        android:text="@string/trade_position_query"
+                        android:textColor="@color/gray"
+                        android:textSize="@dimen/sp_12" />
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="@dimen/common_area_margin_big"
-                            android:text="@string/trade_current_profit_and_loss"
-                            android:textColor="@color/black_pale"
-                            android:textSize="@dimen/sp_12" />
-
-                        <TextView
-                            android:id="@+id/tv_current_profit_and_loss"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="@dimen/common_area_margin_big"
-                            android:layout_marginTop="@dimen/margin_tiny"
-                            android:text="@string/text_no_data_default"
-                            android:textColor="@color/black_deep"
-                            android:textSize="@dimen/common_font_size" />
-
-                    </LinearLayout>
-
-                    <LinearLayout
+                    <RelativeLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:gravity="center"
-                        android:orientation="vertical">
+                        android:layout_height="@dimen/height_item_normal"
+                        android:onClick="@{() -> handlers.onClickQueryCurrentHoldPosition()}"
+                        android:paddingLeft="@dimen/common_area_margin"
+                        android:paddingRight="@dimen/common_area_margin">
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@string/trade_fee"
-                            android:textColor="@color/black_pale"
-                            android:textSize="@dimen/sp_12" />
+                            android:layout_centerVertical="true"
+                            android:text="@string/trade_curren_hold_position"
+                            android:textColor="@color/color_text_black"
+                            android:textSize="@dimen/sp_14" />
 
-                        <TextView
-                            android:id="@+id/tv_fee"
+                        <ImageView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/margin_tiny"
-                            android:text="@string/text_no_data_default"
-                            android:textColor="@color/black_deep"
-                            android:textSize="@dimen/common_font_size" />
+                            android:layout_alignParentRight="true"
+                            android:layout_centerVertical="true"
+                            android:background="@mipmap/ic_next" />
 
-                    </LinearLayout>
+                    </RelativeLayout>
 
-                    <LinearLayout
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white"
+                    android:orientation="vertical">
+
+                    <TextView
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:gravity="center"
-                        android:orientation="vertical">
+                        android:layout_height="@dimen/common_item_height_small"
+                        android:background="@color/color_tabhost"
+                        android:drawableLeft="@mipmap/ic_trade_query"
+                        android:gravity="center|left"
+                        android:paddingLeft="@dimen/common_area_margin"
+                        android:text="@string/trade_trade_query"
+                        android:textColor="@color/gray"
+                        android:textSize="@dimen/sp_12" />
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/trade_software_service_charge"
-                            android:textColor="@color/black_pale"
-                            android:textSize="@dimen/sp_12" />
-
-                        <TextView
-                            android:id="@+id/tv_software_service_charge"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/margin_tiny"
-                            android:text="@string/text_no_data_default"
-                            android:textColor="@color/black_deep"
-                            android:textSize="@dimen/common_font_size" />
-
-                    </LinearLayout>
-
-                    <LinearLayout
+                    <RelativeLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:gravity="center|right"
-                        android:orientation="vertical">
+                        android:layout_height="@dimen/height_item_normal"
+                        android:onClick="@{() -> handlers.onClickQueryCurrentEntrust()}"
+                        android:paddingLeft="@dimen/common_area_margin"
+                        android:paddingRight="@dimen/common_area_margin">
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginRight="@dimen/common_area_margin_big"
-                            android:text="@string/trade_deferred_charges"
-                            android:textColor="@color/black_pale"
-                            android:textSize="@dimen/sp_12" />
+                            android:layout_centerVertical="true"
+                            android:text="@string/trade_current_entrust"
+                            android:textColor="@color/color_text_black"
+                            android:textSize="@dimen/sp_14" />
 
-                        <TextView
-                            android:id="@+id/tv_deferred_charges"
+                        <ImageView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/margin_tiny"
-                            android:layout_marginRight="@dimen/common_area_margin_big"
-                            android:text="@string/text_no_data_default"
-                            android:textColor="@color/black_deep"
-                            android:textSize="@dimen/common_font_size" />
+                            android:layout_alignParentRight="true"
+                            android:layout_centerVertical="true"
+                            android:background="@mipmap/ic_next" />
 
-                    </LinearLayout>
+                    </RelativeLayout>
+
+                    <include layout="@layout/item_line_vertical" />
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/height_item_normal"
+                        android:onClick="@{() -> handlers.onClickQueryHistoryEntrust()}"
+                        android:paddingLeft="@dimen/common_area_margin"
+                        android:paddingRight="@dimen/common_area_margin">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:text="@string/trade_history_entrust"
+                            android:textColor="@color/color_text_black"
+                            android:textSize="@dimen/sp_14" />
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentRight="true"
+                            android:layout_centerVertical="true"
+                            android:background="@mipmap/ic_next" />
+
+                    </RelativeLayout>
+
+                    <include layout="@layout/item_line_vertical" />
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/height_item_normal"
+                        android:onClick="@{() -> handlers.onClickQueryCurrentDeal()}"
+                        android:paddingLeft="@dimen/common_area_margin"
+                        android:paddingRight="@dimen/common_area_margin">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:text="@string/trade_current_deal"
+                            android:textColor="@color/color_text_black"
+                            android:textSize="@dimen/sp_14" />
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentRight="true"
+                            android:layout_centerVertical="true"
+                            android:background="@mipmap/ic_next" />
+
+                    </RelativeLayout>
+
+                    <include layout="@layout/item_line_vertical" />
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/height_item_normal"
+                        android:onClick="@{() -> handlers.onClickQueryHistoryDeal()}"
+                        android:paddingLeft="@dimen/common_area_margin"
+                        android:paddingRight="@dimen/common_area_margin">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:text="@string/trade_history_deal"
+                            android:textColor="@color/color_text_black"
+                            android:textSize="@dimen/sp_14" />
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentRight="true"
+                            android:layout_centerVertical="true"
+                            android:background="@mipmap/ic_next" />
+
+                    </RelativeLayout>
 
                 </LinearLayout>
 
             </LinearLayout>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/common_page_margin"
-                android:background="@color/white"
-                android:orientation="vertical">
+        </android.support.v4.widget.NestedScrollView>
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/common_item_height_small"
-                    android:background="@color/color_tabhost"
-                    android:drawableLeft="@mipmap/ic_position_query"
-                    android:gravity="center|left"
-                    android:paddingLeft="@dimen/common_area_margin"
-                    android:text="@string/trade_position_query"
-                    android:textColor="@color/gray"
-                    android:textSize="@dimen/sp_12" />
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/height_item_normal"
-                    android:onClick="@{() -> handlers.onClickQueryCurrentHoldPosition()}"
-                    android:paddingLeft="@dimen/common_area_margin"
-                    android:paddingRight="@dimen/common_area_margin">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:text="@string/trade_curren_hold_position"
-                        android:textColor="@color/color_text_black"
-                        android:textSize="@dimen/sp_14" />
-
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
-                        android:layout_centerVertical="true"
-                        android:background="@mipmap/ic_next" />
-
-                </RelativeLayout>
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/white"
-                android:orientation="vertical">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/common_item_height_small"
-                    android:background="@color/color_tabhost"
-                    android:drawableLeft="@mipmap/ic_trade_query"
-                    android:gravity="center|left"
-                    android:paddingLeft="@dimen/common_area_margin"
-                    android:text="@string/trade_trade_query"
-                    android:textColor="@color/gray"
-                    android:textSize="@dimen/sp_12" />
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/height_item_normal"
-                    android:onClick="@{() -> handlers.onClickQueryCurrentEntrust()}"
-                    android:paddingLeft="@dimen/common_area_margin"
-                    android:paddingRight="@dimen/common_area_margin">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:text="@string/trade_current_entrust"
-                        android:textColor="@color/color_text_black"
-                        android:textSize="@dimen/sp_14" />
-
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
-                        android:layout_centerVertical="true"
-                        android:background="@mipmap/ic_next" />
-
-                </RelativeLayout>
-
-                <include layout="@layout/item_line_vertical" />
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/height_item_normal"
-                    android:onClick="@{() -> handlers.onClickQueryHistoryEntrust()}"
-                    android:paddingLeft="@dimen/common_area_margin"
-                    android:paddingRight="@dimen/common_area_margin">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:text="@string/trade_history_entrust"
-                        android:textColor="@color/color_text_black"
-                        android:textSize="@dimen/sp_14" />
-
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
-                        android:layout_centerVertical="true"
-                        android:background="@mipmap/ic_next" />
-
-                </RelativeLayout>
-
-                <include layout="@layout/item_line_vertical" />
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/height_item_normal"
-                    android:onClick="@{() -> handlers.onClickQueryCurrentDeal()}"
-                    android:paddingLeft="@dimen/common_area_margin"
-                    android:paddingRight="@dimen/common_area_margin">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:text="@string/trade_current_deal"
-                        android:textColor="@color/color_text_black"
-                        android:textSize="@dimen/sp_14" />
-
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
-                        android:layout_centerVertical="true"
-                        android:background="@mipmap/ic_next" />
-
-                </RelativeLayout>
-
-                <include layout="@layout/item_line_vertical" />
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/height_item_normal"
-                    android:onClick="@{() -> handlers.onClickQueryHistoryDeal()}"
-                    android:paddingLeft="@dimen/common_area_margin"
-                    android:paddingRight="@dimen/common_area_margin">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:text="@string/trade_history_deal"
-                        android:textColor="@color/color_text_black"
-                        android:textSize="@dimen/sp_14" />
-
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
-                        android:layout_centerVertical="true"
-                        android:background="@mipmap/ic_next" />
-
-                </RelativeLayout>
-
-            </LinearLayout>
-
-        </LinearLayout>
-
-    </android.support.v4.widget.NestedScrollView>
+    </com.scwang.smartrefresh.layout.SmartRefreshLayout>
 
 </layout>

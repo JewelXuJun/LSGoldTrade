@@ -1,6 +1,7 @@
 package com.jme.lsgoldtrade.ui.trade;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.text.TextUtils;
 
 import com.alibaba.android.arouter.launcher.ARouter;
@@ -13,10 +14,12 @@ import com.jme.lsgoldtrade.config.Constants;
 import com.jme.lsgoldtrade.databinding.FragmentQueryBinding;
 import com.jme.lsgoldtrade.domain.DailyStatementVo;
 import com.jme.lsgoldtrade.service.TradeService;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 
 import java.util.HashMap;
 
-public class QueryFragment extends JMEBaseFragment {
+public class QueryFragment extends JMEBaseFragment implements OnRefreshListener {
 
     private FragmentQueryBinding mBinding;
 
@@ -44,6 +47,8 @@ public class QueryFragment extends JMEBaseFragment {
     @Override
     protected void initListener() {
         super.initListener();
+
+        mBinding.swipeRefreshLayout.setOnRefreshListener(this);
     }
 
     @Override
@@ -53,7 +58,6 @@ public class QueryFragment extends JMEBaseFragment {
         mBinding.setHandlers(new ClickHandlers());
     }
 
-
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
@@ -61,7 +65,7 @@ public class QueryFragment extends JMEBaseFragment {
         bVisibleToUser = isVisibleToUser;
 
        /* if (null != mBinding && bVisibleToUser)
-            dailystatement();*/
+            dailystatement(true);*/
     }
 
     @Override
@@ -76,7 +80,7 @@ public class QueryFragment extends JMEBaseFragment {
         super.onResume();
 
        /* if (bVisibleToUser)
-            dailystatement();*/
+            dailystatement(true);*/
     }
 
     private void setDailyStatementData(DailyStatementVo dailyStatementVo) {
@@ -97,11 +101,11 @@ public class QueryFragment extends JMEBaseFragment {
         return value;
     }
 
-    private void dailystatement() {
+    private void dailystatement(boolean enable) {
         HashMap<String, String> params = new HashMap<>();
         params.put("tradeDate", getTradeDate());
 
-        sendRequest(TradeService.getInstance().dailystatement, params, true);
+        sendRequest(TradeService.getInstance().dailystatement, params, enable);
     }
 
     @Override
@@ -111,6 +115,8 @@ public class QueryFragment extends JMEBaseFragment {
         switch (request.getApi().getName()) {
             case "DailyStatement":
                 if (head.isSuccess()) {
+                    mBinding.swipeRefreshLayout.finishRefresh(true);
+
                     DailyStatementVo dailyStatementVo;
 
                     try {
@@ -125,10 +131,17 @@ public class QueryFragment extends JMEBaseFragment {
                         return;
 
                     setDailyStatementData(dailyStatementVo);
+                } else {
+                    mBinding.swipeRefreshLayout.finishRefresh(false);
                 }
 
                 break;
         }
+    }
+
+    @Override
+    public void onRefresh(@NonNull RefreshLayout refreshLayout) {
+        dailystatement(false);
     }
 
     public class ClickHandlers {
