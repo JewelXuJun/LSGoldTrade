@@ -225,32 +225,6 @@
 
                 </RelativeLayout>
 
-                <include layout="@layout/item_line_vertical" />
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/height_item_normal"
-                    android:onClick="@{() -> handlers.onClickQueryHistoryHoldPosition()}"
-                    android:paddingLeft="@dimen/common_area_margin"
-                    android:paddingRight="@dimen/common_area_margin">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:text="@string/trade_history_hold_position"
-                        android:textColor="@color/color_text_black"
-                        android:textSize="@dimen/sp_14" />
-
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
-                        android:layout_centerVertical="true"
-                        android:background="@mipmap/ic_next" />
-
-                </RelativeLayout>
-
             </LinearLayout>
 
             <LinearLayout

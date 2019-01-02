@@ -145,12 +145,6 @@ public class QueryFragment extends JMEBaseFragment {
                     .navigation();
         }
 
-        public void onClickQueryHistoryHoldPosition() {
-            ARouter.getInstance()
-                    .build(Constants.ARouterUriConst.HISTORYHOLDPOSITION)
-                    .navigation();
-        }
-
         public void onClickQueryCurrentEntrust() {
             ARouter.getInstance()
                     .build(Constants.ARouterUriConst.CURRENTENTRUST)

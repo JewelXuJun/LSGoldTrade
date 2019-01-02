@@ -55,9 +55,6 @@
             android:name=".ui.trade.CurrentHoldPositionActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.trade.HistoryHoldPositionActivity"
-            android:screenOrientation="portrait" />
-        <activity
             android:name=".ui.trade.CurrentEntrustActivity"
             android:screenOrientation="portrait" />
         <activity
