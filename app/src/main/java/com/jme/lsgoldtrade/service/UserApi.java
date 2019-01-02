@@ -33,7 +33,4 @@ public interface UserApi {
     @GET("/gold-trade/v1.0.0/android/noticepage")
     Call<DTResponse> noticepage(@QueryMap Map<String, String> map);
 
-    @GET("/gold-trade/v1.0.0/android/dealpage")
-    Call<DTResponse> dealpage(@QueryMap Map<String, String> map);
-
 }
