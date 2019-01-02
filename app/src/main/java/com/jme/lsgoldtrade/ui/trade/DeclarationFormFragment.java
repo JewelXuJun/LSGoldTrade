@@ -12,6 +12,7 @@ import com.jme.common.network.DTRequest;
 import com.jme.common.network.Head;
 import com.jme.lsgoldtrade.R;
 import com.jme.lsgoldtrade.base.JMEBaseFragment;
+import com.jme.lsgoldtrade.config.Constants;
 import com.jme.lsgoldtrade.databinding.FragmentDeclarationFormBinding;
 
 public class DeclarationFormFragment extends JMEBaseFragment {
@@ -23,7 +24,7 @@ public class DeclarationFormFragment extends JMEBaseFragment {
 
     private TenSpeedAdapter mSaleAdapter;
     private TenSpeedAdapter mBuyAdapter;
-    private PagerAdapter mAdapter;
+    private TabViewPagerAdapter mAdapter;
 
     @Override
     protected int getContentViewId() {
@@ -63,6 +64,22 @@ public class DeclarationFormFragment extends JMEBaseFragment {
         super.initBinding();
 
         mBinding.setHandlers(new ClickHandlers());
+    }
+
+    @Override
+    public void onHiddenChanged(boolean hidden) {
+        super.onHiddenChanged(hidden);
+
+        if (null != mBinding && null != mBinding.tabViewpager && null != mAdapter)
+            mAdapter.getItem(mBinding.tabViewpager.getCurrentItem()).onHiddenChanged(hidden);
+    }
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+
+        if (null != mBinding && null != mBinding.tabViewpager && null != mAdapter)
+            mAdapter.getItem(mBinding.tabViewpager.getCurrentItem()).setUserVisibleHint(isVisibleToUser);
     }
 
     private void initInfoTabs() {
