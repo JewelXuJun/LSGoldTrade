@@ -10,6 +10,7 @@ import com.alibaba.android.arouter.facade.annotation.Route;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.jme.common.network.DTRequest;
 import com.jme.common.network.Head;
+import com.jme.common.ui.view.MarginDividerItemDecoration;
 import com.jme.lsgoldtrade.R;
 import com.jme.lsgoldtrade.base.JMEBaseActivity;
 import com.jme.lsgoldtrade.config.Constants;
@@ -57,6 +58,7 @@ public class CurrentEntrustActivity extends JMEBaseActivity implements OnRefresh
         mAdapter = new EntrustAdapter(R.layout.item_entrust, null);
 
         mBinding.recyclerView.setHasFixedSize(false);
+        mBinding.recyclerView.addItemDecoration(new MarginDividerItemDecoration(this, LinearLayoutManager.VERTICAL));
         mBinding.recyclerView.setLayoutManager(new LinearLayoutManager(this));
         mBinding.recyclerView.setAdapter(mAdapter);
     }

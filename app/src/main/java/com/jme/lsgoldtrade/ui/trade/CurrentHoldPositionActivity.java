@@ -40,7 +40,7 @@ public class CurrentHoldPositionActivity extends JMEBaseActivity {
         mAdapter = new HoldPositionAdapter(R.layout.item_order_hold_position, null);
 
         mBinding.recyclerView.addItemDecoration(new MarginDividerItemDecoration(mContext, LinearLayoutManager.VERTICAL));
-        mBinding.recyclerView.setLayoutManager(new LinearLayoutManager(mContext));
+        mBinding.recyclerView.setLayoutManager(new LinearLayoutManager(this));
         mBinding.recyclerView.setAdapter(mAdapter);
     }
 

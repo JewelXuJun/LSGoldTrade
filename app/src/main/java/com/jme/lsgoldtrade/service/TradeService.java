@@ -9,9 +9,11 @@ import com.jme.lsgoldtrade.domain.DailyStatementVo;
 import com.jme.lsgoldtrade.domain.DealPageVo;
 import com.jme.lsgoldtrade.domain.InOutTurnOverVo;
 import com.jme.lsgoldtrade.domain.OrderPageVo;
+import com.jme.lsgoldtrade.domain.PositionVo;
 import com.jme.lsgoldtrade.domain.User;
 
 import java.util.HashMap;
+import java.util.List;
 
 import okhttp3.Interceptor;
 import okhttp3.Request;
@@ -92,6 +94,14 @@ public class TradeService extends IService<TradeApi> {
         public Call<DTResponse> request(HashMap<String, String> params) {
 
             return mApi.dealpage(params);
+        }
+    };
+
+    public API position = new API<List<PositionVo>>("Position") {
+        @Override
+        public Call<DTResponse> request(HashMap<String, String> params) {
+
+            return mApi.position(params);
         }
     };
 
