@@ -41,6 +41,23 @@ public class Contract {
         return contractIDList;
     }
 
+    public String getContractIDListStr() {
+        if (null == mList || 0 == mList.size())
+            return "";
+
+        String contractIDListStr = "";
+
+        for (ContractInfoVo contractInfoVo : mList) {
+            if (null != contractInfoVo)
+                contractIDListStr = contractIDListStr + contractInfoVo.getContractId() + ",";
+        }
+
+        if (!TextUtils.isEmpty(contractIDListStr) && contractIDListStr.endsWith(","))
+            contractIDListStr = contractIDListStr.substring(0, contractIDListStr.length() - 1);
+
+        return contractIDListStr;
+    }
+
     public ContractInfoVo getContractInfo(String contractId) {
         if (null == mList || 0 == mList.size() || TextUtils.isEmpty(contractId))
             return null;
