@@ -1,4 +1,6 @@
-package com.jme.lsgoldtrade.domain;
+package com.jme.lsgoldtrade.config;
+
+import com.jme.lsgoldtrade.domain.UserInfoVo;
 
 /**
  * Created by XuJun on 2018/11/8.

@@ -7,7 +7,7 @@ import com.jme.lsgoldtrade.config.Constants;
 import com.jme.lsgoldtrade.domain.ImageVerifyCodeVo;
 import com.jme.lsgoldtrade.domain.NoticePageVo;
 import com.jme.lsgoldtrade.domain.SynTimeVo;
-import com.jme.lsgoldtrade.domain.User;
+import com.jme.lsgoldtrade.config.User;
 import com.jme.lsgoldtrade.domain.UserInfoVo;
 
 import java.util.HashMap;

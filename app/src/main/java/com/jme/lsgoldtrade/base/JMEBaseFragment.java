@@ -15,7 +15,7 @@ import com.jme.common.network.Head;
 import com.jme.common.ui.base.BaseFragment;
 import com.jme.lsgoldtrade.R;
 import com.jme.lsgoldtrade.config.Constants;
-import com.jme.lsgoldtrade.domain.User;
+import com.jme.lsgoldtrade.config.User;
 
 import java.lang.reflect.Field;
 

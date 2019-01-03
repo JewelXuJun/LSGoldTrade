@@ -1,7 +1,6 @@
 package com.jme.lsgoldtrade.base;
 
 import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
@@ -15,10 +14,9 @@ import com.alibaba.android.arouter.launcher.ARouter;
 import com.jme.common.network.DTRequest;
 import com.jme.common.network.Head;
 import com.jme.common.ui.base.BaseActivity;
-import com.jme.common.util.RxBus;
 import com.jme.lsgoldtrade.R;
 import com.jme.lsgoldtrade.config.Constants;
-import com.jme.lsgoldtrade.domain.User;
+import com.jme.lsgoldtrade.config.User;
 
 import java.lang.reflect.Field;
 

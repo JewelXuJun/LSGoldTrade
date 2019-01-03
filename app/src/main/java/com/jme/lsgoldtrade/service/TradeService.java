@@ -12,7 +12,7 @@ import com.jme.lsgoldtrade.domain.DealPageVo;
 import com.jme.lsgoldtrade.domain.InOutTurnOverVo;
 import com.jme.lsgoldtrade.domain.OrderPageVo;
 import com.jme.lsgoldtrade.domain.PositionPageVo;
-import com.jme.lsgoldtrade.domain.User;
+import com.jme.lsgoldtrade.config.User;
 
 import java.util.HashMap;
 import java.util.List;
