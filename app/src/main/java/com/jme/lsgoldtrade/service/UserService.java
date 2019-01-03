@@ -6,6 +6,7 @@ import com.jme.common.network.IService;
 import com.jme.lsgoldtrade.config.Constants;
 import com.jme.lsgoldtrade.domain.ImageVerifyCodeVo;
 import com.jme.lsgoldtrade.domain.NoticePageVo;
+import com.jme.lsgoldtrade.domain.SynTimeVo;
 import com.jme.lsgoldtrade.domain.User;
 import com.jme.lsgoldtrade.domain.UserInfoVo;
 
@@ -98,6 +99,14 @@ public class UserService extends IService<UserApi> {
         public Call<DTResponse> request(HashMap<String, String> params) {
 
             return mApi.noticepage(params);
+        }
+    };
+
+    public API syntime = new API<SynTimeVo>("SynTime") {
+        @Override
+        public Call<DTResponse> request(HashMap<String, String> params) {
+
+            return mApi.syntime(params);
         }
     };
 
