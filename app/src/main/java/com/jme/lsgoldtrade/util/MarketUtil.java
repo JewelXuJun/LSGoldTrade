@@ -1,6 +1,5 @@
 package com.jme.lsgoldtrade.util;
 
-import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 
 import com.jme.lsgoldtrade.R;
@@ -80,7 +79,7 @@ public class MarketUtil {
 
                 break;
             default:
-                color = R.color.common_font_stable;
+                color = R.color.color_text_black;
 
                 break;
         }

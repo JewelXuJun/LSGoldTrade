@@ -7,6 +7,7 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 
 import com.datai.common.charts.fchart.FData;
@@ -20,7 +21,9 @@ import com.jme.lsgoldtrade.config.Constants;
 import com.jme.lsgoldtrade.databinding.FragmentDeclarationFormBinding;
 import com.jme.lsgoldtrade.domain.TenSpeedVo;
 import com.jme.lsgoldtrade.service.MarketService;
+import com.jme.lsgoldtrade.util.MarketUtil;
 
+import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.List;
 
@@ -205,10 +208,17 @@ public class DeclarationFormFragment extends JMEBaseFragment {
                         return;
 
                     String lastSettlePrice = tenSpeedVo.getLastSettlePrice();
+                    String latestPrice = tenSpeedVo.getLatestPrice();
 
                     if (TextUtils.isEmpty(lastSettlePrice))
                         return;
 
+                    mBinding.tvPrice.setText(latestPrice);
+                    mBinding.tvPrice.setTextColor(ContextCompat.getColor(mContext,
+                            MarketUtil.getMarketStateColor(new BigDecimal(latestPrice).compareTo(new BigDecimal(lastSettlePrice)))));
+                    mBinding.tvLimitDownPrice.setText(tenSpeedVo.getLowerLimitPrice());
+                    mBinding.tvLimitUpPrice.setText(tenSpeedVo.getHighLimitPrice());
+                    mBinding.tvAmount.setText(MarketUtil.getVolumeValue(String.valueOf(tenSpeedVo.getTurnover()), false));
                     mBinding.fchartSale.setData(tenSpeedVo.getAskLists(), FData.TYPE_SELL, lastSettlePrice);
                     mBinding.fchartBuy.setData(tenSpeedVo.getBidLists(), FData.TYPE_BUY, lastSettlePrice);
                 }
@@ -224,6 +234,14 @@ public class DeclarationFormFragment extends JMEBaseFragment {
     }
 
     public class ClickHandlers {
+
+        public void onClickLimitDownPrice() {
+
+        }
+
+        public void onClickLimitUpPrice() {
+
+        }
 
         public void onClickPriceMinus() {
 
