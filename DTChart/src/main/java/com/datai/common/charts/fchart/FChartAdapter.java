@@ -156,11 +156,11 @@ public class FChartAdapter extends BaseAdapter {
             } else if (mType == FData.TYPE_BUY) {
                 holder.tv_item_first.setText(mBuy[position]);
             } else {
-                holder.tv_item_first.setText("   - -   ");
+                holder.tv_item_first.setText("   - - -   ");
             }
 
-            holder.tv_item_second.setText("   - -   ");
-            holder.tv_item_third.setText("   - -   ");
+            holder.tv_item_second.setText("   - - -   ");
+            holder.tv_item_third.setText("   - - -   ");
         }
 
         return convertView;
