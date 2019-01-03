@@ -16,6 +16,7 @@ import com.jme.common.network.Head;
 import com.jme.common.ui.base.BaseActivity;
 import com.jme.lsgoldtrade.R;
 import com.jme.lsgoldtrade.config.Constants;
+import com.jme.lsgoldtrade.config.Contract;
 import com.jme.lsgoldtrade.config.User;
 
 import java.lang.reflect.Field;
@@ -30,6 +31,7 @@ public abstract class JMEBaseActivity<T> extends BaseActivity {
     protected T mBinding;
 
     protected User mUser;
+    protected Contract mContract;
 
     private AlertDialog.Builder mDialog;
 
@@ -60,6 +62,7 @@ public abstract class JMEBaseActivity<T> extends BaseActivity {
         super.initData(savedInstanceState);
 
         mUser = User.getInstance();
+        mContract = Contract.getInstance();
 
         initBinding();
     }
