@@ -123,4 +123,28 @@ public class TradeService extends IService<TradeApi> {
         }
     };
 
+    public API limitOrder = new API<String>("LimitOrder") {
+        @Override
+        public Call<DTResponse> request(HashMap<String, String> params) {
+
+            return mApi.limitOrder(params);
+        }
+    };
+
+    public API marketOrder = new API<String>("MarketOrder") {
+        @Override
+        public Call<DTResponse> request(HashMap<String, String> params) {
+
+            return mApi.marketOrder(params);
+        }
+    };
+
+    public API revocateorder = new API<String>("RevocateOrder") {
+        @Override
+        public Call<DTResponse> request(HashMap<String, String> params) {
+
+            return mApi.revocateorder(params);
+        }
+    };
+
 }
