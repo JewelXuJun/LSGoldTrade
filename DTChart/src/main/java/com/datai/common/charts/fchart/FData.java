@@ -15,8 +15,8 @@ public class FData {
     public static final int INCREASING = 1;         //上涨
     public static final int DECREASING = 2;         //下跌
 
-    public static final int TYPE_BUY = 0;           //买5档
-    public static final int TYPE_SELL = 1;          //卖5档
+    public static final int TYPE_BUY = 0;           //买10档
+    public static final int TYPE_SELL = 1;          //卖10档
     public static final int TYPE_TICK = 2;          //明细
     public static final int TYPE_TICK_PART1 = 3;    //明细1
     public static final int TYPE_TICK_PART2 = 4;    //明细2

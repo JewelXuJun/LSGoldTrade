@@ -1,19 +1,28 @@
 package com.jme.lsgoldtrade.ui.trade;
 
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.view.PagerAdapter;
-import android.support.v7.widget.LinearLayoutManager;
+import android.text.TextUtils;
 
+import com.datai.common.charts.fchart.FData;
 import com.jme.common.network.DTRequest;
 import com.jme.common.network.Head;
+import com.jme.common.util.NetWorkUtils;
 import com.jme.lsgoldtrade.R;
 import com.jme.lsgoldtrade.base.JMEBaseFragment;
+import com.jme.lsgoldtrade.config.AppConfig;
 import com.jme.lsgoldtrade.config.Constants;
 import com.jme.lsgoldtrade.databinding.FragmentDeclarationFormBinding;
+import com.jme.lsgoldtrade.domain.TenSpeedVo;
+import com.jme.lsgoldtrade.service.MarketService;
+
+import java.util.HashMap;
+import java.util.List;
 
 public class DeclarationFormFragment extends JMEBaseFragment {
 
@@ -22,9 +31,28 @@ public class DeclarationFormFragment extends JMEBaseFragment {
     private Fragment[] mFragmentArrays;
     private String[] mTabTitles;
 
-    private TenSpeedAdapter mSaleAdapter;
-    private TenSpeedAdapter mBuyAdapter;
     private TabViewPagerAdapter mAdapter;
+
+    private boolean bVisibleToUser = false;
+    private boolean bFlag = true;
+    private String mContractId = "";
+
+    private Handler mHandler = new Handler() {
+        public void handleMessage(Message msg) {
+            switch (msg.what) {
+                case Constants.Msg.MSG_TRADE_UPDATE_DATA:
+                    mHandler.removeMessages(Constants.Msg.MSG_TRADE_UPDATE_DATA);
+
+                    getTenSpeedQuotes();
+
+                    mHandler.sendEmptyMessageDelayed(Constants.Msg.MSG_TRADE_UPDATE_DATA, getTimeInterval());
+
+                    break;
+            }
+
+            super.handleMessage(msg);
+        }
+    };
 
     @Override
     protected int getContentViewId() {
@@ -42,14 +70,9 @@ public class DeclarationFormFragment extends JMEBaseFragment {
     protected void initData(Bundle savedInstanceState) {
         super.initData(savedInstanceState);
 
-        mAdapter = new TabViewPagerAdapter(getChildFragmentManager());
-        mSaleAdapter = new TenSpeedAdapter(R.layout.item_ten_speed, null);
-        mBuyAdapter = new TenSpeedAdapter(R.layout.item_ten_speed, null);
+        mContractId = "au9999";
 
-        mBinding.recyclerViewSale.setLayoutManager(new LinearLayoutManager(mContext));
-        mBinding.recyclerViewSale.setAdapter(mSaleAdapter);
-        mBinding.recyclerViewBuy.setLayoutManager(new LinearLayoutManager(mContext));
-        mBinding.recyclerViewBuy.setAdapter(mBuyAdapter);
+        mAdapter = new TabViewPagerAdapter(getChildFragmentManager());
 
         initInfoTabs();
     }
@@ -68,6 +91,11 @@ public class DeclarationFormFragment extends JMEBaseFragment {
 
     @Override
     public void onHiddenChanged(boolean hidden) {
+        bVisibleToUser = !hidden;
+
+        if (null != mHandler && !bVisibleToUser)
+            mHandler.removeMessages(Constants.Msg.MSG_TRADE_UPDATE_DATA);
+
         super.onHiddenChanged(hidden);
 
         if (null != mBinding && null != mBinding.tabViewpager && null != mAdapter)
@@ -78,8 +106,37 @@ public class DeclarationFormFragment extends JMEBaseFragment {
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
 
+        bVisibleToUser = isVisibleToUser;
+
+        if (null != mBinding && bVisibleToUser) {
+            bFlag = true;
+
+            getTenSpeedQuotes();
+        } else {
+            if (null != mHandler)
+                mHandler.removeMessages(Constants.Msg.MSG_TRADE_UPDATE_DATA);
+        }
+
         if (null != mBinding && null != mBinding.tabViewpager && null != mAdapter)
             mAdapter.getItem(mBinding.tabViewpager.getCurrentItem()).setUserVisibleHint(isVisibleToUser);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        if (bVisibleToUser) {
+            bFlag = true;
+
+            getTenSpeedQuotes();
+        }
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+
+        mHandler.removeMessages(Constants.Msg.MSG_TRADE_UPDATE_DATA);
     }
 
     private void initInfoTabs() {
@@ -108,9 +165,62 @@ public class DeclarationFormFragment extends JMEBaseFragment {
         mBinding.tablayout.post(() -> setIndicator(mBinding.tablayout, 30, 30));
     }
 
+    private long getTimeInterval() {
+        return NetWorkUtils.isWifiConnected(mContext) ? AppConfig.TimeInterval_WiFi : AppConfig.TimeInterval_NetWork;
+    }
+
+    private void getTenSpeedQuotes() {
+        if (TextUtils.isEmpty(mContractId))
+            return;
+
+        HashMap<String, String> params = new HashMap<>();
+        params.put("list", mContractId);
+
+        sendRequest(MarketService.getInstance().getTenSpeedQuotes, params, false, false, false);
+    }
+
     @Override
     protected void DataReturn(DTRequest request, Head head, Object response) {
         super.DataReturn(request, head, response);
+
+        switch (request.getApi().getName()) {
+            case "GetTenSpeedQuotes":
+                if (head.isSuccess()) {
+                    List<TenSpeedVo> list;
+
+                    try {
+                        list = (List<TenSpeedVo>) response;
+                    } catch (Exception e) {
+                        list = null;
+
+                        e.printStackTrace();
+                    }
+
+                    if (null == list || 0 == list.size())
+                        return;
+
+                    TenSpeedVo tenSpeedVo = list.get(0);
+
+                    if (null == tenSpeedVo)
+                        return;
+
+                    String lastSettlePrice = tenSpeedVo.getLastSettlePrice();
+
+                    if (TextUtils.isEmpty(lastSettlePrice))
+                        return;
+
+                    mBinding.fchartSale.setData(tenSpeedVo.getAskLists(), FData.TYPE_SELL, lastSettlePrice);
+                    mBinding.fchartBuy.setData(tenSpeedVo.getBidLists(), FData.TYPE_BUY, lastSettlePrice);
+                }
+
+                if (bFlag) {
+                    bFlag = false;
+
+                    mHandler.sendEmptyMessageDelayed(Constants.Msg.MSG_TRADE_UPDATE_DATA, getTimeInterval());
+                }
+
+                break;
+        }
     }
 
     public class ClickHandlers {
