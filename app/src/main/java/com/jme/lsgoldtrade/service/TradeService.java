@@ -5,6 +5,7 @@ import com.jme.common.network.DTResponse;
 import com.jme.common.network.IService;
 import com.jme.lsgoldtrade.config.Constants;
 import com.jme.lsgoldtrade.domain.AccountVo;
+import com.jme.lsgoldtrade.domain.ContractInfoVo;
 import com.jme.lsgoldtrade.domain.DailyStatementVo;
 import com.jme.lsgoldtrade.domain.DealHistoryPageVo;
 import com.jme.lsgoldtrade.domain.DealPageVo;
@@ -14,6 +15,7 @@ import com.jme.lsgoldtrade.domain.PositionPageVo;
 import com.jme.lsgoldtrade.domain.User;
 
 import java.util.HashMap;
+import java.util.List;
 
 import okhttp3.Interceptor;
 import okhttp3.Request;
@@ -110,6 +112,14 @@ public class TradeService extends IService<TradeApi> {
         public Call<DTResponse> request(HashMap<String, String> params) {
 
             return mApi.position(params);
+        }
+    };
+
+    public API contractInfo = new API<List<ContractInfoVo>>("ContractInfo") {
+        @Override
+        public Call<DTResponse> request(HashMap<String, String> params) {
+
+            return mApi.contractInfo(params);
         }
     };
 

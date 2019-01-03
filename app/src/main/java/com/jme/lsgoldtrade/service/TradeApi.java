@@ -36,4 +36,7 @@ public interface TradeApi {
     @POST("/gold-trade/v1.0.0/android/position")
     Call<DTResponse> position(@QueryMap Map<String, String> map);
 
+    @GET("/gold-trade/v1.0.0/android/contractInfo")
+    Call<DTResponse> contractInfo(@QueryMap Map<String, String> map);
+
 }
