@@ -22,10 +22,6 @@
         <item name="android:colorForeground">@android:color/darker_gray</item>
     </style>
 
-    <style name="SpinnerStyle" parent="Base.Widget.AppCompat.Spinner">
-        <item name="android:background">@drawable/selector_spinner</item>
-    </style>
-
     <style name="CheckBoxStyle" parent="@android:style/Widget.CompoundButton.CheckBox">
         <item name="android:button">@drawable/selector_checkbox</item>
     </style>
