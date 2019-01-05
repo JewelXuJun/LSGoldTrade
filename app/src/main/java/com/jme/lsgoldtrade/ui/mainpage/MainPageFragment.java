@@ -244,7 +244,7 @@ public class MainPageFragment extends JMEBaseFragment implements OnRefreshListen
 
         public void onClickNews() {
             ARouter.getInstance()
-                    .build(Constants.ARouterUriConst.NEWSACTIVITY)
+                    .build(Constants.ARouterUriConst.NEWSCENTERACTIVITY)
                     .navigation();
         }
 

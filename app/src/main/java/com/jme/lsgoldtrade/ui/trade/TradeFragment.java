@@ -120,7 +120,7 @@ public class TradeFragment extends JMEBaseFragment {
 
         public void onClickNews() {
             ARouter.getInstance()
-                    .build(Constants.ARouterUriConst.NEWSACTIVITY)
+                    .build(Constants.ARouterUriConst.NEWSCENTERACTIVITY)
                     .navigation();
         }
 

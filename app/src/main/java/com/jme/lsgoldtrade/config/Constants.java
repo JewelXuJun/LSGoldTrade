@@ -77,7 +77,7 @@ public class Constants {
         public static final String HISTORYENTRUST = "/QueryFragment/HistoryEntrustActivity";
         public static final String CURRENTDEAL = "/QueryFragment/CurrentDealActivity";
         public static final String HISTORYDEAL = "/QueryFragment/HistoryDealActivity";
-        public static final String NEWSACTIVITY = "/JME/NewsActivity";
+        public static final String NEWSCENTERACTIVITY = "/JME/NewsCenterActivity";
     }
 
     public static final long SPLASH_DELAY_MILLIS = 1000;

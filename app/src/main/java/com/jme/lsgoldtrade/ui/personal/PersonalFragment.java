@@ -85,7 +85,7 @@ public class PersonalFragment extends JMEBaseFragment {
 
         public void onClickMessageCenter() {
             ARouter.getInstance()
-                    .build(Constants.ARouterUriConst.NEWSACTIVITY)
+                    .build(Constants.ARouterUriConst.NEWSCENTERACTIVITY)
                     .navigation();
         }
 

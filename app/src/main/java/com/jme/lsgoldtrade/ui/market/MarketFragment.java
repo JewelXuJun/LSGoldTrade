@@ -348,7 +348,7 @@ public class MarketFragment extends JMEBaseFragment implements OnRefreshListener
 
         public void onClickNews() {
             ARouter.getInstance()
-                    .build(Constants.ARouterUriConst.NEWSACTIVITY)
+                    .build(Constants.ARouterUriConst.NEWSCENTERACTIVITY)
                     .navigation();
         }
 
