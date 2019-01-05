@@ -288,6 +288,37 @@ public class DateUtil {
         return dateRange;
     }
 
+    public static String showDateTime(Long date) {
+        String dateTime;
+
+        Calendar currentTime = Calendar.getInstance();
+        long currentTimeInMillis = currentTime.getTimeInMillis();
+
+        Calendar today = Calendar.getInstance();
+        today.set(Calendar.YEAR, currentTime.get(Calendar.YEAR));
+        today.set(Calendar.MONTH, currentTime.get(Calendar.MONTH));
+        today.set(Calendar.DAY_OF_MONTH, currentTime.get(Calendar.DAY_OF_MONTH));
+        today.set(Calendar.HOUR_OF_DAY, 0);
+        today.set(Calendar.MINUTE, 0);
+        today.set(Calendar.SECOND, 0);
+        today.set(Calendar.MILLISECOND, 0);
+
+        long todayTimeInMillis = today.getTimeInMillis();
+
+        if (date > todayTimeInMillis && date < todayTimeInMillis + Day) {
+            dateTime = dateToStringWithHourMinute(date);
+        } else if (date > todayTimeInMillis + Day) {
+            dateTime = "";
+        } else {
+            if (currentTimeInMillis - date > 365 * Day)
+                dateTime = "1年前";
+            else
+                dateTime = dateToStringWithMonth(date);
+        }
+
+        return dateTime;
+    }
+
     public static String showSimpleData(String data) {
         if (TextUtils.isEmpty(data))
             return "-";
