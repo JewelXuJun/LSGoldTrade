@@ -37,6 +37,13 @@ public class MarketUtil {
         return contractName;
     }
 
+    public static String getContractCode(String contractId) {
+        if (TextUtils.isEmpty(contractId))
+            return DEFAULT;
+
+        return contractId;
+    }
+
     public static int getMarketStateColor(int type) {
         int color;
 
