@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.TabHost;
 import android.widget.TextView;
 
+import com.alibaba.android.arouter.facade.annotation.Route;
 import com.jme.common.network.DTRequest;
 import com.jme.common.network.Head;
 import com.jme.common.util.RxBus;
@@ -21,12 +22,14 @@ import com.jme.lsgoldtrade.config.Constants;
 import com.jme.lsgoldtrade.databinding.ActivityMainBinding;
 import com.jme.lsgoldtrade.tabhost.MainTab;
 
+import retrofit2.http.Path;
 import rx.Subscription;
 
 /**
  * Created by XuJun on 2018/11/7.
  */
 
+@Route(path = Constants.ARouterUriConst.MAIN)
 public class MainActivity extends JMEBaseActivity implements TabHost.OnTabChangeListener, View.OnTouchListener {
 
     private ActivityMainBinding mBinding;

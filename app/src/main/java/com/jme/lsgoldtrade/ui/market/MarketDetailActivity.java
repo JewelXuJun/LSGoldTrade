@@ -27,6 +27,7 @@ import com.jme.common.util.DateUtil;
 import com.jme.common.util.KChartVo;
 import com.jme.common.util.NetWorkUtils;
 import com.jme.common.util.RxBus;
+import com.jme.common.util.SharedPreUtils;
 import com.jme.common.util.TChartVo;
 import com.jme.lsgoldtrade.R;
 import com.jme.lsgoldtrade.base.JMEBaseActivity;
@@ -670,7 +671,9 @@ public class MarketDetailActivity extends JMEBaseActivity implements FChart.OnPr
     public class ClickHandlers {
 
         public void onClickDeclarationForm() {
-            RxBus.getInstance().post(Constants.RxBusConst.RxBus_TradeFragment, null);
+            AppConfig.Select_ContractId = mContractId;
+
+            RxBus.getInstance().post(Constants.RxBusConst.RxBus_TradeFragment, mContractId);
 
             ARouter.getInstance()
                     .build(Constants.ARouterUriConst.MAIN)

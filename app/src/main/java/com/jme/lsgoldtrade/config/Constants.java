@@ -41,7 +41,6 @@ public class Constants {
         }
 
         public static final String RxBus_TradeFragment = "TradeFragment";
-        public static final String RxBus_DeclarationFormFragment = "DeclarationFormFragment";
     }
 
     public static final class Msg {
@@ -60,7 +59,7 @@ public class Constants {
     }
 
     public static final class ARouterUriConst {
-        public static final String MAIN = "/AccountLoginActivity/MainActivity";
+        public static final String MAIN = "/JME/MainActivity";
         public static final String RFINEXWEBVIEW = "/JMEBase/JMEBaseWebviewActivity";
         public static final String ACCOUNTLOGIN = "/PersonalFragment/AccountLoginActivity";
         public static final String MOBILELOGIN = "/PersonalFragment/MobileLoginActivity";
