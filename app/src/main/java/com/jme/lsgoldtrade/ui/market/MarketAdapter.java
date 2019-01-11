@@ -43,8 +43,8 @@ public class MarketAdapter extends BaseQuickAdapter<FiveSpeedVo, BaseViewHolder>
         else
             rateType = new BigDecimal(upDown).compareTo(new BigDecimal(0));
 
-        helper.setText(R.id.tv_contractname_cn, MarketUtil.getContractNameCN(contractId))
-                .setText(R.id.tv_contractname_en, MarketUtil.getContractCode(contractId))
+        helper.setText(R.id.tv_contract_name, MarketUtil.getContractName(item.getName()))
+                .setText(R.id.tv_contract_code, MarketUtil.getContractCode(contractId))
                 .setText(R.id.tv_last_price, latestPrice)
                 .setTextColor(R.id.tv_last_price, ContextCompat.getColor(mContext, MarketUtil.getMarketStateColor(rateType)))
                 .setText(R.id.tv_rate, MarketUtil.getMarketRateValue(rateType, item.getUpDownRateValue()))

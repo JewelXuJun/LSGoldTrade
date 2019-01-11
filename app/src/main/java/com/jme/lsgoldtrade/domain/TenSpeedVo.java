@@ -10,6 +10,7 @@ public class TenSpeedVo implements Serializable {
 
     /**
      * "contractId":"iAu100g",
+     * "name":"黄金延期"
      * "lastClosePrice":30000,
      * "lastSettlePrice":30000,
      * "openPrice":30000,
@@ -71,6 +72,8 @@ public class TenSpeedVo implements Serializable {
      */
 
     private String contractId;
+
+    private String name;
 
     private long lastClosePrice;
 
@@ -194,6 +197,14 @@ public class TenSpeedVo implements Serializable {
 
     public void setContractId(String contractId) {
         this.contractId = contractId;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getLastClosePrice() {

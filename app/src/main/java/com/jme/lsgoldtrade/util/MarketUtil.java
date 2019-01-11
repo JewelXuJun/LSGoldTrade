@@ -12,27 +12,9 @@ public class MarketUtil {
 
     private static final String DEFAULT = "- - -";
 
-    public static String getContractNameCN(String contractId) {
-        String contractName;
-
-        switch (contractId) {
-            case "白银":
-                contractName = "白银延期";
-
-                break;
-            case "au9999":
-                contractName = "黄金延期";
-
-                break;
-            case "迷你黄金":
-                contractName = "迷你黄金延期";
-
-                break;
-            default:
-                contractName = DEFAULT;
-
-                break;
-        }
+    public static String getContractName(String contractName) {
+        if (TextUtils.isEmpty(contractName))
+            return DEFAULT;
 
         return contractName;
     }

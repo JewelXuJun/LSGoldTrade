@@ -10,12 +10,12 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:orientation="vertical"
-        android:paddingLeft="@dimen/common_area_margin"
+        android:paddingLeft="@dimen/common_page_padding"
         android:paddingTop="@dimen/common_page_padding"
         android:paddingBottom="@dimen/common_page_padding">
 
         <TextView
-            android:id="@+id/tv_contractname_cn"
+            android:id="@+id/tv_contract_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/text_no_data_default"
@@ -23,7 +23,7 @@
             android:textSize="@dimen/sp_14" />
 
         <TextView
-            android:id="@+id/tv_contractname_en"
+            android:id="@+id/tv_contract_code"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/common_area_margin_tiny"
@@ -63,7 +63,7 @@
         android:layout_gravity="center"
         android:layout_weight="1"
         android:gravity="right"
-        android:paddingRight="@dimen/common_area_margin"
+        android:paddingRight="@dimen/common_page_padding"
         android:text="@string/text_no_data_default"
         android:textColor="@color/color_text_black"
         android:textSize="@dimen/sp_14" />
