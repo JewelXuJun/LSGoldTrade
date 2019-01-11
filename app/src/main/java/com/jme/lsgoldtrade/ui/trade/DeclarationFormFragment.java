@@ -14,7 +14,6 @@ import com.datai.common.charts.fchart.FData;
 import com.jme.common.network.DTRequest;
 import com.jme.common.network.Head;
 import com.jme.common.util.NetWorkUtils;
-import com.jme.common.util.RxBus;
 import com.jme.lsgoldtrade.R;
 import com.jme.lsgoldtrade.base.JMEBaseFragment;
 import com.jme.lsgoldtrade.config.AppConfig;
@@ -27,8 +26,6 @@ import com.jme.lsgoldtrade.util.MarketUtil;
 import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.List;
-
-import rx.Subscription;
 
 public class DeclarationFormFragment extends JMEBaseFragment {
 

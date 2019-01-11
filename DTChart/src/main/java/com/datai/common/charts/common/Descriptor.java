@@ -530,7 +530,9 @@ public class Descriptor {
 
         valueDecimal = new BigDecimal(m);
 
-        if (valueCompare(valueDecimal.abs(), new BigDecimal(10000.0)) == -1) {
+        if (valueCompare(valueDecimal.abs(), new BigDecimal(0)) == 0)
+            result = "0";
+        else if (valueCompare(valueDecimal.abs(), new BigDecimal(10000.0)) == -1) {
             result = formatMoney(m, num);
         } else if ((valueCompare(valueDecimal.abs(), new BigDecimal(10000.0)) == 1
                 || valueCompare(valueDecimal.abs(), new BigDecimal(10000.0)) == 0)

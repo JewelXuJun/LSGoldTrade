@@ -247,7 +247,9 @@ public class MarketUtil {
 
         valueDecimal = new BigDecimal(valueStr);
 
-        if (valueDecimal.abs().compareTo(new BigDecimal(10000.0)) == -1)
+        if (valueDecimal.abs().compareTo(new BigDecimal(0)) == 0)
+            result = "0";
+        else if (valueDecimal.abs().compareTo(new BigDecimal(10000.0)) == -1)
             result = formatValueNum(valueStr, 2);
         else if (valueDecimal.abs().compareTo(new BigDecimal(10000.0)) != -1
                 && valueDecimal.abs().compareTo(new BigDecimal(100000000.0)) == -1)
@@ -388,7 +390,7 @@ public class MarketUtil {
             value = "撤单失败";
         else if (state == 8)
             value = "用户删除";
-        else if (state ==9)
+        else if (state == 9)
             value = "系统删除";
         else if (state == 10)
             value = "委托应答";
