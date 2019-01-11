@@ -58,7 +58,7 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="7"
+                android:layout_weight="1"
                 android:onClick="@{() -> handlers.onClickSortContract()}"
                 android:paddingLeft="@dimen/common_area_margin">
 
@@ -67,8 +67,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
+                    android:drawablePadding="@dimen/common_area_margin_tiny"
                     android:drawableRight="@mipmap/ic_asc"
-                    android:drawablePadding="@dimen/margin_small"
                     android:text="@string/market_contract"
                     android:textColor="@color/color_text_tabhost"
                     android:textSize="@dimen/sp_12" />
@@ -78,16 +78,14 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="8"
+                android:layout_weight="1"
                 android:onClick="@{() -> handlers.onClickSortLastPrice()}">
 
                 <TextView
                     android:id="@+id/tv_last_price"
-                    android:layout_width="wrap_content"
+                    android:layout_width="@dimen/width_market_item"
                     android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:drawablePadding="@dimen/margin_small"
-                    android:paddingLeft="@dimen/common_area_margin_tiny"
+                    android:layout_centerInParent="true"
                     android:text="@string/market_last_price"
                     android:textColor="@color/color_text_tabhost"
                     android:textSize="@dimen/sp_12" />
@@ -97,7 +95,7 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="8"
+                android:layout_weight="1"
                 android:onClick="@{() -> handlers.onClickSortRange()}">
 
                 <TextView
@@ -105,7 +103,6 @@
                     android:layout_width="@dimen/width_market_item"
                     android:layout_height="wrap_content"
                     android:layout_centerInParent="true"
-                    android:drawablePadding="@dimen/margin_small"
                     android:text="@string/market_range"
                     android:textColor="@color/color_text_tabhost"
                     android:textSize="@dimen/sp_12" />
@@ -115,9 +112,9 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="8"
+                android:layout_weight="1"
                 android:onClick="@{() -> handlers.onClickSortVolume()}"
-                android:paddingRight="@dimen/common_page_padding">
+                android:paddingRight="@dimen/margin_small">
 
                 <TextView
                     android:id="@+id/tv_volume"
@@ -125,7 +122,6 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
-                    android:drawablePadding="@dimen/margin_small"
                     android:text="@string/market_volume"
                     android:textColor="@color/color_text_tabhost"
                     android:textSize="@dimen/sp_12" />
@@ -135,19 +131,6 @@
         </LinearLayout>
 
         <include layout="@layout/item_line_vertical" />
-
-        <TextView
-            android:id="@+id/tv_no_data"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="@dimen/margin_no_data"
-            android:drawableTop="@mipmap/ic_no_data"
-            android:drawablePadding="@dimen/common_area_margin_tiny"
-            android:gravity="center|top"
-            android:text="@string/text_no_data"
-            android:textColor="@color/color_text_gray_hint"
-            android:textSize="@dimen/size_normal"
-            android:visibility="gone" />
 
         <com.scwang.smartrefresh.layout.SmartRefreshLayout
             android:id="@+id/swipeRefreshLayout"

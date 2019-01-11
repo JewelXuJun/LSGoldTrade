@@ -108,7 +108,7 @@ public class RateMarketAdapter extends RecyclerView.Adapter<RateMarketAdapter.Vi
             else
                 rateType = new BigDecimal(upDownRate).compareTo(new BigDecimal(0));
 
-            tv_contract.setText(MarketUtil.getContractNameEN(fiveSpeedVo.getContractId()));
+            tv_contract.setText(fiveSpeedVo.getContractId());
             tv_last_price.setText(fiveSpeedVo.getLatestPriceValue());
             tv_last_price.setTextColor(ContextCompat.getColor(context, MarketUtil.getMarketStateColor(rateType)));
             tv_range.setText(MarketUtil.getMarketRangeValue(rateType, fiveSpeedVo.getUpDownValue()));

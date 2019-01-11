@@ -111,7 +111,7 @@ public class MarketDetailActivity extends JMEBaseActivity implements FChart.OnPr
 
         mContractId = getIntent().getStringExtra("ContractId");
 
-        initToolbar(MarketUtil.getContractNameEN(mContractId), true, ContextCompat.getColor(this, R.color.white));
+        initToolbar(mContractId, true, ContextCompat.getColor(this, R.color.white));
         setBackGroundColor(R.color.common_font_stable);
         setBackNavigation(true, R.mipmap.ic_back_white);
 

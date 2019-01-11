@@ -8,6 +8,8 @@ import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.text.TextUtils;
+import android.view.LayoutInflater;
+import android.view.View;
 
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.jme.common.network.DTRequest;
@@ -37,6 +39,7 @@ public class MarketFragment extends JMEBaseFragment implements OnRefreshListener
     private FragmentMarketBinding mBinding;
 
     private MarketAdapter mAdapter;
+    private View mEmptyView;
 
     private List<FiveSpeedVo> mList;
 
@@ -181,126 +184,132 @@ public class MarketFragment extends JMEBaseFragment implements OnRefreshListener
         if (null != drawableVolume)
             drawableVolume.setBounds(0, 0, drawableVolume.getMinimumWidth(), drawableVolume.getMinimumHeight());
         mBinding.tvVolume.setCompoundDrawables(null, null, drawableVolume, null);
-
-        sortList(mList);
     }
 
     private void sortList(List<FiveSpeedVo> list) {
-        if (null == list || 0 == list.size())
-            return;
+        if (null == list || 0 == list.size()) {
+            mAdapter.setEmptyView(getEmptyView());
+        } else {
+            switch (mCurrentSort) {
+                case NONE:
 
-        switch (mCurrentSort) {
-            case NONE:
+                    break;
+                case LETTER_ASC:
+                    Collections.sort(list, (leftValue, rightValue) -> {
+                        if (null == leftValue || null == rightValue)
+                            return 0;
 
-                break;
-            case LETTER_ASC:
-                Collections.sort(list, (leftValue, rightValue) -> {
-                    if (null == leftValue || null == rightValue)
-                        return 0;
+                        Collator collator = Collator.getInstance();
 
-                    Collator collator = Collator.getInstance();
+                        String leftContract = leftValue.getContractId();
+                        String rightContract = rightValue.getContractId();
 
-                    String leftContract = leftValue.getContractId();
-                    String rightContract = rightValue.getContractId();
+                        return collator.getCollationKey(leftContract).compareTo(collator.getCollationKey(rightContract));
+                    });
 
-                    return collator.getCollationKey(leftContract).compareTo(collator.getCollationKey(rightContract));
-                });
+                    break;
+                case LETTER_DESC:
+                    Collections.sort(list, (leftValue, rightValue) -> {
+                        if (null == leftValue || null == rightValue)
+                            return 0;
 
-                break;
-            case LETTER_DESC:
-                Collections.sort(list, (leftValue, rightValue) -> {
-                    if (null == leftValue || null == rightValue)
-                        return 0;
+                        Collator collator = Collator.getInstance();
 
-                    Collator collator = Collator.getInstance();
+                        String leftContract = leftValue.getContractId();
+                        String rightContract = rightValue.getContractId();
 
-                    String leftContract = leftValue.getContractId();
-                    String rightContract = rightValue.getContractId();
+                        return collator.getCollationKey(rightContract).compareTo(collator.getCollationKey(leftContract));
+                    });
 
-                    return collator.getCollationKey(rightContract).compareTo(collator.getCollationKey(leftContract));
-                });
+                    break;
+                case PRICE_ASC:
+                    Collections.sort(list, (leftValue, rightValue) -> {
+                        if (null == leftValue || null == rightValue)
+                            return 0;
 
-                break;
-            case PRICE_ASC:
-                Collections.sort(list, (leftValue, rightValue) -> {
-                    if (null == leftValue || null == rightValue)
-                        return 0;
+                        long leftLastPrice = leftValue.getLatestPrice();
+                        long rightLastPrice = rightValue.getLatestPrice();
 
-                    long leftLastPrice = leftValue.getLatestPrice();
-                    long rightLastPrice = rightValue.getLatestPrice();
+                        return new BigDecimal(leftLastPrice).compareTo(new BigDecimal(rightLastPrice));
+                    });
 
-                    return new BigDecimal(leftLastPrice).compareTo(new BigDecimal(rightLastPrice));
-                });
+                    break;
+                case PRICE_DESC:
+                    Collections.sort(list, (leftValue, rightValue) -> {
+                        if (null == leftValue || null == rightValue)
+                            return 0;
 
-                break;
-            case PRICE_DESC:
-                Collections.sort(list, (leftValue, rightValue) -> {
-                    if (null == leftValue || null == rightValue)
-                        return 0;
+                        long leftLastPrice = leftValue.getLatestPrice();
+                        long rightLastPrice = rightValue.getLatestPrice();
 
-                    long leftLastPrice = leftValue.getLatestPrice();
-                    long rightLastPrice = rightValue.getLatestPrice();
+                        return new BigDecimal(rightLastPrice).compareTo(new BigDecimal(leftLastPrice));
+                    });
 
-                    return new BigDecimal(rightLastPrice).compareTo(new BigDecimal(leftLastPrice));
-                });
+                    break;
+                case RATE_ASC:
+                    Collections.sort(list, (leftValue, rightValue) -> {
+                        if (null == leftValue || null == rightValue)
+                            return 0;
 
-                break;
-            case RATE_ASC:
-                Collections.sort(list, (leftValue, rightValue) -> {
-                    if (null == leftValue || null == rightValue)
-                        return 0;
+                        long leftRate = leftValue.getUpDownRate();
+                        long rightRate = rightValue.getUpDownRate();
 
-                    long leftRate = leftValue.getUpDownRate();
-                    long rightRate = rightValue.getUpDownRate();
+                        return new BigDecimal(leftRate).compareTo(new BigDecimal(rightRate));
+                    });
 
-                    return new BigDecimal(leftRate).compareTo(new BigDecimal(rightRate));
-                });
+                    break;
+                case RATE_DESC:
+                    Collections.sort(list, (leftValue, rightValue) -> {
+                        if (null == leftValue || null == rightValue)
+                            return 0;
 
-                break;
-            case RATE_DESC:
-                Collections.sort(list, (leftValue, rightValue) -> {
-                    if (null == leftValue || null == rightValue)
-                        return 0;
+                        long leftRate = leftValue.getUpDownRate();
+                        long rightRate = rightValue.getUpDownRate();
 
-                    long leftRate = leftValue.getUpDownRate();
-                    long rightRate = rightValue.getUpDownRate();
+                        return new BigDecimal(rightRate).compareTo(new BigDecimal(leftRate));
+                    });
 
-                    return new BigDecimal(rightRate).compareTo(new BigDecimal(leftRate));
-                });
+                    break;
+                case VOLUME_ASC:
+                    Collections.sort(list, (leftValue, rightValue) -> {
+                        if (null == leftValue || null == rightValue)
+                            return 0;
 
-                break;
-            case VOLUME_ASC:
-                Collections.sort(list, (leftValue, rightValue) -> {
-                    if (null == leftValue || null == rightValue)
-                        return 0;
+                        long leftVolume = leftValue.getTurnVolume();
+                        long rightVolume = rightValue.getTurnVolume();
 
-                    long leftVolume = leftValue.getTurnVolume();
-                    long rightVolume = rightValue.getTurnVolume();
+                        return new BigDecimal(leftVolume).compareTo(new BigDecimal(rightVolume));
+                    });
 
-                    return new BigDecimal(leftVolume).compareTo(new BigDecimal(rightVolume));
-                });
+                    break;
+                case VOLUME_DESC:
+                    Collections.sort(list, (leftValue, rightValue) -> {
+                        if (null == leftValue || null == rightValue)
+                            return 0;
 
-                break;
-            case VOLUME_DESC:
-                Collections.sort(list, (leftValue, rightValue) -> {
-                    if (null == leftValue || null == rightValue)
-                        return 0;
+                        long leftVolume = leftValue.getTurnVolume();
+                        long rightRate = rightValue.getTurnVolume();
 
-                    long leftVolume = leftValue.getTurnVolume();
-                    long rightRate = rightValue.getTurnVolume();
+                        return new BigDecimal(rightRate).compareTo(new BigDecimal(leftVolume));
+                    });
 
-                    return new BigDecimal(rightRate).compareTo(new BigDecimal(leftVolume));
-                });
+                    break;
+            }
 
-                break;
+            mActivity.runOnUiThread(() -> mAdapter.setNewData(list));
         }
+    }
 
-        mActivity.runOnUiThread(() -> mAdapter.setNewData(list));
+    private View getEmptyView() {
+        if (null == mEmptyView)
+            mEmptyView = LayoutInflater.from(mContext).inflate(R.layout.layout_empty, null);
+
+        return mEmptyView;
     }
 
     private void getMarket(boolean enable) {
         HashMap<String, String> params = new HashMap<>();
-        params.put("list", "au9999");
+        params.put("list", "");
 
         sendRequest(MarketService.getInstance().getFiveSpeedQuotes, params, enable);
     }
@@ -311,9 +320,9 @@ public class MarketFragment extends JMEBaseFragment implements OnRefreshListener
 
         switch (request.getApi().getName()) {
             case "GetFiveSpeedQuotes":
-                mBinding.swipeRefreshLayout.finishRefresh();
-
                 if (head.isSuccess()) {
+                    mBinding.swipeRefreshLayout.finishRefresh(true);
+
                     try {
                         mList = (List<FiveSpeedVo>) response;
                     } catch (Exception e) {
@@ -323,6 +332,8 @@ public class MarketFragment extends JMEBaseFragment implements OnRefreshListener
                     }
 
                     sortList(mList);
+                } else {
+                    mBinding.swipeRefreshLayout.finishRefresh(false);
                 }
 
                 if (bFlag) {
@@ -362,6 +373,7 @@ public class MarketFragment extends JMEBaseFragment implements OnRefreshListener
                 mCurrentSort = SortUtil.ENUM_SORTS.LETTER_ASC;
 
             setCurrentSortLayout();
+            sortList(mList);
         }
 
         public void onClickSortLastPrice() {
@@ -371,6 +383,7 @@ public class MarketFragment extends JMEBaseFragment implements OnRefreshListener
                 mCurrentSort = SortUtil.ENUM_SORTS.PRICE_ASC;
 
             setCurrentSortLayout();
+            sortList(mList);
         }
 
         public void onClickSortRange() {
@@ -380,6 +393,7 @@ public class MarketFragment extends JMEBaseFragment implements OnRefreshListener
                 mCurrentSort = SortUtil.ENUM_SORTS.RATE_ASC;
 
             setCurrentSortLayout();
+            sortList(mList);
         }
 
         public void onClickSortVolume() {
@@ -389,6 +403,7 @@ public class MarketFragment extends JMEBaseFragment implements OnRefreshListener
                 mCurrentSort = SortUtil.ENUM_SORTS.VOLUME_ASC;
 
             setCurrentSortLayout();
+            sortList(mList);
         }
 
     }

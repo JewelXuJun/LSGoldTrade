@@ -123,7 +123,7 @@ public class MarketDetailLandscapeActivity extends JMEBaseActivity implements FC
         mContractId = getIntent().getStringExtra("ContractId");
         mUnitCode = getIntent().getStringExtra("ChartUnit");
 
-        mBinding.tvName.setText(MarketUtil.getContractNameEN(mContractId));
+        mBinding.tvName.setText(mContractId);
 
         mChart.setUnit(mUnitCode);
     }

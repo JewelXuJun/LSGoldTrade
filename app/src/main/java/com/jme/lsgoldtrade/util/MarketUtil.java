@@ -37,31 +37,6 @@ public class MarketUtil {
         return contractName;
     }
 
-    public static String getContractNameEN(String contractId) {
-        String contractName;
-
-        switch (contractId) {
-            case "白银":
-                contractName = "Ag(T+D)";
-
-                break;
-            case "au9999":
-                contractName = "Au(T+D)";
-
-                break;
-            case "迷你黄金":
-                contractName = "mAu(T+D)";
-
-                break;
-            default:
-                contractName = DEFAULT;
-
-                break;
-        }
-
-        return contractName;
-    }
-
     public static int getMarketStateColor(int type) {
         int color;
 
