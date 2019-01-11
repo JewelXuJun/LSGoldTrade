@@ -353,22 +353,22 @@ public class MarketDetailLandscapeActivity extends JMEBaseActivity implements FC
             return;
 
         if (!bHighlight) {
-            String upDownRate = tenSpeedVo.getUpDownRate();
+            String upDown = tenSpeedVo.getUpDown();
             String highestPrice = tenSpeedVo.getHighestPrice();
             String lowestPrice = tenSpeedVo.getLowestPrice();
             String openPrice = tenSpeedVo.getOpenPrice();
 
             int rateType;
 
-            if (TextUtils.isEmpty(upDownRate))
+            if (TextUtils.isEmpty(upDown))
                 rateType = 0;
             else
-                rateType = new BigDecimal(upDownRate).compareTo(new BigDecimal(0));
+                rateType = new BigDecimal(upDown).compareTo(new BigDecimal(0));
 
             mBinding.layoutLastPrice.setBackground(ContextCompat.getDrawable(this, MarketUtil.getMarketStateBackgroundColor(rateType)));
             mBinding.tvLastPrice.setText(MarketUtil.getValue(tenSpeedVo.getLatestPrice()));
-            mBinding.tvRange.setText(MarketUtil.getMarketRangeValue(rateType, tenSpeedVo.getUpDown()));
-            mBinding.tvRate.setText(MarketUtil.getMarketRateValue(rateType, upDownRate));
+            mBinding.tvRange.setText(MarketUtil.getMarketRangeValue(rateType, upDown));
+            mBinding.tvRate.setText(MarketUtil.getMarketRateValue(rateType, tenSpeedVo.getUpDownRate()));
             mBinding.tvOpen.setText(MarketUtil.getValue(openPrice));
             mBinding.tvOpen.setTextColor(ContextCompat.getColor(this,
                     MarketUtil.getMarketStateColor(TextUtils.isEmpty(openPrice) ? -2 : new BigDecimal(openPrice).compareTo(new BigDecimal(lastSettlePrice)))));

@@ -362,22 +362,22 @@ public class MarketDetailActivity extends JMEBaseActivity implements FChart.OnPr
             return;
 
         if (!bHighlight) {
-            String upDownRate = tenSpeedVo.getUpDownRate();
+            String upDown = tenSpeedVo.getUpDown();
             String highestPrice = tenSpeedVo.getHighestPrice();
             String lowestPrice = tenSpeedVo.getLowestPrice();
 
             int rateType;
 
-            if (TextUtils.isEmpty(upDownRate))
+            if (TextUtils.isEmpty(upDown))
                 rateType = 0;
             else
-                rateType = new BigDecimal(upDownRate).compareTo(new BigDecimal(0));
+                rateType = new BigDecimal(upDown).compareTo(new BigDecimal(0));
 
             setBackGroundColor(MarketUtil.getMarketStateColor(rateType));
 
             mBinding.tvLastPrice.setText(MarketUtil.getValue(tenSpeedVo.getLatestPrice()));
-            mBinding.tvRange.setText(MarketUtil.getMarketRangeValue(rateType, tenSpeedVo.getUpDown()));
-            mBinding.tvRate.setText(MarketUtil.getMarketRateValue(rateType, upDownRate));
+            mBinding.tvRange.setText(MarketUtil.getMarketRangeValue(rateType, upDown));
+            mBinding.tvRate.setText(MarketUtil.getMarketRateValue(rateType, tenSpeedVo.getUpDownRate()));
             mBinding.tvOpen.setText(MarketUtil.getValue(tenSpeedVo.getOpenPrice()));
             mBinding.tvPreclose.setText(MarketUtil.getValue(tenSpeedVo.getLastClosePrice()));
             mBinding.tvTurnVolume.setText(MarketUtil.getVolumeValue(String.valueOf(tenSpeedVo.getTurnover()), false));

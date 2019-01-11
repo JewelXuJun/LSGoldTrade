@@ -134,7 +134,7 @@ public class MarketUtil {
 
         switch (type) {
             case -1:
-                value = rate + "%";
+                value = "-" + rate + "%";
 
                 break;
             case 0:
