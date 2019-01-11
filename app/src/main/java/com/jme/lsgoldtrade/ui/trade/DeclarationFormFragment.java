@@ -14,6 +14,7 @@ import com.datai.common.charts.fchart.FData;
 import com.jme.common.network.DTRequest;
 import com.jme.common.network.Head;
 import com.jme.common.util.NetWorkUtils;
+import com.jme.common.util.RxBus;
 import com.jme.lsgoldtrade.R;
 import com.jme.lsgoldtrade.base.JMEBaseFragment;
 import com.jme.lsgoldtrade.config.AppConfig;
@@ -27,6 +28,8 @@ import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.List;
 
+import rx.Subscription;
+
 public class DeclarationFormFragment extends JMEBaseFragment {
 
     private FragmentDeclarationFormBinding mBinding;
@@ -35,10 +38,11 @@ public class DeclarationFormFragment extends JMEBaseFragment {
     private String[] mTabTitles;
 
     private TabViewPagerAdapter mAdapter;
+    private Subscription mRxbus;
 
     private boolean bVisibleToUser = false;
     private boolean bFlag = true;
-    private String mContractId = "";
+    private String mContractId = "Ag(T+D)";
 
     private Handler mHandler = new Handler() {
         public void handleMessage(Message msg) {
@@ -73,8 +77,6 @@ public class DeclarationFormFragment extends JMEBaseFragment {
     protected void initData(Bundle savedInstanceState) {
         super.initData(savedInstanceState);
 
-        mContractId = "au9999";
-
         mAdapter = new TabViewPagerAdapter(getChildFragmentManager());
 
         initInfoTabs();
@@ -83,6 +85,8 @@ public class DeclarationFormFragment extends JMEBaseFragment {
     @Override
     protected void initListener() {
         super.initListener();
+
+        initRxBus();
     }
 
     @Override
@@ -166,6 +170,21 @@ public class DeclarationFormFragment extends JMEBaseFragment {
         mBinding.tablayout.setSelectedTabIndicatorHeight(4);
         mBinding.tablayout.setupWithViewPager(mBinding.tabViewpager);
         mBinding.tablayout.post(() -> setIndicator(mBinding.tablayout, 30, 30));
+    }
+
+    private void initRxBus() {
+        mRxbus = RxBus.getInstance().toObserverable(RxBus.Message.class).subscribe(message -> {
+            String callType = message.getObject().toString();
+
+            if (TextUtils.isEmpty(callType))
+                return;
+
+            switch (callType) {
+                case Constants.RxBusConst.RxBus_DeclarationFormFragment:
+
+                    break;
+            }
+        });
     }
 
     private long getTimeInterval() {
@@ -294,4 +313,11 @@ public class DeclarationFormFragment extends JMEBaseFragment {
         }
     }
 
+    @Override
+    public void onDetach() {
+        super.onDetach();
+
+        if (!mRxbus.isUnsubscribed())
+            mRxbus.unsubscribe();
+    }
 }

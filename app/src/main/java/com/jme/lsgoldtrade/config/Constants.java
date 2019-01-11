@@ -41,6 +41,7 @@ public class Constants {
         }
 
         public static final String RxBus_TradeFragment = "TradeFragment";
+        public static final String RxBus_DeclarationFormFragment = "DeclarationFormFragment";
     }
 
     public static final class Msg {
