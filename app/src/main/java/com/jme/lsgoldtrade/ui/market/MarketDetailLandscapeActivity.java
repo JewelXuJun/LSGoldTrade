@@ -603,7 +603,7 @@ public class MarketDetailLandscapeActivity extends JMEBaseActivity implements FC
                         e.printStackTrace();
                     }
 
-                    if (null == list)
+                    if (null == list || 0 == list.size())
                         return;
 
                     mTChart.loadTChartData(list);
@@ -624,7 +624,7 @@ public class MarketDetailLandscapeActivity extends JMEBaseActivity implements FC
                         e.printStackTrace();
                     }
 
-                    if (null == list)
+                    if (null == list || 0 == list.size())
                         return;
 
                     KData.Unit unit = mKChart.getUnit();
