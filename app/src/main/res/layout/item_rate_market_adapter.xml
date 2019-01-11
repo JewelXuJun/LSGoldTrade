@@ -7,8 +7,8 @@
     android:background="@color/white"
     android:gravity="center"
     android:orientation="vertical"
-    android:paddingLeft="@dimen/common_area_margin"
-    android:paddingRight="@dimen/common_area_margin">
+    android:paddingLeft="@dimen/margin_middle"
+    android:paddingRight="@dimen/margin_middle">
 
     <TextView
         android:id="@+id/tv_contract"

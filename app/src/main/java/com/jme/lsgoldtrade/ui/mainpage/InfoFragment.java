@@ -121,11 +121,11 @@ public class InfoFragment extends JMEBaseFragment implements BaseQuickAdapter.Re
     }
 
     private void noticepage(boolean enable) {
-        HashMap<String, String> params = new HashMap<>();
+      /*  HashMap<String, String> params = new HashMap<>();
         params.put("pageNo", String.valueOf(mCurrentPage));
         params.put("pageSize", AppConfig.PageSize_10);
 
-        sendRequest(UserService.getInstance().noticepage, params, enable, false, false);
+        sendRequest(UserService.getInstance().noticepage, params, enable, false, false);*/
     }
 
     @Override
