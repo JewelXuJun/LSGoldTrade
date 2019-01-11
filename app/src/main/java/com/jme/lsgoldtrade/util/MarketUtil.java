@@ -95,7 +95,7 @@ public class MarketUtil {
     }
 
     public static String getValue(String value) {
-        return TextUtils.isEmpty(value) ? "- - -" : value;
+        return TextUtils.isEmpty(value) ? DEFAULT : value;
     }
 
     public static String getMarketRangeValue(int type, String range) {
