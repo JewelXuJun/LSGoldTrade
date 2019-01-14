@@ -13,6 +13,7 @@ import android.widget.TabHost;
 import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
+import com.alibaba.android.arouter.launcher.ARouter;
 import com.jme.common.network.DTRequest;
 import com.jme.common.network.Head;
 import com.jme.common.util.RxBus;
@@ -136,7 +137,7 @@ public class MainActivity extends JMEBaseActivity implements TabHost.OnTabChange
 
     @Override
     public boolean onTouch(View view, MotionEvent event) {
-        /*if (event.getAction() == MotionEvent.ACTION_DOWN) {
+        if (event.getAction() == MotionEvent.ACTION_DOWN) {
             if (view.equals(mBinding.tabhost.getTabWidget().getChildAt(MainTab.TRADE.getId()))) {
                 if (!mUser.isLogin()) {
                     ARouter.getInstance()
@@ -146,7 +147,7 @@ public class MainActivity extends JMEBaseActivity implements TabHost.OnTabChange
                     return true;
                 }
             }
-        }*/
+        }
 
         return false;
     }
