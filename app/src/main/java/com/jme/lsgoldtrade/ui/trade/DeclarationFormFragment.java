@@ -111,6 +111,7 @@ public class DeclarationFormFragment extends JMEBaseFragment {
         if (null != mBinding && bVisibleToUser) {
             bFlag = true;
 
+            setContractName();
             getTenSpeedQuotes();
         } else {
             if (null != mHandler)
@@ -128,6 +129,7 @@ public class DeclarationFormFragment extends JMEBaseFragment {
         if (bVisibleToUser) {
             bFlag = true;
 
+            setContractName();
             getTenSpeedQuotes();
         }
     }
@@ -167,6 +169,14 @@ public class DeclarationFormFragment extends JMEBaseFragment {
 
     private long getTimeInterval() {
         return NetWorkUtils.isWifiConnected(mContext) ? AppConfig.TimeInterval_WiFi : AppConfig.TimeInterval_NetWork;
+    }
+
+    private void setContractName() {
+        if (null == mBinding)
+            return;
+
+        if (!mBinding.tvContractName.getText().toString().equals(AppConfig.Select_ContractName))
+            mBinding.tvContractName.setText(AppConfig.Select_ContractName);
     }
 
     private void getTenSpeedQuotes() {

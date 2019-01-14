@@ -68,6 +68,7 @@ public class MarketDetailActivity extends JMEBaseActivity implements FChart.OnPr
     private static final String COUNT_KCHART = "200";
 
     private String mContractId;
+    private String mContractName;
     private boolean bFlag = true;
     private boolean bHighlight = false;
     private boolean bHasMoreKDataFlag = true;
@@ -357,6 +358,7 @@ public class MarketDetailActivity extends JMEBaseActivity implements FChart.OnPr
 
     private void updateMarketData(TenSpeedVo tenSpeedVo) {
         mTenSpeedVo = tenSpeedVo;
+        mContractName = tenSpeedVo.getName();
 
         String lastSettlePrice = tenSpeedVo.getLastSettlePrice();
 
@@ -672,6 +674,7 @@ public class MarketDetailActivity extends JMEBaseActivity implements FChart.OnPr
 
         public void onClickDeclarationForm() {
             AppConfig.Select_ContractId = mContractId;
+            AppConfig.Select_ContractName = mContractName;
 
             RxBus.getInstance().post(Constants.RxBusConst.RxBus_TradeFragment, mContractId);
 

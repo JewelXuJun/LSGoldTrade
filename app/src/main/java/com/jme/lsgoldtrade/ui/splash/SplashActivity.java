@@ -38,6 +38,7 @@ public class SplashActivity extends JMEBaseActivity {
         AppConfig.TimeInterval_NetWork = SharedPreUtils.getLong(this, SharedPreUtils.TimeInterval_NetWork, AppConfig.Second5);
         AppConfig.TimeInterval_WiFi = SharedPreUtils.getLong(this, SharedPreUtils.TimeInterval_WiFi, AppConfig.Second2);
         AppConfig.Select_ContractId = "Ag(T+D)";
+        AppConfig.Select_ContractName = "白银延期";
     }
 
     @Override

@@ -44,14 +44,14 @@
                         android:orientation="horizontal">
 
                         <TextView
-                            android:id="@+id/tv_contract"
+                            android:id="@+id/tv_contract_name"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:layout_weight="1"
                             android:gravity="center"
                             android:paddingLeft="@dimen/common_page_margin"
                             android:textColor="@color/color_toolbar_blue"
-                            android:textSize="@dimen/common_font_size" />
+                            android:textSize="@dimen/sp_16" />
 
                         <include layout="@layout/item_line_horizontal" />
 
