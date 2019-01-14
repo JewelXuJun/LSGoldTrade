@@ -10,15 +10,17 @@ public class UserInfoVo {
      * "forceChangePwd":1, // 2-无需更改密码 1-需要更改密码
      * "tradeName": "张三"
      * "mobile": "138****5915"
+     * "accountId": 2,
+     * "account": "131****930"
      */
 
     private String traderId;
 
     private String token;
 
-    private String account;
-
     private String lastIP;
+
+    private String lastLoginTime;
 
     private int forceChangePwd;
 
@@ -26,13 +28,9 @@ public class UserInfoVo {
 
     private String mobile;
 
-    public String getToken() {
-        return token;
-    }
+    private String accountId;
 
-    public void setToken(String token) {
-        this.token = token;
-    }
+    private String account;
 
     public String getTraderId() {
         return traderId;
@@ -42,12 +40,12 @@ public class UserInfoVo {
         this.traderId = traderId;
     }
 
-    public String getAccount() {
-        return account;
+    public String getToken() {
+        return token;
     }
 
-    public void setAccount(String account) {
-        this.account = account;
+    public void setToken(String token) {
+        this.token = token;
     }
 
     public String getLastIP() {
@@ -56,6 +54,14 @@ public class UserInfoVo {
 
     public void setLastIP(String lastIP) {
         this.lastIP = lastIP;
+    }
+
+    public String getLastLoginTime() {
+        return lastLoginTime;
+    }
+
+    public void setLastLoginTime(String lastLoginTime) {
+        this.lastLoginTime = lastLoginTime;
     }
 
     public int getForceChangePwd() {
@@ -80,5 +86,21 @@ public class UserInfoVo {
 
     public void setMobile(String mobile) {
         this.mobile = mobile;
+    }
+
+    public String getAccountId() {
+        return accountId;
+    }
+
+    public void setAccountId(String accountId) {
+        this.accountId = accountId;
+    }
+
+    public String getAccount() {
+        return account;
+    }
+
+    public void setAccount(String account) {
+        this.account = account;
     }
 }

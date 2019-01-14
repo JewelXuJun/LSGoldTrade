@@ -13,6 +13,7 @@ public class User {
     private UserInfoVo mUserInfoVo;
 
     private String mToken = "";
+    private String mAccountID = "";
 
     public static User getInstance() {
         if (null == mUser)
@@ -28,6 +29,7 @@ public class User {
         mUserInfoVo = userInfoVo;
 
         mToken = userInfoVo.getToken();
+        mAccountID = userInfoVo.getAccountId();
     }
 
     public void logout() {
@@ -46,4 +48,10 @@ public class User {
     public String getToken() {
         return mToken;
     }
+
+
+    public String getAccountID() {
+        return mAccountID;
+    }
+
 }
