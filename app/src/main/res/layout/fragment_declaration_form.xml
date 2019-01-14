@@ -185,8 +185,7 @@
 
                     </LinearLayout>
 
-                    <RadioGroup
-                        android:id="@+id/radio_group_price"
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/common_item_height_middle"
                         android:layout_marginLeft="@dimen/common_area_margin_tiny"
@@ -195,8 +194,8 @@
                         android:gravity="center"
                         android:orientation="horizontal">
 
-                        <RadioButton
-                            android:id="@+id/radio_rival_price"
+                        <Button
+                            android:id="@+id/btn_rival_price"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:layout_marginLeft="@dimen/common_area_margin_tiny"
@@ -206,12 +205,13 @@
                             android:button="@null"
                             android:checked="false"
                             android:gravity="center"
+                            android:onClick="@{() -> handlers.onClickRivalPrice()}"
                             android:text="@string/market_rival_price"
                             android:textColor="@drawable/selector_text_checked"
                             android:textSize="@dimen/sp_12" />
 
-                        <RadioButton
-                            android:id="@+id/radio_queuing_price"
+                        <Button
+                            android:id="@+id/btn_queuing_price"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:layout_marginLeft="@dimen/common_area_margin_tiny"
@@ -221,11 +221,12 @@
                             android:button="@null"
                             android:checked="false"
                             android:gravity="center"
+                            android:onClick="@{() -> handlers.onClickQueuingPrice()}"
                             android:text="@string/market_queuing_price"
                             android:textColor="@drawable/selector_text_checked"
                             android:textSize="@dimen/sp_12" />
 
-                        <RadioButton
+                        <Button
                             android:id="@+id/radio_last_price"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
@@ -236,11 +237,12 @@
                             android:button="@null"
                             android:checked="false"
                             android:gravity="center"
+                            android:onClick="@{() -> handlers.onClickLastPrice()}"
                             android:text="@string/market_last_price"
                             android:textColor="@drawable/selector_text_checked"
                             android:textSize="@dimen/sp_12" />
 
-                    </RadioGroup>
+                    </LinearLayout>
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -380,7 +382,6 @@
                                 android:id="@+id/tv_equal_more"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="@string/text_no_data_default"
                                 android:textColor="@color/white"
                                 android:textSize="@dimen/size_normal" />
 

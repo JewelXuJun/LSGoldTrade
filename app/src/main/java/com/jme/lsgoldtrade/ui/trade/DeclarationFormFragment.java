@@ -317,6 +317,18 @@ public class DeclarationFormFragment extends JMEBaseFragment {
 
         }
 
+        public void onClickRivalPrice() {
+
+        }
+
+        public void onClickQueuingPrice() {
+
+        }
+
+        public void onClickLastPrice() {
+
+        }
+
         public void onClickAmountMinus() {
 
         }
