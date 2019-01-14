@@ -21,12 +21,15 @@ import com.jme.lsgoldtrade.R;
 import com.jme.lsgoldtrade.base.JMEBaseActivity;
 import com.jme.lsgoldtrade.config.Constants;
 import com.jme.lsgoldtrade.databinding.ActivityAccountLoginBinding;
+import com.jme.lsgoldtrade.domain.ContractInfoVo;
 import com.jme.lsgoldtrade.domain.ImageVerifyCodeVo;
 import com.jme.lsgoldtrade.domain.UserInfoVo;
+import com.jme.lsgoldtrade.service.TradeService;
 import com.jme.lsgoldtrade.service.UserService;
 import com.jme.lsgoldtrade.util.ValueUtils;
 
 import java.util.HashMap;
+import java.util.List;
 
 @Route(path = Constants.ARouterUriConst.ACCOUNTLOGIN)
 public class AccountLoginActivity extends JMEBaseActivity {
@@ -144,6 +147,13 @@ public class AccountLoginActivity extends JMEBaseActivity {
         sendRequest(UserService.getInstance().kaptcha, new HashMap<>(), false);
     }
 
+    private void getContractInfo() {
+        HashMap<String, String> parmas = new HashMap<>();
+        parmas.put("contractId", "");
+
+        sendRequest(TradeService.getInstance().contractInfo, parmas, true);
+    }
+
     @Override
     protected void DataReturn(DTRequest request, Head head, Object response) {
         super.DataReturn(request, head, response);
@@ -166,10 +176,10 @@ public class AccountLoginActivity extends JMEBaseActivity {
 
                     mUser.login(userInfoVo);
 
+                    getContractInfo();
+
                     showShortToast(R.string.login_success);
                     SharedPreUtils.setString(this, SharedPreUtils.Login_Account, mBinding.etAccount.getText().toString());
-
-                    finish();
                 } else {
                     kaptcha();
                 }
@@ -207,6 +217,24 @@ public class AccountLoginActivity extends JMEBaseActivity {
 
                     mKaptchaId = imageVerifyCodeVo.getKaptchaId();
                 }
+
+                break;
+            case "ContractInfo":
+                if (head.isSuccess()) {
+                    List<ContractInfoVo> list;
+
+                    try{
+                        list = (List<ContractInfoVo>) response;
+                    } catch (Exception e) {
+                        list = null;
+
+                        e.printStackTrace();
+                    }
+
+                    mContract.setContractList(list);
+                }
+
+                finish();
 
                 break;
         }
