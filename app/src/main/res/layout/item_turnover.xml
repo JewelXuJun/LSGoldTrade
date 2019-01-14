@@ -13,7 +13,7 @@
         android:layout_weight="1"
         android:paddingLeft="@dimen/common_page_padding"
         android:textColor="@color/color_text_black"
-        android:textSize="@dimen/sp_14" />
+        android:textSize="@dimen/size_middle" />
 
     <TextView
         android:id="@+id/tv_amount"
@@ -21,8 +21,9 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:gravity="right"
+        android:paddingRight="@dimen/common_page_padding"
         android:textColor="@color/color_text_black"
-        android:textSize="@dimen/sp_14" />
+        android:textSize="@dimen/size_middle" />
 
     <TextView
         android:id="@+id/tv_type"
@@ -31,7 +32,7 @@
         android:layout_weight="1"
         android:gravity="center"
         android:textColor="@color/color_text_black"
-        android:textSize="@dimen/sp_14" />
+        android:textSize="@dimen/size_middle" />
 
     <TextView
         android:id="@+id/tv_state"
@@ -41,6 +42,6 @@
         android:gravity="right"
         android:paddingRight="@dimen/common_page_padding"
         android:textColor="@color/color_text_black"
-        android:textSize="@dimen/sp_14" />
+        android:textSize="@dimen/size_middle" />
 
 </LinearLayout>

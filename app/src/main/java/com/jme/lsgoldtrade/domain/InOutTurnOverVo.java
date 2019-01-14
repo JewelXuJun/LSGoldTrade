@@ -5,64 +5,74 @@ import java.util.List;
 
 public class InOutTurnOverVo implements Serializable {
 
-    private String searchKey;
+    private boolean hasNext;
 
-    private List<TurnOverBean> turnover;
+    private String pagingKey;
 
-    public String getSearchKey() {
-        return searchKey;
+    private List<TurnOverBean> list;
+
+    public boolean isHasNext() {
+        return hasNext;
     }
 
-    public void setSearchKey(String searchKey) {
-        this.searchKey = searchKey;
+    public void setHasNext(boolean hasNext) {
+        this.hasNext = hasNext;
     }
 
-    public List<TurnOverBean> getTurnover() {
-        return turnover;
+    public String getPagingKey() {
+        return pagingKey;
     }
 
-    public void setTurnover(List<TurnOverBean> turnover) {
-        this.turnover = turnover;
+    public void setPagingKey(String pagingKey) {
+        this.pagingKey = pagingKey;
+    }
+
+    public List<TurnOverBean> getList() {
+        return list;
+    }
+
+    public void setList(List<TurnOverBean> list) {
+        this.list = list;
     }
 
     public static class TurnOverBean implements Serializable {
         /**
-         * "serialNo":"02005000095",
-         * "direction":0,
-         * "tradeDate":"2017-01-01",
-         * "tradeTime":"10:10:10",
-         * "depositFlag":0,
-         * "amount":10000,
-         * "summary":"客户出金"
+         * "bankSerialNo": "19030113344399928500454",
+         * "direction": 1,
+         * "tradeDate": "2019-03-01",
+         * "tradeTime": "13.34.43",
+         * "depositFlag": 1,
+         * "amount": 100,
+         * "summary": "出金"
          */
 
-        private String serialNo;
+        private String bankSerialNo;
 
-        private String direction;
+        private int direction;
 
         private String tradeDate;
 
         private String tradeTime;
 
-        private String depositFlag;
+        private int depositFlag;
 
         private long amount;
 
         private String summary;
 
-        public String getSerialNo() {
-            return serialNo;
+        public String getBankSerialNo() {
+            return bankSerialNo;
         }
 
-        public void setSerialNo(String serialNo) {
-            this.serialNo = serialNo;
+        public void setBankSerialNo(String bankSerialNo) {
+            this.bankSerialNo = bankSerialNo;
         }
 
-        public String getDirection() {
+        public int getDirection() {
             return direction;
         }
 
-        public void setDirection(String direction) {
+        public void setDirection(int direction) {
             this.direction = direction;
         }
 
@@ -82,11 +92,11 @@ public class InOutTurnOverVo implements Serializable {
             this.tradeTime = tradeTime;
         }
 
-        public String getDepositFlag() {
+        public int getDepositFlag() {
             return depositFlag;
         }
 
-        public void setDepositFlag(String depositFlag) {
+        public void setDepositFlag(int depositFlag) {
             this.depositFlag = depositFlag;
         }
 

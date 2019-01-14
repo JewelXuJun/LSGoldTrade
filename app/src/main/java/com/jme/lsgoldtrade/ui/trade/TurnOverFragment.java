@@ -5,7 +5,6 @@ import android.app.DatePickerDialog;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.LinearLayoutManager;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 
@@ -23,7 +22,6 @@ import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 
 import java.util.Calendar;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -36,13 +34,14 @@ public class TurnOverFragment extends JMEBaseFragment implements OnRefreshListen
     private View mEmptyView;
 
     private boolean bVisibleToUser = false;
+    private boolean bHasNext = false;
     private long mStartTime = 0;
     private long mEndTime = 0;
     private int mYear;
     private int mMonth;
     private int mDayOfMonth;
     private int mCurrentPage = 1;
-    private String mSearchKey = "";
+    private String mPagingKey = "";
 
     private static final int TIME_START = 0;
     private static final int TIME_END = 1;
@@ -63,7 +62,7 @@ public class TurnOverFragment extends JMEBaseFragment implements OnRefreshListen
     protected void initData(Bundle savedInstanceState) {
         super.initData(savedInstanceState);
 
-        mAdapter = new TurnOverAdapter(R.layout.item_turnover, null);
+        mAdapter = new TurnOverAdapter(mContext, R.layout.item_turnover, null);
 
         mBinding.recyclerView.setHasFixedSize(false);
         mBinding.recyclerView.addItemDecoration(new MarginDividerItemDecoration(mContext, LinearLayoutManager.VERTICAL));
@@ -77,8 +76,8 @@ public class TurnOverFragment extends JMEBaseFragment implements OnRefreshListen
     protected void initListener() {
         super.initListener();
 
-        mAdapter.setOnLoadMoreListener(this, mBinding.recyclerView);
         mBinding.swipeRefreshLayout.setOnRefreshListener(this);
+        mAdapter.setOnLoadMoreListener(this, mBinding.recyclerView);
     }
 
     @Override
@@ -94,16 +93,16 @@ public class TurnOverFragment extends JMEBaseFragment implements OnRefreshListen
 
         bVisibleToUser = isVisibleToUser;
 
-       /* if (isVisibleToUser && null != mBinding)
-            initTranspage(true);*/
+        if (bVisibleToUser && null != mBinding)
+            initTranspage(true);
     }
 
     @Override
     public void onResume() {
         super.onResume();
 
-      /*  if (bVisibleToUser)
-            initTranspage(true);*/
+        if (bVisibleToUser)
+            initTranspage(true);
     }
 
     private void initDate() {
@@ -154,8 +153,9 @@ public class TurnOverFragment extends JMEBaseFragment implements OnRefreshListen
 
         if (startTime <= mEndTime) {
             mStartTime = startTime;
-
             mBinding.tvStartTime.setText(DateUtil.dateToString(mStartTime));
+
+            initTranspage(true);
         } else {
             showShortToast(R.string.trade_start_time_error);
         }
@@ -166,8 +166,9 @@ public class TurnOverFragment extends JMEBaseFragment implements OnRefreshListen
 
         if (endTime >= mStartTime) {
             mEndTime = endTime;
-
             mBinding.tvEndTime.setText(DateUtil.dateToString(mEndTime));
+
+            initTranspage(true);
         } else {
             showShortToast(R.string.trade_end_time_error);
         }
@@ -175,7 +176,7 @@ public class TurnOverFragment extends JMEBaseFragment implements OnRefreshListen
 
     private void initTranspage(boolean enablle) {
         mCurrentPage = 1;
-        mSearchKey = "";
+        mPagingKey = "";
 
         transpage(enablle);
     }
@@ -194,9 +195,10 @@ public class TurnOverFragment extends JMEBaseFragment implements OnRefreshListen
 
     private void transpage(boolean enable) {
         HashMap<String, String> params = new HashMap<>();
-        params.put("beginDate", DateUtil.dateToStringWithNone(mStartTime));
-        params.put("endDate", DateUtil.dateToStringWithNone(mEndTime));
-        params.put("searchKey", mSearchKey);
+        params.put("accountId", mUser.getAccountID());
+        params.put("beginDate", DateUtil.dateToString(mStartTime));
+        params.put("endDate", DateUtil.dateToString(mEndTime));
+        params.put("pagingKey", mPagingKey);
 
         sendRequest(TradeService.getInstance().transpage, params, enable);
     }
@@ -221,14 +223,22 @@ public class TurnOverFragment extends JMEBaseFragment implements OnRefreshListen
                     if (null == inOutTurnOverVo) {
                         setEmptyData();
                     } else {
-                        mSearchKey = inOutTurnOverVo.getSearchKey();
-                        List<InOutTurnOverVo.TurnOverBean> turnOverBeanList = inOutTurnOverVo.getTurnover();
+                        bHasNext = inOutTurnOverVo.isHasNext();
+                        mPagingKey = inOutTurnOverVo.getPagingKey();
+                        List<InOutTurnOverVo.TurnOverBean> turnOverBeanList = inOutTurnOverVo.getList();
 
-                        if (TextUtils.isEmpty(mSearchKey)) {
+                        if (bHasNext) {
+                            if (mCurrentPage == 1)
+                                mAdapter.setNewData(turnOverBeanList);
+                            else
+                                mAdapter.addData(turnOverBeanList);
+
+                            mAdapter.loadMoreComplete();
+                            mBinding.swipeRefreshLayout.finishRefresh(true);
+                        } else {
                             if (mCurrentPage == 1) {
                                 if (null == turnOverBeanList || 0 == turnOverBeanList.size()) {
                                     mAdapter.setEmptyView(getEmptyView());
-                                    mBinding.swipeRefreshLayout.finishRefresh(true);
                                 } else {
                                     mAdapter.setNewData(turnOverBeanList);
                                     mAdapter.loadMoreComplete();
@@ -237,13 +247,8 @@ public class TurnOverFragment extends JMEBaseFragment implements OnRefreshListen
                                 mAdapter.addData(turnOverBeanList);
                                 mAdapter.loadMoreComplete();
                             }
-                        } else {
-                            if (mCurrentPage == 1)
-                                mAdapter.setNewData(turnOverBeanList);
-                            else
-                                mAdapter.addData(turnOverBeanList);
 
-                            mAdapter.loadMoreComplete();
+                            mBinding.swipeRefreshLayout.finishRefresh(true);
                         }
                     }
                 } else {
@@ -257,12 +262,12 @@ public class TurnOverFragment extends JMEBaseFragment implements OnRefreshListen
     @Override
     public void onLoadMoreRequested() {
         mBinding.recyclerView.postDelayed(() -> {
-            if (TextUtils.isEmpty(mSearchKey)) {
-                mAdapter.loadMoreEnd();
-            } else {
+            if (bHasNext) {
                 mCurrentPage++;
 
                 transpage(true);
+            } else {
+                mAdapter.loadMoreEnd();
             }
         }, 0);
     }
@@ -288,8 +293,8 @@ public class TurnOverFragment extends JMEBaseFragment implements OnRefreshListen
                     setEndTime(year, month, dayOfMonth);
             }, mYear, mMonth, mDayOfMonth);
 
-            if (android.os.Build.VERSION.SDK_INT >= 11)
-                mDatePickerDialog.getDatePicker().setMaxDate(new Date().getTime());
+          /*  if (android.os.Build.VERSION.SDK_INT >= 11)
+                mDatePickerDialog.getDatePicker().setMaxDate(new Date().getTime());*/
 
             mDatePickerDialog.show();
         }
