@@ -58,6 +58,22 @@ public class Contract {
         return contractIDListStr;
     }
 
+    public int getContractIDPosition(String contractId) {
+        if (null == mList || 0 == mList.size() || TextUtils.isEmpty(contractId))
+            return 0;
+
+        for (int i = 0; i < mList.size(); i++) {
+            ContractInfoVo contractInfoVo = mList.get(i);
+
+            if (null != contractInfoVo) {
+                if (contractId.equals(contractInfoVo.getContractId()))
+                    return i;
+            }
+        }
+
+        return 0;
+    }
+
     public ContractInfoVo getContractInfo(String contractId) {
         if (null == mList || 0 == mList.size() || TextUtils.isEmpty(contractId))
             return null;
