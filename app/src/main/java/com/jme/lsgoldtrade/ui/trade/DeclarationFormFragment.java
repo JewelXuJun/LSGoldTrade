@@ -176,7 +176,7 @@ public class DeclarationFormFragment extends JMEBaseFragment {
 
     private void initContractNameValue() {
         if (null != mContract) {
-            String listStr = mContract.getContractIDListStr();
+            String listStr = mContract.getContractNameListStr();
 
             if (!TextUtils.isEmpty(listStr))
                 mContractNames = listStr.split(",");

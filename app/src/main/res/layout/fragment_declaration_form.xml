@@ -99,7 +99,7 @@
                                 android:layout_marginLeft="@dimen/common_area_margin_tiny"
                                 android:text="@string/text_no_data_default"
                                 android:textColor="@color/common_font_decrease"
-                                android:textSize="@dimen/common_font_size__tiny" />
+                                android:textSize="@dimen/common_font_size_exiguity" />
 
                         </LinearLayout>
 
@@ -125,7 +125,7 @@
                                 android:layout_marginLeft="@dimen/common_area_margin_tiny"
                                 android:text="@string/text_no_data_default"
                                 android:textColor="@color/common_font_increase"
-                                android:textSize="@dimen/common_font_size__tiny" />
+                                android:textSize="@dimen/common_font_size_exiguity" />
 
                         </LinearLayout>
 
@@ -435,7 +435,7 @@
                             android:paddingLeft="@dimen/common_page_padding"
                             android:text="@string/text_no_data_default"
                             android:textColor="@color/color_text_black"
-                            android:textSize="@dimen/size_tiny" />
+                            android:textSize="@dimen/size_exiguity" />
 
                         <TextView
                             android:id="@+id/tv_amount"
@@ -446,7 +446,7 @@
                             android:paddingRight="@dimen/margin_tiny"
                             android:text="@string/text_no_data_default"
                             android:textColor="@color/color_text_black"
-                            android:textSize="@dimen/size_tiny" />
+                            android:textSize="@dimen/size_exiguity" />
 
                     </LinearLayout>
 

@@ -149,7 +149,7 @@
                                     android:layout_height="wrap_content"
                                     android:text="@string/market_open"
                                     android:textColor="@color/white"
-                                    android:textSize="@dimen/common_font_size__tiny" />
+                                    android:textSize="@dimen/common_font_size_exiguity" />
 
                                 <TextView
                                     android:id="@+id/tv_open"
@@ -172,7 +172,7 @@
                                     android:layout_height="wrap_content"
                                     android:text="@string/market_preclose"
                                     android:textColor="@color/white"
-                                    android:textSize="@dimen/common_font_size__tiny" />
+                                    android:textSize="@dimen/common_font_size_exiguity" />
 
                                 <TextView
                                     android:id="@+id/tv_preclose"
@@ -204,7 +204,7 @@
                                     android:layout_height="wrap_content"
                                     android:text="@string/market_turn_volume"
                                     android:textColor="@color/white"
-                                    android:textSize="@dimen/common_font_size__tiny" />
+                                    android:textSize="@dimen/common_font_size_exiguity" />
 
                                 <TextView
                                     android:id="@+id/tv_turn_volume"
@@ -227,7 +227,7 @@
                                     android:layout_height="wrap_content"
                                     android:text="@string/market_volume"
                                     android:textColor="@color/white"
-                                    android:textSize="@dimen/common_font_size__tiny" />
+                                    android:textSize="@dimen/common_font_size_exiguity" />
 
                                 <TextView
                                     android:id="@+id/tv_volume"
@@ -266,7 +266,7 @@
                             android:layout_gravity="center"
                             android:text="@string/text_no_data_default"
                             android:textColor="@color/color_text_tabhost"
-                            android:textSize="@dimen/common_font_size__tiny" />
+                            android:textSize="@dimen/common_font_size_exiguity" />
 
                     </LinearLayout>
 
@@ -288,7 +288,7 @@
                                 android:layout_height="wrap_content"
                                 android:text="@string/market_high"
                                 android:textColor="@color/color_text_tabhost"
-                                android:textSize="@dimen/common_font_size__tiny" />
+                                android:textSize="@dimen/common_font_size_exiguity" />
 
                             <TextView
                                 android:id="@+id/tv_high"
@@ -297,7 +297,7 @@
                                 android:layout_marginLeft="@dimen/common_area_margin_tiny"
                                 android:text="@string/text_no_data_default"
                                 android:textColor="@color/common_font_stable"
-                                android:textSize="@dimen/common_font_size__tiny" />
+                                android:textSize="@dimen/common_font_size_exiguity" />
 
                         </LinearLayout>
 
@@ -312,7 +312,7 @@
                                 android:layout_height="wrap_content"
                                 android:text="@string/market_low"
                                 android:textColor="@color/color_text_tabhost"
-                                android:textSize="@dimen/common_font_size__tiny" />
+                                android:textSize="@dimen/common_font_size_exiguity" />
 
                             <TextView
                                 android:id="@+id/tv_low"
@@ -321,7 +321,7 @@
                                 android:layout_marginLeft="@dimen/common_area_margin_tiny"
                                 android:text="@string/text_no_data_default"
                                 android:textColor="@color/common_font_stable"
-                                android:textSize="@dimen/common_font_size__tiny" />
+                                android:textSize="@dimen/common_font_size_exiguity" />
 
                         </LinearLayout>
 

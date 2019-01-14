@@ -42,7 +42,7 @@
                 android:paddingRight="@dimen/common_page_padding"
                 android:paddingBottom="@dimen/margin_tiny_small"
                 android:textColor="@color/gray"
-                android:textSize="@dimen/common_font_size__tiny" />
+                android:textSize="@dimen/common_font_size_exiguity" />
 
         </FrameLayout>
 

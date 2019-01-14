@@ -8,7 +8,7 @@
     <dimen name="common_font_size_small">16sp</dimen>
     <dimen name="common_font_size_tiny">14sp</dimen>
     <dimen name="common_font_size_minimum">12sp</dimen>
-    <dimen name="common_font_size__tiny">10sp</dimen>
+    <dimen name="common_font_size_exiguity">10sp</dimen>
 
     <!--整个界面中，上下左右默认预留的边距-->
     <dimen name="common_page_margin">10dp</dimen>

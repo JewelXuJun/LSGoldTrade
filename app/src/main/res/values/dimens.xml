@@ -54,6 +54,7 @@
     <dimen name="margin_big">40dp</dimen>
     <dimen name="margin_large">60dp</dimen>
 
+    <dimen name="size_exiguity">8sp</dimen>
     <dimen name="size_tiny">9sp</dimen>
     <dimen name="size_small">11sp</dimen>
     <dimen name="size_middle">13sp</dimen>
