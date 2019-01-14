@@ -13,7 +13,7 @@ public class User {
     private UserInfoVo mUserInfoVo;
 
     private String mToken = "";
-    private String mAccountID = "";
+    private long mAccountID;
 
     public static User getInstance() {
         if (null == mUser)
@@ -49,8 +49,7 @@ public class User {
         return mToken;
     }
 
-
-    public String getAccountID() {
+    public long getAccountID() {
         return mAccountID;
     }
 

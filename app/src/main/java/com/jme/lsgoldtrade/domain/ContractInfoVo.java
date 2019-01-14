@@ -5,61 +5,61 @@ import java.io.Serializable;
 public class ContractInfoVo implements Serializable {
 
     /**
-     * "contractId":"au9999",
-     * "name":"测试黄金",
-     * "marketId":1,
-     * "tradingLimit":0,
-     * "lowestQuantity":10,
-     * "highestQuantity":100,
-     * "unitHand": 1000,
+     * "contractId": "Au(T+D)",
+     * "contractType": 1,
+     * "name": "黄金延期",
+     * "minOrderQty": 1,
+     * "maxOrderQty": 200,
+     * "handWeight": 1000000000,
      * "priceUnit": 0,
-     * "tickSize": 1,
-     * "bankFeeRate": 100,
-     * "exchangeFeeRate": 80,
-     * "deliveryFreezeRate": 80,
-     * "midFreezeRate": 80,
-     * "minimumDeliveryNumber":1,
-     * "banklongMarginRate":5000,
-     * "bankshortMarginRate":5000,
-     * "exlongMarginRate":5000,
-     * "exshortMarginRate":5000
+     * "minPriceMove": 1,
+     * "bankFeeRate": 20000,
+     * "exchangeFeeRate": 60000,
+     * "deliveryFreezeRate": 300,
+     * "midFreezeRate": 200,
+     * "minDeliveryQty": 1,
+     * "displayOrder": 1,
+     * "bankLongMarginRate": 900,
+     * "exLongMarginRate": 600,
+     * "bankShortMarginRate": 900,
+     * "exShortMarginRate": 600
      */
 
     private String contractId;
 
+    private int contractType;
+
     private String name;
 
-    private int marketId;
+    private int minOrderQty;
 
-    private int tradingLimit;
+    private int maxOrderQty;
 
-    private long lowestQuantity;
-
-    private long highestQuantity;
-
-    private long unitHand;
+    private long handWeight;
 
     private int priceUnit;
 
-    private int tickSize;
+    private long minPriceMove;
 
-    private float bankFeeRate;
+    private long bankFeeRate;
 
-    private float exchangeFeeRate;
+    private long exchangeFeeRate;
 
-    private float deliveryFreezeRate;
+    private long deliveryFreezeRate;
 
-    private float midFreezeRate;
+    private int midFreezeRate;
 
-    private long minimumDeliveryNumber;
+    private int minDeliveryQty;
 
-    private float banklongMarginRate;
+    private int displayOrder;
 
-    private float bankshortMarginRate;
+    private int bankLongMarginRate;
 
-    private float exlongMarginRate;
+    private int exLongMarginRate;
 
-    private long exshortMarginRate;
+    private int bankShortMarginRate;
+
+    private int exShortMarginRate;
 
     public String getContractId() {
         return contractId;
@@ -67,6 +67,14 @@ public class ContractInfoVo implements Serializable {
 
     public void setContractId(String contractId) {
         this.contractId = contractId;
+    }
+
+    public int getContractType() {
+        return contractType;
+    }
+
+    public void setContractType(int contractType) {
+        this.contractType = contractType;
     }
 
     public String getName() {
@@ -77,44 +85,28 @@ public class ContractInfoVo implements Serializable {
         this.name = name;
     }
 
-    public int getMarketId() {
-        return marketId;
+    public int getMinOrderQty() {
+        return minOrderQty;
     }
 
-    public void setMarketId(int marketId) {
-        this.marketId = marketId;
+    public void setMinOrderQty(int minOrderQty) {
+        this.minOrderQty = minOrderQty;
     }
 
-    public int getTradingLimit() {
-        return tradingLimit;
+    public int getMaxOrderQty() {
+        return maxOrderQty;
     }
 
-    public void setTradingLimit(int tradingLimit) {
-        this.tradingLimit = tradingLimit;
+    public void setMaxOrderQty(int maxOrderQty) {
+        this.maxOrderQty = maxOrderQty;
     }
 
-    public long getLowestQuantity() {
-        return lowestQuantity;
+    public long getHandWeight() {
+        return handWeight;
     }
 
-    public void setLowestQuantity(long lowestQuantity) {
-        this.lowestQuantity = lowestQuantity;
-    }
-
-    public long getHighestQuantity() {
-        return highestQuantity;
-    }
-
-    public void setHighestQuantity(long highestQuantity) {
-        this.highestQuantity = highestQuantity;
-    }
-
-    public long getUnitHand() {
-        return unitHand;
-    }
-
-    public void setUnitHand(long unitHand) {
-        this.unitHand = unitHand;
+    public void setHandWeight(long handWeight) {
+        this.handWeight = handWeight;
     }
 
     public int getPriceUnit() {
@@ -125,83 +117,92 @@ public class ContractInfoVo implements Serializable {
         this.priceUnit = priceUnit;
     }
 
-    public int getTickSize() {
-        return tickSize;
+    public long getMinPriceMove() {
+        return minPriceMove;
     }
 
-    public void setTickSize(int tickSize) {
-        this.tickSize = tickSize;
+    public void setMinPriceMove(long minPriceMove) {
+        this.minPriceMove = minPriceMove;
     }
 
-    public float getBankFeeRate() {
+    public long getBankFeeRate() {
         return bankFeeRate;
     }
 
-    public void setBankFeeRate(float bankFeeRate) {
+    public void setBankFeeRate(long bankFeeRate) {
         this.bankFeeRate = bankFeeRate;
     }
 
-    public float getExchangeFeeRate() {
+    public long getExchangeFeeRate() {
         return exchangeFeeRate;
     }
 
-    public void setExchangeFeeRate(float exchangeFeeRate) {
+    public void setExchangeFeeRate(long exchangeFeeRate) {
         this.exchangeFeeRate = exchangeFeeRate;
     }
 
-    public float getDeliveryFreezeRate() {
+    public long getDeliveryFreezeRate() {
         return deliveryFreezeRate;
     }
 
-    public void setDeliveryFreezeRate(float deliveryFreezeRate) {
+    public void setDeliveryFreezeRate(long deliveryFreezeRate) {
         this.deliveryFreezeRate = deliveryFreezeRate;
     }
 
-    public float getMidFreezeRate() {
+    public int getMidFreezeRate() {
         return midFreezeRate;
     }
 
-    public void setMidFreezeRate(float midFreezeRate) {
+    public void setMidFreezeRate(int midFreezeRate) {
         this.midFreezeRate = midFreezeRate;
     }
 
-    public long getMinimumDeliveryNumber() {
-        return minimumDeliveryNumber;
+    public int getMinDeliveryQty() {
+        return minDeliveryQty;
     }
 
-    public void setMinimumDeliveryNumber(long minimumDeliveryNumber) {
-        this.minimumDeliveryNumber = minimumDeliveryNumber;
+    public void setMinDeliveryQty(int minDeliveryQty) {
+        this.minDeliveryQty = minDeliveryQty;
     }
 
-    public float getBanklongMarginRate() {
-        return banklongMarginRate;
+    public int getDisplayOrder() {
+        return displayOrder;
     }
 
-    public void setBanklongMarginRate(float banklongMarginRate) {
-        this.banklongMarginRate = banklongMarginRate;
+    public void setDisplayOrder(int displayOrder) {
+        this.displayOrder = displayOrder;
     }
 
-    public float getBankshortMarginRate() {
-        return bankshortMarginRate;
+    public int getBankLongMarginRate() {
+        return bankLongMarginRate;
     }
 
-    public void setBankshortMarginRate(float bankshortMarginRate) {
-        this.bankshortMarginRate = bankshortMarginRate;
+    public void setBankLongMarginRate(int bankLongMarginRate) {
+        this.bankLongMarginRate = bankLongMarginRate;
     }
 
-    public float getExlongMarginRate() {
-        return exlongMarginRate;
+    public int getExLongMarginRate() {
+        return exLongMarginRate;
     }
 
-    public void setExlongMarginRate(float exlongMarginRate) {
-        this.exlongMarginRate = exlongMarginRate;
+    public void setExLongMarginRate(int exLongMarginRate) {
+        this.exLongMarginRate = exLongMarginRate;
     }
 
-    public long getExshortMarginRate() {
-        return exshortMarginRate;
+    public int getBankShortMarginRate() {
+        return bankShortMarginRate;
     }
 
-    public void setExshortMarginRate(long exshortMarginRate) {
-        this.exshortMarginRate = exshortMarginRate;
+    public void setBankShortMarginRate(int bankShortMarginRate) {
+        this.bankShortMarginRate = bankShortMarginRate;
     }
+
+    public int getExShortMarginRate() {
+        return exShortMarginRate;
+    }
+
+    public void setExShortMarginRate(int exShortMarginRate) {
+        this.exShortMarginRate = exShortMarginRate;
+    }
+
 }

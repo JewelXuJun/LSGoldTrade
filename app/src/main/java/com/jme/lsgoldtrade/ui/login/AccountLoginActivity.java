@@ -150,6 +150,7 @@ public class AccountLoginActivity extends JMEBaseActivity {
     private void getContractInfo() {
         HashMap<String, String> parmas = new HashMap<>();
         parmas.put("contractId", "");
+        parmas.put("accountId", String.valueOf(mUser.getAccountID()));
 
         sendRequest(TradeService.getInstance().contractInfo, parmas, true);
     }

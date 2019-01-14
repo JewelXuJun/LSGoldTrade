@@ -176,6 +176,7 @@ public class MobileLoginActivity extends JMEBaseActivity {
     private void getContractInfo() {
         HashMap<String, String> parmas = new HashMap<>();
         parmas.put("contractId", "");
+        parmas.put("accountId", String.valueOf(mUser.getAccountID()));
 
         sendRequest(TradeService.getInstance().contractInfo, parmas, true);
     }
@@ -202,10 +203,10 @@ public class MobileLoginActivity extends JMEBaseActivity {
 
                     mUser.login(userInfoVo);
 
+                    getContractInfo();
+
                     showShortToast(R.string.login_success);
                     SharedPreUtils.setString(this, SharedPreUtils.Login_Mobile, mBinding.etMobile.getText().toString());
-
-                    getContractInfo();
                 } else {
                     kaptcha();
                 }
