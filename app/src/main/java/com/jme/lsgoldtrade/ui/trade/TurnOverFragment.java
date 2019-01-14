@@ -11,7 +11,6 @@ import android.view.View;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.jme.common.network.DTRequest;
 import com.jme.common.network.Head;
-import com.jme.common.ui.view.MarginDividerItemDecoration;
 import com.jme.common.util.DateUtil;
 import com.jme.lsgoldtrade.R;
 import com.jme.lsgoldtrade.base.JMEBaseFragment;
@@ -65,7 +64,6 @@ public class TurnOverFragment extends JMEBaseFragment implements OnRefreshListen
         mAdapter = new TurnOverAdapter(mContext, R.layout.item_turnover, null);
 
         mBinding.recyclerView.setHasFixedSize(false);
-        mBinding.recyclerView.addItemDecoration(new MarginDividerItemDecoration(mContext, LinearLayoutManager.VERTICAL));
         mBinding.recyclerView.setLayoutManager(new LinearLayoutManager(mContext));
         mBinding.recyclerView.setAdapter(mAdapter);
 
