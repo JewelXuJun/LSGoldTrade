@@ -170,13 +170,13 @@ public class MobileLoginActivity extends JMEBaseActivity {
     }
 
     private void kaptcha() {
-        sendRequest(UserService.getInstance().kaptcha, new HashMap<>(), false);
+        sendRequest(UserService.getInstance().kaptcha, new HashMap<>(), true);
     }
 
     private void getContractInfo() {
         HashMap<String, String> parmas = new HashMap<>();
         parmas.put("contractId", "");
-        parmas.put("accountId", String.valueOf(mUser.getAccountID()));
+        parmas.put("accountId", mUser.getAccountID());
 
         sendRequest(TradeService.getInstance().contractInfo, parmas, true);
     }

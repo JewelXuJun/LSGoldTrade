@@ -49,8 +49,8 @@ public class User {
         return mToken;
     }
 
-    public long getAccountID() {
-        return mAccountID;
+    public String getAccountID() {
+        return String.valueOf(mAccountID);
     }
 
 }

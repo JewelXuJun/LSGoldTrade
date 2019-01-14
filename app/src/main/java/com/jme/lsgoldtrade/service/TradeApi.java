@@ -13,7 +13,7 @@ import retrofit2.http.QueryMap;
 public interface TradeApi {
 
     @GET("/gold-trade/v1.0.0/android/account")
-    Call<DTResponse> account();
+    Call<DTResponse> account(@QueryMap Map<String, String> map);
 
     @POST("/gold-trade/v1.0.0/android/inoutmoney")
     Call<DTResponse> inoutmoney(@Body Map<String, String> map);

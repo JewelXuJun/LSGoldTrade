@@ -55,7 +55,7 @@ public class TradeService extends IService<TradeApi> {
         @Override
         public Call<DTResponse> request(HashMap<String, String> params) {
 
-            return mApi.account();
+            return mApi.account(params);
         }
     };
 
