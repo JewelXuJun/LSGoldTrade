@@ -89,29 +89,18 @@ public class DailyStatementActivity extends JMEBaseActivity {
         calendar.set(Calendar.MILLISECOND, 0);
 
         mBinding.tvTime.setText(DateUtil.dateToString(calendar.getTimeInMillis()));
+
+        dailystatement();
     }
 
     private void setDailyStatementData(DailyStatementVo dailyStatementVo) {
 
     }
 
-    private String getTradeDate() {
-        String date = mBinding.tvTime.getText().toString();
-        String value;
-
-        if (TextUtils.isEmpty(date))
-            value = "";
-        else if (date.contains("-"))
-            value = date.replace("-", "");
-        else
-            value = date;
-
-        return value;
-    }
-
     private void dailystatement() {
         HashMap<String, String> params = new HashMap<>();
-        params.put("tradeDate", getTradeDate());
+        params.put("accountId", mUser.getAccountID());
+        params.put("tradeDate", mBinding.tvTime.getText().toString());
 
         sendRequest(TradeService.getInstance().dailystatement, params, true);
     }
@@ -155,8 +144,8 @@ public class DailyStatementActivity extends JMEBaseActivity {
             mDatePickerDialog = new DatePickerDialog(DailyStatementActivity.this, (datePicker, year, month, dayOfMonth) ->
                     setQueryTime(year, month, dayOfMonth), mYear, mMonth, mDayOfMonth);
 
-            if (android.os.Build.VERSION.SDK_INT >= 11)
-                mDatePickerDialog.getDatePicker().setMaxDate(new Date().getTime());
+           /* if (android.os.Build.VERSION.SDK_INT >= 11)
+                mDatePickerDialog.getDatePicker().setMaxDate(new Date().getTime());*/
 
             mDatePickerDialog.show();
         }

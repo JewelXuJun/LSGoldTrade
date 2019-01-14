@@ -64,8 +64,8 @@ public class QueryFragment extends JMEBaseFragment implements OnRefreshListener 
 
         bVisibleToUser = isVisibleToUser;
 
-       /* if (null != mBinding && bVisibleToUser)
-            dailystatement(true);*/
+        if (null != mBinding && bVisibleToUser)
+            dailystatement(true);
     }
 
     @Override
@@ -79,31 +79,18 @@ public class QueryFragment extends JMEBaseFragment implements OnRefreshListener 
     public void onResume() {
         super.onResume();
 
-       /* if (bVisibleToUser)
-            dailystatement(true);*/
+        if (bVisibleToUser)
+            dailystatement(true);
     }
 
     private void setDailyStatementData(DailyStatementVo dailyStatementVo) {
 
     }
 
-    private String getTradeDate() {
-        String date = mBinding.tvTime.getText().toString();
-        String value;
-
-        if (TextUtils.isEmpty(date))
-            value = "";
-        else if (date.contains("-"))
-            value = date.replace("-", "");
-        else
-            value = date;
-
-        return value;
-    }
-
     private void dailystatement(boolean enable) {
         HashMap<String, String> params = new HashMap<>();
-        params.put("tradeDate", getTradeDate());
+        params.put("accountId", mUser.getAccountID());
+        params.put("tradeDate", mBinding.tvTime.getText().toString());
 
         sendRequest(TradeService.getInstance().dailystatement, params, enable);
     }
