@@ -136,6 +136,7 @@
     <string name="trade_money_out_success">出金成功</string>
     <string name="trade_start_time_error">起始时间必须早于截止时间</string>
     <string name="trade_end_time_error">截止时间必须晚于起始时间</string>
+    <string name="trade_img_verify_code">图形验证码</string>
 
     <!-- Personal -->
     <string name="personal_login">登录/注册</string>

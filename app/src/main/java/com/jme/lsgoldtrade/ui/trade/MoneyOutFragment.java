@@ -1,10 +1,14 @@
 package com.jme.lsgoldtrade.ui.trade;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.util.Base64;
+import android.view.View;
 import android.widget.EditText;
 
 import com.jme.common.network.DTRequest;
@@ -15,6 +19,7 @@ import com.jme.lsgoldtrade.base.JMEBaseFragment;
 import com.jme.lsgoldtrade.config.AppConfig;
 import com.jme.lsgoldtrade.databinding.FragmentMoneyOutBinding;
 import com.jme.lsgoldtrade.domain.AccountVo;
+import com.jme.lsgoldtrade.domain.ImageVerifyCodeVo;
 import com.jme.lsgoldtrade.domain.UserInfoVo;
 import com.jme.lsgoldtrade.service.TradeService;
 import com.jme.lsgoldtrade.service.UserService;
@@ -31,7 +36,9 @@ public class MoneyOutFragment extends JMEBaseFragment implements OnRefreshListen
 
     private boolean bVisibleToUser = false;
     private boolean bFlag = false;
+    private boolean bShowImgVerifyCode = false;
     private String mExtractableBalance;
+    private String mKaptchaId;
 
     private JMECountDownTimer mCountDownTimer;
 
@@ -59,7 +66,6 @@ public class MoneyOutFragment extends JMEBaseFragment implements OnRefreshListen
 
             mBinding.tvMobileNumber.setText(null == userInfoVo ? "" : userInfoVo.getMobile());
         }
-
     }
 
     @Override
@@ -124,6 +130,23 @@ public class MoneyOutFragment extends JMEBaseFragment implements OnRefreshListen
                 updateUIWithValidation();
             }
         });
+
+        mBinding.etImgVerifyCode.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                updateUIWithValidation();
+            }
+        });
     }
 
     @Override
@@ -139,35 +162,62 @@ public class MoneyOutFragment extends JMEBaseFragment implements OnRefreshListen
 
         bVisibleToUser = isVisibleToUser;
 
-       /* if (isVisibleToUser && null != mBinding)
-            getAccount(true);*/
+        if (bVisibleToUser && null != mBinding)
+            getAccount(true);
     }
 
     @Override
     public void onResume() {
         super.onResume();
 
-       /* if (bVisibleToUser)
-            getAccount(true);*/
+        if (bVisibleToUser)
+            getAccount(true);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+
+        if (null != mCountDownTimer)
+            mCountDownTimer.cancel();
     }
 
     private void updateUIWithValidation() {
-        mBinding.btnSubmit.setEnabled(populated(mBinding.etTransferAmount) && populated(mBinding.etVerificationCode));
+        mBinding.btnSubmit.setEnabled(bShowImgVerifyCode
+                ? populated(mBinding.etTransferAmount) && populated(mBinding.etVerificationCode) && populated(mBinding.etImgVerifyCode)
+                : populated(mBinding.etTransferAmount) && populated(mBinding.etVerificationCode));
     }
 
     private boolean populated(final EditText editText) {
         return editText.length() > 0;
     }
 
+    private Bitmap getBitmap(String kaptchaImg) {
+        Bitmap bitmap = null;
+
+        try {
+            byte[] bitmapArray = Base64.decode(kaptchaImg, Base64.DEFAULT);
+
+            bitmap = BitmapFactory.decodeByteArray(bitmapArray, 0, bitmapArray.length);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return bitmap;
+    }
+
     private void doSubmit() {
         String mobile = mBinding.tvMobileNumber.getText().toString();
         String amount = mBinding.etTransferAmount.getText().toString();
         String verifyCode = mBinding.etVerificationCode.getText().toString();
+        String imgVerifyCode = mBinding.etImgVerifyCode.getText().toString();
 
         if (amount.endsWith("."))
             amount = amount.substring(0, amount.length() - 1);
 
-        if (new BigDecimal(mExtractableBalance).compareTo(new BigDecimal(0)) != 1)
+        if (TextUtils.isEmpty(mExtractableBalance))
+            showShortToast(R.string.trade_amount_error);
+        else if (new BigDecimal(mExtractableBalance).compareTo(new BigDecimal(0)) != 1)
             showShortToast(R.string.trade_amount_error);
         else if (TextUtils.isEmpty(mobile))
             showShortToast(R.string.trade_mobile_error);
@@ -179,12 +229,17 @@ public class MoneyOutFragment extends JMEBaseFragment implements OnRefreshListen
             showShortToast(R.string.login_verification_code_unget);
         else if (verifyCode.length() < 6)
             showShortToast(R.string.login_verification_code_error);
+        else if (bShowImgVerifyCode && TextUtils.isEmpty(imgVerifyCode))
+            showShortToast(R.string.login_img_verify_code_error);
         else
-            inoutMoney(amount);
+            inoutMoney(amount, verifyCode, imgVerifyCode);
     }
 
     private void getAccount(boolean enable) {
-        sendRequest(TradeService.getInstance().account, new HashMap<>(), enable);
+        HashMap<String, String> params = new HashMap<>();
+        params.put("accountId", mUser.getAccountID());
+
+        sendRequest(TradeService.getInstance().account, params, enable);
     }
 
     private void fundInoutMsg() {
@@ -193,12 +248,22 @@ public class MoneyOutFragment extends JMEBaseFragment implements OnRefreshListen
         sendRequest(UserService.getInstance().fundInoutMsg, new HashMap<>(), true);
     }
 
-    private void inoutMoney(String amount) {
+    private void inoutMoney(String amount, String verifyCode, String imgVerifyCode) {
         HashMap<String, String> params = new HashMap<>();
-        params.put("amount", new BigDecimal(amount).multiply(new BigDecimal(100)).toPlainString());
+        params.put("accountId", mUser.getAccountID());
+        params.put("amount", String.valueOf(new BigDecimal(amount).multiply(new BigDecimal(100)).longValue()));
         params.put("direction", "1");
+        params.put("smsCode", verifyCode);
+        if (bShowImgVerifyCode) {
+            params.put("kaptchaId", mKaptchaId);
+            params.put("kaptchaCode", imgVerifyCode);
+        }
 
         sendRequest(TradeService.getInstance().inoutmoney, params, true);
+    }
+
+    private void kaptcha() {
+        sendRequest(UserService.getInstance().kaptcha, new HashMap<>(), true);
     }
 
     @Override
@@ -239,8 +304,44 @@ public class MoneyOutFragment extends JMEBaseFragment implements OnRefreshListen
             case "InoutMoney":
                 if (head.isSuccess())
                     showShortToast(R.string.trade_money_out_success);
+                else
+                    kaptcha();
 
                 getAccount(true);
+
+                break;
+            case "Kaptcha":
+                if (head.isSuccess()) {
+                    ImageVerifyCodeVo imageVerifyCodeVo;
+
+                    try {
+                        imageVerifyCodeVo = (ImageVerifyCodeVo) response;
+                    } catch (Exception e) {
+                        imageVerifyCodeVo = null;
+
+                        e.printStackTrace();
+                    }
+
+                    if (null == imageVerifyCodeVo)
+                        return;
+
+                    String kaptchaImg = imageVerifyCodeVo.getKaptchaImg();
+
+                    if (TextUtils.isEmpty(kaptchaImg))
+                        return;
+
+                    if (kaptchaImg.contains(","))
+                        kaptchaImg = kaptchaImg.split(",")[1];
+
+                    mBinding.imgVerifyCode.setImageBitmap(getBitmap(kaptchaImg));
+                    mBinding.layoutImgVerifyCode.setVisibility(View.VISIBLE);
+                    mBinding.etImgVerifyCode.setText("");
+                    mBinding.btnSubmit.setEnabled(false);
+
+                    bShowImgVerifyCode = true;
+
+                    mKaptchaId = imageVerifyCodeVo.getKaptchaId();
+                }
 
                 break;
         }
@@ -255,6 +356,7 @@ public class MoneyOutFragment extends JMEBaseFragment implements OnRefreshListen
 
         public void onClickOutAll() {
             mBinding.etTransferAmount.setText(mExtractableBalance);
+            mBinding.etTransferAmount.setSelection(TextUtils.isEmpty(mExtractableBalance) ? 0 : mExtractableBalance.length());
         }
 
         public void onClickGetVerificationCode() {
@@ -262,6 +364,10 @@ public class MoneyOutFragment extends JMEBaseFragment implements OnRefreshListen
                 showShortToast(R.string.trade_mobile_error);
             else
                 fundInoutMsg();
+        }
+
+        public void onClickLoadImageVerifyCode() {
+            kaptcha();
         }
 
         public void onClickSubmit() {
