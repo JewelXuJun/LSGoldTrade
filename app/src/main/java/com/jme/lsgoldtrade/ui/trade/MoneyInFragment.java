@@ -273,6 +273,8 @@ public class MoneyInFragment extends JMEBaseFragment implements OnRefreshListene
         switch (request.getApi().getName()) {
             case "Account":
                 if (head.isSuccess()) {
+                    mBinding.swipeRefreshLayout.finishRefresh(true);
+
                     AccountVo accountVo;
 
                     try {
@@ -289,6 +291,8 @@ public class MoneyInFragment extends JMEBaseFragment implements OnRefreshListene
                     mCurAccountBalance = accountVo.getCurAccountBalanceStr();
 
                     mBinding.tvMoneyInMax.setText(MarketUtil.decimalFormatMoney(mCurAccountBalance));
+                } else {
+                    mBinding.swipeRefreshLayout.finishRefresh(false);
                 }
 
                 break;

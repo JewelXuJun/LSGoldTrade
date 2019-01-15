@@ -273,6 +273,8 @@ public class MoneyOutFragment extends JMEBaseFragment implements OnRefreshListen
         switch (request.getApi().getName()) {
             case "Account":
                 if (head.isSuccess()) {
+                    mBinding.swipeRefreshLayout.finishRefresh(true);
+
                     AccountVo accountVo;
 
                     try {
@@ -289,6 +291,8 @@ public class MoneyOutFragment extends JMEBaseFragment implements OnRefreshListen
                     mExtractableBalance = accountVo.getExtractableBalanceStr();
 
                     mBinding.tvMoneyOutMax.setText(MarketUtil.decimalFormatMoney(mExtractableBalance));
+                } else {
+                    mBinding.swipeRefreshLayout.finishRefresh(false);
                 }
 
                 break;
