@@ -31,11 +31,9 @@ public class CurrentEntrustActivity extends JMEBaseActivity implements OnRefresh
     private EntrustAdapter mAdapter;
     private View mEmptyView;
 
-    private static final String PAGE_NEXT = "2";
-
     private int mCurrentPage = 1;
     private boolean bHasNext = false;
-    private String mDeclareTime;
+    private String mPagingKey = "";
 
     @Override
     protected int getContentViewId() {
@@ -67,8 +65,8 @@ public class CurrentEntrustActivity extends JMEBaseActivity implements OnRefresh
     protected void initListener() {
         super.initListener();
 
-        mAdapter.setOnLoadMoreListener(this, mBinding.recyclerView);
         mBinding.swipeRefreshLayout.setOnRefreshListener(this);
+        mAdapter.setOnLoadMoreListener(this, mBinding.recyclerView);
     }
 
     @Override
@@ -85,15 +83,14 @@ public class CurrentEntrustActivity extends JMEBaseActivity implements OnRefresh
 
     private void initOrderPage(boolean enable) {
         mCurrentPage = 1;
+        mPagingKey = "";
 
         orderpage(enable);
     }
 
     private void setEmptyData() {
-        if (mCurrentPage == 1)
-            mBinding.swipeRefreshLayout.finishRefresh(false);
-        else
-            mAdapter.loadMoreFail();
+        mBinding.swipeRefreshLayout.finishRefresh(false);
+        mAdapter.loadMoreFail();
     }
 
     private View getEmptyView() {
@@ -103,25 +100,11 @@ public class CurrentEntrustActivity extends JMEBaseActivity implements OnRefresh
         return mEmptyView;
     }
 
-    private void setDeclareTime(List<OrderPageVo.OrderBean> list) {
-        if (null == list || 0 == list.size()) {
-            if (mCurrentPage == 1)
-                mDeclareTime = "";
-        } else {
-            int size = list.size();
-
-            OrderPageVo.OrderBean orderBean = list.get(size - 1);
-
-            if (null != orderBean)
-                mDeclareTime = orderBean.getDeclarTime();
-        }
-    }
-
     private void orderpage(boolean enable) {
         HashMap<String, String> params = new HashMap<>();
-        params.put("pageNo", String.valueOf(mCurrentPage));
-        params.put("pagingDeclareTime", mDeclareTime);
-        params.put("qryFlg", PAGE_NEXT);
+        params.put("accountId", mUser.getAccountID());
+        params.put("onlyRevocable", "false");
+        params.put("pagingKey", mPagingKey);
 
         sendRequest(TradeService.getInstance().orderpage, params, enable);
     }
@@ -147,22 +130,32 @@ public class CurrentEntrustActivity extends JMEBaseActivity implements OnRefresh
                         setEmptyData();
                     } else {
                         bHasNext = orderPageVo.isHasNext();
-
+                        mPagingKey = orderPageVo.getPagingKey();
                         List<OrderPageVo.OrderBean> orderBeanList = orderPageVo.getList();
 
-                        if (mCurrentPage == 1) {
-                            mAdapter.setNewData(orderBeanList);
+                        if (bHasNext) {
+                            if (mCurrentPage == 1)
+                                mAdapter.setNewData(orderBeanList);
+                            else
+                                mAdapter.addData(orderBeanList);
 
-                            if (null == orderBeanList || 0 == orderBeanList.size())
-                                mAdapter.setEmptyView(getEmptyView());
-
+                            mAdapter.loadMoreComplete();
                             mBinding.swipeRefreshLayout.finishRefresh(true);
                         } else {
-                            mAdapter.addData(orderBeanList);
-                            mAdapter.loadMoreComplete();
-                        }
+                            if (mCurrentPage == 1) {
+                                if (null == orderBeanList || 0 == orderBeanList.size()) {
+                                    mAdapter.setEmptyView(getEmptyView());
+                                } else {
+                                    mAdapter.setNewData(orderBeanList);
+                                    mAdapter.loadMoreComplete();
+                                }
+                            } else {
+                                mAdapter.addData(orderBeanList);
+                                mAdapter.loadMoreComplete();
+                            }
 
-                        setDeclareTime(orderBeanList);
+                            mBinding.swipeRefreshLayout.finishRefresh(true);
+                        }
                     }
                 } else {
                     setEmptyData();

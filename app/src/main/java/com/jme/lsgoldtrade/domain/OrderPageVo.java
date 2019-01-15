@@ -9,6 +9,8 @@ public class OrderPageVo implements Serializable {
 
     private boolean hasNext;
 
+    private String pagingKey;
+
     private List<OrderBean> list;
 
     public boolean isHasNext() {
@@ -17,6 +19,14 @@ public class OrderPageVo implements Serializable {
 
     public void setHasNext(boolean hasNext) {
         this.hasNext = hasNext;
+    }
+
+    public String getPagingKey() {
+        return pagingKey;
+    }
+
+    public void setPagingKey(String pagingKey) {
+        this.pagingKey = pagingKey;
     }
 
     public List<OrderBean> getList() {
@@ -29,25 +39,23 @@ public class OrderPageVo implements Serializable {
 
     public static class OrderBean implements Serializable {
         /**
-         * "contractId":"Au(T+N2)",
-         * "tradingType":4,
-         * "orderNo":02007700092,
-         * "tradeDate":"2017-07-10",
-         * "declarTime":"10:10:10",
-         * "marketId":1,
-         * "status":1,
-         * "orderType":1,
-         * "bsFlag":2,
-         * "ocFlag":0,
-         * "matchPrice":30000,
-         * "entrustNumber":100,
-         * "entrustWeight":1000000000,
-         * "remnantNumber":100,
-         * "remnantWeight":1000000000,
-         * "revocationTime":"23.59.59"
+         * "tradingType": 0,
+         * "orderNo": 2000980845,
+         * "tradeDate": "2019-01-14",
+         * "declareTime": "10.27.26",
+         * "contractType": 1,
+         * "status": 5,
+         * "orderType": 2,
+         * "bsFlag": 2,
+         * "ocFlag": 0,
+         * "contractId": "mAu(T+D)",
+         * "matchPrice": 20760,
+         * "entrustNumber": 1,
+         * "entrustWeight": 100000000,
+         * "remnantNumber": 0,
+         * "remnantWeight": 0,
+         * "revocationTime": ""
          */
-
-        private String contractId;
 
         private int tradingType;
 
@@ -57,7 +65,7 @@ public class OrderPageVo implements Serializable {
 
         private String declarTime;
 
-        private int marketId;
+        private int contractType;
 
         private int status;
 
@@ -66,6 +74,8 @@ public class OrderPageVo implements Serializable {
         private int bsFlag;
 
         private int ocFlag;
+
+        private String contractId;
 
         private long matchPrice;
 
@@ -78,14 +88,6 @@ public class OrderPageVo implements Serializable {
         private long remnantWeight;
 
         private String revocationTime;
-
-        public String getContractId() {
-            return contractId;
-        }
-
-        public void setContractId(String contractId) {
-            this.contractId = contractId;
-        }
 
         public int getTradingType() {
             return tradingType;
@@ -119,12 +121,12 @@ public class OrderPageVo implements Serializable {
             this.declarTime = declarTime;
         }
 
-        public int getMarketId() {
-            return marketId;
+        public int getContractType() {
+            return contractType;
         }
 
-        public void setMarketId(int marketId) {
-            this.marketId = marketId;
+        public void setContractType(int contractType) {
+            this.contractType = contractType;
         }
 
         public int getStatus() {
@@ -157,6 +159,14 @@ public class OrderPageVo implements Serializable {
 
         public void setOcFlag(int ocFlag) {
             this.ocFlag = ocFlag;
+        }
+
+        public String getContractId() {
+            return contractId;
+        }
+
+        public void setContractId(String contractId) {
+            this.contractId = contractId;
         }
 
         public long getMatchPrice() {
