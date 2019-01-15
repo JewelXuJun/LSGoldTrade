@@ -263,7 +263,7 @@ public class MoneyInFragment extends JMEBaseFragment implements OnRefreshListene
     }
 
     private void kaptcha() {
-        sendRequest(UserService.getInstance().kaptcha, new HashMap<>(), true);
+        sendRequest(UserService.getInstance().kaptcha, new HashMap<>(), true, false, false);
     }
 
     @Override

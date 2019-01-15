@@ -263,7 +263,7 @@ public class MoneyOutFragment extends JMEBaseFragment implements OnRefreshListen
     }
 
     private void kaptcha() {
-        sendRequest(UserService.getInstance().kaptcha, new HashMap<>(), true);
+        sendRequest(UserService.getInstance().kaptcha, new HashMap<>(), true, false, false);
     }
 
     @Override

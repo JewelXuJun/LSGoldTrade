@@ -170,7 +170,7 @@ public class MobileLoginActivity extends JMEBaseActivity {
     }
 
     private void kaptcha() {
-        sendRequest(UserService.getInstance().kaptcha, new HashMap<>(), true);
+        sendRequest(UserService.getInstance().kaptcha, new HashMap<>(), true, false, false);
     }
 
     private void getContractInfo() {
@@ -259,7 +259,7 @@ public class MobileLoginActivity extends JMEBaseActivity {
                 if (head.isSuccess()) {
                     List<ContractInfoVo> list;
 
-                    try{
+                    try {
                         list = (List<ContractInfoVo>) response;
                     } catch (Exception e) {
                         list = null;
