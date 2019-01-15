@@ -227,7 +227,7 @@
                             android:textSize="@dimen/sp_12" />
 
                         <Button
-                            android:id="@+id/radio_last_price"
+                            android:id="@+id/btn_last_price"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:layout_marginLeft="@dimen/common_area_margin_tiny"
@@ -276,6 +276,7 @@
                             android:layout_weight="3"
                             android:background="@null"
                             android:gravity="center"
+                            android:hint="@string/market_amount_hint"
                             android:inputType="numberDecimal"
                             android:maxLines="1"
                             android:textColor="@color/color_toolbar_blue"
@@ -326,7 +327,7 @@
                                 android:layout_height="wrap_content"
                                 android:text="@string/text_no_data_default"
                                 android:textColor="@color/white"
-                                android:textSize="@dimen/size_normal" />
+                                android:textSize="@dimen/size_middle" />
 
                             <TextView
                                 android:layout_width="wrap_content"
@@ -355,7 +356,7 @@
                                 android:layout_height="wrap_content"
                                 android:text="@string/text_no_data_default"
                                 android:textColor="@color/white"
-                                android:textSize="@dimen/size_normal" />
+                                android:textSize="@dimen/size_middle" />
 
                             <TextView
                                 android:layout_width="wrap_content"
@@ -382,8 +383,9 @@
                                 android:id="@+id/tv_equal_more"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:text="@string/text_no_data_default"
                                 android:textColor="@color/white"
-                                android:textSize="@dimen/size_normal" />
+                                android:textSize="@dimen/size_middle" />
 
                             <TextView
                                 android:layout_width="wrap_content"

@@ -40,10 +40,16 @@ public class DeclarationFormFragment extends JMEBaseFragment {
     private TabViewPagerAdapter mAdapter;
     private AlertDialog dialog;
     private ContractInfoVo mContractInfoVo;
+    private TenSpeedVo mTenSpeedVo;
 
     private boolean bVisibleToUser = false;
     private boolean bFlag = true;
     private int mSelectItem = 0;
+    private int mPriceType = TYPE_RIVALPRICE;
+
+    private static int TYPE_RIVALPRICE = 0;
+    private static int TYPE_QUEUINGPRICE = 1;
+    private static int TYPE_LASTPRICE = 2;
 
     private Handler mHandler = new Handler() {
         public void handleMessage(Message msg) {
@@ -82,6 +88,7 @@ public class DeclarationFormFragment extends JMEBaseFragment {
 
         initInfoTabs();
         initContractNameValue();
+        setPriceTypeLayout();
     }
 
     @Override
@@ -226,6 +233,65 @@ public class DeclarationFormFragment extends JMEBaseFragment {
         dialog.show();
     }
 
+    private void setPriceTypeLayout() {
+        mBinding.btnRivalPrice.setBackground(mPriceType == TYPE_RIVALPRICE
+                ? ContextCompat.getDrawable(mContext, R.drawable.bg_btn_blue_solid)
+                : ContextCompat.getDrawable(mContext, R.drawable.bg_btn_blue_hollow));
+        mBinding.btnRivalPrice.setTextColor(mPriceType == TYPE_RIVALPRICE
+                ? ContextCompat.getColor(mContext, R.color.white)
+                : ContextCompat.getColor(mContext, R.color.color_blue));
+        mBinding.btnQueuingPrice.setBackground(mPriceType == TYPE_QUEUINGPRICE
+                ? ContextCompat.getDrawable(mContext, R.drawable.bg_btn_blue_solid)
+                : ContextCompat.getDrawable(mContext, R.drawable.bg_btn_blue_hollow));
+        mBinding.btnQueuingPrice.setTextColor(mPriceType == TYPE_QUEUINGPRICE
+                ? ContextCompat.getColor(mContext, R.color.white)
+                : ContextCompat.getColor(mContext, R.color.color_blue));
+        mBinding.btnLastPrice.setBackground(mPriceType == TYPE_LASTPRICE
+                ? ContextCompat.getDrawable(mContext, R.drawable.bg_btn_blue_solid)
+                : ContextCompat.getDrawable(mContext, R.drawable.bg_btn_blue_hollow));
+        mBinding.btnLastPrice.setTextColor(mPriceType == TYPE_LASTPRICE
+                ? ContextCompat.getColor(mContext, R.color.white)
+                : ContextCompat.getColor(mContext, R.color.color_blue));
+
+        if (mPriceType == TYPE_RIVALPRICE)
+            mBinding.etPrice.setHint(R.string.market_rival_price);
+        else if (mPriceType == TYPE_QUEUINGPRICE)
+            mBinding.etPrice.setHint(R.string.market_queuing_price);
+        else if (mPriceType == TYPE_LASTPRICE)
+            mBinding.etPrice.setHint(R.string.market_last_price);
+        else
+            mBinding.etPrice.setHint(R.string.market_price_hint);
+
+        setPriceData();
+    }
+
+    private void setPriceData() {
+        if (!TextUtils.isEmpty(mBinding.etPrice.getText().toString()))
+            return;
+
+        if (null == mTenSpeedVo) {
+            mBinding.tvPriceBuyMore.setText(R.string.text_no_data_default);
+            mBinding.tvPriceSaleEmpty.setText(R.string.text_no_data_default);
+        } else {
+            List<String[]> askLists = mTenSpeedVo.getAskLists();
+            List<String[]> bidLists = mTenSpeedVo.getBidLists();
+
+            if (mPriceType == TYPE_RIVALPRICE) {
+                mBinding.tvPriceBuyMore.setText(askLists.get(9)[1]);
+                mBinding.tvPriceSaleEmpty.setText(bidLists.get(0)[1]);
+            } else if (mPriceType == TYPE_QUEUINGPRICE) {
+                mBinding.tvPriceBuyMore.setText(bidLists.get(0)[1]);
+                mBinding.tvPriceSaleEmpty.setText(askLists.get(9)[1]);
+            } else if (mPriceType == TYPE_LASTPRICE) {
+                mBinding.tvPriceBuyMore.setText(mTenSpeedVo.getLatestPrice());
+                mBinding.tvPriceSaleEmpty.setText(mTenSpeedVo.getLatestPrice());
+            } else {
+                mBinding.tvPriceBuyMore.setText(R.string.text_no_data_default);
+                mBinding.tvPriceSaleEmpty.setText(R.string.text_no_data_default);
+            }
+        }
+    }
+
     private long getTimeInterval() {
         return NetWorkUtils.isWifiConnected(mContext) ? AppConfig.TimeInterval_WiFi : AppConfig.TimeInterval_NetWork;
     }
@@ -257,16 +323,16 @@ public class DeclarationFormFragment extends JMEBaseFragment {
                     if (null == list || 0 == list.size())
                         return;
 
-                    TenSpeedVo tenSpeedVo = list.get(0);
+                    mTenSpeedVo = list.get(0);
 
-                    if (null == tenSpeedVo)
+                    if (null == mTenSpeedVo)
                         return;
 
-                    if (!mBinding.tvContractName.getText().toString().equals(tenSpeedVo.getName()))
+                    if (!mBinding.tvContractName.getText().toString().equals(mTenSpeedVo.getName()))
                         return;
 
-                    String lastSettlePrice = tenSpeedVo.getLastSettlePrice();
-                    String latestPrice = tenSpeedVo.getLatestPrice();
+                    String lastSettlePrice = mTenSpeedVo.getLastSettlePrice();
+                    String latestPrice = mTenSpeedVo.getLatestPrice();
 
                     if (TextUtils.isEmpty(lastSettlePrice))
                         return;
@@ -274,11 +340,13 @@ public class DeclarationFormFragment extends JMEBaseFragment {
                     mBinding.tvPrice.setText(latestPrice);
                     mBinding.tvPrice.setTextColor(ContextCompat.getColor(mContext,
                             MarketUtil.getMarketStateColor(new BigDecimal(latestPrice).compareTo(new BigDecimal(lastSettlePrice)))));
-                    mBinding.tvLimitDownPrice.setText(tenSpeedVo.getLowerLimitPrice());
-                    mBinding.tvLimitUpPrice.setText(tenSpeedVo.getHighLimitPrice());
-                    mBinding.tvAmount.setText(MarketUtil.getVolumeValue(String.valueOf(tenSpeedVo.getTurnover()), false));
-                    mBinding.fchartSale.setData(tenSpeedVo.getAskLists(), FData.TYPE_SELL, lastSettlePrice);
-                    mBinding.fchartBuy.setData(tenSpeedVo.getBidLists(), FData.TYPE_BUY, lastSettlePrice);
+                    mBinding.tvLimitDownPrice.setText(mTenSpeedVo.getLowerLimitPrice());
+                    mBinding.tvLimitUpPrice.setText(mTenSpeedVo.getHighLimitPrice());
+                    mBinding.tvAmount.setText(MarketUtil.getVolumeValue(String.valueOf(mTenSpeedVo.getTurnover()), false));
+                    mBinding.fchartSale.setData(mTenSpeedVo.getAskLists(), FData.TYPE_SELL, lastSettlePrice);
+                    mBinding.fchartBuy.setData(mTenSpeedVo.getBidLists(), FData.TYPE_BUY, lastSettlePrice);
+
+                    setPriceData();
                 }
 
                 if (bFlag) {
@@ -318,15 +386,30 @@ public class DeclarationFormFragment extends JMEBaseFragment {
         }
 
         public void onClickRivalPrice() {
+            if (mPriceType == TYPE_RIVALPRICE)
+                return;
 
+            mPriceType = TYPE_RIVALPRICE;
+
+            setPriceTypeLayout();
         }
 
         public void onClickQueuingPrice() {
+            if (mPriceType == TYPE_QUEUINGPRICE)
+                return;
 
+            mPriceType = TYPE_QUEUINGPRICE;
+
+            setPriceTypeLayout();
         }
 
         public void onClickLastPrice() {
+            if (mPriceType == TYPE_LASTPRICE)
+                return;
 
+            mPriceType = TYPE_LASTPRICE;
+
+            setPriceTypeLayout();
         }
 
         public void onClickAmountMinus() {
