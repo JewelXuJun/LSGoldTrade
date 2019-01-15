@@ -31,9 +31,9 @@ public class ContractInfoVo implements Serializable {
 
     private String name;
 
-    private int minOrderQty;
+    private long minOrderQty;
 
-    private int maxOrderQty;
+    private long maxOrderQty;
 
     private long handWeight;
 
@@ -85,19 +85,19 @@ public class ContractInfoVo implements Serializable {
         this.name = name;
     }
 
-    public int getMinOrderQty() {
+    public long getMinOrderQty() {
         return minOrderQty;
     }
 
-    public void setMinOrderQty(int minOrderQty) {
+    public void setMinOrderQty(long minOrderQty) {
         this.minOrderQty = minOrderQty;
     }
 
-    public int getMaxOrderQty() {
+    public long getMaxOrderQty() {
         return maxOrderQty;
     }
 
-    public void setMaxOrderQty(int maxOrderQty) {
+    public void setMaxOrderQty(long maxOrderQty) {
         this.maxOrderQty = maxOrderQty;
     }
 

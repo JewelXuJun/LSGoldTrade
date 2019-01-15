@@ -24,6 +24,5 @@ public class AppConfig {
     public static final int Lentth_Limit = 2;
 
     public static String Select_ContractId = "Ag(T+D)";
-    public static String Select_ContractName = "白银延期";
 
 }

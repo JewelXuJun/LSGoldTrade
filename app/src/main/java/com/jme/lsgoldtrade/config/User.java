@@ -13,6 +13,7 @@ public class User {
     private UserInfoVo mUserInfoVo;
 
     private String mToken = "";
+    private String mAccount = "";
     private long mAccountID;
 
     public static User getInstance() {
@@ -29,6 +30,7 @@ public class User {
         mUserInfoVo = userInfoVo;
 
         mToken = userInfoVo.getToken();
+        mAccount = userInfoVo.getAccount();
         mAccountID = userInfoVo.getAccountId();
     }
 
@@ -47,6 +49,10 @@ public class User {
 
     public String getToken() {
         return mToken;
+    }
+
+    public String getAccount() {
+        return mAccount;
     }
 
     public String getAccountID() {

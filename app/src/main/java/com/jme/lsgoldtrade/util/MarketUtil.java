@@ -251,7 +251,7 @@ public class MarketUtil {
                 value = new BigDecimal(value).negate().toPlainString();
 
                 if (value.contains("-")) {
-                    value = value.substring(1, value.length());
+                    value = value.substring(1);
                     flag = true;
                 }
             } else {
@@ -259,7 +259,7 @@ public class MarketUtil {
             }
         } else {
             if (value.contains("-")) {
-                value = value.substring(1, value.length());
+                value = value.substring(1);
                 flag = true;
             }
         }
@@ -283,7 +283,7 @@ public class MarketUtil {
 
         if (value.contains(".")) {
             int index = value.indexOf(".");
-            String elseValue = value.substring(index + 1, value.length());
+            String elseValue = value.substring(index + 1);
             int elseLength = elseValue.length();
 
             if (num == 0) {

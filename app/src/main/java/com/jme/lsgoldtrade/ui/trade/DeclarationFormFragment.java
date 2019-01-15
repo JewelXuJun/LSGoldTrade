@@ -1,6 +1,7 @@
 package com.jme.lsgoldtrade.ui.trade;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -9,7 +10,11 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.content.ContextCompat;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
+import android.view.Gravity;
+import android.view.inputmethod.InputMethodManager;
 
 import com.datai.common.charts.fchart.FData;
 import com.jme.common.network.DTRequest;
@@ -22,7 +27,9 @@ import com.jme.lsgoldtrade.config.Constants;
 import com.jme.lsgoldtrade.databinding.FragmentDeclarationFormBinding;
 import com.jme.lsgoldtrade.domain.ContractInfoVo;
 import com.jme.lsgoldtrade.domain.TenSpeedVo;
+import com.jme.lsgoldtrade.generated.callback.OnClickListener;
 import com.jme.lsgoldtrade.service.MarketService;
+import com.jme.lsgoldtrade.service.TradeService;
 import com.jme.lsgoldtrade.util.MarketUtil;
 
 import java.math.BigDecimal;
@@ -35,21 +42,28 @@ public class DeclarationFormFragment extends JMEBaseFragment {
 
     private Fragment[] mFragmentArrays;
     private String[] mTabTitles;
-    private String[] mContractNames;
+    private String[] mContracIDs;
 
     private TabViewPagerAdapter mAdapter;
-    private AlertDialog dialog;
     private ContractInfoVo mContractInfoVo;
     private TenSpeedVo mTenSpeedVo;
+    private AlertDialog mDialog;
+    private OrderPopUpWindow mWindow;
 
     private boolean bVisibleToUser = false;
     private boolean bFlag = true;
     private int mSelectItem = 0;
     private int mPriceType = TYPE_RIVALPRICE;
+    private float mPriceMove = 0.00f;
+    private long mMinOrderQty = 0;
+    private long mMaxOrderQty = 0;
+    private String mLowerLimitPrice;
+    private String mHighLimitPrice;
 
-    private static int TYPE_RIVALPRICE = 0;
-    private static int TYPE_QUEUINGPRICE = 1;
-    private static int TYPE_LASTPRICE = 2;
+    private static int TYPE_NONE = 0;
+    private static int TYPE_RIVALPRICE = 1;
+    private static int TYPE_QUEUINGPRICE = 2;
+    private static int TYPE_LASTPRICE = 3;
 
     private Handler mHandler = new Handler() {
         public void handleMessage(Message msg) {
@@ -85,6 +99,9 @@ public class DeclarationFormFragment extends JMEBaseFragment {
         super.initData(savedInstanceState);
 
         mAdapter = new TabViewPagerAdapter(getChildFragmentManager());
+        mWindow = new OrderPopUpWindow(mContext);
+        mWindow.setOutsideTouchable(true);
+        mWindow.setFocusable(true);
 
         initInfoTabs();
         initContractNameValue();
@@ -94,6 +111,49 @@ public class DeclarationFormFragment extends JMEBaseFragment {
     @Override
     protected void initListener() {
         super.initListener();
+
+        mBinding.etPrice.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (s.toString().contains(".")) {
+                    if (s.length() - 1 - s.toString().indexOf(".") > AppConfig.Lentth_Limit) {
+                        s = s.toString().subSequence(0, s.toString().indexOf(".") + (AppConfig.Lentth_Limit + 1));
+
+                        mBinding.etPrice.setText(s);
+                        mBinding.etPrice.setSelection(s.length());
+                    }
+                }
+
+                if (s.toString().trim().equals(".")) {
+                    s = "0" + s;
+
+                    mBinding.etPrice.setText(s);
+                    mBinding.etPrice.setSelection(2);
+                }
+
+                if (s.toString().startsWith("0") && s.toString().trim().length() > 1) {
+                    if (!s.toString().substring(1, 2).equals(".")) {
+                        mBinding.etPrice.setText(s.subSequence(0, 1));
+                        mBinding.etPrice.setSelection(1);
+
+                        return;
+                    }
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (!TextUtils.isEmpty(s.toString()))
+                    mPriceType = TYPE_NONE;
+
+                setPriceTypeLayout();
+            }
+        });
     }
 
     @Override
@@ -183,10 +243,10 @@ public class DeclarationFormFragment extends JMEBaseFragment {
 
     private void initContractNameValue() {
         if (null != mContract) {
-            String listStr = mContract.getContractNameListStr();
+            String listStr = mContract.getContractIDListStr();
 
             if (!TextUtils.isEmpty(listStr))
-                mContractNames = listStr.split(",");
+                mContracIDs = listStr.split(",");
         }
     }
 
@@ -194,43 +254,54 @@ public class DeclarationFormFragment extends JMEBaseFragment {
         if (null == mBinding)
             return;
 
-        if (!mBinding.tvContractName.getText().toString().equals(AppConfig.Select_ContractName)) {
-            mBinding.tvContractName.setText(AppConfig.Select_ContractName);
+        if (!mBinding.tvContractId.getText().toString().equals(AppConfig.Select_ContractId)) {
+            mBinding.tvContractId.setText(AppConfig.Select_ContractId);
 
             if (null != mContract) {
-                mSelectItem = mContract.getContractNamePosition(mBinding.tvContractName.getText().toString());
-                mContractInfoVo = mContract.getContractInfoFromName(mBinding.tvContractName.getText().toString());
+                mSelectItem = mContract.getContractIDPosition(mBinding.tvContractId.getText().toString());
+                mContractInfoVo = mContract.getContractInfoFromID(mBinding.tvContractId.getText().toString());
+
+                setContractData();
             }
         }
     }
 
     private void showContractNameDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
-        builder.setSingleChoiceItems(mContractNames, mSelectItem, (dialogInterface, position) -> {
-            mSelectItem = position;
+        builder.setSingleChoiceItems(mContracIDs, mSelectItem, (dialogInterface, position) -> {
+            if (mSelectItem != position) {
+                mSelectItem = position;
 
-            String contractName = mContractNames[mSelectItem];
+                String contractID = mContracIDs[mSelectItem];
 
-            mBinding.tvContractName.setText(contractName);
-            mContractInfoVo = mContract.getContractInfoFromName(contractName);
+                mBinding.tvContractId.setText(contractID);
+                mBinding.etPrice.setText("");
+                mBinding.etAmount.setText("");
+                mBinding.tvPriceBuyMore.setText(R.string.text_no_data_default);
+                mBinding.tvPriceSaleEmpty.setText(R.string.text_no_data_default);
+                mContractInfoVo = mContract.getContractInfoFromID(contractID);
+                mPriceType = TYPE_RIVALPRICE;
 
-            if (null == mContractInfoVo)
-                return;
+                setPriceTypeLayout();
 
-            AppConfig.Select_ContractName = contractName;
-            AppConfig.Select_ContractId = mContractInfoVo.getContractId();
+                if (null != mContractInfoVo) {
+                    AppConfig.Select_ContractId = mContractInfoVo.getContractId();
 
-            mHandler.removeMessages(Constants.Msg.MSG_TRADE_UPDATE_DATA);
+                    setContractData();
 
-            getTenSpeedQuotes();
+                    mHandler.removeMessages(Constants.Msg.MSG_TRADE_UPDATE_DATA);
+
+                    getTenSpeedQuotes();
+                }
+            }
 
             mBinding.imgSelect.setBackground(ContextCompat.getDrawable(mContext, R.mipmap.ic_down));
 
-            dialog.dismiss();
+            mDialog.dismiss();
         });
 
-        dialog = builder.create();
-        dialog.show();
+        mDialog = builder.create();
+        mDialog.show();
     }
 
     private void setPriceTypeLayout() {
@@ -266,9 +337,6 @@ public class DeclarationFormFragment extends JMEBaseFragment {
     }
 
     private void setPriceData() {
-        if (!TextUtils.isEmpty(mBinding.etPrice.getText().toString()))
-            return;
-
         if (null == mTenSpeedVo) {
             mBinding.tvPriceBuyMore.setText(R.string.text_no_data_default);
             mBinding.tvPriceSaleEmpty.setText(R.string.text_no_data_default);
@@ -276,7 +344,12 @@ public class DeclarationFormFragment extends JMEBaseFragment {
             List<String[]> askLists = mTenSpeedVo.getAskLists();
             List<String[]> bidLists = mTenSpeedVo.getBidLists();
 
-            if (mPriceType == TYPE_RIVALPRICE) {
+            if (mPriceType == TYPE_NONE) {
+                String price = MarketUtil.formatValue(mBinding.etPrice.getText().toString(), 2);
+
+                mBinding.tvPriceBuyMore.setText(TextUtils.isEmpty(price) ? mContext.getResources().getString(R.string.text_no_data_default) : price);
+                mBinding.tvPriceSaleEmpty.setText(TextUtils.isEmpty(price) ? mContext.getResources().getString(R.string.text_no_data_default) : price);
+            } else if (mPriceType == TYPE_RIVALPRICE) {
                 mBinding.tvPriceBuyMore.setText(askLists.get(9)[1]);
                 mBinding.tvPriceSaleEmpty.setText(bidLists.get(0)[1]);
             } else if (mPriceType == TYPE_QUEUINGPRICE) {
@@ -292,6 +365,76 @@ public class DeclarationFormFragment extends JMEBaseFragment {
         }
     }
 
+    private void setContractData() {
+        if (null == mContractInfoVo) {
+            mPriceMove = 0;
+            mMinOrderQty = 0;
+            mMaxOrderQty = 0;
+        } else {
+            mPriceMove = new BigDecimal(mContractInfoVo.getMinPriceMove()).divide(new BigDecimal(100)).floatValue();
+            mMinOrderQty = mContractInfoVo.getMinOrderQty();
+            mMaxOrderQty = mContractInfoVo.getMaxOrderQty();
+
+            mBinding.etAmount.setText(String.valueOf(mMinOrderQty));
+        }
+    }
+
+    private String getPrice() {
+        String price = mBinding.etPrice.getText().toString();
+
+        if (TextUtils.isEmpty(price))
+            price = mBinding.tvPrice.getText().toString();
+
+        if (TextUtils.isEmpty(price) || price.equals(mContext.getResources().getString(R.string.text_no_data_default)))
+            return "";
+
+        if (price.endsWith("."))
+            price = price.substring(0, price.length() - 1);
+
+        return price;
+    }
+
+    private void showPopupWindow(String contractID, String price, String amount, int bsFlag, int ocFlag) {
+        if (null == mWindow)
+            return;
+
+        mWindow.setData(mUser.getAccount(), contractID, price, amount,
+                bsFlag == 1 ? mContext.getResources().getString(R.string.trade_buy) : mContext.getResources().getString(R.string.trade_sale), (view) -> {
+                    limitOrder(contractID, price, amount, bsFlag, ocFlag);
+
+                    mWindow.dismiss();
+                });
+        mWindow.showAtLocation(mBinding.etAmount, Gravity.CENTER, 0, 0);
+    }
+
+    private void doTrade(int bsFlag, int ocFlag) {
+        String contractID = mBinding.tvContractId.getText().toString();
+        String price = bsFlag == 1 ? mBinding.tvPriceBuyMore.getText().toString() : mBinding.tvPriceSaleEmpty.getText().toString();
+        String amount = mBinding.etAmount.getText().toString();
+
+        if (TextUtils.isEmpty(contractID))
+            showShortToast(R.string.trade_contract_error);
+        else if (TextUtils.isEmpty(price) || price.equals(mContext.getResources().getString(R.string.text_no_data_default)))
+            showShortToast(R.string.trade_price_error);
+        else if (new BigDecimal(price).compareTo(new BigDecimal(mLowerLimitPrice)) == -1)
+            showShortToast(R.string.trade_limit_down_price_error);
+        else if (new BigDecimal(price).compareTo(new BigDecimal(mHighLimitPrice)) == 1)
+            showShortToast(R.string.trade_limit_up_price_error);
+        else if (TextUtils.isEmpty(amount))
+            showShortToast(R.string.trade_number_error);
+        else if (new BigDecimal(amount).compareTo(new BigDecimal(mMinOrderQty)) == -1)
+            showShortToast(R.string.trade_limit_min_amount_error);
+        else if (new BigDecimal(amount).compareTo(new BigDecimal(mMaxOrderQty)) == 1)
+            showShortToast(R.string.trade_limit_max_amount_error);
+        else
+            showPopupWindow(contractID, price, amount, bsFlag, ocFlag);
+    }
+
+    private void hiddenKeyBoard() {
+        ((InputMethodManager) mActivity.getSystemService(Context.INPUT_METHOD_SERVICE)).hideSoftInputFromWindow(
+                mBinding.etAmount.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+    }
+
     private long getTimeInterval() {
         return NetWorkUtils.isWifiConnected(mContext) ? AppConfig.TimeInterval_WiFi : AppConfig.TimeInterval_NetWork;
     }
@@ -301,6 +444,19 @@ public class DeclarationFormFragment extends JMEBaseFragment {
         params.put("list", AppConfig.Select_ContractId);
 
         sendRequest(MarketService.getInstance().getTenSpeedQuotes, params, false, false, false);
+    }
+
+    private void limitOrder(String contractId, String price, String amount, int bsFlag, int ocFlag) {
+        HashMap<String, String> params = new HashMap<>();
+        params.put("contractId", contractId);
+        params.put("accountId", mUser.getAccountID());
+        params.put("entrustPrice", String.valueOf(new BigDecimal(price).multiply(new BigDecimal(100)).longValue()));
+        params.put("entrustNumber", amount);
+        params.put("bsFlag", String.valueOf(bsFlag));
+        params.put("ocFlag", String.valueOf(ocFlag));
+        params.put("tradingType", "0");
+
+        sendRequest(TradeService.getInstance().limitOrder, params, true);
     }
 
     @Override
@@ -328,11 +484,13 @@ public class DeclarationFormFragment extends JMEBaseFragment {
                     if (null == mTenSpeedVo)
                         return;
 
-                    if (!mBinding.tvContractName.getText().toString().equals(mTenSpeedVo.getName()))
+                    if (!mBinding.tvContractId.getText().toString().equals(mTenSpeedVo.getContractId()))
                         return;
 
                     String lastSettlePrice = mTenSpeedVo.getLastSettlePrice();
                     String latestPrice = mTenSpeedVo.getLatestPrice();
+                    mLowerLimitPrice = mTenSpeedVo.getLowerLimitPrice();
+                    mHighLimitPrice = mTenSpeedVo.getHighLimitPrice();
 
                     if (TextUtils.isEmpty(lastSettlePrice))
                         return;
@@ -340,8 +498,8 @@ public class DeclarationFormFragment extends JMEBaseFragment {
                     mBinding.tvPrice.setText(latestPrice);
                     mBinding.tvPrice.setTextColor(ContextCompat.getColor(mContext,
                             MarketUtil.getMarketStateColor(new BigDecimal(latestPrice).compareTo(new BigDecimal(lastSettlePrice)))));
-                    mBinding.tvLimitDownPrice.setText(mTenSpeedVo.getLowerLimitPrice());
-                    mBinding.tvLimitUpPrice.setText(mTenSpeedVo.getHighLimitPrice());
+                    mBinding.tvLimitDownPrice.setText(mLowerLimitPrice);
+                    mBinding.tvLimitUpPrice.setText(mHighLimitPrice);
                     mBinding.tvAmount.setText(MarketUtil.getVolumeValue(String.valueOf(mTenSpeedVo.getTurnover()), false));
                     mBinding.fchartSale.setData(mTenSpeedVo.getAskLists(), FData.TYPE_SELL, lastSettlePrice);
                     mBinding.fchartBuy.setData(mTenSpeedVo.getBidLists(), FData.TYPE_BUY, lastSettlePrice);
@@ -356,85 +514,181 @@ public class DeclarationFormFragment extends JMEBaseFragment {
                 }
 
                 break;
+            case "LimitOrder":
+                if (head.isSuccess())
+                    showShortToast(R.string.trade_success);
+
+                break;
         }
     }
 
     public class ClickHandlers {
 
         public void onClickSelectContract() {
-            if (null != mContractNames && mContractNames.length > 0) {
+            if (null != mContracIDs && mContracIDs.length > 0) {
                 mBinding.imgSelect.setBackground(ContextCompat.getDrawable(mContext, R.mipmap.ic_up));
 
                 showContractNameDialog();
             }
+
+            hiddenKeyBoard();
         }
 
         public void onClickLimitDownPrice() {
+            mPriceType = TYPE_NONE;
+            mBinding.etPrice.setText(mLowerLimitPrice);
 
+            hiddenKeyBoard();
+            setPriceTypeLayout();
         }
 
         public void onClickLimitUpPrice() {
+            mPriceType = TYPE_NONE;
+            mBinding.etPrice.setText(mHighLimitPrice);
 
+            hiddenKeyBoard();
+            setPriceTypeLayout();
         }
 
         public void onClickPriceMinus() {
+            hiddenKeyBoard();
 
+            String price = getPrice();
+
+            if (TextUtils.isEmpty(price) || TextUtils.isEmpty(mLowerLimitPrice))
+                return;
+
+            float value = new BigDecimal(price).subtract(new BigDecimal(mPriceMove)).floatValue();
+
+            if (new BigDecimal(String.valueOf(value)).compareTo(new BigDecimal(mLowerLimitPrice)) == -1) {
+                showShortToast(R.string.trade_limit_down_price_error);
+
+                mBinding.etPrice.setSelection(price.length());
+                mBinding.tvPriceBuyMore.setText(MarketUtil.formatValue(price, 2));
+                mBinding.tvPriceSaleEmpty.setText(MarketUtil.formatValue(price, 2));
+            } else {
+                String valueStr = MarketUtil.formatValue(String.valueOf(value), 2);
+
+                mBinding.etPrice.setText(valueStr);
+                mBinding.etPrice.setSelection(valueStr.length());
+            }
         }
 
         public void onClickPriceAdd() {
+            hiddenKeyBoard();
 
+            String price = getPrice();
+
+            if (TextUtils.isEmpty(price) || TextUtils.isEmpty(mHighLimitPrice))
+                return;
+
+            float value = new BigDecimal(price).add(new BigDecimal(mPriceMove)).floatValue();
+
+            if (new BigDecimal(String.valueOf(value)).compareTo(new BigDecimal(mHighLimitPrice)) == 1) {
+                showShortToast(R.string.trade_limit_up_price_error);
+
+                mBinding.etPrice.setSelection(price.length());
+                mBinding.tvPriceBuyMore.setText(MarketUtil.formatValue(price, 2));
+                mBinding.tvPriceSaleEmpty.setText(MarketUtil.formatValue(price, 2));
+            } else {
+                String valueStr = MarketUtil.formatValue(String.valueOf(value), 2);
+
+                mBinding.etPrice.setText(valueStr);
+                mBinding.etPrice.setSelection(valueStr.length());
+            }
         }
 
         public void onClickRivalPrice() {
+            hiddenKeyBoard();
+
             if (mPriceType == TYPE_RIVALPRICE)
                 return;
 
             mPriceType = TYPE_RIVALPRICE;
+            mBinding.etPrice.setText("");
+            mBinding.etPrice.clearFocus();
 
             setPriceTypeLayout();
         }
 
         public void onClickQueuingPrice() {
+            hiddenKeyBoard();
+
             if (mPriceType == TYPE_QUEUINGPRICE)
                 return;
 
             mPriceType = TYPE_QUEUINGPRICE;
+            mBinding.etPrice.setText("");
+            mBinding.etPrice.clearFocus();
 
             setPriceTypeLayout();
         }
 
         public void onClickLastPrice() {
+            hiddenKeyBoard();
+
             if (mPriceType == TYPE_LASTPRICE)
                 return;
 
             mPriceType = TYPE_LASTPRICE;
+            mBinding.etPrice.setText("");
+            mBinding.etPrice.clearFocus();
 
             setPriceTypeLayout();
         }
 
         public void onClickAmountMinus() {
+            hiddenKeyBoard();
 
+            String amount = mBinding.etAmount.getText().toString();
+
+            if (TextUtils.isEmpty(amount))
+                amount = "0";
+
+            long value = new BigDecimal(amount).subtract(new BigDecimal(1)).longValue();
+
+            if (new BigDecimal(value).compareTo(new BigDecimal(mMinOrderQty)) == -1)
+                showShortToast(R.string.trade_limit_min_amount_error);
+            else
+                mBinding.etAmount.setText(String.valueOf(value));
         }
 
         public void onClickAmountAdd() {
+            hiddenKeyBoard();
 
+            String amount = mBinding.etAmount.getText().toString();
+
+            if (TextUtils.isEmpty(amount))
+                amount = "0";
+
+            long value = new BigDecimal(amount).add(new BigDecimal(1)).longValue();
+
+            if (new BigDecimal(value).compareTo(new BigDecimal(mMaxOrderQty)) == 1)
+                showShortToast(R.string.trade_limit_max_amount_error);
+            else
+                mBinding.etAmount.setText(String.valueOf(value));
         }
 
         public void onClickBuyMore() {
+            hiddenKeyBoard();
 
+            doTrade(1, 0);
         }
 
         public void onClickSaleEmpty() {
+            hiddenKeyBoard();
 
+            doTrade(2, 0);
         }
 
         public void onClickEveningUp() {
-
+            hiddenKeyBoard();
         }
 
     }
 
     final class TabViewPagerAdapter extends FragmentPagerAdapter {
+
         public TabViewPagerAdapter(FragmentManager fm) {
             super(fm);
         }

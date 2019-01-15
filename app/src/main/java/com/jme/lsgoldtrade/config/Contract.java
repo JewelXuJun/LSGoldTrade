@@ -58,23 +58,6 @@ public class Contract {
         return contractIDListStr;
     }
 
-    public String getContractNameListStr() {
-        if (null == mList || 0 == mList.size())
-            return "";
-
-        String contractIDListStr = "";
-
-        for (ContractInfoVo contractInfoVo : mList) {
-            if (null != contractInfoVo)
-                contractIDListStr = contractIDListStr + contractInfoVo.getName() + ",";
-        }
-
-        if (!TextUtils.isEmpty(contractIDListStr) && contractIDListStr.endsWith(","))
-            contractIDListStr = contractIDListStr.substring(0, contractIDListStr.length() - 1);
-
-        return contractIDListStr;
-    }
-
     public int getContractIDPosition(String contractId) {
         if (null == mList || 0 == mList.size() || TextUtils.isEmpty(contractId))
             return 0;
@@ -91,22 +74,6 @@ public class Contract {
         return 0;
     }
 
-    public int getContractNamePosition(String contractName) {
-        if (null == mList || 0 == mList.size() || TextUtils.isEmpty(contractName))
-            return 0;
-
-        for (int i = 0; i < mList.size(); i++) {
-            ContractInfoVo contractInfoVo = mList.get(i);
-
-            if (null != contractInfoVo) {
-                if (contractName.equals(contractInfoVo.getName()))
-                    return i;
-            }
-        }
-
-        return 0;
-    }
-
     public ContractInfoVo getContractInfoFromID(String contractId) {
         if (null == mList || 0 == mList.size() || TextUtils.isEmpty(contractId))
             return null;
@@ -114,20 +81,6 @@ public class Contract {
         for (ContractInfoVo contractInfoVo : mList) {
             if (null != contractInfoVo) {
                 if (contractId.equals(contractInfoVo.getContractId()))
-                    return contractInfoVo;
-            }
-        }
-
-        return null;
-    }
-
-    public ContractInfoVo getContractInfoFromName(String contractName) {
-        if (null == mList || 0 == mList.size() || TextUtils.isEmpty(contractName))
-            return null;
-
-        for (ContractInfoVo contractInfoVo : mList) {
-            if (null != contractInfoVo) {
-                if (contractName.equals(contractInfoVo.getName()))
                     return contractInfoVo;
             }
         }

@@ -45,7 +45,7 @@
                         android:orientation="horizontal">
 
                         <TextView
-                            android:id="@+id/tv_contract_name"
+                            android:id="@+id/tv_contract_id"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:layout_weight="1"
@@ -277,7 +277,7 @@
                             android:background="@null"
                             android:gravity="center"
                             android:hint="@string/market_amount_hint"
-                            android:inputType="numberDecimal"
+                            android:inputType="number"
                             android:maxLines="1"
                             android:textColor="@color/color_toolbar_blue"
                             android:textSize="@dimen/sp_16" />

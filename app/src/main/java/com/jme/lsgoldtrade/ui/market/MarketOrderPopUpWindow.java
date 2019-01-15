@@ -4,7 +4,6 @@ import android.content.Context;
 import android.databinding.DataBindingUtil;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
-import android.widget.RadioGroup;
 
 import com.jme.common.util.DensityUtil;
 import com.jme.lsgoldtrade.R;

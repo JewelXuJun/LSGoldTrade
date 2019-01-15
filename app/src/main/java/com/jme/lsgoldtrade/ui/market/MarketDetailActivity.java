@@ -674,7 +674,6 @@ public class MarketDetailActivity extends JMEBaseActivity implements FChart.OnPr
 
         public void onClickDeclarationForm() {
             AppConfig.Select_ContractId = mContractId;
-            AppConfig.Select_ContractName = mContractName;
 
             RxBus.getInstance().post(Constants.RxBusConst.RxBus_TradeFragment, mContractId);
 
@@ -686,7 +685,8 @@ public class MarketDetailActivity extends JMEBaseActivity implements FChart.OnPr
         }
 
         public void onClickOneKeyOrder() {
-            mPopupWindow.showAtLocation(mBinding.layoutFooterview, Gravity.BOTTOM, 0, 0);
+            if (null != mPopupWindow)
+                mPopupWindow.showAtLocation(mBinding.layoutFooterview, Gravity.BOTTOM, 0, 0);
         }
 
     }
