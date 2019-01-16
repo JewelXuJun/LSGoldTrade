@@ -195,7 +195,7 @@ public class HistoryEntrustActivity extends JMEBaseActivity implements OnRefresh
 
                 mList.add(!mDate.equals(date));
 
-                mDate = orderBean.getTradeDate();
+                mDate = date;
             }
         }
 

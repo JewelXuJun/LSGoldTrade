@@ -25,7 +25,6 @@ public class EntrustAdapter extends BaseQuickAdapter<OrderPageVo.OrderBean, Base
 
         mContext = context;
         mType = type;
-
         mList = new ArrayList<>();
     }
 

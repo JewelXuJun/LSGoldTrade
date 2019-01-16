@@ -23,10 +23,12 @@ import com.jme.lsgoldtrade.databinding.ActivityHistoryEntrustBinding;
 import com.jme.lsgoldtrade.domain.DealHistoryPageVo;
 import com.jme.lsgoldtrade.domain.DealPageVo;
 import com.jme.lsgoldtrade.domain.InOutTurnOverVo;
+import com.jme.lsgoldtrade.domain.OrderPageVo;
 import com.jme.lsgoldtrade.service.TradeService;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
@@ -41,13 +43,17 @@ public class HistoryDealActivity extends JMEBaseActivity implements OnRefreshLis
     private DatePickerDialog mDatePickerDialog;
     private View mEmptyView;
 
+    private List<Boolean> mList;
+
     private long mStartTime = 0;
     private long mEndTime = 0;
     private int mYear;
     private int mMonth;
     private int mDayOfMonth;
     private int mCurrentPage = 1;
-    private String mSearchKey = "";
+    private boolean bHasNext = false;
+    private String mDate = "";
+    private String mPagingKey = "";
 
     private static final int TIME_START = 0;
     private static final int TIME_END = 1;
@@ -71,6 +77,7 @@ public class HistoryDealActivity extends JMEBaseActivity implements OnRefreshLis
         super.initData(savedInstanceState);
 
         mAdapter = new DealAdapter(this, R.layout.item_deal, null, "History");
+        mList = new ArrayList<>();
 
         mBinding.recyclerView.setHasFixedSize(false);
         mBinding.recyclerView.setLayoutManager(new LinearLayoutManager(mContext));
@@ -83,8 +90,8 @@ public class HistoryDealActivity extends JMEBaseActivity implements OnRefreshLis
     protected void initListener() {
         super.initListener();
 
-        mAdapter.setOnLoadMoreListener(this, mBinding.recyclerView);
         mBinding.swipeRefreshLayout.setOnRefreshListener(this);
+        mAdapter.setOnLoadMoreListener(this, mBinding.recyclerView);
     }
 
     @Override
@@ -151,6 +158,8 @@ public class HistoryDealActivity extends JMEBaseActivity implements OnRefreshLis
             mStartTime = startTime;
 
             mBinding.tvStartTime.setText(DateUtil.dateToString(mStartTime));
+
+            initDealHistory(true);
         } else {
             showShortToast(R.string.trade_start_time_error);
         }
@@ -163,6 +172,8 @@ public class HistoryDealActivity extends JMEBaseActivity implements OnRefreshLis
             mEndTime = endTime;
 
             mBinding.tvEndTime.setText(DateUtil.dateToString(mEndTime));
+
+            initDealHistory(true);
         } else {
             showShortToast(R.string.trade_end_time_error);
         }
@@ -170,9 +181,34 @@ public class HistoryDealActivity extends JMEBaseActivity implements OnRefreshLis
 
     private void initDealHistory(boolean enablle) {
         mCurrentPage = 1;
-        mSearchKey = "";
+        mDate = "";
+        mPagingKey = "";
 
         dealhispage(enablle);
+    }
+
+    private void setListData(List<DealPageVo.DealBean> orderBeanList) {
+        if (null == orderBeanList || 0 == orderBeanList.size())
+            return;
+
+        for (int i = 0; i < orderBeanList.size(); i++) {
+            DealPageVo.DealBean orderBean = orderBeanList.get(i);
+
+            if (null != orderBean) {
+                String date = orderBean.getMatchDate();
+
+                mList.add(!mDate.equals(date));
+
+                mDate = date;
+            }
+        }
+
+        mAdapter.setList(mList);
+    }
+
+    private void setEmptyData() {
+        mBinding.swipeRefreshLayout.finishRefresh(false);
+        mAdapter.loadMoreFail();
     }
 
     private View getEmptyView() {
@@ -182,16 +218,12 @@ public class HistoryDealActivity extends JMEBaseActivity implements OnRefreshLis
         return mEmptyView;
     }
 
-    private void setEmptyData() {
-        mBinding.swipeRefreshLayout.finishRefresh(false);
-        mAdapter.loadMoreFail();
-    }
-
     private void dealhispage(boolean enable) {
         HashMap<String, String> params = new HashMap<>();
-        params.put("beginDate", DateUtil.dateToStringWithNone(mStartTime));
-        params.put("endDate", DateUtil.dateToStringWithNone(mEndTime));
-        params.put("searchKey", mSearchKey);
+        params.put("accountId", mUser.getAccountID());
+        params.put("beginDate", mBinding.tvStartTime.getText().toString());
+        params.put("endDate", mBinding.tvEndTime.getText().toString());
+        params.put("pagingKey", mPagingKey);
 
         sendRequest(TradeService.getInstance().dealhispage, params, enable);
     }
@@ -216,29 +248,45 @@ public class HistoryDealActivity extends JMEBaseActivity implements OnRefreshLis
                     if (null == dealHistoryPageVo) {
                         setEmptyData();
                     } else {
-                        mSearchKey = dealHistoryPageVo.getSeachKey();
+                        bHasNext = dealHistoryPageVo.isHasNext();
+                        mPagingKey = dealHistoryPageVo.getPagingKey();
                         List<DealPageVo.DealBean> dealHistoryBeanList = dealHistoryPageVo.getList();
 
-                        if (TextUtils.isEmpty(mSearchKey)) {
+                        if (bHasNext) {
+                            if (mCurrentPage == 1) {
+                                mList.clear();
+                                setListData(dealHistoryBeanList);
+
+                                mAdapter.setNewData(dealHistoryBeanList);
+                            } else {
+                                setListData(dealHistoryBeanList);
+
+                                mAdapter.addData(dealHistoryBeanList);
+                            }
+
+                            mAdapter.loadMoreComplete();
+                            mBinding.swipeRefreshLayout.finishRefresh(true);
+                        } else {
                             if (mCurrentPage == 1) {
                                 if (null == dealHistoryBeanList || 0 == dealHistoryBeanList.size()) {
+                                    mList.clear();
+                                    mAdapter.setNewData(null);
                                     mAdapter.setEmptyView(getEmptyView());
-                                    mBinding.swipeRefreshLayout.finishRefresh(true);
                                 } else {
+                                    mList.clear();
+                                    setListData(dealHistoryBeanList);
+
                                     mAdapter.setNewData(dealHistoryBeanList);
                                     mAdapter.loadMoreComplete();
                                 }
                             } else {
+                                setListData(dealHistoryBeanList);
+
                                 mAdapter.addData(dealHistoryBeanList);
                                 mAdapter.loadMoreComplete();
                             }
-                        } else {
-                            if (mCurrentPage == 1)
-                                mAdapter.setNewData(dealHistoryBeanList);
-                            else
-                                mAdapter.addData(dealHistoryBeanList);
 
-                            mAdapter.loadMoreComplete();
+                            mBinding.swipeRefreshLayout.finishRefresh(true);
                         }
                     }
                 } else {
@@ -252,12 +300,12 @@ public class HistoryDealActivity extends JMEBaseActivity implements OnRefreshLis
     @Override
     public void onLoadMoreRequested() {
         mBinding.recyclerView.postDelayed(() -> {
-            if (TextUtils.isEmpty(mSearchKey)) {
-                mAdapter.loadMoreEnd();
-            } else {
+            if (bHasNext) {
                 mCurrentPage++;
 
                 dealhispage(true);
+            } else {
+                mAdapter.loadMoreEnd();
             }
         }, 0);
     }
