@@ -1,106 +1,108 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/height_item_normal"
+    android:layout_height="wrap_content"
     android:background="@color/white"
-    android:orientation="horizontal">
-
-    <CheckBox
-        android:id="@+id/checkbox"
-        style="@style/CheckBoxStyle"
-        android:layout_width="@dimen/icon_checkbox"
-        android:layout_height="@dimen/icon_checkbox"
-        android:layout_marginLeft="@dimen/common_page_margin" />
+    android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:gravity="center|left"
-        android:orientation="vertical"
-        android:paddingLeft="@dimen/common_area_margin">
+        android:layout_height="@dimen/height_item_normal"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center|left"
+            android:orientation="vertical"
+            android:paddingLeft="@dimen/common_area_margin">
+
+            <TextView
+                android:id="@+id/tv_contract"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/text_no_data_default"
+                android:textColor="@color/color_text_black"
+                android:textSize="@dimen/size_middle" />
+
+            <TextView
+                android:id="@+id/tv_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/common_area_margin_tiny"
+                android:text="@string/text_no_data_default"
+                android:textColor="@color/color_text_gray_hint"
+                android:textSize="@dimen/sp_12" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_type"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/text_no_data_default"
+                android:textColor="@color/common_font_stable"
+                android:textSize="@dimen/size_middle" />
+
+            <TextView
+                android:id="@+id/tv_price"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/common_area_margin_tiny"
+                android:text="@string/text_no_data_default"
+                android:textColor="@color/common_font_stable"
+                android:textSize="@dimen/size_middle" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center|right"
+            android:orientation="vertical"
+            android:paddingRight="@dimen/common_page_padding">
+
+            <TextView
+                android:id="@+id/tv_entrust"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/text_no_data_default"
+                android:textColor="@color/color_text_black"
+                android:textSize="@dimen/size_middle" />
+
+            <TextView
+                android:id="@+id/tv_surplus"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/common_area_margin_tiny"
+                android:text="@string/text_no_data_default"
+                android:textColor="@color/color_text_black"
+                android:textSize="@dimen/size_middle" />
+
+        </LinearLayout>
 
         <TextView
-            android:id="@+id/tv_contract"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:id="@+id/tv_state"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center|right"
+            android:paddingRight="@dimen/common_page_padding"
             android:text="@string/text_no_data_default"
             android:textColor="@color/color_text_black"
             android:textSize="@dimen/size_middle" />
 
-        <TextView
-            android:id="@+id/tv_time"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/common_area_margin_tiny"
-            android:text="@string/text_no_data_default"
-            android:textColor="@color/color_text_gray_hint"
-            android:textSize="@dimen/sp_12" />
-
     </LinearLayout>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:gravity="center"
-        android:orientation="vertical">
-
-        <TextView
-            android:id="@+id/tv_type"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/text_no_data_default"
-            android:textColor="@color/common_font_stable"
-            android:textSize="@dimen/size_middle" />
-
-        <TextView
-            android:id="@+id/tv_price"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/common_area_margin_tiny"
-            android:text="@string/text_no_data_default"
-            android:textColor="@color/common_font_stable"
-            android:textSize="@dimen/size_middle" />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:gravity="center"
-        android:orientation="vertical">
-
-        <TextView
-            android:id="@+id/tv_entrust"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/text_no_data_default"
-            android:textColor="@color/color_text_black"
-            android:textSize="@dimen/size_middle" />
-
-        <TextView
-            android:id="@+id/tv_surplus"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/common_area_margin_tiny"
-            android:text="@string/text_no_data_default"
-            android:textColor="@color/color_text_black"
-            android:textSize="@dimen/size_middle" />
-
-    </LinearLayout>
-
-    <TextView
-        android:id="@+id/tv_state"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:gravity="center|right"
-        android:paddingRight="@dimen/common_page_padding"
-        android:text="@string/text_no_data_default"
-        android:textColor="@color/color_text_black"
-        android:textSize="@dimen/size_middle" />
-
+    <include layout="@layout/item_line_vertical" />
 
 </LinearLayout>

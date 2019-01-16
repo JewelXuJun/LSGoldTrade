@@ -1,67 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <data>
-
-        <variable
-            name="handlers"
-            type="com.jme.lsgoldtrade.ui.trade.CancelOrderFragment.ClickHandlers" />
-
-    </data>
-
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/common_background">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/height_item_normal"
-            android:layout_alignParentBottom="true"
-            android:background="@color/white"
-            android:orientation="vertical">
-
-            <include layout="@layout/item_line_vertical" />
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-                <CheckBox
-                    android:id="@+id/checkbox_all"
-                    style="@style/CheckBoxStyle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_marginLeft="@dimen/common_page_margin"
-                    android:paddingLeft="@dimen/common_page_padding"
-                    android:text="@string/trade_check_all"
-                    android:textColor="@color/color_text_black"
-                    android:textSize="@dimen/sp_16" />
-
-                <Button
-                    android:layout_width="@dimen/width_btn_big"
-                    android:layout_height="match_parent"
-                    android:layout_alignParentRight="true"
-                    android:background="@drawable/bg_btn_cancel"
-                    android:onClick="@{() -> handlers.onClickCancel()}"
-                    android:text="@string/trade_cancel_order"
-                    android:textColor="@color/gray"
-                    android:textSize="@dimen/sp_16" />
-
-            </RelativeLayout>
-
-        </LinearLayout>
+        android:background="@color/common_background"
+        android:orientation="vertical">
 
         <LinearLayout
             android:id="@+id/layout_tabhost"
             android:layout_width="match_parent"
             android:layout_height="@dimen/height_item_small"
-            android:background="@color/color_tabhost">
-
-            <View
-                android:layout_width="@dimen/width_empty"
-                android:layout_height="match_parent" />
+            android:background="@color/color_tabhost"
+            android:orientation="horizontal">
 
             <TextView
                 android:layout_width="match_parent"
@@ -86,7 +37,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:gravity="center"
+                android:gravity="center|right"
+                android:paddingRight="@dimen/common_page_padding"
                 android:text="@string/trade_entrust_surplus"
                 android:textColor="@color/black_pale"
                 android:textSize="@dimen/sp_12" />
@@ -116,13 +68,11 @@
                 android:id="@+id/recyclerView"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_below="@+id/layout_tabhost"
-                android:layout_marginBottom="@dimen/height_item_normal"
                 android:cacheColorHint="@null"
                 android:scrollbars="none" />
 
         </com.scwang.smartrefresh.layout.SmartRefreshLayout>
 
-    </RelativeLayout>
+    </LinearLayout>
 
 </layout>

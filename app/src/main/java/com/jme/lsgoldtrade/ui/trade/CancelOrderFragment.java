@@ -54,25 +54,21 @@ public class CancelOrderFragment extends JMEBaseFragment implements OnRefreshLis
         mAdapter = new CancelOrderAdapter(R.layout.item_cancel_order, null);
 
         mBinding.recyclerView.setHasFixedSize(false);
-        mBinding.recyclerView.addItemDecoration(new MarginDividerItemDecoration(mContext, LinearLayoutManager.VERTICAL));
         mBinding.recyclerView.setLayoutManager(new LinearLayoutManager(mContext));
         mBinding.recyclerView.setAdapter(mAdapter);
-        mBinding.recyclerView.setNestedScrollingEnabled(false);
     }
 
     @Override
     protected void initListener() {
         super.initListener();
 
-        mAdapter.setOnLoadMoreListener(this, mBinding.recyclerView);
         mBinding.swipeRefreshLayout.setOnRefreshListener(this);
+        mAdapter.setOnLoadMoreListener(this, mBinding.recyclerView);
     }
 
     @Override
     public void initBinding() {
         super.initBinding();
-
-        mBinding.setHandlers(new ClickHandlers());
     }
 
     @Override
@@ -207,11 +203,4 @@ public class CancelOrderFragment extends JMEBaseFragment implements OnRefreshLis
         initOrderPage(false);
     }
 
-    public class ClickHandlers {
-
-        public void onClickCancel() {
-
-        }
-
-    }
 }
