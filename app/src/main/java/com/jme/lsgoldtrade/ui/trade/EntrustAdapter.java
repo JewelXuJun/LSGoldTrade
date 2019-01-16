@@ -11,23 +11,26 @@ import com.jme.lsgoldtrade.R;
 import com.jme.lsgoldtrade.domain.OrderPageVo;
 import com.jme.lsgoldtrade.util.MarketUtil;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class EntrustAdapter extends BaseQuickAdapter<OrderPageVo.OrderBean, BaseViewHolder> {
 
     private Context mContext;
     private String mType;
-    private String mDate = "";
+    private List<Boolean> mList;
 
     public EntrustAdapter(Context context, int layoutResId, @Nullable List<OrderPageVo.OrderBean> data, String type) {
         super(layoutResId, data);
 
         mContext = context;
         mType = type;
+
+        mList = new ArrayList<>();
     }
 
-    public void clearDate() {
-        mDate = "";
+    public void setList(List<Boolean> list) {
+        mList = list;
     }
 
     @Override
@@ -40,7 +43,7 @@ public class EntrustAdapter extends BaseQuickAdapter<OrderPageVo.OrderBean, Base
         int bsFlag = item.getBsFlag();
 
         helper.setText(R.id.tv_date, date)
-                .setVisible(R.id.tv_date, mType.equals("History") && !mDate.equals(date))
+                .setGone(R.id.tv_date, mType.equals("History") && mList.get(helper.getAdapterPosition()))
                 .setText(R.id.tv_contract, item.getContractId())
                 .setText(R.id.tv_time, TextUtils.isEmpty(time) ? "" : time.replace(".", ":"))
                 .setText(R.id.tv_type, MarketUtil.getTradeDirection(bsFlag) + MarketUtil.getOCState(item.getOcFlag()))
@@ -50,7 +53,5 @@ public class EntrustAdapter extends BaseQuickAdapter<OrderPageVo.OrderBean, Base
                 .setText(R.id.tv_entrust, String.valueOf(item.getEntrustNumber()))
                 .setText(R.id.tv_surplus, String.valueOf(item.getRemnantNumber()))
                 .setText(R.id.tv_state, MarketUtil.getEntrustState(item.getStatus()));
-
-        mDate = date;
     }
 }

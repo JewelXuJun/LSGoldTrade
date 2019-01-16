@@ -24,6 +24,7 @@ import com.jme.lsgoldtrade.service.TradeService;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
@@ -38,6 +39,8 @@ public class HistoryEntrustActivity extends JMEBaseActivity implements OnRefresh
     private DatePickerDialog mDatePickerDialog;
     private View mEmptyView;
 
+    private List<Boolean> mList;
+
     private long mStartTime = 0;
     private long mEndTime = 0;
     private int mYear;
@@ -45,6 +48,7 @@ public class HistoryEntrustActivity extends JMEBaseActivity implements OnRefresh
     private int mDayOfMonth;
     private int mCurrentPage = 1;
     private boolean bHasNext = false;
+    private String mDate = "";
     private String mPagingKey = "";
 
     private static final int TIME_START = 0;
@@ -69,9 +73,9 @@ public class HistoryEntrustActivity extends JMEBaseActivity implements OnRefresh
         super.initData(savedInstanceState);
 
         mAdapter = new EntrustAdapter(this, R.layout.item_entrust, null, "History");
+        mList = new ArrayList<>();
 
         mBinding.recyclerView.setHasFixedSize(false);
-        mBinding.recyclerView.addItemDecoration(new MarginDividerItemDecoration(mContext, LinearLayoutManager.VERTICAL));
         mBinding.recyclerView.setLayoutManager(new LinearLayoutManager(mContext));
         mBinding.recyclerView.setAdapter(mAdapter);
 
@@ -172,12 +176,30 @@ public class HistoryEntrustActivity extends JMEBaseActivity implements OnRefresh
     }
 
     private void initOrderHisPage(boolean enable) {
-        mAdapter.clearDate();
-
         mCurrentPage = 1;
+        mDate = "";
         mPagingKey = "";
 
         orderhispage(enable);
+    }
+
+    private void setListData(List<OrderPageVo.OrderBean> orderBeanList) {
+        if (null == orderBeanList || 0 == orderBeanList.size())
+            return;
+
+        for (int i = 0; i < orderBeanList.size(); i++) {
+            OrderPageVo.OrderBean orderBean = orderBeanList.get(i);
+
+            if (null != orderBean) {
+                String date = orderBean.getTradeDate();
+
+                mList.add(!mDate.equals(date));
+
+                mDate = orderBean.getTradeDate();
+            }
+        }
+
+        mAdapter.setList(mList);
     }
 
     private void setEmptyData() {
@@ -227,23 +249,35 @@ public class HistoryEntrustActivity extends JMEBaseActivity implements OnRefresh
                         List<OrderPageVo.OrderBean> orderBeanList = orderHisPageVo.getList();
 
                         if (bHasNext) {
-                            if (mCurrentPage == 1)
+                            if (mCurrentPage == 1) {
+                                mList.clear();
+                                setListData(orderBeanList);
+
                                 mAdapter.setNewData(orderBeanList);
-                            else
+                            } else {
+                                setListData(orderBeanList);
+
                                 mAdapter.addData(orderBeanList);
+                            }
 
                             mAdapter.loadMoreComplete();
                             mBinding.swipeRefreshLayout.finishRefresh(true);
                         } else {
                             if (mCurrentPage == 1) {
                                 if (null == orderBeanList || 0 == orderBeanList.size()) {
+                                    mList.clear();
                                     mAdapter.setNewData(null);
                                     mAdapter.setEmptyView(getEmptyView());
                                 } else {
+                                    mList.clear();
+                                    setListData(orderBeanList);
+
                                     mAdapter.setNewData(orderBeanList);
                                     mAdapter.loadMoreComplete();
                                 }
                             } else {
+                                setListData(orderBeanList);
+
                                 mAdapter.addData(orderBeanList);
                                 mAdapter.loadMoreComplete();
                             }
