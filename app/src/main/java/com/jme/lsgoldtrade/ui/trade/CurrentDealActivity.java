@@ -33,6 +33,7 @@ public class CurrentDealActivity extends JMEBaseActivity implements OnRefreshLis
 
     private int mCurrentPage = 1;
     private boolean bHasNext = false;
+    private String mPagingKey = "";
 
     @Override
     protected int getContentViewId() {
@@ -52,10 +53,9 @@ public class CurrentDealActivity extends JMEBaseActivity implements OnRefreshLis
     protected void initData(Bundle savedInstanceState) {
         super.initData(savedInstanceState);
 
-        mAdapter = new DealAdapter(R.layout.item_deal, null, "Current");
+        mAdapter = new DealAdapter(this, R.layout.item_deal, null, "Current");
 
         mBinding.recyclerView.setHasFixedSize(false);
-        mBinding.recyclerView.addItemDecoration(new MarginDividerItemDecoration(this, LinearLayoutManager.VERTICAL));
         mBinding.recyclerView.setLayoutManager(new LinearLayoutManager(this));
         mBinding.recyclerView.setAdapter(mAdapter);
     }
@@ -64,8 +64,8 @@ public class CurrentDealActivity extends JMEBaseActivity implements OnRefreshLis
     protected void initListener() {
         super.initListener();
 
-        mAdapter.setOnLoadMoreListener(this, mBinding.recyclerView);
         mBinding.swipeRefreshLayout.setOnRefreshListener(this);
+        mAdapter.setOnLoadMoreListener(this, mBinding.recyclerView);
     }
 
     @Override
@@ -82,15 +82,14 @@ public class CurrentDealActivity extends JMEBaseActivity implements OnRefreshLis
 
     private void initDealPage(boolean enable) {
         mCurrentPage = 1;
+        mPagingKey = "";
 
         dealpage(enable);
     }
 
     private void setEmptyData() {
-        if (mCurrentPage == 1)
-            mBinding.swipeRefreshLayout.finishRefresh(false);
-        else
-            mAdapter.loadMoreFail();
+        mBinding.swipeRefreshLayout.finishRefresh(false);
+        mAdapter.loadMoreFail();
     }
 
     private View getEmptyView() {
@@ -102,7 +101,8 @@ public class CurrentDealActivity extends JMEBaseActivity implements OnRefreshLis
 
     private void dealpage(boolean enable) {
         HashMap<String, String> params = new HashMap<>();
-        params.put("pageNo", String.valueOf(mCurrentPage));
+        params.put("accountId", mUser.getAccountID());
+        params.put("pagingKey", mPagingKey);
 
         sendRequest(TradeService.getInstance().dealpage, params, enable);
     }
@@ -128,19 +128,32 @@ public class CurrentDealActivity extends JMEBaseActivity implements OnRefreshLis
                         setEmptyData();
                     } else {
                         bHasNext = dealPageVo.isHasNext();
-
+                        mPagingKey = dealPageVo.getPagingKey();
                         List<DealPageVo.DealBean> dealPageVoList = dealPageVo.getList();
 
-                        if (mCurrentPage == 1) {
-                            mAdapter.setNewData(dealPageVoList);
+                        if (bHasNext) {
+                            if (mCurrentPage == 1)
+                                mAdapter.setNewData(dealPageVoList);
+                            else
+                                mAdapter.addData(dealPageVoList);
 
-                            if (null == dealPageVoList || 0 == dealPageVoList.size())
-                                mAdapter.setEmptyView(getEmptyView());
-
+                            mAdapter.loadMoreComplete();
                             mBinding.swipeRefreshLayout.finishRefresh(true);
                         } else {
-                            mAdapter.addData(dealPageVoList);
-                            mAdapter.loadMoreComplete();
+                            if (mCurrentPage == 1) {
+                                if (null == dealPageVoList || 0 == dealPageVoList.size()) {
+                                    mAdapter.setNewData(null);
+                                    mAdapter.setEmptyView(getEmptyView());
+                                } else {
+                                    mAdapter.setNewData(dealPageVoList);
+                                    mAdapter.loadMoreComplete();
+                                }
+                            } else {
+                                mAdapter.addData(dealPageVoList);
+                                mAdapter.loadMoreComplete();
+                            }
+
+                            mBinding.swipeRefreshLayout.finishRefresh(true);
                         }
                     }
                 } else {

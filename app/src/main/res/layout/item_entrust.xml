@@ -12,7 +12,6 @@
         android:layout_gravity="center_vertical|left"
         android:background="@color/color_date_background"
         android:paddingLeft="@dimen/common_page_padding"
-        android:text="111111"
         android:textColor="@color/black_pale"
         android:textSize="@dimen/sp_12"
         android:visibility="gone" />

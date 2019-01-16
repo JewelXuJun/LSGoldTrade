@@ -70,11 +70,9 @@ public class HistoryDealActivity extends JMEBaseActivity implements OnRefreshLis
     protected void initData(Bundle savedInstanceState) {
         super.initData(savedInstanceState);
 
-        mAdapter = new DealAdapter(R.layout.item_deal, null, "History");
-        mAdapter.clearDate();
+        mAdapter = new DealAdapter(this, R.layout.item_deal, null, "History");
 
         mBinding.recyclerView.setHasFixedSize(false);
-        mBinding.recyclerView.addItemDecoration(new MarginDividerItemDecoration(mContext, LinearLayoutManager.VERTICAL));
         mBinding.recyclerView.setLayoutManager(new LinearLayoutManager(mContext));
         mBinding.recyclerView.setAdapter(mAdapter);
 
@@ -173,8 +171,6 @@ public class HistoryDealActivity extends JMEBaseActivity implements OnRefreshLis
     private void initDealHistory(boolean enablle) {
         mCurrentPage = 1;
         mSearchKey = "";
-
-        mAdapter.clearDate();
 
         dealhispage(enablle);
     }

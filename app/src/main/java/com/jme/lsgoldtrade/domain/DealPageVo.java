@@ -9,6 +9,8 @@ public class DealPageVo implements Serializable {
 
     private boolean hasNext;
 
+    private String pagingKey;
+
     private List<DealBean> list;
 
     public boolean isHasNext() {
@@ -17,6 +19,14 @@ public class DealPageVo implements Serializable {
 
     public void setHasNext(boolean hasNext) {
         this.hasNext = hasNext;
+    }
+
+    public String getPagingKey() {
+        return pagingKey;
+    }
+
+    public void setPagingKey(String pagingKey) {
+        this.pagingKey = pagingKey;
     }
 
     public List<DealBean> getList() {
@@ -29,21 +39,23 @@ public class DealPageVo implements Serializable {
 
     public static class DealBean {
         /**
-         *  "matchNo":"1704190000009857",
-         *  "bsFlag":2,
-         *  "contractId":"Au(T+N2)",
-         *  "matchDate":"2017-01-01",
-         *  "matchTime":"10:10:10",
-         *  "matchPrice":30000,
-         *  "matchQuantity":1000000000,
-         *  "matchHand":1000,
-         *  "amount":1000000,
-         *  "orderNo":02005000095,
-         *  "orderType":1,
-         *  "ocFlag":0,
-         *  "tradingType":4,
-         *  "closeFlag":0,
-         *  "transactionFee":100
+         * "matchNo":"1704190000009857",
+         * "bsFlag":2,
+         * "contractId":"Au(T+N2)",
+         * "matchDate":"2017-01-01",
+         * "matchTime":"10:10:10",
+         * "matchPrice":30000,
+         * "matchQuantity":1000000000,
+         * "matchHand":1000,
+         * "amount":1000000,
+         * "orderNo":02005000095,
+         * "orderType":1,
+         * "ocFlag":0,
+         * "tradingType":4,
+         * "bankCloseFlag": 0,
+         * "exOrderNo": "02000473",
+         * "transactionFee": 0,
+         * "basicMarginRate": 900
          */
 
         private String matchNo;
@@ -72,9 +84,13 @@ public class DealPageVo implements Serializable {
 
         private int tradingType;
 
-        private int closeFlag;
+        private int bankCloseFlag;
+
+        private String exOrderNo;
 
         private long transactionFee;
+
+        private long basicMarginRate;
 
         public String getMatchNo() {
             return matchNo;
@@ -180,12 +196,20 @@ public class DealPageVo implements Serializable {
             this.tradingType = tradingType;
         }
 
-        public int getCloseFlag() {
-            return closeFlag;
+        public int getBankCloseFlag() {
+            return bankCloseFlag;
         }
 
-        public void setCloseFlag(int closeFlag) {
-            this.closeFlag = closeFlag;
+        public void setBankCloseFlag(int bankCloseFlag) {
+            this.bankCloseFlag = bankCloseFlag;
+        }
+
+        public String getExOrderNo() {
+            return exOrderNo;
+        }
+
+        public void setExOrderNo(String exOrderNo) {
+            this.exOrderNo = exOrderNo;
         }
 
         public long getTransactionFee() {
@@ -194,6 +218,14 @@ public class DealPageVo implements Serializable {
 
         public void setTransactionFee(long transactionFee) {
             this.transactionFee = transactionFee;
+        }
+
+        public long getBasicMarginRate() {
+            return basicMarginRate;
+        }
+
+        public void setBasicMarginRate(long basicMarginRate) {
+            this.basicMarginRate = basicMarginRate;
         }
 
         public String getMatchPriceStr() {

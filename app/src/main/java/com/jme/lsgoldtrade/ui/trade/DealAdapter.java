@@ -1,6 +1,9 @@
 package com.jme.lsgoldtrade.ui.trade;
 
+import android.content.Context;
 import android.support.annotation.Nullable;
+import android.support.v4.content.ContextCompat;
+import android.text.TextUtils;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
@@ -13,16 +16,12 @@ import java.util.List;
 public class DealAdapter extends BaseQuickAdapter<DealPageVo.DealBean, BaseViewHolder> {
 
     private String mType;
-    private String mDate = "";
 
-    public DealAdapter(int layoutResId, @Nullable List<DealPageVo.DealBean> data, String type) {
+    public DealAdapter(Context context, int layoutResId, @Nullable List<DealPageVo.DealBean> data, String type) {
         super(layoutResId, data);
 
+        mContext = context;
         mType = type;
-    }
-
-    public void clearDate() {
-        mDate = "";
     }
 
     @Override
@@ -31,18 +30,21 @@ public class DealAdapter extends BaseQuickAdapter<DealPageVo.DealBean, BaseViewH
             return;
 
         String date = item.getMatchDate();
+        String time = item.getMatchTime();
         int bsFlag = item.getBsFlag();
 
+       /* if (mType.equals("History"))
+            helper.setGone(R.id.tv_date, mList.get(helper.getAdapterPosition()));
+        else*/
+            helper.setGone(R.id.tv_date, false);
+
         helper.setText(R.id.tv_date, date)
-                .setVisible(R.id.tv_date, mType.equals("History") && !mDate.equals(date))
                 .setText(R.id.tv_contract, item.getContractId())
-                .setText(R.id.tv_time, item.getMatchTime())
+                .setText(R.id.tv_time,  TextUtils.isEmpty(time) ? "" : time.replace(".", ":"))
                 .setText(R.id.tv_type, MarketUtil.getTradeDirection(bsFlag) + MarketUtil.getOCState(item.getOcFlag()))
-                .setTextColor(R.id.tv_type, MarketUtil.getTradeDirectionColor(bsFlag))
+                .setTextColor(R.id.tv_type, ContextCompat.getColor(mContext, MarketUtil.getTradeDirectionColor(bsFlag)))
                 .setText(R.id.tv_amount, String.valueOf(item.getMatchHand()))
                 .setText(R.id.tv_price, MarketUtil.decimalFormatMoney(item.getMatchPriceStr()))
                 .setText(R.id.tv_turn_volume, MarketUtil.decimalFormatMoney(item.getAmountStr()));
-
-        mDate = date;
     }
 }
