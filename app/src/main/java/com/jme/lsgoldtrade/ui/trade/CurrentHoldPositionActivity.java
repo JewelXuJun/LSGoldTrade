@@ -1,6 +1,8 @@
 package com.jme.lsgoldtrade.ui.trade;
 
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.LayoutInflater;
@@ -13,14 +15,21 @@ import com.jme.common.network.Head;
 import com.jme.common.ui.view.MarginDividerItemDecoration;
 import com.jme.lsgoldtrade.R;
 import com.jme.lsgoldtrade.base.JMEBaseActivity;
+import com.jme.lsgoldtrade.config.AppConfig;
 import com.jme.lsgoldtrade.config.Constants;
 import com.jme.lsgoldtrade.databinding.ActivityCurrentHoldPositionBinding;
 import com.jme.lsgoldtrade.domain.DealPageVo;
+import com.jme.lsgoldtrade.domain.FiveSpeedVo;
 import com.jme.lsgoldtrade.domain.PositionPageVo;
+import com.jme.lsgoldtrade.domain.PositionVo;
+import com.jme.lsgoldtrade.service.MarketService;
 import com.jme.lsgoldtrade.service.TradeService;
+import com.jme.lsgoldtrade.util.MarketUtil;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 
+import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -32,8 +41,29 @@ public class CurrentHoldPositionActivity extends JMEBaseActivity implements OnRe
     private HoldPositionAdapter mAdapter;
     private View mEmptyView;
 
+    private List<String> mList;
+
     private int mCurrentPage = 1;
+    private boolean bFlag = true;
     private boolean bHasNext = false;
+    private String mPagingKey = "";
+
+    private Handler mHandler = new Handler() {
+        public void handleMessage(Message msg) {
+            switch (msg.what) {
+                case Constants.Msg.MSG_POSITION_UPDATE_DATA:
+                    mHandler.removeMessages(Constants.Msg.MSG_POSITION_UPDATE_DATA);
+
+                    getMarket();
+
+                    mHandler.sendEmptyMessageDelayed(Constants.Msg.MSG_POSITION_UPDATE_DATA, AppConfig.Minute);
+
+                    break;
+            }
+
+            super.handleMessage(msg);
+        }
+    };
 
     @Override
     protected int getContentViewId() {
@@ -53,10 +83,10 @@ public class CurrentHoldPositionActivity extends JMEBaseActivity implements OnRe
     protected void initData(Bundle savedInstanceState) {
         super.initData(savedInstanceState);
 
-        mAdapter = new HoldPositionAdapter(R.layout.item_hold_position, null);
+        mAdapter = new HoldPositionAdapter(this, R.layout.item_hold_position, null);
+        mList = new ArrayList<>();
 
         mBinding.recyclerView.setHasFixedSize(false);
-        mBinding.recyclerView.addItemDecoration(new MarginDividerItemDecoration(mContext, LinearLayoutManager.VERTICAL));
         mBinding.recyclerView.setLayoutManager(new LinearLayoutManager(this));
         mBinding.recyclerView.setAdapter(mAdapter);
     }
@@ -65,8 +95,8 @@ public class CurrentHoldPositionActivity extends JMEBaseActivity implements OnRe
     protected void initListener() {
         super.initListener();
 
-        mAdapter.setOnLoadMoreListener(this, mBinding.recyclerView);
         mBinding.swipeRefreshLayout.setOnRefreshListener(this);
+        mAdapter.setOnLoadMoreListener(this, mBinding.recyclerView);
     }
 
     @Override
@@ -81,17 +111,27 @@ public class CurrentHoldPositionActivity extends JMEBaseActivity implements OnRe
         initPosition(true);
     }
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+
+        mHandler.removeMessages(Constants.Msg.MSG_POSITION_UPDATE_DATA);
+    }
+
     private void initPosition(boolean enable) {
+        bFlag = true;
         mCurrentPage = 1;
+        mPagingKey = "";
+        mList.clear();
+
+        mHandler.removeMessages(Constants.Msg.MSG_POSITION_UPDATE_DATA);
 
         position(enable);
     }
 
     private void setEmptyData() {
-        if (mCurrentPage == 1)
-            mBinding.swipeRefreshLayout.finishRefresh(false);
-        else
-            mAdapter.loadMoreFail();
+        mBinding.swipeRefreshLayout.finishRefresh(false);
+        mAdapter.loadMoreFail();
     }
 
     private View getEmptyView() {
@@ -101,9 +141,17 @@ public class CurrentHoldPositionActivity extends JMEBaseActivity implements OnRe
         return mEmptyView;
     }
 
+    private void getMarket() {
+        HashMap<String, String> params = new HashMap<>();
+        params.put("list", "");
+
+        sendRequest(MarketService.getInstance().getFiveSpeedQuotes, params, false);
+    }
+
     private void position(boolean enable) {
         HashMap<String, String> params = new HashMap<>();
-        params.put("pageNo", String.valueOf(mCurrentPage));
+        params.put("accountId", mUser.getAccountID());
+        params.put("pagingKey", mPagingKey);
 
         sendRequest(TradeService.getInstance().position, params, enable);
     }
@@ -113,6 +161,48 @@ public class CurrentHoldPositionActivity extends JMEBaseActivity implements OnRe
         super.DataReturn(request, head, response);
 
         switch (request.getApi().getName()) {
+            case "GetFiveSpeedQuotes":
+                if (head.isSuccess()) {
+                    List<FiveSpeedVo> fiveSpeedVoList;
+
+                    try {
+                        fiveSpeedVoList = (List<FiveSpeedVo>) response;
+                    } catch (Exception e) {
+                        fiveSpeedVoList = null;
+
+                        e.getMessage();
+                    }
+
+                    List<PositionVo> positionVoList = mAdapter.getData();
+
+                    if (null == fiveSpeedVoList || 0 == fiveSpeedVoList.size() || null == positionVoList || 0 == positionVoList.size())
+                        return;
+
+                    mList.clear();
+
+                    for (PositionVo positionVo : positionVoList) {
+                        if (null != positionVo) {
+                            String contractID = positionVo.getContractId();
+
+                            for (FiveSpeedVo fiveSpeedVo : fiveSpeedVoList) {
+                                if (null != fiveSpeedVo) {
+                                    if (contractID.equals(fiveSpeedVo.getContractId())) {
+                                        String floatProfit = (new BigDecimal(MarketUtil.getPriceValue(
+                                                new BigDecimal(fiveSpeedVo.getLatestPrice()).subtract(new BigDecimal(positionVo.getPositionAverage())).longValue()))
+                                                .multiply(new BigDecimal(positionVo.getPosition())))
+                                                .add(new BigDecimal(positionVo.getUnliquidatedProfit())).setScale(2, BigDecimal.ROUND_DOWN).toPlainString();
+
+                                        mList.add(floatProfit);
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+                    mAdapter.notifyDataSetChanged();
+                }
+
+                break;
             case "Position":
                 if (head.isSuccess()) {
                     PositionPageVo positionPageVo;
@@ -129,23 +219,51 @@ public class CurrentHoldPositionActivity extends JMEBaseActivity implements OnRe
                         setEmptyData();
                     } else {
                         bHasNext = positionPageVo.isHasNext();
+                        mPagingKey = positionPageVo.getPagingKey();
+                        List<PositionVo> positionVoList = positionPageVo.getPositionList();
 
-                        List<PositionPageVo.PositionBean> positionBeanList = positionPageVo.getList();
+                        if (null != positionVoList && 0 != positionVoList.size()) {
+                            for (PositionVo positionVo : positionVoList) {
+                                if (null != positionVo)
+                                    mList.add(MarketUtil.getPriceValue(positionVo.getFloatProfit() + positionVo.getUnliquidatedProfit()));
+                            }
+                        }
 
-                        if (mCurrentPage == 1) {
-                            mAdapter.setNewData(positionBeanList);
+                        mAdapter.setList(mList);
 
-                            if (null == positionBeanList || 0 == positionBeanList.size())
-                                mAdapter.setEmptyView(getEmptyView());
+                        if (bHasNext) {
+                            if (mCurrentPage == 1)
+                                mAdapter.setNewData(positionVoList);
+                            else
+                                mAdapter.addData(positionVoList);
 
+                            mAdapter.loadMoreComplete();
                             mBinding.swipeRefreshLayout.finishRefresh(true);
                         } else {
-                            mAdapter.addData(positionBeanList);
-                            mAdapter.loadMoreComplete();
+                            if (mCurrentPage == 1) {
+                                if (null == positionVoList || 0 == positionVoList.size()) {
+                                    mAdapter.setNewData(null);
+                                    mAdapter.setEmptyView(getEmptyView());
+                                } else {
+                                    mAdapter.setNewData(positionVoList);
+                                    mAdapter.loadMoreComplete();
+                                }
+                            } else {
+                                mAdapter.addData(positionVoList);
+                                mAdapter.loadMoreComplete();
+                            }
+
+                            mBinding.swipeRefreshLayout.finishRefresh(true);
                         }
                     }
                 } else {
                     setEmptyData();
+                }
+
+                if (bFlag) {
+                    bFlag = false;
+
+                    mHandler.sendEmptyMessageDelayed(Constants.Msg.MSG_POSITION_UPDATE_DATA, AppConfig.Minute);
                 }
 
                 break;

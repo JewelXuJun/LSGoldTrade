@@ -42,7 +42,7 @@ public class ItemHoldPositionFragment extends JMEBaseFragment implements BaseQui
     protected void initData(Bundle savedInstanceState) {
         super.initData(savedInstanceState);
 
-        mAdapter = new HoldPositionAdapter(R.layout.item_hold_position, null);
+        mAdapter = new HoldPositionAdapter(mContext, R.layout.item_hold_position, null);
 
         mBinding.recyclerView.setHasFixedSize(false);
         mBinding.recyclerView.addItemDecoration(new MarginDividerItemDecoration(mContext, LinearLayoutManager.VERTICAL));
@@ -125,7 +125,7 @@ public class ItemHoldPositionFragment extends JMEBaseFragment implements BaseQui
 
                     List<PositionPageVo.PositionBean> positionBeanList = positionPageVo.getList();
 
-                    if (mCurrentPage == 1) {
+                    /*if (mCurrentPage == 1) {
                         mAdapter.setNewData(positionBeanList);
 
                         if (null != positionBeanList && 0 < positionBeanList.size())
@@ -133,7 +133,7 @@ public class ItemHoldPositionFragment extends JMEBaseFragment implements BaseQui
                     } else {
                         mAdapter.addData(positionBeanList);
                         mAdapter.loadMoreComplete();
-                    }
+                    }*/
                 }
 
                 break;

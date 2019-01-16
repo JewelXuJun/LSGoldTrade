@@ -64,7 +64,7 @@
     <string name="trade_floating">浮动盈亏(元)</string>
     <string name="trade_contract_pupil">合约/多空</string>
     <string name="trade_available_hold_position">可用/持仓</string>
-    <string name="trade_average_opening_price">开仓均价</string>
+    <string name="trade_average_price">持仓均价</string>
     <string name="trade_floating_rate">盈亏/比例</string>
     <string name="trade_money_in">入金</string>
     <string name="trade_money_out">出金</string>

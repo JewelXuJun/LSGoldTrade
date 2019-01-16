@@ -51,6 +51,31 @@ public class MarketUtil {
         return color;
     }
 
+    public static int getPriceStateColor(int type) {
+        int color;
+
+        switch (type) {
+            case -1:
+                color = R.color.common_font_decrease;
+
+                break;
+            case 0:
+                color = R.color.color_text_black;
+
+                break;
+            case 1:
+                color = R.color.common_font_increase;
+
+                break;
+            default:
+                color = R.color.color_text_black;
+
+                break;
+        }
+
+        return color;
+    }
+
     public static int getMarketStateBackgroundColor(int type) {
         int drawable;
 

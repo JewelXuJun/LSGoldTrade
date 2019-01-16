@@ -1,11 +1,14 @@
 package com.jme.lsgoldtrade.domain;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 public class PositionPageVo implements Serializable {
 
     private boolean hasNext;
+
+    private String pagingKey;
 
     private List<PositionBean> list;
 
@@ -17,6 +20,14 @@ public class PositionPageVo implements Serializable {
         this.hasNext = hasNext;
     }
 
+    public String getPagingKey() {
+        return pagingKey;
+    }
+
+    public void setPagingKey(String pagingKey) {
+        this.pagingKey = pagingKey;
+    }
+
     public List<PositionBean> getList() {
         return list;
     }
@@ -25,37 +36,37 @@ public class PositionPageVo implements Serializable {
         this.list = list;
     }
 
-    public static class PositionBean implements Serializable{
+    public static class PositionBean implements Serializable {
         /**
-         * "contractId":"Au(T+D)",
-         * "longPosition":100,
-         * "shortPosition":100,
-         * "lastLongPosition":100,
-         * "lastShortPosition":100,
-         * "todayLongPosition":100,
-         * "todayShortPosition":300,
-         * "longOffsetPosition":300,
-         * "shortOffsetPosition":300,
-         * "longTurnover":30000,
-         * "shortTurnover":30000,
-         * "deliveryApplyLongFrozen":1000,
-         * "deliveryApplyShortFrozen":1000,
-         * "deliveryApplyLong":1000,
-         * "deliveryApplyShort":1000,
-         * "longLimitFrozen":10000,
-         * "shortLimitFrozen":10000,
-         * "offsetLongFrozen":20000,
-         * "offsetShortFrozen":20000,
-         * "longPositionAverage":30000,
-         * "shortPositionAverage":30000,
-         * "longPositionMargin":1000000,
-         * "shortPositionMargin":1000000,
-         * "longPositionLimit":100,
-         * "shortPositionLimit":100,
-         * "longFloatProfit":200,
-         * "shortFloatProfit":100,
-         * "longUnliquidatedProfit":0,
-         * "shortUnliquidatedProfit":0
+         * "contractId": "mAu(T+D)",
+         * "longPosition": 5,
+         * "shortPosition": 1,
+         * "lastLongPosition": 0,
+         * "lastShortPosition": 0,
+         * "todayLongPosition": 5,
+         * "todayShortPosition": 1,
+         * "longOffsetPosition": 0,
+         * "shortOffsetPosition": 0,
+         * "longTurnOver": 10378500,
+         * "shortTurnOver": 0,
+         * "deliveryApplyLongFrozen": 0,
+         * "deliveryApplyShortFrozen": 0,
+         * "deliveryApplyLong": 0,
+         * "deliveryApplyShort": 0,
+         * "longLimitFrozen": 0,
+         * "shortLimitFrozen": 0,
+         * "offsetLongFrozen": 0,
+         * "offsetShortFrozen": 0,
+         * "longPositionAverage": 20757,
+         * "shortPositionAverage": 21222,
+         * "longPositionMargin": 934065,
+         * "shortPositionMargin": 0,
+         * "longPositionLimit": 2000,
+         * "shortPositionLimit": 2000,
+         * "longFloatProfit": 232500,
+         * "shortFloatProfit": 0,
+         * "longUnliquidatedProfit": 0,
+         * "shortUnliquidatedProfit": 0
          */
 
         private String contractId;
@@ -347,6 +358,60 @@ public class PositionPageVo implements Serializable {
         public void setShortUnliquidatedProfit(long shortUnliquidatedProfit) {
             this.shortUnliquidatedProfit = shortUnliquidatedProfit;
         }
+    }
+
+    public List<PositionVo> getPositionList() {
+        List<PositionVo> positionVoList = null;
+
+        if (null != list && 0 != list.size()) {
+            positionVoList = new ArrayList<>();
+
+            for (PositionPageVo.PositionBean positionBean : list) {
+                if (null != positionBean) {
+                    PositionVo longPositionVo = new PositionVo();
+                    longPositionVo.setContractId(positionBean.getContractId());
+                    longPositionVo.setType("多");
+                    longPositionVo.setPosition(positionBean.getLongPosition());
+                    longPositionVo.setLastPosition(positionBean.getLastLongPosition());
+                    longPositionVo.setTodayPosition(positionBean.getTodayLongPosition());
+                    longPositionVo.setOffsetPosition(positionBean.getLongOffsetPosition());
+                    longPositionVo.setTurnOver(positionBean.getLongTurnover());
+                    longPositionVo.setDeliveryApplyFrozen(positionBean.getDeliveryApplyLongFrozen());
+                    longPositionVo.setDeliveryApply(positionBean.getDeliveryApplyLong());
+                    longPositionVo.setLimitFrozen(positionBean.getLongLimitFrozen());
+                    longPositionVo.setOffsetFrozen(positionBean.getOffsetLongFrozen());
+                    longPositionVo.setPositionAverage(positionBean.getLongPositionAverage());
+                    longPositionVo.setPositionMargin(positionBean.getLongPositionMargin());
+                    longPositionVo.setPositionLimit(positionBean.getLongPositionLimit());
+                    longPositionVo.setFloatProfit(positionBean.getLongFloatProfit());
+                    longPositionVo.setUnliquidatedProfit(positionBean.getLongUnliquidatedProfit());
+
+                    positionVoList.add(longPositionVo);
+
+                    PositionVo shortPositionVo = new PositionVo();
+                    shortPositionVo.setContractId(positionBean.getContractId());
+                    shortPositionVo.setType("空");
+                    shortPositionVo.setPosition(positionBean.getShortPosition());
+                    shortPositionVo.setLastPosition(positionBean.getLastShortPosition());
+                    shortPositionVo.setTodayPosition(positionBean.getTodayShortPosition());
+                    shortPositionVo.setOffsetPosition(positionBean.getShortOffsetPosition());
+                    shortPositionVo.setTurnOver(positionBean.getShortTurnover());
+                    shortPositionVo.setDeliveryApplyFrozen(positionBean.getDeliveryApplyShortFrozen());
+                    shortPositionVo.setDeliveryApply(positionBean.getDeliveryApplyShort());
+                    shortPositionVo.setLimitFrozen(positionBean.getShortLimitFrozen());
+                    shortPositionVo.setOffsetFrozen(positionBean.getOffsetShortFrozen());
+                    shortPositionVo.setPositionAverage(positionBean.getShortPositionAverage());
+                    shortPositionVo.setPositionMargin(positionBean.getShortPositionMargin());
+                    shortPositionVo.setPositionLimit(positionBean.getShortPositionLimit());
+                    shortPositionVo.setFloatProfit(positionBean.getShortFloatProfit());
+                    shortPositionVo.setUnliquidatedProfit(positionBean.getShortUnliquidatedProfit());
+
+                    positionVoList.add(shortPositionVo);
+                }
+            }
+        }
+
+        return positionVoList;
     }
 
 }

@@ -47,7 +47,7 @@ public class HoldPositionFragment extends JMEBaseFragment implements OnRefreshLi
     protected void initData(Bundle savedInstanceState) {
         super.initData(savedInstanceState);
 
-        mAdapter = new HoldPositionAdapter(R.layout.item_hold_position, null);
+        mAdapter = new HoldPositionAdapter(mContext, R.layout.item_hold_position, null);
 
         mBinding.recyclerView.addItemDecoration(new MarginDividerItemDecoration(mContext, LinearLayoutManager.VERTICAL));
         mBinding.recyclerView.setLayoutManager(new LinearLayoutManager(mContext));
@@ -129,7 +129,7 @@ public class HoldPositionFragment extends JMEBaseFragment implements OnRefreshLi
 
                     bHasNext = positionPageVo.isHasNext();
 
-                    List<PositionPageVo.PositionBean> positionBeanList = positionPageVo.getList();
+                   /* List<PositionPageVo.PositionBean> positionBeanList = positionPageVo.getList();
 
                     if (mCurrentPage == 1) {
                         mAdapter.setNewData(positionBeanList);
@@ -139,7 +139,7 @@ public class HoldPositionFragment extends JMEBaseFragment implements OnRefreshLi
                     } else {
                         mAdapter.addData(positionBeanList);
                         mAdapter.loadMoreComplete();
-                    }
+                    }*/
                 }
 
                 break;
