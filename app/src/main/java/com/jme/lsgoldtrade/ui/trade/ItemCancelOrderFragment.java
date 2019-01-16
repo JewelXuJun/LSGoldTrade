@@ -45,7 +45,7 @@ public class ItemCancelOrderFragment extends JMEBaseFragment implements BaseQuic
     protected void initData(Bundle savedInstanceState) {
         super.initData(savedInstanceState);
 
-        mAdapter = new CancelOrderAdapter(R.layout.item_cancel_order, null);
+        mAdapter = new CancelOrderAdapter(mContext, R.layout.item_cancel_order, null);
 
         mBinding.recyclerView.setHasFixedSize(false);
         mBinding.recyclerView.addItemDecoration(new MarginDividerItemDecoration(mContext, LinearLayoutManager.VERTICAL));
