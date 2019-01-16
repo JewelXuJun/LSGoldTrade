@@ -3,6 +3,8 @@ package com.jme.lsgoldtrade.ui.trade;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.LinearLayoutManager;
+import android.text.TextUtils;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 
@@ -15,6 +17,7 @@ import com.jme.lsgoldtrade.base.JMEBaseFragment;
 import com.jme.lsgoldtrade.databinding.FragmentCancelOrderBinding;
 import com.jme.lsgoldtrade.domain.OrderPageVo;
 import com.jme.lsgoldtrade.service.TradeService;
+import com.jme.lsgoldtrade.util.MarketUtil;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 
@@ -27,6 +30,7 @@ public class CancelOrderFragment extends JMEBaseFragment implements OnRefreshLis
 
     private CancelOrderAdapter mAdapter;
     private View mEmptyView;
+    private CancelOrderPopUpWindow mWindow;
 
     private boolean bVisibleToUser = false;
     private int mCurrentPage = 1;
@@ -50,6 +54,7 @@ public class CancelOrderFragment extends JMEBaseFragment implements OnRefreshLis
         super.initData(savedInstanceState);
 
         mAdapter = new CancelOrderAdapter(mContext, R.layout.item_cancel_order, null);
+        mWindow = new CancelOrderPopUpWindow(mContext);
 
         mBinding.recyclerView.setHasFixedSize(false);
         mBinding.recyclerView.setLayoutManager(new LinearLayoutManager(mContext));
@@ -64,7 +69,35 @@ public class CancelOrderFragment extends JMEBaseFragment implements OnRefreshLis
         mAdapter.setOnLoadMoreListener(this, mBinding.recyclerView);
 
         mAdapter.setOnItemClickListener((adapter, view, position) -> {
+            OrderPageVo.OrderBean orderBean = (OrderPageVo.OrderBean) adapter.getItem(position);
+
+            if (null == orderBean)
+                return;
+
             mAdapter.setSelectPosition(position);
+            mAdapter.notifyDataSetChanged();
+
+            if (null != mWindow) {
+                String time = orderBean.getDeclareTime();
+                String contractId = orderBean.getContractId();
+
+                mWindow.setData(contractId, TextUtils.isEmpty(time) ? "" : time.replace(".", ":"),
+                        MarketUtil.getTradeDirection(orderBean.getBsFlag()) + MarketUtil.getOCState(orderBean.getOcFlag()),
+                        MarketUtil.decimalFormatMoney(orderBean.getMatchPriceStr()), String.valueOf(orderBean.getEntrustNumber()),
+                        String.valueOf(orderBean.getRemnantNumber()), MarketUtil.getEntrustState(orderBean.getStatus()),
+                        (View) -> {
+                            mAdapter.setSelectPosition(-1);
+                            mAdapter.notifyDataSetChanged();
+
+                            mWindow.dismiss();
+                        },
+                        (View) -> {
+                            revocateorder(contractId, orderBean.getOrderNo());
+
+                            mWindow.dismiss();
+                        });
+                mWindow.showAtLocation(mBinding.recyclerView, Gravity.CENTER, 0, 0);
+            }
         });
     }
 
@@ -99,6 +132,9 @@ public class CancelOrderFragment extends JMEBaseFragment implements OnRefreshLis
     }
 
     private void initOrderPage(boolean enable) {
+        if (null != mWindow && mWindow.isShowing())
+            return;
+
         mCurrentPage = 1;
         mPagingKey = "";
         mAdapter.setSelectPosition(-1);
@@ -125,6 +161,15 @@ public class CancelOrderFragment extends JMEBaseFragment implements OnRefreshLis
         params.put("pagingKey", mPagingKey);
 
         sendRequest(TradeService.getInstance().orderpage, params, enable);
+    }
+
+    private void revocateorder(String contractId, String orderNo) {
+        HashMap<String, String> params = new HashMap<>();
+        params.put("contractId", contractId);
+        params.put("accountId", mUser.getAccountID());
+        params.put("orderNo", orderNo);
+
+        sendRequest(TradeService.getInstance().revocateorder, params, true);
     }
 
     @Override
@@ -179,6 +224,13 @@ public class CancelOrderFragment extends JMEBaseFragment implements OnRefreshLis
                 } else {
                     setEmptyData();
                 }
+
+                break;
+            case "RevocateOrder":
+                if (head.isSuccess())
+                    showShortToast(R.string.trade_cancel_order_success);
+
+                initOrderPage(true);
 
                 break;
         }

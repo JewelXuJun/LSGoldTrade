@@ -26,8 +26,6 @@ public class CancelOrderAdapter extends BaseQuickAdapter<OrderPageVo.OrderBean, 
 
     public void setSelectPosition(int position) {
         mPosition = position;
-
-        notifyDataSetChanged();
     }
 
     @Override

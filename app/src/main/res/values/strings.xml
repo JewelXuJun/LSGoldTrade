@@ -157,6 +157,11 @@
     <string name="trade_buy">买入</string>
     <string name="trade_sale">卖出</string>
     <string name="trade_success">下单成功</string>
+    <string name="trade_popupwindow_time">交易时间</string>
+    <string name="trade_popupwindow_trade_price">交易价格</string>
+    <string name="trade_popupwindow_surplus_amount">剩余数量</string>
+    <string name="trade_popupwindow_trade_status">交易状态</string>
+    <string name="trade_cancel_order_success">撤单成功</string>
 
     <!-- Personal -->
     <string name="personal_login">登录/注册</string>
