@@ -5,6 +5,8 @@ import android.app.DatePickerDialog;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.LinearLayoutManager;
+import android.view.LayoutInflater;
+import android.view.View;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.chad.library.adapter.base.BaseQuickAdapter;
@@ -16,11 +18,16 @@ import com.jme.lsgoldtrade.R;
 import com.jme.lsgoldtrade.base.JMEBaseActivity;
 import com.jme.lsgoldtrade.config.Constants;
 import com.jme.lsgoldtrade.databinding.ActivityHistoryEntrustBinding;
+import com.jme.lsgoldtrade.domain.OrderHisPageVo;
+import com.jme.lsgoldtrade.domain.OrderPageVo;
+import com.jme.lsgoldtrade.service.TradeService;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
 
 @Route(path = Constants.ARouterUriConst.HISTORYENTRUST)
 public class HistoryEntrustActivity extends JMEBaseActivity implements OnRefreshListener, BaseQuickAdapter.RequestLoadMoreListener {
@@ -29,12 +36,16 @@ public class HistoryEntrustActivity extends JMEBaseActivity implements OnRefresh
 
     private EntrustAdapter mAdapter;
     private DatePickerDialog mDatePickerDialog;
+    private View mEmptyView;
 
     private long mStartTime = 0;
     private long mEndTime = 0;
     private int mYear;
     private int mMonth;
     private int mDayOfMonth;
+    private int mCurrentPage = 1;
+    private boolean bHasNext = false;
+    private String mPagingKey = "";
 
     private static final int TIME_START = 0;
     private static final int TIME_END = 1;
@@ -57,8 +68,7 @@ public class HistoryEntrustActivity extends JMEBaseActivity implements OnRefresh
     protected void initData(Bundle savedInstanceState) {
         super.initData(savedInstanceState);
 
-        mAdapter = new EntrustAdapter(R.layout.item_entrust, null, "History");
-        mAdapter.clearDate();
+        mAdapter = new EntrustAdapter(this, R.layout.item_entrust, null, "History");
 
         mBinding.recyclerView.setHasFixedSize(false);
         mBinding.recyclerView.addItemDecoration(new MarginDividerItemDecoration(mContext, LinearLayoutManager.VERTICAL));
@@ -72,8 +82,8 @@ public class HistoryEntrustActivity extends JMEBaseActivity implements OnRefresh
     protected void initListener() {
         super.initListener();
 
-        mAdapter.setOnLoadMoreListener(this, mBinding.recyclerView);
         mBinding.swipeRefreshLayout.setOnRefreshListener(this);
+        mAdapter.setOnLoadMoreListener(this, mBinding.recyclerView);
     }
 
     @Override
@@ -81,6 +91,13 @@ public class HistoryEntrustActivity extends JMEBaseActivity implements OnRefresh
         super.initBinding();
 
         mBinding.setHandlers(new ClickHandlers());
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        initOrderHisPage(true);
     }
 
     private void initDate() {
@@ -133,6 +150,8 @@ public class HistoryEntrustActivity extends JMEBaseActivity implements OnRefresh
             mStartTime = startTime;
 
             mBinding.tvStartTime.setText(DateUtil.dateToString(mStartTime));
+
+            initOrderHisPage(true);
         } else {
             showShortToast(R.string.trade_start_time_error);
         }
@@ -145,24 +164,117 @@ public class HistoryEntrustActivity extends JMEBaseActivity implements OnRefresh
             mEndTime = endTime;
 
             mBinding.tvEndTime.setText(DateUtil.dateToString(mEndTime));
+
+            initOrderHisPage(true);
         } else {
             showShortToast(R.string.trade_end_time_error);
         }
     }
 
+    private void initOrderHisPage(boolean enable) {
+        mAdapter.clearDate();
+
+        mCurrentPage = 1;
+        mPagingKey = "";
+
+        orderhispage(enable);
+    }
+
+    private void setEmptyData() {
+        mBinding.swipeRefreshLayout.finishRefresh(false);
+        mAdapter.loadMoreFail();
+    }
+
+    private View getEmptyView() {
+        if (null == mEmptyView)
+            mEmptyView = LayoutInflater.from(mContext).inflate(R.layout.layout_empty, null);
+
+        return mEmptyView;
+    }
+
+    private void orderhispage(boolean enable) {
+        HashMap<String, String> params = new HashMap<>();
+        params.put("accountId", mUser.getAccountID());
+        params.put("beginDate", mBinding.tvStartTime.getText().toString());
+        params.put("endDate", mBinding.tvEndTime.getText().toString());
+        params.put("pagingKey", mPagingKey);
+
+        sendRequest(TradeService.getInstance().orderhispage, params, enable);
+    }
+
     @Override
     protected void DataReturn(DTRequest request, Head head, Object response) {
         super.DataReturn(request, head, response);
+
+        switch (request.getApi().getName()) {
+            case "OrderHisPage":
+                if (head.isSuccess()) {
+                    OrderHisPageVo orderHisPageVo;
+
+                    try {
+                        orderHisPageVo = (OrderHisPageVo) response;
+                    } catch (Exception e) {
+                        orderHisPageVo = null;
+
+                        e.printStackTrace();
+                    }
+
+                    if (null == orderHisPageVo) {
+                        setEmptyData();
+                    } else {
+                        bHasNext = orderHisPageVo.isHasNext();
+                        mPagingKey = orderHisPageVo.getPagingKey();
+                        List<OrderPageVo.OrderBean> orderBeanList = orderHisPageVo.getList();
+
+                        if (bHasNext) {
+                            if (mCurrentPage == 1)
+                                mAdapter.setNewData(orderBeanList);
+                            else
+                                mAdapter.addData(orderBeanList);
+
+                            mAdapter.loadMoreComplete();
+                            mBinding.swipeRefreshLayout.finishRefresh(true);
+                        } else {
+                            if (mCurrentPage == 1) {
+                                if (null == orderBeanList || 0 == orderBeanList.size()) {
+                                    mAdapter.setNewData(null);
+                                    mAdapter.setEmptyView(getEmptyView());
+                                } else {
+                                    mAdapter.setNewData(orderBeanList);
+                                    mAdapter.loadMoreComplete();
+                                }
+                            } else {
+                                mAdapter.addData(orderBeanList);
+                                mAdapter.loadMoreComplete();
+                            }
+
+                            mBinding.swipeRefreshLayout.finishRefresh(true);
+                        }
+                    }
+                } else {
+                    setEmptyData();
+                }
+
+                break;
+        }
     }
 
     @Override
     public void onLoadMoreRequested() {
+        mBinding.recyclerView.postDelayed(() -> {
+            if (bHasNext) {
+                mCurrentPage++;
 
+                orderhispage(true);
+            } else {
+                mAdapter.loadMoreEnd();
+            }
+        }, 0);
     }
 
     @Override
     public void onRefresh(@NonNull RefreshLayout refreshLayout) {
-
+        initOrderHisPage(false);
     }
 
     public class ClickHandlers {

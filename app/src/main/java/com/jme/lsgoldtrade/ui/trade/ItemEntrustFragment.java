@@ -45,7 +45,7 @@ public class ItemEntrustFragment extends JMEBaseFragment implements BaseQuickAda
     protected void initData(Bundle savedInstanceState) {
         super.initData(savedInstanceState);
 
-        mAdapter = new EntrustAdapter(R.layout.item_entrust, null, "Current");
+        mAdapter = new EntrustAdapter(mContext, R.layout.item_entrust, null, "Current");
 
         mBinding.recyclerView.setHasFixedSize(false);
         mBinding.recyclerView.addItemDecoration(new MarginDividerItemDecoration(mContext, LinearLayoutManager.VERTICAL));
@@ -107,7 +107,7 @@ public class ItemEntrustFragment extends JMEBaseFragment implements BaseQuickAda
             OrderPageVo.OrderBean orderBean = list.get(size - 1);
 
             if (null != orderBean)
-                mDeclareTime = orderBean.getDeclarTime();
+                mDeclareTime = orderBean.getDeclareTime();
         }
     }
 

@@ -63,7 +63,7 @@ public class OrderPageVo implements Serializable {
 
         private String tradeDate;
 
-        private String declarTime;
+        private String declareTime;
 
         private int contractType;
 
@@ -113,12 +113,12 @@ public class OrderPageVo implements Serializable {
             this.tradeDate = tradeDate;
         }
 
-        public String getDeclarTime() {
-            return declarTime;
+        public String getDeclareTime() {
+            return declareTime;
         }
 
-        public void setDeclarTime(String declarTime) {
-            this.declarTime = declarTime;
+        public void setDeclareTime(String declareTime) {
+            this.declareTime = declareTime;
         }
 
         public int getContractType() {

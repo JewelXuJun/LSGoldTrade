@@ -79,8 +79,9 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:gravity="center"
-            android:orientation="vertical">
+            android:gravity="right"
+            android:orientation="vertical"
+            android:paddingRight="@dimen/common_page_padding">
 
             <TextView
                 android:id="@+id/tv_entrust"

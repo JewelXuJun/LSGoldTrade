@@ -53,7 +53,7 @@ public class CurrentEntrustActivity extends JMEBaseActivity implements OnRefresh
     protected void initData(Bundle savedInstanceState) {
         super.initData(savedInstanceState);
 
-        mAdapter = new EntrustAdapter(R.layout.item_entrust, null, "Current");
+        mAdapter = new EntrustAdapter(this, R.layout.item_entrust, null, "Current");
 
         mBinding.recyclerView.setHasFixedSize(false);
         mBinding.recyclerView.addItemDecoration(new MarginDividerItemDecoration(this, LinearLayoutManager.VERTICAL));
@@ -144,6 +144,7 @@ public class CurrentEntrustActivity extends JMEBaseActivity implements OnRefresh
                         } else {
                             if (mCurrentPage == 1) {
                                 if (null == orderBeanList || 0 == orderBeanList.size()) {
+                                    mAdapter.setNewData(null);
                                     mAdapter.setEmptyView(getEmptyView());
                                 } else {
                                     mAdapter.setNewData(orderBeanList);

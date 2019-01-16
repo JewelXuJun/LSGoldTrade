@@ -27,6 +27,9 @@ public interface TradeApi {
     @GET("/gold-trade/v1.0.0/android/orderpage")
     Call<DTResponse> orderpage(@QueryMap Map<String, String> map);
 
+    @GET("/gold-trade/v1.0.0/android/orderhispage")
+    Call<DTResponse> orderhispage(@QueryMap Map<String, String> map);
+
     @GET("/gold-trade/v1.0.0/android/dealpage")
     Call<DTResponse> dealpage(@QueryMap Map<String, String> map);
 

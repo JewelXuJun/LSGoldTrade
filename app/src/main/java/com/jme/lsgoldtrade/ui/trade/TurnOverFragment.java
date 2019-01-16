@@ -236,6 +236,7 @@ public class TurnOverFragment extends JMEBaseFragment implements OnRefreshListen
                         } else {
                             if (mCurrentPage == 1) {
                                 if (null == turnOverBeanList || 0 == turnOverBeanList.size()) {
+                                    mAdapter.setNewData(null);
                                     mAdapter.setEmptyView(getEmptyView());
                                 } else {
                                     mAdapter.setNewData(turnOverBeanList);

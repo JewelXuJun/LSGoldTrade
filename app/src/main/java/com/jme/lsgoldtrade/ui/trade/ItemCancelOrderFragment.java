@@ -109,7 +109,7 @@ public class ItemCancelOrderFragment extends JMEBaseFragment implements BaseQuic
             OrderPageVo.OrderBean orderBean = list.get(size - 1);
 
             if (null != orderBean)
-                mDeclareTime = orderBean.getDeclarTime();
+                mDeclareTime = orderBean.getDeclareTime();
         }
     }
 

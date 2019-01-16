@@ -130,7 +130,7 @@ public class CancelOrderFragment extends JMEBaseFragment implements OnRefreshLis
             OrderPageVo.OrderBean orderBean = list.get(size - 1);
 
             if (null != orderBean)
-                mDeclareTime = orderBean.getDeclarTime();
+                mDeclareTime = orderBean.getDeclareTime();
         }
     }
 
