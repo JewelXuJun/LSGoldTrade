@@ -62,6 +62,10 @@ public class CancelOrderFragment extends JMEBaseFragment implements OnRefreshLis
 
         mBinding.swipeRefreshLayout.setOnRefreshListener(this);
         mAdapter.setOnLoadMoreListener(this, mBinding.recyclerView);
+
+        mAdapter.setOnItemClickListener((adapter, view, position) -> {
+            mAdapter.setSelectPosition(position);
+        });
     }
 
     @Override
@@ -97,6 +101,7 @@ public class CancelOrderFragment extends JMEBaseFragment implements OnRefreshLis
     private void initOrderPage(boolean enable) {
         mCurrentPage = 1;
         mPagingKey = "";
+        mAdapter.setSelectPosition(-1);
 
         orderpage(enable);
     }
