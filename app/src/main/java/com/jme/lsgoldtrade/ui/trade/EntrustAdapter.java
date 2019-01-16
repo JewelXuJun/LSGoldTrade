@@ -42,8 +42,12 @@ public class EntrustAdapter extends BaseQuickAdapter<OrderPageVo.OrderBean, Base
         String time = item.getDeclareTime();
         int bsFlag = item.getBsFlag();
 
+        if (mType.equals("History"))
+            helper.setGone(R.id.tv_date, mList.get(helper.getAdapterPosition()));
+        else
+            helper.setGone(R.id.tv_date, false);
+
         helper.setText(R.id.tv_date, date)
-                .setGone(R.id.tv_date, mType.equals("History") && mList.get(helper.getAdapterPosition()))
                 .setText(R.id.tv_contract, item.getContractId())
                 .setText(R.id.tv_time, TextUtils.isEmpty(time) ? "" : time.replace(".", ":"))
                 .setText(R.id.tv_type, MarketUtil.getTradeDirection(bsFlag) + MarketUtil.getOCState(item.getOcFlag()))

@@ -56,7 +56,6 @@ public class CurrentEntrustActivity extends JMEBaseActivity implements OnRefresh
         mAdapter = new EntrustAdapter(this, R.layout.item_entrust, null, "Current");
 
         mBinding.recyclerView.setHasFixedSize(false);
-        mBinding.recyclerView.addItemDecoration(new MarginDividerItemDecoration(this, LinearLayoutManager.VERTICAL));
         mBinding.recyclerView.setLayoutManager(new LinearLayoutManager(this));
         mBinding.recyclerView.setAdapter(mAdapter);
     }
