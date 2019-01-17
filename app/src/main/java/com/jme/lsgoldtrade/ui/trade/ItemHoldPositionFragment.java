@@ -194,7 +194,6 @@ public class ItemHoldPositionFragment extends JMEBaseFragment implements BaseQui
         bFlag = true;
         mCurrentPage = 1;
         mPagingKey = "";
-//        mList.clear();
 
         mHandler.removeMessages(Constants.Msg.MSG_DECLARATIONFORM_POSITION_UPDATE_DATA);
 
