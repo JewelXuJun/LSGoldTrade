@@ -187,9 +187,21 @@ public class CurrentHoldPositionActivity extends JMEBaseActivity implements OnRe
                             for (FiveSpeedVo fiveSpeedVo : fiveSpeedVoList) {
                                 if (null != fiveSpeedVo) {
                                     if (contractID.equals(fiveSpeedVo.getContractId())) {
-                                        String floatProfit = (new BigDecimal(MarketUtil.getPriceValue(
-                                                new BigDecimal(fiveSpeedVo.getLatestPrice()).subtract(new BigDecimal(positionVo.getPositionAverage())).longValue()))
-                                                .multiply(new BigDecimal(positionVo.getPosition())))
+                                        long latestprice = fiveSpeedVo.getLatestPrice();
+                                        long average = positionVo.getPositionAverage();
+                                        long handWeight = mContract.getHandWeightFromID(contractID);
+                                        long contractValue = contractID.equals("Ag(T+D)") ?
+                                                new BigDecimal(handWeight).divide(new BigDecimal(1000), 0, BigDecimal.ROUND_DOWN).longValue() : handWeight;
+
+                                          long margin;
+
+                                        if (positionVo.getType().equals("多"))
+                                            margin = new BigDecimal(latestprice).subtract(new BigDecimal(average)).longValue();
+                                        else
+                                            margin = new BigDecimal(average).subtract(new BigDecimal(latestprice)).longValue();
+
+                                        String floatProfit = (new BigDecimal(MarketUtil.getPriceValue(margin))
+                                                .multiply(new BigDecimal(contractValue)).multiply(new BigDecimal(positionVo.getPosition())))
                                                 .add(new BigDecimal(positionVo.getUnliquidatedProfit())).setScale(2, BigDecimal.ROUND_DOWN).toPlainString();
 
                                         mList.add(floatProfit);

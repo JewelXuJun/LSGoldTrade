@@ -425,4 +425,8 @@ public class MarketUtil {
         return formatValue(new BigDecimal(rate).divide(new BigDecimal(AppConfig.Rate_Divisor)).multiply(new BigDecimal(100)).toString(), 2);
     }
 
+    public static long getHandWeight(long handWeight) {
+        return new BigDecimal(handWeight).divide(new BigDecimal(AppConfig.HandWeight_Divisor)).longValue();
+    }
+
 }

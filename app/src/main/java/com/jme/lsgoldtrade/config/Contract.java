@@ -3,6 +3,7 @@ package com.jme.lsgoldtrade.config;
 import android.text.TextUtils;
 
 import com.jme.lsgoldtrade.domain.ContractInfoVo;
+import com.jme.lsgoldtrade.util.MarketUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -86,6 +87,20 @@ public class Contract {
         }
 
         return null;
+    }
+
+    public long getHandWeightFromID(String contractId) {
+        if (null == mList || 0 == mList.size() || TextUtils.isEmpty(contractId))
+            return 0;
+
+        for (ContractInfoVo contractInfoVo : mList) {
+            if (null != contractInfoVo) {
+                if (contractId.equals(contractInfoVo.getContractId()))
+                    return MarketUtil.getHandWeight(contractInfoVo.getHandWeight());
+            }
+        }
+
+        return 0;
     }
 
 }

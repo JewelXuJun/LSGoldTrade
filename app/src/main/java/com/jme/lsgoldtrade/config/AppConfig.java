@@ -20,6 +20,7 @@ public class AppConfig {
 
     public static final long Price_Divisor = 100;
     public static final long Rate_Divisor = 1000000;
+    public static final long HandWeight_Divisor = 1000000;
 
     public static final int Lentth_Limit = 2;
 

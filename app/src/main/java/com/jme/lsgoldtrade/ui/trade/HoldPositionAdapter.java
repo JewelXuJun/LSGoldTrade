@@ -7,6 +7,8 @@ import android.support.v4.content.ContextCompat;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.jme.lsgoldtrade.R;
+import com.jme.lsgoldtrade.config.Contract;
+import com.jme.lsgoldtrade.config.User;
 import com.jme.lsgoldtrade.domain.PositionVo;
 import com.jme.lsgoldtrade.util.MarketUtil;
 
@@ -36,6 +38,7 @@ public class HoldPositionAdapter extends BaseQuickAdapter<PositionVo, BaseViewHo
         if (null == item)
             return;
 
+        String contractID = item.getContractId();
         String type = item.getType();
         String floatValue = mList.get(helper.getAdapterPosition());
         String average = item.getPositionAverageStr();
@@ -43,7 +46,7 @@ public class HoldPositionAdapter extends BaseQuickAdapter<PositionVo, BaseViewHo
         long frozen = item.getOffsetFrozen();
         int typeValue = new BigDecimal(floatValue).compareTo(new BigDecimal(0));
 
-        helper.setText(R.id.tv_contract, item.getContractId())
+        helper.setText(R.id.tv_contract, contractID)
                 .setText(R.id.tv_pupil, type)
                 .setTextColor(R.id.tv_pupil, type.equals("多") ? ContextCompat.getColor(mContext, R.color.common_font_increase)
                         : ContextCompat.getColor(mContext, R.color.common_font_decrease))
@@ -52,15 +55,19 @@ public class HoldPositionAdapter extends BaseQuickAdapter<PositionVo, BaseViewHo
                 .setText(R.id.tv_average_price, MarketUtil.decimalFormatMoney(average))
                 .setText(R.id.tv_float, MarketUtil.decimalFormatMoney(floatValue))
                 .setTextColor(R.id.tv_float, ContextCompat.getColor(mContext, MarketUtil.getPriceStateColor(typeValue)))
-                .setText(R.id.tv_rate, getRate(floatValue, average, position))
+                .setText(R.id.tv_rate, getRate(contractID, floatValue, average, position))
                 .setTextColor(R.id.tv_rate, ContextCompat.getColor(mContext, MarketUtil.getPriceStateColor(typeValue)));
     }
 
-    private String getRate(String floatStr, String average, long position) {
+    private String getRate(String contractID, String floatStr, String average, long position) {
         String rateStr;
 
-        BigDecimal floatValue =  new BigDecimal(floatStr);
-        BigDecimal positionValue = new BigDecimal(average).multiply(new BigDecimal(position));
+        long handWeight = Contract.getInstance().getHandWeightFromID(contractID);
+        long contractValue = contractID.equals("Ag(T+D)") ? new BigDecimal(handWeight).divide(new BigDecimal(1000), 0 , BigDecimal.ROUND_DOWN).longValue() : handWeight;
+
+        BigDecimal floatValue = new BigDecimal(floatStr);
+        BigDecimal positionValue = new BigDecimal(average).multiply(new BigDecimal(contractValue))
+                .multiply(new BigDecimal(position));
 
         if (positionValue.compareTo(new BigDecimal(0)) == 0) {
             if (floatValue.compareTo(new BigDecimal(0)) == 1)
