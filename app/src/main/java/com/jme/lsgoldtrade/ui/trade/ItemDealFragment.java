@@ -110,7 +110,7 @@ public class ItemDealFragment extends JMEBaseFragment implements BaseQuickAdapte
                 return;
 
             switch (callType) {
-                case Constants.RxBusConst.RxBus_DeclarationForm_UPDATE:
+                case Constants.RxBusConst.RXBUS_DECLARATIONFORM_UPDATE:
                     initDealPage();
 
                     break;

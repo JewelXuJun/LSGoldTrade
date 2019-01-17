@@ -15,6 +15,7 @@ import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.Gravity;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.PopupWindow;
 
 import com.datai.common.charts.fchart.FData;
 import com.jme.common.network.DTRequest;
@@ -27,6 +28,7 @@ import com.jme.lsgoldtrade.config.AppConfig;
 import com.jme.lsgoldtrade.config.Constants;
 import com.jme.lsgoldtrade.databinding.FragmentDeclarationFormBinding;
 import com.jme.lsgoldtrade.domain.ContractInfoVo;
+import com.jme.lsgoldtrade.domain.OrderPageVo;
 import com.jme.lsgoldtrade.domain.PositionVo;
 import com.jme.lsgoldtrade.domain.TenSpeedVo;
 import com.jme.lsgoldtrade.generated.callback.OnClickListener;
@@ -53,6 +55,7 @@ public class DeclarationFormFragment extends JMEBaseFragment {
     private TenSpeedVo mTenSpeedVo;
     private AlertDialog mDialog;
     private OrderPopUpWindow mWindow;
+    private CancelOrderPopUpWindow mCancelWindow;
     private Subscription mRxbus;
 
     private boolean bVisibleToUser = false;
@@ -109,6 +112,9 @@ public class DeclarationFormFragment extends JMEBaseFragment {
         mWindow = new OrderPopUpWindow(mContext);
         mWindow.setOutsideTouchable(true);
         mWindow.setFocusable(true);
+        mCancelWindow = new CancelOrderPopUpWindow(mContext);
+        mCancelWindow.setOutsideTouchable(true);
+        mCancelWindow.setFocusable(true);
 
         initInfoTabs();
         initContractNameValue();
@@ -163,6 +169,8 @@ public class DeclarationFormFragment extends JMEBaseFragment {
                 setPriceTypeLayout();
             }
         });
+
+        mCancelWindow.setOnDismissListener(() -> RxBus.getInstance().post(Constants.RxBusConst.RXBUS_DECLARATIONFORM_CANCEL, null));
     }
 
     @Override
@@ -318,6 +326,39 @@ public class DeclarationFormFragment extends JMEBaseFragment {
 
                             getTenSpeedQuotes();
                         }
+                    }
+
+                    break;
+                case Constants.RxBusConst.RXBUS_DECLARATIONFORM_SHOW:
+                    Object cancelObject = message.getObject2();
+
+                    if (null == cancelObject)
+                        return;
+
+                    OrderPageVo.OrderBean orderBean = (OrderPageVo.OrderBean) cancelObject;
+
+                    if (null == orderBean)
+                        return;
+
+                    if (null != mCancelWindow) {
+                        String time = orderBean.getDeclareTime();
+                        String contractId = orderBean.getContractId();
+
+                        mCancelWindow.setData(contractId, TextUtils.isEmpty(time) ? "" : time.replace(".", ":"),
+                                MarketUtil.getTradeDirection(orderBean.getBsFlag()) + MarketUtil.getOCState(orderBean.getOcFlag()),
+                                MarketUtil.decimalFormatMoney(orderBean.getMatchPriceStr()), String.valueOf(orderBean.getEntrustNumber()),
+                                String.valueOf(orderBean.getRemnantNumber()), MarketUtil.getEntrustState(orderBean.getStatus()),
+                                (View) -> {
+                                    RxBus.getInstance().post(Constants.RxBusConst.RXBUS_DECLARATIONFORM_CANCEL, null);
+
+                                    mCancelWindow.dismiss();
+                                },
+                                (View) -> {
+                                    RxBus.getInstance().post(Constants.RxBusConst.RXBUS_DECLARATIONFORM_CONFIRM, null);
+
+                                    mCancelWindow.dismiss();
+                                });
+                        mCancelWindow.showAtLocation(mBinding.etAmount, Gravity.CENTER, 0, 0);
                     }
 
                     break;
@@ -609,7 +650,7 @@ public class DeclarationFormFragment extends JMEBaseFragment {
                     bEveningUp = false;
                     mBinding.tvPriceEqual.setText(R.string.text_no_data_default);
 
-                    RxBus.getInstance().post(Constants.RxBusConst.RxBus_DeclarationForm_UPDATE, null);
+                    RxBus.getInstance().post(Constants.RxBusConst.RXBUS_DECLARATIONFORM_UPDATE, null);
                 }
 
                 break;

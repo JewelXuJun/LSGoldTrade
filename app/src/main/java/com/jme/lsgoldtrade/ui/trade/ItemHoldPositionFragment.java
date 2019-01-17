@@ -179,7 +179,7 @@ public class ItemHoldPositionFragment extends JMEBaseFragment implements BaseQui
                     mAdapter.notifyDataSetChanged();
 
                     break;
-                case Constants.RxBusConst.RxBus_DeclarationForm_UPDATE:
+                case Constants.RxBusConst.RXBUS_DECLARATIONFORM_UPDATE:
                     mAdapter.setSelectPosition(-1);
                     mAdapter.notifyDataSetChanged();
 
