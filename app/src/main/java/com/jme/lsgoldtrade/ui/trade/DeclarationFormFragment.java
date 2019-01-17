@@ -20,12 +20,14 @@ import com.datai.common.charts.fchart.FData;
 import com.jme.common.network.DTRequest;
 import com.jme.common.network.Head;
 import com.jme.common.util.NetWorkUtils;
+import com.jme.common.util.RxBus;
 import com.jme.lsgoldtrade.R;
 import com.jme.lsgoldtrade.base.JMEBaseFragment;
 import com.jme.lsgoldtrade.config.AppConfig;
 import com.jme.lsgoldtrade.config.Constants;
 import com.jme.lsgoldtrade.databinding.FragmentDeclarationFormBinding;
 import com.jme.lsgoldtrade.domain.ContractInfoVo;
+import com.jme.lsgoldtrade.domain.PositionVo;
 import com.jme.lsgoldtrade.domain.TenSpeedVo;
 import com.jme.lsgoldtrade.generated.callback.OnClickListener;
 import com.jme.lsgoldtrade.service.MarketService;
@@ -35,6 +37,8 @@ import com.jme.lsgoldtrade.util.MarketUtil;
 import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.List;
+
+import rx.Subscription;
 
 public class DeclarationFormFragment extends JMEBaseFragment {
 
@@ -49,9 +53,11 @@ public class DeclarationFormFragment extends JMEBaseFragment {
     private TenSpeedVo mTenSpeedVo;
     private AlertDialog mDialog;
     private OrderPopUpWindow mWindow;
+    private Subscription mRxbus;
 
     private boolean bVisibleToUser = false;
     private boolean bFlag = true;
+    private boolean bEveningUp = false;
     private int mSelectItem = 0;
     private int mPriceType = TYPE_RIVALPRICE;
     private float mPriceMove = 0.00f;
@@ -59,6 +65,7 @@ public class DeclarationFormFragment extends JMEBaseFragment {
     private long mMaxOrderQty = 0;
     private String mLowerLimitPrice;
     private String mHighLimitPrice;
+    private String mPositionType;
 
     private static int TYPE_NONE = 0;
     private static int TYPE_RIVALPRICE = 1;
@@ -111,6 +118,8 @@ public class DeclarationFormFragment extends JMEBaseFragment {
     @Override
     protected void initListener() {
         super.initListener();
+
+        initRxBus();
 
         mBinding.etPrice.addTextChangedListener(new TextWatcher() {
             @Override
@@ -215,6 +224,14 @@ public class DeclarationFormFragment extends JMEBaseFragment {
         mHandler.removeMessages(Constants.Msg.MSG_TRADE_UPDATE_DATA);
     }
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+
+        if (!mRxbus.isUnsubscribed())
+            mRxbus.unsubscribe();
+    }
+
     private void initInfoTabs() {
         mTabTitles = new String[4];
         mTabTitles[0] = mContext.getResources().getString(R.string.trade_hold_position);
@@ -250,6 +267,64 @@ public class DeclarationFormFragment extends JMEBaseFragment {
         }
     }
 
+    private void initRxBus() {
+        mRxbus = RxBus.getInstance().toObserverable(RxBus.Message.class).subscribe(message -> {
+            String callType = message.getObject().toString();
+
+            if (TextUtils.isEmpty(callType))
+                return;
+
+            switch (callType) {
+                case Constants.RxBusConst.RXBUS_DECLARATIONFORM_HOLDPOSITION_SELECT:
+                    Object object = message.getObject2();
+
+                    if (null == object) {
+                        bEveningUp = false;
+
+                        mBinding.tvPriceEqual.setText(R.string.text_no_data_default);
+                    } else {
+                        PositionVo positionVo = (PositionVo) object;
+
+                        if (null == positionVo) {
+                            bEveningUp = false;
+
+                            mBinding.tvPriceEqual.setText(R.string.text_no_data_default);
+                        } else {
+                            bEveningUp = true;
+                            mPositionType = positionVo.getType();
+                            mPriceType = TYPE_RIVALPRICE;
+
+                            String contractID = positionVo.getContractId();
+
+                            if (!contractID.equals(AppConfig.Select_ContractId)) {
+                                mSelectItem = mContract.getContractIDPosition(contractID);
+
+                                AppConfig.Select_ContractId = contractID;
+
+                                mBinding.tvContractId.setText(contractID);
+
+                                mTenSpeedVo = null;
+                                mContractInfoVo = mContract.getContractInfoFromID(contractID);
+                            }
+
+                            mBinding.etPrice.setText("");
+                            mBinding.etPrice.clearFocus();
+                            mBinding.etAmount.setText(String.valueOf(positionVo.getPosition() - positionVo.getOffsetFrozen()));
+
+                            setPriceTypeLayout();
+                            setContractData();
+
+                            mHandler.removeMessages(Constants.Msg.MSG_TRADE_UPDATE_DATA);
+
+                            getTenSpeedQuotes();
+                        }
+                    }
+
+                    break;
+            }
+        });
+    }
+
     private void setContractNameData() {
         if (null == mBinding)
             return;
@@ -272,6 +347,12 @@ public class DeclarationFormFragment extends JMEBaseFragment {
             if (mSelectItem != position) {
                 mSelectItem = position;
 
+                if (bEveningUp) {
+                    bEveningUp = false;
+
+                    RxBus.getInstance().post(Constants.RxBusConst.RXBUS_DECLARATIONFORM_HOLDPOSITION_UNSELECT, null);
+                }
+
                 String contractID = mContracIDs[mSelectItem];
 
                 mBinding.tvContractId.setText(contractID);
@@ -283,16 +364,12 @@ public class DeclarationFormFragment extends JMEBaseFragment {
                 mPriceType = TYPE_RIVALPRICE;
 
                 setPriceTypeLayout();
+                AppConfig.Select_ContractId = contractID;
+                setContractData();
 
-                if (null != mContractInfoVo) {
-                    AppConfig.Select_ContractId = mContractInfoVo.getContractId();
+                mHandler.removeMessages(Constants.Msg.MSG_TRADE_UPDATE_DATA);
 
-                    setContractData();
-
-                    mHandler.removeMessages(Constants.Msg.MSG_TRADE_UPDATE_DATA);
-
-                    getTenSpeedQuotes();
-                }
+                getTenSpeedQuotes();
             }
 
             mBinding.imgSelect.setBackground(ContextCompat.getDrawable(mContext, R.mipmap.ic_down));
@@ -340,6 +417,7 @@ public class DeclarationFormFragment extends JMEBaseFragment {
         if (null == mTenSpeedVo) {
             mBinding.tvPriceBuyMore.setText(R.string.text_no_data_default);
             mBinding.tvPriceSaleEmpty.setText(R.string.text_no_data_default);
+            mBinding.tvPriceEqual.setText(R.string.text_no_data_default);
         } else {
             List<String[]> askLists = mTenSpeedVo.getAskLists();
             List<String[]> bidLists = mTenSpeedVo.getBidLists();
@@ -349,18 +427,27 @@ public class DeclarationFormFragment extends JMEBaseFragment {
 
                 mBinding.tvPriceBuyMore.setText(TextUtils.isEmpty(price) ? mContext.getResources().getString(R.string.text_no_data_default) : price);
                 mBinding.tvPriceSaleEmpty.setText(TextUtils.isEmpty(price) ? mContext.getResources().getString(R.string.text_no_data_default) : price);
+                mBinding.tvPriceEqual.setText(bEveningUp ? (TextUtils.isEmpty(price) ? mContext.getResources().getString(R.string.text_no_data_default) : price)
+                        : mContext.getResources().getString(R.string.text_no_data_default));
             } else if (mPriceType == TYPE_RIVALPRICE) {
                 mBinding.tvPriceBuyMore.setText(askLists.get(9)[1]);
                 mBinding.tvPriceSaleEmpty.setText(bidLists.get(0)[1]);
+                mBinding.tvPriceEqual.setText(bEveningUp ? (mPositionType.equals("多") ? bidLists.get(0)[1] : askLists.get(9)[1])
+                        : mContext.getResources().getString(R.string.text_no_data_default));
             } else if (mPriceType == TYPE_QUEUINGPRICE) {
                 mBinding.tvPriceBuyMore.setText(bidLists.get(0)[1]);
                 mBinding.tvPriceSaleEmpty.setText(askLists.get(9)[1]);
+                mBinding.tvPriceEqual.setText(bEveningUp ? (mPositionType.equals("多") ? askLists.get(9)[1] : bidLists.get(0)[1])
+                        : mContext.getResources().getString(R.string.text_no_data_default));
             } else if (mPriceType == TYPE_LASTPRICE) {
                 mBinding.tvPriceBuyMore.setText(mTenSpeedVo.getLatestPrice());
                 mBinding.tvPriceSaleEmpty.setText(mTenSpeedVo.getLatestPrice());
+                mBinding.tvPriceEqual.setText(bEveningUp ? mTenSpeedVo.getLatestPrice()
+                        : mContext.getResources().getString(R.string.text_no_data_default));
             } else {
                 mBinding.tvPriceBuyMore.setText(R.string.text_no_data_default);
                 mBinding.tvPriceSaleEmpty.setText(R.string.text_no_data_default);
+                mBinding.tvPriceEqual.setText(R.string.text_no_data_default);
             }
         }
     }
@@ -375,7 +462,8 @@ public class DeclarationFormFragment extends JMEBaseFragment {
             mMinOrderQty = mContractInfoVo.getMinOrderQty();
             mMaxOrderQty = mContractInfoVo.getMaxOrderQty();
 
-            mBinding.etAmount.setText(String.valueOf(mMinOrderQty));
+            if (!bEveningUp)
+                mBinding.etAmount.setText(String.valueOf(mMinOrderQty));
         }
     }
 
@@ -515,8 +603,15 @@ public class DeclarationFormFragment extends JMEBaseFragment {
 
                 break;
             case "LimitOrder":
-                if (head.isSuccess())
+                if (head.isSuccess()) {
                     showShortToast(R.string.trade_success);
+
+                    bEveningUp = false;
+                    mBinding.tvPriceEqual.setText(R.string.text_no_data_default);
+
+                    RxBus.getInstance().post(Constants.RxBusConst.RXBUS_DECLARATIONFORM_HOLDPOSITION_UNSELECT, null);
+                    RxBus.getInstance().post(Constants.RxBusConst.RxBus_DeclarationForm_UPDATE, null);
+                }
 
                 break;
         }
@@ -563,9 +658,11 @@ public class DeclarationFormFragment extends JMEBaseFragment {
             if (new BigDecimal(String.valueOf(value)).compareTo(new BigDecimal(mLowerLimitPrice)) == -1) {
                 showShortToast(R.string.trade_limit_down_price_error);
 
-                mBinding.etPrice.setSelection(price.length());
+                mBinding.etPrice.setSelection(TextUtils.isEmpty(price) ? 0 : price.length());
                 mBinding.tvPriceBuyMore.setText(MarketUtil.formatValue(price, 2));
                 mBinding.tvPriceSaleEmpty.setText(MarketUtil.formatValue(price, 2));
+                mBinding.tvPriceEqual.setText(bEveningUp ? MarketUtil.formatValue(price, 2)
+                        : mContext.getResources().getText(R.string.text_no_data_default));
             } else {
                 String valueStr = MarketUtil.formatValue(String.valueOf(value), 2);
 
@@ -590,6 +687,8 @@ public class DeclarationFormFragment extends JMEBaseFragment {
                 mBinding.etPrice.setSelection(price.length());
                 mBinding.tvPriceBuyMore.setText(MarketUtil.formatValue(price, 2));
                 mBinding.tvPriceSaleEmpty.setText(MarketUtil.formatValue(price, 2));
+                mBinding.tvPriceEqual.setText(bEveningUp ? MarketUtil.formatValue(price, 2)
+                        : mContext.getResources().getText(R.string.text_no_data_default));
             } else {
                 String valueStr = MarketUtil.formatValue(String.valueOf(value), 2);
 
@@ -683,6 +782,9 @@ public class DeclarationFormFragment extends JMEBaseFragment {
 
         public void onClickEveningUp() {
             hiddenKeyBoard();
+
+            if (bEveningUp)
+                doTrade(mPositionType.equals("多") ? 2 : 1, 1);
         }
 
     }

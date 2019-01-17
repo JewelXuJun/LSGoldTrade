@@ -42,6 +42,8 @@ public class Constants {
 
         public static final String RxBus_TradeFragment = "TradeFragment";
         public static final String RxBus_DeclarationForm_UPDATE = "DeclarationFormUpdate";
+        public static final String RXBUS_DECLARATIONFORM_HOLDPOSITION_SELECT = "DeclarationFormHoldPositionSelect";
+        public static final String RXBUS_DECLARATIONFORM_HOLDPOSITION_UNSELECT = "DeclarationFormHoldPositionUnSelect";
     }
 
     public static final class Msg {

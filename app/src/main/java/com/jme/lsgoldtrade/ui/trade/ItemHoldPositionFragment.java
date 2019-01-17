@@ -110,6 +110,9 @@ public class ItemHoldPositionFragment extends JMEBaseFragment implements BaseQui
             }
 
             mAdapter.notifyDataSetChanged();
+
+            RxBus.getInstance().post(Constants.RxBusConst.RXBUS_DECLARATIONFORM_HOLDPOSITION_SELECT,
+                    mAdapter.getSelectPosition() == -1 ? null : positionVo);
         });
     }
 
@@ -171,7 +174,13 @@ public class ItemHoldPositionFragment extends JMEBaseFragment implements BaseQui
                 return;
 
             switch (callType) {
+                case Constants.RxBusConst.RXBUS_DECLARATIONFORM_HOLDPOSITION_UNSELECT:
+                    mAdapter.setSelectPosition(-1);
+                    mAdapter.notifyDataSetChanged();
+
+                    break;
                 case Constants.RxBusConst.RxBus_DeclarationForm_UPDATE:
+                    initPosition();
 
                     break;
             }
