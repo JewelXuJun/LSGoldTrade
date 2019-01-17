@@ -8,7 +8,6 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.jme.lsgoldtrade.R;
 import com.jme.lsgoldtrade.config.Contract;
-import com.jme.lsgoldtrade.config.User;
 import com.jme.lsgoldtrade.domain.PositionVo;
 import com.jme.lsgoldtrade.util.MarketUtil;
 

@@ -41,6 +41,7 @@ public class Constants {
         }
 
         public static final String RxBus_TradeFragment = "TradeFragment";
+        public static final String RxBus_DeclarationForm_HoldPosition = "DeclarationFormHoldPosition";
     }
 
     public static final class Msg {
@@ -57,6 +58,7 @@ public class Constants {
         public static final int MSG_RELOAD_DATA_LANDSCAPE = 5;
         public static final int MSG_TRADE_UPDATE_DATA = 6;
         public static final int MSG_POSITION_UPDATE_DATA = 6;
+        public static final int MSG_DECLARATIONFORM_POSITION_UPDATE_DATA = 6;
     }
 
     public static final class ARouterUriConst {

@@ -1,30 +1,64 @@
 package com.jme.lsgoldtrade.ui.trade;
 
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v7.widget.LinearLayoutManager;
+import android.text.TextUtils;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.jme.common.network.DTRequest;
 import com.jme.common.network.Head;
-import com.jme.common.ui.view.MarginDividerItemDecoration;
+import com.jme.common.util.RxBus;
 import com.jme.lsgoldtrade.R;
 import com.jme.lsgoldtrade.base.JMEBaseFragment;
+import com.jme.lsgoldtrade.config.AppConfig;
+import com.jme.lsgoldtrade.config.Constants;
 import com.jme.lsgoldtrade.databinding.FragmentItemHoldPositionBinding;
+import com.jme.lsgoldtrade.domain.FiveSpeedVo;
 import com.jme.lsgoldtrade.domain.PositionPageVo;
+import com.jme.lsgoldtrade.domain.PositionVo;
+import com.jme.lsgoldtrade.service.MarketService;
 import com.jme.lsgoldtrade.service.TradeService;
+import com.jme.lsgoldtrade.util.MarketUtil;
 
+import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+
+import rx.Subscription;
 
 public class ItemHoldPositionFragment extends JMEBaseFragment implements BaseQuickAdapter.RequestLoadMoreListener {
 
     private FragmentItemHoldPositionBinding mBinding;
 
     private HoldPositionAdapter mAdapter;
+    private List<String> mList;
+    private Subscription mRxbus;
 
-    private boolean bVisibleToUser = false;
     private int mCurrentPage = 1;
+    private boolean bFlag = true;
     private boolean bHasNext = false;
+    private boolean bVisibleToUser = false;
+    private String mPagingKey = "";
+
+    private Handler mHandler = new Handler() {
+        public void handleMessage(Message msg) {
+            switch (msg.what) {
+                case Constants.Msg.MSG_DECLARATIONFORM_POSITION_UPDATE_DATA:
+                    mHandler.removeMessages(Constants.Msg.MSG_DECLARATIONFORM_POSITION_UPDATE_DATA);
+
+                    getMarket();
+
+                    mHandler.sendEmptyMessageDelayed(Constants.Msg.MSG_DECLARATIONFORM_POSITION_UPDATE_DATA, AppConfig.Minute);
+
+                    break;
+            }
+
+            super.handleMessage(msg);
+        }
+    };
 
     @Override
     protected int getContentViewId() {
@@ -43,17 +77,18 @@ public class ItemHoldPositionFragment extends JMEBaseFragment implements BaseQui
         super.initData(savedInstanceState);
 
         mAdapter = new HoldPositionAdapter(mContext, R.layout.item_hold_position, null);
+        mList = new ArrayList<>();
 
         mBinding.recyclerView.setHasFixedSize(false);
-        mBinding.recyclerView.addItemDecoration(new MarginDividerItemDecoration(mContext, LinearLayoutManager.VERTICAL));
         mBinding.recyclerView.setLayoutManager(new LinearLayoutManager(mContext));
         mBinding.recyclerView.setAdapter(mAdapter);
-        mBinding.recyclerView.setNestedScrollingEnabled(false);
     }
 
     @Override
     protected void initListener() {
         super.initListener();
+
+        initRxBus();
 
         mAdapter.setOnLoadMoreListener(this, mBinding.recyclerView);
     }
@@ -69,8 +104,10 @@ public class ItemHoldPositionFragment extends JMEBaseFragment implements BaseQui
 
         super.setUserVisibleHint(isVisibleToUser);
 
-      /*  if (null != mBinding && bVisibleToUser)
-            initPosition();*/
+        if (null != mBinding && bVisibleToUser)
+            initPosition();
+        else
+            mHandler.removeMessages(Constants.Msg.MSG_DECLARATIONFORM_POSITION_UPDATE_DATA);
     }
 
     @Override
@@ -78,25 +115,112 @@ public class ItemHoldPositionFragment extends JMEBaseFragment implements BaseQui
         bVisibleToUser = !hidden;
 
         super.onHiddenChanged(hidden);
+
+        if (hidden)
+            mHandler.removeMessages(Constants.Msg.MSG_DECLARATIONFORM_POSITION_UPDATE_DATA);
     }
 
     @Override
     public void onResume() {
         super.onResume();
 
-        /*if (bVisibleToUser)
-            initPosition();*/
+        if (bVisibleToUser)
+            initPosition();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+
+        mHandler.removeMessages(Constants.Msg.MSG_DECLARATIONFORM_POSITION_UPDATE_DATA);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+
+        if (!mRxbus.isUnsubscribed())
+            mRxbus.unsubscribe();
+    }
+
+    private void initRxBus() {
+        mRxbus = RxBus.getInstance().toObserverable(RxBus.Message.class).subscribe(message -> {
+            String callType = message.getObject().toString();
+
+            if (TextUtils.isEmpty(callType))
+                return;
+
+            switch (callType) {
+                case Constants.RxBusConst.RxBus_DeclarationForm_HoldPosition:
+
+                    break;
+            }
+        });
     }
 
     private void initPosition() {
+        bFlag = true;
         mCurrentPage = 1;
+        mPagingKey = "";
+        mList.clear();
+
+        mHandler.removeMessages(Constants.Msg.MSG_DECLARATIONFORM_POSITION_UPDATE_DATA);
 
         position();
     }
 
+    private void calculateFloat(List<FiveSpeedVo> fiveSpeedVoList, List<PositionVo> positionVoList) {
+        if (null == fiveSpeedVoList || 0 == fiveSpeedVoList.size() || null == positionVoList || 0 == positionVoList.size())
+            return;
+
+        mList.clear();
+
+        for (PositionVo positionVo : positionVoList) {
+            if (null != positionVo) {
+                String contractID = positionVo.getContractId();
+
+                for (FiveSpeedVo fiveSpeedVo : fiveSpeedVoList) {
+                    if (null != fiveSpeedVo) {
+                        if (contractID.equals(fiveSpeedVo.getContractId())) {
+                            long latestprice = fiveSpeedVo.getLatestPrice();
+                            long average = positionVo.getPositionAverage();
+                            long handWeight = mContract.getHandWeightFromID(contractID);
+                            long contractValue = contractID.equals("Ag(T+D)") ?
+                                    new BigDecimal(handWeight).divide(new BigDecimal(1000), 0, BigDecimal.ROUND_DOWN).longValue() : handWeight;
+
+                            long margin;
+
+                            if (positionVo.getType().equals("多"))
+                                margin = new BigDecimal(latestprice).subtract(new BigDecimal(average)).longValue();
+                            else
+                                margin = new BigDecimal(average).subtract(new BigDecimal(latestprice)).longValue();
+
+                            String floatProfit = (new BigDecimal(MarketUtil.getPriceValue(margin))
+                                    .multiply(new BigDecimal(contractValue)).multiply(new BigDecimal(positionVo.getPosition())))
+                                    .add(new BigDecimal(positionVo.getUnliquidatedProfit())).setScale(2, BigDecimal.ROUND_DOWN).toPlainString();
+
+                            mList.add(floatProfit);
+                        }
+                    }
+                }
+            }
+        }
+
+        mAdapter.setList(mList);
+        mAdapter.notifyDataSetChanged();
+    }
+
+    private void getMarket() {
+        HashMap<String, String> params = new HashMap<>();
+        params.put("list", "");
+
+        sendRequest(MarketService.getInstance().getFiveSpeedQuotes, params, false);
+    }
+
     private void position() {
         HashMap<String, String> params = new HashMap<>();
-        params.put("pageNo", String.valueOf(mCurrentPage));
+        params.put("accountId", mUser.getAccountID());
+        params.put("pagingKey", mPagingKey);
 
         sendRequest(TradeService.getInstance().position, params, false, false, false);
     }
@@ -106,6 +230,22 @@ public class ItemHoldPositionFragment extends JMEBaseFragment implements BaseQui
         super.DataReturn(request, head, response);
 
         switch (request.getApi().getName()) {
+            case "GetFiveSpeedQuotes":
+                if (head.isSuccess()) {
+                    List<FiveSpeedVo> fiveSpeedVoList;
+
+                    try {
+                        fiveSpeedVoList = (List<FiveSpeedVo>) response;
+                    } catch (Exception e) {
+                        fiveSpeedVoList = null;
+
+                        e.getMessage();
+                    }
+
+                    calculateFloat(fiveSpeedVoList, mAdapter.getData());
+                }
+
+                break;
             case "Position":
                 if (head.isSuccess()) {
                     PositionPageVo positionPageVo;
@@ -122,18 +262,44 @@ public class ItemHoldPositionFragment extends JMEBaseFragment implements BaseQui
                         return;
 
                     bHasNext = positionPageVo.isHasNext();
+                    mPagingKey = positionPageVo.getPagingKey();
+                    List<PositionVo> positionVoList = positionPageVo.getPositionList();
 
-                    List<PositionPageVo.PositionBean> positionBeanList = positionPageVo.getList();
+                    if (null != positionVoList && 0 != positionVoList.size()) {
+                        for (PositionVo positionVo : positionVoList) {
+                            if (null != positionVo)
+                                mList.add(MarketUtil.getPriceValue(positionVo.getFloatProfit() + positionVo.getUnliquidatedProfit()));
+                        }
+                    }
 
-                    /*if (mCurrentPage == 1) {
-                        mAdapter.setNewData(positionBeanList);
+                    mAdapter.setList(mList);
 
-                        if (null != positionBeanList && 0 < positionBeanList.size())
-                            mAdapter.loadMoreComplete();
-                    } else {
-                        mAdapter.addData(positionBeanList);
+                    if (bHasNext) {
+                        if (mCurrentPage == 1)
+                            mAdapter.setNewData(positionVoList);
+                        else
+                            mAdapter.addData(positionVoList);
+
                         mAdapter.loadMoreComplete();
-                    }*/
+                    } else {
+                        if (mCurrentPage == 1) {
+                            if (null == positionVoList || 0 == positionVoList.size()) {
+                                mAdapter.setNewData(null);
+                            } else {
+                                mAdapter.setNewData(positionVoList);
+                                mAdapter.loadMoreComplete();
+                            }
+                        } else {
+                            mAdapter.addData(positionVoList);
+                            mAdapter.loadMoreComplete();
+                        }
+                    }
+                }
+
+                if (bFlag) {
+                    bFlag = false;
+
+                    mHandler.sendEmptyMessageDelayed(Constants.Msg.MSG_DECLARATIONFORM_POSITION_UPDATE_DATA, AppConfig.Minute);
                 }
 
                 break;
