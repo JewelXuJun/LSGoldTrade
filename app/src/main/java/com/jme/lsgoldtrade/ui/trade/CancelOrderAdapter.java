@@ -16,7 +16,7 @@ import java.util.List;
 public class CancelOrderAdapter extends BaseQuickAdapter<OrderPageVo.OrderBean, BaseViewHolder> {
 
     private Context mContext;
-    private int mPosition;
+    private int mPosition = -1;
 
     public CancelOrderAdapter(Context context, int layoutResId, @Nullable List<OrderPageVo.OrderBean> data) {
         super(layoutResId, data);
@@ -26,6 +26,10 @@ public class CancelOrderAdapter extends BaseQuickAdapter<OrderPageVo.OrderBean, 
 
     public void setSelectPosition(int position) {
         mPosition = position;
+    }
+
+    public int getSelectPosition() {
+        return mPosition;
     }
 
     @Override

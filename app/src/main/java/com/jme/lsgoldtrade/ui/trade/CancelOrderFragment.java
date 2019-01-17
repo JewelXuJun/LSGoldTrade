@@ -75,7 +75,17 @@ public class CancelOrderFragment extends JMEBaseFragment implements OnRefreshLis
             if (null == orderBean)
                 return;
 
-            mAdapter.setSelectPosition(position);
+            int selectPosition = mAdapter.getSelectPosition();
+
+            if (selectPosition == -1) {
+                mAdapter.setSelectPosition(position);
+            } else {
+                if (selectPosition == position)
+                    mAdapter.setSelectPosition(-1);
+                else
+                    mAdapter.setSelectPosition(position);
+            }
+
             mAdapter.notifyDataSetChanged();
 
             if (null != mWindow) {
