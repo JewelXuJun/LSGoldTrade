@@ -11,7 +11,6 @@ import android.view.View;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.jme.common.network.DTRequest;
 import com.jme.common.network.Head;
-import com.jme.common.ui.view.MarginDividerItemDecoration;
 import com.jme.lsgoldtrade.R;
 import com.jme.lsgoldtrade.base.JMEBaseFragment;
 import com.jme.lsgoldtrade.databinding.FragmentCancelOrderBinding;
@@ -55,6 +54,8 @@ public class CancelOrderFragment extends JMEBaseFragment implements OnRefreshLis
 
         mAdapter = new CancelOrderAdapter(mContext, R.layout.item_cancel_order, null);
         mWindow = new CancelOrderPopUpWindow(mContext);
+        mWindow.setOutsideTouchable(true);
+        mWindow.setFocusable(true);
 
         mBinding.recyclerView.setHasFixedSize(false);
         mBinding.recyclerView.setLayoutManager(new LinearLayoutManager(mContext));
@@ -92,12 +93,17 @@ public class CancelOrderFragment extends JMEBaseFragment implements OnRefreshLis
                             mWindow.dismiss();
                         },
                         (View) -> {
-                            revocateorder(contractId, orderBean.getOrderNo());
+                            revocateorder(contractId, String.valueOf(orderBean.getOrderNo()));
 
                             mWindow.dismiss();
                         });
                 mWindow.showAtLocation(mBinding.recyclerView, Gravity.CENTER, 0, 0);
             }
+        });
+
+        mWindow.setOnDismissListener(() -> {
+            mAdapter.setSelectPosition(-1);
+            mAdapter.notifyDataSetChanged();
         });
     }
 

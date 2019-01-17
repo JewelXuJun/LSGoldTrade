@@ -59,7 +59,7 @@ public class OrderPageVo implements Serializable {
 
         private int tradingType;
 
-        private String orderNo;
+        private long orderNo;
 
         private String tradeDate;
 
@@ -97,11 +97,11 @@ public class OrderPageVo implements Serializable {
             this.tradingType = tradingType;
         }
 
-        public String getOrderNo() {
+        public long getOrderNo() {
             return orderNo;
         }
 
-        public void setOrderNo(String orderNo) {
+        public void setOrderNo(long orderNo) {
             this.orderNo = orderNo;
         }
 
