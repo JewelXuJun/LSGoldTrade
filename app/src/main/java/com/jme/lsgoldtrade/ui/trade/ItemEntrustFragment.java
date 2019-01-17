@@ -2,13 +2,15 @@ package com.jme.lsgoldtrade.ui.trade;
 
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
+import android.text.TextUtils;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.jme.common.network.DTRequest;
 import com.jme.common.network.Head;
-import com.jme.common.ui.view.MarginDividerItemDecoration;
+import com.jme.common.util.RxBus;
 import com.jme.lsgoldtrade.R;
 import com.jme.lsgoldtrade.base.JMEBaseFragment;
+import com.jme.lsgoldtrade.config.Constants;
 import com.jme.lsgoldtrade.databinding.FragmentItemEntrustBinding;
 import com.jme.lsgoldtrade.domain.OrderPageVo;
 import com.jme.lsgoldtrade.service.TradeService;
@@ -16,18 +18,19 @@ import com.jme.lsgoldtrade.service.TradeService;
 import java.util.HashMap;
 import java.util.List;
 
+import rx.Subscription;
+
 public class ItemEntrustFragment extends JMEBaseFragment implements BaseQuickAdapter.RequestLoadMoreListener {
 
     private FragmentItemEntrustBinding mBinding;
 
     private EntrustAdapter mAdapter;
+    private Subscription mRxbus;
 
-    private static final String PAGE_NEXT = "2";
-
-    private boolean bVisibleToUser = false;
     private int mCurrentPage = 1;
     private boolean bHasNext = false;
-    private String mDeclareTime;
+    private boolean bVisibleToUser = false;
+    private String mPagingKey = "";
 
     @Override
     protected int getContentViewId() {
@@ -48,15 +51,15 @@ public class ItemEntrustFragment extends JMEBaseFragment implements BaseQuickAda
         mAdapter = new EntrustAdapter(mContext, R.layout.item_entrust, null, "Current");
 
         mBinding.recyclerView.setHasFixedSize(false);
-        mBinding.recyclerView.addItemDecoration(new MarginDividerItemDecoration(mContext, LinearLayoutManager.VERTICAL));
         mBinding.recyclerView.setLayoutManager(new LinearLayoutManager(mContext));
         mBinding.recyclerView.setAdapter(mAdapter);
-        mBinding.recyclerView.setNestedScrollingEnabled(false);
     }
 
     @Override
     protected void initListener() {
         super.initListener();
+
+        initRxBus();
 
         mAdapter.setOnLoadMoreListener(this, mBinding.recyclerView);
     }
@@ -72,8 +75,8 @@ public class ItemEntrustFragment extends JMEBaseFragment implements BaseQuickAda
 
         super.setUserVisibleHint(isVisibleToUser);
 
-      /*  if (null != mBinding && bVisibleToUser)
-            initOrderPage();*/
+        if (null != mBinding && bVisibleToUser)
+            initOrderPage();
     }
 
     @Override
@@ -87,35 +90,46 @@ public class ItemEntrustFragment extends JMEBaseFragment implements BaseQuickAda
     public void onResume() {
         super.onResume();
 
-        /*if (bVisibleToUser)
-            initOrderPage();*/
+        if (bVisibleToUser)
+            initOrderPage();
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+
+        if (!mRxbus.isUnsubscribed())
+            mRxbus.unsubscribe();
+    }
+
+    private void initRxBus() {
+        mRxbus = RxBus.getInstance().toObserverable(RxBus.Message.class).subscribe(message -> {
+            String callType = message.getObject().toString();
+
+            if (TextUtils.isEmpty(callType))
+                return;
+
+            switch (callType) {
+                case Constants.RxBusConst.RxBus_DeclarationForm_UPDATE:
+                    initOrderPage();
+
+                    break;
+            }
+        });
     }
 
     private void initOrderPage() {
         mCurrentPage = 1;
+        mPagingKey = "";
 
         orderpage();
     }
 
-    private void setDeclareTime(List<OrderPageVo.OrderBean> list) {
-        if (null == list || 0 == list.size()) {
-            if (mCurrentPage == 1)
-                mDeclareTime = "";
-        } else {
-            int size = list.size();
-
-            OrderPageVo.OrderBean orderBean = list.get(size - 1);
-
-            if (null != orderBean)
-                mDeclareTime = orderBean.getDeclareTime();
-        }
-    }
-
     private void orderpage() {
         HashMap<String, String> params = new HashMap<>();
-        params.put("pageNo", String.valueOf(mCurrentPage));
-        params.put("pagingDeclareTime", mDeclareTime);
-        params.put("qryFlg", PAGE_NEXT);
+        params.put("accountId", mUser.getAccountID());
+        params.put("onlyRevocable", "false");
+        params.put("pagingKey", mPagingKey);
 
         sendRequest(TradeService.getInstance().orderpage, params, false, false, false);
     }
@@ -141,21 +155,31 @@ public class ItemEntrustFragment extends JMEBaseFragment implements BaseQuickAda
                         return;
 
                     bHasNext = orderPageVo.isHasNext();
-
+                    mPagingKey = orderPageVo.getPagingKey();
                     List<OrderPageVo.OrderBean> orderBeanList = orderPageVo.getList();
 
-                    if (mCurrentPage == 1) {
-                        mAdapter.setNewData(orderBeanList);
+                    if (bHasNext) {
+                        if (mCurrentPage == 1)
+                            mAdapter.setNewData(orderBeanList);
+                        else
+                            mAdapter.addData(orderBeanList);
 
-                        if (null != orderBeanList && 0 < orderBeanList.size())
-                            mAdapter.loadMoreComplete();
-                    } else {
-                        mAdapter.addData(orderBeanList);
                         mAdapter.loadMoreComplete();
+                    } else {
+                        if (mCurrentPage == 1) {
+                            if (null == orderBeanList || 0 == orderBeanList.size()) {
+                                mAdapter.setNewData(null);
+                            } else {
+                                mAdapter.setNewData(orderBeanList);
+                                mAdapter.loadMoreComplete();
+                            }
+                        } else {
+                            mAdapter.addData(orderBeanList);
+                            mAdapter.loadMoreComplete();
+                        }
                     }
-
-                    setDeclareTime(orderBeanList);
                 }
+
 
                 break;
         }
