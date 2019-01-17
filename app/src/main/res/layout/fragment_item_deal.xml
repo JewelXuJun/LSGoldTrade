@@ -3,7 +3,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:background="@color/common_background"
         android:orientation="vertical">
 
@@ -18,7 +18,7 @@
                 android:layout_weight="1"
                 android:gravity="center|left"
                 android:paddingLeft="@dimen/common_page_padding"
-                android:text="@string/trade_contract_pupil"
+                android:text="@string/trade_contract_time"
                 android:textColor="@color/black_pale"
                 android:textSize="@dimen/sp_12" />
 
@@ -27,16 +27,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="@string/trade_type_price"
-                android:textColor="@color/black_pale"
-                android:textSize="@dimen/sp_12" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:text="@string/trade_turnover_volume"
+                android:text="@string/trade_type"
                 android:textColor="@color/black_pale"
                 android:textSize="@dimen/sp_12" />
 
@@ -46,7 +37,17 @@
                 android:layout_weight="1"
                 android:gravity="center|right"
                 android:paddingRight="@dimen/common_page_padding"
-                android:text="@string/trade_turnover_money"
+                android:text="@string/trade_amount_dealprice"
+                android:textColor="@color/black_pale"
+                android:textSize="@dimen/sp_12" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center|right"
+                android:paddingRight="@dimen/common_page_padding"
+                android:text="@string/market_turn_volume"
                 android:textColor="@color/black_pale"
                 android:textSize="@dimen/sp_12" />
 
@@ -55,9 +56,7 @@
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recyclerView"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:cacheColorHint="@null"
-            android:scrollbars="none" />
+            android:layout_height="wrap_content" />
 
     </LinearLayout>
 
