@@ -91,6 +91,26 @@ public class ItemHoldPositionFragment extends JMEBaseFragment implements BaseQui
         initRxBus();
 
         mAdapter.setOnLoadMoreListener(this, mBinding.recyclerView);
+
+        mAdapter.setOnItemClickListener((adapter, view, position) -> {
+            PositionVo positionVo = (PositionVo) adapter.getItem(position);
+
+            if (null == positionVo)
+                return;
+
+            int selectPosition = mAdapter.getSelectPosition();
+
+            if (selectPosition == -1) {
+                mAdapter.setSelectPosition(position);
+            } else {
+                if (selectPosition == position)
+                    mAdapter.setSelectPosition(-1);
+                else
+                    mAdapter.setSelectPosition(position);
+            }
+
+            mAdapter.notifyDataSetChanged();
+        });
     }
 
     @Override
@@ -151,7 +171,7 @@ public class ItemHoldPositionFragment extends JMEBaseFragment implements BaseQui
                 return;
 
             switch (callType) {
-                case Constants.RxBusConst.RxBus_DeclarationForm_HoldPosition:
+                case Constants.RxBusConst.RxBus_DeclarationForm_UPDATE:
 
                     break;
             }

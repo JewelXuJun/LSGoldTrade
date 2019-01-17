@@ -18,8 +18,8 @@ import java.util.List;
 public class HoldPositionAdapter extends BaseQuickAdapter<PositionVo, BaseViewHolder> {
 
     private Context mContext;
-
     private List<String> mList;
+    private int mPosition = -1;
 
     public HoldPositionAdapter(Context context, int layoutResId, @Nullable List<PositionVo> data) {
         super(layoutResId, data);
@@ -32,10 +32,20 @@ public class HoldPositionAdapter extends BaseQuickAdapter<PositionVo, BaseViewHo
         mList = list;
     }
 
+    public void setSelectPosition(int position) {
+        mPosition = position;
+    }
+
+    public int getSelectPosition() {
+        return mPosition;
+    }
+
     @Override
     protected void convert(BaseViewHolder helper, PositionVo item) {
         if (null == item)
             return;
+
+        boolean isSelected = mPosition == helper.getAdapterPosition();
 
         String contractID = item.getContractId();
         String type = item.getType();
@@ -45,24 +55,37 @@ public class HoldPositionAdapter extends BaseQuickAdapter<PositionVo, BaseViewHo
         long frozen = item.getOffsetFrozen();
         int typeValue = new BigDecimal(floatValue).compareTo(new BigDecimal(0));
 
-        helper.setText(R.id.tv_contract, contractID)
+        helper.setBackgroundColor(R.id.layout_item, isSelected ? ContextCompat.getColor(mContext, R.color.color_toolbar_blue)
+                : ContextCompat.getColor(mContext, R.color.white))
+                .setText(R.id.tv_contract, contractID)
+                .setTextColor(R.id.tv_contract, isSelected ? ContextCompat.getColor(mContext, R.color.white)
+                        : ContextCompat.getColor(mContext, R.color.color_text_black))
                 .setText(R.id.tv_pupil, type)
-                .setTextColor(R.id.tv_pupil, type.equals("多") ? ContextCompat.getColor(mContext, R.color.common_font_increase)
+                .setTextColor(R.id.tv_pupil, isSelected ? ContextCompat.getColor(mContext, R.color.white)
+                        : type.equals("多") ? ContextCompat.getColor(mContext, R.color.common_font_increase)
                         : ContextCompat.getColor(mContext, R.color.common_font_decrease))
                 .setText(R.id.tv_available, String.valueOf(position - frozen))
+                .setTextColor(R.id.tv_available, isSelected ? ContextCompat.getColor(mContext, R.color.white)
+                        : ContextCompat.getColor(mContext, R.color.color_text_black))
                 .setText(R.id.tv_position, String.valueOf(position))
+                .setTextColor(R.id.tv_position, isSelected ? ContextCompat.getColor(mContext, R.color.white)
+                        : ContextCompat.getColor(mContext, R.color.color_text_black))
                 .setText(R.id.tv_average_price, MarketUtil.decimalFormatMoney(average))
+                .setTextColor(R.id.tv_average_price, isSelected ? ContextCompat.getColor(mContext, R.color.white)
+                        : ContextCompat.getColor(mContext, R.color.color_text_black))
                 .setText(R.id.tv_float, MarketUtil.decimalFormatMoney(floatValue))
-                .setTextColor(R.id.tv_float, ContextCompat.getColor(mContext, MarketUtil.getPriceStateColor(typeValue)))
+                .setTextColor(R.id.tv_float, isSelected ? ContextCompat.getColor(mContext, R.color.white)
+                        : ContextCompat.getColor(mContext, MarketUtil.getPriceStateColor(typeValue)))
                 .setText(R.id.tv_rate, getRate(contractID, floatValue, average, position))
-                .setTextColor(R.id.tv_rate, ContextCompat.getColor(mContext, MarketUtil.getPriceStateColor(typeValue)));
+                .setTextColor(R.id.tv_rate, isSelected ? ContextCompat.getColor(mContext, R.color.white)
+                        : ContextCompat.getColor(mContext, MarketUtil.getPriceStateColor(typeValue)));
     }
 
     private String getRate(String contractID, String floatStr, String average, long position) {
         String rateStr;
 
         long handWeight = Contract.getInstance().getHandWeightFromID(contractID);
-        long contractValue = contractID.equals("Ag(T+D)") ? new BigDecimal(handWeight).divide(new BigDecimal(1000), 0 , BigDecimal.ROUND_DOWN).longValue() : handWeight;
+        long contractValue = contractID.equals("Ag(T+D)") ? new BigDecimal(handWeight).divide(new BigDecimal(1000), 0, BigDecimal.ROUND_DOWN).longValue() : handWeight;
 
         BigDecimal floatValue = new BigDecimal(floatStr);
         BigDecimal positionValue = new BigDecimal(average).multiply(new BigDecimal(contractValue))
