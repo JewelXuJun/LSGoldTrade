@@ -71,7 +71,7 @@
             android:layout_weight="1"
             android:gravity="center|right"
             android:orientation="vertical"
-            android:paddingRight="@dimen/common_page_padding">
+            android:paddingRight="@dimen/common_area_margin">
 
             <TextView
                 android:id="@+id/tv_entrust"
