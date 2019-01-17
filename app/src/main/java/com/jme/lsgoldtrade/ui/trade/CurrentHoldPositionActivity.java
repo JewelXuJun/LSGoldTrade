@@ -211,6 +211,7 @@ public class CurrentHoldPositionActivity extends JMEBaseActivity implements OnRe
                         }
                     }
 
+                    mAdapter.setList(mList);
                     mAdapter.notifyDataSetChanged();
                 }
 
