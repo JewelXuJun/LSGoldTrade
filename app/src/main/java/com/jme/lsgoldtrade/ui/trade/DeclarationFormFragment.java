@@ -609,7 +609,6 @@ public class DeclarationFormFragment extends JMEBaseFragment {
                     bEveningUp = false;
                     mBinding.tvPriceEqual.setText(R.string.text_no_data_default);
 
-                    RxBus.getInstance().post(Constants.RxBusConst.RXBUS_DECLARATIONFORM_HOLDPOSITION_UNSELECT, null);
                     RxBus.getInstance().post(Constants.RxBusConst.RxBus_DeclarationForm_UPDATE, null);
                 }
 

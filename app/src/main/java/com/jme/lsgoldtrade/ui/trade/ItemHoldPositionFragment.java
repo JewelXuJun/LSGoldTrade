@@ -180,6 +180,9 @@ public class ItemHoldPositionFragment extends JMEBaseFragment implements BaseQui
 
                     break;
                 case Constants.RxBusConst.RxBus_DeclarationForm_UPDATE:
+                    mAdapter.setSelectPosition(-1);
+                    mAdapter.notifyDataSetChanged();
+
                     initPosition();
 
                     break;
@@ -191,7 +194,7 @@ public class ItemHoldPositionFragment extends JMEBaseFragment implements BaseQui
         bFlag = true;
         mCurrentPage = 1;
         mPagingKey = "";
-        mList.clear();
+//        mList.clear();
 
         mHandler.removeMessages(Constants.Msg.MSG_DECLARATIONFORM_POSITION_UPDATE_DATA);
 
@@ -293,6 +296,8 @@ public class ItemHoldPositionFragment extends JMEBaseFragment implements BaseQui
                     bHasNext = positionPageVo.isHasNext();
                     mPagingKey = positionPageVo.getPagingKey();
                     List<PositionVo> positionVoList = positionPageVo.getPositionList();
+
+                    mList.clear();
 
                     if (null != positionVoList && 0 != positionVoList.size()) {
                         for (PositionVo positionVo : positionVoList) {
