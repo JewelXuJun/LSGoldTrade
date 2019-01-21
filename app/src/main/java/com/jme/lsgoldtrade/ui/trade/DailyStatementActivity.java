@@ -144,8 +144,8 @@ public class DailyStatementActivity extends JMEBaseActivity {
             mDatePickerDialog = new DatePickerDialog(DailyStatementActivity.this, (datePicker, year, month, dayOfMonth) ->
                     setQueryTime(year, month, dayOfMonth), mYear, mMonth, mDayOfMonth);
 
-           /* if (android.os.Build.VERSION.SDK_INT >= 11)
-                mDatePickerDialog.getDatePicker().setMaxDate(new Date().getTime());*/
+            if (android.os.Build.VERSION.SDK_INT >= 11)
+                mDatePickerDialog.getDatePicker().setMaxDate(new Date().getTime());
 
             mDatePickerDialog.show();
         }
