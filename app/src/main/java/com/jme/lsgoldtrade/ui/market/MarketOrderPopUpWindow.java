@@ -9,6 +9,7 @@ import com.jme.common.util.DensityUtil;
 import com.jme.lsgoldtrade.R;
 import com.jme.lsgoldtrade.base.JMEBasePopupWindow;
 import com.jme.lsgoldtrade.databinding.PopupwindowMarketOrderBinding;
+import com.jme.lsgoldtrade.domain.TenSpeedVo;
 
 /**
  * Created by XuJun on 2018/12/2.
@@ -41,25 +42,14 @@ public class MarketOrderPopUpWindow extends JMEBasePopupWindow {
         setContentView(mBinding.getRoot());
 
         mBinding.setHandlers(new ClickHandlers());
-
-        mBinding.radioGroupPrice.setOnCheckedChangeListener((group, checkedId) -> {
-            switch (checkedId) {
-                case R.id.radio_rival_price:
-
-                    break;
-                case R.id.radio_queuing_price:
-
-                    break;
-                case R.id.radio_last_price:
-
-                    break;
-            }
-        });
     }
 
-    public void setLimitPriceData(String limitDownPrice, String limitUpPrice) {
-        mBinding.tvLimitDownPrice.setText(limitDownPrice);
-        mBinding.tvLimitUpPrice.setText(limitUpPrice);
+    public void setData(TenSpeedVo tenSpeedVo) {
+        if (null == tenSpeedVo)
+            return;
+
+        mBinding.tvLimitDownPrice.setText(tenSpeedVo.getLowerLimitPrice());
+        mBinding.tvLimitUpPrice.setText(tenSpeedVo.getHighLimitPrice());
     }
 
     public class ClickHandlers {
@@ -91,6 +81,19 @@ public class MarketOrderPopUpWindow extends JMEBasePopupWindow {
         public void onClickAmountAdd() {
 
         }
+
+        public void onClickRivalPrice() {
+
+        }
+
+        public void onClickQueuingPrice() {
+
+        }
+
+        public void onClickLastPrice() {
+
+        }
+
 
         public void onClickBuyMore() {
 

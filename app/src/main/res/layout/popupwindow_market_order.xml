@@ -130,7 +130,7 @@
                     android:inputType="numberDecimal"
                     android:maxLines="1"
                     android:textColor="@color/color_toolbar_blue"
-                    android:textSize="@dimen/sp_16" />
+                    android:textSize="@dimen/size_normal" />
 
                 <include layout="@layout/item_line_horizontal" />
 
@@ -181,10 +181,11 @@
                     android:layout_weight="2"
                     android:background="@null"
                     android:gravity="center"
-                    android:inputType="numberDecimal"
+                    android:hint="@string/market_amount_hint"
+                    android:inputType="number"
                     android:maxLines="1"
                     android:textColor="@color/color_toolbar_blue"
-                    android:textSize="@dimen/sp_16" />
+                    android:textSize="@dimen/size_normal" />
 
                 <include layout="@layout/item_line_horizontal" />
 
@@ -206,8 +207,7 @@
 
         </LinearLayout>
 
-        <RadioGroup
-            android:id="@+id/radio_group_price"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="@dimen/common_item_height_middle"
             android:layout_marginLeft="@dimen/margin_small"
@@ -216,52 +216,52 @@
             android:gravity="center"
             android:orientation="horizontal">
 
-            <RadioButton
-                android:id="@+id/radio_rival_price"
+            <Button
+                android:id="@+id/btn_rival_price"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginLeft="@dimen/margin_market_price"
                 android:layout_marginRight="@dimen/margin_market_price"
                 android:layout_weight="1"
-                android:background="@drawable/selector_blue"
+                android:background="@drawable/bg_btn_blue_hollow"
                 android:button="@null"
-                android:checked="false"
                 android:gravity="center"
+                android:onClick="@{() -> handlers.onClickRivalPrice()}"
                 android:text="@string/market_rival_price"
                 android:textColor="@drawable/selector_text_checked"
                 android:textSize="@dimen/sp_14" />
 
-            <RadioButton
-                android:id="@+id/radio_queuing_price"
+            <Button
+                android:id="@+id/btn_queuing_price"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginLeft="@dimen/margin_market_price"
                 android:layout_marginRight="@dimen/margin_market_price"
                 android:layout_weight="1"
-                android:background="@drawable/selector_blue"
+                android:background="@drawable/bg_btn_blue_hollow"
                 android:button="@null"
-                android:checked="false"
                 android:gravity="center"
+                android:onClick="@{() -> handlers.onClickQueuingPrice()}"
                 android:text="@string/market_queuing_price"
                 android:textColor="@drawable/selector_text_checked"
                 android:textSize="@dimen/sp_14" />
 
-            <RadioButton
-                android:id="@+id/radio_last_price"
+            <Button
+                android:id="@+id/btn_last_price"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginLeft="@dimen/margin_market_price"
                 android:layout_marginRight="@dimen/margin_market_price"
                 android:layout_weight="1"
-                android:background="@drawable/selector_blue"
+                android:background="@drawable/bg_btn_blue_hollow"
                 android:button="@null"
-                android:checked="false"
                 android:gravity="center"
+                android:onClick="@{() -> handlers.onClickLastPrice()}"
                 android:text="@string/market_last_price"
                 android:textColor="@drawable/selector_text_checked"
                 android:textSize="@dimen/sp_14" />
 
-        </RadioGroup>
+        </LinearLayout>
 
         <LinearLayout
             android:id="@+id/radio_group_amount"
@@ -291,7 +291,7 @@
                     android:layout_height="wrap_content"
                     android:text="@string/text_no_data_default"
                     android:textColor="@color/white"
-                    android:textSize="@dimen/size_normal" />
+                    android:textSize="@dimen/sp_14" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -320,7 +320,7 @@
                     android:layout_height="wrap_content"
                     android:text="@string/text_no_data_default"
                     android:textColor="@color/white"
-                    android:textSize="@dimen/size_normal" />
+                    android:textSize="@dimen/sp_14" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -349,7 +349,7 @@
                     android:layout_height="wrap_content"
                     android:text="@string/text_no_data_default"
                     android:textColor="@color/white"
-                    android:textSize="@dimen/size_normal" />
+                    android:textSize="@dimen/sp_14" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -378,7 +378,7 @@
                     android:layout_height="wrap_content"
                     android:text="@string/text_no_data_default"
                     android:textColor="@color/white"
-                    android:textSize="@dimen/size_normal" />
+                    android:textSize="@dimen/sp_14" />
 
                 <TextView
                     android:layout_width="wrap_content"

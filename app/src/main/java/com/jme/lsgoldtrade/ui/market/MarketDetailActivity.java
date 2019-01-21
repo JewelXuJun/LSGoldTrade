@@ -400,7 +400,7 @@ public class MarketDetailActivity extends JMEBaseActivity implements FChart.OnPr
 
 
         if (null != mPopupWindow)
-            mPopupWindow.setLimitPriceData(tenSpeedVo.getLowerLimitPrice(), tenSpeedVo.getHighLimitPrice());
+            mPopupWindow.setData(tenSpeedVo);
     }
 
     public void updateKChartData(List<KChartVo> list, KData.Unit unit) {
