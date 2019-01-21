@@ -16,6 +16,7 @@ import com.jme.lsgoldtrade.base.JMEBaseFragment;
 import com.jme.lsgoldtrade.config.AppConfig;
 import com.jme.lsgoldtrade.config.Constants;
 import com.jme.lsgoldtrade.databinding.FragmentHoldPositionBinding;
+import com.jme.lsgoldtrade.domain.AccountVo;
 import com.jme.lsgoldtrade.domain.FiveSpeedVo;
 import com.jme.lsgoldtrade.domain.PositionPageVo;
 import com.jme.lsgoldtrade.domain.PositionVo;
@@ -107,7 +108,7 @@ public class HoldPositionFragment extends JMEBaseFragment implements OnRefreshLi
         bVisibleToUser = isVisibleToUser;
 
         if (null != mBinding && bVisibleToUser)
-            initPosition();
+            initValue(true);
         else
             mHandler.removeMessages(Constants.Msg.MSG_TRADE_POSITION_UPDATE_DATA);
     }
@@ -127,7 +128,7 @@ public class HoldPositionFragment extends JMEBaseFragment implements OnRefreshLi
         super.onResume();
 
         if (null != mBinding && bVisibleToUser)
-            initPosition();
+            initValue(true);
     }
 
     @Override
@@ -135,6 +136,11 @@ public class HoldPositionFragment extends JMEBaseFragment implements OnRefreshLi
         super.onPause();
 
         mHandler.removeMessages(Constants.Msg.MSG_TRADE_POSITION_UPDATE_DATA);
+    }
+
+    private void initValue(boolean enable) {
+        getAccount(enable);
+        initPosition();
     }
 
     private void initPosition() {
@@ -188,11 +194,11 @@ public class HoldPositionFragment extends JMEBaseFragment implements OnRefreshLi
         mAdapter.notifyDataSetChanged();
     }
 
-    private void getMarket() {
+    private void getAccount(boolean enable) {
         HashMap<String, String> params = new HashMap<>();
-        params.put("list", "");
+        params.put("accountId", mUser.getAccountID());
 
-        sendRequest(MarketService.getInstance().getFiveSpeedQuotes, params, false);
+        sendRequest(TradeService.getInstance().account, params, enable);
     }
 
     private void position() {
@@ -203,24 +209,35 @@ public class HoldPositionFragment extends JMEBaseFragment implements OnRefreshLi
         sendRequest(TradeService.getInstance().position, params, false, false, false);
     }
 
+    private void getMarket() {
+        HashMap<String, String> params = new HashMap<>();
+        params.put("list", "");
+
+        sendRequest(MarketService.getInstance().getFiveSpeedQuotes, params, false);
+    }
+
     @Override
     protected void DataReturn(DTRequest request, Head head, Object response) {
         super.DataReturn(request, head, response);
 
         switch (request.getApi().getName()) {
-            case "GetFiveSpeedQuotes":
+            case "Account":
                 if (head.isSuccess()) {
-                    List<FiveSpeedVo> fiveSpeedVoList;
+                    AccountVo accountVo;
 
                     try {
-                        fiveSpeedVoList = (List<FiveSpeedVo>) response;
+                        accountVo = (AccountVo) response;
                     } catch (Exception e) {
-                        fiveSpeedVoList = null;
+                        accountVo = null;
 
-                        e.getMessage();
+                        e.printStackTrace();
                     }
 
-                    calculateFloat(fiveSpeedVoList, mAdapter.getData());
+                    if (null == accountVo)
+                        return;
+
+                    mBinding.tvAvailableFunds.setText(MarketUtil.decimalFormatMoney(accountVo.getTransactionBalanceStr()));
+                    mBinding.tvDesirableCapital.setText(MarketUtil.decimalFormatMoney(accountVo.getExtractableBalanceStr()));
                 }
 
                 break;
@@ -289,6 +306,22 @@ public class HoldPositionFragment extends JMEBaseFragment implements OnRefreshLi
                 }
 
                 break;
+            case "GetFiveSpeedQuotes":
+                if (head.isSuccess()) {
+                    List<FiveSpeedVo> fiveSpeedVoList;
+
+                    try {
+                        fiveSpeedVoList = (List<FiveSpeedVo>) response;
+                    } catch (Exception e) {
+                        fiveSpeedVoList = null;
+
+                        e.getMessage();
+                    }
+
+                    calculateFloat(fiveSpeedVoList, mAdapter.getData());
+                }
+
+                break;
         }
     }
 
@@ -307,7 +340,7 @@ public class HoldPositionFragment extends JMEBaseFragment implements OnRefreshLi
 
     @Override
     public void onRefresh(@NonNull RefreshLayout refreshLayout) {
-        initPosition();
+        initValue(false);
     }
 
     public class ClickHandlers {
