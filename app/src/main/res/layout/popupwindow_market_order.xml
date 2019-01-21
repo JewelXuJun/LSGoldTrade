@@ -42,6 +42,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/common_area_margin_tiny"
+                    android:text="@string/text_no_data_default"
                     android:textColor="@color/common_font_decrease"
                     android:textSize="@dimen/size_middle" />
 
@@ -67,6 +68,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/common_area_margin_tiny"
+                    android:text="@string/text_no_data_default"
                     android:textColor="@color/common_font_increase"
                     android:textSize="@dimen/size_middle" />
 
@@ -291,7 +293,7 @@
                     android:layout_height="wrap_content"
                     android:text="@string/text_no_data_default"
                     android:textColor="@color/white"
-                    android:textSize="@dimen/sp_14" />
+                    android:textSize="@dimen/size_middle" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -320,7 +322,7 @@
                     android:layout_height="wrap_content"
                     android:text="@string/text_no_data_default"
                     android:textColor="@color/white"
-                    android:textSize="@dimen/sp_14" />
+                    android:textSize="@dimen/size_middle" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -344,12 +346,12 @@
                 android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/tv_equal_more"
+                    android:id="@+id/tv_price_equal_more"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/text_no_data_default"
                     android:textColor="@color/white"
-                    android:textSize="@dimen/sp_14" />
+                    android:textSize="@dimen/size_middle" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -373,12 +375,12 @@
                 android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/tv_equal_empty"
+                    android:id="@+id/tv_price_equal_empty"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/text_no_data_default"
                     android:textColor="@color/white"
-                    android:textSize="@dimen/sp_14" />
+                    android:textSize="@dimen/size_middle" />
 
                 <TextView
                     android:layout_width="wrap_content"

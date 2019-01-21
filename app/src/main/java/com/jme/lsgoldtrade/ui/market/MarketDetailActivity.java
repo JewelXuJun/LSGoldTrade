@@ -27,7 +27,6 @@ import com.jme.common.util.DateUtil;
 import com.jme.common.util.KChartVo;
 import com.jme.common.util.NetWorkUtils;
 import com.jme.common.util.RxBus;
-import com.jme.common.util.SharedPreUtils;
 import com.jme.common.util.TChartVo;
 import com.jme.lsgoldtrade.R;
 import com.jme.lsgoldtrade.base.JMEBaseActivity;
@@ -38,6 +37,8 @@ import com.jme.lsgoldtrade.domain.DetailVo;
 import com.jme.lsgoldtrade.domain.SectionVo;
 import com.jme.lsgoldtrade.domain.TenSpeedVo;
 import com.jme.lsgoldtrade.service.MarketService;
+import com.jme.lsgoldtrade.service.TradeService;
+import com.jme.lsgoldtrade.ui.trade.OrderPopUpWindow;
 import com.jme.lsgoldtrade.util.MarketUtil;
 
 import java.math.BigDecimal;
@@ -47,16 +48,20 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
+import rx.Subscription;
+
 @Route(path = Constants.ARouterUriConst.MARKETDETAIL)
 public class MarketDetailActivity extends JMEBaseActivity implements FChart.OnPriceClickListener, OnKChartSelectedListener {
 
     private ActivityMarketDetailBinding mBinding;
 
     private TenSpeedVo mTenSpeedVo;
+    private OrderPopUpWindow mWindow;
     private MarketOrderPopUpWindow mPopupWindow;
     private Chart mChart;
     private TChart mTChart;
     private KChart mKChart;
+    private Subscription mRxbus;
 
     private static final int NONE = 0;
     private static final int INIT = 1;
@@ -117,7 +122,6 @@ public class MarketDetailActivity extends JMEBaseActivity implements FChart.OnPr
         setBackGroundColor(R.color.common_font_stable);
         setBackNavigation(true, R.mipmap.ic_back_white);
 
-        mPopupWindow = new MarketOrderPopUpWindow(this);
         mChart = mBinding.chart;
         mTChart = mChart.getTChart();
         mKChart = mChart.getKChart();
@@ -131,11 +135,17 @@ public class MarketDetailActivity extends JMEBaseActivity implements FChart.OnPr
     @Override
     protected void initData(Bundle savedInstanceState) {
         super.initData(savedInstanceState);
+
+        mWindow = new OrderPopUpWindow(this);
+        mWindow.setOutsideTouchable(true);
+        mWindow.setFocusable(true);
     }
 
     @Override
     protected void initListener() {
         super.initListener();
+
+        initRxBus();
 
         mChart.setOnLandscapeListener((view) -> gotoMarketDetailLandscapeActivity());
 
@@ -179,6 +189,14 @@ public class MarketDetailActivity extends JMEBaseActivity implements FChart.OnPr
         removeMessage();
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+        if (!mRxbus.isUnsubscribed())
+            mRxbus.unsubscribe();
+    }
+
     private void setBackGroundColor(int color) {
 //        StatusBarUtil.setStatusBarMode(this, true, color);
         mToolbarHelper.setBackgroundColor(ContextCompat.getColor(this, color));
@@ -209,6 +227,35 @@ public class MarketDetailActivity extends JMEBaseActivity implements FChart.OnPr
         bGetTradeDateFlag = false;
 
         updateData(true);
+    }
+
+    private void initRxBus() {
+        mRxbus = RxBus.getInstance().toObserverable(RxBus.Message.class).subscribe(message -> {
+            String callType = message.getObject().toString();
+
+            if (TextUtils.isEmpty(callType))
+                return;
+
+            switch (callType) {
+                case Constants.RxBusConst.RXBUS_MARKETDETAIL_QUICK:
+                    Object object = message.getObject2();
+
+                    if (null == object)
+                        return;
+
+                    List<String> list = (List<String>) object;
+
+                    if (null == list || 5 != list.size())
+                        return;
+
+                    if (!mContractId.equals(list.get(0)))
+                        return;
+
+                    showPopupWindow(list.get(0), list.get(1), list.get(2), list.get(3), list.get(4));
+
+                    break;
+            }
+        });
     }
 
     private void updateData(boolean enable) {
@@ -398,7 +445,6 @@ public class MarketDetailActivity extends JMEBaseActivity implements FChart.OnPr
 
         mTChart.loadTradeInfoChartData(tenSpeedVo.getAskLists(), tenSpeedVo.getBidLists());
 
-
         if (null != mPopupWindow)
             mPopupWindow.setData(tenSpeedVo);
     }
@@ -470,6 +516,19 @@ public class MarketDetailActivity extends JMEBaseActivity implements FChart.OnPr
         mBinding.tvLow.setTextColor(ContextCompat.getColor(this, MarketUtil.getMarketStateColor(new BigDecimal(lowestPrice).compareTo(new BigDecimal(preClose)))));
     }
 
+    private void showPopupWindow(String contractID, String price, String amount, String bsFlag, String ocFlag) {
+        if (null == mWindow)
+            return;
+
+        mWindow.setData(mUser.getAccount(), contractID, price, amount,
+                Integer.parseInt(bsFlag) == 1 ? getString(R.string.trade_buy) : getString(R.string.trade_sale), (view) -> {
+                    limitOrder(contractID, price, amount, bsFlag, ocFlag);
+
+                    mWindow.dismiss();
+                });
+        mWindow.showAtLocation(mBinding.tvHigh, Gravity.CENTER, 0, 0);
+    }
+
     private void getTenSpeedQuotes(boolean enable) {
         if (TextUtils.isEmpty(mContractId))
             return;
@@ -527,6 +586,19 @@ public class MarketDetailActivity extends JMEBaseActivity implements FChart.OnPr
         params.put("count", COUNT_KCHART);
 
         sendRequest(MarketService.getInstance().getKChartQuotes, params, false, false, false);
+    }
+
+    private void limitOrder(String contractId, String price, String amount, String bsFlag, String ocFlag) {
+        HashMap<String, String> params = new HashMap<>();
+        params.put("contractId", contractId);
+        params.put("accountId", mUser.getAccountID());
+        params.put("entrustPrice", String.valueOf(new BigDecimal(price).multiply(new BigDecimal(100)).longValue()));
+        params.put("entrustNumber", amount);
+        params.put("bsFlag", bsFlag);
+        params.put("ocFlag", ocFlag);
+        params.put("tradingType", "0");
+
+        sendRequest(TradeService.getInstance().limitOrder, params, true);
     }
 
     @Override
@@ -650,6 +722,11 @@ public class MarketDetailActivity extends JMEBaseActivity implements FChart.OnPr
                 iRequestKDataFlag = NONE;
 
                 break;
+            case "LimitOrder":
+                if (head.isSuccess())
+                    showShortToast(R.string.trade_success);
+
+                break;
         }
     }
 
@@ -698,9 +775,11 @@ public class MarketDetailActivity extends JMEBaseActivity implements FChart.OnPr
                         .build(Constants.ARouterUriConst.ACCOUNTLOGIN)
                         .navigation();
             } else {
-                if (null != mPopupWindow) {
-                    mPopupWindow.showAtLocation(mBinding.layoutFooterview, Gravity.BOTTOM, 0, 0);
-                }
+                mPopupWindow = new MarketOrderPopUpWindow(MarketDetailActivity.this, mContractId);
+                mPopupWindow.setOutsideTouchable(true);
+                mPopupWindow.setFocusable(true);
+                mPopupWindow.setData(mTenSpeedVo);
+                mPopupWindow.showAtLocation(mBinding.layoutFooterview, Gravity.BOTTOM, 0, 0);
             }
         }
 

@@ -47,6 +47,7 @@ public class Constants {
         public static final String RXBUS_DECLARATIONFORM_SHOW = "DeclarationFormShow";
         public static final String RXBUS_DECLARATIONFORM_CANCEL = "DeclarationFormCancel";
         public static final String RXBUS_DECLARATIONFORM_CONFIRM = "DeclarationFormConfirm";
+        public static final String RXBUS_MARKETDETAIL_QUICK = "MarketDetailQuick";
     }
 
     public static final class Msg {
