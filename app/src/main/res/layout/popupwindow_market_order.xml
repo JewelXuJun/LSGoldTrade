@@ -27,6 +27,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/common_area_margin"
                 android:layout_marginBottom="@dimen/common_area_margin"
+                android:onClick="@{() -> handlers.onClickLimitDownPrice()}"
                 android:orientation="horizontal">
 
                 <TextView
@@ -37,11 +38,10 @@
                     android:textSize="@dimen/size_middle" />
 
                 <TextView
-                    android:id="@+id/tv_limit_down"
+                    android:id="@+id/tv_limit_down_price"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/common_area_margin_tiny"
-                    android:text="3347"
                     android:textColor="@color/common_font_decrease"
                     android:textSize="@dimen/size_middle" />
 
@@ -52,6 +52,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/common_area_margin"
                 android:layout_toRightOf="@+id/layout_limit_down"
+                android:onClick="@{() -> handlers.onClickLimitUpPrice()}"
                 android:orientation="horizontal">
 
                 <TextView
@@ -62,11 +63,10 @@
                     android:textSize="@dimen/size_middle" />
 
                 <TextView
-                    android:id="@+id/tv_limit_up"
+                    android:id="@+id/tv_limit_up_price"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/common_area_margin_tiny"
-                    android:text="3347"
                     android:textColor="@color/common_font_increase"
                     android:textSize="@dimen/size_middle" />
 

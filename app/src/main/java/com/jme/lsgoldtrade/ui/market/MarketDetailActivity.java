@@ -68,7 +68,6 @@ public class MarketDetailActivity extends JMEBaseActivity implements FChart.OnPr
     private static final String COUNT_KCHART = "200";
 
     private String mContractId;
-    private String mContractName;
     private boolean bFlag = true;
     private boolean bHighlight = false;
     private boolean bHasMoreKDataFlag = true;
@@ -358,7 +357,6 @@ public class MarketDetailActivity extends JMEBaseActivity implements FChart.OnPr
 
     private void updateMarketData(TenSpeedVo tenSpeedVo) {
         mTenSpeedVo = tenSpeedVo;
-        mContractName = tenSpeedVo.getName();
 
         String lastSettlePrice = tenSpeedVo.getLastSettlePrice();
 
@@ -399,6 +397,10 @@ public class MarketDetailActivity extends JMEBaseActivity implements FChart.OnPr
             mTChart.setPreClose(lastSettlePrice);
 
         mTChart.loadTradeInfoChartData(tenSpeedVo.getAskLists(), tenSpeedVo.getBidLists());
+
+
+        if (null != mPopupWindow)
+            mPopupWindow.setLimitPriceData(tenSpeedVo.getLowerLimitPrice(), tenSpeedVo.getHighLimitPrice());
     }
 
     public void updateKChartData(List<KChartVo> list, KData.Unit unit) {
@@ -696,8 +698,9 @@ public class MarketDetailActivity extends JMEBaseActivity implements FChart.OnPr
                         .build(Constants.ARouterUriConst.ACCOUNTLOGIN)
                         .navigation();
             } else {
-                if (null != mPopupWindow)
+                if (null != mPopupWindow) {
                     mPopupWindow.showAtLocation(mBinding.layoutFooterview, Gravity.BOTTOM, 0, 0);
+                }
             }
         }
 

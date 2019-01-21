@@ -57,10 +57,23 @@ public class MarketOrderPopUpWindow extends JMEBasePopupWindow {
         });
     }
 
+    public void setLimitPriceData(String limitDownPrice, String limitUpPrice) {
+        mBinding.tvLimitDownPrice.setText(limitDownPrice);
+        mBinding.tvLimitUpPrice.setText(limitUpPrice);
+    }
+
     public class ClickHandlers {
 
         public void onClickCancel() {
             dismiss();
+        }
+
+        public void onClickLimitDownPrice() {
+
+        }
+
+        public void onClickLimitUpPrice() {
+
         }
 
         public void onClickPriceMinus() {
