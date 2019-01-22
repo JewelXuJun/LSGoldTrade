@@ -76,7 +76,11 @@ public class PersonalFragment extends JMEBaseFragment {
         }
 
         public void onClickOpenAccountOnline() {
-
+            ARouter.getInstance()
+                    .build(Constants.ARouterUriConst.JMEWEBVIEW)
+                    .withString("title", mContext.getResources().getString(R.string.personal_open_account_online))
+                    .withString("url", Constants.HttpConst.URL_OPEN_ACCOUNT)
+                    .navigation();
         }
 
         public void onClickCustomerService() {

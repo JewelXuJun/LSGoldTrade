@@ -22,6 +22,7 @@ public class Constants {
         }
 
         public static String URL_BASE;
+        public static String URL_OPEN_ACCOUNT = "https://portal.taijs.com";
 
         static {
             if (Envi == Test_WAN) {
@@ -70,7 +71,7 @@ public class Constants {
 
     public static final class ARouterUriConst {
         public static final String MAIN = "/JME/MainActivity";
-        public static final String RFINEXWEBVIEW = "/JMEBase/JMEBaseWebviewActivity";
+        public static final String JMEWEBVIEW = "/JMEBase/JMEBaseWebViewActivity";
         public static final String ACCOUNTLOGIN = "/PersonalFragment/AccountLoginActivity";
         public static final String MOBILELOGIN = "/PersonalFragment/MobileLoginActivity";
         public static final String FEEDBACK = "/PersonalFragment/FeedBackActivity";
