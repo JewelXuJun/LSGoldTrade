@@ -60,6 +60,7 @@
     <dimen name="size_middle">13sp</dimen>
     <dimen name="size_normal">15sp</dimen>
     <dimen name="size_big">22sp</dimen>
+    <dimen name="size_middle_large">30sp</dimen>
     <dimen name="size_large">34sp</dimen>
 
     <dimen name="icon_logo">76dp</dimen>

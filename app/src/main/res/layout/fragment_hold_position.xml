@@ -94,7 +94,7 @@
                                 android:layout_centerVertical="true"
                                 android:text="@string/text_no_data_default"
                                 android:textColor="@color/common_font_increase"
-                                android:textSize="@dimen/size_large" />
+                                android:textSize="@dimen/size_middle_large" />
 
                             <Button
                                 android:layout_width="@dimen/width_trade_hold_position_account_item"

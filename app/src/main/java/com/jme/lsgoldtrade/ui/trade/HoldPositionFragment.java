@@ -44,6 +44,7 @@ public class HoldPositionFragment extends JMEBaseFragment implements OnRefreshLi
     private boolean bHasNext = false;
     private boolean bVisibleToUser = false;
     private String mPagingKey = "";
+    private String mBalance;
 
     private Handler mHandler = new Handler() {
         public void handleMessage(Message msg) {
@@ -194,10 +195,10 @@ public class HoldPositionFragment extends JMEBaseFragment implements OnRefreshLi
         mAdapter.setList(mList);
         mAdapter.notifyDataSetChanged();
 
-        calculateFloatTotal();
+        calculateValue();
     }
 
-    private void calculateFloatTotal() {
+    private void calculateValue() {
         if (null == mList || 0 == mList.size()) {
             mBinding.tvFloating.setText(R.string.text_no_data_default);
         } else {
@@ -209,6 +210,9 @@ public class HoldPositionFragment extends JMEBaseFragment implements OnRefreshLi
             }
 
             mBinding.tvFloating.setText(MarketUtil.decimalFormatMoney(floatTotal.toPlainString()));
+
+            if (!TextUtils.isEmpty(mBalance))
+                mBinding.tvTotal.setText(MarketUtil.decimalFormatMoney(new BigDecimal(mBalance).add(floatTotal).toPlainString()));
         }
     }
 
@@ -254,8 +258,12 @@ public class HoldPositionFragment extends JMEBaseFragment implements OnRefreshLi
                     if (null == accountVo)
                         return;
 
+                    mBalance = accountVo.getBalanceStr();
+
                     mBinding.tvAvailableFunds.setText(MarketUtil.decimalFormatMoney(accountVo.getTransactionBalanceStr()));
                     mBinding.tvDesirableCapital.setText(MarketUtil.decimalFormatMoney(accountVo.getExtractableBalanceStr()));
+
+                    calculateValue();
                 }
 
                 break;
@@ -301,7 +309,7 @@ public class HoldPositionFragment extends JMEBaseFragment implements OnRefreshLi
 
                         mAdapter.setList(mList);
 
-                        calculateFloatTotal();
+                        calculateValue();
 
                         mBinding.tvMarketValue.setText(MarketUtil.decimalFormatMoney(MarketUtil.getPriceValue(marketValueTotal.longValue())));
 
