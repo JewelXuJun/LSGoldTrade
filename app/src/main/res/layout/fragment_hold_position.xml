@@ -206,7 +206,7 @@
                                     android:textSize="@dimen/sp_12" />
 
                                 <TextView
-                                    android:id="@+id/tv_market_capitalization"
+                                    android:id="@+id/tv_market_value"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_marginLeft="@dimen/common_area_margin_tiny"

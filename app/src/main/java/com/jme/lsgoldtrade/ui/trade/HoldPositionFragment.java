@@ -278,18 +278,24 @@ public class HoldPositionFragment extends JMEBaseFragment implements OnRefreshLi
                         mPagingKey = positionPageVo.getPagingKey();
                         List<PositionVo> positionVoList = positionPageVo.getPositionList();
 
+                        BigDecimal marketValueTotal = new BigDecimal(0);
+
                         mList.clear();
 
                         if (null != positionVoList && 0 != positionVoList.size()) {
                             for (PositionVo positionVo : positionVoList) {
-                                if (null != positionVo)
+                                if (null != positionVo) {
                                     mList.add(MarketUtil.getPriceValue(positionVo.getFloatProfit() + positionVo.getUnliquidatedProfit()));
+
+                                    marketValueTotal = marketValueTotal.add(new BigDecimal(positionVo.getTurnOver()));
+                                }
                             }
                         }
 
                         mAdapter.setList(mList);
 
                         calculateFloatTotal();
+                        mBinding.tvMarketValue.setText(MarketUtil.decimalFormatMoney(MarketUtil.getPriceValue(marketValueTotal.longValue())));
 
                         if (bHasNext) {
                             if (mCurrentPage == 1)
