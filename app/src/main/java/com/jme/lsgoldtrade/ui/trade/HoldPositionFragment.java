@@ -5,6 +5,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.LinearLayoutManager;
+import android.text.TextUtils;
 
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.chad.library.adapter.base.BaseQuickAdapter;
@@ -192,6 +193,23 @@ public class HoldPositionFragment extends JMEBaseFragment implements OnRefreshLi
 
         mAdapter.setList(mList);
         mAdapter.notifyDataSetChanged();
+
+        calculateFloatTotal();
+    }
+
+    private void calculateFloatTotal() {
+        if (null == mList || 0 == mList.size()) {
+            mBinding.tvFloating.setText(R.string.text_no_data_default);
+        } else {
+            BigDecimal floatTotal = new BigDecimal(0);
+
+            for (String value : mList) {
+                if (!TextUtils.isEmpty(value))
+                    floatTotal = floatTotal.add(new BigDecimal(value));
+            }
+
+            mBinding.tvFloating.setText(MarketUtil.decimalFormatMoney(floatTotal.toPlainString()));
+        }
     }
 
     private void getAccount(boolean enable) {
@@ -270,6 +288,8 @@ public class HoldPositionFragment extends JMEBaseFragment implements OnRefreshLi
                         }
 
                         mAdapter.setList(mList);
+
+                        calculateFloatTotal();
 
                         if (bHasNext) {
                             if (mCurrentPage == 1)
