@@ -3,9 +3,12 @@ package com.jme.lsgoldtrade.base;
 import android.content.Context;
 
 import com.alibaba.android.arouter.launcher.ARouter;
+import com.jme.common.BuildConfig;
 import com.jme.common.app.BaseApplication;
 import com.jme.common.network.CustomerSSL;
 import com.jme.common.network.ImageDownLoader;
+import com.orhanobut.logger.AndroidLogAdapter;
+import com.orhanobut.logger.Logger;
 import com.squareup.picasso.Picasso;
 
 import java.util.concurrent.TimeUnit;
@@ -13,6 +16,7 @@ import java.util.concurrent.TimeUnit;
 import javax.net.ssl.HostnameVerifier;
 import javax.net.ssl.SSLSession;
 
+import butterknife.ButterKnife;
 import okhttp3.OkHttpClient;
 
 import static com.jme.common.network.Connection.trustManagerForCertificates;
@@ -33,6 +37,13 @@ public class JMEApplication extends BaseApplication {
 
         instance = this;
         mContext = this.getApplicationContext();
+
+        if (BuildConfig.DEBUG) {
+            ARouter.openLog();
+            ARouter.openDebug();
+            ButterKnife.setDebug(true);
+            Logger.addLogAdapter(new AndroidLogAdapter());
+        }
 
         ARouter.init(this);
         initPicasso();

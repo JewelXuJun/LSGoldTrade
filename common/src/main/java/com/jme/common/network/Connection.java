@@ -1,6 +1,8 @@
 package com.jme.common.network;
 
 
+import com.jme.common.BuildConfig;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.security.GeneralSecurityException;
@@ -49,7 +51,10 @@ public class Connection {
             sslSocketFactory = sslContext.getSocketFactory();
 
             HttpLoggingInterceptor logInterceptor = new HttpLoggingInterceptor();
-            logInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+            if (BuildConfig.COMMON_LOG_DEBUG)
+                logInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+            else
+                logInterceptor.setLevel(HttpLoggingInterceptor.Level.NONE);
 
             OkHttpClient.Builder builder = new OkHttpClient.Builder();
 
