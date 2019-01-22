@@ -835,4 +835,28 @@ public class DailyStatementVo implements Serializable {
         return MarketUtil.getPriceValue(tdDeferFee);
     }
 
+    public String getCurrentBalanceStr() {
+        return MarketUtil.getPriceValue(currentBalance);
+    }
+
+    public String getLastTradingBalanceStr() {
+        return MarketUtil.getPriceValue(lastTradingBalance);
+    }
+
+    public String getCurrentDrawAmonutStr() {
+        return MarketUtil.getPriceValue(currentDrawAmonut);
+    }
+
+    public String getCurrentPositionMarginStr() {
+        return MarketUtil.getPriceValue(currentPositionMargin);
+    }
+
+    public String getCurrentWithdrawalStr() {
+        return MarketUtil.getPriceValue(currentWithdrawal);
+    }
+
+    public String getCurrentIncomingsStr() {
+        return MarketUtil.getPriceValue(currentIncomings);
+    }
+
 }

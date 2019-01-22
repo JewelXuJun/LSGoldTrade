@@ -15,6 +15,7 @@ import com.jme.lsgoldtrade.config.Constants;
 import com.jme.lsgoldtrade.databinding.ActivityDailyStatementBinding;
 import com.jme.lsgoldtrade.domain.DailyStatementVo;
 import com.jme.lsgoldtrade.service.TradeService;
+import com.jme.lsgoldtrade.util.MarketUtil;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -94,7 +95,17 @@ public class DailyStatementActivity extends JMEBaseActivity {
     }
 
     private void setDailyStatementData(DailyStatementVo dailyStatementVo) {
-
+        mBinding.tvCurrentClientInterest.setText(MarketUtil.decimalFormatMoney(dailyStatementVo.getCurrentBalanceStr()));
+        mBinding.tvPreviousCustomerInterest.setText(MarketUtil.decimalFormatMoney(dailyStatementVo.getLastTradingBalanceStr()));
+        mBinding.tvCurrentAvailableFunds.setText(MarketUtil.decimalFormatMoney(dailyStatementVo.getCurrentDrawAmonutStr()));
+        mBinding.tvTodayFloat.setText(MarketUtil.decimalFormatMoney(dailyStatementVo.getTodayProfitStr()));
+        mBinding.tvCurrentHoldPositionBond.setText(MarketUtil.decimalFormatMoney(dailyStatementVo.getCurrentPositionMarginStr()));
+        mBinding.tvBreakEvenFund.setText(R.string.text_no_data_default);
+        mBinding.tvCurrentOutmoney.setText(MarketUtil.decimalFormatMoney(dailyStatementVo.getCurrentWithdrawalStr()));
+        mBinding.tvCurrentInmoney.setText(MarketUtil.decimalFormatMoney(dailyStatementVo.getCurrentIncomingsStr()));
+        mBinding.tvFee.setText(MarketUtil.decimalFormatMoney(dailyStatementVo.getTradingFeeStr()));
+        mBinding.tvSoftwareServiceFee.setText(R.string.text_no_data_default);
+        mBinding.tvDeferredFee.setText(MarketUtil.decimalFormatMoney(dailyStatementVo.getTdDeferFeeStr()));
     }
 
     private void dailystatement() {
