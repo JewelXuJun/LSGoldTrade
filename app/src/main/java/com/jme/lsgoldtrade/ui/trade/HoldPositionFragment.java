@@ -287,7 +287,14 @@ public class HoldPositionFragment extends JMEBaseFragment implements OnRefreshLi
                                 if (null != positionVo) {
                                     mList.add(MarketUtil.getPriceValue(positionVo.getFloatProfit() + positionVo.getUnliquidatedProfit()));
 
-                                    marketValueTotal = marketValueTotal.add(new BigDecimal(positionVo.getTurnOver()));
+                                    String contractID = positionVo.getContractId();
+                                    long handWeight = mContract.getHandWeightFromID(contractID);
+
+                                    marketValueTotal = marketValueTotal.add(
+                                            new BigDecimal(positionVo.getPositionAverage())
+                                                    .multiply(new BigDecimal(contractID.equals("Ag(T+D)") ?
+                                                            new BigDecimal(handWeight).divide(new BigDecimal(1000), 0, BigDecimal.ROUND_DOWN).longValue() : handWeight))
+                                                    .multiply(new BigDecimal(positionVo.getPosition())));
                                 }
                             }
                         }
@@ -295,6 +302,7 @@ public class HoldPositionFragment extends JMEBaseFragment implements OnRefreshLi
                         mAdapter.setList(mList);
 
                         calculateFloatTotal();
+
                         mBinding.tvMarketValue.setText(MarketUtil.decimalFormatMoney(MarketUtil.getPriceValue(marketValueTotal.longValue())));
 
                         if (bHasNext) {
