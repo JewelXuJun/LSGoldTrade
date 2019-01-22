@@ -100,7 +100,7 @@
                                 android:textSize="@dimen/sp_12" />
 
                             <TextView
-                                android:id="@+id/tv_current_profit_and_loss"
+                                android:id="@+id/tv_today_float"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="@dimen/common_area_margin_big"
@@ -177,7 +177,7 @@
                                 android:textSize="@dimen/sp_12" />
 
                             <TextView
-                                android:id="@+id/tv_deferred_charges"
+                                android:id="@+id/tv_deferred_fee"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="@dimen/margin_tiny"

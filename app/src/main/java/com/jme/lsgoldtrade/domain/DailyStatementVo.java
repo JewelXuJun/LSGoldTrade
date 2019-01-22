@@ -1,5 +1,7 @@
 package com.jme.lsgoldtrade.domain;
 
+import com.jme.lsgoldtrade.util.MarketUtil;
+
 import java.io.Serializable;
 import java.util.List;
 
@@ -103,6 +105,8 @@ public class DailyStatementVo implements Serializable {
 
     private long deposit;
 
+    private long depositFlag;
+
     private long todayProfit;
 
     private long spotDeliveryAmount;
@@ -127,7 +131,7 @@ public class DailyStatementVo implements Serializable {
 
     private long expirationFee;
 
-    private long deferFee;
+    private long tdDeferFee;
 
     private long deliveryFee;
 
@@ -259,6 +263,14 @@ public class DailyStatementVo implements Serializable {
         this.deposit = deposit;
     }
 
+    public long getDepositFlag() {
+        return depositFlag;
+    }
+
+    public void setDepositFlag(long depositFlag) {
+        this.depositFlag = depositFlag;
+    }
+
     public long getTodayProfit() {
         return todayProfit;
     }
@@ -355,12 +367,12 @@ public class DailyStatementVo implements Serializable {
         this.expirationFee = expirationFee;
     }
 
-    public long getDeferFee() {
-        return deferFee;
+    public long getTdDeferFee() {
+        return tdDeferFee;
     }
 
-    public void setDeferFee(long deferFee) {
-        this.deferFee = deferFee;
+    public void setTdDeferFee(long tdDeferFee) {
+        this.tdDeferFee = tdDeferFee;
     }
 
     public long getDeliveryFee() {
@@ -630,8 +642,6 @@ public class DailyStatementVo implements Serializable {
     public static class DeliveryDetailBean {
         private String deliveryId;
 
-        private String deliveryName;
-
         private long totalStorage;
 
         private long availableStorage;
@@ -660,14 +670,6 @@ public class DailyStatementVo implements Serializable {
 
         public void setDeliveryId(String deliveryId) {
             this.deliveryId = deliveryId;
-        }
-
-        public String getDeliveryName() {
-            return deliveryName;
-        }
-
-        public void setDeliveryName(String deliveryName) {
-            this.deliveryName = deliveryName;
         }
 
         public long getTotalStorage() {
@@ -762,8 +764,6 @@ public class DailyStatementVo implements Serializable {
     public static class ContractDetailBean {
         private String contractId;
 
-        private String contractName;
-
         private long longPosition;
 
         private long shortPosition;
@@ -780,14 +780,6 @@ public class DailyStatementVo implements Serializable {
 
         public void setContractId(String contractId) {
             this.contractId = contractId;
-        }
-
-        public String getContractName() {
-            return contractName;
-        }
-
-        public void setContractName(String contractName) {
-            this.contractName = contractName;
         }
 
         public long getLongPosition() {
@@ -829,6 +821,18 @@ public class DailyStatementVo implements Serializable {
         public void setCurrentDelivery(long currentDelivery) {
             this.currentDelivery = currentDelivery;
         }
+    }
+
+    public String getTodayProfitStr() {
+        return MarketUtil.getPriceValue(todayProfit);
+    }
+
+    public String getTradingFeeStr() {
+        return MarketUtil.getPriceValue(tradingFee);
+    }
+
+    public String getTdDeferFeeStr() {
+        return MarketUtil.getPriceValue(tdDeferFee);
     }
 
 }
