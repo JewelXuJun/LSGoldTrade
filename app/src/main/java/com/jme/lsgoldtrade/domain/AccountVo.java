@@ -17,6 +17,9 @@ public class AccountVo implements Serializable {
      * "todayWithdrawal":1000000,
      * "todayIncomings":1000000,
      * "positionMargin":1000000,
+     * "minReserveFund": 0,
+     * "runtimeFee": 211834,
+     * "riskrate": 8.74
      */
 
     private long curAccountBalance;
@@ -38,6 +41,12 @@ public class AccountVo implements Serializable {
     private long todayIncomings;
 
     private long positionMargin;
+
+    private long minReserveFund;
+
+    private long runtimeFee;
+
+    private float riskrate;
 
     public long getCurAccountBalance() {
         return curAccountBalance;
@@ -119,6 +128,30 @@ public class AccountVo implements Serializable {
         this.positionMargin = positionMargin;
     }
 
+    public long getMinReserveFund() {
+        return minReserveFund;
+    }
+
+    public void setMinReserveFund(long minReserveFund) {
+        this.minReserveFund = minReserveFund;
+    }
+
+    public long getRuntimeFee() {
+        return runtimeFee;
+    }
+
+    public void setRuntimeFee(long runtimeFee) {
+        this.runtimeFee = runtimeFee;
+    }
+
+    public float getRiskrate() {
+        return riskrate;
+    }
+
+    public void setRiskrate(float riskrate) {
+        this.riskrate = riskrate;
+    }
+
     public String getCurAccountBalanceStr() {
         return MarketUtil.getPriceValue(curAccountBalance);
     }
@@ -157,6 +190,14 @@ public class AccountVo implements Serializable {
 
     public String getPositionMarginStr() {
         return MarketUtil.getPriceValue(positionMargin);
+    }
+
+    public String getMinReserveFundStr() {
+        return MarketUtil.getPriceValue(minReserveFund);
+    }
+
+    public String getRuntimeFeeStr() {
+        return MarketUtil.getPriceValue(runtimeFee);
     }
 
 }

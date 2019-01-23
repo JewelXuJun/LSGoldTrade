@@ -241,12 +241,29 @@ public class HoldPositionFragment extends JMEBaseFragment implements OnRefreshLi
 
             mBinding.tvFloating.setText(MarketUtil.decimalFormatMoney(floatTotal.toPlainString()));
 
-            if (null != mAccountVo)
-                mBinding.tvTotal.setText(MarketUtil.decimalFormatMoney(new BigDecimal(mAccountVo.getTransactionBalanceStr())
+            if (null != mAccountVo) {
+                String total = new BigDecimal(mAccountVo.getTransactionBalanceStr())
                         .add(new BigDecimal(mAccountVo.getFreezeBalanceStr()))
                         .add(floatTotal)
                         .add(new BigDecimal(mAccountVo.getPositionMarginStr()))
-                        .toPlainString()));
+                        .toPlainString();
+                String minReserveFund = mAccountVo.getMinReserveFundStr();
+                String runtimeFee = mAccountVo.getRuntimeFeeStr();
+
+                mBinding.tvTotal.setText(MarketUtil.decimalFormatMoney(total));
+
+                if (new BigDecimal(minReserveFund).compareTo(new BigDecimal(0)) == 0) {
+                    mBinding.tvRiskRate.setText(R.string.text_no_data_default);
+                } else {
+                    BigDecimal fee = new BigDecimal(minReserveFund).add(new BigDecimal(runtimeFee));
+
+                    if (fee.compareTo(new BigDecimal(0)) == 0)
+                        mBinding.tvRiskRate.setText(R.string.text_no_data_default);
+                    else
+                        mBinding.tvRiskRate.setText(new BigDecimal(total).divide(fee, 4, BigDecimal.ROUND_HALF_UP)
+                                .multiply(new BigDecimal(100)).toPlainString() + "%");
+                }
+            }
         }
     }
 
