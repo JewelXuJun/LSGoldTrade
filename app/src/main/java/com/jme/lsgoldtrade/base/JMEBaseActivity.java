@@ -1,6 +1,6 @@
 package com.jme.lsgoldtrade.base;
 
-import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
@@ -15,11 +15,15 @@ import com.alibaba.android.arouter.launcher.ARouter;
 import com.jme.common.network.DTRequest;
 import com.jme.common.network.Head;
 import com.jme.common.ui.base.BaseActivity;
+import com.jme.common.util.DialogHelp;
 import com.jme.common.util.RxBus;
 import com.jme.lsgoldtrade.R;
 import com.jme.lsgoldtrade.config.Constants;
 import com.jme.lsgoldtrade.config.Contract;
 import com.jme.lsgoldtrade.config.User;
+import com.jme.lsgoldtrade.ui.main.MainActivity;
+import com.jme.lsgoldtrade.ui.market.MarketDetailActivity;
+import com.jme.lsgoldtrade.ui.market.MarketDetailLandscapeActivity;
 
 import java.lang.reflect.Field;
 
@@ -38,7 +42,7 @@ public abstract class JMEBaseActivity<T> extends BaseActivity {
     protected Contract mContract;
     private Subscription mRxbus;
 
-    private AlertDialog.Builder mDialog;
+    protected static Dialog mDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -116,29 +120,53 @@ public abstract class JMEBaseActivity<T> extends BaseActivity {
 
             switch (callType) {
                 case Constants.RxBusConst.RXBUS_SYNTIME:
-
+                    if (currentClass().equals(MainActivity.class.getName()))
+                        RxBus.getInstance().post(Constants.RxBusConst.RXBUS_CANCEL_MAIN);
+                    else if (!currentClass().equals(MarketDetailActivity.class.getName()) && !currentClass().equals(MarketDetailLandscapeActivity.class.getName())
+                            && (null == mDialog || (mDialog != null && !mDialog.isShowing())))
+                        showLoginDialog();
 
                     break;
             }
         });
     }
 
+    protected String currentClass() {
+        return this.getClass().getName();
+    }
+
+
     @Override
     protected void DataReturn(DTRequest request, Head head, Object response) {
         super.DataReturn(request, head, response);
     }
 
-    protected void showNeedLoginDialog() {
-        if (null == mDialog) {
-            mDialog = new AlertDialog.Builder(this);
-            mDialog.setTitle(getString(R.string.text_tips));
-            mDialog.setMessage(getString(R.string.login_message));
-            mDialog.setPositiveButton(getString(R.string.text_login), (dialog, which) -> ARouter.getInstance().build(Constants.ARouterUriConst.ACCOUNTLOGIN).navigation());
-            mDialog.setNegativeButton(getString(R.string.text_cancel), null);
-            mDialog.show();
-        } else {
-            mDialog.show();
+    protected void showLoginDialog() {
+        if (!isFinishing) {
+            mDialog = DialogHelp.getConfirmDialog(mContext, getString(R.string.text_tips), getString(R.string.text_message_notlogin),
+                    getString(R.string.text_login),
+                    (dialog, which) -> {
+                        dialog.dismiss();
+                        returntoLogin();
+                    },
+                    (dialog, which) -> {
+                        dialog.dismiss();
+                        returnToHomePage();
+                    })
+                    .setCancelable(false)
+                    .show();
         }
+    }
+
+    private void returntoLogin() {
+        ARouter.getInstance()
+                .build(Constants.ARouterUriConst.ACCOUNTLOGIN)
+                .navigation();
+    }
+
+    private void returnToHomePage() {
+        RxBus.getInstance().post(Constants.RxBusConst.RXBUS_CANCEL, null);
+        ARouter.getInstance().build(Constants.ARouterUriConst.MAIN).navigation();
     }
 
     public void setIndicator(TabLayout tabs, int leftDip, int rightDip) {

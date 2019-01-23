@@ -50,6 +50,8 @@ public class Constants {
         public static final String RXBUS_DECLARATIONFORM_CONFIRM = "DeclarationFormConfirm";
         public static final String RXBUS_MARKETDETAIL_QUICK = "MarketDetailQuick";
         public static final String RXBUS_SYNTIME = "SynTimeMessage";
+        public static final String RXBUS_CANCEL = "cancel";
+        public static final String RXBUS_CANCEL_MAIN = "cancelMain";
     }
 
     public static final class Msg {

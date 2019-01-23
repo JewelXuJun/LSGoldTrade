@@ -84,6 +84,17 @@ public class MainActivity extends JMEBaseActivity implements TabHost.OnTabChange
                     runOnUiThread(() -> mBinding.tabhost.setCurrentTab(2));
 
                     break;
+                case Constants.RxBusConst.RXBUS_CANCEL:
+                    runOnUiThread(() -> mBinding.tabhost.setCurrentTab(0));
+
+                    break;
+                case Constants.RxBusConst.RXBUS_CANCEL_MAIN:
+                    int currentTab = mBinding.tabhost.getCurrentTab();
+
+                    if (currentTab == 2 || currentTab == 3)
+                        showLoginDialog();
+
+                    break;
             }
         });
     }
