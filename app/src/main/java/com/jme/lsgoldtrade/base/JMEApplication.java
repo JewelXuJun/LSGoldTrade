@@ -1,6 +1,7 @@
 package com.jme.lsgoldtrade.base;
 
 import android.content.Context;
+import android.content.Intent;
 
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.jme.common.BuildConfig;
@@ -47,6 +48,9 @@ public class JMEApplication extends BaseApplication {
 
         ARouter.init(this);
         initPicasso();
+
+        Intent serviceIntent = new Intent(this, JMEAppService.class);
+        startService(serviceIntent);
     }
 
     public static JMEApplication getInstance() {
