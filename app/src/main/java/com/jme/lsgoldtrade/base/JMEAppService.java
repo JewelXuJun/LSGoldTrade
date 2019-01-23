@@ -126,10 +126,10 @@ public class JMEAppService extends Service implements OnResultListener {
 
                     SharedPreUtils.setString(this, SharedPreUtils.MaxMatchNo, synTimeVo.getMaxMatchNo());
                 } else {
-                    if (head.getCode().equals("107")) {
+                    if (head.getCode().equals("-2000")) {
                         User.getInstance().logout();
 
-                        RxBus.getInstance().post(Constants.RxBusConst.RXBUS_SYNTIME);
+                        RxBus.getInstance().post(Constants.RxBusConst.RXBUS_SYNTIME, null);
                     }
                 }
 

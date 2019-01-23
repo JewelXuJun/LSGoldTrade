@@ -121,9 +121,8 @@ public abstract class JMEBaseActivity<T> extends BaseActivity {
             switch (callType) {
                 case Constants.RxBusConst.RXBUS_SYNTIME:
                     if (currentClass().equals(MainActivity.class.getName()))
-                        RxBus.getInstance().post(Constants.RxBusConst.RXBUS_CANCEL_MAIN);
-                    else if (!currentClass().equals(MarketDetailActivity.class.getName()) && !currentClass().equals(MarketDetailLandscapeActivity.class.getName())
-                            && (null == mDialog || (mDialog != null && !mDialog.isShowing())))
+                        RxBus.getInstance().post(Constants.RxBusConst.RXBUS_CANCEL_MAIN, null);
+                    else if (!currentClass().equals(MarketDetailActivity.class.getName()) && !currentClass().equals(MarketDetailLandscapeActivity.class.getName()))
                         showLoginDialog();
 
                     break;
@@ -142,8 +141,11 @@ public abstract class JMEBaseActivity<T> extends BaseActivity {
     }
 
     protected void showLoginDialog() {
-        if (!isFinishing) {
-            mDialog = DialogHelp.getConfirmDialog(mContext, getString(R.string.text_tips), getString(R.string.text_message_notlogin),
+        if (isFinishing)
+            return;
+
+        if (null == mDialog) {
+            mDialog = DialogHelp.getConfirmDialog(this, getString(R.string.text_tips), getString(R.string.text_message_notlogin),
                     getString(R.string.text_login),
                     (dialog, which) -> {
                         dialog.dismiss();
@@ -155,6 +157,9 @@ public abstract class JMEBaseActivity<T> extends BaseActivity {
                     })
                     .setCancelable(false)
                     .show();
+        } else {
+            if (!mDialog.isShowing())
+                mDialog.show();
         }
     }
 
