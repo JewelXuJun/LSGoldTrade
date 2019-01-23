@@ -263,6 +263,11 @@ public class HoldPositionFragment extends JMEBaseFragment implements OnRefreshLi
                         mBinding.tvRiskRate.setText(new BigDecimal(total).divide(fee, 4, BigDecimal.ROUND_HALF_UP)
                                 .multiply(new BigDecimal(100)).toPlainString() + "%");
                 }
+
+                long value = Math.min((new BigDecimal(total).subtract(new BigDecimal(minReserveFund)).subtract(new BigDecimal(runtimeFee))).multiply(new BigDecimal(100)).longValue(),
+                        mAccountVo.getExtractableBalance());
+
+                mBinding.tvDesirableCapital.setText(MarketUtil.decimalFormatMoney(MarketUtil.getPriceValue(value)));
             }
         }
     }
@@ -308,7 +313,6 @@ public class HoldPositionFragment extends JMEBaseFragment implements OnRefreshLi
                         return;
 
                     mBinding.tvAvailableFunds.setText(MarketUtil.decimalFormatMoney(mAccountVo.getTransactionBalanceStr()));
-                    mBinding.tvDesirableCapital.setText(MarketUtil.decimalFormatMoney(mAccountVo.getExtractableBalanceStr()));
 
                     calculateValue();
                 }
