@@ -40,6 +40,7 @@ public class HoldPositionFragment extends JMEBaseFragment implements OnRefreshLi
     private FragmentHoldPositionBinding mBinding;
 
     private HoldPositionAdapter mAdapter;
+    private AccountVo mAccountVo;
     private List<String> mList;
     private Subscription mRxbus;
 
@@ -48,7 +49,6 @@ public class HoldPositionFragment extends JMEBaseFragment implements OnRefreshLi
     private boolean bHasNext = false;
     private boolean bVisibleToUser = false;
     private String mPagingKey = "";
-    private String mBalance;
 
     private Handler mHandler = new Handler() {
         public void handleMessage(Message msg) {
@@ -241,8 +241,12 @@ public class HoldPositionFragment extends JMEBaseFragment implements OnRefreshLi
 
             mBinding.tvFloating.setText(MarketUtil.decimalFormatMoney(floatTotal.toPlainString()));
 
-            if (!TextUtils.isEmpty(mBalance))
-                mBinding.tvTotal.setText(MarketUtil.decimalFormatMoney(new BigDecimal(mBalance).add(floatTotal).toPlainString()));
+            if (null != mAccountVo)
+                mBinding.tvTotal.setText(MarketUtil.decimalFormatMoney(new BigDecimal(mAccountVo.getTransactionBalanceStr())
+                        .add(new BigDecimal(mAccountVo.getFreezeBalanceStr()))
+                        .add(floatTotal)
+                        .add(new BigDecimal(mAccountVo.getPositionMarginStr()))
+                        .toPlainString()));
         }
     }
 
@@ -275,23 +279,19 @@ public class HoldPositionFragment extends JMEBaseFragment implements OnRefreshLi
         switch (request.getApi().getName()) {
             case "Account":
                 if (head.isSuccess()) {
-                    AccountVo accountVo;
-
                     try {
-                        accountVo = (AccountVo) response;
+                        mAccountVo = (AccountVo) response;
                     } catch (Exception e) {
-                        accountVo = null;
+                        mAccountVo = null;
 
                         e.printStackTrace();
                     }
 
-                    if (null == accountVo)
+                    if (null == mAccountVo)
                         return;
 
-                    mBalance = accountVo.getBalanceStr();
-
-                    mBinding.tvAvailableFunds.setText(MarketUtil.decimalFormatMoney(accountVo.getTransactionBalanceStr()));
-                    mBinding.tvDesirableCapital.setText(MarketUtil.decimalFormatMoney(accountVo.getExtractableBalanceStr()));
+                    mBinding.tvAvailableFunds.setText(MarketUtil.decimalFormatMoney(mAccountVo.getTransactionBalanceStr()));
+                    mBinding.tvDesirableCapital.setText(MarketUtil.decimalFormatMoney(mAccountVo.getExtractableBalanceStr()));
 
                     calculateValue();
                 }
