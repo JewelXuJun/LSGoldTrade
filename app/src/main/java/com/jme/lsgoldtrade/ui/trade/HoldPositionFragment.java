@@ -12,6 +12,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.jme.common.network.DTRequest;
 import com.jme.common.network.Head;
 import com.jme.common.ui.view.MarginDividerItemDecoration;
+import com.jme.common.util.RxBus;
 import com.jme.lsgoldtrade.R;
 import com.jme.lsgoldtrade.base.JMEBaseFragment;
 import com.jme.lsgoldtrade.config.AppConfig;
@@ -32,12 +33,15 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import rx.Subscription;
+
 public class HoldPositionFragment extends JMEBaseFragment implements OnRefreshListener, BaseQuickAdapter.RequestLoadMoreListener {
 
     private FragmentHoldPositionBinding mBinding;
 
     private HoldPositionAdapter mAdapter;
     private List<String> mList;
+    private Subscription mRxbus;
 
     private int mCurrentPage = 1;
     private boolean bFlag = true;
@@ -92,6 +96,8 @@ public class HoldPositionFragment extends JMEBaseFragment implements OnRefreshLi
     protected void initListener() {
         super.initListener();
 
+        initRxBus();
+
         mBinding.swipeRefreshLayout.setOnRefreshListener(this);
         mAdapter.setOnLoadMoreListener(this, mBinding.recyclerView);
     }
@@ -140,6 +146,14 @@ public class HoldPositionFragment extends JMEBaseFragment implements OnRefreshLi
         mHandler.removeMessages(Constants.Msg.MSG_TRADE_POSITION_UPDATE_DATA);
     }
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+
+        if (!mRxbus.isUnsubscribed())
+            mRxbus.unsubscribe();
+    }
+
     private void initValue(boolean enable) {
         getAccount(enable);
         initPosition();
@@ -153,6 +167,22 @@ public class HoldPositionFragment extends JMEBaseFragment implements OnRefreshLi
         mHandler.removeMessages(Constants.Msg.MSG_TRADE_POSITION_UPDATE_DATA);
 
         position();
+    }
+
+    private void initRxBus() {
+        mRxbus = RxBus.getInstance().toObserverable(RxBus.Message.class).subscribe(message -> {
+            String callType = message.getObject().toString();
+
+            if (TextUtils.isEmpty(callType))
+                return;
+
+            switch (callType) {
+                case Constants.RxBusConst.RXBUS_ORDER_SUCCESS:
+                    getMarket();
+
+                    break;
+            }
+        });
     }
 
     private void calculateFloat(List<FiveSpeedVo> fiveSpeedVoList, List<PositionVo> positionVoList) {

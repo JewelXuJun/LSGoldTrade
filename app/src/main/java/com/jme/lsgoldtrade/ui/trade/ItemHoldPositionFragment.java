@@ -186,6 +186,10 @@ public class ItemHoldPositionFragment extends JMEBaseFragment implements BaseQui
                     initPosition();
 
                     break;
+                case Constants.RxBusConst.RXBUS_ORDER_SUCCESS:
+                    getMarket();
+
+                    break;
             }
         });
     }
