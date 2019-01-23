@@ -13,6 +13,7 @@ import com.alibaba.android.arouter.launcher.ARouter;
 import com.jme.common.network.DTRequest;
 import com.jme.common.network.Head;
 import com.jme.common.ui.base.BaseFragment;
+import com.jme.common.util.RxBus;
 import com.jme.lsgoldtrade.R;
 import com.jme.lsgoldtrade.config.Constants;
 import com.jme.lsgoldtrade.config.Contract;
@@ -105,6 +106,9 @@ public abstract class JMEBaseFragment<T> extends BaseFragment {
     @Override
     protected void DataReturn(DTRequest request, Head head, Object response) {
         super.DataReturn(request, head, response);
+
+        if (head.getCode().equals("-2000"))
+            RxBus.getInstance().post(Constants.RxBusConst.RXBUS_SYNTIME, null);
     }
 
     protected void showNeedLoginDialog() {

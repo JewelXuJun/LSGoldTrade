@@ -134,10 +134,12 @@ public abstract class JMEBaseActivity<T> extends BaseActivity {
         return this.getClass().getName();
     }
 
-
     @Override
     protected void DataReturn(DTRequest request, Head head, Object response) {
         super.DataReturn(request, head, response);
+
+        if (head.getCode().equals("-2000"))
+            showLoginDialog();
     }
 
     protected void showLoginDialog() {
