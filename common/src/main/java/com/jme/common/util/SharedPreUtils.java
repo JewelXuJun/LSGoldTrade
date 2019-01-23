@@ -22,7 +22,7 @@ public class SharedPreUtils {
     public static final String TimeInterval_WiFi = "TimeInterval_WiFi";
     public static final String Login_Account = "Login_Account";
     public static final String Login_Mobile = "Login_Mobile";
-    public static final String MatchNo = "matchno";
+    public static final String MaxMatchNo = "maxmMatchno";
 
     /**
      * 序列化对象

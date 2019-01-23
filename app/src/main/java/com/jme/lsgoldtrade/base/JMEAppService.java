@@ -20,6 +20,7 @@ import com.jme.common.util.SharedPreUtils;
 import com.jme.lsgoldtrade.config.AppConfig;
 import com.jme.lsgoldtrade.config.Constants;
 import com.jme.lsgoldtrade.config.User;
+import com.jme.lsgoldtrade.domain.SynTimeVo;
 import com.jme.lsgoldtrade.service.UserService;
 
 import java.lang.ref.WeakReference;
@@ -93,7 +94,7 @@ public class JMEAppService extends Service implements OnResultListener {
     }
 
     private void syncTime() {
-        String matchNo = SharedPreUtils.getString(this, SharedPreUtils.MatchNo);
+        String matchNo = SharedPreUtils.getString(this, SharedPreUtils.MaxMatchNo);
 
         if (TextUtils.isEmpty(matchNo))
             matchNo = "";
@@ -109,10 +110,27 @@ public class JMEAppService extends Service implements OnResultListener {
     public void OnResult(DTRequest request, Head head, Object response) {
         switch (request.getApi().getName()) {
             case "SynTime":
-                if (head.getCode().equals("107")) {
-                    User.getInstance().logout();
+                if (head.isSuccess()) {
+                    SynTimeVo synTimeVo;
 
-                    RxBus.getInstance().post(Constants.RxBusConst.RXBUS_SYNTIME);
+                    try {
+                        synTimeVo = (SynTimeVo) response;
+                    } catch (Exception e) {
+                        synTimeVo = null;
+
+                        e.printStackTrace();
+                    }
+
+                    if (null == synTimeVo)
+                        return;
+
+                    SharedPreUtils.setString(this, SharedPreUtils.MaxMatchNo, synTimeVo.getMaxMatchNo());
+                } else {
+                    if (head.getCode().equals("107")) {
+                        User.getInstance().logout();
+
+                        RxBus.getInstance().post(Constants.RxBusConst.RXBUS_SYNTIME);
+                    }
                 }
 
                 break;
