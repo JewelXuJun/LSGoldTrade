@@ -6,6 +6,7 @@ import android.content.res.Resources;
 import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.support.design.widget.TabLayout;
+import android.text.TextUtils;
 import android.util.TypedValue;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -14,12 +15,15 @@ import com.alibaba.android.arouter.launcher.ARouter;
 import com.jme.common.network.DTRequest;
 import com.jme.common.network.Head;
 import com.jme.common.ui.base.BaseActivity;
+import com.jme.common.util.RxBus;
 import com.jme.lsgoldtrade.R;
 import com.jme.lsgoldtrade.config.Constants;
 import com.jme.lsgoldtrade.config.Contract;
 import com.jme.lsgoldtrade.config.User;
 
 import java.lang.reflect.Field;
+
+import rx.Subscription;
 
 /**
  * Created by XuJun on 2018/11/7.
@@ -32,6 +36,7 @@ public abstract class JMEBaseActivity<T> extends BaseActivity {
 
     protected User mUser;
     protected Contract mContract;
+    private Subscription mRxbus;
 
     private AlertDialog.Builder mDialog;
 
@@ -70,6 +75,8 @@ public abstract class JMEBaseActivity<T> extends BaseActivity {
     @Override
     protected void initListener() {
         super.initListener();
+
+        initRxBus();
     }
 
     protected void initBinding() {
@@ -95,6 +102,25 @@ public abstract class JMEBaseActivity<T> extends BaseActivity {
         super.onDestroy();
 
         isFinishing = isFinishing();
+
+        if (!mRxbus.isUnsubscribed())
+            mRxbus.unsubscribe();
+    }
+
+    private void initRxBus() {
+        mRxbus = RxBus.getInstance().toObserverable(RxBus.Message.class).subscribe(message -> {
+            String callType = message.getObject().toString();
+
+            if (TextUtils.isEmpty(callType))
+                return;
+
+            switch (callType) {
+                case Constants.RxBusConst.RXBUS_SYNTIME:
+
+
+                    break;
+            }
+        });
     }
 
     @Override

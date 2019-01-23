@@ -6,37 +6,53 @@ import java.util.List;
 public class SynTimeVo implements Serializable {
 
     /**
-     * "sysTime":12321321816060000000, // 毫秒数 long
-     * "lastNoticeID":3322,
-     * "tradeTotalCount":1,
-     * "tradeDate":"20180707",
-     * "sysStatus":5,
-     * "tradelst":[
+     * "tradeDate": "2019-01-16",
+     * "sysTime": 1547618592921,
+     * "lastNoticeId": 17,
+     * "maxMatchNo": "1901160200000040",
+     * "sysStatus": 5,
+     * "tradeList": [
      * {
-     * orderNo : 21232323
-     * contractId : "au9999";
-     * name: "黄金(T+D)",
-     * quantity : 1,
-     * orderType : 1, // 1-现货，2-递延业务，3-中立仓，4-交割
-     * bsFlag : 1, // 1买，2卖
-     * ocFlag : 0, // 开平标志，0-开仓 1-平仓 9-不适用
-     * tradingType : 1, // 0-普通限价委托，1-限价FAK，2-限价FOK，3-市价FAK，4-市价FOK，5-市价转限价
-     * closeFlag : 1 // 强平标志0-否，1-工行强平
+     * "matchNo": "1901160200000040",
+     * "bsFlag": 0,
+     * "contractId": "Au(T+D)",
+     * "matchDate": "2019-01-16",
+     * "matchTime": "10.45.09",
+     * "matchPrice": 27012,
+     * "matchQuantity": 1000000000,
+     * "matchHand": 1,
+     * "amount": 27012000,
+     * "orderNo": 0,
+     * "orderType": 0,
+     * "ocFlag": 0,
+     * "tradingType": 0,
+     * "bankCloseFlag": 0,
+     * "exOrderNo": "02000277",
+     * "transactionFee": 0,
+     * "basicMarginRate": 0
      * }
      * ]
      */
 
+    private String tradeDate;
+
     private long sysTime;
 
-    private String lastNoticeID;
+    private long lastNoticeId;
 
-    private int tradeTotalCount;
-
-    private String tradeDate;
+    private String maxMatchNo;
 
     private int sysStatus;
 
-    private List<TradeBean> tradelst;
+    private List<TradeBean> tradeList;
+
+    public String getTradeDate() {
+        return tradeDate;
+    }
+
+    public void setTradeDate(String tradeDate) {
+        this.tradeDate = tradeDate;
+    }
 
     public long getSysTime() {
         return sysTime;
@@ -46,28 +62,20 @@ public class SynTimeVo implements Serializable {
         this.sysTime = sysTime;
     }
 
-    public String getLastNoticeID() {
-        return lastNoticeID;
+    public long getLastNoticeId() {
+        return lastNoticeId;
     }
 
-    public void setLastNoticeID(String lastNoticeID) {
-        this.lastNoticeID = lastNoticeID;
+    public void setLastNoticeId(long lastNoticeId) {
+        this.lastNoticeId = lastNoticeId;
     }
 
-    public int getTradeTotalCount() {
-        return tradeTotalCount;
+    public String getMaxMatchNo() {
+        return maxMatchNo;
     }
 
-    public void setTradeTotalCount(int tradeTotalCount) {
-        this.tradeTotalCount = tradeTotalCount;
-    }
-
-    public String getTradeDate() {
-        return tradeDate;
-    }
-
-    public void setTradeDate(String tradeDate) {
-        this.tradeDate = tradeDate;
+    public void setMaxMatchNo(String maxMatchNo) {
+        this.maxMatchNo = maxMatchNo;
     }
 
     public int getSysStatus() {
@@ -78,51 +86,83 @@ public class SynTimeVo implements Serializable {
         this.sysStatus = sysStatus;
     }
 
-    public List<TradeBean> getTradelst() {
-        return tradelst;
+    public List<TradeBean> getTradeList() {
+        return tradeList;
     }
 
-    public void setTradelst(List<TradeBean> tradelst) {
-        this.tradelst = tradelst;
+    public void setTradeList(List<TradeBean> tradeList) {
+        this.tradeList = tradeList;
     }
 
     public static class TradeBean {
         /**
-         * orderNo : 21232323
-         * contractId : "au9999";
-         * name: "黄金(T+D)",
-         * quantity : 1,
-         * orderType : 1, // 1-现货，2-递延业务，3-中立仓，4-交割
-         * bsFlag : 1, // 1买，2卖
-         * ocFlag : 0, // 开平标志，0-开仓 1-平仓 9-不适用
-         * tradingType : 1, // 0-普通限价委托，1-限价FAK，2-限价FOK，3-市价FAK，4-市价FOK，5-市价转限价
-         * closeFlag : 1 // 强平标志0-否，1-工行强平
+         * "matchNo": "1901160200000040",
+         * "bsFlag": 0,
+         * "contractId": "Au(T+D)",
+         * "matchDate": "2019-01-16",
+         * "matchTime": "10.45.09",
+         * "matchPrice": 27012,
+         * "matchQuantity": 1000000000,
+         * "matchHand": 1,
+         * "amount": 27012000,
+         * "orderNo": 0,
+         * "orderType": 0,
+         * "ocFlag": 0,
+         * "tradingType": 0,
+         * "bankCloseFlag": 0,
+         * "exOrderNo": "02000277",
+         * "transactionFee": 0,
+         * "basicMarginRate": 0
          */
 
-        private String orderNo;
+        private String matchNo;
+
+        private int bsFlag;
 
         private String contractId;
 
-        private String name;
+        private String matchDate;
 
-        private int quantity;
+        private String matchTime;
+
+        private long matchPrice;
+
+        private long matchQuantity;
+
+        private long matchHand;
+
+        private long amount;
+
+        private long orderNo;
 
         private int orderType;
-
-        private int bsFlag;
 
         private int ocFlag;
 
         private int tradingType;
 
-        private int closeFlag;
+        private int bankCloseFlag;
 
-        public String getOrderNo() {
-            return orderNo;
+        private String exOrderNo;
+
+        private long transactionFee;
+
+        private long basicMarginRate;
+
+        public String getMatchNo() {
+            return matchNo;
         }
 
-        public void setOrderNo(String orderNo) {
-            this.orderNo = orderNo;
+        public void setMatchNo(String matchNo) {
+            this.matchNo = matchNo;
+        }
+
+        public int getBsFlag() {
+            return bsFlag;
+        }
+
+        public void setBsFlag(int bsFlag) {
+            this.bsFlag = bsFlag;
         }
 
         public String getContractId() {
@@ -133,20 +173,60 @@ public class SynTimeVo implements Serializable {
             this.contractId = contractId;
         }
 
-        public String getName() {
-            return name;
+        public String getMatchDate() {
+            return matchDate;
         }
 
-        public void setName(String name) {
-            this.name = name;
+        public void setMatchDate(String matchDate) {
+            this.matchDate = matchDate;
         }
 
-        public int getQuantity() {
-            return quantity;
+        public String getMatchTime() {
+            return matchTime;
         }
 
-        public void setQuantity(int quantity) {
-            this.quantity = quantity;
+        public void setMatchTime(String matchTime) {
+            this.matchTime = matchTime;
+        }
+
+        public long getMatchPrice() {
+            return matchPrice;
+        }
+
+        public void setMatchPrice(long matchPrice) {
+            this.matchPrice = matchPrice;
+        }
+
+        public long getMatchQuantity() {
+            return matchQuantity;
+        }
+
+        public void setMatchQuantity(long matchQuantity) {
+            this.matchQuantity = matchQuantity;
+        }
+
+        public long getMatchHand() {
+            return matchHand;
+        }
+
+        public void setMatchHand(long matchHand) {
+            this.matchHand = matchHand;
+        }
+
+        public long getAmount() {
+            return amount;
+        }
+
+        public void setAmount(long amount) {
+            this.amount = amount;
+        }
+
+        public long getOrderNo() {
+            return orderNo;
+        }
+
+        public void setOrderNo(long orderNo) {
+            this.orderNo = orderNo;
         }
 
         public int getOrderType() {
@@ -155,14 +235,6 @@ public class SynTimeVo implements Serializable {
 
         public void setOrderType(int orderType) {
             this.orderType = orderType;
-        }
-
-        public int getBsFlag() {
-            return bsFlag;
-        }
-
-        public void setBsFlag(int bsFlag) {
-            this.bsFlag = bsFlag;
         }
 
         public int getOcFlag() {
@@ -181,12 +253,36 @@ public class SynTimeVo implements Serializable {
             this.tradingType = tradingType;
         }
 
-        public int getCloseFlag() {
-            return closeFlag;
+        public int getBankCloseFlag() {
+            return bankCloseFlag;
         }
 
-        public void setCloseFlag(int closeFlag) {
-            this.closeFlag = closeFlag;
+        public void setBankCloseFlag(int bankCloseFlag) {
+            this.bankCloseFlag = bankCloseFlag;
+        }
+
+        public String getExOrderNo() {
+            return exOrderNo;
+        }
+
+        public void setExOrderNo(String exOrderNo) {
+            this.exOrderNo = exOrderNo;
+        }
+
+        public long getTransactionFee() {
+            return transactionFee;
+        }
+
+        public void setTransactionFee(long transactionFee) {
+            this.transactionFee = transactionFee;
+        }
+
+        public long getBasicMarginRate() {
+            return basicMarginRate;
+        }
+
+        public void setBasicMarginRate(long basicMarginRate) {
+            this.basicMarginRate = basicMarginRate;
         }
     }
 

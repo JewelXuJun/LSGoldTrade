@@ -49,6 +49,7 @@ public class Constants {
         public static final String RXBUS_DECLARATIONFORM_CANCEL = "DeclarationFormCancel";
         public static final String RXBUS_DECLARATIONFORM_CONFIRM = "DeclarationFormConfirm";
         public static final String RXBUS_MARKETDETAIL_QUICK = "MarketDetailQuick";
+        public static final String RXBUS_SYNTIME = "SynTimeMessage";
     }
 
     public static final class Msg {
@@ -67,6 +68,7 @@ public class Constants {
         public static final int MSG_POSITION_UPDATE_DATA = 7;
         public static final int MSG_DECLARATIONFORM_POSITION_UPDATE_DATA = 8;
         public static final int MSG_TRADE_POSITION_UPDATE_DATA = 9;
+        public static final int MSG_SYNTIME = 10;
     }
 
     public static final class ARouterUriConst {

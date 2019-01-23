@@ -206,36 +206,6 @@ public abstract class BaseActivity extends AppCompatActivity implements OnResult
         }
     }
 
-    protected void showLongToast(final int resId) {
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                if (mToast == null)
-                    mToast = Toast.makeText(mContext, getResources().getString(resId), Toast.LENGTH_LONG);
-                else
-                    mToast.setText(resId);
-
-                mToast.show();
-            }
-        });
-    }
-
-    protected void showLongToast(final String text) {
-        if (!TextUtils.isEmpty(text)) {
-            runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    if (mToast == null)
-                        mToast = Toast.makeText(mContext, text, Toast.LENGTH_LONG);
-                    else
-                        mToast.setText(text);
-
-                    mToast.show();
-                }
-            });
-        }
-    }
-
     protected void startAnimActivity(Class<?> cls) {
         this.startAnimActivity(cls, null);
     }
@@ -247,19 +217,6 @@ public abstract class BaseActivity extends AppCompatActivity implements OnResult
             intent.putExtras(bundle);
 
         startActivity(intent);
-    }
-
-    protected void startAnimActivityForResult(Class<?> cls, int requestCode) {
-        this.startAnimActivityForResult(cls, null, requestCode);
-    }
-
-    protected void startAnimActivityForResult(Class<?> cls, Bundle bundle, int requestCode) {
-        Intent intent = new Intent();
-        intent.setClass(mContext, cls);
-        if (bundle != null)
-            intent.putExtras(bundle);
-
-        startActivityForResult(intent, requestCode);
     }
 
     protected void showLoadingDialog(String text) {

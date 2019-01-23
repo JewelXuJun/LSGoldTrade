@@ -86,6 +86,10 @@
             android:name=".base.JMEBaseWebViewActivity"
             android:screenOrientation="portrait" />
 
+        <service
+            android:name=".base.JMEAppService"
+            android:exported="false" />
+
     </application>
 
 </manifest>
