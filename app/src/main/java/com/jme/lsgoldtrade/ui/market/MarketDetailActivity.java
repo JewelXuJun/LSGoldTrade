@@ -27,6 +27,7 @@ import com.jme.common.util.DateUtil;
 import com.jme.common.util.KChartVo;
 import com.jme.common.util.NetWorkUtils;
 import com.jme.common.util.RxBus;
+import com.jme.common.util.StatusBarUtil;
 import com.jme.common.util.TChartVo;
 import com.jme.lsgoldtrade.R;
 import com.jme.lsgoldtrade.base.JMEBaseActivity;
@@ -198,7 +199,7 @@ public class MarketDetailActivity extends JMEBaseActivity implements FChart.OnPr
     }
 
     private void setBackGroundColor(int color) {
-//        StatusBarUtil.setStatusBarMode(this, true, color);
+        StatusBarUtil.setStatusBarMode(this, true, color);
         mToolbarHelper.setBackgroundColor(ContextCompat.getColor(this, color));
         mBinding.layoutMarketDetail.setBackgroundColor(ContextCompat.getColor(this, color));
     }
