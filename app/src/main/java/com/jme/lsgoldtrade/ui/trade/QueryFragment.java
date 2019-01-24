@@ -87,7 +87,7 @@ public class QueryFragment extends JMEBaseFragment implements OnRefreshListener 
     private void setDailyStatementData(DailyStatementVo dailyStatementVo) {
         mBinding.tvTodayFloat.setText(MarketUtil.decimalFormatMoney(dailyStatementVo.getTodayProfitStr()));
         mBinding.tvFee.setText(MarketUtil.decimalFormatMoney(dailyStatementVo.getTradingFeeStr()));
-        mBinding.tvSoftwareServiceFee.setText(R.string.text_no_data_default);
+        mBinding.tvSoftwareServiceFee.setText(MarketUtil.decimalFormatMoney(dailyStatementVo.getServiceFeeStr()));
         mBinding.tvDeferredFee.setText(MarketUtil.decimalFormatMoney(dailyStatementVo.getTdDeferFeeStr()));
     }
 

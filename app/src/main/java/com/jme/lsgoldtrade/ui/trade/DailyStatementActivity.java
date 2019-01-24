@@ -100,11 +100,11 @@ public class DailyStatementActivity extends JMEBaseActivity {
         mBinding.tvCurrentAvailableFunds.setText(MarketUtil.decimalFormatMoney(dailyStatementVo.getCurrentDrawAmonutStr()));
         mBinding.tvTodayFloat.setText(MarketUtil.decimalFormatMoney(dailyStatementVo.getTodayProfitStr()));
         mBinding.tvCurrentHoldPositionBond.setText(MarketUtil.decimalFormatMoney(dailyStatementVo.getCurrentPositionMarginStr()));
-        mBinding.tvBreakEvenFund.setText(R.string.text_no_data_default);
+        mBinding.tvBreakEvenFund.setText(MarketUtil.decimalFormatMoney(dailyStatementVo.getMinReserveFundStr()));
         mBinding.tvCurrentOutmoney.setText(MarketUtil.decimalFormatMoney(dailyStatementVo.getCurrentWithdrawalStr()));
         mBinding.tvCurrentInmoney.setText(MarketUtil.decimalFormatMoney(dailyStatementVo.getCurrentIncomingsStr()));
         mBinding.tvFee.setText(MarketUtil.decimalFormatMoney(dailyStatementVo.getTradingFeeStr()));
-        mBinding.tvSoftwareServiceFee.setText(R.string.text_no_data_default);
+        mBinding.tvSoftwareServiceFee.setText(MarketUtil.decimalFormatMoney(dailyStatementVo.getServiceFeeStr()));
         mBinding.tvDeferredFee.setText(MarketUtil.decimalFormatMoney(dailyStatementVo.getTdDeferFeeStr()));
     }
 

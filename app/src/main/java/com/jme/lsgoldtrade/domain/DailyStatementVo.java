@@ -8,85 +8,87 @@ import java.util.List;
 public class DailyStatementVo implements Serializable {
 
     /**
-     *  "tradingAmount":1000000,
-     *  "currentDrawAmonut":1000000,
-     *  "nextDrawAmount":1000000,
-     *  "lastPositionMargin":1000000,
-     *  "currentPositionMargin":1000000,
-     *  "settlementMargin":1000000,
-     *  "debt":1000000,
-     *  "deposit":1000000,
-     *  "todayProfit":1000000,
-     *  "spotDeliveryAmount":1000000,
-     *  "deferDeliveryAmount":1000000,
-     *  "forwardDeliveryAmount":1000000,
-     *  "lastPlatinumFreeze":1000000,
-     *  "todayPlatinumFreeze":1000000,
-     *  "platinumFreezeMargin":1000000,
-     *  "todayPackageMargin":1000000,
-     *  "packageAmount":1000000,
-     *  "tradingFee":1000000,
-     *  "storageFee":1000000,
-     *  "expirationFee":1000000,
-     *  "deferFee":1000000,
-     *  "deliveryFee":1000000,
-     *  "transportFee":1000000,
-     *  "penalty":1000000,
-     *  "diff":1000000,
-     *  "pledgeFee":1000000,
-     *  "rentFee":1000000,
-     *  "varietyPremium":1000000,
-     *  "slicePremium":1000000,
-     *  "etfFee":1000000,
-     *  "etfAmount":1000000,
-     *  "messageFee":1000000,
-     *  "totalAmount":1000000,
-     *  "liquidationAmount":1000000,
-     *  "lastTradingBalance":1000000,
-     *  "currentBalance":1000000,
-     *  "currentIncomings":1000000,
-     *  "currentWithdrawal":1000000,
-     *  "capitalAdequacyRatio":1000000,
-     *  "bankTradeFee":1000000,
-     *  "exTradeFee":1000000,
-     *  "derateFee":1000000,
-     *  "tnDeferFee":1000000,
-     *  "inoutStorageFee":1000000,
-     *  "lateFee":1000000,
-     *  "fine":1000000,
-     *  "offsetFee":1000000,
-     *  "carriageFee":1000000,
-     *  "withdrawalFee":1000000,
-     *  "transferFee":1000000,
-     *  "custodianFee":1000000,
-     *  "storageExchangeFee":1000000,
-     *  "deliveryDetail":[
-     *     {
-     *       "deliveryId":"201",
-     *       "deliveryName":"Au9999",
-     *       "totalStorage":1000000000,
-     *       "availableStorage":1000000000,
-     *       "extractStorage":1000000000,
-     *       "freezeStorage":1000000000,
-     *       "pledgeStorage":1000000000,
-     *       "manaualFreezeStorage":1000000000,
-     *       "transferFreezeStorage":1000000000,
-     *       "offsetFreezeStorage":1000000000,
-     *       "warehousingDiff":1000000000,
-     *       "nonClearingDiff":1000000000,
-     *       "totalDiff":1000000000,
-     *     }],
-     *  "contract_detail":[
-     *     {
-     *       "contractId":"Ag(T+D)",
-     *       "contractName":"白银递延",
-     *       "longPosition":1000000,
-     *       "shortPosition":1000000
-     *       "longOpenAverage":3000000,
-     *       "shortOpenAverage":3000000,
-     *       "currentDelivery":1000000,
-     *      }
-     *   ]
+     * "tradingAmount":1000000,
+     * "currentDrawAmonut":1000000,
+     * "nextDrawAmount":1000000,
+     * "lastPositionMargin":1000000,
+     * "currentPositionMargin":1000000,
+     * "settlementMargin":1000000,
+     * "debt":1000000,
+     * "deposit":1000000,
+     * "todayProfit":1000000,
+     * "spotDeliveryAmount":1000000,
+     * "deferDeliveryAmount":1000000,
+     * "forwardDeliveryAmount":1000000,
+     * "lastPlatinumFreeze":1000000,
+     * "todayPlatinumFreeze":1000000,
+     * "platinumFreezeMargin":1000000,
+     * "todayPackageMargin":1000000,
+     * "packageAmount":1000000,
+     * "tradingFee":1000000,
+     * "storageFee":1000000,
+     * "expirationFee":1000000,
+     * "deferFee":1000000,
+     * "deliveryFee":1000000,
+     * "transportFee":1000000,
+     * "penalty":1000000,
+     * "diff":1000000,
+     * "pledgeFee":1000000,
+     * "rentFee":1000000,
+     * "varietyPremium":1000000,
+     * "slicePremium":1000000,
+     * "etfFee":1000000,
+     * "etfAmount":1000000,
+     * "messageFee":1000000,
+     * "totalAmount":1000000,
+     * "liquidationAmount":1000000,
+     * "lastTradingBalance":1000000,
+     * "currentBalance":1000000,
+     * "currentIncomings":1000000,
+     * "currentWithdrawal":1000000,
+     * "capitalAdequacyRatio":1000000,
+     * "bankTradeFee":1000000,
+     * "exTradeFee":1000000,
+     * "derateFee":1000000,
+     * "tnDeferFee":1000000,
+     * "inoutStorageFee":1000000,
+     * "lateFee":1000000,
+     * "fine":1000000,
+     * "offsetFee":1000000,
+     * "carriageFee":1000000,
+     * "withdrawalFee":1000000,
+     * "transferFee":1000000,
+     * "custodianFee":1000000,
+     * "storageExchangeFee":1000000,
+     * "serviceFee": 0,
+     * "minReserveFund": 0,
+     * "deliveryDetail":[
+     * {
+     * "deliveryId":"201",
+     * "deliveryName":"Au9999",
+     * "totalStorage":1000000000,
+     * "availableStorage":1000000000,
+     * "extractStorage":1000000000,
+     * "freezeStorage":1000000000,
+     * "pledgeStorage":1000000000,
+     * "manaualFreezeStorage":1000000000,
+     * "transferFreezeStorage":1000000000,
+     * "offsetFreezeStorage":1000000000,
+     * "warehousingDiff":1000000000,
+     * "nonClearingDiff":1000000000,
+     * "totalDiff":1000000000,
+     * }],
+     * "contract_detail":[
+     * {
+     * "contractId":"Ag(T+D)",
+     * "contractName":"白银递延",
+     * "longPosition":1000000,
+     * "shortPosition":1000000
+     * "longOpenAverage":3000000,
+     * "shortOpenAverage":3000000,
+     * "currentDelivery":1000000,
+     * }
+     * ]
      */
 
     private long tradingAmount;
@@ -194,6 +196,10 @@ public class DailyStatementVo implements Serializable {
     private long custodianFee;
 
     private long storageExchangeFee;
+
+    private long serviceFee;
+
+    private long minReserveFund;
 
     private List<DeliveryDetailBean> deliveryDetail;
 
@@ -623,6 +629,22 @@ public class DailyStatementVo implements Serializable {
         this.storageExchangeFee = storageExchangeFee;
     }
 
+    public long getServiceFee() {
+        return serviceFee;
+    }
+
+    public void setServiceFee(long serviceFee) {
+        this.serviceFee = serviceFee;
+    }
+
+    public long getMinReserveFund() {
+        return minReserveFund;
+    }
+
+    public void setMinReserveFund(long minReserveFund) {
+        this.minReserveFund = minReserveFund;
+    }
+
     public List<DeliveryDetailBean> getDeliveryDetail() {
         return deliveryDetail;
     }
@@ -857,6 +879,14 @@ public class DailyStatementVo implements Serializable {
 
     public String getCurrentIncomingsStr() {
         return MarketUtil.getPriceValue(currentIncomings);
+    }
+
+    public String getServiceFeeStr() {
+        return MarketUtil.getPriceValue(serviceFee);
+    }
+
+    public String getMinReserveFundStr() {
+        return  MarketUtil.getPriceValue(minReserveFund);
     }
 
 }
