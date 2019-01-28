@@ -1,5 +1,6 @@
 package com.jme.lsgoldtrade.ui.mainpage;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -8,10 +9,13 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.PagerAdapter;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.text.TextUtils;
+import android.view.LayoutInflater;
+import android.view.View;
 
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.hhl.gridpagersnaphelper.GridPagerSnapHelper;
@@ -27,11 +31,16 @@ import com.jme.lsgoldtrade.base.JMEBaseFragment;
 import com.jme.lsgoldtrade.config.AppConfig;
 import com.jme.lsgoldtrade.config.Constants;
 import com.jme.lsgoldtrade.databinding.FragmentMainPageBinding;
+import com.jme.lsgoldtrade.domain.BannerVo;
 import com.jme.lsgoldtrade.domain.FiveSpeedVo;
 import com.jme.lsgoldtrade.service.MarketService;
+import com.makeramen.roundedimageview.RoundedImageView;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
+import com.squareup.picasso.Picasso;
+import com.zhouwei.mzbanner.holder.MZViewHolder;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -90,6 +99,7 @@ public class MainPageFragment extends JMEBaseFragment implements OnRefreshListen
                 (ScreenUtil.getScreenWidth(mContext) - DensityUtil.dpTopx(mContext, 20)) / 3);
 
         initInfoTabs();
+        initBanners();
 
         mBinding.recyclerView.setLayoutManager(new GridLayoutManager(mContext, 1,
                 LinearLayoutManager.HORIZONTAL, false));
@@ -135,6 +145,46 @@ public class MainPageFragment extends JMEBaseFragment implements OnRefreshListen
         mBinding.setHandlers(new ClickHandlers());
     }
 
+    @Override
+    public void onHiddenChanged(boolean hidden) {
+        super.onHiddenChanged(hidden);
+
+        bHidden = hidden;
+
+        if (!bHidden) {
+            bFlag = true;
+
+            getMarket();
+        } else {
+            mHandler.removeMessages(Constants.Msg.MSG_MAINPAGE_UPDATE_MARKET);
+        }
+
+        if (null != mBinding && null != mBinding.tabViewpager && null != mAdapter)
+            mAdapter.getItem(mBinding.tabViewpager.getCurrentItem()).onHiddenChanged(hidden);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+
+        mBinding.banner.pause();
+
+        mHandler.removeMessages(Constants.Msg.MSG_MAINPAGE_UPDATE_MARKET);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        if (!bHidden) {
+            bFlag = true;
+
+            getMarket();
+        }
+
+        mBinding.banner.start();
+    }
+
     private void initInfoTabs() {
         mTabTitles = new String[3];
         mTabTitles[0] = mContext.getResources().getString(R.string.main_page_notice);
@@ -159,40 +209,24 @@ public class MainPageFragment extends JMEBaseFragment implements OnRefreshListen
         mBinding.tablayout.post(() -> setIndicator(mBinding.tablayout, 45, 45));
     }
 
-    @Override
-    public void onHiddenChanged(boolean hidden) {
-        super.onHiddenChanged(hidden);
+    private void initBanners(){
+        List<BannerVo> bannerVoList = new ArrayList<>();
 
-        bHidden = hidden;
+        BannerVo bannerVo1 = new BannerVo();
+        bannerVo1.setImg("0");
+        bannerVo1.setImgUrl(Constants.HttpConst.URL_OPEN_ACCOUNT);
+        bannerVo1.setTitle(mContext.getResources().getString(R.string.personal_open_account_online));
 
-        if (!bHidden) {
-            bFlag = true;
+        BannerVo bannerVo2 = new BannerVo();
+        bannerVo2.setImg("1");
+        bannerVo2.setImgUrl("");
+        bannerVo2.setTitle("");
 
-            getMarket();
-        } else {
-            mHandler.removeMessages(Constants.Msg.MSG_MAINPAGE_UPDATE_MARKET);
-        }
+        bannerVoList.add(bannerVo1);
+        bannerVoList.add(bannerVo2);
 
-        if (null != mBinding && null != mBinding.tabViewpager && null != mAdapter)
-            mAdapter.getItem(mBinding.tabViewpager.getCurrentItem()).onHiddenChanged(hidden);
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-
-        mHandler.removeMessages(Constants.Msg.MSG_MAINPAGE_UPDATE_MARKET);
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-
-        if (!bHidden) {
-            bFlag = true;
-
-            getMarket();
-        }
+        mBinding.banner.setPages(bannerVoList, () -> new BannerViewHolder());
+        mBinding.banner.start();
     }
 
     private long getTimeInterval() {
@@ -286,6 +320,39 @@ public class MainPageFragment extends JMEBaseFragment implements OnRefreshListen
         @Override
         public CharSequence getPageTitle(int position) {
             return mTabTitles[position];
+        }
+    }
+
+    public static class BannerViewHolder implements MZViewHolder<BannerVo> {
+
+        private RoundedImageView mImgBanner;
+
+        @Override
+        public View createView(Context context) {
+            View view = LayoutInflater.from(context).inflate(R.layout.item_banner, null);
+            mImgBanner = view.findViewById(R.id.img_banner);
+
+            return view;
+        }
+
+        @Override
+        public void onBind(Context context, int position, BannerVo banner) {
+            if (0 == position)
+                mImgBanner.setBackground(ContextCompat.getDrawable(context, R.mipmap.banner1));
+            else if (1 == position)
+                mImgBanner.setBackground(ContextCompat.getDrawable(context, R.mipmap.banner2));
+
+            mImgBanner.setOnClickListener(view -> {
+                String url = banner.getImgUrl();
+
+                if (TextUtils.isEmpty(url))
+                    return;
+
+                ARouter.getInstance().build(Constants.ARouterUriConst.JMEWEBVIEW)
+                        .withString("title", banner.getTitle())
+                        .withString("url", url)
+                        .navigation();
+            });
         }
     }
 

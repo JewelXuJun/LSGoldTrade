@@ -70,6 +70,7 @@
     <dimen name="icon_arrow">15dp</dimen>
 
     <dimen name="radius_small">2dp</dimen>
+    <dimen name="radius_middle">3dp</dimen>
     <dimen name="radius_normal">4dp</dimen>
     <dimen name="radius_big">5dp</dimen>
 
