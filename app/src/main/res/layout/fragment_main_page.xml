@@ -60,90 +60,108 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
-            <android.support.v4.widget.NestedScrollView
+            <android.support.design.widget.CoordinatorLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:fillViewport="true"
-                android:scrollbars="none">
+                android:background="@color/common_background"
+                android:orientation="vertical">
 
-                <LinearLayout
+                <android.support.design.widget.AppBarLayout
+                    android:id="@+id/app_bar"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical">
+                    android:layout_height="wrap_content"
+                    android:fitsSystemWindows="true"
+                    android:gravity="center_horizontal"
+                    android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
 
-                    <com.zhouwei.mzbanner.MZBannerView
-                        android:id="@+id/banner"
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/height_main_page_banner"
-                        app:canLoop="true"
-                        app:indicatorAlign="center"
-                        app:open_mz_mode="true" />
-
-                    <LinearLayout
+                    <android.support.design.widget.CollapsingToolbarLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:background="@color/white"
-                        android:orientation="horizontal">
+                        app:layout_scrollFlags="scroll|enterAlwaysCollapsed">
 
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:drawableTop="@mipmap/ic_open_account"
-                            android:drawablePadding="@dimen/common_area_margin_tiny"
-                            android:gravity="center"
-                            android:onClick="@{() -> handlers.onClickOpenAccount()}"
-                            android:paddingTop="@dimen/common_area_margin"
-                            android:paddingBottom="@dimen/common_area_margin"
-                            android:text="@string/main_page_open_account"
-                            android:textColor="@color/color_text_normal"
-                            android:textSize="@dimen/sp_14" />
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:drawableTop="@mipmap/ic_quick_order"
-                            android:drawablePadding="@dimen/common_area_margin_tiny"
-                            android:gravity="center"
-                            android:onClick="@{() -> handlers.onClickQuickOrder()}"
-                            android:paddingTop="@dimen/common_area_margin"
-                            android:paddingBottom="@dimen/common_area_margin"
-                            android:text="@string/main_page_quick_order"
-                            android:textColor="@color/color_text_normal"
-                            android:textSize="@dimen/sp_14" />
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:drawableTop="@mipmap/ic_beginners"
-                            android:drawablePadding="@dimen/common_area_margin_tiny"
-                            android:gravity="center"
-                            android:onClick="@{() -> handlers.onClickBeginners()}"
-                            android:paddingTop="@dimen/common_area_margin"
-                            android:paddingBottom="@dimen/common_area_margin"
-                            android:text="@string/main_page_beginners"
-                            android:textColor="@color/color_text_normal"
-                            android:textSize="@dimen/sp_14" />
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/height_main_page_market"
-                        android:orientation="vertical">
-
-                        <android.support.v7.widget.RecyclerView
-                            android:id="@+id/recyclerView"
+                        <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:layout_marginLeft="@dimen/margin_main_page_market"
-                            android:layout_marginTop="@dimen/common_area_margin_tiny"
-                            android:layout_marginRight="@dimen/margin_main_page_market"
-                            android:layout_marginBottom="@dimen/common_area_margin_tiny" />
+                            android:orientation="vertical">
 
-                    </LinearLayout>
+                            <com.zhouwei.mzbanner.MZBannerView
+                                android:id="@+id/banner"
+                                android:layout_width="match_parent"
+                                android:layout_height="@dimen/height_main_page_banner"
+                                app:canLoop="true"
+                                app:indicatorAlign="center"
+                                app:open_mz_mode="true" />
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:background="@color/white"
+                                android:orientation="horizontal">
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:drawableTop="@mipmap/ic_open_account"
+                                    android:drawablePadding="@dimen/common_area_margin_tiny"
+                                    android:gravity="center"
+                                    android:onClick="@{() -> handlers.onClickOpenAccount()}"
+                                    android:paddingTop="@dimen/common_area_margin"
+                                    android:paddingBottom="@dimen/common_area_margin"
+                                    android:text="@string/main_page_open_account"
+                                    android:textColor="@color/color_text_normal"
+                                    android:textSize="@dimen/sp_14" />
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:drawableTop="@mipmap/ic_quick_order"
+                                    android:drawablePadding="@dimen/common_area_margin_tiny"
+                                    android:gravity="center"
+                                    android:onClick="@{() -> handlers.onClickQuickOrder()}"
+                                    android:paddingTop="@dimen/common_area_margin"
+                                    android:paddingBottom="@dimen/common_area_margin"
+                                    android:text="@string/main_page_quick_order"
+                                    android:textColor="@color/color_text_normal"
+                                    android:textSize="@dimen/sp_14" />
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:drawableTop="@mipmap/ic_beginners"
+                                    android:drawablePadding="@dimen/common_area_margin_tiny"
+                                    android:gravity="center"
+                                    android:onClick="@{() -> handlers.onClickBeginners()}"
+                                    android:paddingTop="@dimen/common_area_margin"
+                                    android:paddingBottom="@dimen/common_area_margin"
+                                    android:text="@string/main_page_beginners"
+                                    android:textColor="@color/color_text_normal"
+                                    android:textSize="@dimen/sp_14" />
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="@dimen/height_main_page_market"
+                                android:orientation="vertical">
+
+                                <android.support.v7.widget.RecyclerView
+                                    android:id="@+id/recyclerView"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:paddingLeft="@dimen/margin_main_page_market"
+                                    android:paddingTop="@dimen/common_area_margin_tiny"
+                                    android:paddingRight="@dimen/margin_main_page_market"
+                                    android:paddingBottom="@dimen/common_area_margin_tiny"
+                                    android:background="@color/common_background" />
+
+                            </LinearLayout>
+
+                        </LinearLayout>
+
+                    </android.support.design.widget.CollapsingToolbarLayout>
 
                     <android.support.design.widget.TabLayout
                         android:id="@+id/tablayout"
@@ -156,17 +174,15 @@
 
                     <include layout="@layout/item_line_vertical" />
 
-                    <android.support.v4.view.ViewPager
-                        android:id="@+id/tab_viewpager"
-                        android:layout_width="match_parent"
-                        android:layout_height="0dp"
-                        android:layout_marginBottom="@dimen/common_page_margin"
-                        android:layout_weight="1"
-                        android:background="@color/white" />
+                </android.support.design.widget.AppBarLayout>
 
-                </LinearLayout>
+                <android.support.v4.view.ViewPager
+                    android:id="@+id/tab_viewpager"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
-            </android.support.v4.widget.NestedScrollView>
+            </android.support.design.widget.CoordinatorLayout>
 
         </com.scwang.smartrefresh.layout.SmartRefreshLayout>
 

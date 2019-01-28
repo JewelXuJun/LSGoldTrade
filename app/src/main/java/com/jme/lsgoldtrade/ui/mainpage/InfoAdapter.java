@@ -22,9 +22,21 @@ public class InfoAdapter extends BaseQuickAdapter<NoticePageVo.NoticeBean, BaseV
         if (null == item)
             return;
 
+        int position = helper.getAdapterPosition();
         String sendTime = item.getSendTime();
 
+        if (0 == position)
+            helper.setBackgroundRes(R.id.img, R.mipmap.ic_info1);
+        else if (1 == position)
+            helper.setBackgroundRes(R.id.img, R.mipmap.ic_info2);
+        else if (2 == position)
+            helper.setBackgroundRes(R.id.img, R.mipmap.ic_info3);
+        else if (3 == position)
+            helper.setBackgroundRes(R.id.img, R.mipmap.ic_info4);
+        else if (4 == position)
+            helper.setBackgroundRes(R.id.img, R.mipmap.ic_info5);
+
         helper.setText(R.id.tv_title, item.getTitle())
-                .setText(R.id.tv_time, TextUtils.isEmpty(sendTime) ? "" : DateUtil.dateToString(DateUtil.dateToLong(sendTime)));
+                .setText(R.id.tv_time, sendTime/*TextUtils.isEmpty(sendTime) ? "" : DateUtil.dateToString(DateUtil.dateToLong(sendTime))*/);
     }
 }

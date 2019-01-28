@@ -3,39 +3,51 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@color/white"
-    android:orientation="horizontal"
-    android:padding="@dimen/common_page_padding">
-
-    <ImageView
-        android:id="@+id/img"
-        android:layout_width="@dimen/width_main_page_info_img"
-        android:layout_height="@dimen/height_main_page_info_img" />
+    android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/common_area_margin_middle"
-        android:layout_marginRight="@dimen/margin_main_page_info"
-        android:orientation="vertical">
+        android:orientation="horizontal"
+        android:paddingLeft="@dimen/common_page_padding"
+        android:paddingRight="@dimen/common_page_margin"
+        android:paddingTop="@dimen/common_area_margin"
+        android:paddingBottom="@dimen/common_area_margin">
 
-        <TextView
-            android:id="@+id/tv_title"
+        <ImageView
+            android:id="@+id/img"
+            android:layout_width="@dimen/width_main_page_info_img"
+            android:layout_height="@dimen/height_main_page_info_img" />
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:ellipsize="end"
-            android:maxLines="1"
-            android:textColor="@color/color_text_normal"
-            android:textSize="@dimen/sp_14" />
+            android:layout_marginLeft="@dimen/common_area_margin_middle"
+            android:layout_marginRight="@dimen/margin_main_page_info"
+            android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/tv_time"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/common_area_margin_tiny"
-            android:maxLines="1"
-            android:textColor="@color/gray"
-            android:textSize="@dimen/size_small" />
+            <TextView
+                android:id="@+id/tv_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:textColor="@color/color_text_normal"
+                android:textSize="@dimen/sp_14" />
+
+            <TextView
+                android:id="@+id/tv_time"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/common_area_margin_tiny"
+                android:maxLines="1"
+                android:textColor="@color/gray"
+                android:textSize="@dimen/size_small" />
+
+        </LinearLayout>
 
     </LinearLayout>
+
+    <include layout="@layout/item_line_vertical" />
 
 </LinearLayout>

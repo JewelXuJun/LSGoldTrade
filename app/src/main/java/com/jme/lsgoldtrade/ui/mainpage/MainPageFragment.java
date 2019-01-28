@@ -103,7 +103,7 @@ public class MainPageFragment extends JMEBaseFragment implements OnRefreshListen
 
         mBinding.recyclerView.setLayoutManager(new GridLayoutManager(mContext, 1,
                 LinearLayoutManager.HORIZONTAL, false));
-        mBinding.recyclerView.setHasFixedSize(true);
+        mBinding.recyclerView.setHasFixedSize(false);
         mBinding.recyclerView.setAdapter(mRateMarketAdapter);
 
         GridPagerSnapHelper gridPagerSnapHelper = new GridPagerSnapHelper();
