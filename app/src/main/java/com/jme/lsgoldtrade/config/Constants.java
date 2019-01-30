@@ -96,7 +96,7 @@ public class Constants {
         public static final String NEWSCENTERACTIVITY = "/JME/NewsCenterActivity";
     }
 
-    public static final long SPLASH_DELAY_MILLIS = 1000;
+    public static final long SPLASH_DELAY_MILLIS = 2000;
 
     public static final class IntentConst {
 
