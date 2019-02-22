@@ -415,34 +415,6 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_centerVertical="true"
-                            android:text="@string/trade_software_service_charge"
-                            android:textColor="@color/color_text_black"
-                            android:textSize="@dimen/sp_14" />
-
-                        <TextView
-                            android:id="@+id/tv_software_service_fee"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentRight="true"
-                            android:layout_centerVertical="true"
-                            android:text="@string/text_no_data_default"
-                            android:textColor="@color/black_deep"
-                            android:textSize="@dimen/common_font_size" />
-
-                    </RelativeLayout>
-
-                    <include layout="@layout/item_line_vertical" />
-
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/height_item_normal"
-                        android:paddingLeft="@dimen/common_area_margin"
-                        android:paddingRight="@dimen/common_area_margin">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_centerVertical="true"
                             android:text="@string/trade_deferred_charges"
                             android:textColor="@color/color_text_black"
                             android:textSize="@dimen/sp_14" />

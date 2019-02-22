@@ -104,7 +104,6 @@ public class DailyStatementActivity extends JMEBaseActivity {
         mBinding.tvCurrentOutmoney.setText(MarketUtil.decimalFormatMoney(dailyStatementVo.getCurrentWithdrawalStr()));
         mBinding.tvCurrentInmoney.setText(MarketUtil.decimalFormatMoney(dailyStatementVo.getCurrentIncomingsStr()));
         mBinding.tvFee.setText(MarketUtil.decimalFormatMoney(dailyStatementVo.getTradingFeeStr()));
-        mBinding.tvSoftwareServiceFee.setText(MarketUtil.decimalFormatMoney(dailyStatementVo.getServiceFeeStr()));
         mBinding.tvDeferredFee.setText(MarketUtil.decimalFormatMoney(dailyStatementVo.getTdDeferFeeStr()));
     }
 
