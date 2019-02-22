@@ -97,7 +97,7 @@ public class PersonalFragment extends JMEBaseFragment {
         }
 
         public void onClickShare() {
-
+            showShortToast(R.string.setting_expect);
         }
 
         public void onClickFeedback() {
