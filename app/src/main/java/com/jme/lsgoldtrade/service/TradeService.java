@@ -26,7 +26,7 @@ import retrofit2.Call;
 public class TradeService extends IService<TradeApi> {
 
     public TradeService() {
-        super(Constants.HttpConst.URL_BASE, true);
+        super(Constants.HttpConst.URL_BASE_TRADE, true);
     }
 
     public static TradeService getInstance() {

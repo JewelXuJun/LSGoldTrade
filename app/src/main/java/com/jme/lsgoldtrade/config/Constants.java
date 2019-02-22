@@ -12,8 +12,9 @@ public class Constants {
     // Http常量配置
     public static final class HttpConst {
 
-        public static final int Test_WAN = 0; // 测试环境
-        public static final int Produce = 1;  // 正式环境
+        public static final int Test_WAN = 0;
+        public static final int Test_LAN = 1;
+        public static final int Produce = 2;
 
         public static int Envi = Test_WAN;
 
@@ -21,14 +22,20 @@ public class Constants {
 
         }
 
-        public static String URL_BASE;
+        public static String URL_BASE_MARKET;
+        public static String URL_BASE_TRADE;
         public static String URL_OPEN_ACCOUNT = "https://portal.taijs.com";
 
         static {
             if (Envi == Test_WAN) {
-                URL_BASE = "https://222.190.245.2:18012";
+                URL_BASE_MARKET = "https://222.190.245.2:18012";
+                URL_BASE_TRADE = "https://222.190.245.2:18012";
+            } else if (Envi == Test_LAN) {
+                URL_BASE_MARKET = "http://192.168.10.171:8080";
+                URL_BASE_TRADE = "http://192.168.10.171:8081";
             } else if (Envi == Produce) {
-                URL_BASE = "";
+                URL_BASE_MARKET = "";
+                URL_BASE_TRADE = "";
             }
         }
 

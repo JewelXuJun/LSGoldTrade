@@ -20,7 +20,7 @@ import retrofit2.Call;
 public class UserService extends IService<UserApi> {
 
     public UserService() {
-        super(Constants.HttpConst.URL_BASE, true);
+        super(Constants.HttpConst.URL_BASE_TRADE, true);
     }
 
     public static UserService getInstance() {

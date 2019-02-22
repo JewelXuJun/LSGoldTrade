@@ -22,7 +22,7 @@ import retrofit2.Call;
 public class MarketService extends IService<MarketApi> {
 
     public MarketService() {
-        super(Constants.HttpConst.URL_BASE, true);
+        super(Constants.HttpConst.URL_BASE_MARKET, true);
     }
 
     public static MarketService getInstance() {
