@@ -16,7 +16,7 @@ public class Constants {
         public static final int Test_LAN = 1;
         public static final int Produce = 2;
 
-        public static int Envi = Test_LAN;
+        public static int Envi = Test_WAN;
 
         private HttpConst() {
 
@@ -24,18 +24,22 @@ public class Constants {
 
         public static String URL_BASE_MARKET;
         public static String URL_BASE_TRADE;
+        public static String URL_BASE_MANAGE;
         public static String URL_OPEN_ACCOUNT = "https://portal.taijs.com";
 
         static {
             if (Envi == Test_WAN) {
                 URL_BASE_MARKET = "https://222.190.245.2:18012";
                 URL_BASE_TRADE = "https://222.190.245.2:18012";
+                URL_BASE_MANAGE = "http://tjshj-test.developer.jsdttec.com/tjsmanage";
             } else if (Envi == Test_LAN) {
                 URL_BASE_MARKET = "http://192.168.10.171:8080";
                 URL_BASE_TRADE = "http://192.168.10.171:8081";
+                URL_BASE_MANAGE = "http://tjshj-test.developer.jsdttec.com/tjsmanage";
             } else if (Envi == Produce) {
                 URL_BASE_MARKET = "";
                 URL_BASE_TRADE = "";
+                URL_BASE_MANAGE = "";
             }
         }
 

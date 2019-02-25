@@ -27,7 +27,7 @@ public class MarketRefreshActivity extends JMEBaseActivity {
 
         mBinding = (ActivityMarketRefreshBinding) mBindingUtil;
 
-        initToolbar(R.string.setting_refresh_rate, true);
+        initToolbar(R.string.personal_refresh_rate, true);
     }
 
     @Override

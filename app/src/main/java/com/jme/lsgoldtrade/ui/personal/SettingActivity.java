@@ -68,7 +68,7 @@ public class SettingActivity extends JMEBaseActivity {
 
                     mUser.logout();
 
-                    showShortToast(R.string.setting_logout_success);
+                    showShortToast(R.string.personal_logout_success);
                 }
 
                 break;

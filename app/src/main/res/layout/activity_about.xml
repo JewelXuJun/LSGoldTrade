@@ -67,7 +67,7 @@
                         android:layout_alignParentLeft="true"
                         android:layout_centerVertical="true"
                         android:layout_marginLeft="@dimen/common_page_margin"
-                        android:text="@string/setting_about_wx"
+                        android:text="@string/personal_about_wx"
                         android:textColor="@color/color_text_black"
                         android:textSize="@dimen/sp_16" />
 
@@ -95,7 +95,7 @@
                         android:layout_alignParentLeft="true"
                         android:layout_centerVertical="true"
                         android:layout_marginLeft="@dimen/common_page_margin"
-                        android:text="@string/setting_about_function"
+                        android:text="@string/personal_about_function"
                         android:textColor="@color/color_text_black"
                         android:textSize="@dimen/sp_16" />
 
@@ -123,7 +123,7 @@
                         android:layout_alignParentLeft="true"
                         android:layout_centerVertical="true"
                         android:layout_marginLeft="@dimen/common_page_margin"
-                        android:text="@string/setting_about_contact"
+                        android:text="@string/personal_about_contact"
                         android:textColor="@color/color_text_black"
                         android:textSize="@dimen/sp_16" />
 

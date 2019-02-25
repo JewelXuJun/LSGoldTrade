@@ -41,7 +41,7 @@
                     android:gravity="center|left"
                     android:paddingLeft="@dimen/common_page_margin"
                     android:paddingRight="@dimen/common_page_margin"
-                    android:text="@string/setting_refresh_network"
+                    android:text="@string/personal_refresh_network"
                     android:textColor="@color/black_pale"
                     android:textSize="@dimen/sp_12" />
 
@@ -61,7 +61,7 @@
                         android:layout_height="match_parent"
                         android:layout_alignParentLeft="true"
                         android:gravity="center|left"
-                        android:text="@string/setting_refresh_5s"
+                        android:text="@string/personal_refresh_5s"
                         android:textColor="@color/color_text_black"
                         android:textSize="@dimen/sp_16" />
 
@@ -92,7 +92,7 @@
                         android:layout_height="match_parent"
                         android:layout_alignParentLeft="true"
                         android:gravity="center|left"
-                        android:text="@string/setting_refresh_10s"
+                        android:text="@string/personal_refresh_10s"
                         android:textColor="@color/color_text_black"
                         android:textSize="@dimen/sp_16" />
 
@@ -123,7 +123,7 @@
                         android:layout_height="match_parent"
                         android:layout_alignParentLeft="true"
                         android:gravity="center|left"
-                        android:text="@string/setting_refresh_15s"
+                        android:text="@string/personal_refresh_15s"
                         android:textColor="@color/color_text_black"
                         android:textSize="@dimen/sp_16" />
 
@@ -147,7 +147,7 @@
                     android:gravity="center|left"
                     android:paddingLeft="@dimen/common_page_margin"
                     android:paddingRight="@dimen/common_page_margin"
-                    android:text="@string/setting_refresh_wifi"
+                    android:text="@string/personal_refresh_wifi"
                     android:textColor="@color/black_pale"
                     android:textSize="@dimen/sp_12" />
 
@@ -167,7 +167,7 @@
                         android:layout_height="match_parent"
                         android:layout_alignParentLeft="true"
                         android:gravity="center|left"
-                        android:text="@string/setting_refresh_1s"
+                        android:text="@string/personal_refresh_1s"
                         android:textColor="@color/color_text_black"
                         android:textSize="@dimen/sp_16" />
 
@@ -198,7 +198,7 @@
                         android:layout_height="match_parent"
                         android:layout_alignParentLeft="true"
                         android:gravity="center|left"
-                        android:text="@string/setting_refresh_2s"
+                        android:text="@string/personal_refresh_2s"
                         android:textColor="@color/color_text_black"
                         android:textSize="@dimen/sp_16" />
 
@@ -229,7 +229,7 @@
                         android:layout_height="match_parent"
                         android:layout_alignParentLeft="true"
                         android:gravity="center|left"
-                        android:text="@string/setting_refresh_5s"
+                        android:text="@string/personal_refresh_5s"
                         android:textColor="@color/color_text_black"
                         android:textSize="@dimen/sp_16" />
 

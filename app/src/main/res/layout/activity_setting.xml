@@ -41,7 +41,7 @@
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="@dimen/common_page_margin"
                     android:includeFontPadding="false"
-                    android:text="@string/setting_refresh_rate"
+                    android:text="@string/personal_refresh_rate"
                     android:textColor="@color/color_text_black"
                     android:textSize="@dimen/sp_16" />
 
@@ -69,7 +69,7 @@
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="@dimen/common_page_margin"
                     android:includeFontPadding="false"
-                    android:text="@string/setting_version_information"
+                    android:text="@string/personal_version_information"
                     android:textColor="@color/color_text_black"
                     android:textSize="@dimen/sp_16" />
 
@@ -100,7 +100,7 @@
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="@dimen/common_page_margin"
                     android:includeFontPadding="false"
-                    android:text="@string/setting_clear_cache"
+                    android:text="@string/personal_clear_cache"
                     android:textColor="@color/color_text_black"
                     android:textSize="@dimen/sp_16" />
 
@@ -142,7 +142,7 @@
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="@dimen/common_page_margin"
                     android:includeFontPadding="false"
-                    android:text="@string/setting_welcome"
+                    android:text="@string/personal_welcome"
                     android:textColor="@color/color_text_black"
                     android:textSize="@dimen/sp_16" />
 
@@ -171,7 +171,7 @@
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="@dimen/common_page_margin"
                     android:includeFontPadding="false"
-                    android:text="@string/setting_about"
+                    android:text="@string/personal_about"
                     android:textColor="@color/color_text_black"
                     android:textSize="@dimen/sp_16" />
 
@@ -198,7 +198,7 @@
             android:layout_marginRight="@dimen/common_area_margin"
             android:background="@drawable/bg_btn_blue_solid"
             android:onClick="@{() -> handlers.onClickLogout()}"
-            android:text="@string/setting_logout"
+            android:text="@string/personal_logout"
             android:textColor="@color/white"
             android:textSize="@dimen/common_font_size" />
 

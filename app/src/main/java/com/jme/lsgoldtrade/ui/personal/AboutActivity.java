@@ -24,7 +24,7 @@ public class AboutActivity extends JMEBaseActivity {
 
         mBinding = (ActivityAboutBinding) mBindingUtil;
 
-        initToolbar(R.string.setting_about, true);
+        initToolbar(R.string.personal_about, true);
     }
 
     @Override
