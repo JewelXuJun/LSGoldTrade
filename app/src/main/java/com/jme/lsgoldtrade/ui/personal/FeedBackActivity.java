@@ -14,7 +14,7 @@ import com.jme.lsgoldtrade.base.JMEBaseActivity;
 import com.jme.lsgoldtrade.config.AppConfig;
 import com.jme.lsgoldtrade.config.Constants;
 import com.jme.lsgoldtrade.databinding.ActivityFeedbackBinding;
-import com.jme.lsgoldtrade.service.ManageService;
+import com.jme.lsgoldtrade.service.ManagementService;
 
 import java.util.HashMap;
 
@@ -88,10 +88,12 @@ public class FeedBackActivity extends JMEBaseActivity {
 
     private void setRightNavigation() {
         setRightNavigation(getString(R.string.personal_feedback_send), 0, R.style.ToolbarThemeBlue, () -> {
-            if (TextUtils.isEmpty(mBinding.etSuggestion.getText().toString().trim()))
+            String suggest = mBinding.etSuggestion.getText().toString().trim();
+
+            if (TextUtils.isEmpty(suggest))
                 showShortToast(R.string.setting_feedback_empty);
             else
-                sendFeedBackRequest();
+                feedBack(suggest);
         });
     }
 
@@ -107,11 +109,11 @@ public class FeedBackActivity extends JMEBaseActivity {
                 && (codePoint <= 0xFFFD)) || ((codePoint >= 0x10000) && (codePoint <= 0x10FFFF));
     }
 
-    private void sendFeedBackRequest() {
+    private void feedBack(String suggest) {
         HashMap<String, String> params = new HashMap<>();
-        params.put("suggest", mBinding.etSuggestion.getText().toString().trim());
+        params.put("suggest", suggest);
 
-        sendRequest(ManageService.getInstance().feedback, params, true);
+        sendRequest(ManagementService.getInstance().feedback, params, true);
     }
 
     @Override
@@ -120,12 +122,10 @@ public class FeedBackActivity extends JMEBaseActivity {
 
         switch (request.getApi().getName()) {
             case "FeedBack":
-                if (head.getCode().equals("0")) {
+                if (head.isSuccess()) {
                     showShortToast(R.string.setting_feedback_success);
 
                     mBinding.etSuggestion.setText("");
-                } else {
-                    showShortToast(head.getMsg());
                 }
 
                 break;

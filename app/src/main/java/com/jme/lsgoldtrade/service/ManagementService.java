@@ -13,14 +13,14 @@ import okhttp3.Request;
 import okhttp3.Response;
 import retrofit2.Call;
 
-public class ManageService extends IService<ManageApi> {
+public class ManagementService extends IService<ManagementApi> {
 
-    public ManageService() {
-        super(Constants.HttpConst.URL_BASE_MANAGE, true);
+    public ManagementService() {
+        super(Constants.HttpConst.URL_BASE_MANAGEMENT, true);
     }
 
-    public static ManageService getInstance() {
-        return (ManageService) getInstance(ManageService.class);
+    public static ManagementService getInstance() {
+        return (ManagementService) getInstance(ManagementService.class);
     }
 
     protected Interceptor addHeader() {
@@ -50,4 +50,11 @@ public class ManageService extends IService<ManageApi> {
         }
     };
 
+    public API allList = new API<String>("AllList") {
+        @Override
+        public Call<DTResponse> request(HashMap<String, String> params) {
+
+            return mApi.allList(params);
+        }
+    };
 }
