@@ -83,6 +83,9 @@ public class Constants {
         public static final int MSG_DECLARATIONFORM_POSITION_UPDATE_DATA = 8;
         public static final int MSG_TRADE_POSITION_UPDATE_DATA = 9;
         public static final int MSG_SYNTIME = 10;
+        public static final int MSG_POSITION_UPDATE_ACCOUNT_DATA = 11;
+        public static final int MSG_TRADE_POSITION_UPDATE_ACCOUNT_DATA = 12;
+        public static final int MSG_DECLARATIONFORM_POSITION_UPDATE_ACCOUNT_DATA = 13;
     }
 
     public static final class ARouterUriConst {

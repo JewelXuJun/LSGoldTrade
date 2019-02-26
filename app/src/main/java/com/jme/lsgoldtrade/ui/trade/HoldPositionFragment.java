@@ -11,7 +11,7 @@ import com.alibaba.android.arouter.launcher.ARouter;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.jme.common.network.DTRequest;
 import com.jme.common.network.Head;
-import com.jme.common.ui.view.MarginDividerItemDecoration;
+import com.jme.common.util.NetWorkUtils;
 import com.jme.common.util.RxBus;
 import com.jme.lsgoldtrade.R;
 import com.jme.lsgoldtrade.base.JMEBaseFragment;
@@ -58,7 +58,15 @@ public class HoldPositionFragment extends JMEBaseFragment implements OnRefreshLi
 
                     getMarket();
 
-                    mHandler.sendEmptyMessageDelayed(Constants.Msg.MSG_TRADE_POSITION_UPDATE_DATA, AppConfig.Minute);
+                    mHandler.sendEmptyMessageDelayed(Constants.Msg.MSG_TRADE_POSITION_UPDATE_DATA, getTimeInterval());
+
+                    break;
+                case Constants.Msg.MSG_TRADE_POSITION_UPDATE_ACCOUNT_DATA:
+                    mHandler.removeMessages(Constants.Msg.MSG_TRADE_POSITION_UPDATE_ACCOUNT_DATA);
+
+                    initValue(false);
+
+                    mHandler.sendEmptyMessageDelayed(Constants.Msg.MSG_TRADE_POSITION_UPDATE_ACCOUNT_DATA, AppConfig.Minute);
 
                     break;
             }
@@ -115,10 +123,12 @@ public class HoldPositionFragment extends JMEBaseFragment implements OnRefreshLi
 
         bVisibleToUser = isVisibleToUser;
 
-        if (null != mBinding && bVisibleToUser)
+        if (null != mBinding && bVisibleToUser) {
             initValue(true);
-        else
+        } else {
             mHandler.removeMessages(Constants.Msg.MSG_TRADE_POSITION_UPDATE_DATA);
+            mHandler.removeMessages(Constants.Msg.MSG_TRADE_POSITION_UPDATE_ACCOUNT_DATA);
+        }
     }
 
     @Override
@@ -127,8 +137,10 @@ public class HoldPositionFragment extends JMEBaseFragment implements OnRefreshLi
 
         super.onHiddenChanged(hidden);
 
-        if (hidden)
+        if (hidden) {
             mHandler.removeMessages(Constants.Msg.MSG_TRADE_POSITION_UPDATE_DATA);
+            mHandler.removeMessages(Constants.Msg.MSG_TRADE_POSITION_UPDATE_ACCOUNT_DATA);
+        }
     }
 
     @Override
@@ -144,6 +156,7 @@ public class HoldPositionFragment extends JMEBaseFragment implements OnRefreshLi
         super.onPause();
 
         mHandler.removeMessages(Constants.Msg.MSG_TRADE_POSITION_UPDATE_DATA);
+        mHandler.removeMessages(Constants.Msg.MSG_TRADE_POSITION_UPDATE_ACCOUNT_DATA);
     }
 
     @Override
@@ -165,6 +178,7 @@ public class HoldPositionFragment extends JMEBaseFragment implements OnRefreshLi
         mPagingKey = "";
 
         mHandler.removeMessages(Constants.Msg.MSG_TRADE_POSITION_UPDATE_DATA);
+        mHandler.removeMessages(Constants.Msg.MSG_TRADE_POSITION_UPDATE_ACCOUNT_DATA);
 
         position();
     }
@@ -270,6 +284,10 @@ public class HoldPositionFragment extends JMEBaseFragment implements OnRefreshLi
                 mBinding.tvDesirableCapital.setText(MarketUtil.decimalFormatMoney(MarketUtil.getPriceValue(value)));
             }
         }
+    }
+
+    private long getTimeInterval() {
+        return NetWorkUtils.isWifiConnected(mContext) ? AppConfig.TimeInterval_WiFi : AppConfig.TimeInterval_NetWork;
     }
 
     private void getAccount(boolean enable) {
@@ -397,7 +415,8 @@ public class HoldPositionFragment extends JMEBaseFragment implements OnRefreshLi
                 if (bFlag) {
                     bFlag = false;
 
-                    mHandler.sendEmptyMessageDelayed(Constants.Msg.MSG_TRADE_POSITION_UPDATE_DATA, AppConfig.Minute);
+                    mHandler.sendEmptyMessageDelayed(Constants.Msg.MSG_TRADE_POSITION_UPDATE_DATA, getTimeInterval());
+                    mHandler.sendEmptyMessageDelayed(Constants.Msg.MSG_TRADE_POSITION_UPDATE_ACCOUNT_DATA, AppConfig.Minute);
                 }
 
                 break;

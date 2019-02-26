@@ -13,14 +13,13 @@ import com.alibaba.android.arouter.facade.annotation.Route;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.jme.common.network.DTRequest;
 import com.jme.common.network.Head;
-import com.jme.common.ui.view.MarginDividerItemDecoration;
+import com.jme.common.util.NetWorkUtils;
 import com.jme.common.util.RxBus;
 import com.jme.lsgoldtrade.R;
 import com.jme.lsgoldtrade.base.JMEBaseActivity;
 import com.jme.lsgoldtrade.config.AppConfig;
 import com.jme.lsgoldtrade.config.Constants;
 import com.jme.lsgoldtrade.databinding.ActivityCurrentHoldPositionBinding;
-import com.jme.lsgoldtrade.domain.DealPageVo;
 import com.jme.lsgoldtrade.domain.FiveSpeedVo;
 import com.jme.lsgoldtrade.domain.PositionPageVo;
 import com.jme.lsgoldtrade.domain.PositionVo;
@@ -61,7 +60,15 @@ public class CurrentHoldPositionActivity extends JMEBaseActivity implements OnRe
 
                     getMarket();
 
-                    mHandler.sendEmptyMessageDelayed(Constants.Msg.MSG_POSITION_UPDATE_DATA, AppConfig.Minute);
+                    mHandler.sendEmptyMessageDelayed(Constants.Msg.MSG_POSITION_UPDATE_DATA, getTimeInterval());
+
+                    break;
+                case Constants.Msg.MSG_POSITION_UPDATE_ACCOUNT_DATA:
+                    mHandler.removeMessages(Constants.Msg.MSG_POSITION_UPDATE_ACCOUNT_DATA);
+
+                    initPosition(false);
+
+                    mHandler.sendEmptyMessageDelayed(Constants.Msg.MSG_POSITION_UPDATE_ACCOUNT_DATA, AppConfig.Minute);
 
                     break;
             }
@@ -123,6 +130,7 @@ public class CurrentHoldPositionActivity extends JMEBaseActivity implements OnRe
         super.onPause();
 
         mHandler.removeMessages(Constants.Msg.MSG_POSITION_UPDATE_DATA);
+        mHandler.removeMessages(Constants.Msg.MSG_POSITION_UPDATE_ACCOUNT_DATA);
     }
 
     @Override
@@ -140,6 +148,7 @@ public class CurrentHoldPositionActivity extends JMEBaseActivity implements OnRe
         mList.clear();
 
         mHandler.removeMessages(Constants.Msg.MSG_POSITION_UPDATE_DATA);
+        mHandler.removeMessages(Constants.Msg.MSG_POSITION_UPDATE_ACCOUNT_DATA);
 
         position(enable);
     }
@@ -170,6 +179,10 @@ public class CurrentHoldPositionActivity extends JMEBaseActivity implements OnRe
             mEmptyView = LayoutInflater.from(mContext).inflate(R.layout.layout_empty, null);
 
         return mEmptyView;
+    }
+
+    private long getTimeInterval() {
+        return NetWorkUtils.isWifiConnected(mContext) ? AppConfig.TimeInterval_WiFi : AppConfig.TimeInterval_NetWork;
     }
 
     private void getMarket() {
@@ -307,7 +320,8 @@ public class CurrentHoldPositionActivity extends JMEBaseActivity implements OnRe
                 if (bFlag) {
                     bFlag = false;
 
-                    mHandler.sendEmptyMessageDelayed(Constants.Msg.MSG_POSITION_UPDATE_DATA, AppConfig.Minute);
+                    mHandler.sendEmptyMessageDelayed(Constants.Msg.MSG_POSITION_UPDATE_DATA, getTimeInterval());
+                    mHandler.sendEmptyMessageDelayed(Constants.Msg.MSG_POSITION_UPDATE_ACCOUNT_DATA, AppConfig.Minute);
                 }
 
                 break;
