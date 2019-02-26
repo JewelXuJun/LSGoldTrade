@@ -4,7 +4,7 @@
     <dimen name="main_tab_margin">7dp</dimen>
     <dimen name="main_tab_line">1px</dimen>
 
-    <dimen name="height_main_page_banner">132dp</dimen>
+    <dimen name="height_main_page_banner">150dp</dimen>
     <dimen name="height_main_page_market">90dp</dimen>
     <dimen name="height_main_page_info_img">40dp</dimen>
     <dimen name="height_login_btn">48dp</dimen>

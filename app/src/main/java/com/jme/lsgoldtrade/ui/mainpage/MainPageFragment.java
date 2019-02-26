@@ -33,6 +33,7 @@ import com.jme.lsgoldtrade.config.Constants;
 import com.jme.lsgoldtrade.databinding.FragmentMainPageBinding;
 import com.jme.lsgoldtrade.domain.BannerVo;
 import com.jme.lsgoldtrade.domain.FiveSpeedVo;
+import com.jme.lsgoldtrade.service.ManagementService;
 import com.jme.lsgoldtrade.service.MarketService;
 import com.makeramen.roundedimageview.RoundedImageView;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
@@ -99,7 +100,6 @@ public class MainPageFragment extends JMEBaseFragment implements OnRefreshListen
                 (ScreenUtil.getScreenWidth(mContext) - DensityUtil.dpTopx(mContext, 20)) / 3);
 
         initInfoTabs();
-        initBanners();
 
         mBinding.recyclerView.setLayoutManager(new GridLayoutManager(mContext, 1,
                 LinearLayoutManager.HORIZONTAL, false));
@@ -111,6 +111,7 @@ public class MainPageFragment extends JMEBaseFragment implements OnRefreshListen
         gridPagerSnapHelper.attachToRecyclerView(mBinding.recyclerView);
 
         getMarket();
+        getBannerList();
     }
 
     @Override
@@ -155,6 +156,7 @@ public class MainPageFragment extends JMEBaseFragment implements OnRefreshListen
             bFlag = true;
 
             getMarket();
+            getBannerList();
         } else {
             mHandler.removeMessages(Constants.Msg.MSG_MAINPAGE_UPDATE_MARKET);
         }
@@ -180,6 +182,7 @@ public class MainPageFragment extends JMEBaseFragment implements OnRefreshListen
             bFlag = true;
 
             getMarket();
+            getBannerList();
         }
 
         mBinding.banner.start();
@@ -209,26 +212,6 @@ public class MainPageFragment extends JMEBaseFragment implements OnRefreshListen
         mBinding.tablayout.post(() -> setIndicator(mBinding.tablayout, 45, 45));
     }
 
-    private void initBanners(){
-        List<BannerVo> bannerVoList = new ArrayList<>();
-
-        BannerVo bannerVo1 = new BannerVo();
-        bannerVo1.setImg("0");
-        bannerVo1.setImgUrl(Constants.HttpConst.URL_OPEN_ACCOUNT);
-        bannerVo1.setTitle(mContext.getResources().getString(R.string.personal_open_account_online));
-
-        BannerVo bannerVo2 = new BannerVo();
-        bannerVo2.setImg("1");
-        bannerVo2.setImgUrl("");
-        bannerVo2.setTitle("");
-
-        bannerVoList.add(bannerVo1);
-        bannerVoList.add(bannerVo2);
-
-        mBinding.banner.setPages(bannerVoList, () -> new BannerViewHolder());
-        mBinding.banner.start();
-    }
-
     private long getTimeInterval() {
         return NetWorkUtils.isWifiConnected(mContext) ? AppConfig.TimeInterval_WiFi : AppConfig.TimeInterval_NetWork;
     }
@@ -238,6 +221,10 @@ public class MainPageFragment extends JMEBaseFragment implements OnRefreshListen
         params.put("list", "");
 
         sendRequest(MarketService.getInstance().getFiveSpeedQuotes, params, false);
+    }
+
+    private void getBannerList() {
+        sendRequest(ManagementService.getInstance().allList, new HashMap<>(), false);
     }
 
     @Override
@@ -266,12 +253,37 @@ public class MainPageFragment extends JMEBaseFragment implements OnRefreshListen
                 }
 
                 break;
+            case "AllList":
+                if (head.isSuccess()) {
+                    List<BannerVo> bannerVoList;
+
+                    try {
+                       bannerVoList = (List<BannerVo>) response;
+                    } catch (Exception e) {
+                        bannerVoList = null;
+
+                        e.printStackTrace();
+                    }
+
+                    if (null == bannerVoList || 0 == bannerVoList.size())
+                        return;
+
+                    mBinding.banner.setPages(bannerVoList, () -> new BannerViewHolder());
+                    mBinding.banner.start();
+                }
+
+                break;
         }
     }
 
     @Override
     public void onRefresh(@NonNull RefreshLayout refreshLayout) {
+        mHandler.removeMessages(Constants.Msg.MSG_MAINPAGE_UPDATE_MARKET);
 
+        bFlag = true;
+
+        getMarket();
+        getBannerList();
     }
 
     public class ClickHandlers {
@@ -341,20 +353,20 @@ public class MainPageFragment extends JMEBaseFragment implements OnRefreshListen
 
         @Override
         public void onBind(Context context, int position, BannerVo banner) {
-            if (0 == position)
-                mImgBanner.setBackground(ContextCompat.getDrawable(context, R.mipmap.banner1));
-            else if (1 == position)
-                mImgBanner.setBackground(ContextCompat.getDrawable(context, R.mipmap.banner2));
+            String imgUrl = banner.getResUrl();
+
+            if (!TextUtils.isEmpty(imgUrl))
+                Picasso.with(context).load(imgUrl).into(mImgBanner);
 
             mImgBanner.setOnClickListener(view -> {
-                String url = banner.getImgUrl();
+                String actionUrl = banner.getActionUrl();
 
-                if (TextUtils.isEmpty(url))
+                if (TextUtils.isEmpty(actionUrl))
                     return;
 
                 ARouter.getInstance().build(Constants.ARouterUriConst.JMEWEBVIEW)
-                        .withString("title", banner.getTitle())
-                        .withString("url", url)
+                        .withString("title", banner.getItemTxt())
+                        .withString("url", actionUrl)
                         .navigation();
             });
         }

@@ -8,6 +8,8 @@
         android:id="@+id/img_banner"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginLeft="@dimen/margin_small"
+        android:layout_marginRight="@dimen/margin_small"
         android:scaleType="fitXY"
         app:riv_corner_radius="@dimen/radius_middle" />
 

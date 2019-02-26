@@ -5,8 +5,10 @@ import com.jme.common.network.DTResponse;
 import com.jme.common.network.IService;
 import com.jme.lsgoldtrade.config.Constants;
 import com.jme.lsgoldtrade.config.User;
+import com.jme.lsgoldtrade.domain.BannerVo;
 
 import java.util.HashMap;
+import java.util.List;
 
 import okhttp3.Interceptor;
 import okhttp3.Request;
@@ -50,7 +52,7 @@ public class ManagementService extends IService<ManagementApi> {
         }
     };
 
-    public API allList = new API<String>("AllList") {
+    public API allList = new API<List<BannerVo>>("AllList") {
         @Override
         public Call<DTResponse> request(HashMap<String, String> params) {
 
