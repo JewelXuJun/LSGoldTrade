@@ -1,42 +1,34 @@
 package com.jme.lsgoldtrade.ui.mainpage;
 
 import android.support.annotation.Nullable;
-import android.text.TextUtils;
+import android.widget.ImageView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
-import com.jme.common.util.DateUtil;
 import com.jme.lsgoldtrade.R;
-import com.jme.lsgoldtrade.domain.NoticePageVo;
+import com.jme.lsgoldtrade.domain.InfoVo;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
-public class InfoAdapter extends BaseQuickAdapter<NoticePageVo.NoticeBean, BaseViewHolder> {
+public class InfoAdapter extends BaseQuickAdapter<InfoVo.InfoBean, BaseViewHolder> {
 
-    public InfoAdapter(int layoutResId, @Nullable List<NoticePageVo.NoticeBean> data) {
+    public InfoAdapter(int layoutResId, @Nullable List<InfoVo.InfoBean> data) {
         super(layoutResId, data);
     }
 
     @Override
-    protected void convert(BaseViewHolder helper, NoticePageVo.NoticeBean item) {
+    protected void convert(BaseViewHolder helper, InfoVo.InfoBean item) {
         if (null == item)
             return;
 
-        int position = helper.getAdapterPosition();
-        String sendTime = item.getSendTime();
-
-        if (0 == position)
-            helper.setBackgroundRes(R.id.img, R.mipmap.ic_info1);
-        else if (1 == position)
-            helper.setBackgroundRes(R.id.img, R.mipmap.ic_info2);
-        else if (2 == position)
-            helper.setBackgroundRes(R.id.img, R.mipmap.ic_info3);
-        else if (3 == position)
-            helper.setBackgroundRes(R.id.img, R.mipmap.ic_info4);
-        else if (4 == position)
-            helper.setBackgroundRes(R.id.img, R.mipmap.ic_info5);
-
         helper.setText(R.id.tv_title, item.getTitle())
-                .setText(R.id.tv_time, sendTime/*TextUtils.isEmpty(sendTime) ? "" : DateUtil.dateToString(DateUtil.dateToLong(sendTime))*/);
+                .setText(R.id.tv_time, item.getCreateTime());
+
+        Picasso.with(mContext)
+                .load(item.getTitleImg())
+                .placeholder(R.mipmap.ic_img_default)
+                .error(R.mipmap.ic_img_default)
+                .into((ImageView) helper.getView(R.id.img));
     }
 }

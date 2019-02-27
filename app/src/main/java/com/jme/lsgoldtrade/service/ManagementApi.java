@@ -15,7 +15,10 @@ public interface ManagementApi {
     @POST("/tjsmanage//infoapi/v1/android/cmsSuggest/add")
     Call<DTResponse> feedback(@Body Map<String, String> map);
 
-    @GET("/tjsmanage/infoapi/v1/ios/cmsAdsenseItems/allList")
+    @GET("/tjsmanage/infoapi/v1/android/cmsAdsenseItems/allList")
     Call<DTResponse> allList(@QueryMap Map<String, String> map);
+
+    @GET("/tjsmanage/infoapi/v1/android/study")
+    Call<DTResponse> study(@QueryMap Map<String, String> map);
 
 }

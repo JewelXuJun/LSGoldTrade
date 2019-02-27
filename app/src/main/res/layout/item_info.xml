@@ -9,21 +9,20 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:paddingLeft="@dimen/common_page_padding"
-        android:paddingRight="@dimen/common_page_margin"
-        android:paddingTop="@dimen/common_area_margin"
-        android:paddingBottom="@dimen/common_area_margin">
+        android:padding="@dimen/common_page_padding">
 
         <ImageView
             android:id="@+id/img"
             android:layout_width="@dimen/width_main_page_info_img"
-            android:layout_height="@dimen/height_main_page_info_img" />
+            android:scaleType="fitXY"
+            android:layout_height="@dimen/height_item_normal" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/common_area_margin_middle"
+            android:layout_marginLeft="@dimen/common_page_margin"
             android:layout_marginRight="@dimen/margin_main_page_info"
+            android:layout_gravity="center"
             android:orientation="vertical">
 
             <TextView
@@ -39,7 +38,7 @@
                 android:id="@+id/tv_time"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/common_area_margin_tiny"
+                android:layout_marginTop="@dimen/common_area_margin_middle"
                 android:maxLines="1"
                 android:textColor="@color/gray"
                 android:textSize="@dimen/size_small" />

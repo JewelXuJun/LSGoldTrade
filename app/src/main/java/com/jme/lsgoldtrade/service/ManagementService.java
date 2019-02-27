@@ -6,6 +6,7 @@ import com.jme.common.network.IService;
 import com.jme.lsgoldtrade.config.Constants;
 import com.jme.lsgoldtrade.config.User;
 import com.jme.lsgoldtrade.domain.BannerVo;
+import com.jme.lsgoldtrade.domain.InfoVo;
 
 import java.util.HashMap;
 import java.util.List;
@@ -57,6 +58,14 @@ public class ManagementService extends IService<ManagementApi> {
         public Call<DTResponse> request(HashMap<String, String> params) {
 
             return mApi.allList(params);
+        }
+    };
+
+    public API study = new API<InfoVo>("Study") {
+        @Override
+        public Call<DTResponse> request(HashMap<String, String> params) {
+
+            return mApi.study(params);
         }
     };
 }

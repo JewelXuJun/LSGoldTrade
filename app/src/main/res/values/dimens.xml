@@ -24,7 +24,7 @@
     <dimen name="height_chart">400dp</dimen>
     <dimen name="height_market_detail_landscape">60dp</dimen>
 
-    <dimen name="width_main_page_info_img">80dp</dimen>
+    <dimen name="width_main_page_info_img">100dp</dimen>
     <dimen name="width_market_limit">100dp</dimen>
     <dimen name="width_market_item">46dp</dimen>
     <dimen name="width_trade_hold_position_account_item">102dp</dimen>

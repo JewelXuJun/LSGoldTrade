@@ -313,7 +313,9 @@ public class MainPageFragment extends JMEBaseFragment implements OnRefreshListen
         }
 
         public void onClickBeginners() {
-
+            ARouter.getInstance()
+                    .build(Constants.ARouterUriConst.BEGINNERSACTIVITY)
+                    .navigation();
         }
 
     }

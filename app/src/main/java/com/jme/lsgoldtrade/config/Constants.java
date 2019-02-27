@@ -26,20 +26,24 @@ public class Constants {
         public static String URL_BASE_TRADE;
         public static String URL_BASE_MANAGEMENT;
         public static String URL_OPEN_ACCOUNT = "https://portal.taijs.com";
+        public static String URL_INFO;
 
         static {
             if (Envi == Test_WAN) {
                 URL_BASE_MARKET = "https://222.190.245.2:18012";
                 URL_BASE_TRADE = "https://222.190.245.2:18012";
                 URL_BASE_MANAGEMENT = "http://tjs.developer.jsdttec.com";
+                URL_INFO = "http://tjs.developer.jsdttec.com/tjsmanage/infoapi/v1/ios/cmsComtentTxt/get?contentId=";
             } else if (Envi == Test_LAN) {
                 URL_BASE_MARKET = "http://192.168.10.171:8080";
                 URL_BASE_TRADE = "http://192.168.10.171:8081";
                 URL_BASE_MANAGEMENT = "http://tjs.developer.jsdttec.com";
+                URL_INFO = "http://tjs.developer.jsdttec.com/tjsmanage/infoapi/v1/ios/cmsComtentTxt/get?contentId=";
             } else if (Envi == Produce) {
                 URL_BASE_MARKET = "";
                 URL_BASE_TRADE = "";
                 URL_BASE_MANAGEMENT = "";
+                URL_INFO = "";
             }
         }
 
@@ -108,6 +112,7 @@ public class Constants {
         public static final String CURRENTDEAL = "/QueryFragment/CurrentDealActivity";
         public static final String HISTORYDEAL = "/QueryFragment/HistoryDealActivity";
         public static final String NEWSCENTERACTIVITY = "/JME/NewsCenterActivity";
+        public static final String BEGINNERSACTIVITY = "/MainPageFragment/BeginnersActivity";
     }
 
     public static final long SPLASH_DELAY_MILLIS = 2000;
