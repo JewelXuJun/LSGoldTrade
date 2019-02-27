@@ -224,7 +224,7 @@ public class MainPageFragment extends JMEBaseFragment implements OnRefreshListen
     }
 
     private void getBannerList() {
-        sendRequest(ManagementService.getInstance().allList, new HashMap<>(), false);
+        sendRequest(ManagementService.getInstance().bannerAllList, new HashMap<>(), false);
     }
 
     @Override
@@ -253,7 +253,7 @@ public class MainPageFragment extends JMEBaseFragment implements OnRefreshListen
                 }
 
                 break;
-            case "AllList":
+            case "BannerAllList":
                 if (head.isSuccess()) {
                     List<BannerVo> bannerVoList;
 

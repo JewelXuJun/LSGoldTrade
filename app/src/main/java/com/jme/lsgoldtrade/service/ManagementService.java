@@ -53,11 +53,11 @@ public class ManagementService extends IService<ManagementApi> {
         }
     };
 
-    public API allList = new API<List<BannerVo>>("AllList") {
+    public API bannerAllList = new API<List<BannerVo>>("BannerAllList") {
         @Override
         public Call<DTResponse> request(HashMap<String, String> params) {
 
-            return mApi.allList(params);
+            return mApi.bannerAllList(params);
         }
     };
 

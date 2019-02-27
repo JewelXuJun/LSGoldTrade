@@ -16,7 +16,7 @@ public interface ManagementApi {
     Call<DTResponse> feedback(@Body Map<String, String> map);
 
     @GET("/tjsmanage/infoapi/v1/android/cmsAdsenseItems/allList")
-    Call<DTResponse> allList(@QueryMap Map<String, String> map);
+    Call<DTResponse> bannerAllList(@QueryMap Map<String, String> map);
 
     @GET("/tjsmanage/infoapi/v1/android/study")
     Call<DTResponse> study(@QueryMap Map<String, String> map);
