@@ -56,6 +56,7 @@ public class Constants {
 
         }
 
+        public static final String RXBUS_MAINPAGE_REFRESH = "MainPageRefresh";
         public static final String RXBUS_TRADEFRAGMENT = "TradeFragment";
         public static final String RXBUS_DECLARATIONFORM_UPDATE = "DeclarationFormUpdate";
         public static final String RXBUS_DECLARATIONFORM_HOLDPOSITION_SELECT = "DeclarationFormHoldPositionSelect";

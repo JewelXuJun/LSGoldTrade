@@ -6,11 +6,6 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.design.widget.TabLayout;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.content.ContextCompat;
-import android.support.v4.view.PagerAdapter;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.text.TextUtils;
@@ -32,6 +27,7 @@ import com.jme.lsgoldtrade.config.AppConfig;
 import com.jme.lsgoldtrade.config.Constants;
 import com.jme.lsgoldtrade.databinding.FragmentMainPageBinding;
 import com.jme.lsgoldtrade.domain.BannerVo;
+import com.jme.lsgoldtrade.domain.ChannelVo;
 import com.jme.lsgoldtrade.domain.FiveSpeedVo;
 import com.jme.lsgoldtrade.service.ManagementService;
 import com.jme.lsgoldtrade.service.MarketService;
@@ -49,13 +45,12 @@ public class MainPageFragment extends JMEBaseFragment implements OnRefreshListen
 
     private FragmentMainPageBinding mBinding;
 
-    private Fragment[] mFragmentArrays;
-    private String[] mTabTitles;
-
-    private TabViewPagerAdapter mAdapter;
+    private InfoPagerAdapter mInfoPagerAdapter;
     private RateMarketAdapter mRateMarketAdapter;
 
     private List<FiveSpeedVo> mList;
+    private ArrayList<String> mTabs = new ArrayList<>();
+    private ArrayList<Long> mChannelIds = new ArrayList<>();
 
     private boolean bHidden = false;
     private boolean bFlag = true;
@@ -95,11 +90,8 @@ public class MainPageFragment extends JMEBaseFragment implements OnRefreshListen
     protected void initData(Bundle savedInstanceState) {
         super.initData(savedInstanceState);
 
-        mAdapter = new TabViewPagerAdapter(getChildFragmentManager());
         mRateMarketAdapter = new RateMarketAdapter(mContext, null,
                 (ScreenUtil.getScreenWidth(mContext) - DensityUtil.dpTopx(mContext, 20)) / 3);
-
-        initInfoTabs();
 
         mBinding.recyclerView.setLayoutManager(new GridLayoutManager(mContext, 1,
                 LinearLayoutManager.HORIZONTAL, false));
@@ -110,13 +102,14 @@ public class MainPageFragment extends JMEBaseFragment implements OnRefreshListen
         gridPagerSnapHelper.setRow(1).setColumn(3);
         gridPagerSnapHelper.attachToRecyclerView(mBinding.recyclerView);
 
-        getMarket();
-        getBannerList();
+        getChannelAllList();
     }
 
     @Override
     protected void initListener() {
         super.initListener();
+
+        mBinding.swipeRefreshLayout.setOnRefreshListener(this);
 
         mRateMarketAdapter.setItemClickListener((position) -> {
             if (null == mList || position >= mList.size())
@@ -161,8 +154,6 @@ public class MainPageFragment extends JMEBaseFragment implements OnRefreshListen
             mHandler.removeMessages(Constants.Msg.MSG_MAINPAGE_UPDATE_MARKET);
         }
 
-        if (null != mBinding && null != mBinding.tabViewpager && null != mAdapter)
-            mAdapter.getItem(mBinding.tabViewpager.getCurrentItem()).onHiddenChanged(hidden);
     }
 
     @Override
@@ -188,30 +179,6 @@ public class MainPageFragment extends JMEBaseFragment implements OnRefreshListen
         mBinding.banner.start();
     }
 
-    private void initInfoTabs() {
-        mTabTitles = new String[3];
-        mTabTitles[0] = mContext.getResources().getString(R.string.main_page_notice);
-        mTabTitles[1] = mContext.getResources().getString(R.string.main_page_news);
-        mTabTitles[2] = mContext.getResources().getString(R.string.main_page_activity);
-
-        mFragmentArrays = new Fragment[3];
-        mFragmentArrays[0] = InfoFragment.newInstance("notice");
-        mFragmentArrays[1] = InfoFragment.newInstance("news");
-        mFragmentArrays[2] = InfoFragment.newInstance("activity");
-
-        initTabLayout();
-    }
-
-    private void initTabLayout() {
-        mBinding.tabViewpager.removeAllViewsInLayout();
-        mBinding.tabViewpager.setAdapter(mAdapter);
-        mBinding.tabViewpager.setOffscreenPageLimit(3);
-        mBinding.tablayout.setTabMode(TabLayout.MODE_FIXED);
-        mBinding.tablayout.setSelectedTabIndicatorHeight(4);
-        mBinding.tablayout.setupWithViewPager(mBinding.tabViewpager);
-        mBinding.tablayout.post(() -> setIndicator(mBinding.tablayout, 45, 45));
-    }
-
     private long getTimeInterval() {
         return NetWorkUtils.isWifiConnected(mContext) ? AppConfig.TimeInterval_WiFi : AppConfig.TimeInterval_NetWork;
     }
@@ -225,6 +192,10 @@ public class MainPageFragment extends JMEBaseFragment implements OnRefreshListen
 
     private void getBannerList() {
         sendRequest(ManagementService.getInstance().bannerAllList, new HashMap<>(), false);
+    }
+
+    private void getChannelAllList() {
+        sendRequest(ManagementService.getInstance().channelAllList, new HashMap<>(), true);
     }
 
     @Override
@@ -255,10 +226,12 @@ public class MainPageFragment extends JMEBaseFragment implements OnRefreshListen
                 break;
             case "BannerAllList":
                 if (head.isSuccess()) {
+                    mBinding.swipeRefreshLayout.finishRefresh(true);
+
                     List<BannerVo> bannerVoList;
 
                     try {
-                       bannerVoList = (List<BannerVo>) response;
+                        bannerVoList = (List<BannerVo>) response;
                     } catch (Exception e) {
                         bannerVoList = null;
 
@@ -270,6 +243,47 @@ public class MainPageFragment extends JMEBaseFragment implements OnRefreshListen
 
                     mBinding.banner.setPages(bannerVoList, () -> new BannerViewHolder());
                     mBinding.banner.start();
+                } else {
+                    mBinding.swipeRefreshLayout.finishRefresh(false);
+                }
+
+                break;
+            case "ChannelAllList":
+                if (head.isSuccess()) {
+                    mTabs.clear();
+                    mChannelIds.clear();
+
+                    List<ChannelVo> channelVoList;
+
+                    try {
+                        channelVoList = (List<ChannelVo>) response;
+                    } catch (Exception e) {
+                        channelVoList = null;
+
+                        e.printStackTrace();
+                    }
+
+                    if (null == channelVoList || 0 == channelVoList.size())
+                        return;
+
+                    if (channelVoList.size() <= 4) {
+                        mBinding.tablayout.setTabMode(TabLayout.MODE_FIXED);
+                    } else {
+                        mBinding.tablayout.setTabGravity(TabLayout.GRAVITY_FILL);
+                        mBinding.tablayout.setTabMode(TabLayout.MODE_SCROLLABLE);
+                    }
+
+                    for (ChannelVo channelVo : channelVoList) {
+                        if (null != channelVo) {
+                            mTabs.add(channelVo.getName());
+                            mChannelIds.add(channelVo.getId());
+                        }
+                    }
+
+                    mInfoPagerAdapter = new InfoPagerAdapter(getChildFragmentManager(), mTabs, mChannelIds);
+                    mBinding.tabViewpager.removeAllViewsInLayout();
+                    mBinding.tabViewpager.setAdapter(mInfoPagerAdapter);
+                    mBinding.tablayout.setupWithViewPager(mBinding.tabViewpager);
                 }
 
                 break;
@@ -284,6 +298,8 @@ public class MainPageFragment extends JMEBaseFragment implements OnRefreshListen
 
         getMarket();
         getBannerList();
+
+        RxBus.getInstance().post(Constants.RxBusConst.RXBUS_MAINPAGE_REFRESH, null);
     }
 
     public class ClickHandlers {
@@ -318,27 +334,6 @@ public class MainPageFragment extends JMEBaseFragment implements OnRefreshListen
                     .navigation();
         }
 
-    }
-
-    final class TabViewPagerAdapter extends FragmentPagerAdapter {
-        public TabViewPagerAdapter(FragmentManager fm) {
-            super(fm);
-        }
-
-        @Override
-        public Fragment getItem(int position) {
-            return mFragmentArrays[position];
-        }
-
-        @Override
-        public int getCount() {
-            return mFragmentArrays.length;
-        }
-
-        @Override
-        public CharSequence getPageTitle(int position) {
-            return mTabTitles[position];
-        }
     }
 
     public static class BannerViewHolder implements MZViewHolder<BannerVo> {

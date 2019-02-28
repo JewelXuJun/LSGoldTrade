@@ -5,28 +5,40 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.text.TextUtils;
 
+import com.alibaba.android.arouter.launcher.ARouter;
+import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.jme.common.network.DTRequest;
 import com.jme.common.network.Head;
+import com.jme.common.util.RxBus;
 import com.jme.lsgoldtrade.R;
 import com.jme.lsgoldtrade.base.JMEBaseFragment;
+import com.jme.lsgoldtrade.config.AppConfig;
+import com.jme.lsgoldtrade.config.Constants;
 import com.jme.lsgoldtrade.databinding.FragmentInfoBinding;
+import com.jme.lsgoldtrade.domain.InfoVo;
+import com.jme.lsgoldtrade.service.ManagementService;
 
-public class InfoFragment extends JMEBaseFragment /*implements BaseQuickAdapter.RequestLoadMoreListener*/ {
+import java.util.HashMap;
+import java.util.List;
+
+import rx.Subscription;
+
+public class InfoFragment extends JMEBaseFragment implements BaseQuickAdapter.RequestLoadMoreListener {
 
     private FragmentInfoBinding mBinding;
 
     private InfoAdapter mAdapter;
+    private Subscription mRxbus;
 
-    private boolean bVisibleToUser = false;
-    private String mType;
-   /* private int mCurrentPage = 1;
-    private int mTotalPage = 1;*/
+    private long mChannelId = -10000;
+    private int mCurrentPage = 1;
+    private int mTotalPage = 1;
 
-    public static Fragment newInstance(String type) {
+    public static Fragment newInstance(long channelId) {
         InfoFragment fragment = new InfoFragment();
 
         Bundle bundle = new Bundle();
-        bundle.putString("InfoType", type);
+        bundle.putLong("ChannelId", channelId);
         fragment.setArguments(bundle);
 
         return fragment;
@@ -48,21 +60,35 @@ public class InfoFragment extends JMEBaseFragment /*implements BaseQuickAdapter.
     protected void initData(Bundle savedInstanceState) {
         super.initData(savedInstanceState);
 
-        mType = getArguments().getString("InfoType");
+        mChannelId = getArguments().getLong("ChannelId");
         mAdapter = new InfoAdapter(R.layout.item_info, null);
 
-        mBinding.recyclerView.setHasFixedSize(false);
+        mBinding.recyclerView.setHasFixedSize(true);
         mBinding.recyclerView.setLayoutManager(new LinearLayoutManager(mContext));
         mBinding.recyclerView.setAdapter(mAdapter);
 
-        initInfoData();
+        getData();
     }
 
     @Override
     protected void initListener() {
         super.initListener();
 
-//        mAdapter.setOnLoadMoreListener(this, mBinding.recyclerView);
+        initRxBus();
+
+        mAdapter.setOnLoadMoreListener(this, mBinding.recyclerView);
+
+        mAdapter.setOnItemClickListener((adapter, view, position) -> {
+            InfoVo.InfoBean infoBean = (InfoVo.InfoBean) adapter.getItem(position);
+
+            if (null == infoBean)
+                return;
+
+            ARouter.getInstance().build(Constants.ARouterUriConst.JMEWEBVIEW)
+                    .withString("title", infoBean.getTitle())
+                    .withString("url", Constants.HttpConst.URL_INFO + infoBean.getId())
+                    .navigation();
+        });
     }
 
     @Override
@@ -72,159 +98,35 @@ public class InfoFragment extends JMEBaseFragment /*implements BaseQuickAdapter.
         mBinding = (FragmentInfoBinding) mBindingUtil;
     }
 
-    @Override
-    public void setUserVisibleHint(boolean isVisibleToUser) {
-        super.setUserVisibleHint(isVisibleToUser);
+    private void initRxBus() {
+        mRxbus = RxBus.getInstance().toObserverable(RxBus.Message.class).subscribe(message -> {
+            String callType = message.getObject().toString();
 
-        bVisibleToUser = isVisibleToUser;
+            if (TextUtils.isEmpty(callType))
+                return;
 
-        if (null != mBinding && bVisibleToUser && !TextUtils.isEmpty(mType))
-            getData(false);
+            switch (callType) {
+                case Constants.RxBusConst.RXBUS_MAINPAGE_REFRESH:
+                    getData();
+
+                    break;
+            }
+        });
     }
 
-    @Override
-    public void onHiddenChanged(boolean hidden) {
-        bVisibleToUser = !hidden;
+    private void getData() {
+        mCurrentPage = 1;
 
-        super.onHiddenChanged(hidden);
+        getChannelList();
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-
-        if (bVisibleToUser)
-            getData(false);
-    }
-
-    private void initInfoData() {
-        if (mType.equals("notice"))
-            initNoticeData();
-        else if (mType.equals("news"))
-            initNewsData();
-        else if (mType.equals("activity"))
-            initActivityData();
-    }
-
-    private void initNoticeData() {
-       /* List<InfoVo.NoticeBean> list = new ArrayList<>();
-
-        InfoVo.NoticeBean noticeBean1 = new InfoVo.NoticeBean();
-        noticeBean1.setTitle("关于延长银行间黄金交易询价是从交易时间的公告");
-        noticeBean1.setSendTime("2018-01-27 00:00:00");
-
-        InfoVo.NoticeBean noticeBean2 = new InfoVo.NoticeBean();
-        noticeBean2.setTitle("关于修订《上海黄金交易所异常交易健康制度的暂行规定》的公告");
-        noticeBean2.setSendTime("2018-01-27 12:30:00");
-
-        InfoVo.NoticeBean noticeBean3 = new InfoVo.NoticeBean();
-        noticeBean3.setTitle("关于继续免收2019年国际会员及国际客户仓储费、出入库费等费用的公告");
-        noticeBean3.setSendTime("2018-01-28 00:00:00");
-
-        InfoVo.NoticeBean noticeBean4 = new InfoVo.NoticeBean();
-        noticeBean4.setTitle("关于继续免收2019年库存互换过户费及保管库场外失误清算过户费的公告");
-        noticeBean4.setSendTime("2018-01-28 18:00:00");
-
-        InfoVo.NoticeBean noticeBean5 = new InfoVo.NoticeBean();
-        noticeBean5.setTitle("关于调整上海金定价市场参数的通知");
-        noticeBean5.setSendTime("2018-01-29 08:00:00");
-
-        list.add(noticeBean1);
-        list.add(noticeBean2);
-        list.add(noticeBean3);
-        list.add(noticeBean4);
-        list.add(noticeBean5);
-
-        mAdapter.setNewData(list);*/
-    }
-
-    private void initNewsData() {
-       /* List<InfoVo.NoticeBean> list = new ArrayList<>();
-
-        InfoVo.NoticeBean noticeBean1 = new InfoVo.NoticeBean();
-        noticeBean1.setTitle("实物黄金消费旺季来临 黄金一季度有望走强");
-        noticeBean1.setSendTime("2018-01-27 07:00:00");
-
-        InfoVo.NoticeBean noticeBean2 = new InfoVo.NoticeBean();
-        noticeBean2.setTitle("黄金美元避险属性争宠 近期金市仍受多重要素制掣");
-        noticeBean2.setSendTime("2018-01-27 09:30:00");
-
-        InfoVo.NoticeBean noticeBean3 = new InfoVo.NoticeBean();
-        noticeBean3.setTitle("挑战特朗普！ 又以为竞选者假如2020年的美国大选竞争惨烈");
-        noticeBean3.setSendTime("2018-01-28 09:00:00");
-
-        InfoVo.NoticeBean noticeBean4 = new InfoVo.NoticeBean();
-        noticeBean4.setTitle("空头步步紧逼 黄金跌破1280创近一个月新低");
-        noticeBean4.setSendTime("2018-01-28 15:00:00");
-
-        InfoVo.NoticeBean noticeBean5 = new InfoVo.NoticeBean();
-        noticeBean5.setTitle("美国政府停摆24日创最长记录 恐进一步延续到2月底");
-        noticeBean5.setSendTime("2018-01-29 10:00:00");
-
-        list.add(noticeBean1);
-        list.add(noticeBean2);
-        list.add(noticeBean3);
-        list.add(noticeBean4);
-        list.add(noticeBean5);
-
-        mAdapter.setNewData(list);*/
-    }
-
-    private void initActivityData() {
-      /*  List<InfoVo.NoticeBean> list = new ArrayList<>();
-
-        InfoVo.NoticeBean noticeBean1 = new InfoVo.NoticeBean();
-        noticeBean1.setTitle("岁月入金-上海黄金交易所成立16周年");
-        noticeBean1.setSendTime("2018-01-27 17:00:00");
-
-        InfoVo.NoticeBean noticeBean2 = new InfoVo.NoticeBean();
-        noticeBean2.setTitle("2017“中金建行杯”全国黄金投资分析师职业技能竞赛正式报名开赛");
-        noticeBean2.setSendTime("2018-01-27 19:30:00");
-
-        InfoVo.NoticeBean noticeBean3 = new InfoVo.NoticeBean();
-        noticeBean3.setTitle("直播：浦发银行指标实战网络讲座");
-        noticeBean3.setSendTime("2018-01-28 13:00:00");
-
-        InfoVo.NoticeBean noticeBean4 = new InfoVo.NoticeBean();
-        noticeBean4.setTitle("安银行:玩“赚”贵金属，大奖等你来");
-        noticeBean4.setSendTime("2018-01-28 20:00:00");
-
-        InfoVo.NoticeBean noticeBean5 = new InfoVo.NoticeBean();
-        noticeBean5.setTitle("中国银行2016年金交所代理业务手机交易大赛获奖名单");
-        noticeBean5.setSendTime("2018-01-29 14:00:00");
-
-        list.add(noticeBean1);
-        list.add(noticeBean2);
-        list.add(noticeBean3);
-        list.add(noticeBean4);
-        list.add(noticeBean5);
-
-        mAdapter.setNewData(list);*/
-    }
-
-   /* private int getTotalPage(int totalPage) {
-        int pageSize = Integer.parseInt(AppConfig.PageSize_10);
-
-        if (totalPage % pageSize == 0)
-            totalPage = totalPage / pageSize;
-        else
-            totalPage = totalPage / pageSize + 1;
-
-        return totalPage;
-    }*/
-
-    private void getData(boolean enable) {
-        /*if (mType.equals("notice"))
-            noticepage(enable);*/
-        initInfoData();
-    }
-
-    private void noticepage(boolean enable) {
-      /*  HashMap<String, String> params = new HashMap<>();
-        params.put("pageNo", String.valueOf(mCurrentPage));
+    private void getChannelList() {
+        HashMap<String, String> params = new HashMap<>();
         params.put("pageSize", AppConfig.PageSize_10);
+        params.put("current", String.valueOf(mCurrentPage));
+        params.put("channelId", String.valueOf(mChannelId));
 
-        sendRequest(UserService.getInstance().noticepage, params, enable, false, false);*/
+        sendRequest(ManagementService.getInstance().channelList, params, false);
     }
 
     @Override
@@ -232,46 +134,38 @@ public class InfoFragment extends JMEBaseFragment /*implements BaseQuickAdapter.
         super.DataReturn(request, head, response);
 
         switch (request.getApi().getName()) {
-           /* case "NoticePage":
+            case "ChannelList":
                 if (head.isSuccess()) {
-                    InfoVo noticePageVo;
+                    InfoVo infoVo;
 
                     try {
-                        noticePageVo = (InfoVo) response;
+                        infoVo = (InfoVo) response;
                     } catch (Exception e) {
-                        noticePageVo = null;
+                        infoVo = null;
 
                         e.printStackTrace();
                     }
 
-                    if (null == noticePageVo)
-                        return;
+                    if (null != infoVo) {
+                        mTotalPage = infoVo.getPages();
 
-                    mTotalPage = getTotalPage(noticePageVo.getTotal());
+                        List<InfoVo.InfoBean> infoBeanList = infoVo.getRecords();
 
-                    if (0 == mTotalPage)
-                        return;
-
-                    List<InfoVo.NoticeBean> list = noticePageVo.getList();
-
-                    if (null == list || 0 == list.size())
-                        return;
-
-                    if (mCurrentPage == 1) {
-                        mAdapter.setNewData(list);
-                    } else {
-                        mAdapter.addData(list);
-                        mAdapter.loadMoreComplete();
+                        if (mCurrentPage == 1) {
+                            mAdapter.setNewData(infoBeanList);
+                        } else {
+                            mAdapter.addData(infoBeanList);
+                            mAdapter.loadMoreComplete();
+                        }
                     }
-                } else {
-                    mAdapter.loadMoreFail();
+
                 }
 
-                break;*/
+                break;
         }
     }
 
-   /* @Override
+    @Override
     public void onLoadMoreRequested() {
         mBinding.recyclerView.postDelayed(() -> {
             if (mCurrentPage >= mTotalPage) {
@@ -279,8 +173,17 @@ public class InfoFragment extends JMEBaseFragment /*implements BaseQuickAdapter.
             } else {
                 mCurrentPage++;
 
-                getData(true);
+                getChannelList();
             }
         }, 0);
-    }*/
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+
+        if (!mRxbus.isUnsubscribed())
+            mRxbus.unsubscribe();
+    }
+
 }

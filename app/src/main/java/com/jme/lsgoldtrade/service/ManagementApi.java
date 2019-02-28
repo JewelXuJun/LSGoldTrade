@@ -21,4 +21,10 @@ public interface ManagementApi {
     @GET("/tjsmanage/infoapi/v1/android/study")
     Call<DTResponse> study(@QueryMap Map<String, String> map);
 
+    @GET("/tjsmanage/infoapi/v1/android/cmsChannel/allList")
+    Call<DTResponse> channelAllList(@QueryMap Map<String, String> map);
+
+    @GET("/tjsmanage/infoapi/v1/android/cmsComtent/list")
+    Call<DTResponse> channelList(@QueryMap Map<String, String> map);
+
 }

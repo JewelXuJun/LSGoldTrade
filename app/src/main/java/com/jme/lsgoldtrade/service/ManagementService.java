@@ -6,6 +6,7 @@ import com.jme.common.network.IService;
 import com.jme.lsgoldtrade.config.Constants;
 import com.jme.lsgoldtrade.config.User;
 import com.jme.lsgoldtrade.domain.BannerVo;
+import com.jme.lsgoldtrade.domain.ChannelVo;
 import com.jme.lsgoldtrade.domain.InfoVo;
 
 import java.util.HashMap;
@@ -66,6 +67,22 @@ public class ManagementService extends IService<ManagementApi> {
         public Call<DTResponse> request(HashMap<String, String> params) {
 
             return mApi.study(params);
+        }
+    };
+
+    public API channelAllList = new API<List<ChannelVo>>("ChannelAllList") {
+        @Override
+        public Call<DTResponse> request(HashMap<String, String> params) {
+
+            return mApi.channelAllList(params);
+        }
+    };
+
+    public API channelList = new API<InfoVo>("ChannelList") {
+        @Override
+        public Call<DTResponse> request(HashMap<String, String> params) {
+
+            return mApi.channelList(params);
         }
     };
 }

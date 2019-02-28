@@ -47,6 +47,6 @@
 
     </LinearLayout>
 
-    <include layout="@layout/item_line_vertical" />
+    <include layout="@layout/item_line_vertical_margin" />
 
 </LinearLayout>
