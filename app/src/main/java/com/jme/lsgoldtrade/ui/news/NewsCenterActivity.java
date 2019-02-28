@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
+import com.alibaba.android.arouter.launcher.ARouter;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.jme.common.network.DTRequest;
 import com.jme.common.network.Head;
@@ -64,6 +65,17 @@ public class NewsCenterActivity extends JMEBaseActivity implements OnRefreshList
 
         mAdapter.setOnLoadMoreListener(this, mBinding.recyclerView);
         mBinding.swipeRefreshLayout.setOnRefreshListener(this);
+
+        mAdapter.setOnItemClickListener((adapter, view, position) -> {
+            NoticeVo.NoticeBean noticeBean = (NoticeVo.NoticeBean) adapter.getItem(position);
+
+            if (null == noticeBean)
+                return;
+
+            ARouter.getInstance().build(Constants.ARouterUriConst.NEWSDETAILACTIVITY)
+                    .withLong("ID", noticeBean.getId())
+                    .navigation();
+        });
     }
 
     @Override

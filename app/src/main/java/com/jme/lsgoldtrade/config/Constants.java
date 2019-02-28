@@ -113,6 +113,7 @@ public class Constants {
         public static final String CURRENTDEAL = "/QueryFragment/CurrentDealActivity";
         public static final String HISTORYDEAL = "/QueryFragment/HistoryDealActivity";
         public static final String NEWSCENTERACTIVITY = "/JME/NewsCenterActivity";
+        public static final String NEWSDETAILACTIVITY = "/NewsCenterActivity/NewsDetailActivity";
         public static final String BEGINNERSACTIVITY = "/MainPageFragment/BeginnersActivity";
     }
 

@@ -102,6 +102,14 @@ public class UserService extends IService<UserApi> {
         }
     };
 
+    public API noticedetail = new API<NoticeVo.NoticeBean>("NoticeDetail") {
+        @Override
+        public Call<DTResponse> request(HashMap<String, String> params) {
+
+            return mApi.noticedetail(params);
+        }
+    };
+
     public API syntime = new API<SynTimeVo>("SynTime") {
         @Override
         public Call<DTResponse> request(HashMap<String, String> params) {

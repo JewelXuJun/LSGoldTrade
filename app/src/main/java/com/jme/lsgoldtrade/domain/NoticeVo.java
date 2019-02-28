@@ -45,7 +45,7 @@ public class NoticeVo implements Serializable {
          * "cFlag": "C"
          */
 
-        private String id;
+        private long id;
 
         private String title;
 
@@ -75,11 +75,11 @@ public class NoticeVo implements Serializable {
 
         private String cFlag;
 
-        public String getId() {
+        public long getId() {
             return id;
         }
 
-        public void setId(String id) {
+        public void setId(long id) {
             this.id = id;
         }
 

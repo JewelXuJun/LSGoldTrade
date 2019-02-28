@@ -202,6 +202,7 @@
 
     <!-- News -->
     <string name="news_title">消息中心</string>
+    <string name="news_detail_title">消息详情</string>
 
     <!-- Login -->
     <string name="login_title">登录</string>

@@ -83,6 +83,9 @@
             android:name=".ui.news.NewsCenterActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:name=".ui.news.NewsDetailActivity"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".ui.news.BeginnersActivity"
             android:screenOrientation="portrait" />
         <activity

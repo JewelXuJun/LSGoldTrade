@@ -33,6 +33,9 @@ public interface UserApi {
     @GET("/gold-trade/v1.0.0/android/noticepage")
     Call<DTResponse> noticepage(@QueryMap Map<String, String> map);
 
+    @GET("/gold-trade/v1.0.0/android/noticedetail")
+    Call<DTResponse> noticedetail(@QueryMap Map<String, String> map);
+
     @GET("/gold-trade/v1.0.0/android/syntime")
     Call<DTResponse> syntime(@QueryMap Map<String, String> map);
 

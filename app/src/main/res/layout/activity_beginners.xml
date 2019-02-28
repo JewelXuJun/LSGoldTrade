@@ -9,6 +9,8 @@
 
         <include layout="@layout/layout_toolbar" />
 
+        <include layout="@layout/item_line_vertical" />
+
         <com.scwang.smartrefresh.layout.SmartRefreshLayout
             android:id="@+id/swipeRefreshLayout"
             android:layout_width="match_parent"
