@@ -5,7 +5,7 @@ import com.jme.common.network.DTResponse;
 import com.jme.common.network.IService;
 import com.jme.lsgoldtrade.config.Constants;
 import com.jme.lsgoldtrade.domain.ImageVerifyCodeVo;
-import com.jme.lsgoldtrade.domain.InfoVo;
+import com.jme.lsgoldtrade.domain.NoticeVo;
 import com.jme.lsgoldtrade.domain.SynTimeVo;
 import com.jme.lsgoldtrade.config.User;
 import com.jme.lsgoldtrade.domain.UserInfoVo;
@@ -94,7 +94,7 @@ public class UserService extends IService<UserApi> {
         }
     };
 
-    public API noticepage = new API<InfoVo>("NoticePage") {
+    public API noticepage = new API<NoticeVo>("NoticePage") {
         @Override
         public Call<DTResponse> request(HashMap<String, String> params) {
 

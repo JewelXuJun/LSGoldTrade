@@ -149,12 +149,18 @@ public class DateUtil {
     }
 
     public static Long dateToLong(String date) {
+        if (TextUtils.isEmpty(date))
+            return null;
+
         format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+
         try {
             Date dateFormat = format.parse(date);
+
             return dateFormat.getTime();
         } catch (ParseException e) {
             e.printStackTrace();
+
             return null;
         }
     }
@@ -289,6 +295,9 @@ public class DateUtil {
     }
 
     public static String showDateTime(Long date) {
+        if (null == date)
+            return "";
+
         String dateTime;
 
         Calendar currentTime = Calendar.getInstance();
