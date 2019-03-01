@@ -53,6 +53,14 @@ public class SettingActivity extends JMEBaseActivity {
         mBinding.setHandlers(new ClickHandlers());
     }
 
+    private void setLogoutLayout() {
+        mBinding.btnLogout.setVisibility(View.GONE);
+
+        mUser.logout();
+
+        showShortToast(R.string.personal_logout_success);
+    }
+
     private void logout() {
         sendRequest(UserService.getInstance().logout, new HashMap<>(), true);
     }
@@ -63,13 +71,8 @@ public class SettingActivity extends JMEBaseActivity {
 
         switch (request.getApi().getName()) {
             case "Logout":
-                if (head.isSuccess()) {
-                    mBinding.btnLogout.setVisibility(View.GONE);
-
-                    mUser.logout();
-
-                    showShortToast(R.string.personal_logout_success);
-                }
+                if (head.isSuccess())
+                    setLogoutLayout();
 
                 break;
         }
@@ -100,8 +103,14 @@ public class SettingActivity extends JMEBaseActivity {
         }
 
         public void onClickLogout() {
-            if (null != mUser && mUser.isLogin())
-                logout();
+            if (null == mUser) {
+                setLogoutLayout();
+            } else {
+                if (mUser.isLogin())
+                    logout();
+                else
+                    setLogoutLayout();
+            }
         }
     }
 }
