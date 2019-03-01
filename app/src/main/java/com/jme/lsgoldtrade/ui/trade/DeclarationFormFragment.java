@@ -698,7 +698,8 @@ public class DeclarationFormFragment extends JMEBaseFragment {
             if (new BigDecimal(String.valueOf(value)).compareTo(new BigDecimal(mLowerLimitPrice)) == -1) {
                 showShortToast(R.string.trade_limit_down_price_error);
 
-                mBinding.etPrice.setSelection(TextUtils.isEmpty(price) ? 0 : price.length());
+                mBinding.etPrice.setText(price);
+                mBinding.etPrice.setSelection(price.length());
                 mBinding.tvPriceBuyMore.setText(MarketUtil.formatValue(price, 2));
                 mBinding.tvPriceSaleEmpty.setText(MarketUtil.formatValue(price, 2));
                 mBinding.tvPriceEqual.setText(bEveningUp ? MarketUtil.formatValue(price, 2)
@@ -724,6 +725,7 @@ public class DeclarationFormFragment extends JMEBaseFragment {
             if (new BigDecimal(String.valueOf(value)).compareTo(new BigDecimal(mHighLimitPrice)) == 1) {
                 showShortToast(R.string.trade_limit_up_price_error);
 
+                mBinding.etPrice.setText(price);
                 mBinding.etPrice.setSelection(price.length());
                 mBinding.tvPriceBuyMore.setText(MarketUtil.formatValue(price, 2));
                 mBinding.tvPriceSaleEmpty.setText(MarketUtil.formatValue(price, 2));
