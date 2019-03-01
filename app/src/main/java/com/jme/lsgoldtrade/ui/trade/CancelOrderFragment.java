@@ -94,7 +94,7 @@ public class CancelOrderFragment extends JMEBaseFragment implements OnRefreshLis
 
                 mWindow.setData(contractId, TextUtils.isEmpty(time) ? "" : time.replace(".", ":"),
                         MarketUtil.getTradeDirection(orderBean.getBsFlag()) + MarketUtil.getOCState(orderBean.getOcFlag()),
-                        MarketUtil.decimalFormatMoney(orderBean.getMatchPriceStr()), String.valueOf(orderBean.getEntrustNumber()),
+                        orderBean.getMatchPriceStr(), String.valueOf(orderBean.getEntrustNumber()),
                         String.valueOf(orderBean.getRemnantNumber()), MarketUtil.getEntrustState(orderBean.getStatus()),
                         (View) -> {
                             mAdapter.setSelectPosition(-1);

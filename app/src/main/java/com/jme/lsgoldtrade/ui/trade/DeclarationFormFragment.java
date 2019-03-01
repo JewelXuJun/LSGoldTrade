@@ -346,7 +346,7 @@ public class DeclarationFormFragment extends JMEBaseFragment {
 
                         mCancelWindow.setData(contractId, TextUtils.isEmpty(time) ? "" : time.replace(".", ":"),
                                 MarketUtil.getTradeDirection(orderBean.getBsFlag()) + MarketUtil.getOCState(orderBean.getOcFlag()),
-                                MarketUtil.decimalFormatMoney(orderBean.getMatchPriceStr()), String.valueOf(orderBean.getEntrustNumber()),
+                                orderBean.getMatchPriceStr(), String.valueOf(orderBean.getEntrustNumber()),
                                 String.valueOf(orderBean.getRemnantNumber()), MarketUtil.getEntrustState(orderBean.getStatus()),
                                 (View) -> {
                                     RxBus.getInstance().post(Constants.RxBusConst.RXBUS_DECLARATIONFORM_CANCEL, null);
