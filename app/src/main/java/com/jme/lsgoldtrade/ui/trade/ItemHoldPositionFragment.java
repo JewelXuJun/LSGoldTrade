@@ -236,7 +236,7 @@ public class ItemHoldPositionFragment extends JMEBaseFragment implements BaseQui
                             long average = positionVo.getPositionAverage();
                             long handWeight = mContract.getHandWeightFromID(contractID);
                             long contractValue = contractID.equals("Ag(T+D)") ?
-                                    new BigDecimal(handWeight).divide(new BigDecimal(1000), 0, BigDecimal.ROUND_DOWN).longValue() : handWeight;
+                                    new BigDecimal(handWeight).divide(new BigDecimal(1000), 0, BigDecimal.ROUND_HALF_UP).longValue() : handWeight;
 
                             long margin;
 
@@ -247,7 +247,7 @@ public class ItemHoldPositionFragment extends JMEBaseFragment implements BaseQui
 
                             String floatProfit = (new BigDecimal(MarketUtil.getPriceValue(margin))
                                     .multiply(new BigDecimal(contractValue)).multiply(new BigDecimal(positionVo.getPosition())))
-                                    .add(new BigDecimal(positionVo.getUnliquidatedProfit())).setScale(2, BigDecimal.ROUND_DOWN).toPlainString();
+                                    .add(new BigDecimal(positionVo.getUnliquidatedProfit())).setScale(2, BigDecimal.ROUND_HALF_UP).toPlainString();
 
                             mList.add(floatProfit);
                         }

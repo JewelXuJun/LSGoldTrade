@@ -85,7 +85,7 @@ public class HoldPositionAdapter extends BaseQuickAdapter<PositionVo, BaseViewHo
         String rateStr;
 
         long handWeight = Contract.getInstance().getHandWeightFromID(contractID);
-        long contractValue = contractID.equals("Ag(T+D)") ? new BigDecimal(handWeight).divide(new BigDecimal(1000), 0, BigDecimal.ROUND_DOWN).longValue() : handWeight;
+        long contractValue = contractID.equals("Ag(T+D)") ? new BigDecimal(handWeight).divide(new BigDecimal(1000), 0, BigDecimal.ROUND_HALF_UP).longValue() : handWeight;
 
         BigDecimal floatValue = new BigDecimal(floatStr);
         BigDecimal positionValue = new BigDecimal(average).multiply(new BigDecimal(contractValue))
