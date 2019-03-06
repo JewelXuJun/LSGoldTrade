@@ -275,6 +275,8 @@ public class MarketOrderPopUpWindow extends JMEBasePopupWindow {
             Toast.makeText(mContext, R.string.trade_limit_up_price_error, Toast.LENGTH_SHORT).show();
         else if (TextUtils.isEmpty(amount))
             Toast.makeText(mContext, R.string.trade_number_error, Toast.LENGTH_SHORT).show();
+        else if (new BigDecimal(amount).compareTo(new BigDecimal(0)) == 0)
+            Toast.makeText(mContext, R.string.trade_number_error_zero, Toast.LENGTH_SHORT).show();
         else if (mMinOrderQty != -1 && new BigDecimal(amount).compareTo(new BigDecimal(mMinOrderQty)) == -1)
             Toast.makeText(mContext, R.string.trade_limit_min_amount_error, Toast.LENGTH_SHORT).show();
         else if (mMaxOrderQty != -1 && new BigDecimal(amount).compareTo(new BigDecimal(mMaxOrderQty)) == 1)

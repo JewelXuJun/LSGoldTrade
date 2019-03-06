@@ -551,6 +551,8 @@ public class DeclarationFormFragment extends JMEBaseFragment {
             showShortToast(R.string.trade_limit_up_price_error);
         else if (TextUtils.isEmpty(amount))
             showShortToast(R.string.trade_number_error);
+        else if (new BigDecimal(amount).compareTo(new BigDecimal(0)) == 0)
+            showShortToast(R.string.trade_number_error_zero);
         else if (mMinOrderQty != -1 && new BigDecimal(amount).compareTo(new BigDecimal(mMinOrderQty)) == -1)
             showShortToast(R.string.trade_limit_min_amount_error);
         else if (mMaxOrderQty != -1 && new BigDecimal(amount).compareTo(new BigDecimal(mMaxOrderQty)) == 1)

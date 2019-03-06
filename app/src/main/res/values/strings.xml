@@ -150,6 +150,7 @@
     <string name="trade_contract_error">请选择报单合约</string>
     <string name="trade_price_error">请输入价格</string>
     <string name="trade_number_error">请输入数量</string>
+    <string name="trade_number_error_zero">您的数量必须大于0</string>
     <string name="trade_popupwindow_title">报单确认</string>
     <string name="trade_popupwindow_account">工行账户</string>
     <string name="trade_popupwindow_contract_code">合约代码</string>
