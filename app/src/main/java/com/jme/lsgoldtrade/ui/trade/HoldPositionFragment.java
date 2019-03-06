@@ -465,5 +465,9 @@ public class HoldPositionFragment extends JMEBaseFragment implements OnRefreshLi
                     .navigation();
         }
 
+        public void onClickGuaranteeFundSetting() {
+
+        }
+
     }
 }

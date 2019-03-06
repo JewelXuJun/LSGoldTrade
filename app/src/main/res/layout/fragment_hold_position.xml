@@ -37,34 +37,134 @@
 
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="@dimen/height_trade_hold_position_account_total"
+                        android:layout_height="wrap_content"
                         android:background="@color/white"
                         android:gravity="center"
-                        android:orientation="vertical"
-                        android:padding="@dimen/common_area_margin">
+                        android:orientation="vertical">
 
-                        <RelativeLayout
+                        <LinearLayout
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content">
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_centerVertical="true"
-                                android:text="@string/trade_total_equity"
-                                android:textColor="@color/black_pale"
-                                android:textSize="@dimen/sp_12" />
+                            android:layout_height="@dimen/height_trade_hold_position_account_total"
+                            android:orientation="vertical"
+                            android:padding="@dimen/common_area_margin">
 
                             <RelativeLayout
-                                android:layout_width="@dimen/width_trade_hold_position_account_item"
-                                android:layout_height="wrap_content"
-                                android:layout_alignParentRight="true">
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content">
 
                                 <TextView
-                                    android:id="@+id/tv_risk_rate_title"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_centerVertical="true"
+                                    android:text="@string/trade_total_equity"
+                                    android:textColor="@color/black_pale"
+                                    android:textSize="@dimen/sp_12" />
+
+                            </RelativeLayout>
+
+                            <RelativeLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/common_area_margin_middle">
+
+                                <TextView
+                                    android:id="@+id/tv_total"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_centerVertical="true"
+                                    android:text="@string/text_no_data_default"
+                                    android:textColor="@color/common_font_increase"
+                                    android:textSize="@dimen/size_middle_large" />
+
+                                <Button
+                                    android:layout_width="@dimen/width_trade_hold_position_account_item"
+                                    android:layout_height="@dimen/common_item_height_middle"
+                                    android:layout_alignParentRight="true"
+                                    android:layout_centerVertical="true"
+                                    android:background="@drawable/selector_blue"
+                                    android:onClick="@{() -> handlers.onClickCapitalTransfer()}"
+                                    android:text="@string/trade_capital_transfer"
+                                    android:textColor="@drawable/selector_text" />
+
+                            </RelativeLayout>
+
+                        </LinearLayout>
+
+                        <include layout="@layout/item_line_vertical_margin" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:padding="@dimen/common_area_margin">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:orientation="vertical">
+
+                                <LinearLayout
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="horizontal">
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="@string/trade_guarantee_fund"
+                                        android:textColor="@color/black_pale"
+                                        android:textSize="@dimen/sp_12" />
+
+                                    <ImageView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_gravity="center"
+                                        android:layout_marginLeft="@dimen/common_area_margin_tiny"
+                                        android:onClick="@{() -> handlers.onClickGuaranteeFundSetting()}" />
+
+                                </LinearLayout>
+
+                                <RelativeLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content">
+
+                                    <TextView
+                                        android:id="@+id/tv_guarantee_fund"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_centerVertical="true"
+                                        android:text="@string/text_no_data_default"
+                                        android:textColor="@color/color_toolbar_blue"
+                                        android:textSize="@dimen/size_big" />
+
+                                    <Button
+                                        android:layout_width="@dimen/width_market_item"
+                                        android:layout_height="@dimen/height_item_small"
+                                        android:layout_alignParentRight="true"
+                                        android:layout_centerVertical="true"
+                                        android:layout_marginTop="@dimen/common_area_margin_middle"
+                                        android:layout_marginRight="@dimen/common_area_margin_big"
+                                        android:background="@drawable/bg_btn_blue_hollow"
+                                        android:onClick="@{() -> handlers.onClickGuaranteeFundSetting()}"
+                                        android:text="@string/personal_setting"
+                                        android:textColor="@color/color_blue"
+                                        android:textSize="@dimen/sp_12" />
+
+                                </RelativeLayout>
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="2"
+                                android:orientation="vertical"
+                                android:paddingLeft="@dimen/margin_normal">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
                                     android:text="@string/trade_risk_rate"
                                     android:textColor="@color/black_pale"
                                     android:textSize="@dimen/sp_12" />
@@ -73,43 +173,13 @@
                                     android:id="@+id/tv_risk_rate"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:layout_alignParentRight="true"
-                                    android:layout_centerVertical="true"
-                                    android:layout_toRightOf="@+id/tv_risk_rate_title"
-                                    android:gravity="right"
                                     android:text="@string/text_no_data_default"
                                     android:textColor="@color/color_orange"
-                                    android:textSize="@dimen/sp_14" />
+                                    android:textSize="@dimen/size_big" />
 
-                            </RelativeLayout>
+                            </LinearLayout>
 
-                        </RelativeLayout>
-
-                        <RelativeLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/common_area_margin_middle">
-
-                            <TextView
-                                android:id="@+id/tv_total"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_centerVertical="true"
-                                android:text="@string/text_no_data_default"
-                                android:textColor="@color/common_font_increase"
-                                android:textSize="@dimen/size_middle_large" />
-
-                            <Button
-                                android:layout_width="@dimen/width_trade_hold_position_account_item"
-                                android:layout_height="@dimen/common_item_height_middle"
-                                android:layout_alignParentRight="true"
-                                android:layout_centerVertical="true"
-                                android:background="@drawable/selector_blue"
-                                android:onClick="@{() -> handlers.onClickCapitalTransfer()}"
-                                android:text="@string/trade_capital_transfer"
-                                android:textColor="@drawable/selector_text" />
-
-                        </RelativeLayout>
+                        </LinearLayout>
 
                     </LinearLayout>
 

@@ -163,6 +163,7 @@
     <string name="trade_popupwindow_surplus_amount">剩余数量</string>
     <string name="trade_popupwindow_trade_status">交易状态</string>
     <string name="trade_cancel_order_success">撤单成功</string>
+    <string name="trade_guarantee_fund">保底资金(元)</string>
 
     <!-- Personal -->
     <string name="personal_login">登录/注册</string>
