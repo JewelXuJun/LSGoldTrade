@@ -278,8 +278,8 @@ public class HoldPositionFragment extends JMEBaseFragment implements OnRefreshLi
                                 .multiply(new BigDecimal(100)).toPlainString() + "%");
                 }
 
-                long value = Math.min((new BigDecimal(total).subtract(new BigDecimal(minReserveFund)).subtract(new BigDecimal(runtimeFee))).multiply(new BigDecimal(100)).longValue(),
-                        mAccountVo.getExtractableBalance());
+                long value = Math.min((new BigDecimal(total).subtract(new BigDecimal(minReserveFund))).multiply(new BigDecimal(100)).longValue(),
+                        new BigDecimal(mAccountVo.getExtractableBalance()).subtract(new BigDecimal(mAccountVo.getRuntimeFee())).longValue());
 
                 mBinding.tvDesirableCapital.setText(MarketUtil.decimalFormatMoney(MarketUtil.getPriceValue(value)));
             }
