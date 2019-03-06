@@ -156,4 +156,12 @@ public class TradeService extends IService<TradeApi> {
         }
     };
 
+    public API minReserveFund = new API<String>("MinReserveFund") {
+        @Override
+        public Call<DTResponse> request(HashMap<String, String> params) {
+
+            return mApi.minReserveFund(params);
+        }
+    };
+
 }

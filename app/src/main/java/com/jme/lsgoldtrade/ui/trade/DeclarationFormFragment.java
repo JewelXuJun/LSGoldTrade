@@ -136,8 +136,8 @@ public class DeclarationFormFragment extends JMEBaseFragment {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 if (s.toString().contains(".")) {
-                    if (s.length() - 1 - s.toString().indexOf(".") > AppConfig.Lentth_Limit) {
-                        s = s.toString().subSequence(0, s.toString().indexOf(".") + (AppConfig.Lentth_Limit + 1));
+                    if (s.length() - 1 - s.toString().indexOf(".") > AppConfig.Length_Limit) {
+                        s = s.toString().subSequence(0, s.toString().indexOf(".") + (AppConfig.Length_Limit + 1));
 
                         mBinding.etPrice.setText(s);
                         mBinding.etPrice.setSelection(s.length());

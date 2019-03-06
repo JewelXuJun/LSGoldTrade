@@ -51,4 +51,7 @@ public interface TradeApi {
     @POST("/gold-trade/v1.0.0/android/revocateorder")
     Call<DTResponse> revocateorder(@Body Map<String, String> map);
 
+    @POST("/gold-trade/v1.0.0/android/minReserveFund")
+    Call<DTResponse> minReserveFund(@Body Map<String, String> map);
+
 }

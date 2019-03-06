@@ -20,7 +20,7 @@ public class AppConfig {
     public static final long Rate_Divisor = 1000000;
     public static final long HandWeight_Divisor = 1000000;
 
-    public static final int Lentth_Limit = 2;
+    public static final int Length_Limit = 2;
     public static final int MaxLength = 500;
 
     public static String Select_ContractId = "Ag(T+D)";
