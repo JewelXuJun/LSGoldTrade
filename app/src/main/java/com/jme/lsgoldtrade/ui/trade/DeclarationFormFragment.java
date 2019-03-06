@@ -504,7 +504,7 @@ public class DeclarationFormFragment extends JMEBaseFragment {
             mMaxOrderQty = mContractInfoVo.getMaxOrderQty();
 
             if (!bEveningUp)
-                mBinding.etAmount.setText(String.valueOf(mMinOrderQty));
+                mBinding.etAmount.setText(mMinOrderQty == -1 ? "0" : String.valueOf(mMinOrderQty));
         }
     }
 
@@ -551,9 +551,9 @@ public class DeclarationFormFragment extends JMEBaseFragment {
             showShortToast(R.string.trade_limit_up_price_error);
         else if (TextUtils.isEmpty(amount))
             showShortToast(R.string.trade_number_error);
-        else if (new BigDecimal(amount).compareTo(new BigDecimal(mMinOrderQty)) == -1)
+        else if (mMinOrderQty != -1 && new BigDecimal(amount).compareTo(new BigDecimal(mMinOrderQty)) == -1)
             showShortToast(R.string.trade_limit_min_amount_error);
-        else if (new BigDecimal(amount).compareTo(new BigDecimal(mMaxOrderQty)) == 1)
+        else if (mMaxOrderQty != -1 && new BigDecimal(amount).compareTo(new BigDecimal(mMaxOrderQty)) == 1)
             showShortToast(R.string.trade_limit_max_amount_error);
         else
             showPopupWindow(contractID, price, amount, bsFlag, ocFlag);
@@ -788,7 +788,7 @@ public class DeclarationFormFragment extends JMEBaseFragment {
 
             long value = new BigDecimal(amount).subtract(new BigDecimal(1)).longValue();
 
-            if (new BigDecimal(value).compareTo(new BigDecimal(mMinOrderQty)) == -1)
+            if (mMinOrderQty != -1 && new BigDecimal(value).compareTo(new BigDecimal(mMinOrderQty)) == -1)
                 showShortToast(R.string.trade_limit_min_amount_error);
             else
                 mBinding.etAmount.setText(String.valueOf(value));
@@ -804,7 +804,7 @@ public class DeclarationFormFragment extends JMEBaseFragment {
 
             long value = new BigDecimal(amount).add(new BigDecimal(1)).longValue();
 
-            if (new BigDecimal(value).compareTo(new BigDecimal(mMaxOrderQty)) == 1)
+            if (mMaxOrderQty != -1 && new BigDecimal(value).compareTo(new BigDecimal(mMaxOrderQty)) == 1)
                 showShortToast(R.string.trade_limit_max_amount_error);
             else
                 mBinding.etAmount.setText(String.valueOf(value));
