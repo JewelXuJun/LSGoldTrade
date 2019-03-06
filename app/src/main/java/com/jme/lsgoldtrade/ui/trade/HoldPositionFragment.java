@@ -335,6 +335,7 @@ public class HoldPositionFragment extends JMEBaseFragment implements OnRefreshLi
 
                     long availableFunds = mAccountVo.getTransactionBalance() - mAccountVo.getRuntimeFee();
 
+                    mBinding.tvGuaranteeFund.setText(MarketUtil.decimalFormatMoney(mAccountVo.getMinReserveFundStr()));
                     mBinding.tvAvailableFunds.setText(MarketUtil.decimalFormatMoney(MarketUtil.getPriceValue(availableFunds)));
 
                     calculateValue();
