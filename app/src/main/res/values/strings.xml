@@ -176,6 +176,7 @@
 
 3、保底资金在设置后的下一个交易日生效,保底资金在生效前可修改.</string>
     <string name="trade_guarantee_fund_success">保底资金设置成功</string>
+    <string name="trade_guarantee_total_error">总权益金额异常</string>
 
     <!-- Personal -->
     <string name="personal_login">登录/注册</string>

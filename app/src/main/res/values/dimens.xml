@@ -62,6 +62,7 @@
     <dimen name="size_big">22sp</dimen>
     <dimen name="size_middle_large">30sp</dimen>
     <dimen name="size_large">34sp</dimen>
+    <dimen name="size_riskrate">20sp</dimen>
 
     <dimen name="icon_logo">76dp</dimen>
     <dimen name="icon_head_portrait">60dp</dimen>

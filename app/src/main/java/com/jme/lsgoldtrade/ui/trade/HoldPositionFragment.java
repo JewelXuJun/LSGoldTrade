@@ -11,6 +11,7 @@ import com.alibaba.android.arouter.launcher.ARouter;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.jme.common.network.DTRequest;
 import com.jme.common.network.Head;
+import com.jme.common.util.BigDecimalUtil;
 import com.jme.common.util.NetWorkUtils;
 import com.jme.common.util.RxBus;
 import com.jme.lsgoldtrade.R;
@@ -49,6 +50,7 @@ public class HoldPositionFragment extends JMEBaseFragment implements OnRefreshLi
     private boolean bHasNext = false;
     private boolean bVisibleToUser = false;
     private String mPagingKey = "";
+    private String mTotal;
 
     private Handler mHandler = new Handler() {
         public void handleMessage(Message msg) {
@@ -256,7 +258,7 @@ public class HoldPositionFragment extends JMEBaseFragment implements OnRefreshLi
             mBinding.tvFloating.setText(MarketUtil.decimalFormatMoney(floatTotal.toPlainString()));
 
             if (null != mAccountVo) {
-                String total = new BigDecimal(mAccountVo.getTransactionBalanceStr())
+                mTotal = new BigDecimal(mAccountVo.getTransactionBalanceStr())
                         .add(new BigDecimal(mAccountVo.getFreezeBalanceStr()))
                         .add(floatTotal)
                         .add(new BigDecimal(mAccountVo.getPositionMarginStr()))
@@ -264,7 +266,7 @@ public class HoldPositionFragment extends JMEBaseFragment implements OnRefreshLi
                 String minReserveFund = mAccountVo.getMinReserveFundStr();
                 String runtimeFee = mAccountVo.getRuntimeFeeStr();
 
-                mBinding.tvTotal.setText(MarketUtil.decimalFormatMoney(total));
+                mBinding.tvTotal.setText(MarketUtil.decimalFormatMoney(mTotal));
 
                 if (new BigDecimal(minReserveFund).compareTo(new BigDecimal(0)) == 0) {
                     mBinding.tvRiskRate.setText(R.string.text_no_data_default);
@@ -274,14 +276,24 @@ public class HoldPositionFragment extends JMEBaseFragment implements OnRefreshLi
                     if (fee.compareTo(new BigDecimal(0)) == 0) {
                         mBinding.tvRiskRate.setText(R.string.text_no_data_default);
                     } else {
-                        long riskRate = Math.min(new BigDecimal(total).divide(new BigDecimal(mAccountVo.getMinReserveFundStr()), 4, BigDecimal.ROUND_HALF_UP)
-                                .multiply(new BigDecimal(100)).longValue(), 10000);
+                        String minReserveFundStr = mAccountVo.getMinReserveFundStr();
+                        float riskRate;
 
-                        mBinding.tvRiskRate.setText(riskRate + "%");
+                        if (TextUtils.isEmpty(minReserveFundStr)) {
+                            riskRate = 0.00f;
+                        } else {
+                            if (new BigDecimal(minReserveFundStr).compareTo(new BigDecimal(0)) == 0)
+                                riskRate = 0.00f;
+                            else
+                                riskRate = Math.min(new BigDecimal(mTotal).divide(new BigDecimal(minReserveFundStr), 4, BigDecimal.ROUND_HALF_UP)
+                                        .multiply(new BigDecimal(100)).floatValue(), 10000.00f);
+                        }
+
+                        mBinding.tvRiskRate.setText(BigDecimalUtil.formatRate(String.valueOf(riskRate)));
                     }
                 }
 
-                long value = Math.min((new BigDecimal(total).subtract(new BigDecimal(minReserveFund))).multiply(new BigDecimal(100)).longValue(),
+                long value = Math.min((new BigDecimal(mTotal).subtract(new BigDecimal(minReserveFund))).multiply(new BigDecimal(100)).longValue(),
                         new BigDecimal(mAccountVo.getExtractableBalance()).subtract(new BigDecimal(mAccountVo.getRuntimeFee())).longValue());
 
                 mBinding.tvDesirableCapital.setText(MarketUtil.decimalFormatMoney(MarketUtil.getPriceValue(value)));
@@ -472,6 +484,7 @@ public class HoldPositionFragment extends JMEBaseFragment implements OnRefreshLi
         public void onClickGuaranteeFundSetting() {
             ARouter.getInstance()
                     .build(Constants.ARouterUriConst.GUARANTEEFUNDSETTINGACTIVITY)
+                    .withString("Total", mTotal)
                     .withFloat("Warnth", mAccountVo.getWarnth())
                     .withFloat("Forcecloseth", mAccountVo.getForcecloseth())
                     .navigation();

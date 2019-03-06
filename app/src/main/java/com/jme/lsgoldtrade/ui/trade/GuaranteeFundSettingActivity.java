@@ -2,6 +2,7 @@ package com.jme.lsgoldtrade.ui.trade;
 
 import android.os.Bundle;
 import android.text.Editable;
+import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.widget.EditText;
 
@@ -23,6 +24,7 @@ public class GuaranteeFundSettingActivity extends JMEBaseActivity {
 
     private ActivityGuaranteefundSettingBinding mBinding;
 
+    private String mTotal;
     private float mWarnth;
     private float mForcecloseth;
 
@@ -42,6 +44,7 @@ public class GuaranteeFundSettingActivity extends JMEBaseActivity {
     protected void initData(Bundle savedInstanceState) {
         super.initData(savedInstanceState);
 
+        mTotal = getIntent().getStringExtra("Total");
         mWarnth = getIntent().getFloatExtra("Warnth", 1.2f);
         mForcecloseth = getIntent().getFloatExtra("Forcecloseth", 1.1f);
 
@@ -143,6 +146,12 @@ public class GuaranteeFundSettingActivity extends JMEBaseActivity {
     public class ClickHandlers {
 
         public void onClickConfirm() {
+            if (TextUtils.isEmpty(mTotal)) {
+                showShortToast(R.string.trade_guarantee_total_error);
+            } else {
+
+            }
+
             getMinReserveFund();
         }
 
