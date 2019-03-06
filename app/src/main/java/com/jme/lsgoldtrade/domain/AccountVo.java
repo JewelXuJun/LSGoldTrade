@@ -44,6 +44,12 @@ public class AccountVo implements Serializable {
 
     private long minReserveFund;
 
+    private long minReserveFundCust;
+
+    private float warnth;
+
+    private float forcecloseth;
+
     private long runtimeFee;
 
     private float riskrate;
@@ -136,6 +142,30 @@ public class AccountVo implements Serializable {
         this.minReserveFund = minReserveFund;
     }
 
+    public long getMinReserveFundCust() {
+        return minReserveFundCust;
+    }
+
+    public void setMinReserveFundCust(long minReserveFundCust) {
+        this.minReserveFundCust = minReserveFundCust;
+    }
+
+    public float getWarnth() {
+        return warnth;
+    }
+
+    public void setWarnth(float warnth) {
+        this.warnth = warnth;
+    }
+
+    public float getForcecloseth() {
+        return forcecloseth;
+    }
+
+    public void setForcecloseth(float forcecloseth) {
+        this.forcecloseth = forcecloseth;
+    }
+
     public long getRuntimeFee() {
         return runtimeFee;
     }
@@ -194,6 +224,10 @@ public class AccountVo implements Serializable {
 
     public String getMinReserveFundStr() {
         return MarketUtil.getPriceValue(minReserveFund);
+    }
+
+    public String getMinReserveFundCustStr() {
+        return MarketUtil.getPriceValue(minReserveFundCust);
     }
 
     public String getRuntimeFeeStr() {
