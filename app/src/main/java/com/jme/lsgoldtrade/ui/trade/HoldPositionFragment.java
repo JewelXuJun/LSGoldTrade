@@ -271,11 +271,14 @@ public class HoldPositionFragment extends JMEBaseFragment implements OnRefreshLi
                 } else {
                     BigDecimal fee = new BigDecimal(minReserveFund).add(new BigDecimal(runtimeFee));
 
-                    if (fee.compareTo(new BigDecimal(0)) == 0)
+                    if (fee.compareTo(new BigDecimal(0)) == 0) {
                         mBinding.tvRiskRate.setText(R.string.text_no_data_default);
-                    else
-                        mBinding.tvRiskRate.setText(new BigDecimal(total).divide(fee, 4, BigDecimal.ROUND_HALF_UP)
-                                .multiply(new BigDecimal(100)).toPlainString() + "%");
+                    } else {
+                        long riskRate = Math.min(new BigDecimal(total).divide(new BigDecimal(mAccountVo.getMinReserveFundStr()), 4, BigDecimal.ROUND_HALF_UP)
+                                .multiply(new BigDecimal(100)).longValue(), 10000);
+
+                        mBinding.tvRiskRate.setText(riskRate + "%");
+                    }
                 }
 
                 long value = Math.min((new BigDecimal(total).subtract(new BigDecimal(minReserveFund))).multiply(new BigDecimal(100)).longValue(),
