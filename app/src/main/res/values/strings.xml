@@ -4,6 +4,7 @@
     <!-- Common -->
     <string name="text_cancel">取消</string>
     <string name="text_confirm">确定</string>
+    <string name="text_confirm2">确认</string>
     <string name="text_no_data">当前没有数据</string>
     <string name="text_no_data_default">- - -</string>
     <string name="text_money_unit">元</string>
@@ -164,6 +165,15 @@
     <string name="trade_popupwindow_trade_status">交易状态</string>
     <string name="trade_cancel_order_success">撤单成功</string>
     <string name="trade_guarantee_fund">保底资金(元)</string>
+    <string name="trade_guarantee_fund_title">保底资金</string>
+    <string name="trade_guarantee_fund_input">请输入金额</string>
+    <string name="trade_guarantee_fund_message">1、保底风控是我系统根据客户意愿辅助进行风险控制的功能，保底资金t是客户希望交易过程中能保留的最低资金权益，保底资金由客户自行设置。\n\n
+
+2、我系统在交易时段实时计算保底风控线，并依据指标完成相应的风险处置，主要包括：\n
+（1）保底预警，指标值=客户总权益/保底资金*120%，当风控线低于指标值时，我系统将限制客户开仓，并对客户进行预警提示\n
+（2）保底平仓，指标值=客户总权益/保底资金*110%，当风控线低于指标值时，我系统将对客户的所有递延品种可用持仓发出平仓指令\n\n
+
+3、保底资金在设置后的下一个交易日生效,保底资金在生效前可修改。</string>
 
     <!-- Personal -->
     <string name="personal_login">登录/注册</string>

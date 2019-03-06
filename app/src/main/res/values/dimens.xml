@@ -74,4 +74,6 @@
     <dimen name="radius_normal">4dp</dimen>
     <dimen name="radius_big">5dp</dimen>
 
+    <dimen name="lineSpacingExtra_normal">3sp</dimen>
+
 </resources>

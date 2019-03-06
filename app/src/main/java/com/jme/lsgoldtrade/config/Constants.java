@@ -115,6 +115,7 @@ public class Constants {
         public static final String NEWSCENTERACTIVITY = "/JME/NewsCenterActivity";
         public static final String NEWSDETAILACTIVITY = "/NewsCenterActivity/NewsDetailActivity";
         public static final String BEGINNERSACTIVITY = "/MainPageFragment/BeginnersActivity";
+        public static final String GUARANTEEFUNDSETTINGACTIVITY = "/HoldPositionFragment/GuaranteeFundSettingActivity";
     }
 
     public static final long SPLASH_DELAY_MILLIS = 2000;
