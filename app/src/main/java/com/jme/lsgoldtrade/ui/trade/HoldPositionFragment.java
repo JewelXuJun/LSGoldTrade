@@ -472,6 +472,8 @@ public class HoldPositionFragment extends JMEBaseFragment implements OnRefreshLi
         public void onClickGuaranteeFundSetting() {
             ARouter.getInstance()
                     .build(Constants.ARouterUriConst.GUARANTEEFUNDSETTINGACTIVITY)
+                    .withFloat("Warnth", mAccountVo.getWarnth())
+                    .withFloat("Forcecloseth", mAccountVo.getForcecloseth())
                     .navigation();
         }
 

@@ -55,6 +55,7 @@
         <include layout="@layout/item_line_vertical_margin" />
 
         <TextView
+            android:id="@+id/tv_message"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/white"
@@ -63,7 +64,6 @@
             android:paddingTop="@dimen/common_area_margin"
             android:paddingRight="@dimen/common_area_margin"
             android:paddingBottom="@dimen/common_area_margin_big"
-            android:text="@string/trade_guarantee_fund_message"
             android:textColor="@color/black_pale"
             android:textSize="@dimen/sp_12" />
 

@@ -23,6 +23,9 @@ public class GuaranteeFundSettingActivity extends JMEBaseActivity {
 
     private ActivityGuaranteefundSettingBinding mBinding;
 
+    private float mWarnth;
+    private float mForcecloseth;
+
     @Override
     protected int getContentViewId() {
         return R.layout.activity_guaranteefund_setting;
@@ -38,6 +41,13 @@ public class GuaranteeFundSettingActivity extends JMEBaseActivity {
     @Override
     protected void initData(Bundle savedInstanceState) {
         super.initData(savedInstanceState);
+
+        mWarnth = getIntent().getFloatExtra("Warnth", 1.2f);
+        mForcecloseth = getIntent().getFloatExtra("Forcecloseth", 1.1f);
+
+        mBinding.tvMessage.setText(String.format(getResources().getString(R.string.trade_guarantee_fund_message),
+                new BigDecimal(mWarnth).multiply(new BigDecimal(100)).setScale(0, BigDecimal.ROUND_DOWN).toPlainString() + "%",
+                new BigDecimal(mForcecloseth).multiply(new BigDecimal(100)).setScale(0, BigDecimal.ROUND_DOWN).toPlainString() + "%"));
     }
 
     @Override
