@@ -24,7 +24,7 @@ public class GuaranteeFundPopUpWindow extends JMEBasePopupWindow {
         super.initPopupWindow();
 
         setHeight(ViewGroup.LayoutParams.WRAP_CONTENT);
-        setWidth(DensityUtil.dpTopx(getContext(), 260));
+        setWidth(DensityUtil.dpTopx(getContext(), 300));
     }
 
     @Override

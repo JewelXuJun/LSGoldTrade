@@ -22,12 +22,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:layout_margin="@dimen/margin_normal"
             android:textColor="@color/black_deep"
-            android:textSize="@dimen/size_normal"
-            android:layout_marginLeft="@dimen/margin_normal"
-            android:layout_marginTop="@dimen/common_area_margin"
-            android:layout_marginRight="@dimen/margin_normal"
-            android:layout_marginBottom="@dimen/common_area_margin" />
+            android:textSize="@dimen/sp_14" />
 
         <include layout="@layout/item_line_vertical" />
 

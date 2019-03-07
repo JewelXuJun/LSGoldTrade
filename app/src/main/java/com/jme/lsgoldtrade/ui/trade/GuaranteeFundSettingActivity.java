@@ -4,11 +4,14 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.view.Gravity;
+import android.view.View;
 import android.widget.EditText;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.jme.common.network.DTRequest;
 import com.jme.common.network.Head;
+import com.jme.common.util.BigDecimalUtil;
 import com.jme.lsgoldtrade.R;
 import com.jme.lsgoldtrade.base.JMEBaseActivity;
 import com.jme.lsgoldtrade.config.AppConfig;
@@ -23,6 +26,8 @@ import java.util.HashMap;
 public class GuaranteeFundSettingActivity extends JMEBaseActivity {
 
     private ActivityGuaranteefundSettingBinding mBinding;
+
+    private GuaranteeFundPopUpWindow mWindow;
 
     private String mTotal;
     private float mWarnth;
@@ -51,6 +56,10 @@ public class GuaranteeFundSettingActivity extends JMEBaseActivity {
         mBinding.tvMessage.setText(String.format(getResources().getString(R.string.trade_guarantee_fund_message),
                 new BigDecimal(mWarnth).multiply(new BigDecimal(100)).setScale(0, BigDecimal.ROUND_DOWN).toPlainString() + "%",
                 new BigDecimal(mForcecloseth).multiply(new BigDecimal(100)).setScale(0, BigDecimal.ROUND_DOWN).toPlainString() + "%"));
+
+        mWindow = new GuaranteeFundPopUpWindow(this);
+        mWindow.setOutsideTouchable(true);
+        mWindow.setFocusable(true);
     }
 
     @Override
@@ -149,10 +158,37 @@ public class GuaranteeFundSettingActivity extends JMEBaseActivity {
             if (TextUtils.isEmpty(mTotal)) {
                 showShortToast(R.string.trade_guarantee_total_error);
             } else {
+                String value = mBinding.etGuaranteeFund.getText().toString();
+                BigDecimal riskRate;
 
+                if (value.endsWith("."))
+                    value = value.substring(0, value.length() - 1);
+
+                if (new BigDecimal(value).compareTo(new BigDecimal(0)) == 0)
+                    riskRate = new BigDecimal(0);
+                else
+                    riskRate = new BigDecimal(mTotal).divide(new BigDecimal(value), 4, BigDecimal.ROUND_HALF_UP);
+
+                if (null != mWindow) {
+                    String message;
+
+                    if (riskRate.compareTo(new BigDecimal(0)) == 0) {
+                        message = getString(R.string.trade_guarantee_fund_message1);
+                    } else {
+                        String riskRateValue = BigDecimalUtil.formatRate(riskRate.multiply(new BigDecimal(100)).toPlainString());
+
+                        if (riskRate.compareTo(new BigDecimal(mForcecloseth)) == -1)
+                            message = String.format(getString(R.string.trade_guarantee_fund_message2), riskRateValue);
+                        else if (riskRate.compareTo(new BigDecimal(mForcecloseth)) == 1 && riskRate.compareTo(new BigDecimal(mWarnth)) == -1)
+                            message = String.format(getString(R.string.trade_guarantee_fund_message3), riskRateValue);
+                        else
+                            message = String.format(getString(R.string.trade_guarantee_fund_message4), riskRateValue);
+                    }
+
+                    mWindow.setData(message, (view) -> getMinReserveFund());
+                    mWindow.showAtLocation(mBinding.etGuaranteeFund, Gravity.CENTER, 0, 0);
+                }
             }
-
-            getMinReserveFund();
         }
 
     }
