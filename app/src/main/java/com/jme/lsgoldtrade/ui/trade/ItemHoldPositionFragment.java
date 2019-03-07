@@ -36,6 +36,7 @@ public class ItemHoldPositionFragment extends JMEBaseFragment implements BaseQui
 
     private HoldPositionAdapter mAdapter;
     private List<String> mList;
+    private List<PositionVo> mPositionVoList;
     private Subscription mRxbus;
 
     private int mCurrentPage = 1;
@@ -219,13 +220,13 @@ public class ItemHoldPositionFragment extends JMEBaseFragment implements BaseQui
         position();
     }
 
-    private void calculateFloat(List<FiveSpeedVo> fiveSpeedVoList, List<PositionVo> positionVoList) {
-        if (null == fiveSpeedVoList || 0 == fiveSpeedVoList.size() || null == positionVoList || 0 == positionVoList.size())
+    private void calculateFloat(List<FiveSpeedVo> fiveSpeedVoList) {
+        if (null == fiveSpeedVoList || 0 == fiveSpeedVoList.size() || null == mPositionVoList || 0 == mPositionVoList.size())
             return;
 
         mList.clear();
 
-        for (PositionVo positionVo : positionVoList) {
+        for (PositionVo positionVo : mPositionVoList) {
             if (null != positionVo) {
                 String contractID = positionVo.getContractId();
 
@@ -264,6 +265,23 @@ public class ItemHoldPositionFragment extends JMEBaseFragment implements BaseQui
         return NetWorkUtils.isWifiConnected(mContext) ? AppConfig.TimeInterval_WiFi : AppConfig.TimeInterval_NetWork;
     }
 
+    public long getPosition(String contractID) {
+        if (null == mPositionVoList || 0 == mPositionVoList.size())
+            return 0;
+
+        long value = 0;
+
+        for (PositionVo positionVo : mPositionVoList) {
+            if (null != positionVo) {
+                if (positionVo.getContractId().equalsIgnoreCase(contractID)){
+                    value = value + positionVo.getPosition();
+                }
+            }
+        }
+
+        return value;
+    }
+
     private void getMarket() {
         HashMap<String, String> params = new HashMap<>();
         params.put("list", "");
@@ -296,7 +314,9 @@ public class ItemHoldPositionFragment extends JMEBaseFragment implements BaseQui
                         e.getMessage();
                     }
 
-                    calculateFloat(fiveSpeedVoList, mAdapter.getData());
+                    mPositionVoList = mAdapter.getData();
+
+                    calculateFloat(fiveSpeedVoList);
                 }
 
                 break;
