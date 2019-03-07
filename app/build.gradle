@@ -43,7 +43,7 @@ android {
 
             applicationVariants.all { variant ->
                 variant.outputs.all {
-                    outputFileName = "lsgoldtrade_${releaseTime()}_(VersionName_${variant.versionName})_(VersionCode_${variant.versionCode})_${variant.name}.apk"
+                    outputFileName = "tjs_${releaseTime()}_(VersionName_${variant.versionName})_(VersionCode_${variant.versionCode})_${variant.name}.apk"
                 }
             }
 
