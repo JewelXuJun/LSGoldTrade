@@ -147,6 +147,7 @@
     <string name="trade_limit_up_price_error">您的价格高于涨停价</string>
     <string name="trade_limit_min_amount_error">您的数量低于单笔最低交易数量</string>
     <string name="trade_limit_max_amount_error">您的数量高于单笔最高交易数量</string>
+    <string name="trade_limit_max_amount_error2">您的数量高于最大持仓量</string>
     <string name="trade_contract_error">请选择报单合约</string>
     <string name="trade_price_error">请输入价格</string>
     <string name="trade_number_error">请输入数量</string>

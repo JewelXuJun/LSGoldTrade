@@ -66,6 +66,7 @@ public class DeclarationFormFragment extends JMEBaseFragment {
     private float mPriceMove = 0.00f;
     private long mMinOrderQty = 0;
     private long mMaxOrderQty = 0;
+    private long mMaxHoldQty = 0;
     private String mLowerLimitPrice;
     private String mHighLimitPrice;
     private String mPositionType;
@@ -498,10 +499,12 @@ public class DeclarationFormFragment extends JMEBaseFragment {
             mPriceMove = 0;
             mMinOrderQty = 0;
             mMaxOrderQty = 0;
+            mMaxHoldQty = 0;
         } else {
             mPriceMove = new BigDecimal(mContractInfoVo.getMinPriceMove()).divide(new BigDecimal(100)).floatValue();
             mMinOrderQty = mContractInfoVo.getMinOrderQty();
             mMaxOrderQty = mContractInfoVo.getMaxOrderQty();
+            mMaxHoldQty = mContractInfoVo.getMaxHoldQty();
 
             if (!bEveningUp)
                 mBinding.etAmount.setText(mMinOrderQty == -1 ? "0" : String.valueOf(mMinOrderQty));
@@ -551,7 +554,7 @@ public class DeclarationFormFragment extends JMEBaseFragment {
             showShortToast(R.string.trade_limit_up_price_error);
         else if (TextUtils.isEmpty(amount))
             showShortToast(R.string.trade_number_error);
-        else if (new BigDecimal(amount).compareTo(new BigDecimal(0)) == 0)
+        else if (new BigDecimal(amount).compareTo(new BigDecimal(0)) == 0 || new BigDecimal(amount).compareTo(new BigDecimal(0)) == -1)
             showShortToast(R.string.trade_number_error_zero);
         else if (mMinOrderQty != -1 && new BigDecimal(amount).compareTo(new BigDecimal(mMinOrderQty)) == -1)
             showShortToast(R.string.trade_limit_min_amount_error);
@@ -790,10 +793,17 @@ public class DeclarationFormFragment extends JMEBaseFragment {
 
             long value = new BigDecimal(amount).subtract(new BigDecimal(1)).longValue();
 
-            if (mMinOrderQty != -1 && new BigDecimal(value).compareTo(new BigDecimal(mMinOrderQty)) == -1)
-                showShortToast(R.string.trade_limit_min_amount_error);
-            else
-                mBinding.etAmount.setText(String.valueOf(value));
+            if (mMinOrderQty == -1) {
+                if (new BigDecimal(value).compareTo(new BigDecimal(0)) == 1)
+                    mBinding.etAmount.setText(String.valueOf(value));
+                else
+                    showShortToast(R.string.trade_number_error_zero);
+            } else {
+                if (new BigDecimal(value).compareTo(new BigDecimal(mMinOrderQty)) == -1)
+                    showShortToast(R.string.trade_limit_min_amount_error);
+                else
+                    mBinding.etAmount.setText(String.valueOf(value));
+            }
         }
 
         public void onClickAmountAdd() {
@@ -806,10 +816,21 @@ public class DeclarationFormFragment extends JMEBaseFragment {
 
             long value = new BigDecimal(amount).add(new BigDecimal(1)).longValue();
 
-            if (mMaxOrderQty != -1 && new BigDecimal(value).compareTo(new BigDecimal(mMaxOrderQty)) == 1)
-                showShortToast(R.string.trade_limit_max_amount_error);
-            else
-                mBinding.etAmount.setText(String.valueOf(value));
+            if (mMaxOrderQty == -1) {
+                if (mMaxHoldQty == -1) {
+                    mBinding.etAmount.setText(String.valueOf(value));
+                } else {
+                    if (new BigDecimal(value).compareTo(new BigDecimal(mMaxHoldQty)) == 1)
+                        showShortToast(R.string.trade_limit_max_amount_error2);
+                    else
+                        mBinding.etAmount.setText(String.valueOf(value));
+                }
+            } else {
+                if (new BigDecimal(value).compareTo(new BigDecimal(mMaxOrderQty)) == 1)
+                    showShortToast(R.string.trade_limit_max_amount_error);
+                else
+                    mBinding.etAmount.setText(String.valueOf(value));
+            }
         }
 
         public void onClickBuyMore() {

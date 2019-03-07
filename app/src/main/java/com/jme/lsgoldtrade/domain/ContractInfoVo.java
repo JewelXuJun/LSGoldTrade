@@ -61,6 +61,8 @@ public class ContractInfoVo implements Serializable {
 
     private int exShortMarginRate;
 
+    private long maxHoldQty;
+
     public String getContractId() {
         return contractId;
     }
@@ -205,4 +207,11 @@ public class ContractInfoVo implements Serializable {
         this.exShortMarginRate = exShortMarginRate;
     }
 
+    public long getMaxHoldQty() {
+        return maxHoldQty;
+    }
+
+    public void setMaxHoldQty(long maxHoldQty) {
+        this.maxHoldQty = maxHoldQty;
+    }
 }
