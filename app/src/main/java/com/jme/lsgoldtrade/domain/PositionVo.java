@@ -162,6 +162,10 @@ public class PositionVo implements Serializable {
         return unliquidatedProfit;
     }
 
+    public String getUnliquidatedProfitStr() {
+        return MarketUtil.getPriceValue(unliquidatedProfit);
+    }
+
     public void setUnliquidatedProfit(long unliquidatedProfit) {
         this.unliquidatedProfit = unliquidatedProfit;
     }

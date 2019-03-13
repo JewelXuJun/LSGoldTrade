@@ -16,7 +16,7 @@ public class Constants {
         public static final int Test_LAN = 1;
         public static final int Produce = 2;
 
-        public static int Envi = Test_LAN;
+        public static int Envi = Test_WAN;
 
         private HttpConst() {
 

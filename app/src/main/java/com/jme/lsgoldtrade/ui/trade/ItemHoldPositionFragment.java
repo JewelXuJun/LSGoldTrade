@@ -248,7 +248,7 @@ public class ItemHoldPositionFragment extends JMEBaseFragment implements BaseQui
 
                             String floatProfit = (new BigDecimal(MarketUtil.getPriceValue(margin))
                                     .multiply(new BigDecimal(contractValue)).multiply(new BigDecimal(positionVo.getPosition())))
-                                    .add(new BigDecimal(positionVo.getUnliquidatedProfit())).setScale(2, BigDecimal.ROUND_HALF_UP).toPlainString();
+                                    .add(new BigDecimal(positionVo.getUnliquidatedProfitStr())).setScale(2, BigDecimal.ROUND_HALF_UP).toPlainString();
 
                             mList.add(floatProfit);
                         }
