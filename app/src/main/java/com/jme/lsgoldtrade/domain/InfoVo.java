@@ -91,11 +91,11 @@ public class InfoVo implements Serializable {
 
         private long channelId;
 
-        private long createUser;
+        private String createUser;
 
-        private long cancelUser;
+        private String cancelUser;
 
-        private long checkUser;
+        private String checkUser;
 
         private String title;
 
@@ -157,27 +157,27 @@ public class InfoVo implements Serializable {
             this.channelId = channelId;
         }
 
-        public long getCreateUser() {
+        public String getCreateUser() {
             return createUser;
         }
 
-        public void setCreateUser(long createUser) {
+        public void setCreateUser(String createUser) {
             this.createUser = createUser;
         }
 
-        public long getCancelUser() {
+        public String getCancelUser() {
             return cancelUser;
         }
 
-        public void setCancelUser(long cancelUser) {
+        public void setCancelUser(String cancelUser) {
             this.cancelUser = cancelUser;
         }
 
-        public long getCheckUser() {
+        public String getCheckUser() {
             return checkUser;
         }
 
-        public void setCheckUser(long checkUser) {
+        public void setCheckUser(String checkUser) {
             this.checkUser = checkUser;
         }
 

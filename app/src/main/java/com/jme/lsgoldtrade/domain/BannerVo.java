@@ -3,48 +3,52 @@ package com.jme.lsgoldtrade.domain;
 public class BannerVo {
 
     /**
-     * "actionUrl": "string",
-     * "adsenseId": 0,
-     * "cancelUser": 0,
-     * "checkDate": "2019-02-25T06:25:58.186Z",
-     * "checkUser": 0,
-     * "createTime": "2019-02-25T06:25:58.186Z",
-     * "createUser": 0,
-     * "endDate": "2019-02-25T06:25:58.186Z",
-     * "id": "string",
-     * "itemTxt": "string",
-     * "itemType": "string",
-     * "releaseDate": "2019-02-25T06:25:58.186Z",
-     * "releaseTime": "2019-02-25T06:25:58.186Z",
-     * "releaseTimeArea": "string",
-     * "releaseType": "string",
-     * "resUrl": "string",
-     * "siteId": 0,
-     * "sort": 0,
-     * "startDate": "2019-02-25T06:25:58.187Z",
-     * "state": "string",
-     * "updateTime": "2019-02-25T06:25:58.187Z"
+     * "id":"1105281983937896449",
+     * "adsenseId":1,
+     * "itemTxt":"开户002",
+     * "resUrl":"https://tjshj.oss-cn-beijing.aliyuncs.com/20190312/15523547203262396318189709125451.jpg",
+     * "actionUrl":"https://portal.taijs.com",
+     * "sort":222,
+     * "state":"d",
+     * "siteId":1,
+     * "startDate":"2019-03-12 00:00:00",
+     * "endDate":"2019-04-06 00:00:00",
+     * "createUser":"超级管理员",
+     * "createTime":"2019-03-12 09:38:54",
+     * "updateTime":"2019-03-12 09:38:54"
      */
 
-    private String actionUrl;
+    private String id;
 
     private long adsenseId;
 
-    private long cancelUser;
+    private String itemTxt;
 
-    private String checkDate;
+    private String resUrl;
 
-    private long checkUser;
+    private String actionUrl;
 
-    private String createTime;
+    private long sort;
 
-    private long createUser;
+    private String state;
+
+    private long siteId;
+
+    private String startDate;
 
     private String endDate;
 
-    private long id;
+    private String createUser;
 
-    private String itemTxt;
+    private String createTime;
+
+    private String updateTime;
+
+    private String cancelUser;
+
+    private String checkDate;
+
+    private String checkUser;
 
     private String itemType;
 
@@ -56,24 +60,12 @@ public class BannerVo {
 
     private String releaseType;
 
-    private String resUrl;
-
-    private long siteId;
-
-    private long sort;
-
-    private String startDate;
-
-    private String state;
-
-    private String updateTime;
-
-    public String getActionUrl() {
-        return actionUrl;
+    public String getId() {
+        return id;
     }
 
-    public void setActionUrl(String actionUrl) {
-        this.actionUrl = actionUrl;
+    public void setId(String id) {
+        this.id = id;
     }
 
     public long getAdsenseId() {
@@ -84,11 +76,99 @@ public class BannerVo {
         this.adsenseId = adsenseId;
     }
 
-    public long getCancelUser() {
+    public String getItemTxt() {
+        return itemTxt;
+    }
+
+    public void setItemTxt(String itemTxt) {
+        this.itemTxt = itemTxt;
+    }
+
+    public String getResUrl() {
+        return resUrl;
+    }
+
+    public void setResUrl(String resUrl) {
+        this.resUrl = resUrl;
+    }
+
+    public String getActionUrl() {
+        return actionUrl;
+    }
+
+    public void setActionUrl(String actionUrl) {
+        this.actionUrl = actionUrl;
+    }
+
+    public long getSort() {
+        return sort;
+    }
+
+    public void setSort(long sort) {
+        this.sort = sort;
+    }
+
+    public String getState() {
+        return state;
+    }
+
+    public void setState(String state) {
+        this.state = state;
+    }
+
+    public long getSiteId() {
+        return siteId;
+    }
+
+    public void setSiteId(long siteId) {
+        this.siteId = siteId;
+    }
+
+    public String getStartDate() {
+        return startDate;
+    }
+
+    public void setStartDate(String startDate) {
+        this.startDate = startDate;
+    }
+
+    public String getEndDate() {
+        return endDate;
+    }
+
+    public void setEndDate(String endDate) {
+        this.endDate = endDate;
+    }
+
+    public String getCreateUser() {
+        return createUser;
+    }
+
+    public void setCreateUser(String createUser) {
+        this.createUser = createUser;
+    }
+
+    public String getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(String createTime) {
+        this.createTime = createTime;
+    }
+
+    public String getUpdateTime() {
+        return updateTime;
+    }
+
+    public void setUpdateTime(String updateTime) {
+        this.updateTime = updateTime;
+    }
+
+    public String getCancelUser() {
         return cancelUser;
     }
 
-    public void setCancelUser(long cancelUser) {
+    public void setCancelUser(String cancelUser) {
         this.cancelUser = cancelUser;
     }
 
@@ -100,52 +180,12 @@ public class BannerVo {
         this.checkDate = checkDate;
     }
 
-    public long getCheckUser() {
+    public String getCheckUser() {
         return checkUser;
     }
 
-    public void setCheckUser(long checkUser) {
+    public void setCheckUser(String checkUser) {
         this.checkUser = checkUser;
-    }
-
-    public String getCreateTime() {
-        return createTime;
-    }
-
-    public void setCreateTime(String createTime) {
-        this.createTime = createTime;
-    }
-
-    public long getCreateUser() {
-        return createUser;
-    }
-
-    public void setCreateUser(long createUser) {
-        this.createUser = createUser;
-    }
-
-    public String getEndDate() {
-        return endDate;
-    }
-
-    public void setEndDate(String endDate) {
-        this.endDate = endDate;
-    }
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    public String getItemTxt() {
-        return itemTxt;
-    }
-
-    public void setItemTxt(String itemTxt) {
-        this.itemTxt = itemTxt;
     }
 
     public String getItemType() {
@@ -186,53 +226,5 @@ public class BannerVo {
 
     public void setReleaseType(String releaseType) {
         this.releaseType = releaseType;
-    }
-
-    public String getResUrl() {
-        return resUrl;
-    }
-
-    public void setResUrl(String resUrl) {
-        this.resUrl = resUrl;
-    }
-
-    public long getSiteId() {
-        return siteId;
-    }
-
-    public void setSiteId(long siteId) {
-        this.siteId = siteId;
-    }
-
-    public long getSort() {
-        return sort;
-    }
-
-    public void setSort(long sort) {
-        this.sort = sort;
-    }
-
-    public String getStartDate() {
-        return startDate;
-    }
-
-    public void setStartDate(String startDate) {
-        this.startDate = startDate;
-    }
-
-    public String getState() {
-        return state;
-    }
-
-    public void setState(String state) {
-        this.state = state;
-    }
-
-    public String getUpdateTime() {
-        return updateTime;
-    }
-
-    public void setUpdateTime(String updateTime) {
-        this.updateTime = updateTime;
     }
 }
