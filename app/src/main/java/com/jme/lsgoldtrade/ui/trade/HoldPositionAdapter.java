@@ -99,7 +99,7 @@ public class HoldPositionAdapter extends BaseQuickAdapter<PositionVo, BaseViewHo
             else
                 rateStr = "-100.00%";
         } else {
-            rateStr = floatValue.divide(positionValue, 4, BigDecimal.ROUND_UP).multiply(new BigDecimal(100)).setScale(2).toPlainString() + "%";
+            rateStr = floatValue.divide(positionValue, 4, BigDecimal.ROUND_HALF_UP).multiply(new BigDecimal(100)).setScale(2).toPlainString() + "%";
         }
 
         return rateStr;
