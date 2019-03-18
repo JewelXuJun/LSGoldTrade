@@ -269,6 +269,7 @@ public class HoldPositionFragment extends JMEBaseFragment implements OnRefreshLi
                         .add(new BigDecimal(mAccountVo.getFreezeBalanceStr()))
                         .add(floatTotal)
                         .add(new BigDecimal(mAccountVo.getPositionMarginStr()))
+                        .subtract(new BigDecimal(mAccountVo.getRuntimeFeeStr()))
                         .toPlainString();
                 String minReserveFund = mAccountVo.getMinReserveFundStr();
                 String runtimeFee = mAccountVo.getRuntimeFeeStr();
