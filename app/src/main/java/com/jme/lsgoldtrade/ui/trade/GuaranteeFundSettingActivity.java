@@ -175,14 +175,18 @@ public class GuaranteeFundSettingActivity extends JMEBaseActivity {
                     if (riskRate.compareTo(new BigDecimal(0)) == 0) {
                         message = getString(R.string.trade_guarantee_fund_message1);
                     } else {
-                        String riskRateValue = BigDecimalUtil.formatRate(riskRate.multiply(new BigDecimal(100)).toPlainString());
+                        if (new BigDecimal(value).compareTo(new BigDecimal(mTotal)) == 1) {
+                            message = getString(R.string.trade_guarantee_fund_message5);
+                        } else {
+                            String riskRateValue = BigDecimalUtil.formatRate(riskRate.multiply(new BigDecimal(100)).toPlainString());
 
-                        if (riskRate.compareTo(new BigDecimal(mForcecloseth)) == -1)
-                            message = String.format(getString(R.string.trade_guarantee_fund_message2), riskRateValue);
-                        else if (riskRate.compareTo(new BigDecimal(mForcecloseth)) == 1 && riskRate.compareTo(new BigDecimal(mWarnth)) == -1)
-                            message = String.format(getString(R.string.trade_guarantee_fund_message3), riskRateValue);
-                        else
-                            message = String.format(getString(R.string.trade_guarantee_fund_message4), riskRateValue);
+                            if (riskRate.compareTo(new BigDecimal(mForcecloseth)) == -1)
+                                message = String.format(getString(R.string.trade_guarantee_fund_message2), riskRateValue);
+                            else if (riskRate.compareTo(new BigDecimal(mForcecloseth)) == 1 && riskRate.compareTo(new BigDecimal(mWarnth)) == -1)
+                                message = String.format(getString(R.string.trade_guarantee_fund_message3), riskRateValue);
+                            else
+                                message = String.format(getString(R.string.trade_guarantee_fund_message4), riskRateValue);
+                        }
                     }
 
                     mWindow.setData(message, (view) -> getMinReserveFund());

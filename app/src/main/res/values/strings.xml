@@ -182,6 +182,7 @@
     <string name="trade_guarantee_fund_message2">尊敬的客户，该保底资金设置的当前风险率为%1$s，小于保底平仓指标，将会触发系统保底平仓，是否继续设置?</string>
     <string name="trade_guarantee_fund_message3">尊敬的客户，该保底资金设置的当前风险率为%1$s，小于保底预警指标，系统将限制开仓，是否继续设置?</string>
     <string name="trade_guarantee_fund_message4">尊敬的客户，该保底资金设置的当前风险率为%1$s，祝您投资愉快。</string>
+    <string name="trade_guarantee_fund_message5">尊敬的客户，保底资金的设置不能超过当前总权益，是否继续设置?</string>
 
     <!-- Personal -->
     <string name="personal_login">登录/注册</string>
