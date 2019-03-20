@@ -559,7 +559,7 @@ public class DeclarationFormFragment extends JMEBaseFragment {
             showShortToast(R.string.trade_limit_min_amount_error);
         else if (mMaxOrderQty != -1 && new BigDecimal(amount).compareTo(new BigDecimal(mMaxOrderQty)) == 1)
             showShortToast(R.string.trade_limit_max_amount_error);
-        else if (mMaxOrderQty == -1 && mMaxHoldQty != -1 && new BigDecimal(holdAmount).compareTo(new BigDecimal(mMaxHoldQty)) == 1)
+        else if (mMaxHoldQty != -1 && new BigDecimal(holdAmount).compareTo(new BigDecimal(mMaxHoldQty)) == 1)
             showShortToast(R.string.trade_limit_max_amount_error2);
         else
             showPopupWindow(contractID, price, amount, bsFlag, ocFlag);
