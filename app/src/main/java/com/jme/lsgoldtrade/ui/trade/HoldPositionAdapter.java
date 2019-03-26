@@ -3,6 +3,7 @@ package com.jme.lsgoldtrade.ui.trade;
 import android.content.Context;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
+import android.text.TextUtils;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
@@ -46,14 +47,18 @@ public class HoldPositionAdapter extends BaseQuickAdapter<PositionVo, BaseViewHo
             return;
 
         boolean isSelected = mPosition == helper.getAdapterPosition();
+        String floatValue = "";
+        int typeValue = 0;
 
         String contractID = item.getContractId();
         String type = item.getType();
-        String floatValue = mList.get(helper.getAdapterPosition());
+        if (null != mList && 0 != mList.size())
+            floatValue = mList.get(helper.getAdapterPosition());
         String average = item.getPositionAverageStr();
         long position = item.getPosition();
         long frozen = item.getOffsetFrozen();
-        int typeValue = new BigDecimal(floatValue).compareTo(new BigDecimal(0));
+        if (!TextUtils.isEmpty(floatValue))
+            typeValue = new BigDecimal(floatValue).compareTo(new BigDecimal(0));
 
         helper.setBackgroundColor(R.id.layout_item, isSelected ? ContextCompat.getColor(mContext, R.color.color_toolbar_blue)
                 : ContextCompat.getColor(mContext, R.color.white))
@@ -73,10 +78,10 @@ public class HoldPositionAdapter extends BaseQuickAdapter<PositionVo, BaseViewHo
                 .setText(R.id.tv_average_price, MarketUtil.decimalFormatMoney(average))
                 .setTextColor(R.id.tv_average_price, isSelected ? ContextCompat.getColor(mContext, R.color.white)
                         : ContextCompat.getColor(mContext, R.color.color_text_black))
-                .setText(R.id.tv_float, MarketUtil.decimalFormatMoney(floatValue))
+                .setText(R.id.tv_float, TextUtils.isEmpty(floatValue) ? mContext.getResources().getString(R.string.text_no_data_default) : MarketUtil.decimalFormatMoney(floatValue))
                 .setTextColor(R.id.tv_float, isSelected ? ContextCompat.getColor(mContext, R.color.white)
                         : ContextCompat.getColor(mContext, MarketUtil.getPriceStateColor(typeValue)))
-                .setText(R.id.tv_rate, getRate(contractID, floatValue, average, position))
+                .setText(R.id.tv_rate, TextUtils.isEmpty(floatValue) ? mContext.getResources().getString(R.string.text_no_data_default) : getRate(contractID, floatValue, average, position))
                 .setTextColor(R.id.tv_rate, isSelected ? ContextCompat.getColor(mContext, R.color.white)
                         : ContextCompat.getColor(mContext, MarketUtil.getPriceStateColor(typeValue)));
     }

@@ -402,7 +402,8 @@ public class HoldPositionFragment extends JMEBaseFragment implements OnRefreshLi
                             }
                         }
 
-                        mAdapter.setList(mList);
+                        if (!bFlag)
+                            mAdapter.setList(mList);
 
                         calculateValue();
 
@@ -439,7 +440,7 @@ public class HoldPositionFragment extends JMEBaseFragment implements OnRefreshLi
                 if (bFlag) {
                     bFlag = false;
 
-                    mHandler.sendEmptyMessageDelayed(Constants.Msg.MSG_TRADE_POSITION_UPDATE_DATA, getTimeInterval());
+                    mHandler.sendEmptyMessageDelayed(Constants.Msg.MSG_TRADE_POSITION_UPDATE_DATA, 0);
                     mHandler.sendEmptyMessageDelayed(Constants.Msg.MSG_TRADE_POSITION_UPDATE_ACCOUNT_DATA, AppConfig.Minute);
                 }
 

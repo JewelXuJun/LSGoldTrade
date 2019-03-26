@@ -293,7 +293,8 @@ public class CurrentHoldPositionActivity extends JMEBaseActivity implements OnRe
                             }
                         }
 
-                        mAdapter.setList(mList);
+                        if (!bFlag)
+                            mAdapter.setList(mList);
 
                         if (bHasNext) {
                             if (mCurrentPage == 1)
@@ -327,7 +328,7 @@ public class CurrentHoldPositionActivity extends JMEBaseActivity implements OnRe
                 if (bFlag) {
                     bFlag = false;
 
-                    mHandler.sendEmptyMessageDelayed(Constants.Msg.MSG_POSITION_UPDATE_DATA, getTimeInterval());
+                    mHandler.sendEmptyMessageDelayed(Constants.Msg.MSG_POSITION_UPDATE_DATA, 0);
                     mHandler.sendEmptyMessageDelayed(Constants.Msg.MSG_POSITION_UPDATE_ACCOUNT_DATA, AppConfig.Minute);
                 }
 

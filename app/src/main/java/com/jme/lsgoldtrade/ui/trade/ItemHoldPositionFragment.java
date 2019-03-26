@@ -280,7 +280,7 @@ public class ItemHoldPositionFragment extends JMEBaseFragment implements BaseQui
 
         for (PositionVo positionVo : mPositionVoList) {
             if (null != positionVo) {
-                if (positionVo.getContractId().equalsIgnoreCase(contractID)){
+                if (positionVo.getContractId().equalsIgnoreCase(contractID)) {
                     value = value + positionVo.getPosition();
                 }
             }
@@ -355,7 +355,8 @@ public class ItemHoldPositionFragment extends JMEBaseFragment implements BaseQui
                         }
                     }
 
-                    mAdapter.setList(mList);
+                    if (!bFlag)
+                        mAdapter.setList(mList);
 
                     if (bHasNext) {
                         if (mCurrentPage == 1)
@@ -382,7 +383,7 @@ public class ItemHoldPositionFragment extends JMEBaseFragment implements BaseQui
                 if (bFlag) {
                     bFlag = false;
 
-                    mHandler.sendEmptyMessageDelayed(Constants.Msg.MSG_DECLARATIONFORM_POSITION_UPDATE_DATA, getTimeInterval());
+                    mHandler.sendEmptyMessageDelayed(Constants.Msg.MSG_DECLARATIONFORM_POSITION_UPDATE_DATA, 0);
                     mHandler.sendEmptyMessageDelayed(Constants.Msg.MSG_DECLARATIONFORM_POSITION_UPDATE_ACCOUNT_DATA, AppConfig.Minute);
                 }
 
