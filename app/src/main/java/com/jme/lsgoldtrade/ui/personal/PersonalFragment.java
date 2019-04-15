@@ -1,11 +1,16 @@
 package com.jme.lsgoldtrade.ui.personal;
 
+import android.Manifest;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.view.View;
 
 import com.alibaba.android.arouter.launcher.ARouter;
-import com.jme.common.network.DTRequest;
-import com.jme.common.network.Head;
 import com.jme.common.util.StatusBarUtil;
 import com.jme.lsgoldtrade.R;
 import com.jme.lsgoldtrade.base.JMEBaseFragment;
@@ -15,6 +20,8 @@ import com.jme.lsgoldtrade.databinding.FragmentPersonalBinding;
 public class PersonalFragment extends JMEBaseFragment {
 
     private FragmentPersonalBinding mBinding;
+
+    private static final int REQUEST_CODE_ASK_CALL_PHONE = 0x126;
 
     @Override
     protected int getContentViewId() {
@@ -61,9 +68,41 @@ public class PersonalFragment extends JMEBaseFragment {
         }
     }
 
+    private void callCustomer() {
+        if (Build.VERSION.SDK_INT >= 23) {
+            int checkCallPhonePermission = ContextCompat.checkSelfPermission(mContext, Manifest.permission.CALL_PHONE);
+
+            if (checkCallPhonePermission != PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(mActivity, new String[]{Manifest.permission.CALL_PHONE}, REQUEST_CODE_ASK_CALL_PHONE);
+                return;
+            } else {
+                callPhone();
+            }
+        } else {
+            callPhone();
+        }
+    }
+
+    private void callPhone() {
+        Intent intent;
+        intent = new Intent("android.intent.action.CALL", Uri.parse("tel:4008276006"));
+
+        startActivity(intent);
+    }
+
     @Override
-    protected void DataReturn(DTRequest request, Head head, Object response) {
-        super.DataReturn(request, head, response);
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        switch (requestCode) {
+            case REQUEST_CODE_ASK_CALL_PHONE:
+                if (grantResults[0] == PackageManager.PERMISSION_GRANTED)
+                    callCustomer();
+
+                break;
+            default:
+                super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
+                break;
+        }
     }
 
     public class ClickHandlers {
@@ -84,7 +123,7 @@ public class PersonalFragment extends JMEBaseFragment {
         }
 
         public void onClickCustomerService() {
-
+            callCustomer();
         }
 
         public void onClickMessageCenter() {
