@@ -262,24 +262,24 @@
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/height_item_normal"
-                    android:onClick="@{() -> handlers.onClickFeedback()}"
+                    android:onClick="@{() -> handlers.onClickAbout()}"
                     android:paddingLeft="@dimen/common_area_margin_big"
                     android:paddingRight="@dimen/common_area_margin">
 
                     <ImageView
-                        android:id="@+id/img_feedback"
+                        android:id="@+id/img_about"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
-                        android:background="@mipmap/ic_feedback" />
+                        android:background="@mipmap/ic_about" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
                         android:layout_marginLeft="@dimen/common_area_margin"
-                        android:layout_toRightOf="@+id/img_feedback"
-                        android:text="@string/personal_feedback"
+                        android:layout_toRightOf="@+id/img_about"
+                        android:text="@string/personal_about"
                         android:textColor="@color/color_text_black"
                         android:textSize="@dimen/size_normal" />
 
@@ -295,7 +295,7 @@
                         android:layout_height="@dimen/common_line_height"
                         android:layout_alignParentBottom="true"
                         android:layout_marginLeft="@dimen/common_area_margin_tiny"
-                        android:layout_toRightOf="@+id/img_feedback"
+                        android:layout_toRightOf="@+id/img_about"
                         android:background="@color/common_line_divider" />
 
                 </RelativeLayout>

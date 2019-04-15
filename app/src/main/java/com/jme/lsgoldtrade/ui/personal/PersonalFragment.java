@@ -100,13 +100,10 @@ public class PersonalFragment extends JMEBaseFragment {
             showShortToast(R.string.personal_expect);
         }
 
-        public void onClickFeedback() {
-            if (null == mUser || !mUser.isLogin())
-                showNeedLoginDialog();
-            else
-                ARouter.getInstance()
-                        .build(Constants.ARouterUriConst.FEEDBACK)
-                        .navigation();
+        public void onClickAbout() {
+            ARouter.getInstance()
+                    .build(Constants.ARouterUriConst.ABOUT)
+                    .navigation();
         }
 
         public void onClickSeeting() {

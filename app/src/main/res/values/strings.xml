@@ -199,7 +199,7 @@
     <string name="personal_version_information">版本信息</string>
     <string name="personal_clear_cache">清理缓存</string>
     <string name="personal_welcome">欢迎页</string>
-    <string name="personal_about">关于泰金所</string>
+    <string name="personal_about">关于</string>
     <string name="personal_logout">退出</string>
     <string name="personal_refresh_network">移动网络刷新频率</string>
     <string name="personal_refresh_wifi">WiFi网络刷新频率</string>
