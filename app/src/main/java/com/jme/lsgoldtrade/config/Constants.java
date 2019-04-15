@@ -26,6 +26,8 @@ public class Constants {
         public static String URL_BASE_TRADE;
         public static String URL_BASE_MANAGEMENT;
         public static String URL_OPEN_ACCOUNT = "https://portal.taijs.com/lsjhj-openacct/wap/register.html";
+        public static String URL_DISCLAIMER = "http://www.taijs.com/upload/mianze.html";
+        public static String URL_PRIVACY_POLICY = "http://www.taijs.com/upload/yszc.htm";
         public static String URL_INFO;
 
         static {

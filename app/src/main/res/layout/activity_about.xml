@@ -9,19 +9,28 @@
 
     </data>
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/common_background"
-        android:orientation="vertical">
-
-        <include layout="@layout/layout_toolbar" />
-
-        <include layout="@layout/item_line_vertical" />
+        android:background="@color/common_background">
 
         <LinearLayout
+            android:id="@+id/layout_toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <include layout="@layout/layout_toolbar" />
+
+            <include layout="@layout/item_line_vertical" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/layout_version"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/layout_toolbar"
             android:background="@color/common_background"
             android:gravity="center"
             android:orientation="vertical">
@@ -30,7 +39,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginTop="@dimen/common_area_margin_big" />
+                android:layout_marginTop="@dimen/margin_normal"
+                android:background="@mipmap/ic_login_logo" />
 
             <TextView
                 android:id="@+id/tv_version"
@@ -38,17 +48,35 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginTop="@dimen/common_area_margin"
-                android:layout_marginBottom="@dimen/common_area_margin_big"
-                android:textColor="@color/color_blue"
-                android:textSize="@dimen/common_font_size" />
+                android:textColor="@color/color_text_normal"
+                android:textSize="@dimen/size_normal" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="@dimen/common_area_margin_tiny"
+                android:layout_marginBottom="@dimen/common_area_margin_large"
+                android:text="www.taijs.com"
+                android:textColor="@color/color_text_normal"
+                android:textSize="@dimen/size_normal" />
 
         </LinearLayout>
 
-        <include layout="@layout/item_line_vertical" />
+        <LinearLayout
+            android:id="@+id/layout_version_line"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/layout_version">
+
+            <include layout="@layout/item_line_vertical" />
+
+        </LinearLayout>
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/layout_version_line">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -59,7 +87,7 @@
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/height_item_normal"
-                    android:onClick="@{() -> handlers.onClickPublicNumber()}">
+                    android:onClick="@{() -> handlers.onClickFeedBack()}">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -67,8 +95,8 @@
                         android:layout_alignParentLeft="true"
                         android:layout_centerVertical="true"
                         android:layout_marginLeft="@dimen/common_page_margin"
-                        android:text="@string/personal_about_wx"
-                        android:textColor="@color/color_text_black"
+                        android:text="@string/personal_feedback"
+                        android:textColor="@color/color_text_normal"
                         android:textSize="@dimen/sp_16" />
 
                     <ImageView
@@ -87,7 +115,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/height_item_normal"
                     android:background="@color/white"
-                    android:onClick="@{() -> handlers.onClickFunction()}">
+                    android:onClick="@{() -> handlers.onClickDisclaimer()}">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -95,8 +123,8 @@
                         android:layout_alignParentLeft="true"
                         android:layout_centerVertical="true"
                         android:layout_marginLeft="@dimen/common_page_margin"
-                        android:text="@string/personal_about_function"
-                        android:textColor="@color/color_text_black"
+                        android:text="@string/personal_about_disclaimer"
+                        android:textColor="@color/color_text_normal"
                         android:textSize="@dimen/sp_16" />
 
                     <ImageView
@@ -115,7 +143,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/height_item_normal"
                     android:background="@color/white"
-                    android:onClick="@{() -> handlers.onClickContact()}">
+                    android:onClick="@{() -> handlers.onClickPrivacyPolicy()}">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -123,8 +151,8 @@
                         android:layout_alignParentLeft="true"
                         android:layout_centerVertical="true"
                         android:layout_marginLeft="@dimen/common_page_margin"
-                        android:text="@string/personal_about_contact"
-                        android:textColor="@color/color_text_black"
+                        android:text="@string/personal_about_privacy_policy"
+                        android:textColor="@color/color_text_normal"
                         android:textSize="@dimen/sp_16" />
 
                     <ImageView
@@ -143,6 +171,33 @@
 
         </RelativeLayout>
 
-    </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="@dimen/margin_big"
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="Copyright© 2019 泰金所"
+                android:textColor="@color/color_text_normal"
+                android:textSize="@dimen/sp_12" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/common_area_margin_tiny"
+                android:gravity="center"
+                android:text="All Rights Reserved"
+                android:textColor="@color/color_text_normal"
+                android:textSize="@dimen/sp_12" />
+
+        </LinearLayout>
+
+    </RelativeLayout>
 
 </layout>
