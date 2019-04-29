@@ -175,15 +175,21 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            android:layout_marginBottom="@dimen/margin_big"
+            android:layout_marginBottom="@dimen/margin_main_page_info"
             android:gravity="center_horizontal"
             android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@mipmap/ic_logo_sd" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="Copyright© 2019 泰金所"
+                android:text="Copyright© 2015-2019 泰金所"
+                android:layout_marginTop="@dimen/common_area_margin"
                 android:textColor="@color/color_text_normal"
                 android:textSize="@dimen/sp_12" />
 
