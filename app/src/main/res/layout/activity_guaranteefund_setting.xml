@@ -43,6 +43,8 @@
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="@dimen/common_area_margin_big"
                 android:background="@null"
+                android:enabled="false"
+                android:focusable="false"
                 android:hint="@string/trade_guarantee_fund_input"
                 android:inputType="numberDecimal"
                 android:maxLines="1"
