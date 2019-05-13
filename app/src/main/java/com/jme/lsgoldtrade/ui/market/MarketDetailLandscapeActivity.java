@@ -132,7 +132,11 @@ public class MarketDetailLandscapeActivity extends JMEBaseActivity implements FC
     protected void initListener() {
         super.initListener();
 
-        mChart.setOnChartListener((showTChart, unit) -> sendChartRefreshMessage(showTChart));
+        mChart.setOnChartListener((showTChart, unit) -> {
+            iRequestKDataFlag = NONE;
+
+            sendChartRefreshMessage(showTChart);
+        });
 
         mKChart.setOnKChartListener(new OnKChartListener() {
             @Override

@@ -150,7 +150,11 @@ public class MarketDetailActivity extends JMEBaseActivity implements FChart.OnPr
 
         mChart.setOnLandscapeListener((view) -> gotoMarketDetailLandscapeActivity());
 
-        mChart.setOnChartListener((showTChart, unit) -> sendChartRefreshMessage(showTChart));
+        mChart.setOnChartListener((showTChart, unit) -> {
+            iRequestKDataFlag = NONE;
+
+            sendChartRefreshMessage(showTChart);
+        });
 
         mKChart.setOnKChartListener(new OnKChartListener() {
             @Override
