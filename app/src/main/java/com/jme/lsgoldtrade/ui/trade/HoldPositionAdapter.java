@@ -52,7 +52,7 @@ public class HoldPositionAdapter extends BaseQuickAdapter<PositionVo, BaseViewHo
 
         String contractID = item.getContractId();
         String type = item.getType();
-        if (null != mList && 0 != mList.size())
+        if (null != mList && 0 != mList.size() && mList.size() > helper.getAdapterPosition())
             floatValue = mList.get(helper.getAdapterPosition());
         String average = item.getPositionAverageStr();
         long position = item.getPosition();
