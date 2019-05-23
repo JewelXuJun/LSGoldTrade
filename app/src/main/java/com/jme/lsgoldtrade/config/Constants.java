@@ -16,7 +16,7 @@ public class Constants {
         public static final int Test_LAN = 1;
         public static final int Produce = 2;
 
-        public static int Envi = Test_WAN;
+        public static int Envi = Produce;
 
         private HttpConst() {
 
@@ -42,10 +42,10 @@ public class Constants {
                 URL_BASE_MANAGEMENT = "http://tjs.developer.jsdttec.com";
                 URL_INFO = "http://tjs.developer.jsdttec.com/tjsmanage/infoapi/v1/ios/cmsComtentTxt/get?contentId=";
             } else if (Envi == Produce) {
-                URL_BASE_MARKET = "";
-                URL_BASE_TRADE = "";
-                URL_BASE_MANAGEMENT = "";
-                URL_INFO = "";
+                URL_BASE_MARKET = "https://180.96.49.165:18002";
+                URL_BASE_TRADE = "https://180.96.49.165:18001";
+                URL_BASE_MANAGEMENT = "http://tjs.developer.jsdttec.com";
+                URL_INFO = "http://tjs.developer.jsdttec.com/tjsmanage/infoapi/v1/ios/cmsComtentTxt/get?contentId=";
             }
         }
 
