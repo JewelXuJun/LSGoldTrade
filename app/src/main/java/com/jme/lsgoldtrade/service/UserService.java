@@ -5,6 +5,7 @@ import com.jme.common.network.DTResponse;
 import com.jme.common.network.IService;
 import com.jme.lsgoldtrade.config.Constants;
 import com.jme.lsgoldtrade.domain.ImageVerifyCodeVo;
+import com.jme.lsgoldtrade.domain.LoginResponse;
 import com.jme.lsgoldtrade.domain.NoticeVo;
 import com.jme.lsgoldtrade.domain.SynTimeVo;
 import com.jme.lsgoldtrade.config.User;
@@ -56,7 +57,7 @@ public class UserService extends IService<UserApi> {
 
     public API loginMsg = new API<String>("LoginMsg") {
         @Override
-        public Call<DTResponse> request(HashMap<String, String> params) {
+        public Call<LoginResponse> request(HashMap<String, String> params) {
 
             return mApi.loginMsg(params);
         }
@@ -64,7 +65,7 @@ public class UserService extends IService<UserApi> {
 
     public API login = new API<UserInfoVo>("Login") {
         @Override
-        public Call<DTResponse> request(HashMap<String, String> params) {
+        public Call<LoginResponse> request(HashMap<String, String> params) {
 
             return mApi.login(params);
         }

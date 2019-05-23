@@ -1,6 +1,7 @@
 package com.jme.lsgoldtrade.service;
 
 import com.jme.common.network.DTResponse;
+import com.jme.lsgoldtrade.domain.LoginResponse;
 
 import java.util.Map;
 
@@ -16,10 +17,10 @@ public interface UserApi {
     Call<DTResponse> kaptcha();
 
     @GET("/gold-trade/v1.0.0/android/loginMsg")
-    Call<DTResponse> loginMsg(@QueryMap Map<String, String> map);
+    Call<LoginResponse> loginMsg(@QueryMap Map<String, String> map);
 
     @POST("/gold-trade/v1.0.0/android/login")
-    Call<DTResponse> login(@Body Map<String, String> map);
+    Call<LoginResponse> login(@Body Map<String, String> map);
 
     @POST("/gold-trade/v1.0.0/android/logout")
     Call<DTResponse> logout(@QueryMap Map<String, String> map);
