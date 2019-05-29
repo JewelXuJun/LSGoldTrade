@@ -345,6 +345,8 @@ public class MarketDetailLandscapeActivity extends JMEBaseActivity implements FC
             bGetTradeDateFlag = true;
 
             mTChart.setTChartXAxisTime(timeLists, AppConfig.Minute);
+
+            getTChartData();
         }
     }
 
