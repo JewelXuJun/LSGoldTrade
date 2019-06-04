@@ -131,7 +131,7 @@ public class TChart extends LinearLayout {
     }
 
     public void loadTChartData(List<TChartVo> list) {
-        loadTChartData(list, true, false);
+        loadTChartData(list, false, false);
     }
 
     public void loadTChartData(JsonArray jsonArray, boolean isSingleVol) {
