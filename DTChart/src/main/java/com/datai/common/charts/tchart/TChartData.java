@@ -272,7 +272,8 @@ public class TChartData {
             list.add(averageData.getVal());
             list.add(currentData.getVal());
             list.add(currentData.getVal() - preclose);
-            list.add(bIsSingleVol ? currentData.getVal() : ((currentData.getVal() - preclose) / preclose) * 100);
+            list.add(bIsSingleVol ? currentData.getVal() :(new BigDecimal(currentData.getVal()).subtract(new BigDecimal(preclose)))
+                    .divide(new BigDecimal(preclose), 4, BigDecimal.ROUND_DOWN).multiply(new BigDecimal(100)).floatValue());
 
             return list;
         } else {
