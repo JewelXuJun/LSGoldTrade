@@ -218,8 +218,8 @@ public class TChartUIConfig {
         mFirstChart.getXAxis().setOnlyShowFirstLastValue(true, enable, startTime, endTime, closeTime);
     }
 
-    public void setXAxisTime(boolean enable, boolean haveMoreCloseTime, List<long[]> moreCloseTime) {
-        mFirstChart.getXAxis().setOnlyShowFirstLastValue(true, enable, haveMoreCloseTime, moreCloseTime);
+    public void setXAxisTime(boolean onlyShowFirstLastValue, boolean enable, boolean haveMoreCloseTime, List<long[]> moreCloseTime) {
+        mFirstChart.getXAxis().setOnlyShowFirstLastValue(onlyShowFirstLastValue, enable, haveMoreCloseTime, moreCloseTime);
     }
 
     public void setLineDataSet(LineDataSet set) {

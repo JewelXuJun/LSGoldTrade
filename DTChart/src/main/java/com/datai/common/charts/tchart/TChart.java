@@ -232,9 +232,11 @@ public class TChart extends LinearLayout {
                 bHaveCloseTime = true;
 
                 if (size > 2)
-                    mTConfig.setXAxisTime(bHaveCloseTime, true, list);
+                    mTConfig.setXAxisTime(true, bHaveCloseTime, true, list);
                 else
                     mTConfig.setXAxisTime(bHaveCloseTime, list.get(0)[0], list.get(list.size() - 1)[1], list.get(list.size() - 1)[0] - list.get(0)[1]);
+            } else {
+                mTConfig.setXAxisTime(false, true, true, list);
             }
 
             mTChartData.setTradeTime(list, timeInterval);
@@ -400,11 +402,11 @@ public class TChart extends LinearLayout {
         if (bAverageFlag) {
             mFirstChart.getXAxis().setLabelsToSkip(mFirstChart.getXValCount() / 4);
         } else {
-           long[] timeValues = new long[mTimeLists.size()];
+            long[] timeValues = new long[mTimeLists.size()];
 
-           for (int i = 0; i < mTimeLists.size(); i++) {
-               timeValues[i] = (mTimeLists.get(i)[1] - mTimeLists.get(i)[0]) / Config.TimeInterval_OneMinute;
-           }
+            for (int i = 0; i < mTimeLists.size(); i++) {
+                timeValues[i] = (mTimeLists.get(i)[1] - mTimeLists.get(i)[0]) / Config.TimeInterval_OneMinute;
+            }
 
             mFirstChart.getXAxis().setLabelsToSkip(timeValues, true);
         }

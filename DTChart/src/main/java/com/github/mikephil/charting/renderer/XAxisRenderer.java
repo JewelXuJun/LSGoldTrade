@@ -265,9 +265,17 @@ public class XAxisRenderer extends AxisRenderer {
                 } else {
                     if (i > count) {
                         label = "";
-                    } else if (i % mXAxis.mAxisLabelModulus == 0) {
+                    } else if (i == 0) {
+                        label = sdf.format(timeLists.get(0)[0]);
+
+                        position[0] = position[0] + Utils.calcTextWidth(mAxisLabelPaint, label) / 2;  //Add by XuJun 使X轴首数值显示靠左对齐
+                    } else if (i == count - 1) {
+                        label = sdf.format(timeLists.get(0)[1]);
+
+                        position[0] = position[0] - Utils.calcTextWidth(mAxisLabelPaint, label) / 2;  //Add by XuJun 使X轴尾数值显示靠右对齐
+                    } /*else if (i % mXAxis.mAxisLabelModulus == 0) {
                         label = mXAxis.getValues().get(i);
-                    } else {
+                    }*/ else {
                         label = "";
                     }
                 }
