@@ -70,7 +70,6 @@ public class MarketDetailActivity extends JMEBaseActivity implements FChart.OnPr
     private static final int MORE = 3;
     private static final String DIRECTION_AFTER = "1";
     private static final String DIRECTION_BEFORE = "2";
-    private static final String COUNT_TCHART = "660";
     private static final String COUNT_KCHART = "200";
 
     private String mContractId;
@@ -80,6 +79,7 @@ public class MarketDetailActivity extends JMEBaseActivity implements FChart.OnPr
     private boolean bRequestTDataFlag = false;
     private boolean bGetTradeDateFlag = false;
     private int iRequestKDataFlag = NONE;
+    private int mTChartCount;
 
     private Handler mHandler = new Handler() {
         public void handleMessage(Message msg) {
@@ -405,8 +405,20 @@ public class MarketDetailActivity extends JMEBaseActivity implements FChart.OnPr
 
             mTChart.setTChartXAxisTime(timeLists, AppConfig.Minute);
 
+            calculateTChartCount(timeLists);
+
             getTChartData();
         }
+    }
+
+    private void calculateTChartCount(List<long[]> timeLists) {
+        long timeTotal = 0;
+
+        for (long[] times : timeLists) {
+            timeTotal = timeTotal + (times[1] - times[0]);
+        }
+
+        mTChartCount = new BigDecimal(timeTotal).divide(new BigDecimal(AppConfig.Minute)).intValue() + 1;
     }
 
     private void updateMarketData(TenSpeedVo tenSpeedVo) {
@@ -576,7 +588,7 @@ public class MarketDetailActivity extends JMEBaseActivity implements FChart.OnPr
         HashMap<String, String> params = new HashMap<>();
         params.put("contractId", mContractId);
         params.put("qryFlag", DIRECTION_AFTER);
-        params.put("count", COUNT_TCHART);
+        params.put("count", mTChartCount == 0 ? "1440" : String.valueOf(mTChartCount));
 
         sendRequest(MarketService.getInstance().getTChartQuotes, params, false, false, false);
     }

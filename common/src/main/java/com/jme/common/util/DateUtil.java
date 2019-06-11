@@ -166,6 +166,9 @@ public class DateUtil {
     }
 
     public static String stringToAllTime(String date) {
+        if (TextUtils.isEmpty(date))
+            return "";
+
         format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
         try {
