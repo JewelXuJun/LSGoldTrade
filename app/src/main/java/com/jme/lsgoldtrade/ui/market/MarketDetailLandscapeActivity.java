@@ -309,14 +309,11 @@ public class MarketDetailLandscapeActivity extends JMEBaseActivity implements FC
     }
 
     public void getMoreKChartData(long oldestTime, KData.Unit unit) {
-        if (iRequestKDataFlag != NONE)
-            return;
-
         if (bHasMoreKDataFlag == false)
             return;
 
         Date date = new Date(oldestTime - 1);
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmm");
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
 
         iRequestKDataFlag = MORE;
 
@@ -360,8 +357,6 @@ public class MarketDetailLandscapeActivity extends JMEBaseActivity implements FC
         }
 
         mTChartCount = new BigDecimal(timeTotal).divide(new BigDecimal(AppConfig.Minute)).intValue() + 1;
-
-        System.out.println("---" + mTChartCount);
     }
 
     private void updateMarketData(TenSpeedVo tenSpeedVo) {
