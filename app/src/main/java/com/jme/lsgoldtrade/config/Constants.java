@@ -12,12 +12,12 @@ public class Constants {
     // Http常量配置
     public static final class HttpConst {
 
-        public static final int Test_WAN = 0;
-        public static final int Test_LAN = 1;
-        public static final int Produce = 2;
-        public static final int Uat = 3;
+        public static final int TEST_WAN = 0;
+        public static final int TEST_LAN = 1;
+        public static final int PRODUCE = 2;
+        public static final int UAT = 3;
 
-        public static int Envi = Test_WAN;
+        public static int Envi = TEST_WAN;
 
         private HttpConst() {
 
@@ -33,24 +33,24 @@ public class Constants {
         public static String URL_INFO;
 
         static {
-            if (Envi == Test_WAN) {
+            if (Envi == TEST_WAN) {
                 URL_BASE_MARKET = "https://222.190.245.2:18012";
                 URL_BASE_TRADE = "https://222.190.245.2:18012";
                 URL_BASE_ACCOUNT = "http://192.168.10.41:8008";
                 URL_BASE_MANAGEMENT = "http://tjs.developer.jsdttec.com";
                 URL_INFO = "http://tjs.developer.jsdttec.com/tjsmanage/infoapi/v1/android/cmsComtentTxt/get?contentId=";
-            } else if (Envi == Test_LAN) {
+            } else if (Envi == TEST_LAN) {
                 URL_BASE_MARKET = "http://192.168.10.171:8080";
                 URL_BASE_TRADE = "http://192.168.10.171:8081";
                 URL_BASE_ACCOUNT = "http://192.168.10.41:8008";
                 URL_BASE_MANAGEMENT = "http://tjs.developer.jsdttec.com";
                 URL_INFO = "http://tjs.developer.jsdttec.com/tjsmanage/infoapi/v1/android/cmsComtentTxt/get?contentId=";
-            } else if (Envi == Produce) {
+            } else if (Envi == PRODUCE) {
                 URL_BASE_MARKET = "https://180.96.49.165:18002";
                 URL_BASE_TRADE = "https://180.96.49.165:18001";
                 URL_BASE_MANAGEMENT = "http://tjs.developer.jsdttec.com";
                 URL_INFO = "http://tjs.developer.jsdttec.com/tjsmanage/infoapi/v1/android/cmsComtentTxt/get?contentId=";
-            } else if (Envi == Uat) {
+            } else if (Envi == UAT) {
                 URL_BASE_MARKET = "http://192.168.10.186:6543";
                 URL_BASE_TRADE = "http://192.168.10.186:6666";
                 URL_BASE_MANAGEMENT = "http://192.168.10.188:18080";
