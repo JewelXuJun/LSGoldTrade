@@ -1,7 +1,6 @@
 package com.jme.common.util;
 
 import android.text.TextUtils;
-import android.util.Log;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;

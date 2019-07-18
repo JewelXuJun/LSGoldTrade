@@ -80,7 +80,7 @@ public class BarData extends BarLineScatterCandleBubbleData<BarDataSet> {
     }
 
     /**
-     * Returns true if this BarData object contains grouped DataSets (more than
+     * Returns true if this BarData object contains grouped DataSets (down than
      * 1 DataSet).
      * 
      * @return

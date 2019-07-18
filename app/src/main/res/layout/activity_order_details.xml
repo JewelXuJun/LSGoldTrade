@@ -1,0 +1,469 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+        <variable
+            name="handlers"
+            type="com.jme.lsgoldtrade.ui.order.OrderDetailsActivity.ClickHandlers" />
+
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        >
+
+        <LinearLayout
+            android:id="@+id/lltitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            >
+
+            <include layout="@layout/layout_toolbar" />
+
+            <include layout="@layout/item_line_vertical" />
+
+        </LinearLayout>
+
+        <android.support.v4.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                >
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="15dp"
+                    android:paddingRight="15dp"
+                    >
+
+                    <TextView
+                        android:layout_width="120dp"
+                        android:layout_height="wrap_content"
+                        android:text="委托交易品种"
+                        android:textSize="@dimen/sp_14"
+                        android:textColor="@color/color_333"
+                        />
+
+                    <TextView
+                        android:id="@+id/pinzhong"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Au(T+D)"
+                        android:textSize="@dimen/sp_18"
+                        android:textColor="@color/color_333"
+                        />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="15dp"
+                    android:paddingRight="15dp"
+                    >
+
+                    <TextView
+                        android:layout_width="120dp"
+                        android:layout_height="wrap_content"
+                        android:text="委托方向"
+                        android:textSize="@dimen/sp_14"
+                        android:textColor="@color/color_333"
+                        />
+
+                    <TextView
+                        android:id="@+id/choose_direction"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="多"
+                        android:textSize="@dimen/sp_15"
+                        android:layout_marginLeft="8dp"
+                        />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="15dp"
+                    android:paddingRight="15dp"
+                    >
+
+                    <TextView
+                        android:layout_width="120dp"
+                        android:layout_height="wrap_content"
+                        android:text="委托开仓时间段"
+                        android:textSize="@dimen/sp_14"
+                        android:textColor="@color/color_333"
+                        />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        >
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            >
+
+                            <TextView
+                                android:id="@+id/kaicangbeginyear"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="2019/3/20"
+                                android:textSize="@dimen/sp_14"
+                                android:textColor="@color/color_000"
+                                />
+
+                            <TextView
+                                android:id="@+id/kaicangbeginclock"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="07:30:00"
+                                android:textSize="@dimen/sp_18"
+                                android:textColor="@color/color_000"
+                                />
+
+                        </LinearLayout>
+
+                        <TextView
+                            android:layout_width="30dp"
+                            android:layout_height="1dp"
+                            android:layout_gravity="center"
+                            android:background="@color/color_000"
+                            android:layout_marginLeft="15dp"
+                            android:layout_marginRight="15dp"
+                            />
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            >
+
+                            <TextView
+                                android:id="@+id/kaicangcloseyear"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="2019/3/20"
+                                android:textSize="@dimen/sp_14"
+                                android:textColor="@color/color_000"
+                                />
+
+                            <TextView
+                                android:id="@+id/kaicangcloseclock"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="07:59:59"
+                                android:textSize="@dimen/sp_18"
+                                android:textColor="@color/color_000"
+                                />
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="15dp"
+                    android:paddingRight="15dp"
+                    >
+
+                    <TextView
+                        android:layout_width="120dp"
+                        android:layout_height="wrap_content"
+                        android:text="委托平仓时间段"
+                        android:textSize="@dimen/sp_14"
+                        android:textColor="@color/color_333"
+                        />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        >
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            >
+
+                            <TextView
+                                android:id="@+id/pingcangbeginyear"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="2019/3/20"
+                                android:textSize="@dimen/sp_14"
+                                android:textColor="@color/color_000"
+                                />
+
+                            <TextView
+                                android:id="@+id/pingcangbeginclock"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="07:30:00"
+                                android:textSize="@dimen/sp_18"
+                                android:textColor="@color/color_000"
+                                />
+
+                        </LinearLayout>
+
+                        <TextView
+                            android:layout_width="30dp"
+                            android:layout_height="1dp"
+                            android:layout_gravity="center"
+                            android:background="@color/color_000"
+                            android:layout_marginLeft="15dp"
+                            android:layout_marginRight="15dp"
+                            />
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            >
+
+                            <TextView
+                                android:id="@+id/pingcangendyear"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="2019/3/20"
+                                android:textSize="@dimen/sp_14"
+                                android:textColor="@color/color_000"
+                                />
+
+                            <TextView
+                                android:id="@+id/pingcangendclock"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="07:59:59"
+                                android:textSize="@dimen/sp_18"
+                                android:textColor="@color/color_000"
+                                />
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="15dp"
+                    android:paddingRight="15dp"
+                    android:visibility="gone"
+                    >
+
+                    <TextView
+                        android:layout_width="120dp"
+                        android:layout_height="wrap_content"
+                        android:text="委托开仓价格"
+                        android:textSize="@dimen/sp_14"
+                        android:textColor="@color/color_333"
+                        />
+
+                    <TextView
+                        android:id="@+id/kaicangjiage"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="280.00"
+                        android:textSize="@dimen/sp_18"
+                        android:textColor="@color/color_0080ff"
+                        />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="15dp"
+                    android:paddingRight="15dp"
+                    >
+
+                    <TextView
+                        android:layout_width="120dp"
+                        android:layout_height="wrap_content"
+                        android:text="委托手数"
+                        android:textSize="@dimen/sp_14"
+                        android:textColor="@color/color_333"
+                        />
+
+                    <TextView
+                        android:id="@+id/weituoshu"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="1手"
+                        android:textSize="@dimen/sp_18"
+                        android:textColor="@color/color_0080ff"
+                        />
+
+                </LinearLayout>
+
+                <include layout="@layout/item_line_5" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:paddingLeft="15dp"
+                    android:paddingRight="15dp"
+                    >
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="盈亏设置"
+                        android:textSize="@dimen/sp_14"
+                        android:textColor="@color/color_333"
+                        android:layout_marginTop="20dp"
+                        />
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical"
+                        >
+
+                        <TextView
+                            android:id="@+id/yingli"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="盈利平仓线 50点"
+                            android:textSize="@dimen/sp_15"
+                            android:textColor="@color/color_ff3300"
+                            android:layout_marginTop="20dp"
+                            android:layout_marginBottom="20dp"
+                            />
+
+                        <include layout="@layout/item_line_vertical" />
+
+                        <TextView
+                            android:id="@+id/kuisun"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="亏损平仓线 50点"
+                            android:textSize="@dimen/sp_15"
+                            android:textColor="@color/color_00cc00"
+                            android:layout_marginTop="20dp"
+                            android:layout_marginBottom="20dp"
+                            />
+
+                        <TextView
+                            android:id="@+id/changeset"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="修改盈亏设置"
+                            android:textSize="@dimen/sp_15"
+                            android:textColor="@color/color_0080ff"
+                            android:layout_marginTop="20dp"
+                            android:layout_marginBottom="20dp"
+                            android:background="@drawable/bg_btn_blue_stroke"
+                            android:paddingTop="4dp"
+                            android:paddingBottom="4dp"
+                            android:paddingLeft="8dp"
+                            android:paddingRight="8dp"
+                            android:visibility="gone"
+                            />
+
+                        <!--android:onClick="@{() -> handlers.onClickChangeSet()}"-->
+
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <include layout="@layout/item_line_5" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="15dp"
+                    android:paddingRight="15dp"
+                    >
+
+                    <TextView
+                        android:layout_width="120dp"
+                        android:layout_height="wrap_content"
+                        android:text="下单时间"
+                        android:textSize="@dimen/sp_14"
+                        android:textColor="@color/color_333"
+                        />
+
+                    <TextView
+                        android:id="@+id/time"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="2019/0303 17:17:17"
+                        android:textSize="@dimen/sp_18"
+                        android:textColor="@color/color_333"
+                        />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="15dp"
+                    android:paddingRight="15dp"
+                    >
+
+                    <TextView
+                        android:layout_width="120dp"
+                        android:layout_height="wrap_content"
+                        android:text="状态"
+                        android:textSize="@dimen/sp_14"
+                        android:textColor="@color/color_333"
+                        />
+
+                    <TextView
+                        android:id="@+id/status"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="委托中"
+                        android:textSize="@dimen/sp_18"
+                        android:textColor="@color/color_333"
+                        />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </android.support.v4.widget.NestedScrollView>
+
+    </LinearLayout>
+
+</layout>

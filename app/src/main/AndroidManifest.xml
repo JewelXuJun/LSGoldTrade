@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.jme.lsgoldtrade">
 
     <uses-permission android:name="android.permission.INTERNET" />
@@ -18,8 +19,38 @@
         android:largeHeap="true"
         android:roundIcon="@mipmap/ic_logo"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
-
+        android:theme="@style/AppTheme"
+        android:usesCleartextTraffic="true">
+        <activity android:name=".ui.personal.DetailsActivity"></activity>
+        <activity android:name=".ui.personal.ThawActivity" />
+        <activity android:name=".ui.personal.ApplicationForCashActivity" />
+        <activity android:name=".ui.personal.CashActivity" />
+        <activity android:name=".ui.personal.CheckServiceActivity" />
+        <activity android:name=".ui.personal.RechargeActivity" />
+        <activity android:name=".ui.personal.ValueServiceSuccessActivity" />
+        <activity android:name=".ui.personal.ValueAddedServiceActivity" />
+        <activity android:name=".ui.login.NameCardCheckActivity" />
+        <activity android:name=".ui.login.LoginPwdActivity" />
+        <activity android:name=".ui.login.BindUserNameActivity" />
+        <activity android:name=".ui.login.AgreementActivity" />
+        <activity android:name=".ui.personal.MySubscribeActivity" />
+        <activity android:name=".ui.login.RegisterSuccessActivity" />
+        <activity android:name=".ui.personal.AboutDoubtActivity" />
+        <activity android:name=".ui.personal.CustomerServiceActivity" />
+        <activity android:name=".ui.login.RegisterActivity" />
+        <activity android:name=".ui.login.ForgetPwdActivity" />
+        <activity android:name=".ui.market.YujingActivity" />
+        <activity android:name=".ui.mainpage.HangQingYanPanActivity" />
+        <activity android:name=".ui.mainpage.DiYanActivity" />
+        <activity android:name=".ui.mainpage.FastEntryActivity" />
+        <activity android:name=".ui.order.OrderDetailsActivity" />
+        <activity android:name=".ui.order.MyOrderActivity" />
+        <activity android:name=".ui.tradingbox.HistoryBoxActivity" />
+        <activity android:name=".ui.tradingbox.PlaceOrderActivity" />
+        <activity android:name=".ui.tradingbox.AboutNewsActivity" />
+        <activity android:name=".ui.tradingbox.TradingBoxDetailsActivity" />
+        <activity android:name=".ui.mainpage.TradingBoxActivity" />
+        <activity android:name=".ui.mainpage.EconomicCalendarActivity" />
         <activity
             android:name=".ui.splash.SplashActivity"
             android:screenOrientation="portrait">
@@ -99,7 +130,39 @@
         <service
             android:name=".base.JMEAppService"
             android:exported="false" />
+        <service
+            android:name=".push.CustIntentService"
+            android:exported="true"
+            android:label="PushService"
+            android:process=":pushservice" />
 
+        <activity
+            android:name="com.umeng.socialize.editorpage.ShareActivity"
+            android:excludeFromRecents="true"
+            android:theme="@android:style/Theme.NoTitleBar" />
+        <activity
+            android:name=".wxapi.WXEntryActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:exported="true"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+        <activity
+            android:name="com.tencent.tauth.AuthActivity"
+            android:launchMode="singleTask"
+            android:noHistory="true" >
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data android:scheme="tencent1108077613" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.tencent.connect.common.AssistActivity"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar"
+            />
     </application>
 
 </manifest>

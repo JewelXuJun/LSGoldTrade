@@ -1,0 +1,319 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+        <variable
+            name="handlers"
+            type="com.jme.lsgoldtrade.ui.personal.CheckServiceActivity.ClickHandlers" />
+
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        >
+
+        <LinearLayout
+            android:id="@+id/lltitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            >
+
+            <include layout="@layout/layout_toolbar" />
+
+            <include layout="@layout/item_line_vertical" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center|left"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/common_area_margin_tiny"
+                    android:text="可用余额(元)"
+                    android:textColor="@color/black_pale"
+                    android:textSize="@dimen/sp_12" />
+
+                <TextView
+                    android:id="@+id/tv_available_funds"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/common_area_margin_tiny"
+                    android:layout_marginTop="@dimen/common_area_margin_tiny"
+                    android:text="@string/text_no_data_default"
+                    android:textColor="@color/black_deep"
+                    android:textSize="@dimen/common_font_size" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center|left"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/common_area_margin_tiny"
+                    android:text="冻结资金(元)"
+                    android:textColor="@color/black_pale"
+                    android:textSize="@dimen/sp_12" />
+
+                <TextView
+                    android:id="@+id/tv_frozen_funds"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/common_area_margin_tiny"
+                    android:layout_marginTop="@dimen/common_area_margin_tiny"
+                    android:text="@string/text_no_data_default"
+                    android:textColor="@color/black_deep"
+                    android:textSize="@dimen/common_font_size" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
+            >
+
+            <Button
+                android:layout_width="0dp"
+                android:layout_height="@dimen/height_login_btn"
+                android:layout_weight="1"
+                android:background="@drawable/selector_btn"
+                android:onClick="@{() -> handlers.onClickRecharge()}"
+                android:text="充值"
+                android:textColor="@color/white"
+                android:textSize="@dimen/common_font_size"
+                android:layout_margin="5dp"
+                />
+            <Button
+                android:layout_width="0dp"
+                android:layout_height="@dimen/height_login_btn"
+                android:layout_weight="1"
+                android:background="@drawable/selector_btn"
+                android:onClick="@{() -> handlers.onClickCash()}"
+                android:text="提现"
+                android:textColor="@color/white"
+                android:textSize="@dimen/common_font_size"
+                android:layout_margin="5dp"
+                />
+            <Button
+                android:layout_width="0dp"
+                android:layout_height="@dimen/height_login_btn"
+                android:layout_weight="1"
+                android:background="@drawable/selector_btn"
+                android:onClick="@{() -> handlers.onClickThaw()}"
+                android:text="申请解冻"
+                android:textColor="@color/white"
+                android:textSize="@dimen/common_font_size"
+                android:layout_margin="5dp"
+                />
+            <Button
+                android:layout_width="0dp"
+                android:layout_height="@dimen/height_login_btn"
+                android:layout_weight="1"
+                android:background="@drawable/selector_btn"
+                android:onClick="@{() -> handlers.onClickDetailed()}"
+                android:text="账户明细"
+                android:textColor="@color/white"
+                android:textSize="@dimen/common_font_size"
+                android:layout_margin="5dp"
+                />
+
+        </LinearLayout>
+
+        <include layout="@layout/item_line_10" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:paddingLeft="28dp"
+            android:paddingRight="15dp"
+            >
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                />
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="交易匣子"
+                    android:textSize="@dimen/sp_15"
+                    android:textColor="@color/color_000"
+                    />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="把握非农，一键下单"
+                    android:textSize="@dimen/sp_14"
+                    android:textColor="@color/color_000"
+                    />
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="75dp"
+                android:layout_height="40dp"
+                android:text="去使用"
+                android:textSize="@dimen/sp_18"
+                android:textColor="@color/color_0080ff"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:background="@drawable/bg_btn_blue_stroke"
+                android:onClick="@{() -> handlers.onClickTradingBox()}"
+                />
+
+        </LinearLayout>
+
+        <include layout="@layout/item_line_vertical" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:paddingLeft="28dp"
+            android:paddingRight="15dp"
+            >
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                />
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="委托风控"
+                    android:textSize="@dimen/sp_15"
+                    android:textColor="@color/color_000"
+                    />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="实时监控，交易安全"
+                    android:textSize="@dimen/sp_14"
+                    android:textColor="@color/color_000"
+                    />
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="75dp"
+                android:layout_height="40dp"
+                android:text="去使用"
+                android:textSize="@dimen/sp_18"
+                android:textColor="@color/color_0080ff"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:background="@drawable/bg_btn_blue_stroke"
+                android:onClick="@{() -> handlers.onClickEntrust()}"
+                />
+
+        </LinearLayout>
+
+        <include layout="@layout/item_line_vertical" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:paddingLeft="28dp"
+            android:paddingRight="15dp"
+            android:visibility="gone"
+            >
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                />
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="策略共建服务"
+                    android:textSize="@dimen/sp_15"
+                    android:textColor="@color/color_000"
+                    />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="黄金交易实战、技术分析、指标解读、沙盘实战等系列服务"
+                    android:textSize="@dimen/sp_14"
+                    android:textColor="@color/color_000"
+                    />
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="75dp"
+                android:layout_height="40dp"
+                android:text="去使用"
+                android:textSize="@dimen/sp_18"
+                android:textColor="@color/color_0080ff"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:background="@drawable/bg_btn_blue_stroke"
+                android:onClick="@{() -> handlers.onClickService()}"
+                />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</layout>

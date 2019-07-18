@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+
+    <data>
+
+        <variable
+            name="handlers"
+            type="com.jme.lsgoldtrade.ui.login.NameCardCheckActivity.ClickHandlers" />
+
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:orientation="vertical">
+
+        <include layout="@layout/layout_toolbar" />
+
+        <include layout="@layout/item_line_vertical" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/margin_login"
+            android:layout_marginTop="@dimen/common_area_margin"
+            android:layout_marginRight="@dimen/margin_login"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="姓名"
+                    android:textSize="@dimen/sp_14"
+                    android:textColor="@color/color_4d4d4d"
+                    />
+
+                <com.jme.common.ui.view.ClearEditText
+                    android:id="@+id/et_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/common_area_margin_middle"
+                    android:background="@null"
+                    android:hint="输入您的姓名"
+                    android:maxLength="11"
+                    android:maxLines="1"
+                    android:layout_marginLeft="25dp"
+                    android:paddingLeft="20dp"
+                    android:textColor="@color/color_text_normal"
+                    android:textColorHint="@color/color_text_hint"
+                    android:textSize="@dimen/size_normal" />
+
+            </LinearLayout>
+
+            <include layout="@layout/item_line_vertical" />
+
+            <LinearLayout
+                android:id="@+id/layout_img_verify_code"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="@dimen/common_area_margin_middle"
+                >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="身份证号"
+                    android:textSize="@dimen/sp_14"
+                    android:textColor="@color/color_4d4d4d"
+                    android:layout_gravity="center_vertical"
+                    />
+
+                <com.jme.common.ui.view.ClearEditText
+                    android:id="@+id/et_name_card"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginTop="@dimen/common_area_margin"
+                    android:layout_marginRight="@dimen/common_page_margin"
+                    android:layout_marginBottom="@dimen/common_area_margin_middle"
+                    android:layout_toLeftOf="@+id/layout_img"
+                    android:background="@null"
+                    android:hint="输入身份证号码"
+                    android:maxLines="1"
+                    android:paddingLeft="20dp"
+                    android:textColor="@color/color_text_normal"
+                    android:textColorHint="@color/color_text_hint"
+                    android:textSize="@dimen/size_normal" />
+
+            </LinearLayout>
+
+            <include layout="@layout/item_line_vertical" />
+
+            <Button
+                android:id="@+id/btn_bind"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/height_login_btn"
+                android:layout_marginTop="@dimen/margin_main_page_info"
+                android:background="@drawable/selector_btn"
+                android:onClick="@{() -> handlers.onClickBind()}"
+                android:text="立即绑定"
+                android:textColor="@color/white"
+                android:textSize="@dimen/common_font_size" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</layout>

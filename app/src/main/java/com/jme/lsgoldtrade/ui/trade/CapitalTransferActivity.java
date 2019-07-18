@@ -13,6 +13,9 @@ import com.jme.lsgoldtrade.base.JMEBaseActivity;
 import com.jme.lsgoldtrade.config.Constants;
 import com.jme.lsgoldtrade.databinding.ActivityCapitalTransferBinding;
 
+/**
+ * 资金划转
+ */
 @Route(path = Constants.ARouterUriConst.CAPITALTRANSFER)
 public class CapitalTransferActivity extends JMEBaseActivity {
 

@@ -7,6 +7,9 @@ import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.jme.common.network.DTRequest;
 import com.jme.common.network.Head;
+import com.jme.common.util.AppInfoUtil;
+import com.jme.common.util.MyDataCleanManager;
+import com.jme.common.util.ToastUtils;
 import com.jme.lsgoldtrade.R;
 import com.jme.lsgoldtrade.base.JMEBaseActivity;
 import com.jme.lsgoldtrade.config.Constants;
@@ -15,6 +18,9 @@ import com.jme.lsgoldtrade.service.UserService;
 
 import java.util.HashMap;
 
+/**
+ * 设置
+ */
 @Route(path = Constants.ARouterUriConst.SETTING)
 public class SettingActivity extends JMEBaseActivity {
 
@@ -39,6 +45,9 @@ public class SettingActivity extends JMEBaseActivity {
         super.initData(savedInstanceState);
 
         mBinding.btnLogout.setVisibility(null == mUser || !mUser.isLogin() ? View.GONE : View.VISIBLE);
+        mBinding.tvVersionInformation.setText(AppInfoUtil.getVersionName(this));
+        String totalCacheSize = MyDataCleanManager.getTotalCacheSize(this);
+        mBinding.tvCache.setText(totalCacheSize);
     }
 
     @Override
@@ -87,7 +96,8 @@ public class SettingActivity extends JMEBaseActivity {
         }
 
         public void onClickClearCache() {
-
+            mBinding.tvCache.setText("0KB");
+            ToastUtils.setToast(mContext, "缓存清理成功");
         }
 
         public void onClickWelcome() {

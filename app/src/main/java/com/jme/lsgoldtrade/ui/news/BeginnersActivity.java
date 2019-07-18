@@ -25,6 +25,9 @@ import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import java.util.HashMap;
 import java.util.List;
 
+/**
+ * 新手学堂
+ */
 @Route(path = Constants.ARouterUriConst.BEGINNERSACTIVITY)
 public class BeginnersActivity extends JMEBaseActivity implements OnRefreshListener, BaseQuickAdapter.RequestLoadMoreListener {
 

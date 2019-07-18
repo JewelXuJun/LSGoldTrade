@@ -20,6 +20,9 @@ import java.util.List;
 
 import rx.Subscription;
 
+/**
+ * 成交
+ */
 public class ItemDealFragment extends JMEBaseFragment implements BaseQuickAdapter.RequestLoadMoreListener {
 
     private FragmentItemDealBinding mBinding;

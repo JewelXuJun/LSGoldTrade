@@ -20,7 +20,6 @@ public class MarketAdapter extends BaseQuickAdapter<FiveSpeedVo, BaseViewHolder>
 
     public MarketAdapter(Context context, int layoutResId, @Nullable List<FiveSpeedVo> data) {
         super(layoutResId, data);
-
         mContext = context;
     }
 

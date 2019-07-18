@@ -5,6 +5,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.v7.widget.LinearLayoutManager;
 import android.text.TextUtils;
+import android.view.Gravity;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.jme.common.network.DTRequest;
@@ -22,6 +23,7 @@ import com.jme.lsgoldtrade.domain.PositionVo;
 import com.jme.lsgoldtrade.service.MarketService;
 import com.jme.lsgoldtrade.service.TradeService;
 import com.jme.lsgoldtrade.util.MarketUtil;
+import com.jme.lsgoldtrade.view.HangQingWindow;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -30,6 +32,9 @@ import java.util.List;
 
 import rx.Subscription;
 
+/**
+ * 持仓
+ */
 public class ItemHoldPositionFragment extends JMEBaseFragment implements BaseQuickAdapter.RequestLoadMoreListener {
 
     private FragmentItemHoldPositionBinding mBinding;
@@ -86,7 +91,7 @@ public class ItemHoldPositionFragment extends JMEBaseFragment implements BaseQui
     protected void initData(Bundle savedInstanceState) {
         super.initData(savedInstanceState);
 
-        mAdapter = new HoldPositionAdapter(mContext, R.layout.item_hold_position, null);
+        mAdapter = new HoldPositionAdapter(mContext, R.layout.item_hold_position, null, 2);
         mList = new ArrayList<>();
 
         mBinding.recyclerView.setHasFixedSize(false);
@@ -102,28 +107,72 @@ public class ItemHoldPositionFragment extends JMEBaseFragment implements BaseQui
 
         mAdapter.setOnLoadMoreListener(this, mBinding.recyclerView);
 
+        mAdapter.setOnPingCangListener(new HoldPositionAdapter.setOnPingCangListener() {
+            @Override
+            public void listener(PositionVo item, HangQingWindow mWindow) {
+                    if (null == mWindow)
+                        return;
+                long position = item.getPosition();
+                long frozen = item.getOffsetFrozen();
+                String contractId = item.getContractId();
+                String type = item.getType();
+                String tag = type.equals("多") ? "1" : "2";
+                mWindow.setData(mUser.getAccount(), contractId, MarketUtil.decimalFormatMoney(item.getPositionAverageStr()),
+                        String.valueOf(position - frozen), tag, "1", "", (view) -> {
+                            limitOrder(contractId, item.getPositionAverageStr(), String.valueOf(position - frozen), tag, "1");
+
+                            mWindow.dismiss();
+                        });
+//                mWindow.setData(mUser.getAccount(), item.getContractId(), MarketUtil.decimalFormatMoney(item.getPositionAverageStr()),
+//                            String.valueOf(position - frozen), tag, "1", (view) -> {
+//                                limitOrder(item.getContractId(), MarketUtil.decimalFormatMoney(item.getPositionAverageStr()),
+//                                        String.valueOf(position - frozen), tag, "1");
+//                                mWindow.dismiss();
+//                            });
+                    mWindow.showAtLocation(mBinding.recyclerView, Gravity.BOTTOM, 0, 0);
+            }
+        });
+
         mAdapter.setOnItemClickListener((adapter, view, position) -> {
             PositionVo positionVo = (PositionVo) adapter.getItem(position);
 
             if (null == positionVo)
                 return;
+            if ("0".equals(positionVo.getExists()))
+                return;
+
+            if ("0".equals(positionVo.getExists()))
+                return;
 
             int selectPosition = mAdapter.getSelectPosition();
 
-            if (selectPosition == -1) {
-                mAdapter.setSelectPosition(position);
-            } else {
-                if (selectPosition == position)
-                    mAdapter.setSelectPosition(-1);
-                else
-                    mAdapter.setSelectPosition(position);
-            }
+//            if (selectPosition == -1) {
+//                mAdapter.setSelectPosition(position);
+//            } else {
+//                if (selectPosition == position)
+//                    mAdapter.setSelectPosition(-1);
+//                else
+//                    mAdapter.setSelectPosition(position);
+//            }
 
             mAdapter.notifyDataSetChanged();
 
-            RxBus.getInstance().post(Constants.RxBusConst.RXBUS_DECLARATIONFORM_HOLDPOSITION_SELECT,
-                    mAdapter.getSelectPosition() == -1 ? null : positionVo);
+//            RxBus.getInstance().post(Constants.RxBusConst.RXBUS_DECLARATIONFORM_HOLDPOSITION_SELECT,
+//                    mAdapter.getSelectPosition() == -1 ? null : positionVo);
         });
+    }
+
+    private void limitOrder(String contractId, String price, String amount, String bsFlag, String ocFlag) {
+        HashMap<String, String> params = new HashMap<>();
+        params.put("contractId", contractId);
+        params.put("accountId", mUser.getAccountID());
+        params.put("entrustPrice", String.valueOf(new BigDecimal(price).multiply(new BigDecimal(100)).longValue()));
+        params.put("entrustNumber", amount);
+        params.put("bsFlag", bsFlag);
+        params.put("ocFlag", ocFlag);
+        params.put("tradingType", "0");
+
+        sendRequest(TradeService.getInstance().limitOrder, params, true);
     }
 
     @Override
@@ -190,12 +239,12 @@ public class ItemHoldPositionFragment extends JMEBaseFragment implements BaseQui
 
             switch (callType) {
                 case Constants.RxBusConst.RXBUS_DECLARATIONFORM_HOLDPOSITION_UNSELECT:
-                    mAdapter.setSelectPosition(-1);
+//                    mAdapter.setSelectPosition(-1);
                     mAdapter.notifyDataSetChanged();
 
                     break;
                 case Constants.RxBusConst.RXBUS_DECLARATIONFORM_UPDATE:
-                    mAdapter.setSelectPosition(-1);
+//                    mAdapter.setSelectPosition(-1);
                     mAdapter.notifyDataSetChanged();
 
                     initPosition();
@@ -387,6 +436,12 @@ public class ItemHoldPositionFragment extends JMEBaseFragment implements BaseQui
                     mHandler.sendEmptyMessageDelayed(Constants.Msg.MSG_DECLARATIONFORM_POSITION_UPDATE_ACCOUNT_DATA, AppConfig.Minute);
                 }
 
+                break;
+            case "LimitOrder":
+                if (head.isSuccess())
+                    showShortToast(R.string.trade_success);
+                else
+                    showShortToast(head.getMsg());
                 break;
         }
     }

@@ -1,19 +1,20 @@
 package com.jme.common.network;
 
 import android.content.Context;
+
 import com.google.gson.Gson;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonParser;
 import com.jme.common.R;
+import com.orhanobut.logger.Logger;
+
 import java.net.ConnectException;
 import java.util.HashMap;
-import okhttp3.ResponseBody;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
 /**
- * Created by Yanmin on 2016/3/12.
+ * 接口返回处理
  */
 public class AsynCommon {
     private Context mContext;
@@ -64,16 +65,16 @@ public class AsynCommon {
                         head = new Head();
                         head.setCode(dtResponse.getCode());
                         head.setMsg(dtResponse.getMsg());
+                        head.setValue(dtResponse.getBodyToString());
 
                         try {
-                            body = new Gson().fromJson(dtResponse.getBodyToString(),
-                                    mRequest.getApi().getEntryType());
+                            Logger.e("请求体--->" + dtResponse.getBodyToString());
+                            body = new Gson().fromJson(dtResponse.getBodyToString(), mRequest. getApi().getEntryType());
                         } catch (Exception e) {
                             body = dtResponse.getBodyToString();
                         }
                     }
                 }
-
                 mListener.OnResult(mRequest, head, body);
                 restResponse = null;
             }

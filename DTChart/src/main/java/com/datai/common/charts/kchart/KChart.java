@@ -283,10 +283,6 @@ public class KChart extends LinearLayout {
         mKConfig.setDragEnable(!visible);// 竖屏时，K线图不能拖拽
     }
 
-//    public OnKChartListener getOnKChartListener() {
-//        return mKChartListener;
-//    }
-
     public void setVisibleXRange(int minXRange, int maxXRange) {
         mMinXRange = minXRange;
         mMaxXRange = maxXRange;
@@ -346,16 +342,15 @@ public class KChart extends LinearLayout {
             mPopupIndicators.addActionItem(item);
         }
 
-        mPopupIndicators
-                .setOnActionItemClickListener(new QuickAction.OnActionItemClickListener() {
-                    @Override
-                    public void onItemClick(QuickAction source, int pos,
-                                            int actionId) {
-                        ActionItem item = mPopupIndicators.getActionItem(pos);
-                        switchIndicator(mShowIndicators[actionId]);
-                        setSecondChartData();
-                    }
-                });
+        mPopupIndicators.setOnActionItemClickListener(new QuickAction.OnActionItemClickListener() {
+            @Override
+            public void onItemClick(QuickAction source, int pos,
+                                    int actionId) {
+                ActionItem item = mPopupIndicators.getActionItem(pos);
+                switchIndicator(mShowIndicators[actionId]);
+                setSecondChartData();
+            }
+        });
 
         tv_second_chart_title.setOnClickListener(new OnClickListener() {
             @Override
@@ -400,6 +395,8 @@ public class KChart extends LinearLayout {
         });
     }
 
+    private boolean isInit = false;
+
     private void setChartGestureListener() {
         mFirstChart.setOnChartGestureListener(new OnChartGestureListener() {
             @Override
@@ -432,7 +429,22 @@ public class KChart extends LinearLayout {
                     if (mKChartListener != null) {
                         mKChartListener.onChartSingleTapped(me);
                     }
-//                    Toast.makeText(mContext, "主Chart", Toast.LENGTH_SHORT).show();
+
+                    if (isInit == false) {
+                        isInit = true;
+                        HashMap<String, Object> entryData = mKChartData.getEntryData(mKChartData.getEntryCount() - 1);
+                        tv_first_chart.setText(mDescriptor.getDetail(mMAIndicator, entryData, false, true));
+                        setCandleChartData();
+                    } else {
+                        isInit = false;
+                        switchIndicator(mShowIndicators[6]);
+                        setFirstBOLLChartData();
+
+                        HashMap<String, Object> entryData = mKChartData.getEntryData(mKChartData.getEntryCount() - 1);
+                        tv_first_chart.setText(mDescriptor.getDetail(mMAIndicator, entryData, false, true));
+
+                        setTextOnUnHighlight();
+                    }
                 } else {
                     //点击chart2，切换到下一个item
                     Indicator.Type type = mSelIndicator.getType();
@@ -447,10 +459,7 @@ public class KChart extends LinearLayout {
                     index = (index + 1) % mShowIndicators.length;
                     switchIndicator(mShowIndicators[index]);
                     setSecondChartData();
-                    //mShowIndicators.
-//                    Toast.makeText(mContext, "副Chart", Toast.LENGTH_SHORT).show();
                 }
-
             }
 
             @Override
@@ -618,6 +627,39 @@ public class KChart extends LinearLayout {
         mSecondChart.setData(combinedData);
         mKConfig.setStartAtZero(false);
         mSecondChart.invalidate();
+    }
+
+    //BOLL Chart
+    private void setFirstBOLLChartData() {
+        String lineKeys[] = mSelIndicator.getKeys();
+        List<ArrayList> lists = mKChartData.getEntryList(mSelIndicator);
+
+        //Lines
+        ArrayList<LineDataSet> lineDateSet = new ArrayList<LineDataSet>();
+        for (int i = 0; i < lineKeys.length; i++) {
+            LineDataSet set = new LineDataSet(lists.get(i), lineKeys[i]);
+            mKConfig.setCommonLineDataSet(set);
+            set.setColor(Config.LineColorGroup[i]);
+            lineDateSet.add(set);
+        }
+        LineData lineData = new LineData(mKChartData.getXVals(), lineDateSet);
+
+        // Candle
+        CandleDataSet candleDataSet = new CandleDataSet(mKChartData.getCandleEntry(), "Candle");
+        mKConfig.setBollCandleDateSet(candleDataSet);
+        mKConfig.setHighlightEnabled(candleDataSet, true);//让Candle显示HighLight
+        candleDataSet.setColors(mKChartData.getColorList());
+
+        CandleData candleData = new CandleData(mKChartData.getXVals(), candleDataSet);
+        candleData.setValueFormatter(mKConfig.getValueFormatter());//new MyValueFormatter(2)
+
+        CombinedData combinedData = new CombinedData(mKChartData.getXVals());
+        combinedData.setData(candleData);
+        combinedData.setData(lineData);
+
+        mFirstChart.setData(combinedData);
+        mKConfig.setStartAtZero(false);
+        mFirstChart.invalidate();
     }
 
     //VOL Chart

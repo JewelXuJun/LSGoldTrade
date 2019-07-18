@@ -11,6 +11,9 @@ import com.jme.lsgoldtrade.base.JMEBaseActivity;
 import com.jme.lsgoldtrade.config.Constants;
 import com.jme.lsgoldtrade.databinding.ActivityAboutBinding;
 
+/**
+ * 关于
+ */
 @Route(path = Constants.ARouterUriConst.ABOUT)
 public class AboutActivity extends JMEBaseActivity {
 
@@ -87,6 +90,5 @@ public class AboutActivity extends JMEBaseActivity {
                     .withString("url", Constants.HttpConst.URL_PRIVACY_POLICY)
                     .navigation();
         }
-
     }
 }

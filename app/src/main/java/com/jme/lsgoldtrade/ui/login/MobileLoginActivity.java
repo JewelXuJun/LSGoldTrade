@@ -39,6 +39,9 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+/**
+ * 手机号登录
+ */
 @Route(path = Constants.ARouterUriConst.MOBILELOGIN)
 public class MobileLoginActivity extends JMEBaseActivity {
 
@@ -164,6 +167,8 @@ public class MobileLoginActivity extends JMEBaseActivity {
             params.put("kaptchaCode", imgVerifyCode);
         }
 
+//        sendRequest(UserService.getInstance().login, params, true);
+
         showLoadingDialog("");
 
         DTRequest request = new DTRequest(UserService.getInstance().login, params, true, true);
@@ -275,6 +280,7 @@ public class MobileLoginActivity extends JMEBaseActivity {
                     showShortToast(R.string.login_success);
                     SharedPreUtils.setString(this, SharedPreUtils.Login_Mobile, mBinding.etMobile.getText().toString());
                 } else {
+                    showShortToast(head.getMsg());
                     kaptcha();
                 }
 
@@ -376,11 +382,14 @@ public class MobileLoginActivity extends JMEBaseActivity {
 
         public void onClickRegister() {
             ARouter.getInstance()
-                    .build(Constants.ARouterUriConst.JMEWEBVIEW)
-                    .withString("title", mContext.getResources().getString(R.string.personal_open_account_online))
-                    .withString("url", Constants.HttpConst.URL_OPEN_ACCOUNT)
+                    .build(Constants.ARouterUriConst.REGISTER)
                     .navigation();
         }
 
+        public void onClickForgetPwd() {
+            ARouter.getInstance()
+                    .build(Constants.ARouterUriConst.FORGETPWD)
+                    .navigation();
+        }
     }
 }

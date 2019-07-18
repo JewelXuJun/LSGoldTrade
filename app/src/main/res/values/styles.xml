@@ -13,6 +13,10 @@
         <item name="actionMenuTextColor">@color/color_blue</item>
     </style>
 
+    <style name="ToolbarThemeWhite" parent="@style/mToolbarTheme">
+        <item name="actionMenuTextColor">@color/white</item>
+    </style>
+
     <style name="ColorSwitchStyle">
         <!-- Active thumb color & Active track color(30% transparency) switch 打开时的拇指按钮的颜色 轨迹颜色默认为30%这个颜色 -->
         <item name="colorControlActivated">@color/color_blue</item>
@@ -24,6 +28,25 @@
 
     <style name="CheckBoxStyle" parent="@android:style/Widget.CompoundButton.CheckBox">
         <item name="android:button">@drawable/selector_checkbox</item>
+    </style>
+
+    <style name="collect_dialog" parent="@android:style/Theme.Dialog">
+        <item name="android:windowFrame">@null</item><!--边框-->
+        <item name="android:windowIsFloating">true</item><!--是否浮现在activity之上-->
+        <item name="android:windowIsTranslucent">false</item><!--半透明-->
+        <item name="android:windowNoTitle">true</item><!--无标题-->
+        <item name="android:windowBackground">@color/transparent</item><!--背景透明-->
+        <item name="android:backgroundDimEnabled">false</item><!--模糊-->
+    </style>
+
+    <!-- CustomCheckBox theme -->
+    <style name="CustomPayCheckBoxTheme" parent="@android:style/Widget.CompoundButton.CheckBox">
+        <item name="android:button">@drawable/choose_pay</item>
+    </style>
+
+    <!-- CustomCheckBox theme -->
+    <style name="CustomYuJingTheme" parent="@android:style/Widget.CompoundButton.CheckBox">
+        <item name="android:button">@drawable/yujing_choose</item>
     </style>
 
 </resources>

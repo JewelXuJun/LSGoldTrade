@@ -19,7 +19,7 @@ public class ValueUtils {
         if (TextUtils.isEmpty(mobile))
             return false;
 
-        String REGEX_MOBILE = "^[1][3,4,5,7,8][0-9]{9}$";
+        String REGEX_MOBILE = "^[1][3,4,5,7,8,9][0-9]{9}$";
 
         return Pattern.matches(REGEX_MOBILE, mobile);
     }

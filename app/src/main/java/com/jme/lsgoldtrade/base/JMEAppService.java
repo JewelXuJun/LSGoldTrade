@@ -1,6 +1,7 @@
 package com.jme.lsgoldtrade.base;
 
 import android.app.ActivityManager;
+import android.app.Dialog;
 import android.app.Service;
 import android.content.ComponentName;
 import android.content.Context;
@@ -11,12 +12,15 @@ import android.os.Message;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
 
+import com.alibaba.android.arouter.launcher.ARouter;
 import com.jme.common.network.AsynCommon;
 import com.jme.common.network.DTRequest;
 import com.jme.common.network.Head;
 import com.jme.common.network.OnResultListener;
+import com.jme.common.util.DialogHelp;
 import com.jme.common.util.RxBus;
 import com.jme.common.util.SharedPreUtils;
+import com.jme.lsgoldtrade.R;
 import com.jme.lsgoldtrade.config.AppConfig;
 import com.jme.lsgoldtrade.config.Constants;
 import com.jme.lsgoldtrade.config.User;
@@ -134,12 +138,42 @@ public class JMEAppService extends Service implements OnResultListener {
                 } else {
                     if (head.getCode().equals("-2000")) {
                         User.getInstance().logout();
-
+//                        AsynCommon.SendRequest(UserService.getInstance().logout, new HashMap<>(), true, false, this, this);
                         RxBus.getInstance().post(Constants.RxBusConst.RXBUS_SYNTIME, null);
                     }
                 }
 
                 break;
+//            case "Logout":
+//                if (head.isSuccess()) {
+//                    User.getInstance().logout();
+//                    showLoginDialog();
+//                }
+//                break;
+        }
+    }
+
+    private void showLoginDialog() {
+        Dialog mDialog = null;
+        if (null == mDialog) {
+            mDialog = DialogHelp.getConfirmDialog(this, getString(R.string.text_tips), getString(R.string.text_message_notlogin),
+                    getString(R.string.text_login),
+                    (dialog, which) -> {
+                        dialog.dismiss();
+                        ARouter.getInstance()
+                                .build(Constants.ARouterUriConst.ACCOUNTLOGIN)
+                                .navigation();
+                    },
+                    (dialog, which) -> {
+                        dialog.dismiss();
+                        RxBus.getInstance().post(Constants.RxBusConst.RXBUS_CANCEL, null);
+                        ARouter.getInstance().build(Constants.ARouterUriConst.MAIN).navigation();
+                    })
+                    .setCancelable(false)
+                    .show();
+        } else {
+            if (!mDialog.isShowing())
+                mDialog.show();
         }
     }
 

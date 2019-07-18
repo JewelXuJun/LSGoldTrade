@@ -62,7 +62,7 @@
     <string name="trade_capital_transfer">资金划转</string>
     <string name="trade_available_funds">可用资金(元)</string>
     <string name="trade_desirable_capital">可取资金(元)</string>
-    <string name="trade_market_capitalization">持仓市值(元)</string>
+    <string name="trade_market_capitalization">持仓保证金(元)</string>
     <string name="trade_floating">浮动盈亏(元)</string>
     <string name="trade_contract_pupil">合约/多空</string>
     <string name="trade_available_hold_position">可用/持仓</string>
@@ -73,7 +73,7 @@
     <string name="trade_turnover">流水</string>
     <string name="trade_money_in_max">当前最大可入金金额</string>
     <string name="trade_money_out_max">当前最大可出金金额</string>
-    <string name="trade_money_in_time">可入金时段，交易日全天。17:00~19:00为银行清算时间除外。</string>
+    <string name="trade_money_in_time">可入金时间段：全天，17:00~19:00为银行清算时间除外。</string>
     <string name="trade_money_out_time">可出金时段，交易日9:00~15:30。</string>
     <string name="trade_transfer_amount">转账金额</string>
     <string name="trade_transfer_amount_hint">请输入金额</string>
@@ -113,6 +113,8 @@
     <string name="trade_history_entrust">历史委托</string>
     <string name="trade_current_deal">当日成交</string>
     <string name="trade_history_deal">历史成交</string>
+    <string name="trade_box">交易匣子</string>
+    <string name="my_order">我的订单</string>
     <string name="trade_daily_statement_query">日结单查询</string>
     <string name="trade_select_date">选择日期</string>
     <string name="trade_equity">权益(元)</string>
@@ -153,7 +155,7 @@
     <string name="trade_number_error">请输入数量</string>
     <string name="trade_number_error_zero">您的数量必须大于0</string>
     <string name="trade_popupwindow_title">报单确认</string>
-    <string name="trade_popupwindow_account">工行账户</string>
+    <string name="trade_popupwindow_account">黄金账户</string>
     <string name="trade_popupwindow_contract_code">合约代码</string>
     <string name="trade_popupwindow_entrust_price">委托价格</string>
     <string name="trade_popupwindow_entrust_amount">委托数量</string>
@@ -243,5 +245,12 @@
     <string name="login_register">还没有账号？立即开户</string>
     <string name="login_success">登录成功</string>
     <string name="login_message">该功能需要登录泰金所才能使用,去登录?</string>
+
+    <string name="yingkuishezhi">盈亏线设置,是根据您设置的盈亏线,系统监则到报价到达您设置的点位/价格时帮您进行委托操作。\n
+1.当您使用此功能时,视作您已同意系统帮您进行委托操作；\n
+2.由于撮合机制问题,盈亏线设置仅视为帮您进行委托操作，最终实际成交与否得视当时行情为准；\n
+3.盈亏线设置后可能因市况波动,受跳空的影响,未能在预设的价格执行，您知晓并认可该风险点；\n
+4.浮动成交机制是为您按照市价指令最快速的进行下单，根据上金所交易规则,市价指令可能会导致您的成交价格与您设置的盈亏线不一致。\n
+5.我们仅通过上金所的撮合交易规则为您最大程度的进行委托,实际成交依请参考上金所的交易规则。</string>
 
 </resources>

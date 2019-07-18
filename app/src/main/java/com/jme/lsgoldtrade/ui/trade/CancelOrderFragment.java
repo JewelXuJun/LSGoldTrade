@@ -23,6 +23,9 @@ import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import java.util.HashMap;
 import java.util.List;
 
+/**
+ * 撤单
+ */
 public class CancelOrderFragment extends JMEBaseFragment implements OnRefreshListener, BaseQuickAdapter.RequestLoadMoreListener {
 
     private FragmentCancelOrderBinding mBinding;
@@ -224,8 +227,14 @@ public class CancelOrderFragment extends JMEBaseFragment implements OnRefreshLis
                             if (mCurrentPage == 1) {
                                 if (null == orderBeanList || 0 == orderBeanList.size()) {
                                     mAdapter.setNewData(null);
-                                    mAdapter.setEmptyView(getEmptyView());
+                                    mBinding.layoutTabhost.setVisibility(View.GONE);
+                                    mBinding.swipeRefreshLayout.setVisibility(View.GONE);
+                                    mBinding.tvEmpty.setVisibility(View.VISIBLE);
+//                                    mAdapter.setEmptyView(getEmptyView());
                                 } else {
+                                    mBinding.layoutTabhost.setVisibility(View.VISIBLE);
+                                    mBinding.swipeRefreshLayout.setVisibility(View.VISIBLE);
+                                    mBinding.tvEmpty.setVisibility(View.GONE);
                                     mAdapter.setNewData(orderBeanList);
                                     mAdapter.loadMoreComplete();
                                 }
@@ -245,7 +254,8 @@ public class CancelOrderFragment extends JMEBaseFragment implements OnRefreshLis
             case "RevocateOrder":
                 if (head.isSuccess())
                     showShortToast(R.string.trade_cancel_order_success);
-
+                else
+                    showShortToast(head.getMsg());
                 initOrderPage(true);
 
                 break;

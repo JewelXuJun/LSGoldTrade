@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    >
+
+    <LinearLayout
+        android:id="@+id/ll_upapp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_centerInParent="true"
+        >
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/updata_"
+            />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="@drawable/updata_yuanjiao"
+            >
+
+            <TextView
+                android:id="@+id/tv_updata_app"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="30dp"
+                android:paddingRight="30dp"
+                android:textSize="@dimen/sp_14"
+                android:textColor="@color/color_999"
+                android:lineSpacingExtra="6dp"
+                />
+
+            <TextView
+                android:id="@+id/install_apk_sure"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="立即升级"
+                android:textSize="16sp"
+                android:textColor="@color/white"
+                android:background="@drawable/button_shape_30"
+                android:layout_gravity="center_horizontal"
+                android:paddingTop="9dp"
+                android:paddingBottom="10dp"
+                android:paddingLeft="30dp"
+                android:paddingRight="30dp"
+                android:layout_marginBottom="20dp"
+                />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/install_apk_cancel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/cancel_update"
+        android:layout_toRightOf="@id/ll_upapp"
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="-5dp"
+        />
+
+</RelativeLayout>

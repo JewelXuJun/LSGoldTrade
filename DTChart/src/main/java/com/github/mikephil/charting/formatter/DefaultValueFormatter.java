@@ -38,7 +38,7 @@ public class DefaultValueFormatter implements ValueFormatter {
     @Override
     public String getFormattedValue(float value, Entry entry, int dataSetIndex, ViewPortHandler viewPortHandler) {
 
-        // put more logic here ...
+        // put down logic here ...
         // avoid memory allocations here (for performance reasons)
 
         return mFormat.format(value);

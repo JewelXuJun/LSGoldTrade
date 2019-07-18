@@ -3,7 +3,6 @@ package com.jme.lsgoldtrade.ui.trade;
 import android.content.Context;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
-import android.text.TextUtils;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
@@ -28,13 +27,15 @@ public class TurnOverAdapter extends BaseQuickAdapter<InOutTurnOverVo.TurnOverBe
         if (null == item)
             return;
 
-        String date = item.getTradeDate();
+        String date = item.getTradeDate().replace("/", "-");
+        String time = item.getTradeTime().replace(".", ":");
         int direction = item.getDirection();
 
-        if (!TextUtils.isEmpty(date) && date.contains("-"))
-            date = date.replace("-", "/");
+//        if (!TextUtils.isEmpty(date) && date.contains("-"))
+//            date = date.replace("-", "/");
 
         helper.setText(R.id.tv_time, date)
+                .setText(R.id.trade_time, time)
                 .setText(R.id.tv_amount, MarketUtil.decimalFormatMoney(MarketUtil.getPriceValue(item.getAmount())))
                 .setTextColor(R.id.tv_amount, ContextCompat.getColor(mContext, MarketUtil.getInOutMoneyDirectionColor(direction)))
                 .setText(R.id.tv_type, item.getSummary())

@@ -1,0 +1,60 @@
+package com.jme.lsgoldtrade.ui.login;
+
+import android.os.Bundle;
+
+import com.alibaba.android.arouter.facade.annotation.Route;
+import com.jme.common.util.AppManager;
+import com.jme.lsgoldtrade.R;
+import com.jme.lsgoldtrade.base.JMEBaseActivity;
+import com.jme.lsgoldtrade.config.Constants;
+import com.jme.lsgoldtrade.databinding.ActivityRegisterSuccessBinding;
+import com.jme.lsgoldtrade.util.JumpActivity;
+
+/**
+ * 注册成功
+ */
+@Route(path = Constants.ARouterUriConst.REGISTERSUCCESS)
+public class RegisterSuccessActivity extends JMEBaseActivity {
+
+    private ActivityRegisterSuccessBinding mBinding;
+
+    @Override
+    protected int getContentViewId() {
+        return R.layout.activity_register_success;
+    }
+
+    @Override
+    protected void initView() {
+        super.initView();
+        mBinding = (ActivityRegisterSuccessBinding) mBindingUtil;
+    }
+
+    @Override
+    protected void initData(Bundle savedInstanceState) {
+        super.initData(savedInstanceState);
+
+    }
+
+    @Override
+    protected void initListener() {
+        super.initListener();
+
+    }
+
+    @Override
+    protected void initBinding() {
+        super.initBinding();
+        mBinding.setHandlers(new ClickHandlers());
+    }
+
+    public class ClickHandlers {
+
+        public void onClickCancel() {
+            AppManager.getAppManager().finishActivity();
+        }
+
+        public void onClickRegister() {
+            JumpActivity.jumpGongHangSmall(mContext);
+        }
+    }
+}

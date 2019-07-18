@@ -6,8 +6,7 @@ repositories {
 }
 
 android {
-    compileSdkVersion rootProject.ext.compileSdkVersion
-    buildToolsVersion '28.0.3'
+    compileSdkVersion 28
 
     defaultConfig {
         minSdkVersion rootProject.ext.minSdkVersion
@@ -62,4 +61,5 @@ dependencies {
 
     //状态栏颜色修改
     api 'com.readystatesoftware.systembartint:systembartint:1.0.3'
+
 }

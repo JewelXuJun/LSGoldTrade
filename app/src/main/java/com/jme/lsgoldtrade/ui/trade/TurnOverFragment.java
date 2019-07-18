@@ -24,6 +24,9 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 
+/**
+ * 流水
+ */
 public class TurnOverFragment extends JMEBaseFragment implements OnRefreshListener, BaseQuickAdapter.RequestLoadMoreListener {
 
     private FragmentTurnoverBinding mBinding;

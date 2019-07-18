@@ -1,0 +1,94 @@
+package com.jme.lsgoldtrade.view;
+
+import android.content.Context;
+import android.text.TextUtils;
+import android.util.AttributeSet;
+import android.view.View;
+import android.view.animation.AccelerateDecelerateInterpolator;
+import android.view.animation.Interpolator;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
+
+import com.alibaba.android.arouter.launcher.ARouter;
+import com.jme.common.util.RxBus;
+import com.jme.lsgoldtrade.R;
+import com.jme.lsgoldtrade.config.Constants;
+import com.jme.lsgoldtrade.config.User;
+
+public class TradingBox extends RelativeLayout {
+
+    private Boolean isShow = false;
+    private static final int TRANSLATE_DURATION_MILLIS = 300;
+    private final Interpolator mInterpolator = new AccelerateDecelerateInterpolator();
+
+    public TradingBox(Context context) {
+        super(context);
+    }
+
+    public TradingBox(Context context, AttributeSet attrs) {
+        super(context, attrs);
+        initView(context);
+    }
+
+    public TradingBox(Context context, AttributeSet attrs, int defStyleAttr) {
+        super(context, attrs, defStyleAttr);
+    }
+
+    private void initView(Context context) {
+        //加载视图的布局
+        View view = View.inflate(context, R.layout.view_trading_box, this);
+        ImageView tranding = view.findViewById(R.id.tranding);
+        ImageView cancel_tranding = view.findViewById(R.id.cancel_tranding);
+        show();
+
+        tranding.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!isShow) {
+                    show();
+                } else {
+                    if (User.getInstance().isLogin() && !TextUtils.isEmpty(User.getInstance().getToken())) {
+                        if (TextUtils.isEmpty(User.getInstance().getAccountID())) {
+                            RxBus.getInstance().post(Constants.RxBusConst.RXBUS_TRADEFRAGMENT, null);
+                        } else {
+                            ARouter.getInstance()
+                                    .build(Constants.ARouterUriConst.TRADINGBOX)
+                                    .navigation();
+                        }
+                    } else {
+                        ARouter.getInstance()
+                                .build(Constants.ARouterUriConst.ACCOUNTLOGIN)
+                                .navigation();
+                    }
+                }
+            }
+        });
+
+        cancel_tranding.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                hide();
+            }
+        });
+    }
+
+    public void show() {
+        if (!isShow) {
+            isShow = true;
+            toggle();
+        }
+    }
+    public void hide() {
+        if (isShow) {
+            isShow = false;
+            toggle();
+        }
+    }
+    private void toggle() {
+        int width = getWidth();
+        int translationX = isShow ? 0 : width / 2;
+        animate().setInterpolator(mInterpolator)
+                .setDuration(TRANSLATE_DURATION_MILLIS)
+                .translationX(translationX);
+    }
+}

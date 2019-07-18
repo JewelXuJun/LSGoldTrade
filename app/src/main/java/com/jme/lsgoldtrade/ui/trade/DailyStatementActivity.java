@@ -1,9 +1,7 @@
 package com.jme.lsgoldtrade.ui.trade;
 
-import android.annotation.TargetApi;
 import android.app.DatePickerDialog;
 import android.os.Bundle;
-import android.text.TextUtils;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.jme.common.network.DTRequest;
@@ -18,9 +16,11 @@ import com.jme.lsgoldtrade.service.TradeService;
 import com.jme.lsgoldtrade.util.MarketUtil;
 
 import java.util.Calendar;
-import java.util.Date;
 import java.util.HashMap;
 
+/**
+ * 日结单
+ */
 @Route(path = Constants.ARouterUriConst.DAILYSTATEMENT)
 public class DailyStatementActivity extends JMEBaseActivity {
 
@@ -50,7 +50,8 @@ public class DailyStatementActivity extends JMEBaseActivity {
     protected void initData(Bundle savedInstanceState) {
         super.initData(savedInstanceState);
 
-        mBinding.tvTime.setText(DateUtil.dateToString(System.currentTimeMillis()));
+        String time = getIntent().getStringExtra("time");
+        mBinding.tvTime.setText(time);
     }
 
     @Override
@@ -95,8 +96,8 @@ public class DailyStatementActivity extends JMEBaseActivity {
     }
 
     private void setDailyStatementData(DailyStatementVo dailyStatementVo) {
-        mBinding.tvCurrentClientInterest.setText(MarketUtil.decimalFormatMoney(dailyStatementVo.getCurrentBalanceStr()));
-        mBinding.tvPreviousCustomerInterest.setText(MarketUtil.decimalFormatMoney(dailyStatementVo.getLastTradingBalanceStr()));
+        mBinding.tvCurrentClientInterest.setText(MarketUtil.decimalFormatMoney(dailyStatementVo.getLastTradingBalanceStr()));
+        mBinding.tvPreviousCustomerInterest.setText(MarketUtil.decimalFormatMoney(dailyStatementVo.getCurrentBalanceStr()));
         mBinding.tvCurrentAvailableFunds.setText(MarketUtil.decimalFormatMoney(dailyStatementVo.getCurrentDrawAmonutStr()));
         mBinding.tvTodayFloat.setText(MarketUtil.decimalFormatMoney(dailyStatementVo.getTodayProfitStr()));
         mBinding.tvCurrentHoldPositionBond.setText(MarketUtil.decimalFormatMoney(dailyStatementVo.getCurrentPositionMarginStr()));
@@ -144,21 +145,21 @@ public class DailyStatementActivity extends JMEBaseActivity {
 
     public class ClickHandlers {
 
-        @TargetApi(24)
-        public void onClickSelectDate() {
-            if (null != mDatePickerDialog && mDatePickerDialog.isShowing())
-                return;
-
-            getTodayCalendar();
-
-            mDatePickerDialog = new DatePickerDialog(DailyStatementActivity.this, (datePicker, year, month, dayOfMonth) ->
-                    setQueryTime(year, month, dayOfMonth), mYear, mMonth, mDayOfMonth);
-
-            if (android.os.Build.VERSION.SDK_INT >= 11)
-                mDatePickerDialog.getDatePicker().setMaxDate(new Date().getTime());
-
-            mDatePickerDialog.show();
-        }
+//        @TargetApi(24)
+//        public void onClickSelectDate() {
+//            if (null != mDatePickerDialog && mDatePickerDialog.isShowing())
+//                return;
+//
+//            getTodayCalendar();
+//
+//            mDatePickerDialog = new DatePickerDialog(DailyStatementActivity.this, (datePicker, year, month, dayOfMonth) ->
+//                    setQueryTime(year, month, dayOfMonth), mYear, mMonth, mDayOfMonth);
+//
+//            if (android.os.Build.VERSION.SDK_INT >= 11)
+//                mDatePickerDialog.getDatePicker().setMaxDate(new Date().getTime());
+//
+//            mDatePickerDialog.show();
+//        }
 
     }
 }

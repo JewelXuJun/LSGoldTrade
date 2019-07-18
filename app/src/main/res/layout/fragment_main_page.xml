@@ -90,13 +90,64 @@
                                 android:layout_height="@dimen/height_main_page_banner"
                                 app:canLoop="true"
                                 app:indicatorAlign="center"
-                                app:open_mz_mode="true" />
+                                app:open_mz_mode="false" />
+                                app:open_mz_mode="false" />
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="40dp"
+                                android:orientation="horizontal"
+                                android:paddingLeft="20dp"
+                                android:gravity="center_vertical"
+                                >
+
+                                <ImageView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:src="@mipmap/advertisement"
+                                    />
+
+                                <ViewFlipper
+                                    android:id="@+id/view_flipper"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:inAnimation="@anim/anim_in"
+                                    android:outAnimation="@anim/anim_out"
+                                    android:layout_gravity="center"
+                                    android:layout_marginLeft="4dp"
+                                    />
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="90dp"
+                                android:orientation="vertical"
+                                >
+
+                                <android.support.v4.view.ViewPager
+                                    android:id="@+id/view_pager_1"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="0dp"
+                                    android:layout_weight="1" />
+
+                                <net.lucode.hackware.magicindicator.MagicIndicator
+                                    android:id="@+id/magic_indicator1"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="2dp"
+                                    android:layout_marginBottom="6dp"
+                                    android:layout_gravity="center_horizontal"
+                                    />
+
+                            </LinearLayout>
 
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:background="@color/white"
-                                android:orientation="horizontal">
+                                android:orientation="horizontal"
+                                android:visibility="gone"
+                                >
 
                                 <TextView
                                     android:layout_width="match_parent"
@@ -145,7 +196,8 @@
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="@dimen/height_main_page_market"
-                                android:orientation="vertical">
+                                android:orientation="vertical"
+                                >
 
                                 <android.support.v7.widget.RecyclerView
                                     android:id="@+id/recyclerView"
@@ -181,6 +233,14 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+
+                <com.jme.lsgoldtrade.view.TradingBox
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom|right"
+                    android:layout_marginBottom="53dp"
+                    android:layout_marginRight="2dp"
+                    />
 
             </android.support.design.widget.CoordinatorLayout>
 

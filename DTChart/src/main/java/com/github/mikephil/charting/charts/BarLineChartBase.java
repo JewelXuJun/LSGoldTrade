@@ -428,7 +428,7 @@ public abstract class BarLineChartBase<T extends BarLineScatterCandleBubbleData<
                 mAxisLeft.mAxisMinimum = 0.f;
                 mAxisLeft.mAxisMaximum = Math.max(0.f, !Float.isNaN(mAxisLeft.getAxisMaxValue()) ? mAxisLeft.getAxisMaxValue() : (maxLeft + topSpaceLeft));
             } else {
-                // Stick the minimum to 0.0 or less, and maximum to 0.0 or more (startAtZero for negative/positive at the same time)
+                // Stick the minimum to 0.0 or less, and maximum to 0.0 or down (startAtZero for negative/positive at the same time)
                 mAxisLeft.mAxisMinimum = Math.min(0.f, !Float.isNaN(mAxisLeft.getAxisMinValue()) ? mAxisLeft.getAxisMinValue() : (minLeft - bottomSpaceLeft));
                 mAxisLeft.mAxisMaximum = Math.max(0.f, !Float.isNaN(mAxisLeft.getAxisMaxValue()) ? mAxisLeft.getAxisMaxValue() : (maxLeft + topSpaceLeft));
             }
@@ -453,7 +453,7 @@ public abstract class BarLineChartBase<T extends BarLineScatterCandleBubbleData<
                 mAxisRight.mAxisMinimum = 0.f;
                 mAxisRight.mAxisMaximum = Math.max(0.f, !Float.isNaN(mAxisRight.getAxisMaxValue()) ? mAxisRight.getAxisMaxValue() : (maxRight + topSpaceRight));
             } else {
-                // Stick the minimum to 0.0 or less, and maximum to 0.0 or more (startAtZero for negative/positive at the same time)
+                // Stick the minimum to 0.0 or less, and maximum to 0.0 or down (startAtZero for negative/positive at the same time)
                 mAxisRight.mAxisMinimum = Math.min(0.f, !Float.isNaN(mAxisRight.getAxisMinValue()) ? mAxisRight.getAxisMinValue() : (minRight - bottomSpaceRight));
                 mAxisRight.mAxisMaximum = Math.max(0.f, !Float.isNaN(mAxisRight.getAxisMaxValue()) ? mAxisRight.getAxisMaxValue() : (maxRight + topSpaceRight));
             }
@@ -848,7 +848,7 @@ public abstract class BarLineChartBase<T extends BarLineScatterCandleBubbleData<
     /**
      * Sets the size of the area (range on the x-axis) that should be maximum
      * visible at once (no further zooming out allowed). If this is e.g. set to
-     * 10, no more than 10 values on the x-axis can be viewed at once without
+     * 10, no down than 10 values on the x-axis can be viewed at once without
      * scrolling.
      *
      * @param maxXRange The maximum visible range of x-values.
@@ -861,7 +861,7 @@ public abstract class BarLineChartBase<T extends BarLineScatterCandleBubbleData<
     /**
      * Sets the size of the area (range on the x-axis) that should be minimum
      * visible at once (no further zooming in allowed). If this is e.g. set to
-     * 10, no more than 10 values on the x-axis can be viewed at once without
+     * 10, no down than 10 values on the x-axis can be viewed at once without
      * scrolling.
      *
      * @param minXRange The minimum visible range of x-values.
@@ -874,7 +874,7 @@ public abstract class BarLineChartBase<T extends BarLineScatterCandleBubbleData<
     /**
      * Limits the maximum and minimum value count that can be visible by
      * pinching and zooming. e.g. minRange=10, maxRange=100 no less than 10
-     * values and no more that 100 values can be viewed at once without
+     * values and no down that 100 values can be viewed at once without
      * scrolling
      *
      * @param minXRange

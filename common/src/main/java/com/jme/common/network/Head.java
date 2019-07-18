@@ -12,6 +12,8 @@ public class Head implements Serializable {
 
     private String msg;
 
+    private String value;
+
     private boolean isSuccess;
 
     public boolean isSuccess() {
@@ -36,5 +38,13 @@ public class Head implements Serializable {
 
     public void setMsg(String msg) {
         this.msg = msg;
+    }
+
+    public String getValue() {
+        return value;
+    }
+
+    public void setValue(String value) {
+        this.value = value;
     }
 }

@@ -208,6 +208,44 @@
 
                         </RelativeLayout>
 
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="28dp"
+                            >
+
+                            <CheckBox
+                                android:id="@+id/cb_yingliqian"
+                                style="@style/CustomPayCheckBoxTheme"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerVertical="true"
+                                android:gravity="center_vertical"
+                                android:layout_marginRight="5dp"
+                                />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="保持登录状态"
+                                android:textSize="@dimen/sp_14"
+                                android:textColor="@color/color_4d4d4d"
+                                android:layout_toRightOf="@id/cb_yingliqian"
+                                android:layout_marginLeft="8dp"
+                                />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="忘记密码"
+                                android:textSize="@dimen/sp_14"
+                                android:textColor="@color/color_0080ff"
+                                android:layout_alignParentRight="true"
+                                android:onClick="@{() -> handlers.onClickForgetPwd()}"
+                                />
+
+                        </RelativeLayout>
+
                         <Button
                             android:id="@+id/btn_login"
                             android:layout_width="match_parent"
@@ -238,7 +276,7 @@
                             android:layout_marginBottom="@dimen/common_area_margin_big"
                             android:background="@drawable/bg_btn_blue_hollow"
                             android:onClick="@{() -> handlers.onClickRegister()}"
-                            android:text="@string/login_register"
+                            android:text="还没有账号?立即注册"
                             android:textColor="@color/color_blue"
                             android:textSize="@dimen/common_font_size" />
 

@@ -4,7 +4,9 @@ import com.jme.common.network.API;
 import com.jme.common.network.DTResponse;
 import com.jme.common.network.IService;
 import com.jme.lsgoldtrade.config.Constants;
+import com.jme.lsgoldtrade.config.User;
 import com.jme.lsgoldtrade.domain.AccountVo;
+import com.jme.lsgoldtrade.domain.BindUserNameVo;
 import com.jme.lsgoldtrade.domain.ContractInfoVo;
 import com.jme.lsgoldtrade.domain.DailyStatementVo;
 import com.jme.lsgoldtrade.domain.DealHistoryPageVo;
@@ -13,7 +15,9 @@ import com.jme.lsgoldtrade.domain.InOutTurnOverVo;
 import com.jme.lsgoldtrade.domain.OrderHisPageVo;
 import com.jme.lsgoldtrade.domain.OrderPageVo;
 import com.jme.lsgoldtrade.domain.PositionPageVo;
-import com.jme.lsgoldtrade.config.User;
+import com.jme.lsgoldtrade.domain.UserInfoVo;
+import com.jme.lsgoldtrade.domain.VerifyIdCardVo;
+import com.jme.lsgoldtrade.domain.WarmVo;
 
 import java.util.HashMap;
 import java.util.List;
@@ -161,6 +165,94 @@ public class TradeService extends IService<TradeApi> {
         public Call<DTResponse> request(HashMap<String, String> params) {
 
             return mApi.minReserveFund(params);
+        }
+    };
+
+    public API setWarm = new API<String>("SetWarm") {
+        @Override
+        public Call<DTResponse> request(HashMap<String, String> params) {
+
+            return mApi.setWarm(params);
+        }
+    };
+
+    public API warnInfo = new API<WarmVo>("GetWarm") {
+        @Override
+        public Call<DTResponse> request(HashMap<String, String> params) {
+
+            return mApi.warnInfo(params);
+        }
+    };
+
+    public API icbcMsg = new API<String>("IcbcMsg") {
+        @Override
+        public Call<DTResponse> request(HashMap<String, String> params) {
+
+            return mApi.icbcMsg(params);
+        }
+    };
+
+    public API registerMsg = new API<String>("RegisterMsg") {
+        @Override
+        public Call<DTResponse> request(HashMap<String, String> params) {
+
+            return mApi.registerMsg(params);
+        }
+    };
+
+    public API verifyIdCard = new API<String>("VerifyIdCard") {
+        @Override
+        public Call<DTResponse> request(HashMap<String, String> params) {
+
+            return mApi.verifyIdCard(params);
+        }
+    };
+
+    public API registerLogin = new API<UserInfoVo>("RegisterLogin") {
+        @Override
+        public Call<DTResponse> request(HashMap<String, String> params) {
+
+            return mApi.registerLogin(params);
+        }
+    };
+
+    public API resetLoginPasswordMsg = new API<String>("ResetLoginPasswordMsg") {
+        @Override
+        public Call<DTResponse> request(HashMap<String, String> params) {
+
+            return mApi.resetLoginPasswordMsg(params);
+        }
+    };
+
+    public API resetLoginPassword = new API<String>("ResetLoginPassword") {
+        @Override
+        public Call<DTResponse> request(HashMap<String, String> params) {
+
+            return mApi.resetLoginPassword(params);
+        }
+    };
+
+    public API bindaccount = new API<BindUserNameVo>("Bindaccount") {
+        @Override
+        public Call<DTResponse> request(HashMap<String, String> params) {
+
+            return mApi.bindaccount(params);
+        }
+    };
+
+    public API setLoginPassword = new API<String>("SetLoginPassword") {
+        @Override
+        public Call<DTResponse> request(HashMap<String, String> params) {
+
+            return mApi.setLoginPassword(params);
+        }
+    };
+
+    public API whetherIdCard = new API<VerifyIdCardVo>("WhetherIdCard") {
+        @Override
+        public Call<DTResponse> request(HashMap<String, String> params) {
+
+            return mApi.whetherIdCard(params);
         }
     };
 

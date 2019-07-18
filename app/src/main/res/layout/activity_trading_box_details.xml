@@ -1,0 +1,695 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:more="http://schemas.android.com/apk/res-auto"
+    >
+
+    <data>
+
+        <variable
+            name="handlers"
+            type="com.jme.lsgoldtrade.ui.tradingbox.TradingBoxDetailsActivity.ClickHandlers" />
+
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/common_background"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:id="@+id/lltitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            >
+
+            <include layout="@layout/layout_toolbar" />
+
+            <include layout="@layout/item_line_vertical" />
+
+        </LinearLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/white"
+            >
+
+            <android.support.v4.widget.NestedScrollView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                >
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    >
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="94dp"
+                        >
+
+                        <ImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="@mipmap/xiazibeijing"
+                            />
+
+                        <TextView
+                            android:id="@+id/trading_chance"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="交易机会"
+                            android:textSize="@dimen/sp_14"
+                            android:textColor="@color/white"
+                            android:layout_centerHorizontal="true"
+                            android:layout_marginTop="15dp"
+                            />
+
+                        <TextView
+                            android:id="@+id/title"
+                            android:layout_width="match_parent"
+                            android:layout_height="40dp"
+                            android:text="美联储"
+                            android:textSize="@dimen/common_font_size"
+                            android:textColor="@color/white"
+                            android:gravity="center"
+                            android:layout_below="@id/trading_chance"
+                            android:layout_marginTop="2dp"
+                            android:background="@drawable/bg_translate"
+                            android:layout_marginLeft="20dp"
+                            android:layout_marginRight="20dp"
+                            android:maxLines="1"
+                            android:ellipsize="end"
+                            />
+
+                    </RelativeLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="44dp"
+                        android:orientation="horizontal"
+                        >
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="44dp"
+                            android:layout_weight="1"
+                            android:text="基本面分析"
+                            android:textSize="@dimen/sp_14"
+                            android:textColor="@color/color_000"
+                            android:gravity="center_vertical"
+                            android:drawableLeft="@drawable/drawleft_blue"
+                            android:drawablePadding="5dp"
+                            android:paddingLeft="15dp"
+                            />
+
+                        <TextView
+                            android:id="@+id/aboutnews"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_gravity="center_vertical"
+                            android:text="相关资讯"
+                            android:textSize="@dimen/sp_14"
+                            android:textColor="@color/color_0080ff"
+                            android:layout_marginLeft="5dp"
+                            android:onClick="@{() -> handlers.onClickAboutNews()}"
+                            android:layout_marginRight="15dp"
+                            android:gravity="center"
+                            />
+
+                    </LinearLayout>
+
+                    <include layout="@layout/item_line_vertical" />
+
+                    <com.jme.lsgoldtrade.view.CollapsibleTextView
+                        android:id="@+id/jibenmian"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/color_4d4d4d"
+                        android:textSize="@dimen/sp_14"
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginTop="15dp"
+                        android:layout_marginRight="15dp"
+                        android:layout_marginBottom="5dp"
+                        />
+
+                    <include layout="@layout/item_line_5" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="44dp"
+                        android:text="分析师观点"
+                        android:textSize="@dimen/sp_14"
+                        android:textColor="@color/color_000"
+                        android:gravity="center_vertical"
+                        android:drawableLeft="@drawable/drawleft_blue"
+                        android:drawablePadding="5dp"
+                        android:paddingLeft="15dp"
+                        />
+
+                    <include layout="@layout/item_line_vertical" />
+
+                    <com.jme.lsgoldtrade.view.CollapsibleTextView
+                        android:id="@+id/fenxishi"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/color_4d4d4d"
+                        android:textSize="@dimen/sp_14"
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginTop="15dp"
+                        android:layout_marginRight="15dp"
+                        android:layout_marginBottom="5dp"
+                        />
+
+                    <include layout="@layout/item_line_vertical" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="47dp"
+                        android:orientation="horizontal"
+                        android:layout_marginTop="3dp"
+                        >
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="vertical"
+                            android:gravity="center"
+                            >
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="预测交易品种"
+                                android:textSize="@dimen/sp_14"
+                                android:textColor="@color/color_000"
+                                />
+
+                            <TextView
+                                android:id="@+id/variety"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Au(T+D)"
+                                android:textSize="@dimen/sp_14"
+                                android:textColor="@color/color_000"
+                                />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="vertical"
+                            android:gravity="center"
+                            >
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="预测方向"
+                                android:textSize="@dimen/sp_14"
+                                android:textColor="@color/color_000"
+                                />
+
+                            <TextView
+                                android:id="@+id/direction"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="多"
+                                android:textSize="@dimen/sp_14"
+                                android:textColor="@color/color_000"
+                                />
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                    <include layout="@layout/item_line_5" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="44dp"
+                        android:orientation="horizontal"
+                        >
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="44dp"
+                            android:layout_weight="1"
+                            android:text="投票"
+                            android:textSize="@dimen/sp_14"
+                            android:textColor="@color/color_000"
+                            android:gravity="center_vertical"
+                            android:drawableLeft="@drawable/drawleft_blue"
+                            android:drawablePadding="5dp"
+                            android:paddingLeft="15dp"
+                            />
+
+                        <LinearLayout
+                            android:id="@+id/daojishi"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginRight="20dp"
+                            android:orientation="horizontal" >
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginRight="5dp"
+                                android:text="离结束还有:"
+                                android:textSize="@dimen/sp_14"
+                                android:textColor="@color/color_000"
+                                />
+
+                            <TextView
+                                android:id="@+id/tvtime0"
+                                android:layout_width="20dp"
+                                android:layout_height="20dp"
+                                android:layout_centerHorizontal="true"
+                                android:layout_centerVertical="true"
+                                android:gravity="center"
+                                android:background="@drawable/panicbuy_time"
+                                android:textColor="@color/color_000"
+                                android:textSize="@dimen/sp_14" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text=":"
+                                android:textColor="@color/color_000"
+                                android:layout_marginLeft="5dp"
+                                android:layout_marginRight="5dp"
+                                />
+
+                            <TextView
+                                android:id="@+id/tvtime1"
+                                android:layout_width="20dp"
+                                android:layout_height="20dp"
+                                android:layout_centerHorizontal="true"
+                                android:layout_centerVertical="true"
+                                android:gravity="center"
+                                android:background="@drawable/panicbuy_time"
+                                android:textColor="@color/color_000"
+                                android:textSize="@dimen/sp_14" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text=":"
+                                android:textColor="@color/color_000"
+                                android:layout_marginLeft="5dp"
+                                android:layout_marginRight="5dp"
+                                />
+
+                            <TextView
+                                android:id="@+id/tvtime2"
+                                android:layout_width="20dp"
+                                android:layout_height="20dp"
+                                android:layout_centerHorizontal="true"
+                                android:layout_centerVertical="true"
+                                android:gravity="center"
+                                android:textColor="@color/color_000"
+                                android:background="@drawable/panicbuy_time"
+                                android:textSize="@dimen/sp_14" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text=":"
+                                android:textColor="@color/color_000"
+                                android:layout_marginLeft="5dp"
+                                android:layout_marginRight="5dp"
+                                />
+
+                            <TextView
+                                android:id="@+id/tvtime3"
+                                android:layout_width="20dp"
+                                android:layout_height="20dp"
+                                android:layout_centerHorizontal="true"
+                                android:layout_centerVertical="true"
+                                android:gravity="center"
+                                android:background="@drawable/panicbuy_time"
+                                android:textColor="@color/color_000"
+                                android:textSize="@dimen/sp_14" />
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                    <include layout="@layout/item_line_vertical" />
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingLeft="18dp"
+                        android:paddingRight="18dp"
+                        >
+
+                        <RelativeLayout
+                            android:id="@+id/rl"
+                            android:layout_width="match_parent"
+                            android:layout_height="15dp"
+                            android:layout_marginTop="11dp"
+                            >
+
+                            <ProgressBar
+                                android:id="@+id/progress"
+                                style="@android:style/Widget.ProgressBar.Horizontal"
+                                android:layout_width="match_parent"
+                                android:layout_height="15dp"
+                                android:progressDrawable="@drawable/bar_color"
+                                />
+
+                            <TextView
+                                android:id="@+id/moreRate"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textSize="@dimen/sp_12"
+                                android:textColor="@color/chart_item_pressed_white"
+                                android:layout_marginLeft="10dp"
+                                />
+
+                            <TextView
+                                android:id="@+id/kongRate"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textSize="@dimen/sp_12"
+                                android:textColor="@color/chart_item_pressed_white"
+                                android:layout_marginRight="10dp"
+                                android:layout_alignParentRight="true"
+                                />
+
+                        </RelativeLayout>
+
+                        <LinearLayout
+                            android:layout_below="@+id/rl"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:layout_marginTop="10dp"
+                            android:gravity="center"
+                            >
+
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical"
+                                android:gravity="center"
+                                android:layout_marginRight="20dp"
+                                >
+
+                                <TextView
+                                    android:id="@+id/more_num"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="111票"
+                                    android:textSize="@dimen/sp_14"
+                                    android:textColor="@color/color_000"
+                                    android:layout_marginBottom="3dp"
+                                    />
+
+                                <TextView
+                                    android:id="@+id/more_choose"
+                                    android:layout_width="100dp"
+                                    android:layout_height="33dp"
+                                    android:text="同意"
+                                    android:textSize="@dimen/sp_18"
+                                    android:textColor="@color/white"
+                                    android:gravity="center"
+                                    android:onClick="@{() -> handlers.onClickMore()}"
+                                    />
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical"
+                                android:gravity="center"
+                                >
+
+                                <TextView
+                                    android:id="@+id/kong_num"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="25票"
+                                    android:textSize="@dimen/sp_14"
+                                    android:textColor="@color/color_000"
+                                    android:layout_marginBottom="3dp"
+                                    />
+
+                                <TextView
+                                    android:id="@+id/kong_choose"
+                                    android:layout_width="100dp"
+                                    android:layout_height="33dp"
+                                    android:text="反对"
+                                    android:textSize="@dimen/sp_18"
+                                    android:textColor="@color/white"
+                                    android:gravity="center"
+                                    android:onClick="@{() -> handlers.onClickKong()}"
+                                    />
+
+                            </LinearLayout>
+
+                        </LinearLayout>
+
+                    </RelativeLayout>
+
+                    <LinearLayout
+                        android:id="@+id/kaipingtime"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_marginTop="20dp"
+                        >
+
+                        <include layout="@layout/item_line_vertical" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="60dp"
+                            android:orientation="horizontal"
+                            android:gravity="center_vertical"
+                            android:paddingLeft="15dp"
+                            android:paddingRight="15dp"
+                            >
+
+                            <TextView
+                                android:layout_width="120dp"
+                                android:layout_height="wrap_content"
+                                android:text="开仓时间段"
+                                android:textSize="@dimen/sp_14"
+                                android:textColor="@color/color_333"
+                                />
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal"
+                                >
+
+                                <LinearLayout
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="vertical"
+                                    >
+
+                                    <TextView
+                                        android:id="@+id/kaicangbeginyear"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="2019/3/20"
+                                        android:textSize="@dimen/sp_14"
+                                        android:textColor="@color/color_000"
+                                        />
+
+                                    <TextView
+                                        android:id="@+id/kaicangbeginclock"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="07:30:00"
+                                        android:textSize="@dimen/sp_18"
+                                        android:textColor="@color/color_000"
+                                        />
+
+                                </LinearLayout>
+
+                                <TextView
+                                    android:layout_width="30dp"
+                                    android:layout_height="1dp"
+                                    android:layout_gravity="center"
+                                    android:background="@color/color_000"
+                                    android:layout_marginLeft="15dp"
+                                    android:layout_marginRight="15dp"
+                                    />
+
+                                <LinearLayout
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="vertical"
+                                    >
+
+                                    <TextView
+                                        android:id="@+id/kaicangcloseyear"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="2019/3/20"
+                                        android:textSize="@dimen/sp_14"
+                                        android:textColor="@color/color_000"
+                                        />
+
+                                    <TextView
+                                        android:id="@+id/kaicangcloseclock"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="07:59:59"
+                                        android:textSize="@dimen/sp_18"
+                                        android:textColor="@color/color_000"
+                                        />
+
+                                </LinearLayout>
+
+                            </LinearLayout>
+
+                        </LinearLayout>
+
+                        <include layout="@layout/item_line_vertical" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="60dp"
+                            android:orientation="horizontal"
+                            android:gravity="center_vertical"
+                            android:paddingLeft="15dp"
+                            android:paddingRight="15dp"
+                            >
+
+                            <TextView
+                                android:layout_width="120dp"
+                                android:layout_height="wrap_content"
+                                android:text="平仓时间段"
+                                android:textSize="@dimen/sp_14"
+                                android:textColor="@color/color_333"
+                                />
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal"
+                                >
+
+                                <LinearLayout
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="vertical"
+                                    >
+
+                                    <TextView
+                                        android:id="@+id/pingcangbeginyear"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="2019/3/20"
+                                        android:textSize="@dimen/sp_14"
+                                        android:textColor="@color/color_000"
+                                        />
+
+                                    <TextView
+                                        android:id="@+id/pingcangbeginclock"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="07:30:00"
+                                        android:textSize="@dimen/sp_18"
+                                        android:textColor="@color/color_000"
+                                        />
+
+                                </LinearLayout>
+
+                                <TextView
+                                    android:layout_width="30dp"
+                                    android:layout_height="1dp"
+                                    android:layout_gravity="center"
+                                    android:background="@color/color_000"
+                                    android:layout_marginLeft="15dp"
+                                    android:layout_marginRight="15dp"
+                                    />
+
+                                <LinearLayout
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="vertical"
+                                    >
+
+                                    <TextView
+                                        android:id="@+id/pingcangendyear"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="2019/3/20"
+                                        android:textSize="@dimen/sp_14"
+                                        android:textColor="@color/color_000"
+                                        />
+
+                                    <TextView
+                                        android:id="@+id/pingcangendclock"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="07:59:59"
+                                        android:textSize="@dimen/sp_18"
+                                        android:textColor="@color/color_000"
+                                        />
+
+                                </LinearLayout>
+
+                            </LinearLayout>
+
+                        </LinearLayout>
+
+                        <include layout="@layout/item_line_vertical" />
+
+                    </LinearLayout>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="44dp"
+                        android:text="以上内容及建议，仅供参考，据此操作盈亏自负。"
+                        android:textSize="@dimen/sp_12"
+                        android:textColor="@color/color_999"
+                        android:gravity="center_vertical"
+                        android:layout_gravity="center_horizontal"
+                        />
+
+                </LinearLayout>
+
+            </android.support.v4.widget.NestedScrollView>
+
+            <ImageView
+                android:id="@+id/left"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="108dp"
+                android:onClick="@{() -> handlers.onClickLeft()}"
+                android:src="@mipmap/left"
+                />
+
+            <ImageView
+                android:id="@+id/right"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_marginTop="108dp"
+                android:onClick="@{() -> handlers.onClickRight()}"
+                android:src="@mipmap/right"
+                />
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
+</layout>

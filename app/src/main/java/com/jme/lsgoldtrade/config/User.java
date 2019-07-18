@@ -14,7 +14,7 @@ public class User {
 
     private String mToken = "";
     private String mAccount = "";
-    private long mAccountID;
+    private String mAccountID = "";
 
     public static User getInstance() {
         if (null == mUser)
@@ -51,12 +51,20 @@ public class User {
         return mToken;
     }
 
+    public void setmAccount(String account) {
+        this.mAccount = account;
+    }
+
     public String getAccount() {
         return mAccount;
     }
 
+    public void setmAccountID(String accountID) {
+        this.mAccountID = accountID;
+    }
+
     public String getAccountID() {
-        return String.valueOf(mAccountID);
+        return mAccountID;
     }
 
 }

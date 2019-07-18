@@ -1,14 +1,20 @@
 package com.jme.lsgoldtrade.ui.main;
 
+import android.app.Dialog;
+import android.content.DialogInterface;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.os.Environment;
+import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TabHost;
 import android.widget.TextView;
 
@@ -16,14 +22,29 @@ import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.jme.common.network.DTRequest;
 import com.jme.common.network.Head;
+import com.jme.common.util.AppInfoUtil;
+import com.jme.common.util.AppManager;
 import com.jme.common.util.RxBus;
+import com.jme.common.util.ToastUtils;
 import com.jme.lsgoldtrade.R;
 import com.jme.lsgoldtrade.base.JMEBaseActivity;
 import com.jme.lsgoldtrade.config.Constants;
 import com.jme.lsgoldtrade.databinding.ActivityMainBinding;
+import com.jme.lsgoldtrade.domain.UpdateInfoVo;
+import com.jme.lsgoldtrade.service.ManagementService;
 import com.jme.lsgoldtrade.tabhost.MainTab;
+import com.jme.lsgoldtrade.util.AESUtil;
+import com.orhanobut.logger.Logger;
+import com.jme.lsgoldtrade.util.DialogUtils;
+import com.maning.updatelibrary.InstallUtils;
+import com.orhanobut.logger.Logger;
+import com.yanzhenjie.permission.Action;
+import com.yanzhenjie.permission.AndPermission;
+import com.yanzhenjie.permission.Permission;
 
-import retrofit2.http.Path;
+import java.util.HashMap;
+import java.util.List;
+
 import rx.Subscription;
 
 /**
@@ -56,6 +77,21 @@ public class MainActivity extends JMEBaseActivity implements TabHost.OnTabChange
     @Override
     protected void initData(Bundle savedInstanceState) {
         super.initData(savedInstanceState);
+//        1bd7c3a9fd8f920f396f86ab42cfbce4
+//        http://192.168.10.171:18080/tjsmanage/infoapi/v1/ios/getVersionInfo?code=1
+        getUpDateInfo();
+//        String s = "1B:D7:C3:A9:FD:8F:92:0F:39:6F:86:AB:42:CF:BC:E4";
+//        1bd7c3a9fd8f920f396f86ab42cfbce4
+//        String s1 = s.replaceAll(":", "").toLowerCase();
+//        Logger.e("字符串--->" + s1);
+    }
+
+    private void getUpDateInfo() {
+        int versionCode = AppInfoUtil.getVersionCode(mContext);
+        HashMap<String, String> params = new HashMap<>();
+        params.put("code", versionCode + "");
+
+        sendRequest(ManagementService.getInstance().getVersionInfo, params, false);
     }
 
     @Override
@@ -88,10 +124,20 @@ public class MainActivity extends JMEBaseActivity implements TabHost.OnTabChange
                     runOnUiThread(() -> mBinding.tabhost.setCurrentTab(0));
 
                     break;
+                case Constants.RxBusConst.RXBUS_CHEDAN:
+                    runOnUiThread(() -> mBinding.tabhost.setCurrentTab(2));
+                    RxBus.getInstance().post(Constants.RxBusConst.RXBUS_CHEDAN_FRAGMENT, null);
+
+                    break;
+                case Constants.RxBusConst.RXBUS_TRADEFRAGMENT_HOLD:
+                    runOnUiThread(() -> mBinding.tabhost.setCurrentTab(2));
+                    RxBus.getInstance().post(Constants.RxBusConst.RXBUS_CHICANG_FRAGMENT, null);
+
+                    break;
                 case Constants.RxBusConst.RXBUS_CANCEL_MAIN:
                     int currentTab = mBinding.tabhost.getCurrentTab();
 
-                    if (currentTab == 2 || currentTab == 3)
+                    if (currentTab == 3)
                         showLoginDialog();
 
                     break;
@@ -148,17 +194,17 @@ public class MainActivity extends JMEBaseActivity implements TabHost.OnTabChange
 
     @Override
     public boolean onTouch(View view, MotionEvent event) {
-        if (event.getAction() == MotionEvent.ACTION_DOWN) {
-            if (view.equals(mBinding.tabhost.getTabWidget().getChildAt(MainTab.TRADE.getId()))) {
-                if (!mUser.isLogin()) {
-                    ARouter.getInstance()
-                            .build(Constants.ARouterUriConst.ACCOUNTLOGIN)
-                            .navigation();
-
-                    return true;
-                }
-            }
-        }
+//        if (event.getAction() == MotionEvent.ACTION_DOWN) {
+//            if (view.equals(mBinding.tabhost.getTabWidget().getChildAt(MainTab.TRADE.getId()))) {
+//                if (!mUser.isLogin()) {
+//                    ARouter.getInstance()
+//                            .build(Constants.ARouterUriConst.ACCOUNTLOGIN)
+//                            .navigation();
+//
+//                    return true;
+//                }
+//            }
+//        }
 
         return false;
     }
@@ -166,6 +212,30 @@ public class MainActivity extends JMEBaseActivity implements TabHost.OnTabChange
     @Override
     protected void DataReturn(DTRequest request, Head head, Object response) {
         super.DataReturn(request, head, response);
+        switch (request.getApi().getName()) {
+            case "GetVersionInfo":
+                if (head.isSuccess()) {
+                    UpdateInfoVo value;
+                    try {
+                        value = (UpdateInfoVo) response;
+                    } catch (Exception e) {
+                        value = null;
+
+                        e.printStackTrace();
+                    }
+
+                    if (null == value)
+                        return;
+
+                    String force = value.getForce();
+                    if ("2".equals(force)) { //普通更新
+                        isUpData(value);
+                    } else if ("3".equals(force)) { //强制更新
+                        isUpData(value);
+                    }
+                }
+                break;
+        }
     }
 
     @Override
@@ -211,4 +281,179 @@ public class MainActivity extends JMEBaseActivity implements TabHost.OnTabChange
             mRxbus.unsubscribe();
     }
 
+    private void isUpData(UpdateInfoVo value) {
+        View v = View.inflate(this, R.layout.apk_updata_info, null);
+        final Dialog dialog = new AlertDialog.Builder(this, R.style.dialog).create();
+        dialog.show();
+        dialog.getWindow().setContentView(v);
+        ImageView install_apk_cancel = (ImageView) v.findViewById(R.id.install_apk_cancel);
+        TextView install_apk_sure = (TextView) v.findViewById(R.id.install_apk_sure);
+        TextView tv_updata_app = (TextView) v.findViewById(R.id.tv_updata_app);
+        if ("3".equals(value.getForce())) {
+            //点击dialog外部不消失
+            dialog.setCancelable(false);
+            //还有另一种方法   待试
+            //dialog.setCanceledOnTouchOutside(false);// 设置点击屏幕Dialog不消失
+        } else if ("2".equals(value.getForce())){
+            //点击dialog外部消失
+            dialog.setCancelable(true);
+        }
+        tv_updata_app.setText(value.getUpdateContent());
+        install_apk_cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if ("2".equals(value.getForce())) {
+                    dialog.dismiss();
+                } else {
+                    DialogUtils.alertTitleDialog(MainActivity.this, "确定", "取消",
+                            "取消更新将无法使用", new DialogUtils.SetAlertDialogListener() {
+                                @Override
+                                public void onPositive() {
+                                    AppManager.getAppManager().AppExit(mContext);
+                                }
+
+                                @Override
+                                public void onNegative() {
+
+                                }
+                            });
+                }
+            }
+        });
+        install_apk_sure.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String[] args = new String[]{Permission.READ_EXTERNAL_STORAGE};
+                AndPermission.with(MainActivity.this)
+                        .permission(args)
+                        .onGranted(new Action() {
+                            @Override
+                            public void onAction(List<String> permissions) {
+                                loadApp(value.getDownloadUrl());
+                                dialog.dismiss();
+                            }
+                        })
+                        .onDenied(new Action() {
+                            @Override
+                            public void onAction(@NonNull List<String> permissions) {
+
+                            }
+                        })
+                        .start();
+            }
+        });
+    }
+
+    /**
+     * 下载app
+     *
+     * @param url      下载地址
+     */
+    private void loadApp(String url) {
+
+        String APK_SAVE_PATH = Environment.getExternalStorageDirectory().getAbsolutePath() + "/MNUpdateAPK/sheyiapp.apk";
+
+        //下载APK
+        InstallUtils.with(this)
+                //必须-下载地址
+                .setApkUrl(url)
+                //非必须-下载保存的路径
+                .setApkPath(APK_SAVE_PATH)
+                //非必须-下载回调
+                .setCallBack(new InstallUtils.DownloadCallBack() {
+                    @Override
+                    public void onStart() {
+                        //下载开始
+                        ToastUtils.setToast(MainActivity.this, "正在后台下载");
+                    }
+
+                    @Override
+                    public void onComplete(final String path) {
+                        Logger.e("下载完成");
+                        InstallUtils.checkInstallPermission(MainActivity.this, new InstallUtils.InstallPermissionCallBack() {
+                            @Override
+                            public void onGranted() {
+                                /**
+                                 * 安装APK工具类
+                                 * @param context       上下文
+                                 * @param filePath      文件路径
+                                 * @param callBack      安装界面成功调起的回调
+                                 */
+                                InstallUtils.installAPK(MainActivity.this, path, new InstallUtils.InstallCallBack() {
+                                    @Override
+                                    public void onSuccess() {
+                                    }
+
+                                    @Override
+                                    public void onFail(Exception e) {
+                                    }
+                                });
+                            }
+
+                            @Override
+                            public void onDenied() {
+                                //弹出弹框提醒用户
+                                AlertDialog alertDialog = new AlertDialog.Builder(MainActivity.this)
+                                        .setTitle("温馨提示")
+                                        .setMessage("必须授权才能安装APK，请设置允许安装")
+                                        .setNegativeButton("取消", null)
+                                        .setPositiveButton("设置", new DialogInterface.OnClickListener() {
+                                            @Override
+                                            public void onClick(DialogInterface dialog, int which) {
+                                                //打开设置页面
+                                                InstallUtils.openInstallPermissionSetting(MainActivity.this, new InstallUtils.InstallPermissionCallBack() {
+                                                    @Override
+                                                    public void onGranted() {
+                                                        /**
+                                                         * 安装APK工具类
+                                                         * @param context       上下文
+                                                         * @param filePath      文件路径
+                                                         * @param callBack      安装界面成功调起的回调
+                                                         */
+                                                        InstallUtils.installAPK(MainActivity.this, path, new InstallUtils.InstallCallBack() {
+                                                            @Override
+                                                            public void onSuccess() {
+                                                            }
+
+                                                            @Override
+                                                            public void onFail(Exception e) {
+                                                            }
+                                                        });
+                                                    }
+
+                                                    @Override
+                                                    public void onDenied() {
+                                                        //还是不允许咋搞？
+//                                                        Toast.makeText(context, "不允许安装咋搞？强制更新就退出应用程序吧！", Toast.LENGTH_SHORT).show();
+                                                    }
+                                                });
+                                            }
+                                        })
+                                        .create();
+                                alertDialog.show();
+                            }
+                        });
+                    }
+
+                    @Override
+                    public void onLoading(long total, long current) {
+                        //下载中
+                        Logger.e("下载中");
+                    }
+
+                    @Override
+                    public void onFail(Exception e) {
+                        //下载失败
+                        Logger.e("下载失败");
+                    }
+
+                    @Override
+                    public void cancle() {
+                        //下载取消
+                        Logger.e("取消下载");
+                    }
+                })
+                //开始下载
+                .startDownload();
+    }
 }

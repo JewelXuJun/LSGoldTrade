@@ -21,13 +21,12 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="70dp"
             android:background="@color/white"
             android:orientation="horizontal"
             android:paddingLeft="@dimen/common_area_margin"
-            android:paddingTop="@dimen/margin_normal"
             android:paddingRight="@dimen/common_area_margin"
-            android:paddingBottom="@dimen/margin_normal">
+            >
 
             <TextView
                 android:layout_width="wrap_content"
@@ -39,7 +38,7 @@
             <EditText
                 android:id="@+id/et_guarantee_fund"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="@dimen/common_area_margin_big"
                 android:background="@null"

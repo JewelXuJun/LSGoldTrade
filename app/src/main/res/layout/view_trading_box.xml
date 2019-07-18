@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+    <ImageView
+        android:id="@+id/tranding"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:src="@mipmap/trand_box"
+        android:layout_marginTop="20dp"
+        />
+
+    <ImageView
+        android:id="@+id/cancel_tranding"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:src="@mipmap/cancel_trand_box"
+        android:layout_alignRight="@id/tranding"
+        />
+
+</RelativeLayout>

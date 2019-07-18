@@ -11,12 +11,23 @@ import android.support.v4.content.ContextCompat;
 import android.view.View;
 
 import com.alibaba.android.arouter.launcher.ARouter;
+import com.jme.common.network.DTRequest;
+import com.jme.common.network.Head;
 import com.jme.common.util.StatusBarUtil;
 import com.jme.lsgoldtrade.R;
 import com.jme.lsgoldtrade.base.JMEBaseFragment;
 import com.jme.lsgoldtrade.config.Constants;
+import com.jme.lsgoldtrade.config.User;
 import com.jme.lsgoldtrade.databinding.FragmentPersonalBinding;
+import com.jme.lsgoldtrade.service.ManagementService;
+import com.jme.lsgoldtrade.util.JumpActivity;
+import com.jme.lsgoldtrade.util.NormalUtils;
 
+import java.util.HashMap;
+
+/**
+ * 我的
+ */
 public class PersonalFragment extends JMEBaseFragment {
 
     private FragmentPersonalBinding mBinding;
@@ -62,7 +73,8 @@ public class PersonalFragment extends JMEBaseFragment {
             mBinding.tvAccount.setVisibility(View.GONE);
             mBinding.layoutLoginMessage.setVisibility(View.VISIBLE);
         } else {
-            mBinding.tvAccount.setText(mUser.getCurrentUser().getTradeName());
+            String phone = NormalUtils.settingphone(mUser.getCurrentUser().getMobile());
+            mBinding.tvAccount.setText(phone);
             mBinding.tvAccount.setVisibility(View.VISIBLE);
             mBinding.layoutLoginMessage.setVisibility(View.GONE);
         }
@@ -115,15 +127,14 @@ public class PersonalFragment extends JMEBaseFragment {
         }
 
         public void onClickOpenAccountOnline() {
-            ARouter.getInstance()
-                    .build(Constants.ARouterUriConst.JMEWEBVIEW)
-                    .withString("title", mContext.getResources().getString(R.string.personal_open_account_online))
-                    .withString("url", Constants.HttpConst.URL_OPEN_ACCOUNT)
-                    .navigation();
+            JumpActivity.jumpSmall(mContext);
         }
 
         public void onClickCustomerService() {
-            callCustomer();
+//            callCustomer();
+            ARouter.getInstance()
+                    .build(Constants.ARouterUriConst.CUSTOMSERVICE)
+                    .navigation();
         }
 
         public void onClickMessageCenter() {
@@ -151,7 +162,42 @@ public class PersonalFragment extends JMEBaseFragment {
                     .navigation();
         }
 
+        public void onClickSubscribe() {
+            ARouter.getInstance()
+                    .build(Constants.ARouterUriConst.TRADINGBOX)
+                    .navigation();
+        }
 
+        public void onClickHomeTab() {
+            ARouter.getInstance()
+                    .build(Constants.ARouterUriConst.FASTENTRY)
+                    .navigation();
+        }
+
+        public void onClickValueAddedService() {
+            if (User.getInstance().isLogin()) {
+                sendRequest(ManagementService.getInstance().getUserAddedServicesStatus, new HashMap<>(), false);
+            } else {
+                showNeedLoginDialog();
+            }
+        }
     }
 
+    @Override
+    protected void DataReturn(DTRequest request, Head head, Object response) {
+        super.DataReturn(request, head, response);
+        switch (request.getApi().getName()) {
+            case "GetUserAddedServicesStatus":
+                if (head.isSuccess()) {
+                    ARouter.getInstance()
+                            .build(Constants.ARouterUriConst.CHECKSERVICE)
+                            .navigation();
+                } else {
+                    ARouter.getInstance()
+                            .build(Constants.ARouterUriConst.VALUEADDEDSERVICE)
+                            .navigation();
+                }
+                break;
+        }
+    }
 }

@@ -10,6 +10,8 @@ public class PositionVo implements Serializable {
 
     private String type;
 
+    private String exists;
+
     private long Position;
 
     private long lastPosition;
@@ -37,6 +39,15 @@ public class PositionVo implements Serializable {
     private long floatProfit;
 
     private long unliquidatedProfit;
+
+    public String getExists() {
+        return exists;
+    }
+
+    public void setExists(String exists) {
+        this.exists = exists;
+    }
+
 
     public String getContractId() {
         return contractId;

@@ -23,6 +23,7 @@ public class SharedPreUtils {
     public static final String Login_Account = "Login_Account";
     public static final String Login_Mobile = "Login_Mobile";
     public static final String MaxMatchNo = "maxmMatchno";
+    public static final String Uuid = "uuid";
 
     /**
      * 序列化对象
@@ -49,7 +50,7 @@ public class SharedPreUtils {
      * @param str
      * @return
      * @throws IOException
-     * @throws ClassNotFoundException
+     * @throws
      */
     public static Object deSerialization(String str) throws IOException, ClassNotFoundException {
         String redStr = "";

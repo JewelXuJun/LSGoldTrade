@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+        <variable
+            name="handlers"
+            type="com.jme.lsgoldtrade.ui.personal.CustomerServiceActivity.ClickHandlers" />
+
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/common_background"
+        android:orientation="vertical">
+
+        <include layout="@layout/layout_toolbar" />
+
+        <include layout="@layout/item_line_vertical" />
+
+        <android.support.v4.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:fillViewport="true"
+            android:background="@color/color_f5f5f5"
+            android:scrollbars="none">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                >
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="90dp"
+                    android:orientation="horizontal"
+                    android:layout_margin="10dp"
+                    >
+
+                    <android.support.v7.widget.RecyclerView
+                        android:id="@+id/about_quest"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        />
+
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/welcome"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/sp_15"
+                    android:textColor="@color/color_000"
+                    android:background="@drawable/bg_yujing_white"
+                    android:layout_margin="10dp"
+                    android:paddingLeft="15dp"
+                    android:paddingRight="15dp"
+                    android:paddingTop="10dp"
+                    android:paddingBottom="10dp"
+                    />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:background="@drawable/bg_yujing_white"
+                    android:layout_marginLeft="10dp"
+                    >
+
+                    <RelativeLayout
+                        android:layout_width="235dp"
+                        android:layout_height="wrap_content"
+                        android:padding="15dp"
+                        >
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="猜你想问"
+                            android:textSize="@dimen/sp_18"
+                            android:textColor="@color/color_000"
+                            />
+
+                        <TextView
+                            android:id="@+id/change_group"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="换一组"
+                            android:textSize="@dimen/sp_15"
+                            android:textColor="@color/color_0080ff"
+                            android:layout_alignParentRight="true"
+                            android:onClick="@{() -> handlers.onClickChangeGroup()}"
+                            />
+
+                    </RelativeLayout>
+
+                    <include layout="@layout/item_line_vertical" />
+
+                    <android.support.v7.widget.RecyclerView
+                        android:id="@+id/recyclerView_question"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:nestedScrollingEnabled="false"
+                        android:padding="15dp"
+                        />
+
+                </LinearLayout>
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/recyclerView"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:nestedScrollingEnabled="false"
+                    android:padding="10dp"
+                    />
+
+            </LinearLayout>
+
+        </android.support.v4.widget.NestedScrollView>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:orientation="horizontal"
+            android:padding="5dp"
+            >
+
+            <EditText
+                android:id="@+id/et_question"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/bg_et"
+                android:layout_marginRight="5dp"
+                android:paddingLeft="8dp"
+                />
+
+            <TextView
+                android:layout_width="80dp"
+                android:layout_height="40dp"
+                android:text="发送"
+                android:textSize="@dimen/sp_16"
+                android:textColor="@color/white"
+                android:gravity="center"
+                android:background="@drawable/drawable_blue"
+                android:onClick="@{() -> handlers.onClickSend()}"
+                />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</layout>

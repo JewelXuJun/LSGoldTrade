@@ -303,7 +303,7 @@ public class LineChartRenderer extends LineScatterCandleRadarRenderer {
 
         trans.pointValuesToPixel(buffer.buffer);
 
-        // more than 1 color
+        // down than 1 color
         if (dataSet.getColors().size() > 1) {
 
             for (int j = 0; j < range; j += 4) {

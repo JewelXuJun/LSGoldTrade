@@ -1,6 +1,7 @@
 package com.datai.common.charts.chart;
 
 import android.content.Context;
+import android.content.Intent;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
@@ -11,6 +12,7 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.datai.common.R;
+import com.datai.common.TimeSortActivity;
 import com.datai.common.charts.common.Config;
 import com.datai.common.charts.common.Descriptor;
 import com.datai.common.charts.kchart.KChart;
@@ -186,8 +188,7 @@ public class Chart extends LinearLayout {
             }
         });
 
-        mPopupIndicators
-                .setOnActionItemClickListener(new QuickAction.OnActionItemClickListener() {
+        mPopupIndicators.setOnActionItemClickListener(new QuickAction.OnActionItemClickListener() {
                     @Override
                     public void onItemClick(QuickAction source, int pos,
                                             int actionId) {
@@ -258,6 +259,13 @@ public class Chart extends LinearLayout {
             case "60minK":
                 setChartUnit(KData.Unit.MIN60);
 
+                break;
+            case "240minK":
+                setChartUnit(KData.Unit.MIN240);
+
+                break;
+            case "sort":
+                mContext.startActivity(new Intent(mContext, TimeSortActivity.class));
                 break;
             default:
                 setChartUnit(KData.Unit.TIME);

@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+        <variable
+            name="handlers"
+            type="com.jme.lsgoldtrade.ui.personal.ValueAddedServiceActivity.ClickHandlers" />
+
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        >
+
+        <LinearLayout
+            android:id="@+id/lltitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            >
+
+            <include layout="@layout/layout_toolbar" />
+
+            <include layout="@layout/item_line_vertical" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:paddingLeft="28dp"
+            android:paddingRight="15dp"
+            >
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                />
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="交易匣子"
+                    android:textSize="@dimen/sp_15"
+                    android:textColor="@color/color_000"
+                    />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="把握非农，一键下单"
+                    android:textSize="@dimen/sp_14"
+                    android:textColor="@color/color_000"
+                    />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <include layout="@layout/item_line_vertical" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:paddingLeft="28dp"
+            android:paddingRight="15dp"
+            >
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                />
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="委托风控"
+                    android:textSize="@dimen/sp_15"
+                    android:textColor="@color/color_000"
+                    />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="实时监控，交易安全"
+                    android:textSize="@dimen/sp_14"
+                    android:textColor="@color/color_000"
+                    />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <include layout="@layout/item_line_vertical" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="28dp"
+            android:layout_gravity="center"
+            >
+
+            <CheckBox
+                android:id="@+id/cb_agree"
+                style="@style/CustomPayCheckBoxTheme"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:gravity="center_vertical"
+                android:layout_marginRight="5dp"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="我已阅读并同意"
+                android:textSize="@dimen/sp_14"
+                android:textColor="@color/color_4d4d4d"
+                android:layout_toRightOf="@id/cb_yingliqian"
+                android:layout_marginLeft="8dp"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="《增值服务协议》"
+                android:textSize="@dimen/sp_14"
+                android:textColor="@color/color_0080ff"
+                android:layout_alignParentRight="true"
+                android:onClick="@{() -> handlers.onClickValueAddServiceAgreement()}"
+                />
+
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/btn_bind"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/height_login_btn"
+            android:background="@drawable/selector_btn"
+            android:onClick="@{() -> handlers.onClickOpenService()}"
+            android:text="申请开通"
+            android:textColor="@color/white"
+            android:textSize="@dimen/common_font_size"
+            android:layout_margin="10dp"
+            />
+
+    </LinearLayout>
+
+</layout>

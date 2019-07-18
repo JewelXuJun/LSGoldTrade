@@ -36,6 +36,9 @@ import java.util.List;
 
 import rx.Subscription;
 
+/**
+ * 持仓
+ */
 public class HoldPositionFragment extends JMEBaseFragment implements OnRefreshListener, BaseQuickAdapter.RequestLoadMoreListener {
 
     private FragmentHoldPositionBinding mBinding;
@@ -93,7 +96,7 @@ public class HoldPositionFragment extends JMEBaseFragment implements OnRefreshLi
     protected void initData(Bundle savedInstanceState) {
         super.initData(savedInstanceState);
 
-        mAdapter = new HoldPositionAdapter(mContext, R.layout.item_hold_position, null);
+        mAdapter = new HoldPositionAdapter(mContext, R.layout.item_hold_position, null, 1);
         mList = new ArrayList<>();
 
         mBinding.recyclerView.setHasFixedSize(false);
@@ -254,6 +257,22 @@ public class HoldPositionFragment extends JMEBaseFragment implements OnRefreshLi
     private void calculateValue() {
         if (null == mList || 0 == mList.size()) {
             mBinding.tvFloating.setText(R.string.text_no_data_default);
+            if (null != mAccountVo) {
+                BigDecimal floatTotal = new BigDecimal(0);
+                mTotal = new BigDecimal(mAccountVo.getTransactionBalanceStr())
+                        .add(new BigDecimal(mAccountVo.getFreezeBalanceStr()))
+                        .add(floatTotal)
+                        .add(new BigDecimal(mAccountVo.getPositionMarginStr()))
+                        .subtract(new BigDecimal(mAccountVo.getRuntimeFeeStr()))
+                        .toPlainString();
+                mBinding.tvTotal.setText(MarketUtil.decimalFormatMoney(mTotal));
+
+                String minReserveFund = mAccountVo.getMinReserveFundStr();
+                String runtimeFee = mAccountVo.getRuntimeFeeStr();
+                long value = Math.min((new BigDecimal(mTotal).subtract(new BigDecimal(minReserveFund))).multiply(new BigDecimal(100)).longValue(),
+                        new BigDecimal(mAccountVo.getExtractableBalance()).subtract(new BigDecimal(mAccountVo.getRuntimeFee())).longValue());
+                mBinding.tvDesirableCapital.setText(MarketUtil.decimalFormatMoney(MarketUtil.getPriceValue(value)));
+            }
         } else {
             BigDecimal floatTotal = new BigDecimal(0);
 
@@ -265,7 +284,7 @@ public class HoldPositionFragment extends JMEBaseFragment implements OnRefreshLi
             mBinding.tvFloating.setText(MarketUtil.decimalFormatMoney(floatTotal.toPlainString()));
 
             if (null != mAccountVo) {
-                mTotal = new BigDecimal(mAccountVo.getTransactionBalanceStr())
+                    mTotal = new BigDecimal(mAccountVo.getTransactionBalanceStr())
                         .add(new BigDecimal(mAccountVo.getFreezeBalanceStr()))
                         .add(floatTotal)
                         .add(new BigDecimal(mAccountVo.getPositionMarginStr()))
@@ -357,7 +376,7 @@ public class HoldPositionFragment extends JMEBaseFragment implements OnRefreshLi
 
                     mBinding.tvGuaranteeFund.setText(MarketUtil.decimalFormatMoney(mAccountVo.getMinReserveFundStr()));
                     mBinding.tvAvailableFunds.setText(MarketUtil.decimalFormatMoney(MarketUtil.getPriceValue(availableFunds)));
-
+                    mBinding.tvMarketValue.setText(MarketUtil.decimalFormatMoney(MarketUtil.getPriceValue(mAccountVo.getPositionMargin())));
                     calculateValue();
                 }
 
@@ -407,8 +426,7 @@ public class HoldPositionFragment extends JMEBaseFragment implements OnRefreshLi
 
                         calculateValue();
 
-                        mBinding.tvMarketValue.setText(MarketUtil.decimalFormatMoney(MarketUtil.getPriceValue(marketValueTotal.longValue())));
-
+//                        mBinding.tvMarketValue.setText(MarketUtil.decimalFormatMoney(MarketUtil.getPriceValue(marketValueTotal.longValue())));
                         if (bHasNext) {
                             if (mCurrentPage == 1)
                                 mAdapter.setNewData(positionVoList);

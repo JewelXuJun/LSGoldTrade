@@ -20,7 +20,7 @@ public class InfoPagerAdapter extends FragmentStatePagerAdapter {
 
     @Override
     public Fragment getItem(int position) {
-        return InfoFragment.newInstance(mChannelIds.get(position));
+        return InfoFragment.newInstance(mChannelIds.get(position), mTabHeaders.get(position));
     }
 
     @Override

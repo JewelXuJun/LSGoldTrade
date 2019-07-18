@@ -36,6 +36,9 @@ import java.util.List;
 
 import rx.Subscription;
 
+/**
+ * 当日持仓
+ */
 @Route(path = Constants.ARouterUriConst.CURRENTHOLDPOSITION)
 public class CurrentHoldPositionActivity extends JMEBaseActivity implements OnRefreshListener, BaseQuickAdapter.RequestLoadMoreListener {
 
@@ -95,7 +98,7 @@ public class CurrentHoldPositionActivity extends JMEBaseActivity implements OnRe
     protected void initData(Bundle savedInstanceState) {
         super.initData(savedInstanceState);
 
-        mAdapter = new HoldPositionAdapter(this, R.layout.item_hold_position, null);
+        mAdapter = new HoldPositionAdapter(this, R.layout.item_hold_position, null, 1);
         mList = new ArrayList<>();
 
         mBinding.recyclerView.setHasFixedSize(false);

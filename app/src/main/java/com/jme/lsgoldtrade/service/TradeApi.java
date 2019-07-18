@@ -54,4 +54,36 @@ public interface TradeApi {
     @POST("/gold-trade/v1.0.0/android/minReserveFund")
     Call<DTResponse> minReserveFund(@Body Map<String, String> map);
 
+    @POST("/gold-trade/v1.0.0/android/setWarn")
+    Call<DTResponse> setWarm(@Body Map<String, String> map);
+
+    @GET("/gold-trade/v1.0.0/android/warnInfo")
+    Call<DTResponse> warnInfo(@QueryMap Map<String, String> map);
+
+    @POST("/gold-trade/v1.0.0/android/icbcMsg")
+    Call<DTResponse> icbcMsg(@Body Map<String, String> map);
+
+    @GET("/gold-trade/v1.0.0/android/registerMsg")
+    Call<DTResponse> registerMsg(@QueryMap Map<String, String> map);
+
+    @POST("/gold-trade/v1.0.0/android/verifyIdCard")
+    Call<DTResponse> verifyIdCard(@Body Map<String, String> map);
+
+    @POST("/gold-trade/v1.0.0/android/registerLogin")
+    Call<DTResponse> registerLogin(@Body Map<String, String> map);
+
+    @GET("/gold-trade/v1.0.0/android/resetLoginPasswordMsg")
+    Call<DTResponse> resetLoginPasswordMsg(@QueryMap Map<String, String> map);
+
+    @POST("/gold-trade/v1.0.0/android/resetLoginPassword")
+    Call<DTResponse> resetLoginPassword(@Body Map<String, String> map);
+
+    @POST("/gold-trade/v1.0.0/android/bindAccount")
+    Call<DTResponse> bindaccount(@Body Map<String, String> map);
+
+    @POST("/gold-trade/v1.0.0/android/setLoginPassword")
+    Call<DTResponse> setLoginPassword(@Body Map<String, String> map);
+
+    @GET("/gold-trade/v1.0.0/android/whetherIdCard")
+    Call<DTResponse> whetherIdCard(@QueryMap Map<String, String> map);
 }

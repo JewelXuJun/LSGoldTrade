@@ -1,7 +1,7 @@
 package com.jme.lsgoldtrade.config;
 
 /**
- * Created by XuJun on 2018/11/8.
+ * 网络配置
  */
 public class Constants {
 
@@ -15,8 +15,9 @@ public class Constants {
         public static final int Test_WAN = 0;
         public static final int Test_LAN = 1;
         public static final int Produce = 2;
+        public static final int Uat = 3;
 
-        public static int Envi = Produce;
+        public static int Envi = Test_WAN;
 
         private HttpConst() {
 
@@ -24,6 +25,7 @@ public class Constants {
 
         public static String URL_BASE_MARKET;
         public static String URL_BASE_TRADE;
+        public static String URL_BASE_ACCOUNT;
         public static String URL_BASE_MANAGEMENT;
         public static String URL_OPEN_ACCOUNT = "https://portal.taijs.com/lsjhj-openacct/wap/register.html";
         public static String URL_DISCLAIMER = "http://www.taijs.com/upload/mianze.html";
@@ -34,18 +36,25 @@ public class Constants {
             if (Envi == Test_WAN) {
                 URL_BASE_MARKET = "https://222.190.245.2:18012";
                 URL_BASE_TRADE = "https://222.190.245.2:18012";
+                URL_BASE_ACCOUNT = "http://192.168.10.41:8008";
                 URL_BASE_MANAGEMENT = "http://tjs.developer.jsdttec.com";
-                URL_INFO = "http://tjs.developer.jsdttec.com/tjsmanage/infoapi/v1/ios/cmsComtentTxt/get?contentId=";
+                URL_INFO = "http://tjs.developer.jsdttec.com/tjsmanage/infoapi/v1/android/cmsComtentTxt/get?contentId=";
             } else if (Envi == Test_LAN) {
                 URL_BASE_MARKET = "http://192.168.10.171:8080";
                 URL_BASE_TRADE = "http://192.168.10.171:8081";
+                URL_BASE_ACCOUNT = "http://192.168.10.41:8008";
                 URL_BASE_MANAGEMENT = "http://tjs.developer.jsdttec.com";
-                URL_INFO = "http://tjs.developer.jsdttec.com/tjsmanage/infoapi/v1/ios/cmsComtentTxt/get?contentId=";
+                URL_INFO = "http://tjs.developer.jsdttec.com/tjsmanage/infoapi/v1/android/cmsComtentTxt/get?contentId=";
             } else if (Envi == Produce) {
                 URL_BASE_MARKET = "https://180.96.49.165:18002";
                 URL_BASE_TRADE = "https://180.96.49.165:18001";
                 URL_BASE_MANAGEMENT = "http://tjs.developer.jsdttec.com";
-                URL_INFO = "http://tjs.developer.jsdttec.com/tjsmanage/infoapi/v1/ios/cmsComtentTxt/get?contentId=";
+                URL_INFO = "http://tjs.developer.jsdttec.com/tjsmanage/infoapi/v1/android/cmsComtentTxt/get?contentId=";
+            } else if (Envi == Uat) {
+                URL_BASE_MARKET = "http://192.168.10.186:6543";
+                URL_BASE_TRADE = "http://192.168.10.186:6666";
+                URL_BASE_MANAGEMENT = "http://192.168.10.188:18080";
+                URL_INFO = "http://tjsuat.developer.jsdttec.com/tjsmanage/infoapi/v1/android/cmsComtentTxt/get?contentId=";
             }
         }
 
@@ -60,6 +69,7 @@ public class Constants {
 
         public static final String RXBUS_MAINPAGE_REFRESH = "MainPageRefresh";
         public static final String RXBUS_TRADEFRAGMENT = "TradeFragment";
+        public static final String RXBUS_TRADEFRAGMENT_HOLD = "TradeFragmentHold";
         public static final String RXBUS_DECLARATIONFORM_UPDATE = "DeclarationFormUpdate";
         public static final String RXBUS_DECLARATIONFORM_HOLDPOSITION_SELECT = "DeclarationFormHoldPositionSelect";
         public static final String RXBUS_DECLARATIONFORM_HOLDPOSITION_UNSELECT = "DeclarationFormHoldPositionUnSelect";
@@ -71,6 +81,9 @@ public class Constants {
         public static final String RXBUS_CANCEL = "cancel";
         public static final String RXBUS_CANCEL_MAIN = "cancelMain";
         public static final String RXBUS_ORDER_SUCCESS = "orderSuccess";
+        public static final String RXBUS_CHEDAN = "chedan";
+        public static final String RXBUS_CHEDAN_FRAGMENT = "chedanfragment";
+        public static final String RXBUS_CHICANG_FRAGMENT = "chicangfragment";
     }
 
     public static final class Msg {
@@ -118,6 +131,36 @@ public class Constants {
         public static final String NEWSDETAILACTIVITY = "/NewsCenterActivity/NewsDetailActivity";
         public static final String BEGINNERSACTIVITY = "/MainPageFragment/BeginnersActivity";
         public static final String GUARANTEEFUNDSETTINGACTIVITY = "/HoldPositionFragment/GuaranteeFundSettingActivity";
+        public static final String TRADINGBOX = "/Mainpage/TradingBoxActivity";
+        public static final String TRADINGBOXDETAILS = "/TradingboxDetails/TradingBoxDetailsActivity";
+        public static final String ABOUTNEWS = "/TradingboxDetails/AboutNewsActivity";
+        public static final String PLACEORDER = "/TradingboxDetails/PlaceOrderActivity";
+        public static final String HISTORYBOX = "/TradingboxDetails/HistoryBoxActivity";
+        public static final String MYORDER = "/Order/MyOrderActivity";
+        public static final String ORDERDETAILS = "/Order/OrderDetailsActivity";
+        public static final String FASTENTRY = "/Mainpager/FastEntryActivity";
+        public static final String DIYAN = "/Mainpager/DiYanActivity";
+        public static final String VALUEADDEDSERVICE = "/Personal/ValueAddedServiceActivity";
+        public static final String YANPAN = "/Mainpager/HangQingYanPanActivity";
+        public static final String YUJING = "/Market/YujingActivity";
+        public static final String ECONOMICCALENDAR = "/Mainpager/EconomicCalendarActivity";
+        public static final String FORGETPWD = "/Login/ForgetPwdActivity";
+        public static final String REGISTER = "/Login/RegisterActivity";
+        public static final String CUSTOMSERVICE = "/Personal/CustomerServiceActivity";
+        public static final String ABOUTDOUBT = "/Personal/AboutDoubtActivity";
+        public static final String REGISTERSUCCESS = "/PersonalFragment/RegisterSuccessActivity";
+        public static final String MYSUBSCRIBE = "/PersonalFragment/MySubscribeActivity";
+        public static final String AGREEMENT = "/Login/AgreementActivity";
+        public static final String BINDUSERNAME = "/Login/BindUserNameActivity";
+        public static final String LOGINPWD = "/Login/LoginPwdActivity";
+        public static final String NAMECARDCHECK = "/Login/NameCardCheckActivity";
+        public static final String VALUESERVICESUCCESS = "/Personal/ValueServiceSuccessActivity";
+        public static final String RECHARGE = "/Personal/RechargeActivity";
+        public static final String CHECKSERVICE = "/Personal/CheckServiceActivity";
+        public static final String CASH = "/Personal/CashActivity";
+        public static final String THAW = "/Personal/ThawActivity";
+        public static final String APPLICATIONFORCASH = "/Personal/ApplicationForCashActivity";
+        public static final String DETAILS = "/Personal/DetailsActivity";
     }
 
     public static final long SPLASH_DELAY_MILLIS = 2000;

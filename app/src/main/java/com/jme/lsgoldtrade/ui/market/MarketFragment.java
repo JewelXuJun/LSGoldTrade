@@ -34,6 +34,9 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 
+/**
+ * 行情
+ */
 public class MarketFragment extends JMEBaseFragment implements OnRefreshListener {
 
     private FragmentMarketBinding mBinding;

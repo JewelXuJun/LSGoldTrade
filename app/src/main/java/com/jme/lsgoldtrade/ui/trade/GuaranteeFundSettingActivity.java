@@ -5,7 +5,6 @@ import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.Gravity;
-import android.view.View;
 import android.widget.EditText;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
@@ -22,6 +21,9 @@ import com.jme.lsgoldtrade.service.TradeService;
 import java.math.BigDecimal;
 import java.util.HashMap;
 
+/**
+ * 保底资金
+ */
 @Route(path = Constants.ARouterUriConst.GUARANTEEFUNDSETTINGACTIVITY)
 public class GuaranteeFundSettingActivity extends JMEBaseActivity {
 
@@ -194,6 +196,5 @@ public class GuaranteeFundSettingActivity extends JMEBaseActivity {
                 }
             }
         }
-
     }
 }

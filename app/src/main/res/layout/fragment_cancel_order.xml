@@ -58,7 +58,8 @@
         <com.scwang.smartrefresh.layout.SmartRefreshLayout
             android:id="@+id/swipeRefreshLayout"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            >
 
             <com.scwang.smartrefresh.layout.header.ClassicsHeader
                 android:layout_width="match_parent"
@@ -72,6 +73,19 @@
                 android:scrollbars="none" />
 
         </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+
+        <TextView
+            android:id="@+id/tv_empty"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_no_data"
+            android:drawableTop="@mipmap/ic_no_data"
+            android:drawablePadding="@dimen/common_area_margin_tiny"
+            android:text="@string/text_no_data"
+            android:textColor="@color/color_text_gray_hint"
+            android:textSize="@dimen/size_normal"
+            android:layout_gravity="center_horizontal"
+            />
 
     </LinearLayout>
 

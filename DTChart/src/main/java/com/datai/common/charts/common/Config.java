@@ -52,7 +52,7 @@ public class Config {
     public static long TimeInterval_OneMinute = MINUTE;
     public static long TimeInterval_FiveMinute = 5 * MINUTE;
 
-    public static KData.Unit[] MinuteType = new KData.Unit[]{KData.Unit.MIN1, KData.Unit.MIN5, KData.Unit.MIN15, KData.Unit.MIN30, KData.Unit.MIN60};
+    public static KData.Unit[] MinuteType = new KData.Unit[]{KData.Unit.MIN1, KData.Unit.MIN5, KData.Unit.MIN15, KData.Unit.MIN30, KData.Unit.MIN60, KData.Unit.MIN240};
 
     static {
         setStyle(STYLE_DAY);

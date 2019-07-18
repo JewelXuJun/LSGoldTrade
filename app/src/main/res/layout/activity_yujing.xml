@@ -1,0 +1,396 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+        <variable
+            name="handlers"
+            type="com.jme.lsgoldtrade.ui.market.YujingActivity.ClickHandlers" />
+
+    </data>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:id="@+id/lltitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            >
+
+            <include layout="@layout/layout_toolbar" />
+
+            <include layout="@layout/item_line_vertical" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:layout_below="@id/lltitle"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                >
+
+                <TextView
+                    android:id="@+id/type"
+                    android:layout_width="120dp"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/sp_14"
+                    android:textColor="@color/color_333"
+                    />
+
+                <TextView
+                    android:id="@+id/price"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/sp_18"
+                    android:textColor="@color/color_333"
+                    />
+
+                <TextView
+                    android:id="@+id/bili"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/sp_18"
+                    android:textColor="@color/color_333"
+                    android:layout_marginLeft="57dp"
+                    />
+
+            </LinearLayout>
+
+            <include layout="@layout/item_line_vertical" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp"
+                >
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    >
+
+                    <CheckBox
+                        android:id="@+id/cb_upprice"
+                        style="@style/CustomPayCheckBoxTheme"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:gravity="center_vertical"
+                        android:layout_marginRight="5dp"
+                        />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="价格上限"
+                        android:textSize="@dimen/sp_14"
+                        android:textColor="@color/color_4d4d4d"
+                        />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="@dimen/common_item_height_middle"
+                    android:layout_marginLeft="45dp"
+                    android:layout_marginRight="@dimen/common_page_margin"
+                    android:background="@drawable/bg_btn_gray_hollow"
+                    android:orientation="horizontal">
+
+                    <RelativeLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:onClick="@{() -> handlers.onClickUpMinus()}"
+                        >
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerInParent="true"
+                            android:background="@mipmap/ic_minus" />
+
+                    </RelativeLayout>
+
+                    <include layout="@layout/item_line_horizontal" />
+
+                    <EditText
+                        android:id="@+id/et_up_price"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="3"
+                        android:background="@null"
+                        android:gravity="center"
+                        android:inputType="numberDecimal"
+                        android:maxLines="1"
+                        android:textColor="@color/color_0080ff"
+                        android:textColorHint="@color/color_text_hint"
+                        android:textSize="@dimen/sp_16" />
+
+                    <include layout="@layout/item_line_horizontal" />
+
+                    <RelativeLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:onClick="@{() -> handlers.onClickUpPriceAdd()}">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerInParent="true"
+                            android:background="@mipmap/ic_add" />
+
+                    </RelativeLayout>
+
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="元"
+                    android:textSize="@dimen/sp_15"
+                    android:textColor="@color/color_4d4d4d"
+                    android:layout_marginLeft="8dp"
+                    />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp"
+                >
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    >
+
+                    <CheckBox
+                        android:id="@+id/cb_lowprice"
+                        style="@style/CustomPayCheckBoxTheme"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:gravity="center_vertical"
+                        android:layout_marginRight="5dp"
+                        />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="价格下限"
+                        android:textSize="@dimen/sp_14"
+                        android:textColor="@color/color_4d4d4d"
+                        />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="@dimen/common_item_height_middle"
+                    android:layout_marginLeft="45dp"
+                    android:layout_marginRight="@dimen/common_page_margin"
+                    android:background="@drawable/bg_btn_gray_hollow"
+                    android:orientation="horizontal">
+
+                    <RelativeLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:onClick="@{() -> handlers.onClickDownMinus()}"
+                        >
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerInParent="true"
+                            android:background="@mipmap/ic_minus" />
+
+                    </RelativeLayout>
+
+                    <include layout="@layout/item_line_horizontal" />
+
+                    <EditText
+                        android:id="@+id/et_low_price"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_alignParentTop="true"
+                        android:layout_weight="3"
+                        android:background="@null"
+                        android:gravity="center"
+                        android:inputType="numberDecimal"
+                        android:maxLines="1"
+                        android:textColor="@color/color_0080ff"
+                        android:textColorHint="@color/color_text_hint"
+                        android:textSize="@dimen/sp_16" />
+
+                    <include layout="@layout/item_line_horizontal" />
+
+                    <RelativeLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:onClick="@{() -> handlers.onClickDownPriceAdd()}">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerInParent="true"
+                            android:background="@mipmap/ic_add" />
+
+                    </RelativeLayout>
+
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="元"
+                    android:textSize="@dimen/sp_15"
+                    android:textColor="@color/color_4d4d4d"
+                    android:layout_marginLeft="8dp"
+                    />
+
+            </LinearLayout>
+
+            <include layout="@layout/item_line_vertical" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="78dp"
+                android:orientation="horizontal"
+                >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="预警周期"
+                    android:textSize="@dimen/sp_15"
+                    android:textColor="@color/color_4d4d4d"
+                    android:layout_gravity="center_vertical"
+                    />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical"
+                        android:layout_marginLeft="70dp"
+                        android:gravity="center"
+                        >
+
+                        <RelativeLayout
+                            android:layout_width="174dp"
+                            android:layout_height="18dp">
+
+                            <ImageView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:background="@mipmap/yujing_bg"
+                                />
+
+                            <CheckBox
+                                android:id="@+id/cb_1"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerVertical="true"
+                                android:checked="true"
+                                style="@style/CustomYuJingTheme"
+                                android:layout_marginLeft="4dp"
+                                />
+
+                            <CheckBox
+                                android:id="@+id/cb_3"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerInParent="true"
+                                android:checked="false"
+                                style="@style/CustomYuJingTheme"
+                                />
+
+                            <CheckBox
+                                android:id="@+id/cb_7"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentRight="true"
+                                android:layout_centerVertical="true"
+                                android:checked="false"
+                                style="@style/CustomYuJingTheme"
+                                android:layout_marginRight="4dp"
+                                />
+
+                        </RelativeLayout>
+
+                        <LinearLayout
+                            android:layout_width="174dp"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            >
+
+                            <TextView
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="24小时"
+                                android:textSize="@dimen/sp_15"
+                                android:textColor="@color/color_4d4d4d"
+                                />
+
+                            <TextView
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="3天"
+                                android:textSize="@dimen/sp_15"
+                                android:textColor="@color/color_4d4d4d"
+                                android:layout_marginLeft="8dp"
+                                android:gravity="center"
+                                />
+
+                            <TextView
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="7天"
+                                android:textSize="@dimen/sp_15"
+                                android:textColor="@color/color_4d4d4d"
+                                android:gravity="right"
+                                />
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+            </LinearLayout>
+
+            <include layout="@layout/item_line_vertical" />
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
+</layout>

@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+        <variable
+            name="handlers"
+            type="com.jme.lsgoldtrade.ui.mainpage.TradingBoxActivity.ClickHandlers" />
+
+    </data>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:id="@+id/lltitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            >
+
+            <include layout="@layout/layout_toolbar" />
+
+            <include layout="@layout/item_line_vertical" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/subcribenum"
+            android:layout_width="match_parent"
+            android:layout_height="44dp"
+            android:orientation="horizontal"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:layout_below="@id/lltitle"
+            >
+
+            <TextView
+                android:id="@+id/subscribe_num"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textSize="@dimen/sp_14"
+                android:textColor="@color/black"
+                android:layout_gravity="center_vertical"
+                />
+
+            <TextView
+                android:id="@+id/subscribe"
+                android:layout_width="55dp"
+                android:layout_height="27dp"
+                android:gravity="center"
+                android:textSize="@dimen/sp_14"
+                android:layout_gravity="center_vertical"
+                android:onClick="@{() -> handlers.onClickSubcribe()}"
+                />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/llbottom"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:orientation="horizontal"
+            android:layout_alignParentBottom="true"
+            >
+
+            <TextView
+                android:id="@+id/trading_details"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="2"
+                android:text="查看详情"
+                android:textSize="@dimen/sp_18"
+                android:textColor="@color/color_0080ff"
+                android:gravity="center"
+                android:onClick="@{() -> handlers.onClickDetails()}"
+                />
+
+            <TextView
+                android:id="@+id/trading_buy"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="去下单"
+                android:textSize="@dimen/sp_18"
+                android:textColor="@color/white"
+                android:gravity="center"
+                android:onClick="@{() -> handlers.onClickBuy()}"
+                />
+
+        </LinearLayout>
+
+        <android.support.v4.view.ViewPager
+            android:id="@+id/viewpager"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/subcribenum"
+            android:layout_above="@id/llbottom"
+            />
+
+        <ImageView
+            android:id="@+id/left"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/lltitle"
+            android:layout_marginTop="108dp"
+            android:onClick="@{() -> handlers.onClickLeft()}"
+            android:src="@mipmap/left"
+            />
+
+        <ImageView
+            android:id="@+id/right"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_below="@+id/lltitle"
+            android:layout_marginTop="108dp"
+            android:onClick="@{() -> handlers.onClickRight()}"
+            android:src="@mipmap/right"
+            />
+
+    </RelativeLayout>
+
+</layout>

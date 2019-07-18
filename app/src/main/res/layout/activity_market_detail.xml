@@ -42,14 +42,38 @@
             android:orientation="horizontal">
 
             <Button
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="match_parent"
+                android:layout_marginLeft="@dimen/common_area_margin_middle"
+                android:layout_weight="1"
+                android:background="@drawable/bg_btn_buy_more_solid"
+                android:onClick="@{() -> handlers.onClickMore()}"
+                android:text="买多"
+                android:textColor="@color/white"
+                android:textSize="@dimen/sp_16" />
+
+            <Button
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="@dimen/common_area_margin_middle"
                 android:layout_marginRight="@dimen/common_area_margin_middle"
                 android:layout_weight="1"
-                android:background="@drawable/bg_btn_blue_hollow"
+                android:background="@drawable/bg_btn_sale_empty_solid"
+                android:onClick="@{() -> handlers.onClickKong()}"
+                android:text="卖空"
+                android:textColor="@color/white"
+                android:textSize="@dimen/sp_16"
+                />
+
+            <Button
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginRight="@dimen/common_area_margin_middle"
+                android:layout_weight="2"
+                android:background="@drawable/bg_btn_blue_solid"
                 android:onClick="@{() -> handlers.onClickDeclarationForm()}"
                 android:text="@string/market_declaration_form"
-                android:textColor="@color/color_blue"
+                android:textColor="@color/white"
                 android:textSize="@dimen/sp_16" />
 
             <Button
@@ -61,7 +85,9 @@
                 android:onClick="@{() -> handlers.onClickOneKeyOrder()}"
                 android:text="@string/market_one_key_order"
                 android:textColor="@color/white"
-                android:textSize="@dimen/sp_16" />
+                android:textSize="@dimen/sp_16"
+                android:visibility="gone"
+                />
 
         </LinearLayout>
 

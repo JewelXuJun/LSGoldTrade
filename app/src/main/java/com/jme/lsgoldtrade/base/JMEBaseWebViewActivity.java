@@ -20,6 +20,9 @@ import com.alibaba.android.arouter.facade.annotation.Route;
 import com.jme.common.ui.base.BaseActivity;
 import com.jme.lsgoldtrade.R;
 import com.jme.lsgoldtrade.config.Constants;
+import com.orhanobut.logger.Logger;
+
+import java.net.URL;
 
 @Route(path = Constants.ARouterUriConst.JMEWEBVIEW)
 public class JMEBaseWebViewActivity extends BaseActivity {
@@ -63,7 +66,7 @@ public class JMEBaseWebViewActivity extends BaseActivity {
     protected void initData(Bundle savedInstanceState) {
         mTitle = getIntent().getStringExtra("title");
         mUrl = getIntent().getStringExtra("url");
-
+        Logger.e("url--->" + mUrl);
         if (!TextUtils.isEmpty(mUrl))
             updateData(mUrl);
 

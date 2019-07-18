@@ -4,13 +4,17 @@ import android.content.Context;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
+import android.view.View;
+import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
+import com.jme.common.util.DensityUtil;
 import com.jme.lsgoldtrade.R;
 import com.jme.lsgoldtrade.config.Contract;
 import com.jme.lsgoldtrade.domain.PositionVo;
 import com.jme.lsgoldtrade.util.MarketUtil;
+import com.jme.lsgoldtrade.view.HangQingWindow;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -21,12 +25,14 @@ public class HoldPositionAdapter extends BaseQuickAdapter<PositionVo, BaseViewHo
     private Context mContext;
     private List<String> mList;
     private int mPosition = -1;
+    private int tag;
 
-    public HoldPositionAdapter(Context context, int layoutResId, @Nullable List<PositionVo> data) {
+    public HoldPositionAdapter(Context context, int layoutResId, @Nullable List<PositionVo> data, int tag) {
         super(layoutResId, data);
 
         mContext = context;
         mList = new ArrayList<>();
+        this.tag = tag;
     }
 
     public void setList(List<String> list) {
@@ -52,13 +58,21 @@ public class HoldPositionAdapter extends BaseQuickAdapter<PositionVo, BaseViewHo
 
         String contractID = item.getContractId();
         String type = item.getType();
-        if (null != mList && 0 != mList.size() && mList.size() > helper.getAdapterPosition())
+        if (null != mList && 0 != mList.size() && mList.size() > helper.getAdapterPosition()) {
             floatValue = mList.get(helper.getAdapterPosition());
+        }
         String average = item.getPositionAverageStr();
         long position = item.getPosition();
+        if (position == 0) {
+            helper.getView(R.id.layout_item).setVisibility(View.GONE);
+        } else {
+            helper.getView(R.id.layout_item).setVisibility(View.VISIBLE);
+        }
         long frozen = item.getOffsetFrozen();
         if (!TextUtils.isEmpty(floatValue))
             typeValue = new BigDecimal(floatValue).compareTo(new BigDecimal(0));
+
+        long floatProfit = item.getFloatProfit();
 
         helper.setBackgroundColor(R.id.layout_item, isSelected ? ContextCompat.getColor(mContext, R.color.color_toolbar_blue)
                 : ContextCompat.getColor(mContext, R.color.white))
@@ -69,6 +83,10 @@ public class HoldPositionAdapter extends BaseQuickAdapter<PositionVo, BaseViewHo
                 .setTextColor(R.id.tv_pupil, isSelected ? ContextCompat.getColor(mContext, R.color.white)
                         : type.equals("多") ? ContextCompat.getColor(mContext, R.color.common_font_increase)
                         : ContextCompat.getColor(mContext, R.color.common_font_decrease))
+                .setText(R.id.yingkui, (floatProfit / 100) + "")
+                .setTextColor(R.id.yingkui, isSelected ? ContextCompat.getColor(mContext, R.color.white)
+                        : type.equals("多") ? ContextCompat.getColor(mContext, R.color.common_font_increase)
+                        : ContextCompat.getColor(mContext, R.color.common_font_decrease))
                 .setText(R.id.tv_available, String.valueOf(position - frozen))
                 .setTextColor(R.id.tv_available, isSelected ? ContextCompat.getColor(mContext, R.color.white)
                         : ContextCompat.getColor(mContext, R.color.color_text_black))
@@ -77,13 +95,48 @@ public class HoldPositionAdapter extends BaseQuickAdapter<PositionVo, BaseViewHo
                         : ContextCompat.getColor(mContext, R.color.color_text_black))
                 .setText(R.id.tv_average_price, MarketUtil.decimalFormatMoney(average))
                 .setTextColor(R.id.tv_average_price, isSelected ? ContextCompat.getColor(mContext, R.color.white)
-                        : ContextCompat.getColor(mContext, R.color.color_text_black))
-                .setText(R.id.tv_float, TextUtils.isEmpty(floatValue) ? mContext.getResources().getString(R.string.text_no_data_default) : MarketUtil.decimalFormatMoney(floatValue))
-                .setTextColor(R.id.tv_float, isSelected ? ContextCompat.getColor(mContext, R.color.white)
-                        : ContextCompat.getColor(mContext, MarketUtil.getPriceStateColor(typeValue)))
-                .setText(R.id.tv_rate, TextUtils.isEmpty(floatValue) ? mContext.getResources().getString(R.string.text_no_data_default) : getRate(contractID, floatValue, average, position))
-                .setTextColor(R.id.tv_rate, isSelected ? ContextCompat.getColor(mContext, R.color.white)
-                        : ContextCompat.getColor(mContext, MarketUtil.getPriceStateColor(typeValue)));
+                        : ContextCompat.getColor(mContext, R.color.color_text_black));
+
+
+        if (tag == 1) {
+            helper.getView(R.id.tv_rate).setVisibility(View.VISIBLE);
+            helper.getView(R.id.yingkui).setVisibility(View.GONE);
+            helper.setText(R.id.tv_float, TextUtils.isEmpty(floatValue) ? mContext.getResources().getString(R.string.text_no_data_default) : MarketUtil.decimalFormatMoney(floatValue))
+                    .setTextColor(R.id.tv_float, isSelected ? ContextCompat.getColor(mContext, R.color.white)
+                            : ContextCompat.getColor(mContext, MarketUtil.getPriceStateColor(typeValue)))
+                    .setText(R.id.tv_rate, TextUtils.isEmpty(floatValue) ? mContext.getResources().getString(R.string.text_no_data_default) : getRate(contractID, floatValue, average, position))
+                    .setTextColor(R.id.tv_rate, isSelected ? ContextCompat.getColor(mContext, R.color.white)
+                            : ContextCompat.getColor(mContext, MarketUtil.getPriceStateColor(typeValue)));
+        } else {
+            helper.getView(R.id.yingkui).setVisibility(View.VISIBLE);
+            TextView tv_float = helper.getView(R.id.tv_float);
+            helper.getView(R.id.tv_rate).setVisibility(View.GONE);
+            tv_float.setText("平仓");
+            tv_float.setTextColor(mContext.getResources().getColor(R.color.white));
+            tv_float.setBackground(mContext.getResources().getDrawable(R.drawable.bg_btn_blue_solid));
+            tv_float.setPadding(DensityUtil.dpTopx(mContext, 5), DensityUtil.dpTopx(mContext, 5), DensityUtil.dpTopx(mContext, 5), DensityUtil.dpTopx(mContext, 5));
+            tv_float.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    HangQingWindow mWindow  = new HangQingWindow(mContext);
+                    mWindow.setOutsideTouchable(true);
+                    mWindow.setFocusable(true);
+                    if (listener != null) {
+                        listener.listener(item, mWindow);
+                    }
+                }
+            });
+        }
+    }
+
+    public setOnPingCangListener listener;
+
+    public interface setOnPingCangListener {
+        void listener(PositionVo item, HangQingWindow mWindow);
+    }
+
+    public void setOnPingCangListener(setOnPingCangListener listener) {
+        this.listener = listener;
     }
 
     private String getRate(String contractID, String floatStr, String average, long position) {

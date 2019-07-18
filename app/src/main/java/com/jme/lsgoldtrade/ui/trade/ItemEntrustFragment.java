@@ -20,6 +20,9 @@ import java.util.List;
 
 import rx.Subscription;
 
+/**
+ * 委托
+ */
 public class ItemEntrustFragment extends JMEBaseFragment implements BaseQuickAdapter.RequestLoadMoreListener {
 
     private FragmentItemEntrustBinding mBinding;

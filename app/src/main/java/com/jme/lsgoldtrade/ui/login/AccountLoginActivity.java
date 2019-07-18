@@ -28,6 +28,7 @@ import com.jme.lsgoldtrade.domain.LoginResponse;
 import com.jme.lsgoldtrade.domain.UserInfoVo;
 import com.jme.lsgoldtrade.service.TradeService;
 import com.jme.lsgoldtrade.service.UserService;
+import com.jme.lsgoldtrade.util.AESUtil;
 import com.jme.lsgoldtrade.util.ValueUtils;
 
 import java.net.ConnectException;
@@ -38,6 +39,9 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+/**
+ * 交易账号密码登录
+ */
 @Route(path = Constants.ARouterUriConst.ACCOUNTLOGIN)
 public class AccountLoginActivity extends JMEBaseActivity {
 
@@ -133,19 +137,21 @@ public class AccountLoginActivity extends JMEBaseActivity {
         if (bShowImgVerifyCode && TextUtils.isEmpty(imgVerifyCode))
             showShortToast(R.string.login_img_verify_code_error);
         else
-            login(account, password, imgVerifyCode);
+            login(account, AESUtil.encryptString2Base64(password,"0J4S9B5C0J4S9B5C","16-Bytes--String").trim(), imgVerifyCode);
     }
 
     private void login(String account, String password, String imgVerifyCode) {
         HashMap<String, String> params = new HashMap<>();
         params.put("loginName", account);
-        params.put("password", ValueUtils.MD5(account + password).toUpperCase());
+        params.put("password", password);
         params.put("loginIP", null == ValueUtils.getLocalIPAddress() ? "" : ValueUtils.getLocalIPAddress());
         params.put("loginType", "1");
         if (bShowImgVerifyCode) {
             params.put("kaptchaId", mKaptchaId);
             params.put("kaptchaCode", imgVerifyCode);
         }
+
+//        sendRequest(UserService.getInstance().login, params, true);
 
         showLoadingDialog("");
 
@@ -249,6 +255,7 @@ public class AccountLoginActivity extends JMEBaseActivity {
                     showShortToast(R.string.login_success);
                     SharedPreUtils.setString(this, SharedPreUtils.Login_Account, mBinding.etAccount.getText().toString());
                 } else {
+                    showShortToast(head.getMsg());
                     kaptcha();
                 }
 
@@ -331,12 +338,16 @@ public class AccountLoginActivity extends JMEBaseActivity {
         }
 
         public void onClickRegister() {
+//            JumpActivity.jumpSmall(mContext);
             ARouter.getInstance()
-                    .build(Constants.ARouterUriConst.JMEWEBVIEW)
-                    .withString("title", mContext.getResources().getString(R.string.personal_open_account_online))
-                    .withString("url", Constants.HttpConst.URL_OPEN_ACCOUNT)
+                    .build(Constants.ARouterUriConst.REGISTER)
                     .navigation();
         }
 
+        public void onClickForgetPwd() {
+            ARouter.getInstance()
+                    .build(Constants.ARouterUriConst.FORGETPWD)
+                    .navigation();
+        }
     }
 }

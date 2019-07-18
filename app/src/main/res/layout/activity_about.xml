@@ -69,8 +69,6 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/layout_version">
 
-            <include layout="@layout/item_line_vertical" />
-
         </LinearLayout>
 
         <RelativeLayout
@@ -164,8 +162,6 @@
                         android:background="@mipmap/ic_next" />
 
                 </RelativeLayout>
-
-                <include layout="@layout/item_line_vertical" />
 
             </LinearLayout>
 

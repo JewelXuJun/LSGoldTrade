@@ -37,7 +37,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="@string/trade_average_price"
+                android:text="持仓均价/盈亏"
                 android:textColor="@color/black_pale"
                 android:textSize="@dimen/sp_12" />
 
@@ -47,7 +47,8 @@
                 android:layout_weight="1"
                 android:gravity="center|right"
                 android:paddingRight="@dimen/common_page_padding"
-                android:text="@string/trade_floating_rate"
+                android:layout_marginRight="10dp"
+                android:text="操作"
                 android:textColor="@color/black_pale"
                 android:textSize="@dimen/sp_12" />
 

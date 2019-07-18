@@ -16,8 +16,10 @@ import com.jme.lsgoldtrade.config.AppConfig;
 import com.jme.lsgoldtrade.config.Constants;
 import com.jme.lsgoldtrade.databinding.FragmentInfoBinding;
 import com.jme.lsgoldtrade.domain.InfoVo;
+import com.jme.lsgoldtrade.domain.StrategyVo;
 import com.jme.lsgoldtrade.service.ManagementService;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -29,16 +31,19 @@ public class InfoFragment extends JMEBaseFragment implements BaseQuickAdapter.Re
 
     private InfoAdapter mAdapter;
     private Subscription mRxbus;
+    private String name;
 
     private long mChannelId = -10000;
     private int mCurrentPage = 1;
     private int mTotalPage = 1;
+    private List<InfoVo.InfoBean> infoBeanList = new ArrayList<>();
 
-    public static Fragment newInstance(long channelId) {
+    public static Fragment newInstance(long channelId, String name) {
         InfoFragment fragment = new InfoFragment();
 
         Bundle bundle = new Bundle();
         bundle.putLong("ChannelId", channelId);
+        bundle.putString("name", name);
         fragment.setArguments(bundle);
 
         return fragment;
@@ -61,6 +66,7 @@ public class InfoFragment extends JMEBaseFragment implements BaseQuickAdapter.Re
         super.initData(savedInstanceState);
 
         mChannelId = getArguments().getLong("ChannelId");
+        name = getArguments().getString("name");
         mAdapter = new InfoAdapter(R.layout.item_info, null);
 
         mBinding.recyclerView.setHasFixedSize(true);
@@ -84,10 +90,12 @@ public class InfoFragment extends JMEBaseFragment implements BaseQuickAdapter.Re
             if (null == infoBean)
                 return;
 
-            ARouter.getInstance().build(Constants.ARouterUriConst.JMEWEBVIEW)
-                    .withString("title", infoBean.getTitle())
-                    .withString("url", Constants.HttpConst.URL_INFO + infoBean.getId())
-                    .navigation();
+            if (!"策略".equals(name)) {
+                ARouter.getInstance().build(Constants.ARouterUriConst.JMEWEBVIEW)
+                        .withString("title", infoBean.getTitle())
+                        .withString("url", Constants.HttpConst.URL_INFO + infoBean.getId())
+                        .navigation();
+            }
         });
     }
 
@@ -121,12 +129,16 @@ public class InfoFragment extends JMEBaseFragment implements BaseQuickAdapter.Re
     }
 
     private void getChannelList() {
-        HashMap<String, String> params = new HashMap<>();
-        params.put("pageSize", AppConfig.PageSize_10);
-        params.put("current", String.valueOf(mCurrentPage));
-        params.put("channelId", String.valueOf(mChannelId));
+        if ("策略".equals(name)) {
+            sendRequest(ManagementService.getInstance().strategy, new HashMap<>(), false);
+        } else {
+            HashMap<String, String> params = new HashMap<>();
+            params.put("pageSize", AppConfig.PageSize_10);
+            params.put("current", String.valueOf(mCurrentPage));
+            params.put("channelId", String.valueOf(mChannelId));
 
-        sendRequest(ManagementService.getInstance().channelList, params, false);
+            sendRequest(ManagementService.getInstance().channelList, params, false);
+        }
     }
 
     @Override
@@ -149,7 +161,7 @@ public class InfoFragment extends JMEBaseFragment implements BaseQuickAdapter.Re
                     if (null != infoVo) {
                         mTotalPage = infoVo.getPages();
 
-                        List<InfoVo.InfoBean> infoBeanList = infoVo.getRecords();
+                        infoBeanList = infoVo.getRecords();
 
                         if (mCurrentPage == 1) {
                             mAdapter.setNewData(infoBeanList);
@@ -161,6 +173,36 @@ public class InfoFragment extends JMEBaseFragment implements BaseQuickAdapter.Re
 
                 }
 
+                break;
+            case "Strategy":
+                if (head.isSuccess()) {
+                    List<StrategyVo> strategyVo;
+
+                    try {
+                        strategyVo = (List<StrategyVo>) response;
+                    } catch (Exception e) {
+                        strategyVo = null;
+
+                        e.printStackTrace();
+                    }
+
+                    if (strategyVo == null)
+                        return;
+
+                    if (infoBeanList != null && !infoBeanList.isEmpty())
+                        infoBeanList.clear();
+
+                    for (int i = 0; i < strategyVo.size(); i++) {
+                        InfoVo.InfoBean infoVo = new InfoVo.InfoBean();
+                        infoVo.setTitle(strategyVo.get(i).getContent());
+                        infoVo.setTitleImg("");
+                        infoVo.setCreateTime(strategyVo.get(i).getCreateTime());
+                        infoBeanList.add(infoVo);
+                    }
+
+                    mAdapter.setNewData(infoBeanList);
+                    mAdapter.loadMoreComplete();
+                }
                 break;
         }
     }

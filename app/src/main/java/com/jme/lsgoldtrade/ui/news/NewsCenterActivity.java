@@ -24,6 +24,9 @@ import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import java.util.HashMap;
 import java.util.List;
 
+/**
+ * 消息中心
+ */
 @Route(path = Constants.ARouterUriConst.NEWSCENTERACTIVITY)
 public class NewsCenterActivity extends JMEBaseActivity implements OnRefreshListener, BaseQuickAdapter.RequestLoadMoreListener {
 

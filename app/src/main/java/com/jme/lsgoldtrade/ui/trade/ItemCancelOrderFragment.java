@@ -20,6 +20,9 @@ import java.util.List;
 
 import rx.Subscription;
 
+/**
+ * 撤单
+ */
 public class ItemCancelOrderFragment extends JMEBaseFragment implements BaseQuickAdapter.RequestLoadMoreListener {
 
     private FragmentItemCancelOrderBinding mBinding;

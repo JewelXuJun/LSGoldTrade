@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+        <variable
+            name="handlers"
+            type="com.jme.lsgoldtrade.ui.personal.ThawActivity.ClickHandlers" />
+
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        >
+
+        <LinearLayout
+            android:id="@+id/lltitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            >
+
+            <include layout="@layout/layout_toolbar" />
+
+            <include layout="@layout/item_line_vertical" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:orientation="horizontal"
+            >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center|left"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/common_area_margin_tiny"
+                    android:text="冻结金额(元)"
+                    android:textColor="@color/black_pale"
+                    android:textSize="@dimen/sp_12" />
+
+                <TextView
+                    android:id="@+id/tv_available_funds"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/common_area_margin_tiny"
+                    android:layout_marginTop="@dimen/common_area_margin_tiny"
+                    android:text="@string/text_no_data_default"
+                    android:textColor="@color/black_deep"
+                    android:textSize="@dimen/common_font_size" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center|left"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/common_area_margin_tiny"
+                    android:text="可解冻金额(元)"
+                    android:textColor="@color/black_pale"
+                    android:textSize="@dimen/sp_12" />
+
+                <TextView
+                    android:id="@+id/tv_frozen_funds"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/common_area_margin_tiny"
+                    android:layout_marginTop="@dimen/common_area_margin_tiny"
+                    android:text="@string/text_no_data_default"
+                    android:textColor="@color/black_deep"
+                    android:textSize="@dimen/common_font_size" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <include layout="@layout/item_line_10" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:orientation="horizontal"
+            android:layout_marginTop="@dimen/common_area_margin_middle"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="请输入充值金额"
+                android:textSize="@dimen/sp_14"
+                android:textColor="@color/color_4d4d4d"
+                android:layout_gravity="center_vertical"
+                />
+
+            <com.jme.common.ui.view.ClearEditText
+                android:id="@+id/et_gold_account"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_gravity="center_vertical"
+                android:background="@null"
+                android:hint="请输入金额"
+                android:inputType="number"
+                android:maxLines="1"
+                android:paddingLeft="20dp"
+                android:textColor="@color/color_text_normal"
+                android:textColorHint="@color/color_text_hint"
+                android:textSize="@dimen/size_normal" />
+
+            <TextView
+                android:layout_width="75dp"
+                android:layout_height="40dp"
+                android:text="全部"
+                android:textSize="@dimen/sp_18"
+                android:textColor="@color/color_0080ff"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:background="@drawable/bg_btn_blue_stroke"
+                android:onClick="@{() -> handlers.onClickAll()}"
+                />
+
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:text="说明:不可解冻金额可在策略结束后申请解冻。"
+            android:textSize="@dimen/sp_14"
+            android:textColor="@color/color_4d4d4d"
+            android:layout_gravity="center"
+            android:gravity="center"
+            />
+
+        <include layout="@layout/item_line_vertical" />
+
+        <Button
+            android:id="@+id/btn_bind"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/height_login_btn"
+            android:background="@drawable/selector_btn"
+            android:onClick="@{() -> handlers.onClickThaw()}"
+            android:text="申请解冻"
+            android:textColor="@color/white"
+            android:textSize="@dimen/common_font_size"
+            android:layout_margin="10dp"
+            />
+
+    </LinearLayout>
+
+</layout>
