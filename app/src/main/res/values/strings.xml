@@ -258,6 +258,20 @@
     <string name="login_reset_passord_not_equal">您两次输入的密码不一致</string>
     <string name="login_reset_passord_success">重置密码成功</string>
 
+    <!-- Register -->
+    <string name="register">注册</string>
+    <string name="register_referral_code_hint">请输入推荐人编号，选填</string>
+    <string name="register_aggre">我已阅读并同意</string>
+    <string name="register_aggrement">《用户使用协议》</string>
+    <string name="register_now">立即注册</string>
+    <string name="register_hava_acccount">已有账号</string>
+    <string name="register_go_login">去登录</string>
+    <string name="register_success">注册成功</string>
+    <string name="register_aggrement_title">用户使用协议</string>
+    <string name="register_aggrement_unread">请仔细阅读用户使用协议并同意该协议</string>
+    <string name="register_success_message">恭喜您已注册成功!</string>
+    <string name="register_open_account">立即开户</string>
+
     <string name="yingkuishezhi">盈亏线设置,是根据您设置的盈亏线,系统监则到报价到达您设置的点位/价格时帮您进行委托操作。\n
 1.当您使用此功能时,视作您已同意系统帮您进行委托操作；\n
 2.由于撮合机制问题,盈亏线设置仅视为帮您进行委托操作，最终实际成交与否得视当时行情为准；\n

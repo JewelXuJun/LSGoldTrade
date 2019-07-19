@@ -348,10 +348,11 @@ public abstract class BaseFragment<T> extends Fragment implements View.OnTouchLi
                     mPrevErrorCode = head.getCode();
                     mErrorHandler.removeMessages(MSG_ERROR_MSG_REPEAT);
                     mErrorHandler.sendEmptyMessageDelayed(MSG_ERROR_MSG_REPEAT, 120 * 1000);
-//                    showShortToast(head.getMsg());
+
+                    showShortToast(head.getMsg());
                 }
             } else {
-//                showShortToast(head.getMsg());
+                showShortToast(head.getMsg());
             }
         }
     }

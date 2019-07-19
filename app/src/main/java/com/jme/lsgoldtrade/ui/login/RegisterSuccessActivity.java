@@ -3,12 +3,11 @@ package com.jme.lsgoldtrade.ui.login;
 import android.os.Bundle;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
-import com.jme.common.util.AppManager;
 import com.jme.lsgoldtrade.R;
 import com.jme.lsgoldtrade.base.JMEBaseActivity;
 import com.jme.lsgoldtrade.config.Constants;
 import com.jme.lsgoldtrade.databinding.ActivityRegisterSuccessBinding;
-import com.jme.lsgoldtrade.util.JumpActivity;
+import com.jme.lsgoldtrade.util.IntentUtils;
 
 /**
  * 注册成功
@@ -26,6 +25,9 @@ public class RegisterSuccessActivity extends JMEBaseActivity {
     @Override
     protected void initView() {
         super.initView();
+
+        initToolbar(R.string.register, true);
+
         mBinding = (ActivityRegisterSuccessBinding) mBindingUtil;
     }
 
@@ -38,23 +40,21 @@ public class RegisterSuccessActivity extends JMEBaseActivity {
     @Override
     protected void initListener() {
         super.initListener();
-
     }
 
     @Override
     protected void initBinding() {
         super.initBinding();
+
         mBinding.setHandlers(new ClickHandlers());
     }
 
     public class ClickHandlers {
 
-        public void onClickCancel() {
-            AppManager.getAppManager().finishActivity();
-        }
+        public void onClickOpenAccount() {
+            IntentUtils.jumpBankSmall(RegisterSuccessActivity.this);
 
-        public void onClickRegister() {
-            JumpActivity.jumpGongHangSmall(mContext);
+            finish();
         }
     }
 }

@@ -10,7 +10,7 @@ import android.view.ViewGroup;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.jme.lsgoldtrade.R;
 import com.jme.lsgoldtrade.domain.NavigatorVo;
-import com.jme.lsgoldtrade.util.JumpActivity;
+import com.jme.lsgoldtrade.util.IntentUtils;
 
 import java.util.List;
 
@@ -59,7 +59,7 @@ public class ExamplePagerAdapter extends PagerAdapter {
         mAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                JumpActivity.jumpHomeTab(context, usedModulesBeans, position);
+                IntentUtils.jumpHomeTab(context, usedModulesBeans, position);
             }
         });
         return view;

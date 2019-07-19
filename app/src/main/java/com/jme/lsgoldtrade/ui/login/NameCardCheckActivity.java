@@ -13,9 +13,8 @@ import com.jme.lsgoldtrade.config.Constants;
 import com.jme.lsgoldtrade.databinding.ActivityNameCardCheckBinding;
 import com.jme.lsgoldtrade.domain.VerifyIdCardVo;
 import com.jme.lsgoldtrade.service.TradeService;
-import com.jme.lsgoldtrade.util.JumpActivity;
+import com.jme.lsgoldtrade.util.IntentUtils;
 import com.jme.lsgoldtrade.util.NormalUtils;
-import com.jme.lsgoldtrade.view.NormalPopupwindow;
 
 import java.util.HashMap;
 
@@ -101,7 +100,7 @@ public class NameCardCheckActivity extends JMEBaseActivity {
                 mBinding.btnBind.setClickable(true);
                 if (head.isSuccess()) {
                     if ("1".equals(tag)) {
-                        JumpActivity.jumpGongHangSmall(mContext);
+                        IntentUtils.jumpBankSmall(mContext);
                     } else {
                         String name = mBinding.etName.getText().toString().trim();
                         String namecard = mBinding.etNameCard.getText().toString().trim();

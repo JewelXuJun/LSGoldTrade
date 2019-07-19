@@ -75,7 +75,7 @@ public class ValueAddedServiceActivity extends JMEBaseActivity {
         public void onClickValueAddServiceAgreement() {
             String url = "http://www.taijs.com/upload/fwxy.htm";
             ARouter.getInstance()
-                    .build(Constants.ARouterUriConst.AGREEMENT)
+                    .build(Constants.ARouterUriConst.JMEWEBVIEW)
                     .withString("title", "增值服务协议")
                     .withString("url", url)
                     .navigation();

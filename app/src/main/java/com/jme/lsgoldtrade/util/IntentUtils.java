@@ -1,6 +1,8 @@
 package com.jme.lsgoldtrade.util;
 
 import android.content.Context;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.support.v7.app.AlertDialog;
 
 import com.alibaba.android.arouter.launcher.ARouter;
@@ -16,7 +18,7 @@ import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 
 import java.util.List;
 
-public class JumpActivity {
+public class IntentUtils {
 
     public static void jumpSmall(Context context) {
         String appId = AppConfig.WECHATAPPID; // 填应用AppId
@@ -29,7 +31,7 @@ public class JumpActivity {
         api.sendReq(req);
     }
 
-    public static void jumpGongHangSmall(Context context) {
+    public static void jumpBankSmall(Context context) {
         String appId = AppConfig.WECHATAPPID; // 填应用AppId
         IWXAPI api = WXAPIFactory.createWXAPI(context, appId);
 
@@ -163,4 +165,22 @@ public class JumpActivity {
             mDialog.show();
         }
     }
+
+    //判断有没有安装微信
+    public static boolean isWeChatAvilible(Context context) {
+        final PackageManager packageManager = context.getPackageManager();
+        List<PackageInfo> pinfo = packageManager.getInstalledPackages(0);
+
+        if (pinfo != null) {
+            for (int i = 0; i < pinfo.size(); i++) {
+                String pn = pinfo.get(i).packageName;
+
+                if (pn.equals("com.tencent.mm"))
+                    return true;
+            }
+        }
+
+        return false;
+    }
+
 }

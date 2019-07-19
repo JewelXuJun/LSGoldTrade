@@ -84,7 +84,7 @@ public class TradeBoxTitleUtils {
                 //使用攻略
                 String url = "http://www.taijs.com/upload/jyxz/jyxz.html";
                 ARouter.getInstance()
-                        .build(Constants.ARouterUriConst.AGREEMENT)
+                        .build(Constants.ARouterUriConst.JMEWEBVIEW)
                         .withString("title", "使用攻略")
                         .withString("url", url)
                         .navigation();
@@ -97,7 +97,7 @@ public class TradeBoxTitleUtils {
                 //常见问题
                 String url = "http://www.taijs.com/upload/jyxz/cjwt.html";
                 ARouter.getInstance()
-                        .build(Constants.ARouterUriConst.AGREEMENT)
+                        .build(Constants.ARouterUriConst.JMEWEBVIEW)
                         .withString("title", "常见问题")
                         .withString("url", url)
                         .navigation();

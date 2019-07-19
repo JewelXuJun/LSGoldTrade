@@ -131,7 +131,7 @@ public class BindUserNameActivity extends JMEBaseActivity {
         public void onClickSoftWareAgreement() {
             String url = "http://www.taijs.com/upload/fwxy.htm" + "?name" + name + "&cardNo=" + card;
             ARouter.getInstance()
-                    .build(Constants.ARouterUriConst.AGREEMENT)
+                    .build(Constants.ARouterUriConst.JMEWEBVIEW)
                     .withString("title", "软件服务协议")
                     .withString("url", url)
                     .navigation();
@@ -140,7 +140,7 @@ public class BindUserNameActivity extends JMEBaseActivity {
         public void onClickBusinessAgreement() {
             String url = "http://www.taijs.com/upload/dljj.htm" + "?name" + name + "&cardNo=" + card;
             ARouter.getInstance()
-                    .build(Constants.ARouterUriConst.AGREEMENT)
+                    .build(Constants.ARouterUriConst.JMEWEBVIEW)
                     .withString("title", "业务服务协议")
                     .withString("url", url)
                     .navigation();

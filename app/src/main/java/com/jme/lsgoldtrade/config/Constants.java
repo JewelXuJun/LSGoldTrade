@@ -1,5 +1,7 @@
 package com.jme.lsgoldtrade.config;
 
+import retrofit2.http.PUT;
+
 /**
  * 网络配置
  */
@@ -31,6 +33,7 @@ public class Constants {
         public static String URL_DISCLAIMER = "http://www.taijs.com/upload/mianze.html";
         public static String URL_PRIVACY_POLICY = "http://www.taijs.com/upload/yszc.htm";
         public static String URL_INFO;
+        public static String URL_REGISTER_AGGREMENT = "http://www.taijs.com/upload/yhxy.htm";
 
         static {
             if (Envi == TEST_WAN) {
@@ -150,7 +153,6 @@ public class Constants {
         public static final String ABOUTDOUBT = "/Personal/AboutDoubtActivity";
         public static final String REGISTERSUCCESS = "/PersonalFragment/RegisterSuccessActivity";
         public static final String MYSUBSCRIBE = "/PersonalFragment/MySubscribeActivity";
-        public static final String AGREEMENT = "/Login/AgreementActivity";
         public static final String BINDUSERNAME = "/Login/BindUserNameActivity";
         public static final String LOGINPWD = "/Login/LoginPwdActivity";
         public static final String NAMECARDCHECK = "/Login/NameCardCheckActivity";

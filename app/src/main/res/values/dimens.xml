@@ -55,6 +55,7 @@
     <dimen name="margin_normal">25dp</dimen>
     <dimen name="margin_big">40dp</dimen>
     <dimen name="margin_large">60dp</dimen>
+    <dimen name="margin_line">6dp</dimen>
 
     <dimen name="size_exiguity">8sp</dimen>
     <dimen name="size_tiny">9sp</dimen>

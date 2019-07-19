@@ -16,39 +16,7 @@
         android:background="@color/white"
         android:orientation="vertical">
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:fitsSystemWindows="true"
-            android:minHeight="?attr/actionBarSize">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:text="注册"
-                android:textColor="@color/color_text_black"
-                android:textSize="@dimen/common_font_size" />
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_centerVertical="true"
-                android:onClick="@{() -> handlers.onClickCancel()}"
-                android:orientation="horizontal"
-                android:padding="@dimen/common_page_padding">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/text_cancel"
-                    android:textColor="@color/color_blue"
-                    android:textSize="@dimen/size_normal" />
-
-            </LinearLayout>
-
-        </RelativeLayout>
+        <include layout="@layout/layout_toolbar" />
 
         <include layout="@layout/item_line_vertical" />
 
@@ -99,7 +67,7 @@
                             android:paddingLeft="@dimen/common_page_padding"
                             android:textColor="@color/color_text_normal"
                             android:textColorHint="@color/color_text_hint"
-                            android:textSize="@dimen/size_normal" />
+                            android:textSize="@dimen/sp_16" />
 
                         <include layout="@layout/item_line_vertical" />
 
@@ -115,11 +83,10 @@
                                 android:layout_alignParentRight="true"
                                 android:layout_centerVertical="true"
                                 android:background="@drawable/selector_blue"
+                                android:onClick="@{() -> handlers.onClickSms()}"
                                 android:text="@string/trade_get_verification_code"
                                 android:textColor="@drawable/selector_text"
-                                android:textSize="@dimen/size_middle"
-                                android:onClick="@{() -> handlers.onClickSms()}"
-                                />
+                                android:textSize="@dimen/size_middle" />
 
                             <com.jme.common.ui.view.ClearEditText
                                 android:id="@+id/et_verify_code"
@@ -127,7 +94,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="@dimen/common_area_margin"
                                 android:layout_marginRight="@dimen/common_page_margin"
-                                android:layout_marginBottom="@dimen/common_area_margin_middle"
+                                android:layout_marginBottom="@dimen/margin_line"
                                 android:layout_toLeftOf="@+id/btn_verification_code"
                                 android:background="@null"
                                 android:drawableLeft="@mipmap/ic_verification_code"
@@ -139,7 +106,7 @@
                                 android:paddingLeft="@dimen/common_page_padding"
                                 android:textColor="@color/color_text_normal"
                                 android:textColorHint="@color/color_text_hint"
-                                android:textSize="@dimen/size_normal" />
+                                android:textSize="@dimen/sp_16" />
 
                             <LinearLayout
                                 android:layout_width="wrap_content"
@@ -154,97 +121,61 @@
 
                         </RelativeLayout>
 
-                        <RelativeLayout
-                            android:id="@+id/layout_img_verify_code"
+                        <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/common_area_margin_middle"
-                            android:visibility="gone">
-
-                            <RelativeLayout
-                                android:id="@+id/layout_img"
-                                android:layout_width="@dimen/width_login_verification_code"
-                                android:layout_height="@dimen/common_item_height_middle"
-                                android:layout_alignParentRight="true"
-                                >
-
-                                <ImageView
-                                    android:id="@+id/img_verify_code"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="match_parent"
-                                    android:layout_centerInParent="true"
-                                    android:padding="@dimen/common_area_margin_tiny" />
-
-                            </RelativeLayout>
+                            android:layout_marginTop="@dimen/common_area_margin_big"
+                            android:orientation="vertical">
 
                             <com.jme.common.ui.view.ClearEditText
-                                android:id="@+id/et_img_verify_code"
+                                android:id="@+id/et_referral_code"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_marginTop="@dimen/common_area_margin"
-                                android:layout_marginRight="@dimen/common_page_margin"
                                 android:layout_marginBottom="@dimen/common_area_margin_middle"
-                                android:layout_toLeftOf="@+id/layout_img"
                                 android:background="@null"
-                                android:drawableLeft="@mipmap/ic_img_verify_code"
+                                android:drawableLeft="@mipmap/ic_referral_code"
                                 android:drawablePadding="@dimen/common_area_margin_tiny"
-                                android:hint="@string/login_img_verify_code_hint"
-                                android:inputType="none"
+                                android:hint="@string/register_referral_code_hint"
+                                android:inputType="number"
+                                android:maxLength="11"
                                 android:maxLines="1"
                                 android:paddingLeft="@dimen/common_page_padding"
                                 android:textColor="@color/color_text_normal"
                                 android:textColorHint="@color/color_text_hint"
-                                android:textSize="@dimen/size_normal" />
+                                android:textSize="@dimen/sp_16" />
 
-                            <LinearLayout
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_below="@+id/et_img_verify_code"
-                                android:layout_marginRight="@dimen/common_page_margin"
-                                android:layout_toLeftOf="@+id/layout_img">
+                            <include layout="@layout/item_line_vertical" />
 
-                                <include layout="@layout/item_line_vertical" />
-
-                            </LinearLayout>
-
-                        </RelativeLayout>
+                        </LinearLayout>
 
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:orientation="horizontal"
-                            android:layout_marginTop="28dp"
-                            >
+                            android:layout_marginTop="@dimen/margin_normal"
+                            android:gravity="center|left"
+                            android:orientation="horizontal">
 
                             <CheckBox
-                                android:id="@+id/cb_agree"
+                                android:id="@+id/checkbox_agree"
                                 style="@style/CustomPayCheckBoxTheme"
                                 android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_centerVertical="true"
-                                android:gravity="center_vertical"
-                                android:layout_marginRight="5dp"
-                                />
+                                android:layout_height="wrap_content" />
 
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="我已阅读并同意"
-                                android:textSize="@dimen/sp_14"
+                                android:layout_marginLeft="@dimen/common_page_margin"
+                                android:text="@string/register_aggre"
                                 android:textColor="@color/color_4d4d4d"
-                                android:layout_toRightOf="@id/cb_yingliqian"
-                                android:layout_marginLeft="8dp"
-                                />
+                                android:textSize="@dimen/sp_14" />
 
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="《用户使用协议》"
-                                android:textSize="@dimen/sp_14"
-                                android:textColor="@color/color_0080ff"
-                                android:layout_alignParentRight="true"
                                 android:onClick="@{() -> handlers.onClickAgreement()}"
-                                />
+                                android:text="@string/register_aggrement"
+                                android:textColor="@color/color_0080ff"
+                                android:textSize="@dimen/sp_14" />
 
                         </LinearLayout>
 
@@ -252,25 +183,39 @@
                             android:id="@+id/btn_login"
                             android:layout_width="match_parent"
                             android:layout_height="@dimen/height_login_btn"
-                            android:layout_marginTop="@dimen/margin_main_page_info"
+                            android:layout_marginTop="@dimen/common_area_margin_large"
                             android:background="@drawable/selector_btn"
-                            android:text="注册"
-                            android:textColor="@color/white"
-                            android:textSize="@dimen/common_font_size"
                             android:onClick="@{() -> handlers.onClickRegister()}"
-                            />
+                            android:text="@string/register_now"
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/common_font_size" />
 
-                        <TextView
-                            android:id="@+id/login"
+                        <LinearLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="已有账号去登录"
-                            android:textSize="@dimen/sp_18"
-                            android:textColor="@color/color_4d4d4d"
-                            android:layout_gravity="center_horizontal"
-                            android:layout_marginTop="32dp"
-                            android:onClick="@{() -> handlers.onClickLogin()}"
-                            />
+                            android:layout_gravity="center"
+                            android:layout_marginTop="@dimen/common_area_margin_large"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_horizontal"
+                                android:text="@string/register_hava_acccount"
+                                android:textColor="@color/black"
+                                android:textSize="@dimen/sp_18" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_horizontal"
+                                android:layout_marginLeft="@dimen/margin_line"
+                                android:onClick="@{() -> handlers.onClickLogin()}"
+                                android:text="@string/register_go_login"
+                                android:textColor="@color/color_0080ff"
+                                android:textSize="@dimen/sp_18" />
+
+                        </LinearLayout>
 
                     </LinearLayout>
 
@@ -282,9 +227,7 @@
                     android:layout_alignParentBottom="true"
                     android:layout_centerHorizontal="true"
                     android:layout_marginBottom="@dimen/common_area_margin"
-                    android:background="@mipmap/ic_logo_sd"
-                    android:visibility="gone"
-                    />
+                    android:background="@mipmap/ic_logo_sd" />
 
             </RelativeLayout>
 

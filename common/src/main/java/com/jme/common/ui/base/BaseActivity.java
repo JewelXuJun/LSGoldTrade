@@ -251,10 +251,6 @@ public abstract class BaseActivity extends AppCompatActivity implements OnResult
         return sendRequest(api, params, showprogressDialog, false, true);
     }
 
-//    protected AsynCommon sendRequest(API api, Object vo, boolean showprogressDialog) {
-//        return sendRequest(api, vo, showprogressDialog, false, true);
-//    }
-
     @Override
     public void OnResult(DTRequest request, Head head, Object response) {
         dismissLoadingDialog();
@@ -283,10 +279,10 @@ public abstract class BaseActivity extends AppCompatActivity implements OnResult
                     mErrorHandler.removeMessages(MSG_ERROR_MSG_REPET);
                     mErrorHandler.sendEmptyMessageDelayed(MSG_ERROR_MSG_REPET, 120 * 1000);
 
-//                    showShortToast(head.getMsg());
+                    showShortToast(head.getMsg());
                 }
             } else {
-//                showShortToast(head.getMsg());
+                showShortToast(head.getMsg());
             }
         }
     }

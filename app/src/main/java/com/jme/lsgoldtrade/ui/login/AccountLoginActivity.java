@@ -327,23 +327,17 @@ public class AccountLoginActivity extends JMEBaseActivity {
         }
 
         public void onClickLoginMobile() {
-            ARouter.getInstance()
-                    .build(Constants.ARouterUriConst.MOBILELOGIN)
-                    .navigation();
+            ARouter.getInstance().build(Constants.ARouterUriConst.MOBILELOGIN).navigation();
 
             finish();
         }
 
         public void onClickRegister() {
-            ARouter.getInstance()
-                    .build(Constants.ARouterUriConst.REGISTER)
-                    .navigation();
+            ARouter.getInstance().build(Constants.ARouterUriConst.REGISTER).navigation();
         }
 
         public void onClickForgetPwd() {
-            ARouter.getInstance()
-                    .build(Constants.ARouterUriConst.FORGETPASSWORD)
-                    .navigation();
+            ARouter.getInstance().build(Constants.ARouterUriConst.FORGETPASSWORD).navigation();
         }
     }
 }

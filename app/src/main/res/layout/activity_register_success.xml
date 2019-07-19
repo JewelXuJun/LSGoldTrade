@@ -16,39 +16,7 @@
         android:background="@color/white"
         android:orientation="vertical">
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:fitsSystemWindows="true"
-            android:minHeight="?attr/actionBarSize">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:text="注册成功"
-                android:textColor="@color/color_text_black"
-                android:textSize="@dimen/common_font_size" />
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_centerVertical="true"
-                android:onClick="@{() -> handlers.onClickCancel()}"
-                android:orientation="horizontal"
-                android:padding="@dimen/common_page_padding">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/text_cancel"
-                    android:textColor="@color/color_blue"
-                    android:textSize="@dimen/size_normal" />
-
-            </LinearLayout>
-
-        </RelativeLayout>
+        <include layout="@layout/layout_toolbar" />
 
         <include layout="@layout/item_line_vertical" />
 
@@ -62,34 +30,29 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginTop="@dimen/common_area_margin_big"
-                android:background="@mipmap/register_success"
-                />
+                android:layout_marginTop="@dimen/margin_normal"
+                android:background="@mipmap/register_success" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="恭喜您已注册成功!"
-                android:textSize="@dimen/sp_18"
-                android:textColor="@color/color_000"
                 android:layout_gravity="center"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="30dp"
-                />
+                android:layout_marginTop="@dimen/common_page_margin"
+                android:text="@string/register_success_message"
+                android:textColor="@color/black"
+                android:textSize="@dimen/sp_18" />
 
             <Button
-                android:id="@+id/btn_login"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/height_login_btn"
-                android:layout_marginTop="@dimen/margin_main_page_info"
+                android:layout_marginLeft="@dimen/margin_login"
+                android:layout_marginTop="@dimen/common_area_margin_large"
+                android:layout_marginRight="@dimen/margin_login"
                 android:background="@drawable/bg_btn_blue_solid"
-                android:text="立即开户"
+                android:onClick="@{() -> handlers.onClickOpenAccount()}"
+                android:text="@string/register_open_account"
                 android:textColor="@color/white"
-                android:textSize="@dimen/common_font_size"
-                android:onClick="@{() -> handlers.onClickRegister()}"
-                android:layout_marginLeft="35dp"
-                android:layout_marginRight="35dp"
-                />
+                android:textSize="@dimen/common_font_size" />
 
         </LinearLayout>
 

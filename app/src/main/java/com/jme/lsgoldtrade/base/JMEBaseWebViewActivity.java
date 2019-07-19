@@ -66,7 +66,7 @@ public class JMEBaseWebViewActivity extends BaseActivity {
     protected void initData(Bundle savedInstanceState) {
         mTitle = getIntent().getStringExtra("title");
         mUrl = getIntent().getStringExtra("url");
-        Logger.e("url--->" + mUrl);
+
         if (!TextUtils.isEmpty(mUrl))
             updateData(mUrl);
 

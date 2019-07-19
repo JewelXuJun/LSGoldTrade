@@ -20,7 +20,7 @@ import com.jme.lsgoldtrade.config.Constants;
 import com.jme.lsgoldtrade.config.User;
 import com.jme.lsgoldtrade.databinding.FragmentPersonalBinding;
 import com.jme.lsgoldtrade.service.ManagementService;
-import com.jme.lsgoldtrade.util.JumpActivity;
+import com.jme.lsgoldtrade.util.IntentUtils;
 import com.jme.lsgoldtrade.util.NormalUtils;
 
 import java.util.HashMap;
@@ -127,7 +127,7 @@ public class PersonalFragment extends JMEBaseFragment {
         }
 
         public void onClickOpenAccountOnline() {
-            JumpActivity.jumpSmall(mContext);
+            IntentUtils.jumpSmall(mContext);
         }
 
         public void onClickCustomerService() {

@@ -75,6 +75,8 @@ public class TradeFragment extends JMEBaseFragment {
             mBinding.layoutNoLogin.setVisibility(View.GONE);
             mAdapter = new TabViewPagerAdapter(getChildFragmentManager());
             initInfoTabs();
+
+            sendRequest(TradeService.getInstance().whetherIdCard, new HashMap<>(), true);
         } else {
             mBinding.layoutLogin.setVisibility(View.GONE);
             mBinding.layoutNoLogin.setVisibility(View.VISIBLE);
@@ -86,7 +88,6 @@ public class TradeFragment extends JMEBaseFragment {
                     .create());
 //            PicassoUtils.getInstance().loadImg(mContext, url, mBinding.imgBanner);
         }
-        sendRequest(TradeService.getInstance().whetherIdCard, new HashMap<>(), true);
     }
 
     @Override
@@ -205,7 +206,7 @@ public class TradeFragment extends JMEBaseFragment {
         public void onClickKaiHuJiaoCheng() {
             String url = "http://www.taijs.com/upload/glht/khjc.html";
             ARouter.getInstance()
-                    .build(Constants.ARouterUriConst.AGREEMENT)
+                    .build(Constants.ARouterUriConst.JMEWEBVIEW)
                     .withString("title", "开户教程")
                     .withString("url", url)
                     .navigation();

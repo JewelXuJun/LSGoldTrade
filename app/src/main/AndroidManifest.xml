@@ -21,36 +21,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".ui.personal.DetailsActivity"></activity>
-        <activity android:name=".ui.personal.ThawActivity" />
-        <activity android:name=".ui.personal.ApplicationForCashActivity" />
-        <activity android:name=".ui.personal.CashActivity" />
-        <activity android:name=".ui.personal.CheckServiceActivity" />
-        <activity android:name=".ui.personal.RechargeActivity" />
-        <activity android:name=".ui.personal.ValueServiceSuccessActivity" />
-        <activity android:name=".ui.personal.ValueAddedServiceActivity" />
-        <activity android:name=".ui.login.NameCardCheckActivity" />
-        <activity android:name=".ui.login.LoginPwdActivity" />
-        <activity android:name=".ui.login.BindUserNameActivity" />
-        <activity android:name=".ui.login.AgreementActivity" />
-        <activity android:name=".ui.personal.MySubscribeActivity" />
-        <activity android:name=".ui.login.RegisterSuccessActivity" />
-        <activity android:name=".ui.personal.AboutDoubtActivity" />
-        <activity android:name=".ui.personal.CustomerServiceActivity" />
-        <activity android:name=".ui.login.RegisterActivity" />
-        <activity android:name=".ui.login.ForgetPasswordActivity" />
-        <activity android:name=".ui.market.YujingActivity" />
-        <activity android:name=".ui.mainpage.HangQingYanPanActivity" />
-        <activity android:name=".ui.mainpage.DiYanActivity" />
-        <activity android:name=".ui.mainpage.FastEntryActivity" />
-        <activity android:name=".ui.order.OrderDetailsActivity" />
-        <activity android:name=".ui.order.MyOrderActivity" />
-        <activity android:name=".ui.tradingbox.HistoryBoxActivity" />
-        <activity android:name=".ui.tradingbox.PlaceOrderActivity" />
-        <activity android:name=".ui.tradingbox.AboutNewsActivity" />
-        <activity android:name=".ui.tradingbox.TradingBoxDetailsActivity" />
-        <activity android:name=".ui.mainpage.TradingBoxActivity" />
-        <activity android:name=".ui.mainpage.EconomicCalendarActivity" />
+        <activity
+            android:name=".ui.mainpage.EconomicCalendarActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.splash.SplashActivity"
             android:screenOrientation="portrait">
@@ -67,9 +40,11 @@
             android:windowSoftInputMode="stateHidden" />
         <activity
             android:name=".ui.login.AccountLoginActivity"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.login.MobileLoginActivity"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.market.MarketDetailActivity"
@@ -126,6 +101,90 @@
         <activity
             android:name=".base.JMEBaseWebViewActivity"
             android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.personal.DetailsActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.personal.ThawActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.personal.ApplicationForCashActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.personal.CashActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.personal.CheckServiceActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.personal.RechargeActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.personal.ValueServiceSuccessActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.personal.ValueAddedServiceActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.login.NameCardCheckActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.login.LoginPwdActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.login.BindUserNameActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.personal.MySubscribeActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.login.RegisterSuccessActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.personal.AboutDoubtActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.personal.CustomerServiceActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.login.RegisterActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.login.ForgetPasswordActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.market.YujingActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.mainpage.HangQingYanPanActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.mainpage.DiYanActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.mainpage.FastEntryActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.order.OrderDetailsActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.order.MyOrderActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.tradingbox.HistoryBoxActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.tradingbox.PlaceOrderActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.tradingbox.AboutNewsActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.tradingbox.TradingBoxDetailsActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.mainpage.TradingBoxActivity"
+            android:screenOrientation="portrait" />
 
         <service
             android:name=".base.JMEAppService"
@@ -149,7 +208,7 @@
         <activity
             android:name="com.tencent.tauth.AuthActivity"
             android:launchMode="singleTask"
-            android:noHistory="true" >
+            android:noHistory="true">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
 
@@ -161,8 +220,7 @@
         </activity>
         <activity
             android:name="com.tencent.connect.common.AssistActivity"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar"
-            />
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
     </application>
 
 </manifest>
