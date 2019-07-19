@@ -2,6 +2,7 @@ package com.jme.common.util;
 
 import android.content.Context;
 import android.os.Environment;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.math.BigDecimal;
@@ -36,6 +37,7 @@ public class FileUtil {
 
     public static String getTotalCacheSize(Context context) throws Exception {
         long cacheSize = getFolderSize(context.getCacheDir());
+
         if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
             cacheSize += getFolderSize(context.getExternalCacheDir());
         }
@@ -62,12 +64,12 @@ public class FileUtil {
                 + context.getPackageName() + "/databases"));
     }
 
-    public static void clearSharedPreferences(Context ctx) {
-        File dir = new File(ctx.getFilesDir().getParent() + "/shared_prefs/");
+    public static void clearSharedPreferences(Context context) {
+        File dir = new File(context.getFilesDir().getParent() + "/shared_prefs/");
         if (!dir.exists()) return;
         String[] children = dir.list();
         for (int i = 0; i < children.length; i++) {
-            ctx.getSharedPreferences(children[i].replace(".xml", ""), Context.MODE_PRIVATE).edit().clear().commit();
+            context.getSharedPreferences(children[i].replace(".xml", ""), Context.MODE_PRIVATE).edit().clear().commit();
         }
         try {
             Thread.sleep(1000);

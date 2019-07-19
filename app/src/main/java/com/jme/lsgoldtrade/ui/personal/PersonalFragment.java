@@ -154,15 +154,11 @@ public class PersonalFragment extends JMEBaseFragment {
         }
 
         public void onClickAbout() {
-            ARouter.getInstance()
-                    .build(Constants.ARouterUriConst.ABOUT)
-                    .navigation();
+            ARouter.getInstance().build(Constants.ARouterUriConst.ABOUT).navigation();
         }
 
         public void onClickSeeting() {
-            ARouter.getInstance()
-                    .build(Constants.ARouterUriConst.SETTING)
-                    .navigation();
+            ARouter.getInstance().build(Constants.ARouterUriConst.SETTING).navigation();
         }
 
     }

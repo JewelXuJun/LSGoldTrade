@@ -28,24 +28,19 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/common_area_margin"
                 android:background="@color/white"
                 android:orientation="vertical">
-
-                <include layout="@layout/item_line_vertical" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/height_item_small"
-                    android:background="@color/color_tabhost"
+                    android:background="@color/common_background"
                     android:gravity="center|left"
                     android:paddingLeft="@dimen/common_page_margin"
                     android:paddingRight="@dimen/common_page_margin"
                     android:text="@string/personal_refresh_network"
                     android:textColor="@color/black_pale"
                     android:textSize="@dimen/sp_12" />
-
-                <include layout="@layout/item_line_vertical" />
 
                 <RelativeLayout
                     android:id="@+id/layout_network_5s"
@@ -138,20 +133,16 @@
 
                 </RelativeLayout>
 
-                <include layout="@layout/item_line_vertical" />
-
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/height_item_small"
-                    android:background="@color/color_tabhost"
+                    android:background="@color/common_background"
                     android:gravity="center|left"
                     android:paddingLeft="@dimen/common_page_margin"
                     android:paddingRight="@dimen/common_page_margin"
                     android:text="@string/personal_refresh_wifi"
                     android:textColor="@color/black_pale"
                     android:textSize="@dimen/sp_12" />
-
-                <include layout="@layout/item_line_vertical" />
 
                 <RelativeLayout
                     android:id="@+id/layout_wifi_1s"
@@ -243,8 +234,6 @@
                         android:visibility="gone" />
 
                 </RelativeLayout>
-
-                <include layout="@layout/item_line_vertical" />
 
             </LinearLayout>
 

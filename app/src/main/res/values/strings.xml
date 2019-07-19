@@ -227,6 +227,8 @@
     <string name="setting_feedback_success">感谢您的宝贵意见，我们会及时处理</string>
     <string name="personal_aboutus_version">泰金所&#160;%1$s</string>
     <string name="personal_send">发送</string>
+    <string name="personal_clear_cache_success">清除缓存成功</string>
+    <string name="personal_clear_cache_fail">清除缓存失败</string>
 
     <!-- News -->
     <string name="news_title">消息中心</string>

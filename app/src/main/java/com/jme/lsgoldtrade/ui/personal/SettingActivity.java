@@ -7,8 +7,7 @@ import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.jme.common.network.DTRequest;
 import com.jme.common.network.Head;
-import com.jme.common.util.AppInfoUtil;
-import com.jme.common.util.MyDataCleanManager;
+import com.jme.common.util.FileUtil;
 import com.jme.common.util.ToastUtils;
 import com.jme.lsgoldtrade.R;
 import com.jme.lsgoldtrade.base.JMEBaseActivity;
@@ -44,10 +43,9 @@ public class SettingActivity extends JMEBaseActivity {
     protected void initData(Bundle savedInstanceState) {
         super.initData(savedInstanceState);
 
+        setCache();
+
         mBinding.btnLogout.setVisibility(null == mUser || !mUser.isLogin() ? View.GONE : View.VISIBLE);
-        mBinding.tvVersionInformation.setText(AppInfoUtil.getVersionName(this));
-        String totalCacheSize = MyDataCleanManager.getTotalCacheSize(this);
-        mBinding.tvCache.setText(totalCacheSize);
     }
 
     @Override
@@ -60,6 +58,20 @@ public class SettingActivity extends JMEBaseActivity {
         super.initBinding();
 
         mBinding.setHandlers(new ClickHandlers());
+    }
+
+    private void setCache() {
+        String cache;
+
+        try {
+            cache = FileUtil.getTotalCacheSize(getApplicationContext());
+        } catch (Exception e) {
+            cache = null;
+
+            e.printStackTrace();
+        }
+
+        mBinding.tvCache.setText(null != cache ? cache : "");
     }
 
     private void setLogoutLayout() {
@@ -90,26 +102,16 @@ public class SettingActivity extends JMEBaseActivity {
     public class ClickHandlers {
 
         public void onClickRefreshSetting() {
-            ARouter.getInstance()
-                    .build(Constants.ARouterUriConst.MARKETREFRESH)
-                    .navigation();
+            ARouter.getInstance().build(Constants.ARouterUriConst.MARKETREFRESH).navigation();
         }
 
         public void onClickClearCache() {
-            mBinding.tvCache.setText("0KB");
-            ToastUtils.setToast(mContext, "缓存清理成功");
-        }
+            if (FileUtil.cleanApplicationData(getApplicationContext()))
+                showShortToast(R.string.personal_clear_cache_success);
+            else
+                showShortToast(R.string.personal_clear_cache_fail);
 
-        public void onClickWelcome() {
-            ARouter.getInstance()
-                    .build(Constants.ARouterUriConst.SPLASH)
-                    .navigation();
-        }
-
-        public void onClickAbout() {
-            ARouter.getInstance()
-                    .build(Constants.ARouterUriConst.ABOUT)
-                    .navigation();
+            setCache();
         }
 
         public void onClickLogout() {

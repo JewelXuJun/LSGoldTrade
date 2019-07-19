@@ -22,71 +22,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/common_area_margin"
             android:background="@color/white"
             android:orientation="vertical">
-
-            <include layout="@layout/item_line_vertical" />
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/height_item_normal"
-                android:background="?android:attr/selectableItemBackground"
-                android:onClick="@{() -> handlers.onClickRefreshSetting()}">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentLeft="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginLeft="@dimen/common_page_margin"
-                    android:includeFontPadding="false"
-                    android:text="@string/personal_refresh_rate"
-                    android:textColor="@color/color_text_black"
-                    android:textSize="@dimen/sp_16" />
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginRight="@dimen/common_page_margin"
-                    android:background="@mipmap/ic_next" />
-
-            </RelativeLayout>
-
-            <include layout="@layout/item_line_vertical_margin" />
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/height_item_normal"
-                android:background="?android:attr/selectableItemBackground"
-                >
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentLeft="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginLeft="@dimen/common_page_margin"
-                    android:includeFontPadding="false"
-                    android:text="@string/personal_version_information"
-                    android:textColor="@color/color_text_black"
-                    android:textSize="@dimen/sp_16" />
-
-                <TextView
-                    android:id="@+id/tv_version_information"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerInParent="true"
-                    android:layout_marginRight="@dimen/common_page_margin"
-                    android:textColor="@color/gray"
-                    android:textSize="@dimen/sp_16" />
-
-            </RelativeLayout>
-
-            <include layout="@layout/item_line_vertical_margin" />
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -117,53 +54,13 @@
 
             </RelativeLayout>
 
-            <include layout="@layout/item_line_vertical" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/common_area_margin"
-            android:background="@color/white"
-            android:orientation="vertical">
-
-            <include layout="@layout/item_line_vertical" />
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/height_item_normal"
-                android:background="?android:attr/selectableItemBackground"
-                android:onClick="@{() -> handlers.onClickWelcome()}">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentLeft="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginLeft="@dimen/common_page_margin"
-                    android:includeFontPadding="false"
-                    android:text="@string/personal_welcome"
-                    android:textColor="@color/color_text_black"
-                    android:textSize="@dimen/sp_16" />
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginRight="@dimen/common_page_margin"
-                    android:background="@mipmap/ic_next" />
-
-            </RelativeLayout>
-
             <include layout="@layout/item_line_vertical_margin" />
 
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/height_item_normal"
                 android:background="?android:attr/selectableItemBackground"
-                android:onClick="@{() -> handlers.onClickAbout()}">
+                android:onClick="@{() -> handlers.onClickRefreshSetting()}">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -172,7 +69,7 @@
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="@dimen/common_page_margin"
                     android:includeFontPadding="false"
-                    android:text="@string/personal_about"
+                    android:text="@string/personal_refresh_rate"
                     android:textColor="@color/color_text_black"
                     android:textSize="@dimen/sp_16" />
 
@@ -187,8 +84,6 @@
             </RelativeLayout>
 
         </LinearLayout>
-
-        <include layout="@layout/item_line_vertical" />
 
         <Button
             android:id="@+id/btn_logout"
