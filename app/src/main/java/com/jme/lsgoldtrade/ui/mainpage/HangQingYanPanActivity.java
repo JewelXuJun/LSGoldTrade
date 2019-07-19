@@ -188,7 +188,7 @@ public class HangQingYanPanActivity extends JMEBaseActivity {
                 return;
 
             switch (callType) {
-                case Constants.RxBusConst.RXBUS_TRADEFRAGMENT:
+                case Constants.RxBusConst.RXBUS_TRADE:
                     runOnUiThread(() -> mBinding.tabViewpager.setCurrentItem(1));
 
                     break;
@@ -254,7 +254,7 @@ public class HangQingYanPanActivity extends JMEBaseActivity {
             } else {
                 AppConfig.Select_ContractId = "Au(T+D)";
 
-                RxBus.getInstance().post(Constants.RxBusConst.RXBUS_TRADEFRAGMENT, "Au(T+D)");
+                RxBus.getInstance().post(Constants.RxBusConst.RXBUS_TRADE, "Au(T+D)");
 
                 ARouter.getInstance()
                         .build(Constants.ARouterUriConst.MAIN)

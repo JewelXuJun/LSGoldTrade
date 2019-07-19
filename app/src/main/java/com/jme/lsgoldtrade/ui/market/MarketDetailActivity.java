@@ -825,7 +825,7 @@ public class MarketDetailActivity extends JMEBaseActivity implements FChart.OnPr
             } else {
                 AppConfig.Select_ContractId = mContractId;
 
-                RxBus.getInstance().post(Constants.RxBusConst.RXBUS_TRADEFRAGMENT, mContractId);
+                RxBus.getInstance().post(Constants.RxBusConst.RXBUS_TRADE, mContractId);
 
                 ARouter.getInstance()
                         .build(Constants.ARouterUriConst.MAIN)

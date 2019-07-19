@@ -54,7 +54,7 @@ public class IntentUtils {
                 if (null == User.getInstance() || !User.getInstance().isLogin())
                     showNeedLoginDialog(context);
                 else
-                    RxBus.getInstance().post(Constants.RxBusConst.RXBUS_TRADEFRAGMENT, null);
+                    RxBus.getInstance().post(Constants.RxBusConst.RXBUS_TRADE, null);
                 break;
             case "XSXT":
                 //新手学堂

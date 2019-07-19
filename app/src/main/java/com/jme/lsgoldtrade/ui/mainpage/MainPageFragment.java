@@ -470,7 +470,7 @@ public class MainPageFragment extends JMEBaseFragment implements OnRefreshListen
             if (null == mUser || !mUser.isLogin())
                 showNeedLoginDialog();
             else
-                RxBus.getInstance().post(Constants.RxBusConst.RXBUS_TRADEFRAGMENT, null);
+                RxBus.getInstance().post(Constants.RxBusConst.RXBUS_TRADE, null);
         }
 
         public void onClickBeginners() {

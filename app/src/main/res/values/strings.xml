@@ -190,12 +190,16 @@
     <!-- Personal -->
     <string name="personal_login">登录/注册</string>
     <string name="personal_login_message">马上登录享受更多服务</string>
-    <string name="personal_open_account_online">在线开户</string>
-    <string name="personal_customer_service">联系客服</string>
+    <string name="personal_open_account">免费开户</string>
+    <string name="personal_increment">我的增值服务</string>
+    <string name="personal_customer_service">在线客服</string>
     <string name="personal_message_center">消息中心</string>
+    <string name="personal_fast_management">首页快捷管理</string>
+    <string name="personal_subscribe">我的订阅</string>
     <string name="personal_share">分享APP</string>
     <string name="personal_feedback">意见反馈</string>
     <string name="personal_setting">设置</string>
+    <string name="personal_message_box_new">敬请期待新的匣子</string>
     <string name="personal_feedback_send">发送</string>
     <string name="personal_feedback_hint">我们珍视每一份用户反馈，您的宝贵意见让我们做的更好！意见反馈仅针对软件的使用问题，如遇到交易问题请联系客服!</string>
     <string name="personal_refresh_rate">行情刷新频率设置</string>

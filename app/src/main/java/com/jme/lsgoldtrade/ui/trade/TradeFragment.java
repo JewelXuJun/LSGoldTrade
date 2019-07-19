@@ -162,7 +162,7 @@ public class TradeFragment extends JMEBaseFragment {
                     mActivity.runOnUiThread(() -> mBinding.tabViewpager.setCurrentItem(0));
 
                     break;
-                case Constants.RxBusConst.RXBUS_TRADEFRAGMENT:
+                case Constants.RxBusConst.RXBUS_TRADE:
                     mActivity.runOnUiThread(() -> mBinding.tabViewpager.setCurrentItem(1));
 
                     break;

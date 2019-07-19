@@ -51,16 +51,8 @@ public class User {
         return mToken;
     }
 
-    public void setmAccount(String account) {
-        this.mAccount = account;
-    }
-
     public String getAccount() {
         return mAccount;
-    }
-
-    public void setmAccountID(String accountID) {
-        this.mAccountID = accountID;
     }
 
     public String getAccountID() {

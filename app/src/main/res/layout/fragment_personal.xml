@@ -67,15 +67,6 @@
                         android:textColor="@color/white"
                         android:textSize="@dimen/size_normal" />
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_marginTop="@dimen/margin_tiny"
-                        android:text="@string/personal_login_message"
-                        android:textColor="@color/white"
-                        android:textSize="@dimen/size_middle" />
-
                 </LinearLayout>
 
             </RelativeLayout>
@@ -88,6 +79,7 @@
                 android:orientation="vertical">
 
                 <RelativeLayout
+                    android:id="@+id/layout_open_account"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/height_item_normal"
                     android:onClick="@{() -> handlers.onClickOpenAccountOnline()}"
@@ -95,7 +87,7 @@
                     android:paddingRight="@dimen/common_area_margin">
 
                     <ImageView
-                        android:id="@+id/img_open_account_online"
+                        android:id="@+id/img_open_account"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
@@ -106,8 +98,8 @@
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
                         android:layout_marginLeft="@dimen/common_area_margin"
-                        android:layout_toRightOf="@+id/img_open_account_online"
-                        android:text="免费开户"
+                        android:layout_toRightOf="@+id/img_open_account"
+                        android:text="@string/personal_open_account"
                         android:textColor="@color/color_text_black"
                         android:textSize="@dimen/size_normal" />
 
@@ -123,7 +115,7 @@
                         android:layout_height="@dimen/common_line_height"
                         android:layout_alignParentBottom="true"
                         android:layout_marginLeft="@dimen/common_area_margin_tiny"
-                        android:layout_toRightOf="@+id/img_open_account_online"
+                        android:layout_toRightOf="@+id/img_open_account"
                         android:background="@color/common_line_divider" />
 
                 </RelativeLayout>
@@ -131,40 +123,52 @@
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/height_item_normal"
-                    android:onClick="@{() -> handlers.onClickValueAddedService()}"
+                    android:onClick="@{() -> handlers.onClickIncrement()}"
                     android:paddingLeft="@dimen/common_area_margin_big"
                     android:paddingRight="@dimen/common_area_margin">
 
                     <ImageView
-                        android:id="@+id/img_zhegnzhiyewu"
+                        android:id="@+id/img_increment"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
-                        android:background="@mipmap/ic_open_account_online" />
+                        android:background="@mipmap/ic_increment" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
                         android:layout_marginLeft="@dimen/common_area_margin"
-                        android:layout_toRightOf="@+id/img_zhegnzhiyewu"
-                        android:text="我的增值业务"
+                        android:layout_toRightOf="@+id/img_increment"
+                        android:text="@string/personal_increment"
                         android:textColor="@color/color_text_black"
                         android:textSize="@dimen/size_normal" />
 
                     <ImageView
+                        android:id="@+id/img_increment_next"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
                         android:layout_centerVertical="true"
                         android:background="@mipmap/ic_next" />
 
+                    <TextView
+                        android:id="@+id/tv_increment_state"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="@dimen/common_area_margin"
+                        android:layout_marginRight="@dimen/common_page_margin"
+                        android:layout_toLeftOf="@+id/img_increment_next"
+                        android:textColor="@color/color_4d4d4d"
+                        android:textSize="@dimen/sp_15" />
+
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/common_line_height"
                         android:layout_alignParentBottom="true"
                         android:layout_marginLeft="@dimen/common_area_margin_tiny"
-                        android:layout_toRightOf="@+id/img_zhegnzhiyewu"
+                        android:layout_toRightOf="@+id/img_increment"
                         android:background="@color/common_line_divider" />
 
                 </RelativeLayout>
@@ -189,7 +193,7 @@
                         android:layout_centerVertical="true"
                         android:layout_marginLeft="@dimen/common_area_margin"
                         android:layout_toRightOf="@+id/img_customer_service"
-                        android:text="联系客服"
+                        android:text="@string/personal_customer_service"
                         android:textColor="@color/color_text_black"
                         android:textSize="@dimen/size_normal" />
 
@@ -248,11 +252,53 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
+                android:layout_marginTop="@dimen/common_page_margin"
                 android:background="@color/white"
                 android:orientation="vertical">
 
                 <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/height_item_normal"
+                    android:onClick="@{() -> handlers.onClickFastManagement()}"
+                    android:paddingLeft="@dimen/common_area_margin_big"
+                    android:paddingRight="@dimen/common_area_margin">
+
+                    <ImageView
+                        android:id="@+id/img_fast_management"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:background="@mipmap/home_tab" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="@dimen/common_area_margin"
+                        android:layout_toRightOf="@+id/img_fast_management"
+                        android:text="@string/personal_fast_management"
+                        android:textColor="@color/color_text_black"
+                        android:textSize="@dimen/size_normal" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:background="@mipmap/ic_next" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/common_line_height"
+                        android:layout_alignParentBottom="true"
+                        android:layout_marginLeft="@dimen/common_area_margin_tiny"
+                        android:layout_toRightOf="@+id/img_fast_management"
+                        android:background="@color/common_line_divider" />
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/layout_subscribe"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/height_item_normal"
                     android:onClick="@{() -> handlers.onClickSubscribe()}"
@@ -272,7 +318,7 @@
                         android:layout_centerVertical="true"
                         android:layout_marginLeft="@dimen/common_area_margin"
                         android:layout_toRightOf="@+id/img_subscribe"
-                        android:text="我的订阅"
+                        android:text="@string/personal_subscribe"
                         android:textColor="@color/color_text_black"
                         android:textSize="@dimen/size_normal" />
 
@@ -285,17 +331,16 @@
                         android:background="@mipmap/ic_next" />
 
                     <TextView
-                        android:id="@+id/xiazi"
+                        android:id="@+id/tv_message_box"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
                         android:layout_marginLeft="@dimen/common_area_margin"
+                        android:layout_marginRight="@dimen/common_page_margin"
                         android:layout_toLeftOf="@+id/next"
-                        android:text="敬请期待新的匣子"
+                        android:text="@string/personal_message_box_new"
                         android:textColor="@color/color_4d4d4d"
-                        android:textSize="@dimen/sp_15"
-                        android:layout_marginRight="10dp"
-                        />
+                        android:textSize="@dimen/sp_15" />
 
                     <View
                         android:layout_width="match_parent"
@@ -307,53 +352,12 @@
 
                 </RelativeLayout>
 
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/height_item_normal"
-                    android:onClick="@{() -> handlers.onClickHomeTab()}"
-                    android:paddingLeft="@dimen/common_area_margin_big"
-                    android:paddingRight="@dimen/common_area_margin">
-
-                    <ImageView
-                        android:id="@+id/img_hometab"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:background="@mipmap/home_tab" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:layout_marginLeft="@dimen/common_area_margin"
-                        android:layout_toRightOf="@+id/img_hometab"
-                        android:text="首页快捷管理"
-                        android:textColor="@color/color_text_black"
-                        android:textSize="@dimen/size_normal" />
-
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
-                        android:layout_centerVertical="true"
-                        android:background="@mipmap/ic_next" />
-
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/common_line_height"
-                        android:layout_alignParentBottom="true"
-                        android:layout_marginLeft="@dimen/common_area_margin_tiny"
-                        android:layout_toRightOf="@+id/img_hometab"
-                        android:background="@color/common_line_divider" />
-
-                </RelativeLayout>
-
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
+                android:layout_marginTop="@dimen/common_page_margin"
                 android:background="@color/white"
                 android:orientation="vertical">
 

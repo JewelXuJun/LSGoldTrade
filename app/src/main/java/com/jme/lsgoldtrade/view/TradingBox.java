@@ -50,7 +50,7 @@ public class TradingBox extends RelativeLayout {
             } else {
                 if (User.getInstance().isLogin() && !TextUtils.isEmpty(User.getInstance().getToken())) {
 //                    if (TextUtils.isEmpty(User.getInstance().getAccountID()))
-                        RxBus.getInstance().post(Constants.RxBusConst.RXBUS_TRADEFRAGMENT, null);
+                        RxBus.getInstance().post(Constants.RxBusConst.RXBUS_TRADE, null);
 //                    else
 //                        ARouter.getInstance().build(Constants.ARouterUriConst.TRADINGBOX).navigation();
                 } else {

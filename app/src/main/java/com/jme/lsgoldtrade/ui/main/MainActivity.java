@@ -116,7 +116,7 @@ public class MainActivity extends JMEBaseActivity implements TabHost.OnTabChange
                 return;
 
             switch (callType) {
-                case Constants.RxBusConst.RXBUS_TRADEFRAGMENT:
+                case Constants.RxBusConst.RXBUS_TRADE:
                     runOnUiThread(() -> mBinding.tabhost.setCurrentTab(2));
 
                     break;
@@ -126,11 +126,13 @@ public class MainActivity extends JMEBaseActivity implements TabHost.OnTabChange
                     break;
                 case Constants.RxBusConst.RXBUS_CHEDAN:
                     runOnUiThread(() -> mBinding.tabhost.setCurrentTab(2));
+
                     RxBus.getInstance().post(Constants.RxBusConst.RXBUS_CHEDAN_FRAGMENT, null);
 
                     break;
                 case Constants.RxBusConst.RXBUS_TRADEFRAGMENT_HOLD:
                     runOnUiThread(() -> mBinding.tabhost.setCurrentTab(2));
+
                     RxBus.getInstance().post(Constants.RxBusConst.RXBUS_CHICANG_FRAGMENT, null);
 
                     break;

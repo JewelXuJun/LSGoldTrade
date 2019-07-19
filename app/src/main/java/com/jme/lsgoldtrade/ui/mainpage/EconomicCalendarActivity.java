@@ -97,7 +97,7 @@ public class EconomicCalendarActivity extends JMEBaseActivity {
                 return;
 
             switch (callType) {
-                case Constants.RxBusConst.RXBUS_TRADEFRAGMENT:
+                case Constants.RxBusConst.RXBUS_TRADE:
                     runOnUiThread(() -> mBinding.tabViewpager.setCurrentItem(1));
 
                     break;
