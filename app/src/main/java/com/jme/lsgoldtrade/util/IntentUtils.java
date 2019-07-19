@@ -166,7 +166,6 @@ public class IntentUtils {
         }
     }
 
-    //判断有没有安装微信
     public static boolean isWeChatAvilible(Context context) {
         final PackageManager packageManager = context.getPackageManager();
         List<PackageInfo> pinfo = packageManager.getInstalledPackages(0);

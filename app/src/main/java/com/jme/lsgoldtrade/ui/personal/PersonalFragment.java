@@ -127,7 +127,10 @@ public class PersonalFragment extends JMEBaseFragment {
         }
 
         public void onClickOpenAccountOnline() {
-            IntentUtils.jumpSmall(mContext);
+            if (IntentUtils.isWeChatAvilible(mContext))
+                IntentUtils.jumpSmall(mContext);
+            else
+                showShortToast(R.string.text_wechat_uninstalled);
         }
 
         public void onClickCustomerService() {

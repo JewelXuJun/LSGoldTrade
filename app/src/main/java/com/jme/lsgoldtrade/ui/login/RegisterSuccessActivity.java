@@ -52,9 +52,13 @@ public class RegisterSuccessActivity extends JMEBaseActivity {
     public class ClickHandlers {
 
         public void onClickOpenAccount() {
-            IntentUtils.jumpBankSmall(RegisterSuccessActivity.this);
+            if (IntentUtils.isWeChatAvilible(RegisterSuccessActivity.this)) {
+                IntentUtils.jumpBankSmall(RegisterSuccessActivity.this);
 
-            finish();
+                finish();
+            } else {
+                showShortToast(R.string.text_wechat_uninstalled);
+            }
         }
     }
 }

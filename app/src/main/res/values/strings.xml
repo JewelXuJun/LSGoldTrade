@@ -13,6 +13,7 @@
     <string name="text_tips">操作提示</string>
     <string name="text_login">登录</string>
     <string name="text_message_notlogin">很抱歉，您还未登录</string>
+    <string name="text_wechat_uninstalled">您还没有安装微信，请先进行安装！</string>
 
     <!--首页-->
     <string name="main_exit_app">再按一次退出程序</string>
