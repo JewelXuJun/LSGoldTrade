@@ -246,6 +246,17 @@
     <string name="login_success">登录成功</string>
     <string name="login_message">该功能需要登录泰金所才能使用,去登录?</string>
     <string name="login_forget_passord">忘记密码</string>
+    <string name="login_reset_passord">重置密码</string>
+    <string name="login_reset_passord_mobile">手机号</string>
+    <string name="login_reset_passord_verification_code">短信验证码</string>
+    <string name="login_reset_passord_verification_code_input">输入短信验证码</string>
+    <string name="login_reset_passord_new">新密码</string>
+    <string name="login_reset_passord_new_confirm">确认密码</string>
+    <string name="login_reset_passord_rule">请输入6-18位数字字母组合密码</string>
+    <string name="login_reset_passord_new_confirm_input">请再次输入您的新密码</string>
+    <string name="login_reset_passord_modify_confirm">确认修改</string>
+    <string name="login_reset_passord_not_equal">您两次输入的密码不一致</string>
+    <string name="login_reset_passord_success">重置密码成功</string>
 
     <string name="yingkuishezhi">盈亏线设置,是根据您设置的盈亏线,系统监则到报价到达您设置的点位/价格时帮您进行委托操作。\n
 1.当您使用此功能时,视作您已同意系统帮您进行委托操作；\n

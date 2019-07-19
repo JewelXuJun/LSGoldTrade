@@ -144,7 +144,7 @@ public class Constants {
         public static final String YANPAN = "/Mainpager/HangQingYanPanActivity";
         public static final String YUJING = "/Market/YujingActivity";
         public static final String ECONOMICCALENDAR = "/Mainpager/EconomicCalendarActivity";
-        public static final String FORGETPWD = "/Login/ForgetPwdActivity";
+        public static final String FORGETPASSWORD = "/Login/ForgetPasswordActivity";
         public static final String REGISTER = "/Login/RegisterActivity";
         public static final String CUSTOMSERVICE = "/Personal/CustomerServiceActivity";
         public static final String ABOUTDOUBT = "/Personal/AboutDoubtActivity";

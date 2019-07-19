@@ -342,7 +342,7 @@ public class AccountLoginActivity extends JMEBaseActivity {
 
         public void onClickForgetPwd() {
             ARouter.getInstance()
-                    .build(Constants.ARouterUriConst.FORGETPWD)
+                    .build(Constants.ARouterUriConst.FORGETPASSWORD)
                     .navigation();
         }
     }
