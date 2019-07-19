@@ -8,12 +8,15 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
+import android.text.TextUtils;
 import android.view.View;
 
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.jme.common.network.DTRequest;
 import com.jme.common.network.Head;
+import com.jme.common.util.RxBus;
 import com.jme.common.util.StatusBarUtil;
+import com.jme.common.util.StringUtils;
 import com.jme.lsgoldtrade.R;
 import com.jme.lsgoldtrade.base.JMEBaseFragment;
 import com.jme.lsgoldtrade.config.Constants;
@@ -72,11 +75,14 @@ public class PersonalFragment extends JMEBaseFragment {
         if (null == mUser || !mUser.isLogin()) {
             mBinding.tvAccount.setVisibility(View.GONE);
             mBinding.layoutLoginMessage.setVisibility(View.VISIBLE);
+            mBinding.layoutOpenAccount.setVisibility(View.VISIBLE);
+            mBinding.layoutSubscribe.setVisibility(View.GONE);
         } else {
-            String phone = NormalUtils.settingphone(mUser.getCurrentUser().getMobile());
-            mBinding.tvAccount.setText(phone);
+            mBinding.tvAccount.setText(StringUtils.phoneInvisibleMiddle(mUser.getCurrentUser().getMobile()));
             mBinding.tvAccount.setVisibility(View.VISIBLE);
             mBinding.layoutLoginMessage.setVisibility(View.GONE);
+            mBinding.layoutOpenAccount.setVisibility(TextUtils.isEmpty(mUser.getAccountID()) ? View.VISIBLE : View.GONE);
+            mBinding.layoutSubscribe.setVisibility(View.VISIBLE);
         }
     }
 
@@ -121,20 +127,17 @@ public class PersonalFragment extends JMEBaseFragment {
 
         public void onClickLogin() {
             if (null == mUser || !mUser.isLogin())
-                ARouter.getInstance()
-                        .build(Constants.ARouterUriConst.ACCOUNTLOGIN)
-                        .navigation();
+                ARouter.getInstance().build(Constants.ARouterUriConst.ACCOUNTLOGIN).navigation();
         }
 
         public void onClickOpenAccountOnline() {
-            if (IntentUtils.isWeChatAvilible(mContext))
-                IntentUtils.jumpSmall(mContext);
-            else
-                showShortToast(R.string.text_wechat_uninstalled);
+            if (null == mUser || !mUser.isLogin())
+                ARouter.getInstance().build(Constants.ARouterUriConst.ACCOUNTLOGIN).navigation();
+            else if (TextUtils.isEmpty(mUser.getAccountID()))
+                RxBus.getInstance().post(Constants.RxBusConst.RXBUS_TRADE, null);
         }
 
         public void onClickCustomerService() {
-//            callCustomer();
             ARouter.getInstance()
                     .build(Constants.ARouterUriConst.CUSTOMSERVICE)
                     .navigation();
@@ -171,13 +174,13 @@ public class PersonalFragment extends JMEBaseFragment {
                     .navigation();
         }
 
-        public void onClickHomeTab() {
+        public void onClickFastManagement() {
             ARouter.getInstance()
                     .build(Constants.ARouterUriConst.FASTENTRY)
                     .navigation();
         }
 
-        public void onClickValueAddedService() {
+        public void onClickIncrement() {
             if (User.getInstance().isLogin()) {
                 sendRequest(ManagementService.getInstance().getUserAddedServicesStatus, new HashMap<>(), false);
             } else {
