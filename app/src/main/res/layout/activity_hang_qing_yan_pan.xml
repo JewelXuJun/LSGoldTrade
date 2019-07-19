@@ -13,15 +13,13 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        >
+        android:orientation="vertical">
 
         <LinearLayout
             android:id="@+id/lltitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            >
+            android:orientation="vertical">
 
             <include layout="@layout/layout_toolbar" />
 
@@ -32,8 +30,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical"
-            >
+            android:orientation="vertical">
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -43,9 +40,12 @@
                     android:id="@+id/tablayout"
                     android:layout_width="wrap_content"
                     android:layout_height="40dp"
-                    android:background="@color/white"
                     android:layout_centerInParent="true"
+                    android:background="@color/white"
                     app:tabIndicatorColor="@color/color_blue"
+                    app:tabIndicatorFullWidth="true"
+                    app:tabIndicatorHeight="2dp"
+                    app:tabRippleColor="@null"
                     app:tabSelectedTextColor="@color/color_toolbar_blue"
                     app:tabTextColor="@color/color_text_normal" />
 
@@ -57,69 +57,48 @@
                 android:id="@+id/tab_viewpager"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="1"
-                />
-
-            <!--<LinearLayout-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:layout_marginTop="@dimen/common_page_margin"-->
-                <!--android:layout_marginBottom="@dimen/common_area_margin_big">-->
-
-                <!--<com.datai.common.charts.kchart.KChart-->
-                    <!--android:id="@+id/view_chart_kchart"-->
-                    <!--android:layout_width="match_parent"-->
-                    <!--android:layout_height="match_parent"-->
-                    <!--android:layout_marginLeft="2dp"-->
-                    <!--android:layout_marginRight="2dp"-->
-                    <!--/>-->
-
-            <!--</LinearLayout>-->
+                android:layout_weight="1" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
-                android:orientation="horizontal"
                 android:layout_margin="15dp"
-                >
+                android:orientation="horizontal">
 
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:text="买多"
-                    android:textSize="@dimen/sp_16"
-                    android:textColor="@color/white"
-                    android:gravity="center"
                     android:background="@drawable/bg_btn_buy_more_solid"
+                    android:gravity="center"
                     android:onClick="@{() -> handlers.onClickBuyMore()}"
-                    />
+                    android:text="买多"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/sp_16" />
 
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="1"
                     android:layout_marginLeft="5dp"
                     android:layout_marginRight="5dp"
-                    android:text="卖空"
-                    android:textSize="@dimen/sp_16"
-                    android:textColor="@color/white"
-                    android:gravity="center"
+                    android:layout_weight="1"
                     android:background="@drawable/bg_btn_sale_empty_solid"
+                    android:gravity="center"
                     android:onClick="@{() -> handlers.onClickSaleEmpty()}"
-                    />
+                    android:text="卖空"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/sp_16" />
 
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="2"
-                    android:text="报单"
-                    android:textSize="@dimen/sp_16"
-                    android:textColor="@color/white"
-                    android:gravity="center"
                     android:background="@drawable/bg_btn_blue_solid"
+                    android:gravity="center"
                     android:onClick="@{() -> handlers.onClickBaoDan()}"
-                    />
+                    android:text="报单"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/sp_16" />
 
             </LinearLayout>
 

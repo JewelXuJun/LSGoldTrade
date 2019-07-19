@@ -23,6 +23,7 @@
     <dimen name="height_feedback">180dp</dimen>
     <dimen name="height_chart">400dp</dimen>
     <dimen name="height_market_detail_landscape">60dp</dimen>
+    <dimen name="height_trade_box_banner">130dp</dimen>
 
     <dimen name="width_main_page_info_img">100dp</dimen>
     <dimen name="width_market_limit">100dp</dimen>

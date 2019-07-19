@@ -69,22 +69,22 @@ public class TradeFragment extends JMEBaseFragment {
     @Override
     public void onResume() {
         super.onResume();
-        Logger.e("是否绑定--->" + User.getInstance().getAccountID());
+
         if (User.getInstance().isLogin() && !TextUtils.isEmpty(User.getInstance().getAccountID())) {
-            mBinding.llLogin.setVisibility(View.VISIBLE);
-            mBinding.llNoLogin.setVisibility(View.GONE);
+            mBinding.layoutLogin.setVisibility(View.VISIBLE);
+            mBinding.layoutNoLogin.setVisibility(View.GONE);
             mAdapter = new TabViewPagerAdapter(getChildFragmentManager());
             initInfoTabs();
         } else {
-            mBinding.llLogin.setVisibility(View.GONE);
-            mBinding.llNoLogin.setVisibility(View.VISIBLE);
+            mBinding.layoutLogin.setVisibility(View.GONE);
+            mBinding.layoutNoLogin.setVisibility(View.VISIBLE);
             mBinding.kaihujiaocheng.setText(new SpanUtils(mContext)
                     .append("开户有疑问?来看看")
                     .setForegroundColor(getResources().getColor(R.color.color_000))
                     .append("开户教程")
                     .setForegroundColor(getResources().getColor(R.color.color_0080ff))
                     .create());
-//            PicassoUtils.getInstance().loadImg(mContext, url, mBinding.ivTopPic);
+//            PicassoUtils.getInstance().loadImg(mContext, url, mBinding.imgBanner);
         }
         sendRequest(TradeService.getInstance().whetherIdCard, new HashMap<>(), true);
     }
@@ -145,7 +145,6 @@ public class TradeFragment extends JMEBaseFragment {
         mBinding.tablayout.setTabMode(TabLayout.MODE_FIXED);
         mBinding.tablayout.setSelectedTabIndicatorHeight(4);
         mBinding.tablayout.setupWithViewPager(mBinding.tabViewpager);
-        mBinding.tablayout.post(() -> setIndicator(mBinding.tablayout, 30, 30));
 
         initRxBus();
     }
@@ -159,33 +158,15 @@ public class TradeFragment extends JMEBaseFragment {
 
             switch (callType) {
                 case Constants.RxBusConst.RXBUS_CHICANG_FRAGMENT:
-                    //mBinding.tabViewpager.setCurrentItem(1);单独设置不起作用，需要延时操作
-                    mBinding.tabViewpager.postDelayed(new Runnable() {
+                    mActivity.runOnUiThread(() -> mBinding.tabViewpager.setCurrentItem(0));
 
-                        @Override
-                        public void run() {
-                            mBinding.tabViewpager.setCurrentItem(0);
-                        }
-                    }, 100);
                     break;
                 case Constants.RxBusConst.RXBUS_TRADEFRAGMENT:
-                    //mBinding.tabViewpager.setCurrentItem(1);单独设置不起作用，需要延时操作
-                    mBinding.tabViewpager.postDelayed(new Runnable() {
+                    mActivity.runOnUiThread(() -> mBinding.tabViewpager.setCurrentItem(1));
 
-                        @Override
-                        public void run() {
-                            mBinding.tabViewpager.setCurrentItem(1);
-                        }
-                    }, 100);
                     break;
                 case Constants.RxBusConst.RXBUS_CHEDAN_FRAGMENT:
-                    mBinding.tabViewpager.postDelayed(new Runnable() {
-
-                        @Override
-                        public void run() {
-                            mBinding.tabViewpager.setCurrentItem(2);
-                        }
-                    }, 100);
+                    mActivity.runOnUiThread(() -> mBinding.tabViewpager.setCurrentItem(2));
 
                     break;
             }

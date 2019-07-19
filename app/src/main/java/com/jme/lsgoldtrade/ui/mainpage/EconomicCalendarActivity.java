@@ -87,7 +87,6 @@ public class EconomicCalendarActivity extends JMEBaseActivity {
         mBinding.tablayout.setTabMode(TabLayout.MODE_SCROLLABLE);
         mBinding.tablayout.setSelectedTabIndicatorHeight(4);
         mBinding.tablayout.setupWithViewPager(mBinding.tabViewpager);
-        mBinding.tablayout.post(() -> setIndicator(mBinding.tablayout, 0, 00));
     }
 
     private void initRxBus() {

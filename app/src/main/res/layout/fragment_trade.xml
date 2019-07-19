@@ -55,12 +55,13 @@
             android:id="@+id/layout_no_login"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:visibility="visible">
 
             <ImageView
-                android:id="@+id/iv_top_pic"
+                android:id="@+id/img_banner"
                 android:layout_width="match_parent"
-                android:layout_height="130dp"
+                android:layout_height="@dimen/height_trade_box_banner"
                 android:scaleType="centerCrop" />
 
             <ImageView
@@ -111,7 +112,7 @@
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/ll_login"
+            android:id="@+id/layout_login"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
@@ -122,6 +123,9 @@
                 android:layout_height="@dimen/common_item_height_middle"
                 android:background="@color/white"
                 app:tabIndicatorColor="@color/color_blue"
+                app:tabIndicatorFullWidth="true"
+                app:tabIndicatorHeight="2dp"
+                app:tabRippleColor="@null"
                 app:tabSelectedTextColor="@color/color_toolbar_blue"
                 app:tabTextColor="@color/color_text_normal" />
 

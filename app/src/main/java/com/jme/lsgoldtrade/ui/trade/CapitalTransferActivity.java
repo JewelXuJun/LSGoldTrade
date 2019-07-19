@@ -80,7 +80,6 @@ public class CapitalTransferActivity extends JMEBaseActivity {
         mBinding.tablayout.setTabMode(TabLayout.MODE_FIXED);
         mBinding.tablayout.setSelectedTabIndicatorHeight(4);
         mBinding.tablayout.setupWithViewPager(mBinding.tabViewpager);
-        mBinding.tablayout.post(() -> setIndicator(mBinding.tablayout, 45, 45));
     }
 
     final class TabViewPagerAdapter extends FragmentPagerAdapter {

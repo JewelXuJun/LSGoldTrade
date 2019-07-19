@@ -290,7 +290,6 @@ public class DeclarationFormFragment extends JMEBaseFragment {
         mBinding.tablayout.setTabMode(TabLayout.MODE_FIXED);
         mBinding.tablayout.setSelectedTabIndicatorHeight(4);
         mBinding.tablayout.setupWithViewPager(mBinding.tabViewpager);
-        mBinding.tablayout.post(() -> setIndicator(mBinding.tablayout, 30, 30));
     }
 
     private void initContractNameValue() {

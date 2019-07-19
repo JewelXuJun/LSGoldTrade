@@ -146,12 +146,11 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="委托价格"
-                                android:textSize="@dimen/sp_14"
-                                android:textColor="@color/color_333"
                                 android:layout_marginLeft="10dp"
                                 android:layout_marginBottom="4dp"
-                                />
+                                android:text="委托价格"
+                                android:textColor="@color/color_333"
+                                android:textSize="@dimen/sp_14" />
 
                             <LinearLayout
                                 android:layout_width="match_parent"
@@ -217,8 +216,7 @@
                                 android:layout_marginRight="@dimen/common_area_margin_tiny"
                                 android:gravity="center"
                                 android:orientation="horizontal"
-                                android:visibility="gone"
-                                >
+                                android:visibility="gone">
 
                                 <Button
                                     android:id="@+id/btn_rival_price"
@@ -273,13 +271,12 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="委托手数"
-                                android:textSize="@dimen/sp_14"
-                                android:textColor="@color/color_333"
                                 android:layout_marginLeft="10dp"
                                 android:layout_marginTop="15dp"
                                 android:layout_marginBottom="4dp"
-                                />
+                                android:text="委托手数"
+                                android:textColor="@color/color_333"
+                                android:textSize="@dimen/sp_14" />
 
                             <LinearLayout
                                 android:layout_width="match_parent"
@@ -341,14 +338,13 @@
                                 android:id="@+id/maxMoney"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="单笔下单最大量:"
-                                android:textSize="@dimen/sp_14"
-                                android:textColor="@color/color_333"
                                 android:layout_marginLeft="10dp"
                                 android:layout_marginTop="4dp"
                                 android:layout_marginBottom="25dp"
-                                android:visibility="gone"
-                                />
+                                android:text="单笔下单最大量:"
+                                android:textColor="@color/color_333"
+                                android:textSize="@dimen/sp_14"
+                                android:visibility="gone" />
 
                             <LinearLayout
                                 android:layout_width="match_parent"
@@ -378,8 +374,7 @@
                                         android:text="@string/text_no_data_default"
                                         android:textColor="@color/white"
                                         android:textSize="@dimen/size_middle"
-                                        android:visibility="gone"
-                                        />
+                                        android:visibility="gone" />
 
                                     <TextView
                                         android:layout_width="wrap_content"
@@ -408,8 +403,7 @@
                                         android:text="@string/text_no_data_default"
                                         android:textColor="@color/white"
                                         android:textSize="@dimen/size_middle"
-                                        android:visibility="gone"
-                                        />
+                                        android:visibility="gone" />
 
                                     <TextView
                                         android:layout_width="wrap_content"
@@ -430,8 +424,7 @@
                                     android:gravity="center"
                                     android:onClick="@{() -> handlers.onClickEveningUp()}"
                                     android:orientation="vertical"
-                                    android:visibility="gone"
-                                    >
+                                    android:visibility="gone">
 
                                     <TextView
                                         android:id="@+id/tv_price_equal"
@@ -440,8 +433,7 @@
                                         android:text="@string/text_no_data_default"
                                         android:textColor="@color/white"
                                         android:textSize="@dimen/size_middle"
-                                        android:visibility="gone"
-                                        />
+                                        android:visibility="gone" />
 
                                     <TextView
                                         android:layout_width="wrap_content"
@@ -544,6 +536,9 @@
                 android:layout_height="@dimen/common_item_height_middle"
                 android:background="@color/white"
                 app:tabIndicatorColor="@color/color_blue"
+                app:tabIndicatorFullWidth="true"
+                app:tabIndicatorHeight="2dp"
+                app:tabRippleColor="@null"
                 app:tabSelectedTextColor="@color/color_toolbar_blue"
                 app:tabTextColor="@color/color_text_normal" />
 

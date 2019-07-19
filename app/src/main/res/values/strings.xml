@@ -245,6 +245,7 @@
     <string name="login_register">还没有账号？立即开户</string>
     <string name="login_success">登录成功</string>
     <string name="login_message">该功能需要登录泰金所才能使用,去登录?</string>
+    <string name="login_forget_passord">忘记密码</string>
 
     <string name="yingkuishezhi">盈亏线设置,是根据您设置的盈亏线,系统监则到报价到达您设置的点位/价格时帮您进行委托操作。\n
 1.当您使用此功能时,视作您已同意系统帮您进行委托操作；\n
