@@ -86,38 +86,20 @@ public class PersonalFragment extends JMEBaseFragment {
         }
     }
 
-    private void callCustomer() {
-        if (Build.VERSION.SDK_INT >= 23) {
-            int checkCallPhonePermission = ContextCompat.checkSelfPermission(mContext, Manifest.permission.CALL_PHONE);
-
-            if (checkCallPhonePermission != PackageManager.PERMISSION_GRANTED) {
-                ActivityCompat.requestPermissions(mActivity, new String[]{Manifest.permission.CALL_PHONE}, REQUEST_CODE_ASK_CALL_PHONE);
-                return;
-            } else {
-                callPhone();
-            }
-        } else {
-            callPhone();
-        }
-    }
-
-    private void callPhone() {
-        Intent intent;
-        intent = new Intent("android.intent.action.CALL", Uri.parse("tel:4008276006"));
-
-        startActivity(intent);
+    private void getUserAddedServicesStatus() {
+        sendRequest(ManagementService.getInstance().getUserAddedServicesStatus, new HashMap<>(), false);
     }
 
     @Override
-    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
-        switch (requestCode) {
-            case REQUEST_CODE_ASK_CALL_PHONE:
-                if (grantResults[0] == PackageManager.PERMISSION_GRANTED)
-                    callCustomer();
+    protected void DataReturn(DTRequest request, Head head, Object response) {
+        super.DataReturn(request, head, response);
 
-                break;
-            default:
-                super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        switch (request.getApi().getName()) {
+            case "GetUserAddedServicesStatus":
+                if (head.isSuccess())
+                    ARouter.getInstance().build(Constants.ARouterUriConst.CHECKSERVICE).navigation();
+                else
+                    ARouter.getInstance().build(Constants.ARouterUriConst.VALUEADDEDSERVICE).navigation();
 
                 break;
         }
@@ -137,10 +119,15 @@ public class PersonalFragment extends JMEBaseFragment {
                 RxBus.getInstance().post(Constants.RxBusConst.RXBUS_TRADE, null);
         }
 
+        public void onClickIncrement() {
+            if (null == mUser || !mUser.isLogin())
+                ARouter.getInstance().build(Constants.ARouterUriConst.ACCOUNTLOGIN).navigation();
+            else
+                getUserAddedServicesStatus();
+        }
+
         public void onClickCustomerService() {
-            ARouter.getInstance()
-                    .build(Constants.ARouterUriConst.CUSTOMSERVICE)
-                    .navigation();
+            ARouter.getInstance().build(Constants.ARouterUriConst.CUSTOMSERVICE).navigation();
         }
 
         public void onClickMessageCenter() {
@@ -180,30 +167,6 @@ public class PersonalFragment extends JMEBaseFragment {
                     .navigation();
         }
 
-        public void onClickIncrement() {
-            if (User.getInstance().isLogin()) {
-                sendRequest(ManagementService.getInstance().getUserAddedServicesStatus, new HashMap<>(), false);
-            } else {
-                showNeedLoginDialog();
-            }
-        }
     }
 
-    @Override
-    protected void DataReturn(DTRequest request, Head head, Object response) {
-        super.DataReturn(request, head, response);
-        switch (request.getApi().getName()) {
-            case "GetUserAddedServicesStatus":
-                if (head.isSuccess()) {
-                    ARouter.getInstance()
-                            .build(Constants.ARouterUriConst.CHECKSERVICE)
-                            .navigation();
-                } else {
-                    ARouter.getInstance()
-                            .build(Constants.ARouterUriConst.VALUEADDEDSERVICE)
-                            .navigation();
-                }
-                break;
-        }
-    }
 }
