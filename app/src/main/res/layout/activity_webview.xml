@@ -4,33 +4,9 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/white"
-        android:elevation="0dp"
-        android:fitsSystemWindows="true"
-        android:minHeight="?attr/actionBarSize"
-        android:theme="@style/mToolbarTheme">
+    <include layout="@layout/layout_toolbar" />
 
-        <TextView
-            android:id="@+id/tv_close"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="@dimen/common_page_margin"
-            android:text="关闭"
-            android:textSize="@dimen/sp_16" />
-
-        <TextView
-            android:id="@+id/tv_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:textColor="@color/black"
-            android:textSize="@dimen/common_font_size" />
-
-    </RelativeLayout>
+    <include layout="@layout/item_line_vertical" />
 
     <ProgressBar
         android:id="@+id/pb"

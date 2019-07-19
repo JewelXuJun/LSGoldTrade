@@ -27,8 +27,6 @@ import java.net.URL;
 @Route(path = Constants.ARouterUriConst.JMEWEBVIEW)
 public class JMEBaseWebViewActivity extends BaseActivity {
 
-    private TextView mTvClose;
-    private TextView mTvTitle;
     private WebView mWebView;
     private ProgressBar mProgressBar;
 
@@ -42,18 +40,18 @@ public class JMEBaseWebViewActivity extends BaseActivity {
 
     @Override
     protected void initView() {
-        mTvClose = findViewById(R.id.tv_close);
-        mTvTitle = findViewById(R.id.tv_title);
         mWebView = findViewById(R.id.webview);
         mProgressBar = findViewById(R.id.pb);
 
         mWebView.getSettings().setJavaScriptEnabled(true);
-        mWebView.getSettings().setUserAgentString(mWebView.getSettings().getUserAgentString() + " LSGoldTradeAndroid");
+        mWebView.getSettings().setUserAgentString(mWebView.getSettings().getUserAgentString() + "LSGoldTradeAndroid");
         mWebView.getSettings().setDomStorageEnabled(true);
         mWebView.getSettings().setDatabaseEnabled(true);
         mWebView.getSettings().setUseWideViewPort(true);
         mWebView.getSettings().setLoadWithOverviewMode(true);
         mWebView.getSettings().setDisplayZoomControls(true);
+        mWebView.getSettings().setSupportZoom(true);
+        mWebView.getSettings().setTextSize(WebSettings.TextSize.LARGER);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
             mWebView.getSettings().setMixedContentMode(WebSettings.MIXED_CONTENT_ALWAYS_ALLOW);
@@ -70,13 +68,11 @@ public class JMEBaseWebViewActivity extends BaseActivity {
         if (!TextUtils.isEmpty(mUrl))
             updateData(mUrl);
 
-        mTvTitle.setText(mTitle);
+        initToolbar(mTitle, true);
     }
 
     @Override
     protected void initListener() {
-        mTvClose.setOnClickListener((view) -> finish());
-
         mWebView.setWebChromeClient(new WebChromeClient() {
 
             @Override
