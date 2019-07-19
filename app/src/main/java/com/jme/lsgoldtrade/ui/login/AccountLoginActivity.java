@@ -131,9 +131,6 @@ public class AccountLoginActivity extends JMEBaseActivity {
         String password = mBinding.etPassword.getText().toString();
         String imgVerifyCode = mBinding.etImgVerifyCode.getText().toString();
 
-       /* if (!ValueUtils.isPasswordRight(password))
-            showShortToast(R.string.login_password_error);
-        else*/
         if (bShowImgVerifyCode && TextUtils.isEmpty(imgVerifyCode))
             showShortToast(R.string.login_img_verify_code_error);
         else
@@ -150,8 +147,6 @@ public class AccountLoginActivity extends JMEBaseActivity {
             params.put("kaptchaId", mKaptchaId);
             params.put("kaptchaCode", imgVerifyCode);
         }
-
-//        sendRequest(UserService.getInstance().login, params, true);
 
         showLoadingDialog("");
 
@@ -253,9 +248,11 @@ public class AccountLoginActivity extends JMEBaseActivity {
                     getContractInfo();
 
                     showShortToast(R.string.login_success);
+
                     SharedPreUtils.setString(this, SharedPreUtils.Login_Account, mBinding.etAccount.getText().toString());
                 } else {
                     showShortToast(head.getMsg());
+
                     kaptcha();
                 }
 
@@ -338,7 +335,6 @@ public class AccountLoginActivity extends JMEBaseActivity {
         }
 
         public void onClickRegister() {
-//            JumpActivity.jumpSmall(mContext);
             ARouter.getInstance()
                     .build(Constants.ARouterUriConst.REGISTER)
                     .navigation();

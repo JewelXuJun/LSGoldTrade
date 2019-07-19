@@ -167,8 +167,6 @@ public class MobileLoginActivity extends JMEBaseActivity {
             params.put("kaptchaCode", imgVerifyCode);
         }
 
-//        sendRequest(UserService.getInstance().login, params, true);
-
         showLoadingDialog("");
 
         DTRequest request = new DTRequest(UserService.getInstance().login, params, true, true);
@@ -278,9 +276,11 @@ public class MobileLoginActivity extends JMEBaseActivity {
                     getContractInfo();
 
                     showShortToast(R.string.login_success);
+
                     SharedPreUtils.setString(this, SharedPreUtils.Login_Mobile, mBinding.etMobile.getText().toString());
                 } else {
                     showShortToast(head.getMsg());
+
                     kaptcha();
                 }
 

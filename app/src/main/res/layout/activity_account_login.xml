@@ -178,38 +178,16 @@
                         <RelativeLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="28dp"
-                            >
-
-                            <CheckBox
-                                android:id="@+id/cb_yingliqian"
-                                style="@style/CustomPayCheckBoxTheme"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_centerVertical="true"
-                                android:gravity="center_vertical"
-                                android:layout_marginRight="5dp"
-                                />
+                            android:layout_marginTop="@dimen/margin_normal">
 
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="保持登录状态"
-                                android:textSize="@dimen/sp_14"
-                                android:textColor="@color/color_4d4d4d"
-                                android:layout_toRightOf="@id/cb_yingliqian"
-                                android:layout_marginLeft="8dp"
-                                />
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="忘记密码"
-                                android:textSize="@dimen/sp_14"
-                                android:textColor="@color/color_0080ff"
                                 android:layout_alignParentRight="true"
                                 android:onClick="@{() -> handlers.onClickForgetPwd()}"
-                                />
+                                android:text="@string/login_forget_passord"
+                                android:textColor="@color/color_0080ff"
+                                android:textSize="@dimen/sp_14" />
 
                         </RelativeLayout>
 

@@ -68,7 +68,6 @@ public class AsynCommon {
                         head.setValue(dtResponse.getBodyToString());
 
                         try {
-                            Logger.e("请求体--->" + dtResponse.getBodyToString());
                             body = new Gson().fromJson(dtResponse.getBodyToString(), mRequest. getApi().getEntryType());
                         } catch (Exception e) {
                             body = dtResponse.getBodyToString();

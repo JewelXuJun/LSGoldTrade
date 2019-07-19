@@ -17,8 +17,10 @@ import com.jme.lsgoldtrade.config.User;
 
 public class TradingBox extends RelativeLayout {
 
-    private Boolean isShow = false;
+    private Boolean bShow = false;
+
     private static final int TRANSLATE_DURATION_MILLIS = 300;
+
     private final Interpolator mInterpolator = new AccelerateDecelerateInterpolator();
 
     public TradingBox(Context context) {
@@ -27,6 +29,7 @@ public class TradingBox extends RelativeLayout {
 
     public TradingBox(Context context, AttributeSet attrs) {
         super(context, attrs);
+
         initView(context);
     }
 
@@ -35,60 +38,50 @@ public class TradingBox extends RelativeLayout {
     }
 
     private void initView(Context context) {
-        //加载视图的布局
         View view = View.inflate(context, R.layout.view_trading_box, this);
         ImageView tranding = view.findViewById(R.id.tranding);
         ImageView cancel_tranding = view.findViewById(R.id.cancel_tranding);
+
         show();
 
-        tranding.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (!isShow) {
-                    show();
+        tranding.setOnClickListener((v) -> {
+            if (!bShow) {
+                show();
+            } else {
+                if (User.getInstance().isLogin() && !TextUtils.isEmpty(User.getInstance().getToken())) {
+//                    if (TextUtils.isEmpty(User.getInstance().getAccountID()))
+                        RxBus.getInstance().post(Constants.RxBusConst.RXBUS_TRADEFRAGMENT, null);
+//                    else
+//                        ARouter.getInstance().build(Constants.ARouterUriConst.TRADINGBOX).navigation();
                 } else {
-                    if (User.getInstance().isLogin() && !TextUtils.isEmpty(User.getInstance().getToken())) {
-                        if (TextUtils.isEmpty(User.getInstance().getAccountID())) {
-                            RxBus.getInstance().post(Constants.RxBusConst.RXBUS_TRADEFRAGMENT, null);
-                        } else {
-                            ARouter.getInstance()
-                                    .build(Constants.ARouterUriConst.TRADINGBOX)
-                                    .navigation();
-                        }
-                    } else {
-                        ARouter.getInstance()
-                                .build(Constants.ARouterUriConst.ACCOUNTLOGIN)
-                                .navigation();
-                    }
+                    ARouter.getInstance().build(Constants.ARouterUriConst.ACCOUNTLOGIN).navigation();
                 }
             }
         });
 
-        cancel_tranding.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                hide();
-            }
-        });
+        cancel_tranding.setOnClickListener((v) -> hide());
     }
 
     public void show() {
-        if (!isShow) {
-            isShow = true;
+        if (!bShow) {
+            bShow = true;
+
             toggle();
         }
     }
+
     public void hide() {
-        if (isShow) {
-            isShow = false;
+        if (bShow) {
+            bShow = false;
+
             toggle();
         }
     }
+
     private void toggle() {
         int width = getWidth();
-        int translationX = isShow ? 0 : width / 2;
-        animate().setInterpolator(mInterpolator)
-                .setDuration(TRANSLATE_DURATION_MILLIS)
-                .translationX(translationX);
+        int translationX = bShow ? 0 : width / 2;
+
+        animate().setInterpolator(mInterpolator).setDuration(TRANSLATE_DURATION_MILLIS).translationX(translationX);
     }
 }
