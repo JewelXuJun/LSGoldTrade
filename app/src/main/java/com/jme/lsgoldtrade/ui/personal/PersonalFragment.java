@@ -137,6 +137,18 @@ public class PersonalFragment extends JMEBaseFragment {
                 ARouter.getInstance().build(Constants.ARouterUriConst.NEWSCENTERACTIVITY).navigation();
         }
 
+        public void onClickFastManagement() {
+            ARouter.getInstance()
+                    .build(Constants.ARouterUriConst.FASTENTRY)
+                    .navigation();
+        }
+
+        public void onClickSubscribe() {
+            ARouter.getInstance()
+                    .build(Constants.ARouterUriConst.TRADINGBOX)
+                    .navigation();
+        }
+
         public void onClickShare() {
             showShortToast(R.string.personal_expect);
         }
@@ -150,18 +162,6 @@ public class PersonalFragment extends JMEBaseFragment {
         public void onClickSeeting() {
             ARouter.getInstance()
                     .build(Constants.ARouterUriConst.SETTING)
-                    .navigation();
-        }
-
-        public void onClickSubscribe() {
-            ARouter.getInstance()
-                    .build(Constants.ARouterUriConst.TRADINGBOX)
-                    .navigation();
-        }
-
-        public void onClickFastManagement() {
-            ARouter.getInstance()
-                    .build(Constants.ARouterUriConst.FASTENTRY)
                     .navigation();
         }
 

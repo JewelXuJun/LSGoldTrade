@@ -68,7 +68,7 @@ public class AboutActivity extends JMEBaseActivity {
 
         public void onClickFeedBack() {
             if (null == mUser || !mUser.isLogin())
-                showNeedLoginDialog();
+                ARouter.getInstance().build(Constants.ARouterUriConst.ACCOUNTLOGIN).navigation();
             else
                 ARouter.getInstance()
                         .build(Constants.ARouterUriConst.FEEDBACK)

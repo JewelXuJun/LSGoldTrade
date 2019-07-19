@@ -40,7 +40,7 @@
                 android:layout_gravity="right|bottom"
                 android:layout_marginRight="@dimen/common_page_margin"
                 android:paddingRight="@dimen/common_page_padding"
-                android:paddingBottom="@dimen/margin_tiny_small"
+                android:paddingBottom="@dimen/common_page_margin"
                 android:textColor="@color/gray"
                 android:textSize="@dimen/common_font_size_exiguity" />
 
