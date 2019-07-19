@@ -22,7 +22,7 @@ public class NewsAdapter extends BaseQuickAdapter<NoticeVo.NoticeBean, BaseViewH
             return;
 
         helper.setText(R.id.tv_title, item.getTitle())
-                .setText(R.id.tv_time, DateUtil.showDateTime(DateUtil.dateToLong(item.getCreateTime())))
+                .setText(R.id.tv_time, item.getCreateTime())
                 .setText(R.id.tv_content, item.getContent());
     }
 }

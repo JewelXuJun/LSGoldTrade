@@ -41,6 +41,7 @@
     <dimen name="width_login_verification_code">90dp</dimen>
     <dimen name="width_market_detail_landscape_close">40dp</dimen>
     <dimen name="width_reset_item">85dp</dimen>
+    <dimen name="width_send">80dp</dimen>
 
     <dimen name="margin_main_page_info">30dp</dimen>
     <dimen name="margin_main_page_market">2.5dp</dimen>

@@ -42,8 +42,6 @@
 
         </LinearLayout>
 
-        <include layout="@layout/item_line_vertical" />
-
         <TextView
             android:id="@+id/tv_content"
             android:layout_width="match_parent"

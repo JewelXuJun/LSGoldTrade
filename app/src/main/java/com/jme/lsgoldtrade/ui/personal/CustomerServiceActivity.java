@@ -6,6 +6,7 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.text.TextUtils;
 import android.view.View;
+import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
@@ -55,8 +56,12 @@ public class CustomerServiceActivity extends JMEBaseActivity {
     @Override
     protected void initView() {
         super.initView();
+
         mBinding = (ActivityCustomerServiceBinding) mBindingUtil;
-        initToolbar("在线客服", true);
+
+        initToolbar(R.string.personal_customer_service, true);
+
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
 
         questAdapter = new QuestAdapter(mContext, R.layout.item_quest, null);
         mBinding.recyclerViewQuestion.addItemDecoration(new MarginDividerItemDecoration(mContext, LinearLayoutManager.VERTICAL));
@@ -121,6 +126,7 @@ public class CustomerServiceActivity extends JMEBaseActivity {
     @Override
     protected void DataReturn(DTRequest request, Head head, Object response) {
         super.DataReturn(request, head, response);
+
         switch (request.getApi().getName()) {
             case "QuestListVo":
                 if (head.isSuccess()) {
@@ -247,5 +253,12 @@ public class CustomerServiceActivity extends JMEBaseActivity {
     private void hiddenKeyBoard() {
         ((InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE)).hideSoftInputFromWindow(
                 mBinding.etQuestion.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+
+        hiddenKeyBoard();
     }
 }
