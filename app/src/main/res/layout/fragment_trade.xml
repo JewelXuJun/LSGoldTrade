@@ -52,67 +52,61 @@
         </RelativeLayout>
 
         <LinearLayout
-            android:id="@+id/ll_no_login"
+            android:id="@+id/layout_no_login"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical"
-            >
+            android:orientation="vertical">
 
             <ImageView
                 android:id="@+id/iv_top_pic"
                 android:layout_width="match_parent"
                 android:layout_height="130dp"
-                android:scaleType="centerCrop"
-                />
+                android:scaleType="centerCrop" />
 
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:scaleType="centerCrop"
                 android:background="@mipmap/trading_no_login"
-                />
+                android:scaleType="centerCrop" />
 
             <Button
                 android:id="@+id/btn_kaihu"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/height_login_btn"
-                android:layout_marginTop="@dimen/margin_main_page_info"
                 android:layout_marginLeft="35dp"
+                android:layout_marginTop="@dimen/margin_main_page_info"
                 android:layout_marginRight="35dp"
                 android:background="@drawable/bg_btn_blue_solid"
+                android:onClick="@{() -> handlers.onClickKaiHu()}"
                 android:text="免费开户"
                 android:textColor="@color/white"
-                android:textSize="@dimen/common_font_size"
-                android:onClick="@{() -> handlers.onClickKaiHu()}"
-                />
+                android:textSize="@dimen/common_font_size" />
 
             <TextView
                 android:id="@+id/kaihujiaocheng"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="@dimen/sp_14"
                 android:layout_gravity="center"
                 android:layout_marginTop="15dp"
                 android:onClick="@{() -> handlers.onClickKaiHuJiaoCheng()}"
-                />
+                android:textSize="@dimen/sp_14" />
 
             <TextView
                 android:id="@+id/bangding"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="已有黄金账号，去绑定"
-                android:textSize="@dimen/sp_18"
-                android:textColor="@color/color_0080ff"
-                android:layout_marginTop="20dp"
                 android:layout_gravity="center"
-                android:gravity="center"
-                android:background="@drawable/bg_btn_blue_stroke"
                 android:layout_marginLeft="35dp"
+                android:layout_marginTop="20dp"
                 android:layout_marginRight="35dp"
+                android:background="@drawable/bg_btn_blue_stroke"
+                android:gravity="center"
+                android:onClick="@{() -> handlers.onClickBangDing()}"
                 android:paddingTop="13dp"
                 android:paddingBottom="13dp"
-                android:onClick="@{() -> handlers.onClickBangDing()}"
-                />
+                android:text="已有黄金账号，去绑定"
+                android:textColor="@color/color_0080ff"
+                android:textSize="@dimen/sp_18" />
 
         </LinearLayout>
 
@@ -120,8 +114,7 @@
             android:id="@+id/ll_login"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical"
-            >
+            android:orientation="vertical">
 
             <android.support.design.widget.TabLayout
                 android:id="@+id/tablayout"
