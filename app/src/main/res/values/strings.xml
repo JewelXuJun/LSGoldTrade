@@ -234,6 +234,8 @@
     <string name="personal_customer_service_quesiont_title">相关问题</string>
     <string name="personal_customer_service_can_help">您好，请问有什么可以帮您？</string>
     <string name="personal_customer_service_personal">人工客服</string>
+    <string name="personal_customer_service_guess">猜您想问</string>
+    <string name="personal_customer_service_change">换一组</string>
 
     <!-- News -->
     <string name="news_title">消息中心</string>

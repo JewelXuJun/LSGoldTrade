@@ -53,60 +53,62 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textColor="@color/black"
                         android:text="@string/personal_customer_service_can_help"
+                        android:textColor="@color/black"
                         android:textSize="@dimen/sp_15" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textColor="@color/color_blue_deep"
-                        android:onClick="@{() -> handlers.onClickArtificialCustomerService()}"
                         android:layout_marginLeft="@dimen/common_area_margin_tiny"
+                        android:onClick="@{() -> handlers.onClickArtificialCustomerService()}"
                         android:text="@string/personal_customer_service_personal"
+                        android:textColor="@color/color_blue_deep"
                         android:textSize="@dimen/sp_15" />
 
                 </LinearLayout>
 
                 <LinearLayout
-                    android:layout_width="wrap_content"
+                    android:layout_width="@dimen/width_customer_service_question"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
+                    android:layout_marginLeft="@dimen/common_page_margin"
                     android:background="@drawable/bg_white"
                     android:orientation="vertical">
 
                     <RelativeLayout
-                        android:layout_width="235dp"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:padding="15dp">
+                        android:padding="@dimen/common_page_padding">
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="猜你想问"
+                            android:layout_centerVertical="true"
+                            android:text="@string/personal_customer_service_guess"
                             android:textColor="@color/black"
-                            android:textSize="@dimen/sp_18" />
+                            android:textSize="@dimen/size_normal_middle"
+                            android:textStyle="bold" />
 
                         <TextView
-                            android:id="@+id/change_group"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_alignParentRight="true"
+                            android:layout_centerVertical="true"
                             android:onClick="@{() -> handlers.onClickChangeGroup()}"
-                            android:text="换一组"
+                            android:text="@string/personal_customer_service_change"
                             android:textColor="@color/color_blue_deep"
                             android:textSize="@dimen/sp_15" />
 
                     </RelativeLayout>
 
-                    <include layout="@layout/item_line_vertical" />
+                    <include layout="@layout/item_line_vertical_list" />
 
                     <android.support.v7.widget.RecyclerView
                         android:id="@+id/recyclerView_question"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:nestedScrollingEnabled="false"
-                        android:padding="15dp" />
+                        android:scrollbars="none" />
 
                 </LinearLayout>
 

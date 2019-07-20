@@ -43,6 +43,7 @@
     <dimen name="width_reset_item">85dp</dimen>
     <dimen name="width_send">80dp</dimen>
     <dimen name="width_customer_service_item">90dp</dimen>
+    <dimen name="width_customer_service_question">278dp</dimen>
 
     <dimen name="margin_main_page_info">30dp</dimen>
     <dimen name="margin_main_page_market">2.5dp</dimen>
@@ -64,6 +65,7 @@
     <dimen name="size_small">11sp</dimen>
     <dimen name="size_middle">13sp</dimen>
     <dimen name="size_normal">15sp</dimen>
+    <dimen name="size_normal_middle">17sp</dimen>
     <dimen name="size_big">22sp</dimen>
     <dimen name="size_middle_large">30sp</dimen>
     <dimen name="size_large">34sp</dimen>

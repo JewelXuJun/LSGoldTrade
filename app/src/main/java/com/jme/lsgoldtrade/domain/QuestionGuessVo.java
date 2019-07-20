@@ -2,7 +2,7 @@ package com.jme.lsgoldtrade.domain;
 
 import java.util.List;
 
-public class QuestVo {
+public class QuestionGuessVo {
 
     /**
      * greeting : 您好，请问有什么可以帮您？
@@ -10,7 +10,8 @@ public class QuestVo {
      */
 
     private String greeting;
-    private List<QuestionListBean> questionList;
+
+    private List<QuestionBean> questionList;
 
     public String getGreeting() {
         return greeting;
@@ -20,15 +21,15 @@ public class QuestVo {
         this.greeting = greeting;
     }
 
-    public List<QuestionListBean> getQuestionList() {
+    public List<QuestionBean> getQuestionList() {
         return questionList;
     }
 
-    public void setQuestionList(List<QuestionListBean> questionList) {
+    public void setQuestionList(List<QuestionBean> questionList) {
         this.questionList = questionList;
     }
 
-    public static class QuestionListBean {
+    public static class QuestionBean {
         /**
          * id : 1140541574875430914
          * title : 密码忘记了如何找回？
@@ -40,11 +41,17 @@ public class QuestVo {
          */
 
         private String id;
+
         private String title;
+
         private String anwser;
+
         private String typeId;
+
         private String createTime;
+
         private String isSpread;
+
         private String jumpTxt;
 
         public String getId() {

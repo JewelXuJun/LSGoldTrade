@@ -12,16 +12,13 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.text.TextUtils;
-import android.view.View;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
-import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.jme.common.network.DTRequest;
 import com.jme.common.network.Head;
-import com.jme.common.ui.view.MarginDividerItemDecoration;
 import com.jme.lsgoldtrade.R;
 import com.jme.lsgoldtrade.base.JMEBaseActivity;
 import com.jme.lsgoldtrade.config.AppConfig;
@@ -29,7 +26,7 @@ import com.jme.lsgoldtrade.config.Constants;
 import com.jme.lsgoldtrade.databinding.ActivityCustomerServiceBinding;
 import com.jme.lsgoldtrade.domain.CustomerServiceVo;
 import com.jme.lsgoldtrade.domain.QuestListTypeVo;
-import com.jme.lsgoldtrade.domain.QuestVo;
+import com.jme.lsgoldtrade.domain.QuestionGuessVo;
 import com.jme.lsgoldtrade.domain.QuestionAskVo;
 import com.jme.lsgoldtrade.service.ManagementService;
 
@@ -46,12 +43,9 @@ public class CustomerServiceActivity extends JMEBaseActivity {
     private ActivityCustomerServiceBinding mBinding;
 
     private QuestionTypeAdapter mQuestionTypeAdapter;
+    private QuestionGuessAdapter mQuestionGuessAdapter;
 
     private CustomerServicesAdapter adapter;
-
-    private QuestAdapter questAdapter;
-
-    private List<QuestVo.QuestionListBean> questionList;
 
     private List<QuestionAskVo> list = new ArrayList<>();
 
@@ -73,11 +67,6 @@ public class CustomerServiceActivity extends JMEBaseActivity {
 
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
 
-        questAdapter = new QuestAdapter(mContext, R.layout.item_quest, null);
-        mBinding.recyclerViewQuestion.addItemDecoration(new MarginDividerItemDecoration(mContext, LinearLayoutManager.VERTICAL));
-        mBinding.recyclerViewQuestion.setLayoutManager(new LinearLayoutManager(mContext));
-        mBinding.recyclerViewQuestion.setAdapter(questAdapter);
-
         adapter = new CustomerServicesAdapter(mContext, R.layout.item_customer_service, list);
         mBinding.recyclerView.setLayoutManager(new LinearLayoutManager(mContext));
         mBinding.recyclerView.setAdapter(adapter);
@@ -88,19 +77,15 @@ public class CustomerServiceActivity extends JMEBaseActivity {
         super.initData(savedInstanceState);
 
         mQuestionTypeAdapter = new QuestionTypeAdapter(R.layout.item_question_type, null);
-
         mBinding.recyclerViewQuestionType.setLayoutManager(new GridLayoutManager(this, 4));
         mBinding.recyclerViewQuestionType.setAdapter(mQuestionTypeAdapter);
 
+        mQuestionGuessAdapter = new QuestionGuessAdapter(R.layout.item_question_guess, null);
+        mBinding.recyclerViewQuestion.setLayoutManager(new LinearLayoutManager(mContext));
+        mBinding.recyclerViewQuestion.setAdapter(mQuestionGuessAdapter);
+
         getQuestTypeList();
-    }
-
-    private void getQuestionData() {
-        sendRequest(ManagementService.getInstance().welcome, new HashMap<>(), false);
-    }
-
-    private void getQuestTypeList() {
-        sendRequest(ManagementService.getInstance().questTypeList, new HashMap<>(), true);
+        getGreeting();
     }
 
     @Override
@@ -119,17 +104,13 @@ public class CustomerServiceActivity extends JMEBaseActivity {
                     .navigation();
         });
 
-        questAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                QuestVo.QuestionListBean question = (QuestVo.QuestionListBean) adapter.getItem(position);
+        mQuestionGuessAdapter.setOnItemClickListener((adapter, view, position) -> {
+            QuestionGuessVo.QuestionBean questionBean = (QuestionGuessVo.QuestionBean) adapter.getItem(position);
 
-                if (null == question)
-                    return;
-                HashMap<String, String> hashMap = new HashMap<>();
-                hashMap.put("ask", question.getTitle());
-                sendRequest(ManagementService.getInstance().ask, hashMap, false);
-            }
+            if (null == questionBean)
+                return;
+
+            getAnswerList(questionBean.getTitle());
         });
     }
 
@@ -138,6 +119,13 @@ public class CustomerServiceActivity extends JMEBaseActivity {
         super.initBinding();
 
         mBinding.setHandlers(new ClickHandlers());
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+
+        hiddenKeyBoard();
     }
 
     private void callCustomer() {
@@ -178,6 +166,21 @@ public class CustomerServiceActivity extends JMEBaseActivity {
         }
     }
 
+    private void getQuestTypeList() {
+        sendRequest(ManagementService.getInstance().questTypeList, new HashMap<>(), true);
+    }
+
+    private void getGreeting() {
+        sendRequest(ManagementService.getInstance().getGreeting, new HashMap<>(), false);
+    }
+
+    private void getAnswerList(String title) {
+        HashMap<String, String> hashMap = new HashMap<>();
+        hashMap.put("ask", title);
+
+        sendRequest(ManagementService.getInstance().answerList, hashMap, true);
+    }
+
     @Override
     protected void DataReturn(DTRequest request, Head head, Object response) {
         super.DataReturn(request, head, response);
@@ -195,38 +198,35 @@ public class CustomerServiceActivity extends JMEBaseActivity {
                         e.printStackTrace();
                     }
 
-                    if (null == questListVoList)
-                        return;
-
                     mQuestionTypeAdapter.setNewData(questListVoList);
                 }
+
                 break;
-            case "Welcome":
+            case "GetGreeting":
                 if (head.isSuccess()) {
-                    QuestVo questVo;
+                    QuestionGuessVo questionGuessVo;
+
                     try {
-                        questVo = (QuestVo) response;
+                        questionGuessVo = (QuestionGuessVo) response;
                     } catch (Exception e) {
-                        questVo = null;
+                        questionGuessVo = null;
+
                         e.printStackTrace();
                     }
 
-                    if (null == questVo) {
+                    if (null == questionGuessVo)
                         return;
-                    }
 
-                    if (questionList != null && !questionList.isEmpty())
-                        questionList.clear();
-
-                    questionList = questVo.getQuestionList();
-
-                    questAdapter.setNewData(questVo.getQuestionList());
+                    mQuestionGuessAdapter.setNewData(questionGuessVo.getQuestionList());
                 }
+
                 break;
-            case "Ask":
+            case "AnswerList":
+                hiddenKeyBoard();
+
                 if (head.isSuccess()) {
                     mBinding.etQuestion.setText("");
-                    hiddenKeyBoard();
+
                     List<CustomerServiceVo> value;
                     try {
                         value = (List<CustomerServiceVo>) response;
@@ -266,7 +266,7 @@ public class CustomerServiceActivity extends JMEBaseActivity {
         }
 
         public void onClickChangeGroup() {
-            sendRequest(ManagementService.getInstance().welcome, new HashMap<>(), false);
+            getGreeting();
         }
 
         public void onClickSend() {
@@ -276,7 +276,7 @@ public class CustomerServiceActivity extends JMEBaseActivity {
             }
             HashMap<String, String> hashMap = new HashMap<>();
             hashMap.put("ask", question);
-            sendRequest(ManagementService.getInstance().ask, hashMap, false);
+            sendRequest(ManagementService.getInstance().answerList, hashMap, false);
         }
     }
 
@@ -285,10 +285,4 @@ public class CustomerServiceActivity extends JMEBaseActivity {
                 mBinding.etQuestion.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
     }
 
-    @Override
-    protected void onPause() {
-        super.onPause();
-
-        hiddenKeyBoard();
-    }
 }

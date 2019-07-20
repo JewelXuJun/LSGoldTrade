@@ -18,7 +18,7 @@ import com.jme.lsgoldtrade.domain.IsSubscribeVo;
 import com.jme.lsgoldtrade.domain.MyOrderVo;
 import com.jme.lsgoldtrade.domain.NavigatorVo;
 import com.jme.lsgoldtrade.domain.QuestListTypeVo;
-import com.jme.lsgoldtrade.domain.QuestVo;
+import com.jme.lsgoldtrade.domain.QuestionGuessVo;
 import com.jme.lsgoldtrade.domain.SaveNavigatorVo;
 import com.jme.lsgoldtrade.domain.StrategyVo;
 import com.jme.lsgoldtrade.domain.SubscribeVo;
@@ -249,10 +249,10 @@ public class ManagementService extends IService<ManagementApi> {
         }
     };
 
-    public API welcome = new API<QuestVo>("Welcome") {
+    public API getGreeting = new API<QuestionGuessVo>("GetGreeting") {
         @Override
         public Call<DTResponse> request(HashMap<String, String> params) {
-            return mApi.welcome(params);
+            return mApi.getGreeting(params);
         }
     };
 
@@ -263,10 +263,10 @@ public class ManagementService extends IService<ManagementApi> {
         }
     };
 
-    public API ask = new API<List<CustomerServiceVo>>("Ask") {
+    public API answerList = new API<List<CustomerServiceVo>>("AnswerList") {
         @Override
         public Call<DTResponse> request(HashMap<String, String> params) {
-            return mApi.ask(params);
+            return mApi.answerList(params);
         }
     };
 

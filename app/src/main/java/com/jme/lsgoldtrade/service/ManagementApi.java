@@ -82,13 +82,13 @@ public interface ManagementApi {
     Call<DTResponse> diyanfangxiang(@QueryMap Map<String, String> map);
 
     @GET("/tjsmanage/infoapi/v1/android/customerService/getGreeting")
-    Call<DTResponse> welcome(@QueryMap Map<String, String> map);
+    Call<DTResponse> getGreeting(@QueryMap Map<String, String> map);
 
     @GET("/tjsmanage/infoapi/v1/android/questionType/list")
     Call<DTResponse> questTypeList(@QueryMap Map<String, String> map);
 
     @GET("/tjsmanage/infoapi/v1/android/customerService/answerList")
-    Call<DTResponse> ask(@QueryMap Map<String, String> map);
+    Call<DTResponse> answerList(@QueryMap Map<String, String> map);
 
     @GET("/tjsmanage/infoapi/v1/android/questionType/getQuestionListByType")
     Call<DTResponse> getQuestionListByType(@QueryMap Map<String, String> map);
