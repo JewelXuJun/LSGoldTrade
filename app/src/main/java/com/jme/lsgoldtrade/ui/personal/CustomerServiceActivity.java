@@ -7,6 +7,7 @@ import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.GridLayoutManager;
@@ -14,6 +15,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.text.TextUtils;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.ScrollView;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
@@ -262,8 +264,10 @@ public class CustomerServiceActivity extends JMEBaseActivity {
                     }
 
                     mQuestionAnswerAdapter.notifyDataSetChanged();
+
                     mBinding.recyclerViewAnswer.scrollToPosition(mQuestionAnswerAdapter.getItemCount() - 1);
 
+                    new Handler().post(() -> mBinding.nestedScrollView.fullScroll(ScrollView.FOCUS_DOWN));
                 }
 
                 break;
