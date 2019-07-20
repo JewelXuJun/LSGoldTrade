@@ -42,7 +42,7 @@
             android:layout_height="wrap_content"
             android:text="开通成功!"
             android:textSize="@dimen/sp_18"
-            android:textColor="@color/color_000"
+            android:textColor="@color/black"
             android:layout_gravity="center"
             android:layout_marginTop="10dp"
             android:layout_marginBottom="30dp"

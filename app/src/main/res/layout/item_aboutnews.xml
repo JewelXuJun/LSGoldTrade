@@ -8,7 +8,7 @@
         android:id="@+id/mytextview"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        more:textColor="@color/color_4d4d4d"
+        more:textColor="@color/color_text_normal"
         more:maxLine="4"
         more:textSize="@dimen/sp_14"
         android:layout_marginLeft="15dp"

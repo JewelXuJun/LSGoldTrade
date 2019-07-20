@@ -174,7 +174,7 @@
                     android:layout_height="wrap_content"
                     android:text="交易匣子"
                     android:textSize="@dimen/sp_15"
-                    android:textColor="@color/color_000"
+                    android:textColor="@color/black"
                     />
 
                 <TextView
@@ -182,7 +182,7 @@
                     android:layout_height="wrap_content"
                     android:text="把握非农，一键下单"
                     android:textSize="@dimen/sp_14"
-                    android:textColor="@color/color_000"
+                    android:textColor="@color/black"
                     />
 
             </LinearLayout>
@@ -230,7 +230,7 @@
                     android:layout_height="wrap_content"
                     android:text="委托风控"
                     android:textSize="@dimen/sp_15"
-                    android:textColor="@color/color_000"
+                    android:textColor="@color/black"
                     />
 
                 <TextView
@@ -238,7 +238,7 @@
                     android:layout_height="wrap_content"
                     android:text="实时监控，交易安全"
                     android:textSize="@dimen/sp_14"
-                    android:textColor="@color/color_000"
+                    android:textColor="@color/black"
                     />
 
             </LinearLayout>
@@ -287,7 +287,7 @@
                     android:layout_height="wrap_content"
                     android:text="策略共建服务"
                     android:textSize="@dimen/sp_15"
-                    android:textColor="@color/color_000"
+                    android:textColor="@color/black"
                     />
 
                 <TextView
@@ -295,7 +295,7 @@
                     android:layout_height="wrap_content"
                     android:text="黄金交易实战、技术分析、指标解读、沙盘实战等系列服务"
                     android:textSize="@dimen/sp_14"
-                    android:textColor="@color/color_000"
+                    android:textColor="@color/black"
                     />
 
             </LinearLayout>

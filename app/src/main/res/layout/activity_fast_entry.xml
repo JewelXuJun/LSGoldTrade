@@ -42,7 +42,7 @@
                     android:layout_height="wrap_content"
                     android:text="快捷入口管理"
                     android:textSize="@dimen/sp_18"
-                    android:textColor="@color/color_000"
+                    android:textColor="@color/black"
                     android:layout_centerInParent="true"
                     />
 

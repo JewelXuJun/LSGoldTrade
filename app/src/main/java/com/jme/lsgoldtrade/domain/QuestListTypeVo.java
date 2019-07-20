@@ -1,6 +1,6 @@
 package com.jme.lsgoldtrade.domain;
 
-public class QuestListVo {
+public class QuestListTypeVo {
 
     /**
      * id : 1
@@ -10,8 +10,11 @@ public class QuestListVo {
      */
 
     private String id;
+
     private String name;
+
     private double sort;
+
     private String pic;
 
     public String getId() {

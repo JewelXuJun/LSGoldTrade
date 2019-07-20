@@ -101,7 +101,7 @@
                             android:layout_weight="1"
                             android:text="基本面分析"
                             android:textSize="@dimen/sp_14"
-                            android:textColor="@color/color_000"
+                            android:textColor="@color/black"
                             android:gravity="center_vertical"
                             android:drawableLeft="@drawable/drawleft_blue"
                             android:drawablePadding="5dp"
@@ -130,7 +130,7 @@
                         android:id="@+id/jibenmian"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:textColor="@color/color_4d4d4d"
+                        android:textColor="@color/color_text_normal"
                         android:textSize="@dimen/sp_14"
                         android:layout_marginLeft="15dp"
                         android:layout_marginTop="15dp"
@@ -145,7 +145,7 @@
                         android:layout_height="44dp"
                         android:text="分析师观点"
                         android:textSize="@dimen/sp_14"
-                        android:textColor="@color/color_000"
+                        android:textColor="@color/black"
                         android:gravity="center_vertical"
                         android:drawableLeft="@drawable/drawleft_blue"
                         android:drawablePadding="5dp"
@@ -158,7 +158,7 @@
                         android:id="@+id/fenxishi"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:textColor="@color/color_4d4d4d"
+                        android:textColor="@color/color_text_normal"
                         android:textSize="@dimen/sp_14"
                         android:layout_marginLeft="15dp"
                         android:layout_marginTop="15dp"
@@ -188,7 +188,7 @@
                                 android:layout_height="wrap_content"
                                 android:text="预测交易品种"
                                 android:textSize="@dimen/sp_14"
-                                android:textColor="@color/color_000"
+                                android:textColor="@color/black"
                                 />
 
                             <TextView
@@ -197,7 +197,7 @@
                                 android:layout_height="wrap_content"
                                 android:text="Au(T+D)"
                                 android:textSize="@dimen/sp_14"
-                                android:textColor="@color/color_000"
+                                android:textColor="@color/black"
                                 />
 
                         </LinearLayout>
@@ -215,7 +215,7 @@
                                 android:layout_height="wrap_content"
                                 android:text="预测方向"
                                 android:textSize="@dimen/sp_14"
-                                android:textColor="@color/color_000"
+                                android:textColor="@color/black"
                                 />
 
                             <TextView
@@ -224,7 +224,7 @@
                                 android:layout_height="wrap_content"
                                 android:text="多"
                                 android:textSize="@dimen/sp_14"
-                                android:textColor="@color/color_000"
+                                android:textColor="@color/black"
                                 />
 
                         </LinearLayout>
@@ -245,7 +245,7 @@
                             android:layout_weight="1"
                             android:text="投票"
                             android:textSize="@dimen/sp_14"
-                            android:textColor="@color/color_000"
+                            android:textColor="@color/black"
                             android:gravity="center_vertical"
                             android:drawableLeft="@drawable/drawleft_blue"
                             android:drawablePadding="5dp"
@@ -266,7 +266,7 @@
                                 android:layout_marginRight="5dp"
                                 android:text="离结束还有:"
                                 android:textSize="@dimen/sp_14"
-                                android:textColor="@color/color_000"
+                                android:textColor="@color/black"
                                 />
 
                             <TextView
@@ -277,14 +277,14 @@
                                 android:layout_centerVertical="true"
                                 android:gravity="center"
                                 android:background="@drawable/panicbuy_time"
-                                android:textColor="@color/color_000"
+                                android:textColor="@color/black"
                                 android:textSize="@dimen/sp_14" />
 
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text=":"
-                                android:textColor="@color/color_000"
+                                android:textColor="@color/black"
                                 android:layout_marginLeft="5dp"
                                 android:layout_marginRight="5dp"
                                 />
@@ -297,14 +297,14 @@
                                 android:layout_centerVertical="true"
                                 android:gravity="center"
                                 android:background="@drawable/panicbuy_time"
-                                android:textColor="@color/color_000"
+                                android:textColor="@color/black"
                                 android:textSize="@dimen/sp_14" />
 
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text=":"
-                                android:textColor="@color/color_000"
+                                android:textColor="@color/black"
                                 android:layout_marginLeft="5dp"
                                 android:layout_marginRight="5dp"
                                 />
@@ -316,7 +316,7 @@
                                 android:layout_centerHorizontal="true"
                                 android:layout_centerVertical="true"
                                 android:gravity="center"
-                                android:textColor="@color/color_000"
+                                android:textColor="@color/black"
                                 android:background="@drawable/panicbuy_time"
                                 android:textSize="@dimen/sp_14" />
 
@@ -324,7 +324,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text=":"
-                                android:textColor="@color/color_000"
+                                android:textColor="@color/black"
                                 android:layout_marginLeft="5dp"
                                 android:layout_marginRight="5dp"
                                 />
@@ -337,7 +337,7 @@
                                 android:layout_centerVertical="true"
                                 android:gravity="center"
                                 android:background="@drawable/panicbuy_time"
-                                android:textColor="@color/color_000"
+                                android:textColor="@color/black"
                                 android:textSize="@dimen/sp_14" />
 
                         </LinearLayout>
@@ -412,7 +412,7 @@
                                     android:layout_height="wrap_content"
                                     android:text="111票"
                                     android:textSize="@dimen/sp_14"
-                                    android:textColor="@color/color_000"
+                                    android:textColor="@color/black"
                                     android:layout_marginBottom="3dp"
                                     />
 
@@ -442,7 +442,7 @@
                                     android:layout_height="wrap_content"
                                     android:text="25票"
                                     android:textSize="@dimen/sp_14"
-                                    android:textColor="@color/color_000"
+                                    android:textColor="@color/black"
                                     android:layout_marginBottom="3dp"
                                     />
 
@@ -508,7 +508,7 @@
                                         android:layout_height="wrap_content"
                                         android:text="2019/3/20"
                                         android:textSize="@dimen/sp_14"
-                                        android:textColor="@color/color_000"
+                                        android:textColor="@color/black"
                                         />
 
                                     <TextView
@@ -517,7 +517,7 @@
                                         android:layout_height="wrap_content"
                                         android:text="07:30:00"
                                         android:textSize="@dimen/sp_18"
-                                        android:textColor="@color/color_000"
+                                        android:textColor="@color/black"
                                         />
 
                                 </LinearLayout>
@@ -526,7 +526,7 @@
                                     android:layout_width="30dp"
                                     android:layout_height="1dp"
                                     android:layout_gravity="center"
-                                    android:background="@color/color_000"
+                                    android:background="@color/black"
                                     android:layout_marginLeft="15dp"
                                     android:layout_marginRight="15dp"
                                     />
@@ -543,7 +543,7 @@
                                         android:layout_height="wrap_content"
                                         android:text="2019/3/20"
                                         android:textSize="@dimen/sp_14"
-                                        android:textColor="@color/color_000"
+                                        android:textColor="@color/black"
                                         />
 
                                     <TextView
@@ -552,7 +552,7 @@
                                         android:layout_height="wrap_content"
                                         android:text="07:59:59"
                                         android:textSize="@dimen/sp_18"
-                                        android:textColor="@color/color_000"
+                                        android:textColor="@color/black"
                                         />
 
                                 </LinearLayout>
@@ -598,7 +598,7 @@
                                         android:layout_height="wrap_content"
                                         android:text="2019/3/20"
                                         android:textSize="@dimen/sp_14"
-                                        android:textColor="@color/color_000"
+                                        android:textColor="@color/black"
                                         />
 
                                     <TextView
@@ -607,7 +607,7 @@
                                         android:layout_height="wrap_content"
                                         android:text="07:30:00"
                                         android:textSize="@dimen/sp_18"
-                                        android:textColor="@color/color_000"
+                                        android:textColor="@color/black"
                                         />
 
                                 </LinearLayout>
@@ -616,7 +616,7 @@
                                     android:layout_width="30dp"
                                     android:layout_height="1dp"
                                     android:layout_gravity="center"
-                                    android:background="@color/color_000"
+                                    android:background="@color/black"
                                     android:layout_marginLeft="15dp"
                                     android:layout_marginRight="15dp"
                                     />
@@ -633,7 +633,7 @@
                                         android:layout_height="wrap_content"
                                         android:text="2019/3/20"
                                         android:textSize="@dimen/sp_14"
-                                        android:textColor="@color/color_000"
+                                        android:textColor="@color/black"
                                         />
 
                                     <TextView
@@ -642,7 +642,7 @@
                                         android:layout_height="wrap_content"
                                         android:text="07:59:59"
                                         android:textSize="@dimen/sp_18"
-                                        android:textColor="@color/color_000"
+                                        android:textColor="@color/black"
                                         />
 
                                 </LinearLayout>

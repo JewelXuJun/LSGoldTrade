@@ -24,7 +24,7 @@
                 android:layout_height="50dp"
                 android:orientation="horizontal"
                 android:gravity="center"
-                android:background="@color/color_f5f5f5"
+                android:background="@color/color_bg_img"
                 >
 
                 <ImageView
@@ -135,7 +135,7 @@
                 <View
                     android:layout_width="2dp"
                     android:layout_height="match_parent"
-                    android:background="@color/color_f5f5f5"
+                    android:background="@color/color_bg_img"
                     />
 
                 <ImageView
@@ -149,7 +149,7 @@
                 <View
                     android:layout_width="2dp"
                     android:layout_height="match_parent"
-                    android:background="@color/color_f5f5f5"
+                    android:background="@color/color_bg_img"
                     />
 
                 <ImageView
@@ -163,7 +163,7 @@
                 <View
                     android:layout_width="2dp"
                     android:layout_height="match_parent"
-                    android:background="@color/color_f5f5f5"
+                    android:background="@color/color_bg_img"
                     />
 
                 <ImageView
@@ -177,7 +177,7 @@
                 <View
                     android:layout_width="2dp"
                     android:layout_height="match_parent"
-                    android:background="@color/color_f5f5f5"
+                    android:background="@color/color_bg_img"
                     />
 
                 <ImageView
@@ -221,7 +221,7 @@
                 <View
                     android:layout_width="2dp"
                     android:layout_height="match_parent"
-                    android:background="@color/color_f5f5f5"
+                    android:background="@color/color_bg_img"
                     />
 
                 <ImageView
@@ -235,7 +235,7 @@
                 <View
                     android:layout_width="2dp"
                     android:layout_height="match_parent"
-                    android:background="@color/color_f5f5f5"
+                    android:background="@color/color_bg_img"
                     />
 
                 <ImageView
@@ -249,7 +249,7 @@
                 <View
                     android:layout_width="2dp"
                     android:layout_height="match_parent"
-                    android:background="@color/color_f5f5f5"
+                    android:background="@color/color_bg_img"
                     />
 
                 <ImageView
@@ -263,7 +263,7 @@
                 <View
                     android:layout_width="2dp"
                     android:layout_height="match_parent"
-                    android:background="@color/color_f5f5f5"
+                    android:background="@color/color_bg_img"
                     />
 
                 <ImageView
@@ -292,7 +292,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textSize="@dimen/sp_15"
-                android:textColor="@color/color_4d4d4d"
+                android:textColor="@color/color_text_normal"
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
                 android:lineSpacingExtra="3dp"

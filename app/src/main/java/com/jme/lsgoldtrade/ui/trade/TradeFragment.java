@@ -82,7 +82,7 @@ public class TradeFragment extends JMEBaseFragment {
             mBinding.layoutNoLogin.setVisibility(View.VISIBLE);
             mBinding.kaihujiaocheng.setText(new SpanUtils(mContext)
                     .append("开户有疑问?来看看")
-                    .setForegroundColor(getResources().getColor(R.color.color_000))
+                    .setForegroundColor(getResources().getColor(R.color.black))
                     .append("开户教程")
                     .setForegroundColor(getResources().getColor(R.color.color_0080ff))
                     .create());

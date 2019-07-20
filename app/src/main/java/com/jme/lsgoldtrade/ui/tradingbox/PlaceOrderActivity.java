@@ -504,7 +504,7 @@ public class PlaceOrderActivity extends JMEBaseActivity {
             enoughPrice = false;
             mBinding.enoughPrice.setText(new SpanUtils(this)
                     .append("预计可用金额不足，请先")
-                    .setForegroundColor(getResources().getColor(R.color.color_000))
+                    .setForegroundColor(getResources().getColor(R.color.black))
                     .append("入金")
                     .setForegroundColor(getResources().getColor(R.color.color_0080ff))
                     .create());

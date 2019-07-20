@@ -17,7 +17,7 @@
         android:layout_height="wrap_content"
         android:text="分享"
         android:textSize="@dimen/sp_16"
-        android:textColor="@color/color_4d4d4d"
+        android:textColor="@color/color_text_normal"
         android:layout_marginBottom="10dp"
         android:layout_marginTop="10dp"
         />
@@ -34,7 +34,7 @@
         android:layout_height="wrap_content"
         android:text="历史匣子"
         android:textSize="@dimen/sp_16"
-        android:textColor="@color/color_4d4d4d"
+        android:textColor="@color/color_text_normal"
         android:layout_marginBottom="10dp"
         android:layout_marginTop="10dp"
         />
@@ -51,7 +51,7 @@
         android:layout_height="wrap_content"
         android:text="我的订单"
         android:textSize="@dimen/sp_16"
-        android:textColor="@color/color_4d4d4d"
+        android:textColor="@color/color_text_normal"
         android:layout_marginBottom="10dp"
         android:layout_marginTop="10dp"
         />
@@ -68,7 +68,7 @@
         android:layout_height="wrap_content"
         android:text="使用攻略"
         android:textSize="@dimen/sp_16"
-        android:textColor="@color/color_4d4d4d"
+        android:textColor="@color/color_text_normal"
         android:layout_marginBottom="10dp"
         android:layout_marginTop="10dp"
         />
@@ -85,7 +85,7 @@
         android:layout_height="wrap_content"
         android:text="常见问题"
         android:textSize="@dimen/sp_16"
-        android:textColor="@color/color_4d4d4d"
+        android:textColor="@color/color_text_normal"
         android:layout_marginBottom="10dp"
         android:layout_marginTop="10dp"
         />

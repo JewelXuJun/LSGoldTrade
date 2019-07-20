@@ -85,13 +85,13 @@ public interface ManagementApi {
     Call<DTResponse> welcome(@QueryMap Map<String, String> map);
 
     @GET("/tjsmanage/infoapi/v1/android/questionType/list")
-    Call<DTResponse> questList(@QueryMap Map<String, String> map);
+    Call<DTResponse> questTypeList(@QueryMap Map<String, String> map);
 
     @GET("/tjsmanage/infoapi/v1/android/customerService/answerList")
     Call<DTResponse> ask(@QueryMap Map<String, String> map);
 
     @GET("/tjsmanage/infoapi/v1/android/questionType/getQuestionListByType")
-    Call<DTResponse> askList(@QueryMap Map<String, String> map);
+    Call<DTResponse> getQuestionListByType(@QueryMap Map<String, String> map);
 
     @GET("/tjsmanage/infoapi/v1/android/getMaxTradeNum")
     Call<DTResponse> getMaxTradeNum(@QueryMap Map<String, String> map);

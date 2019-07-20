@@ -76,7 +76,7 @@
                 android:layout_height="wrap_content"
                 android:text="提现方式"
                 android:textSize="@dimen/sp_14"
-                android:textColor="@color/color_4d4d4d"
+                android:textColor="@color/color_text_normal"
                 android:layout_gravity="center_vertical"
                 />
 
@@ -97,7 +97,7 @@
             android:layout_height="30dp"
             android:text="预留收款账户信息"
             android:textSize="13dp"
-            android:textColor="@color/color_4d4d4d"
+            android:textColor="@color/color_text_normal"
             android:paddingLeft="25dp"
             android:gravity="center_vertical"
             android:background="@color/color_fafafa"
@@ -119,7 +119,7 @@
                 android:layout_height="wrap_content"
                 android:text="姓名"
                 android:textSize="@dimen/sp_14"
-                android:textColor="@color/color_4d4d4d"
+                android:textColor="@color/color_text_normal"
                 android:layout_gravity="center_vertical"
                 />
 
@@ -155,7 +155,7 @@
                 android:layout_height="wrap_content"
                 android:text="银行卡号"
                 android:textSize="@dimen/sp_14"
-                android:textColor="@color/color_4d4d4d"
+                android:textColor="@color/color_text_normal"
                 android:layout_gravity="center_vertical"
                 />
 
@@ -191,7 +191,7 @@
                 android:layout_height="wrap_content"
                 android:text="开户行"
                 android:textSize="@dimen/sp_14"
-                android:textColor="@color/color_4d4d4d"
+                android:textColor="@color/color_text_normal"
                 android:layout_gravity="center_vertical"
                 />
 
@@ -218,7 +218,7 @@
             android:layout_height="60dp"
             android:text="说明:提现将按照提现金额的0.1%收取手续费"
             android:textSize="@dimen/sp_14"
-            android:textColor="@color/color_4d4d4d"
+            android:textColor="@color/color_text_normal"
             android:layout_gravity="center"
             android:gravity="center"
             />

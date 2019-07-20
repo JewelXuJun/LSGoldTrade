@@ -1,6 +1,6 @@
 package com.jme.lsgoldtrade.domain;
 
-public class AskListVo {
+public class QuestionVo {
 
     /**
      * id : 1140541574867042305
@@ -13,11 +13,17 @@ public class AskListVo {
      */
 
     private String id;
+
     private String title;
+
     private String anwser;
+
     private double typeId;
+
     private String createTime;
+
     private String jumpTxt;
+
     private String isSpread;
 
     public String getId() {

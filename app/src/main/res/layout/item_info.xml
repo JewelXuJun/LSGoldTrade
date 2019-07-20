@@ -70,7 +70,7 @@
             android:id="@+id/celvecontent"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColor="@color/color_4d4d4d"
+            android:textColor="@color/color_text_normal"
             android:textSize="@dimen/sp_14"
             android:layout_marginTop="@dimen/common_area_margin_middle"
             />

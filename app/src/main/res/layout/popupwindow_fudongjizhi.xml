@@ -4,7 +4,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/bg_yujing_white"
+        android:background="@drawable/bg_white"
         android:orientation="vertical">
 
         <TextView
@@ -32,7 +32,7 @@
             android:layout_height="wrap_content"
             android:text=""
             android:textSize="@dimen/sp_14"
-            android:textColor="@color/color_4d4d4d"
+            android:textColor="@color/color_text_normal"
             android:layout_below="@id/title"
             android:layout_margin="15dp"
             />

@@ -6,7 +6,7 @@ import com.jme.common.network.IService;
 import com.jme.lsgoldtrade.config.Constants;
 import com.jme.lsgoldtrade.config.User;
 import com.jme.lsgoldtrade.domain.AdvertisementVo;
-import com.jme.lsgoldtrade.domain.AskListVo;
+import com.jme.lsgoldtrade.domain.QuestionVo;
 import com.jme.lsgoldtrade.domain.BannerVo;
 import com.jme.lsgoldtrade.domain.ChannelVo;
 import com.jme.lsgoldtrade.domain.CustomerServiceVo;
@@ -17,7 +17,7 @@ import com.jme.lsgoldtrade.domain.InfoVo;
 import com.jme.lsgoldtrade.domain.IsSubscribeVo;
 import com.jme.lsgoldtrade.domain.MyOrderVo;
 import com.jme.lsgoldtrade.domain.NavigatorVo;
-import com.jme.lsgoldtrade.domain.QuestListVo;
+import com.jme.lsgoldtrade.domain.QuestListTypeVo;
 import com.jme.lsgoldtrade.domain.QuestVo;
 import com.jme.lsgoldtrade.domain.SaveNavigatorVo;
 import com.jme.lsgoldtrade.domain.StrategyVo;
@@ -256,10 +256,10 @@ public class ManagementService extends IService<ManagementApi> {
         }
     };
 
-    public API questList = new API<List<QuestListVo>>("QuestListVo") {
+    public API questTypeList = new API<List<QuestListTypeVo>>("QuestTypeList") {
         @Override
         public Call<DTResponse> request(HashMap<String, String> params) {
-            return mApi.questList(params);
+            return mApi.questTypeList(params);
         }
     };
 
@@ -270,10 +270,10 @@ public class ManagementService extends IService<ManagementApi> {
         }
     };
 
-    public API askList = new API<List<AskListVo>>("AskList") {
+    public API getQuestionListByType = new API<List<QuestionVo>>("GetQuestionListByType") {
         @Override
         public Call<DTResponse> request(HashMap<String, String> params) {
-            return mApi.askList(params);
+            return mApi.getQuestionListByType(params);
         }
     };
 

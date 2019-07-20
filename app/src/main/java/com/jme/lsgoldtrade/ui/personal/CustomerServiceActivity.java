@@ -1,7 +1,14 @@
 package com.jme.lsgoldtrade.ui.personal;
 
+import android.Manifest;
 import android.content.Context;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.text.TextUtils;
@@ -20,11 +27,10 @@ import com.jme.lsgoldtrade.base.JMEBaseActivity;
 import com.jme.lsgoldtrade.config.Constants;
 import com.jme.lsgoldtrade.databinding.ActivityCustomerServiceBinding;
 import com.jme.lsgoldtrade.domain.CustomerServiceVo;
-import com.jme.lsgoldtrade.domain.QuestListVo;
+import com.jme.lsgoldtrade.domain.QuestListTypeVo;
 import com.jme.lsgoldtrade.domain.QuestVo;
 import com.jme.lsgoldtrade.domain.QuestionAskVo;
 import com.jme.lsgoldtrade.service.ManagementService;
-import com.jme.lsgoldtrade.ui.mainpage.AboutQuestAdapter;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -38,6 +44,8 @@ public class CustomerServiceActivity extends JMEBaseActivity {
 
     private ActivityCustomerServiceBinding mBinding;
 
+    private QuestionTypeAdapter mQuestionTypeAdapter;
+
     private CustomerServicesAdapter adapter;
 
     private QuestAdapter questAdapter;
@@ -46,7 +54,8 @@ public class CustomerServiceActivity extends JMEBaseActivity {
 
     private List<QuestionAskVo> list = new ArrayList<>();
 
-    private AboutQuestAdapter mAdapter;
+
+    private static final int REQUEST_CODE_ASK_CALL_PHONE = 0x126;
 
     @Override
     protected int getContentViewId() {
@@ -71,28 +80,44 @@ public class CustomerServiceActivity extends JMEBaseActivity {
         adapter = new CustomerServicesAdapter(mContext, R.layout.item_customer_service, list);
         mBinding.recyclerView.setLayoutManager(new LinearLayoutManager(mContext));
         mBinding.recyclerView.setAdapter(adapter);
-
-        mAdapter = new AboutQuestAdapter(R.layout.item_about_quest, null);
-        GridLayoutManager manager = new GridLayoutManager(mContext, 4);
-
-        mBinding.aboutQuest.setLayoutManager(manager);
-        mBinding.aboutQuest.setAdapter(mAdapter);
     }
 
     @Override
     protected void initData(Bundle savedInstanceState) {
         super.initData(savedInstanceState);
-        getWelcomeFromNet();
+
+        mQuestionTypeAdapter = new QuestionTypeAdapter(R.layout.item_question_type, null);
+
+        mBinding.recyclerViewQuestionType.setLayoutManager(new GridLayoutManager(this, 4));
+        mBinding.recyclerViewQuestionType.setAdapter(mQuestionTypeAdapter);
+
+        getQuestTypeList();
     }
 
-    private void getWelcomeFromNet() {
-        sendRequest(ManagementService.getInstance().questList, new HashMap<>(), false);
+    private void getQuestionData() {
         sendRequest(ManagementService.getInstance().welcome, new HashMap<>(), false);
+    }
+
+    private void getQuestTypeList() {
+        sendRequest(ManagementService.getInstance().questTypeList, new HashMap<>(), true);
     }
 
     @Override
     protected void initListener() {
         super.initListener();
+
+        mQuestionTypeAdapter.setOnItemClickListener((adapter, view, position) -> {
+            QuestListTypeVo questListTypeVo = (QuestListTypeVo) adapter.getItem(position);
+
+            if (null == questListTypeVo)
+                return;
+
+            ARouter.getInstance()
+                    .build(Constants.ARouterUriConst.QUESTIONABOUT)
+                    .withString("TypeId", questListTypeVo.getId())
+                    .navigation();
+        });
+
         questAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
@@ -105,22 +130,50 @@ public class CustomerServiceActivity extends JMEBaseActivity {
                 sendRequest(ManagementService.getInstance().ask, hashMap, false);
             }
         });
-        mAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                String type = (position + 1) + "";
-                ARouter.getInstance()
-                        .build(Constants.ARouterUriConst.ABOUTDOUBT)
-                        .withString("type", type)
-                        .navigation();
-            }
-        });
     }
 
     @Override
     protected void initBinding() {
         super.initBinding();
+
         mBinding.setHandlers(new ClickHandlers());
+    }
+
+    private void callCustomer() {
+        if (Build.VERSION.SDK_INT >= 23) {
+            int checkCallPhonePermission = ContextCompat.checkSelfPermission(mContext, Manifest.permission.CALL_PHONE);
+
+            if (checkCallPhonePermission != PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CALL_PHONE}, REQUEST_CODE_ASK_CALL_PHONE);
+                return;
+            } else {
+                callPhone();
+            }
+        } else {
+            callPhone();
+        }
+    }
+
+    private void callPhone() {
+        Intent intent;
+        intent = new Intent("android.intent.action.CALL", Uri.parse("tel:4008276006"));
+
+        startActivity(intent);
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        switch (requestCode) {
+            case REQUEST_CODE_ASK_CALL_PHONE:
+                if (grantResults[0] == PackageManager.PERMISSION_GRANTED)
+                    callCustomer();
+
+                break;
+            default:
+                super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
+                break;
+        }
     }
 
     @Override
@@ -128,21 +181,22 @@ public class CustomerServiceActivity extends JMEBaseActivity {
         super.DataReturn(request, head, response);
 
         switch (request.getApi().getName()) {
-            case "QuestListVo":
+            case "QuestTypeList":
                 if (head.isSuccess()) {
-                    List<QuestListVo> value;
+                    List<QuestListTypeVo> questListVoList;
+
                     try {
-                        value = (List<QuestListVo>) response;
+                        questListVoList = (List<QuestListTypeVo>) response;
                     } catch (Exception e) {
-                        value = null;
+                        questListVoList = null;
+
                         e.printStackTrace();
                     }
 
-                    if (null == value) {
+                    if (null == questListVoList)
                         return;
-                    }
 
-                    mAdapter.setNewData(value);
+                    mQuestionTypeAdapter.setNewData(questListVoList);
                 }
                 break;
             case "Welcome":
@@ -188,7 +242,7 @@ public class CustomerServiceActivity extends JMEBaseActivity {
                         questionAskVo.setAsk("抱歉，暂时无法解决您的问题，请联系人工客服");
                         list.add(questionAskVo);
                         adapter.notifyDataSetChanged();
-                        mBinding.recyclerView.scrollToPosition(adapter.getItemCount()-1);
+                        mBinding.recyclerView.scrollToPosition(adapter.getItemCount() - 1);
                         return;
                     }
                     for (int i = 0; i < value.size(); i++) {
@@ -199,7 +253,7 @@ public class CustomerServiceActivity extends JMEBaseActivity {
                         list.add(questionAskVo);
                     }
                     adapter.notifyDataSetChanged();
-                    mBinding.recyclerView.scrollToPosition(adapter.getItemCount()-1);
+                    mBinding.recyclerView.scrollToPosition(adapter.getItemCount() - 1);
                 }
                 break;
         }
@@ -209,28 +263,28 @@ public class CustomerServiceActivity extends JMEBaseActivity {
 
         public void onClickKaihu() {
             ARouter.getInstance()
-                    .build(Constants.ARouterUriConst.ABOUTDOUBT)
+                    .build(Constants.ARouterUriConst.QUESTIONABOUT)
                     .withString("type", "1")
                     .navigation();
         }
 
         public void onClickJiaoYi() {
             ARouter.getInstance()
-                    .build(Constants.ARouterUriConst.ABOUTDOUBT)
+                    .build(Constants.ARouterUriConst.QUESTIONABOUT)
                     .withString("type", "2")
                     .navigation();
         }
 
         public void onClickZiJin() {
             ARouter.getInstance()
-                    .build(Constants.ARouterUriConst.ABOUTDOUBT)
+                    .build(Constants.ARouterUriConst.QUESTIONABOUT)
                     .withString("type", "3")
                     .navigation();
         }
 
         public void onClickZhangHu() {
             ARouter.getInstance()
-                    .build(Constants.ARouterUriConst.ABOUTDOUBT)
+                    .build(Constants.ARouterUriConst.QUESTIONABOUT)
                     .withString("type", "4")
                     .navigation();
         }

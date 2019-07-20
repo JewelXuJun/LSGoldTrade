@@ -23,7 +23,7 @@
             android:layout_weight="1.5"
             android:text="mAu(T+D)"
             android:textSize="@dimen/sp_14"
-            android:textColor="@color/color_4d4d4d"
+            android:textColor="@color/color_text_normal"
             />
 
         <TextView
@@ -33,7 +33,7 @@
             android:layout_weight="1"
             android:text="多"
             android:textSize="@dimen/sp_14"
-            android:textColor="@color/color_4d4d4d"
+            android:textColor="@color/color_text_normal"
             android:layout_alignTop="@id/pingzhong"
             android:layout_toRightOf="@id/pingzhong"
             android:paddingLeft="3dp"
@@ -46,7 +46,7 @@
             android:layout_weight="1"
             android:text="10"
             android:textSize="@dimen/sp_14"
-            android:textColor="@color/color_4d4d4d"
+            android:textColor="@color/color_text_normal"
             android:gravity="center"
             />
 

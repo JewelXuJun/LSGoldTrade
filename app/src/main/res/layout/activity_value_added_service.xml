@@ -55,7 +55,7 @@
                     android:layout_height="wrap_content"
                     android:text="交易匣子"
                     android:textSize="@dimen/sp_15"
-                    android:textColor="@color/color_000"
+                    android:textColor="@color/black"
                     />
 
                 <TextView
@@ -63,7 +63,7 @@
                     android:layout_height="wrap_content"
                     android:text="把握非农，一键下单"
                     android:textSize="@dimen/sp_14"
-                    android:textColor="@color/color_000"
+                    android:textColor="@color/black"
                     />
 
             </LinearLayout>
@@ -99,7 +99,7 @@
                     android:layout_height="wrap_content"
                     android:text="委托风控"
                     android:textSize="@dimen/sp_15"
-                    android:textColor="@color/color_000"
+                    android:textColor="@color/black"
                     />
 
                 <TextView
@@ -107,7 +107,7 @@
                     android:layout_height="wrap_content"
                     android:text="实时监控，交易安全"
                     android:textSize="@dimen/sp_14"
-                    android:textColor="@color/color_000"
+                    android:textColor="@color/black"
                     />
 
             </LinearLayout>
@@ -139,7 +139,7 @@
                 android:layout_height="wrap_content"
                 android:text="我已阅读并同意"
                 android:textSize="@dimen/sp_14"
-                android:textColor="@color/color_4d4d4d"
+                android:textColor="@color/color_text_normal"
                 android:layout_toRightOf="@id/cb_yingliqian"
                 android:layout_marginLeft="8dp"
                 />

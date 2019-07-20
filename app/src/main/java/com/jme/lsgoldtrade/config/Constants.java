@@ -147,7 +147,7 @@ public class Constants {
         public static final String FORGETPASSWORD = "/Login/ForgetPasswordActivity";
         public static final String REGISTER = "/Login/RegisterActivity";
         public static final String CUSTOMSERVICE = "/Personal/CustomerServiceActivity";
-        public static final String ABOUTDOUBT = "/Personal/AboutDoubtActivity";
+        public static final String QUESTIONABOUT = "/Personal/QuestionAboutActivity";
         public static final String REGISTERSUCCESS = "/PersonalFragment/RegisterSuccessActivity";
         public static final String MYSUBSCRIBE = "/PersonalFragment/MySubscribeActivity";
         public static final String BINDUSERNAME = "/Login/BindUserNameActivity";

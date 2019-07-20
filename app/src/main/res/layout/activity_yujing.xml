@@ -101,7 +101,7 @@
                         android:layout_height="wrap_content"
                         android:text="价格上限"
                         android:textSize="@dimen/sp_14"
-                        android:textColor="@color/color_4d4d4d"
+                        android:textColor="@color/color_text_normal"
                         />
 
                 </LinearLayout>
@@ -168,7 +168,7 @@
                     android:layout_height="wrap_content"
                     android:text="元"
                     android:textSize="@dimen/sp_15"
-                    android:textColor="@color/color_4d4d4d"
+                    android:textColor="@color/color_text_normal"
                     android:layout_marginLeft="8dp"
                     />
 
@@ -204,7 +204,7 @@
                         android:layout_height="wrap_content"
                         android:text="价格下限"
                         android:textSize="@dimen/sp_14"
-                        android:textColor="@color/color_4d4d4d"
+                        android:textColor="@color/color_text_normal"
                         />
 
                 </LinearLayout>
@@ -272,7 +272,7 @@
                     android:layout_height="wrap_content"
                     android:text="元"
                     android:textSize="@dimen/sp_15"
-                    android:textColor="@color/color_4d4d4d"
+                    android:textColor="@color/color_text_normal"
                     android:layout_marginLeft="8dp"
                     />
 
@@ -291,7 +291,7 @@
                     android:layout_height="wrap_content"
                     android:text="预警周期"
                     android:textSize="@dimen/sp_15"
-                    android:textColor="@color/color_4d4d4d"
+                    android:textColor="@color/color_text_normal"
                     android:layout_gravity="center_vertical"
                     />
 
@@ -357,7 +357,7 @@
                                 android:layout_weight="1"
                                 android:text="24小时"
                                 android:textSize="@dimen/sp_15"
-                                android:textColor="@color/color_4d4d4d"
+                                android:textColor="@color/color_text_normal"
                                 />
 
                             <TextView
@@ -366,7 +366,7 @@
                                 android:layout_weight="1"
                                 android:text="3天"
                                 android:textSize="@dimen/sp_15"
-                                android:textColor="@color/color_4d4d4d"
+                                android:textColor="@color/color_text_normal"
                                 android:layout_marginLeft="8dp"
                                 android:gravity="center"
                                 />
@@ -377,7 +377,7 @@
                                 android:layout_weight="1"
                                 android:text="7天"
                                 android:textSize="@dimen/sp_15"
-                                android:textColor="@color/color_4d4d4d"
+                                android:textColor="@color/color_text_normal"
                                 android:gravity="right"
                                 />
 

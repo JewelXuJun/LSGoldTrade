@@ -166,7 +166,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="@dimen/common_page_margin"
                                 android:text="@string/register_aggre"
-                                android:textColor="@color/color_4d4d4d"
+                                android:textColor="@color/color_text_normal"
                                 android:textSize="@dimen/sp_14" />
 
                             <TextView

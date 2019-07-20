@@ -5,13 +5,11 @@
     <color name="colorAccent">#D81B60</color>
 
     <color name="transparent">#00000000</color>
-    <color name="color_000">#000000</color>
     <color name="color_333">#333333</color>
     <color name="color_666">#666666</color>
     <color name="color_999">#999999</color>
     <color name="color_ff3300">#ff3300</color>
     <color name="color_00cc00">#00cc00</color>
-    <color name="color_4d4d4d">#4d4d4d</color>
     <color name="color_e6e6e6">#e6e6e6</color>
     <color name="color_1a1a1a">#1a1a1a</color>
     <color name="color_cacaca">#cacaca</color>
@@ -26,9 +24,6 @@
     <color name="color_ffa94c">#ffa94c</color>
     <color name="color_fafafa">#fafafa</color>
     <color name="color_e9edf2">#e9edf2</color>
-    <color name="color_f5f5f5">#f5f5f5</color>
-    <drawable name="color_fff">#FFFFFF</drawable>
-    <drawable name="color_4285f4">#4285f4</drawable>
 
     <color name="color_text_normal">#4d4d4d</color>
     <color name="color_text_black">#1a1a1a</color>

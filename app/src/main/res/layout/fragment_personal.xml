@@ -160,7 +160,7 @@
                         android:layout_marginLeft="@dimen/common_area_margin"
                         android:layout_marginRight="@dimen/common_page_margin"
                         android:layout_toLeftOf="@+id/img_increment_next"
-                        android:textColor="@color/color_4d4d4d"
+                        android:textColor="@color/color_text_normal"
                         android:textSize="@dimen/sp_15" />
 
                     <View
@@ -339,7 +339,7 @@
                         android:layout_marginRight="@dimen/common_page_margin"
                         android:layout_toLeftOf="@+id/next"
                         android:text="@string/personal_message_box_new"
-                        android:textColor="@color/color_4d4d4d"
+                        android:textColor="@color/color_text_normal"
                         android:textSize="@dimen/sp_15" />
 
                     <View

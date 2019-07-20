@@ -141,7 +141,7 @@
             android:name=".ui.login.RegisterSuccessActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.personal.AboutDoubtActivity"
+            android:name=".ui.personal.QuestionAboutActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.personal.CustomerServiceActivity"
