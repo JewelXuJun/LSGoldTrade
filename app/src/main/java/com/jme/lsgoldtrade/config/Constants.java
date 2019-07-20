@@ -84,6 +84,7 @@ public class Constants {
         public static final String RXBUS_CHEDAN = "chedan";
         public static final String RXBUS_CHEDAN_FRAGMENT = "chedanfragment";
         public static final String RXBUS_CHICANG_FRAGMENT = "chicangfragment";
+        public static final String RXBUS_CUSTOMER_SERVICE = "customerservice";
     }
 
     public static final class Msg {

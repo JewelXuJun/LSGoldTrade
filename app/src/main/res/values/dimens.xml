@@ -59,6 +59,7 @@
     <dimen name="margin_big">40dp</dimen>
     <dimen name="margin_large">60dp</dimen>
     <dimen name="margin_line">6dp</dimen>
+    <dimen name="margin_customer_service_item">65dp</dimen>
 
     <dimen name="size_exiguity">8sp</dimen>
     <dimen name="size_tiny">9sp</dimen>
@@ -86,6 +87,7 @@
     <dimen name="radius_big">5dp</dimen>
 
     <dimen name="lineSpacingExtra_normal">3sp</dimen>
+    <dimen name="lineSpacingExtra_big">5sp</dimen>
 
     <dimen name="sp_30">30sp</dimen>
     <dimen name="sp_27">27sp</dimen>

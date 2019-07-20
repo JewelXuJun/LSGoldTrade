@@ -19,6 +19,7 @@ import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.jme.common.network.DTRequest;
 import com.jme.common.network.Head;
+import com.jme.common.util.RxBus;
 import com.jme.lsgoldtrade.R;
 import com.jme.lsgoldtrade.base.JMEBaseActivity;
 import com.jme.lsgoldtrade.config.AppConfig;
@@ -27,12 +28,14 @@ import com.jme.lsgoldtrade.databinding.ActivityCustomerServiceBinding;
 import com.jme.lsgoldtrade.domain.CustomerServiceVo;
 import com.jme.lsgoldtrade.domain.QuestListTypeVo;
 import com.jme.lsgoldtrade.domain.QuestionGuessVo;
-import com.jme.lsgoldtrade.domain.QuestionAskVo;
+import com.jme.lsgoldtrade.domain.QuestionAnswerVo;
 import com.jme.lsgoldtrade.service.ManagementService;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+
+import rx.Subscription;
 
 /**
  * 在线客服
@@ -44,11 +47,12 @@ public class CustomerServiceActivity extends JMEBaseActivity {
 
     private QuestionTypeAdapter mQuestionTypeAdapter;
     private QuestionGuessAdapter mQuestionGuessAdapter;
+    private QuestionAnswerAdapter mQuestionAnswerAdapter;
+    private List<QuestionAnswerVo> mList = new ArrayList<>();
 
-    private CustomerServicesAdapter adapter;
+    private String mQuestion;
 
-    private List<QuestionAskVo> list = new ArrayList<>();
-
+    private Subscription mRxbus;
 
     private static final int REQUEST_CODE_ASK_CALL_PHONE = 0x126;
 
@@ -66,10 +70,6 @@ public class CustomerServiceActivity extends JMEBaseActivity {
         initToolbar(R.string.personal_customer_service, true);
 
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
-
-        adapter = new CustomerServicesAdapter(mContext, R.layout.item_customer_service, list);
-        mBinding.recyclerView.setLayoutManager(new LinearLayoutManager(mContext));
-        mBinding.recyclerView.setAdapter(adapter);
     }
 
     @Override
@@ -84,6 +84,10 @@ public class CustomerServiceActivity extends JMEBaseActivity {
         mBinding.recyclerViewQuestion.setLayoutManager(new LinearLayoutManager(mContext));
         mBinding.recyclerViewQuestion.setAdapter(mQuestionGuessAdapter);
 
+        mQuestionAnswerAdapter = new QuestionAnswerAdapter(R.layout.item_question_answer, mList);
+        mBinding.recyclerViewAnswer.setLayoutManager(new LinearLayoutManager(mContext));
+        mBinding.recyclerViewAnswer.setAdapter(mQuestionAnswerAdapter);
+
         getQuestTypeList();
         getGreeting();
     }
@@ -91,6 +95,8 @@ public class CustomerServiceActivity extends JMEBaseActivity {
     @Override
     protected void initListener() {
         super.initListener();
+
+        initRxBus();
 
         mQuestionTypeAdapter.setOnItemClickListener((adapter, view, position) -> {
             QuestListTypeVo questListTypeVo = (QuestListTypeVo) adapter.getItem(position);
@@ -110,7 +116,9 @@ public class CustomerServiceActivity extends JMEBaseActivity {
             if (null == questionBean)
                 return;
 
-            getAnswerList(questionBean.getTitle());
+            mQuestion = questionBean.getTitle();
+
+            getAnswerList();
         });
     }
 
@@ -126,6 +134,22 @@ public class CustomerServiceActivity extends JMEBaseActivity {
         super.onPause();
 
         hiddenKeyBoard();
+    }
+
+    private void initRxBus() {
+        mRxbus = RxBus.getInstance().toObserverable(RxBus.Message.class).subscribe(message -> {
+            String callType = message.getObject().toString();
+
+            if (TextUtils.isEmpty(callType))
+                return;
+
+            switch (callType) {
+                case Constants.RxBusConst.RXBUS_CUSTOMER_SERVICE:
+                    callCustomer();
+
+                    break;
+            }
+        });
     }
 
     private void callCustomer() {
@@ -151,21 +175,6 @@ public class CustomerServiceActivity extends JMEBaseActivity {
         startActivity(intent);
     }
 
-    @Override
-    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
-        switch (requestCode) {
-            case REQUEST_CODE_ASK_CALL_PHONE:
-                if (grantResults[0] == PackageManager.PERMISSION_GRANTED)
-                    callCustomer();
-
-                break;
-            default:
-                super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-
-                break;
-        }
-    }
-
     private void getQuestTypeList() {
         sendRequest(ManagementService.getInstance().questTypeList, new HashMap<>(), true);
     }
@@ -174,9 +183,9 @@ public class CustomerServiceActivity extends JMEBaseActivity {
         sendRequest(ManagementService.getInstance().getGreeting, new HashMap<>(), false);
     }
 
-    private void getAnswerList(String title) {
+    private void getAnswerList() {
         HashMap<String, String> hashMap = new HashMap<>();
-        hashMap.put("ask", title);
+        hashMap.put("ask", mQuestion);
 
         sendRequest(ManagementService.getInstance().answerList, hashMap, true);
     }
@@ -222,39 +231,41 @@ public class CustomerServiceActivity extends JMEBaseActivity {
 
                 break;
             case "AnswerList":
-                hiddenKeyBoard();
-
                 if (head.isSuccess()) {
                     mBinding.etQuestion.setText("");
 
-                    List<CustomerServiceVo> value;
+                    List<CustomerServiceVo> customerServiceVoList;
+
                     try {
-                        value = (List<CustomerServiceVo>) response;
+                        customerServiceVoList = (List<CustomerServiceVo>) response;
                     } catch (Exception e) {
-                        value = null;
+                        customerServiceVoList = null;
+
                         e.printStackTrace();
                     }
 
-                    if (null == value) {
-                        CustomerServiceVo customerServiceVo = value.get(0);
-                        QuestionAskVo questionAskVo = new QuestionAskVo();
-                        questionAskVo.setQuestion(customerServiceVo.getTitle());
-                        questionAskVo.setAsk("抱歉，暂时无法解决您的问题，请联系人工客服");
-                        list.add(questionAskVo);
-                        adapter.notifyDataSetChanged();
-                        mBinding.recyclerView.scrollToPosition(adapter.getItemCount() - 1);
-                        return;
+                    if (null == customerServiceVoList || 0 == customerServiceVoList.size()) {
+                        QuestionAnswerVo questionAnswerVo = new QuestionAnswerVo();
+                        questionAnswerVo.setQuestion(mQuestion);
+                        questionAnswerVo.setAsk(getString(R.string.personal_customer_service_cannot_answer));
+
+                        mList.add(questionAnswerVo);
+                    } else {
+                        for (int i = 0; i < customerServiceVoList.size(); i++) {
+                            CustomerServiceVo customerServiceVo = customerServiceVoList.get(i);
+                            QuestionAnswerVo questionAnswerVo = new QuestionAnswerVo();
+                            questionAnswerVo.setQuestion(customerServiceVo.getTitle());
+                            questionAnswerVo.setAsk(customerServiceVo.getAnwser());
+
+                            mList.add(questionAnswerVo);
+                        }
                     }
-                    for (int i = 0; i < value.size(); i++) {
-                        CustomerServiceVo customerServiceVo = value.get(i);
-                        QuestionAskVo questionAskVo = new QuestionAskVo();
-                        questionAskVo.setQuestion(customerServiceVo.getTitle());
-                        questionAskVo.setAsk(customerServiceVo.getAnwser());
-                        list.add(questionAskVo);
-                    }
-                    adapter.notifyDataSetChanged();
-                    mBinding.recyclerView.scrollToPosition(adapter.getItemCount() - 1);
+
+                    mQuestionAnswerAdapter.notifyDataSetChanged();
+                    mBinding.recyclerViewAnswer.scrollToPosition(mQuestionAnswerAdapter.getItemCount() - 1);
+
                 }
+
                 break;
         }
     }
@@ -262,27 +273,55 @@ public class CustomerServiceActivity extends JMEBaseActivity {
     public class ClickHandlers {
 
         public void onClickArtificialCustomerService() {
+            hiddenKeyBoard();
+
             callCustomer();
         }
 
         public void onClickChangeGroup() {
+            hiddenKeyBoard();
+
             getGreeting();
         }
 
         public void onClickSend() {
-            String question = mBinding.etQuestion.getText().toString().trim();
-            if (TextUtils.isEmpty(question)) {
-                return;
-            }
-            HashMap<String, String> hashMap = new HashMap<>();
-            hashMap.put("ask", question);
-            sendRequest(ManagementService.getInstance().answerList, hashMap, false);
+            hiddenKeyBoard();
+
+            mQuestion = mBinding.etQuestion.getText().toString().trim();
+
+            if (TextUtils.isEmpty(mQuestion))
+                showShortToast(R.string.personal_customer_service_empty);
+            else
+                getAnswerList();
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        switch (requestCode) {
+            case REQUEST_CODE_ASK_CALL_PHONE:
+                if (grantResults[0] == PackageManager.PERMISSION_GRANTED)
+                    callCustomer();
+
+                break;
+            default:
+                super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
+                break;
         }
     }
 
     private void hiddenKeyBoard() {
         ((InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE)).hideSoftInputFromWindow(
                 mBinding.etQuestion.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+        if (!mRxbus.isUnsubscribed())
+            mRxbus.unsubscribe();
     }
 
 }

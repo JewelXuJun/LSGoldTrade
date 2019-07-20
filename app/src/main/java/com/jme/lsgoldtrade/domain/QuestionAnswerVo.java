@@ -1,6 +1,6 @@
 package com.jme.lsgoldtrade.domain;
 
-public class QuestionAskVo {
+public class QuestionAnswerVo {
 
     private String question;
 
