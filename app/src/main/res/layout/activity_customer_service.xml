@@ -48,16 +48,22 @@
                     android:layout_margin="@dimen/common_page_margin"
                     android:background="@drawable/bg_white"
                     android:orientation="horizontal"
-                    android:paddingLeft="@dimen/common_area_margin"
-                    android:paddingTop="@dimen/common_page_padding"
-                    android:paddingRight="@dimen/common_area_margin"
-                    android:paddingBottom="@dimen/common_page_padding">
+                    android:padding="@dimen/common_page_padding">
 
                     <TextView
-                        android:id="@+id/welcome"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textColor="@color/black"
+                        android:text="@string/personal_customer_service_can_help"
+                        android:textSize="@dimen/sp_15" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/color_blue_deep"
+                        android:onClick="@{() -> handlers.onClickArtificialCustomerService()}"
+                        android:layout_marginLeft="@dimen/common_area_margin_tiny"
+                        android:text="@string/personal_customer_service_personal"
                         android:textSize="@dimen/sp_15" />
 
                 </LinearLayout>
@@ -88,7 +94,7 @@
                             android:layout_alignParentRight="true"
                             android:onClick="@{() -> handlers.onClickChangeGroup()}"
                             android:text="换一组"
-                            android:textColor="@color/color_0080ff"
+                            android:textColor="@color/color_blue_deep"
                             android:textSize="@dimen/sp_15" />
 
                     </RelativeLayout>

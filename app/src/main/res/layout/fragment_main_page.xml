@@ -21,7 +21,7 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/color_toolbar_blue"
+            android:background="@color/color_blue_deep"
             android:fitsSystemWindows="true"
             android:minHeight="?attr/actionBarSize">
 
@@ -221,7 +221,7 @@
                         android:layout_height="@dimen/common_item_height_middle"
                         android:background="@color/white"
                         app:tabIndicatorColor="@color/color_blue"
-                        app:tabSelectedTextColor="@color/color_toolbar_blue"
+                        app:tabSelectedTextColor="@color/color_blue_deep"
                         app:tabTextColor="@color/color_text_normal" />
 
                     <include layout="@layout/item_line_vertical" />

@@ -74,7 +74,7 @@ public class HoldPositionAdapter extends BaseQuickAdapter<PositionVo, BaseViewHo
 
         long floatProfit = item.getFloatProfit();
 
-        helper.setBackgroundColor(R.id.layout_item, isSelected ? ContextCompat.getColor(mContext, R.color.color_toolbar_blue)
+        helper.setBackgroundColor(R.id.layout_item, isSelected ? ContextCompat.getColor(mContext, R.color.color_blue_deep)
                 : ContextCompat.getColor(mContext, R.color.white))
                 .setText(R.id.tv_contract, contractID)
                 .setTextColor(R.id.tv_contract, isSelected ? ContextCompat.getColor(mContext, R.color.white)

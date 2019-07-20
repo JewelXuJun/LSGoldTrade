@@ -136,7 +136,7 @@
                                         android:layout_height="wrap_content"
                                         android:layout_centerVertical="true"
                                         android:text="@string/text_no_data_default"
-                                        android:textColor="@color/color_toolbar_blue"
+                                        android:textColor="@color/color_blue_deep"
                                         android:textSize="@dimen/size_big" />
 
                                     <Button

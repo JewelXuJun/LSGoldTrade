@@ -42,7 +42,7 @@ public class CancelOrderAdapter extends BaseQuickAdapter<OrderPageVo.OrderBean, 
         String time = item.getDeclareTime();
         int bsFlag = item.getBsFlag();
 
-        helper.setBackgroundColor(R.id.layout_item, isSelected ? ContextCompat.getColor(mContext, R.color.color_toolbar_blue)
+        helper.setBackgroundColor(R.id.layout_item, isSelected ? ContextCompat.getColor(mContext, R.color.color_blue_deep)
                 : ContextCompat.getColor(mContext, R.color.white))
                 .setText(R.id.tv_contract, item.getContractId())
                 .setTextColor(R.id.tv_contract, isSelected ? ContextCompat.getColor(mContext, R.color.white) :

@@ -175,7 +175,7 @@ public class TradingBoxActivity extends JMEBaseActivity {
                     if (list != null && list.size() > 0) {
                         mBinding.subscribeNum.setText("已有" + list.size() + "位用户使用");
                         mBinding.subscribe.setText("已订阅");
-                        mBinding.subscribe.setTextColor(getResources().getColor(R.color.color_0080ff));
+                        mBinding.subscribe.setTextColor(getResources().getColor(R.color.color_blue_deep));
                         mBinding.subscribe.setBackground(getResources().getDrawable(R.drawable.bg_btn_blue_stroke));
                     } else {
                         mBinding.subscribe.setText("订 阅");
@@ -187,7 +187,7 @@ public class TradingBoxActivity extends JMEBaseActivity {
                     subscriberCount += 1;
                     mBinding.subscribeNum.setText("已有" + subscriberCount + "位用户使用");
                     mBinding.subscribe.setText("已订阅");
-                    mBinding.subscribe.setTextColor(getResources().getColor(R.color.color_0080ff));
+                    mBinding.subscribe.setTextColor(getResources().getColor(R.color.color_blue_deep));
                     mBinding.subscribe.setBackground(getResources().getDrawable(R.drawable.bg_btn_blue_stroke));
                 }
                 break;
@@ -201,7 +201,7 @@ public class TradingBoxActivity extends JMEBaseActivity {
             mBinding.tradingBuy.setBackgroundResource(R.color.color_bfc9d3);
         } else {
             mBinding.tradingBuy.setEnabled(true);
-            mBinding.tradingBuy.setBackgroundResource(R.color.color_0080ff);
+            mBinding.tradingBuy.setBackgroundResource(R.color.color_blue_deep);
         }
     }
 

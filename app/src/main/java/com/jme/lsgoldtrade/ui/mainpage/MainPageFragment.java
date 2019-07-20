@@ -103,7 +103,7 @@ public class MainPageFragment extends JMEBaseFragment implements OnRefreshListen
     protected void initView() {
         super.initView();
         mBinding = (FragmentMainPageBinding) mBindingUtil;
-        StatusBarUtil.setStatusBarMode(mActivity, true, R.color.color_toolbar_blue);
+        StatusBarUtil.setStatusBarMode(mActivity, true, R.color.color_blue_deep);
     }
 
     @Override

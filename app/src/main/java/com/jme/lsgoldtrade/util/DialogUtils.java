@@ -27,7 +27,7 @@ public class DialogUtils {
                 .title(title)
                 .content(content)
                 .positiveText(positive)
-                .positiveColor(context.getResources().getColor(R.color.color_0080ff))
+                .positiveColor(context.getResources().getColor(R.color.color_blue_deep))
                 .negativeText(negative)
                 .negativeColor(context.getResources().getColor(R.color.color_333))
                 .onPositive(new MaterialDialog.SingleButtonCallback() {
@@ -53,7 +53,7 @@ public class DialogUtils {
         new MaterialDialog.Builder(context)
                 .title(title)
                 .positiveText(positive)
-                .positiveColor(context.getResources().getColor(R.color.color_0080ff))
+                .positiveColor(context.getResources().getColor(R.color.color_blue_deep))
                 .negativeText(negative)
                 .negativeColor(context.getResources().getColor(R.color.color_333))
                 .onPositive(new MaterialDialog.SingleButtonCallback() {
@@ -79,7 +79,7 @@ public class DialogUtils {
         new MaterialDialog.Builder(context)
                 .content(content)
                 .positiveText(positive)
-                .positiveColor(context.getResources().getColor(R.color.color_0080ff))
+                .positiveColor(context.getResources().getColor(R.color.color_blue_deep))
                 .negativeText(negative)
                 .negativeColor(context.getResources().getColor(R.color.color_333))
                 .onPositive(new MaterialDialog.SingleButtonCallback() {

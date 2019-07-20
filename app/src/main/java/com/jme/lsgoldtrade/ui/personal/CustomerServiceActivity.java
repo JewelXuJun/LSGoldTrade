@@ -24,6 +24,7 @@ import com.jme.common.network.Head;
 import com.jme.common.ui.view.MarginDividerItemDecoration;
 import com.jme.lsgoldtrade.R;
 import com.jme.lsgoldtrade.base.JMEBaseActivity;
+import com.jme.lsgoldtrade.config.AppConfig;
 import com.jme.lsgoldtrade.config.Constants;
 import com.jme.lsgoldtrade.databinding.ActivityCustomerServiceBinding;
 import com.jme.lsgoldtrade.domain.CustomerServiceVo;
@@ -145,6 +146,7 @@ public class CustomerServiceActivity extends JMEBaseActivity {
 
             if (checkCallPhonePermission != PackageManager.PERMISSION_GRANTED) {
                 ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CALL_PHONE}, REQUEST_CODE_ASK_CALL_PHONE);
+
                 return;
             } else {
                 callPhone();
@@ -156,7 +158,7 @@ public class CustomerServiceActivity extends JMEBaseActivity {
 
     private void callPhone() {
         Intent intent;
-        intent = new Intent("android.intent.action.CALL", Uri.parse("tel:4008276006"));
+        intent = new Intent("android.intent.action.CALL", Uri.parse("tel:" + AppConfig.CustomerServicePhone));
 
         startActivity(intent);
     }
@@ -213,8 +215,6 @@ public class CustomerServiceActivity extends JMEBaseActivity {
                         return;
                     }
 
-                    String greeting = questVo.getGreeting();
-                    mBinding.welcome.setText(greeting);
                     if (questionList != null && !questionList.isEmpty())
                         questionList.clear();
 
@@ -261,32 +261,8 @@ public class CustomerServiceActivity extends JMEBaseActivity {
 
     public class ClickHandlers {
 
-        public void onClickKaihu() {
-            ARouter.getInstance()
-                    .build(Constants.ARouterUriConst.QUESTIONABOUT)
-                    .withString("type", "1")
-                    .navigation();
-        }
-
-        public void onClickJiaoYi() {
-            ARouter.getInstance()
-                    .build(Constants.ARouterUriConst.QUESTIONABOUT)
-                    .withString("type", "2")
-                    .navigation();
-        }
-
-        public void onClickZiJin() {
-            ARouter.getInstance()
-                    .build(Constants.ARouterUriConst.QUESTIONABOUT)
-                    .withString("type", "3")
-                    .navigation();
-        }
-
-        public void onClickZhangHu() {
-            ARouter.getInstance()
-                    .build(Constants.ARouterUriConst.QUESTIONABOUT)
-                    .withString("type", "4")
-                    .navigation();
+        public void onClickArtificialCustomerService() {
+            callCustomer();
         }
 
         public void onClickChangeGroup() {

@@ -24,6 +24,8 @@ public class AppConfig {
     public static final int Length_Limit = 2;
     public static final int MaxLength = 500;
 
+    public static final String CustomerServicePhone = "4008276006";
+
     public static String Select_ContractId = "Ag(T+D)";
 
     public static final String WECHATAPPID = "wx16fbbdbe78667176";

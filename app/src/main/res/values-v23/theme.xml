@@ -3,7 +3,7 @@
     <style name="AppTheme" parent="@style/Theme.AppCompat.Light.NoActionBar">
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/color_toolbar_blue</item>
+        <item name="colorAccent">@color/color_blue_deep</item>
         <item name="android:windowLightStatusBar">true</item>
     </style>
 </resources>

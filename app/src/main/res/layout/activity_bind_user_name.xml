@@ -219,7 +219,7 @@
                     android:layout_height="wrap_content"
                     android:text="《软件服务协议》"
                     android:textSize="@dimen/sp_14"
-                    android:textColor="@color/color_0080ff"
+                    android:textColor="@color/color_blue_deep"
                     android:layout_alignParentRight="true"
                     android:onClick="@{() -> handlers.onClickSoftWareAgreement()}"
                     />
@@ -248,7 +248,7 @@
                     android:layout_height="wrap_content"
                     android:text="《业务服务协议》"
                     android:textSize="@dimen/sp_14"
-                    android:textColor="@color/color_0080ff"
+                    android:textColor="@color/color_blue_deep"
                     android:onClick="@{() -> handlers.onClickBusinessAgreement()}"
                     />
 

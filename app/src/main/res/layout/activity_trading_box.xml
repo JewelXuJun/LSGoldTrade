@@ -73,7 +73,7 @@
                 android:layout_weight="2"
                 android:text="查看详情"
                 android:textSize="@dimen/sp_18"
-                android:textColor="@color/color_0080ff"
+                android:textColor="@color/color_blue_deep"
                 android:gravity="center"
                 android:onClick="@{() -> handlers.onClickDetails()}"
                 />

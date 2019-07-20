@@ -183,7 +183,7 @@
                         android:gravity="center"
                         android:inputType="numberDecimal"
                         android:maxLines="1"
-                        android:textColor="@color/color_toolbar_blue"
+                        android:textColor="@color/color_blue_deep"
                         android:textColorHint="@color/color_text_hint"
                         android:textSize="@dimen/sp_16" />
 
@@ -255,7 +255,7 @@
                         android:gravity="center"
                         android:inputType="numberDecimal"
                         android:maxLines="1"
-                        android:textColor="@color/color_toolbar_blue"
+                        android:textColor="@color/color_blue_deep"
                         android:textColorHint="@color/color_text_hint"
                         android:textSize="@dimen/sp_16" />
 

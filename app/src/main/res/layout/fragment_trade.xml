@@ -21,7 +21,7 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/color_toolbar_blue"
+            android:background="@color/color_blue_deep"
             android:fitsSystemWindows="true"
             android:minHeight="?attr/actionBarSize">
 
@@ -106,7 +106,7 @@
                 android:paddingTop="13dp"
                 android:paddingBottom="13dp"
                 android:text="已有黄金账号，去绑定"
-                android:textColor="@color/color_0080ff"
+                android:textColor="@color/color_blue_deep"
                 android:textSize="@dimen/sp_18" />
 
         </LinearLayout>
@@ -126,7 +126,7 @@
                 app:tabIndicatorFullWidth="true"
                 app:tabIndicatorHeight="2dp"
                 app:tabRippleColor="@null"
-                app:tabSelectedTextColor="@color/color_toolbar_blue"
+                app:tabSelectedTextColor="@color/color_blue_deep"
                 app:tabTextColor="@color/color_text_normal" />
 
             <include layout="@layout/item_line_vertical" />

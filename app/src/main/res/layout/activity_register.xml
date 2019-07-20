@@ -174,7 +174,7 @@
                                 android:layout_height="wrap_content"
                                 android:onClick="@{() -> handlers.onClickAgreement()}"
                                 android:text="@string/register_aggrement"
-                                android:textColor="@color/color_0080ff"
+                                android:textColor="@color/color_blue_deep"
                                 android:textSize="@dimen/sp_14" />
 
                         </LinearLayout>
@@ -212,7 +212,7 @@
                                 android:layout_marginLeft="@dimen/margin_line"
                                 android:onClick="@{() -> handlers.onClickLogin()}"
                                 android:text="@string/register_go_login"
-                                android:textColor="@color/color_0080ff"
+                                android:textColor="@color/color_blue_deep"
                                 android:textSize="@dimen/sp_18" />
 
                         </LinearLayout>

@@ -294,7 +294,7 @@
                         android:layout_height="wrap_content"
                         android:text="280.00"
                         android:textSize="@dimen/sp_18"
-                        android:textColor="@color/color_0080ff"
+                        android:textColor="@color/color_blue_deep"
                         />
 
                 </LinearLayout>
@@ -322,7 +322,7 @@
                         android:layout_height="wrap_content"
                         android:text="1手"
                         android:textSize="@dimen/sp_18"
-                        android:textColor="@color/color_0080ff"
+                        android:textColor="@color/color_blue_deep"
                         />
 
                 </LinearLayout>
@@ -384,7 +384,7 @@
                             android:layout_height="wrap_content"
                             android:text="修改盈亏设置"
                             android:textSize="@dimen/sp_15"
-                            android:textColor="@color/color_0080ff"
+                            android:textColor="@color/color_blue_deep"
                             android:layout_marginTop="20dp"
                             android:layout_marginBottom="20dp"
                             android:background="@drawable/bg_btn_blue_stroke"

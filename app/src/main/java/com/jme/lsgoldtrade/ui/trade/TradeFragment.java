@@ -58,7 +58,7 @@ public class TradeFragment extends JMEBaseFragment {
 
         mBinding = (FragmentTradeBinding) mBindingUtil;
 
-        StatusBarUtil.setStatusBarMode(mActivity, true, R.color.color_toolbar_blue);
+        StatusBarUtil.setStatusBarMode(mActivity, true, R.color.color_blue_deep);
     }
 
     @Override
@@ -84,7 +84,7 @@ public class TradeFragment extends JMEBaseFragment {
                     .append("开户有疑问?来看看")
                     .setForegroundColor(getResources().getColor(R.color.black))
                     .append("开户教程")
-                    .setForegroundColor(getResources().getColor(R.color.color_0080ff))
+                    .setForegroundColor(getResources().getColor(R.color.color_blue_deep))
                     .create());
 //            PicassoUtils.getInstance().loadImg(mContext, url, mBinding.imgBanner);
         }

@@ -506,7 +506,7 @@ public class PlaceOrderActivity extends JMEBaseActivity {
                     .append("预计可用金额不足，请先")
                     .setForegroundColor(getResources().getColor(R.color.black))
                     .append("入金")
-                    .setForegroundColor(getResources().getColor(R.color.color_0080ff))
+                    .setForegroundColor(getResources().getColor(R.color.color_blue_deep))
                     .create());
         } else {
             enoughPrice = true;

@@ -115,7 +115,7 @@
                             android:layout_gravity="center_vertical"
                             android:text="相关资讯"
                             android:textSize="@dimen/sp_14"
-                            android:textColor="@color/color_0080ff"
+                            android:textColor="@color/color_blue_deep"
                             android:layout_marginLeft="5dp"
                             android:onClick="@{() -> handlers.onClickAboutNews()}"
                             android:layout_marginRight="15dp"

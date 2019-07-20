@@ -52,7 +52,7 @@
                     android:layout_height="wrap_content"
                     android:text="编辑"
                     android:textSize="@dimen/sp_18"
-                    android:textColor="@color/color_0080ff"
+                    android:textColor="@color/color_blue_deep"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
                     android:onClick="@{() -> handlers.onClickBw()}"

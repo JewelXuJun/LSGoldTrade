@@ -355,7 +355,7 @@
                             android:gravity="center"
                             android:inputType="numberDecimal"
                             android:maxLines="1"
-                            android:textColor="@color/color_toolbar_blue"
+                            android:textColor="@color/color_blue_deep"
                             android:textColorHint="@color/color_text_hint"
                             android:textSize="@dimen/sp_16" />
 
@@ -430,7 +430,7 @@
                             android:inputType="numberDecimal"
                             android:maxLines="1"
                             android:text="1"
-                            android:textColor="@color/color_toolbar_blue"
+                            android:textColor="@color/color_blue_deep"
                             android:textColorHint="@color/color_text_hint"
                             android:textSize="@dimen/sp_16" />
 
@@ -506,7 +506,7 @@
                             android:layout_height="44dp"
                             android:text="浮动成交机制"
                             android:textSize="@dimen/sp_14"
-                            android:textColor="@color/color_0080ff"
+                            android:textColor="@color/color_blue_deep"
                             android:gravity="center_vertical"
                             />
 

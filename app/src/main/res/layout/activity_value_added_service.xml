@@ -149,7 +149,7 @@
                 android:layout_height="wrap_content"
                 android:text="《增值服务协议》"
                 android:textSize="@dimen/sp_14"
-                android:textColor="@color/color_0080ff"
+                android:textColor="@color/color_blue_deep"
                 android:layout_alignParentRight="true"
                 android:onClick="@{() -> handlers.onClickValueAddServiceAgreement()}"
                 />

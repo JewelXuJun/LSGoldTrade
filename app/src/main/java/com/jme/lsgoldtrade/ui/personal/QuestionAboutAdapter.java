@@ -29,7 +29,7 @@ public class QuestionAboutAdapter extends BaseQuickAdapter<QuestionVo, BaseViewH
                 .setText(R.id.tv_answer, item.getAnwser());
 
         helper.getView(R.id.img_down).setOnClickListener((view) -> {
-            helper.setTextColor(R.id.tv_question, ContextCompat.getColor(mContext, R.color.color_0080ff))
+            helper.setTextColor(R.id.tv_question, ContextCompat.getColor(mContext, R.color.color_blue_deep))
                     .setGone(R.id.tv_answer, true)
                     .setGone(R.id.img_down, false)
                     .setGone(R.id.img_up, true);

@@ -130,7 +130,7 @@
                 android:layout_height="40dp"
                 android:text="全部"
                 android:textSize="@dimen/sp_18"
-                android:textColor="@color/color_0080ff"
+                android:textColor="@color/color_blue_deep"
                 android:layout_gravity="center"
                 android:gravity="center"
                 android:background="@drawable/bg_btn_blue_stroke"
