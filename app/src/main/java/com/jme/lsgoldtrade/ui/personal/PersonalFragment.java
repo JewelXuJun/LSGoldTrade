@@ -1,12 +1,6 @@
 package com.jme.lsgoldtrade.ui.personal;
 
-import android.Manifest;
-import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
-import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 import android.view.View;
@@ -20,11 +14,8 @@ import com.jme.common.util.StringUtils;
 import com.jme.lsgoldtrade.R;
 import com.jme.lsgoldtrade.base.JMEBaseFragment;
 import com.jme.lsgoldtrade.config.Constants;
-import com.jme.lsgoldtrade.config.User;
 import com.jme.lsgoldtrade.databinding.FragmentPersonalBinding;
 import com.jme.lsgoldtrade.service.ManagementService;
-import com.jme.lsgoldtrade.util.IntentUtils;
-import com.jme.lsgoldtrade.util.NormalUtils;
 
 import java.util.HashMap;
 
@@ -35,7 +26,7 @@ public class PersonalFragment extends JMEBaseFragment {
 
     private FragmentPersonalBinding mBinding;
 
-    private static final int REQUEST_CODE_ASK_CALL_PHONE = 0x126;
+    private String mIncrementState;
 
     @Override
     protected int getContentViewId() {
@@ -77,17 +68,20 @@ public class PersonalFragment extends JMEBaseFragment {
             mBinding.layoutLoginMessage.setVisibility(View.VISIBLE);
             mBinding.layoutOpenAccount.setVisibility(View.VISIBLE);
             mBinding.layoutSubscribe.setVisibility(View.GONE);
+            mBinding.tvIncrementState.setText("");
         } else {
             mBinding.tvAccount.setText(StringUtils.phoneInvisibleMiddle(mUser.getCurrentUser().getMobile()));
             mBinding.tvAccount.setVisibility(View.VISIBLE);
             mBinding.layoutLoginMessage.setVisibility(View.GONE);
             mBinding.layoutOpenAccount.setVisibility(TextUtils.isEmpty(mUser.getAccountID()) ? View.VISIBLE : View.GONE);
             mBinding.layoutSubscribe.setVisibility(View.VISIBLE);
+
+            getUserAddedServicesStatus();
         }
     }
 
     private void getUserAddedServicesStatus() {
-        sendRequest(ManagementService.getInstance().getUserAddedServicesStatus, new HashMap<>(), false);
+        sendRequest(ManagementService.getInstance().getUserAddedServicesStatus, new HashMap<>(), false, false, false);
     }
 
     @Override
@@ -96,10 +90,15 @@ public class PersonalFragment extends JMEBaseFragment {
 
         switch (request.getApi().getName()) {
             case "GetUserAddedServicesStatus":
-                if (head.isSuccess())
-                    ARouter.getInstance().build(Constants.ARouterUriConst.CHECKSERVICE).navigation();
+                if (null == response)
+                    mIncrementState = "";
                 else
-                    ARouter.getInstance().build(Constants.ARouterUriConst.VALUEADDEDSERVICE).navigation();
+                    mIncrementState = response.toString();
+
+                mBinding.tvIncrementState.setText(mIncrementState.equals("T") ? R.string.personal_increment_state_open
+                        : R.string.personal_increment_state_unopen);
+                mBinding.tvIncrementState.setTextColor(mIncrementState.equals("T") ? ContextCompat.getColor(mContext, R.color.color_text_black)
+                        : ContextCompat.getColor(mContext, R.color.color_ff3300));
 
                 break;
         }
@@ -120,10 +119,14 @@ public class PersonalFragment extends JMEBaseFragment {
         }
 
         public void onClickIncrement() {
-            if (null == mUser || !mUser.isLogin())
+            if (null == mUser || !mUser.isLogin()) {
                 ARouter.getInstance().build(Constants.ARouterUriConst.ACCOUNTLOGIN).navigation();
-            else
-                getUserAddedServicesStatus();
+            } else {
+                if (mIncrementState.equals("T"))
+                    ARouter.getInstance().build(Constants.ARouterUriConst.CHECKSERVICE).navigation();
+                else
+                    ARouter.getInstance().build(Constants.ARouterUriConst.VALUEADDEDSERVICE).navigation();
+            }
         }
 
         public void onClickCustomerService() {

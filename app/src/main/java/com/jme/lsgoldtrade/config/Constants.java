@@ -1,7 +1,5 @@
 package com.jme.lsgoldtrade.config;
 
-import retrofit2.http.PUT;
-
 /**
  * 网络配置
  */
