@@ -126,13 +126,13 @@
             android:name=".ui.personal.ValueAddedServiceActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.login.NameCardCheckActivity"
+            android:name=".ui.trade.AuthenticationActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.login.LoginPwdActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.login.BindUserNameActivity"
+            android:name=".ui.trade.BindAccountActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.personal.MySubscribeActivity"

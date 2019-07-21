@@ -1,4 +1,4 @@
-package com.jme.lsgoldtrade.ui.login;
+package com.jme.lsgoldtrade.ui.trade;
 
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -10,7 +10,7 @@ import com.jme.common.network.Head;
 import com.jme.lsgoldtrade.R;
 import com.jme.lsgoldtrade.base.JMEBaseActivity;
 import com.jme.lsgoldtrade.config.Constants;
-import com.jme.lsgoldtrade.databinding.ActivityNameCardCheckBinding;
+import com.jme.lsgoldtrade.databinding.ActivityAuthenticationBinding;
 import com.jme.lsgoldtrade.domain.IdentityInfoVo;
 import com.jme.lsgoldtrade.service.TradeService;
 import com.jme.lsgoldtrade.util.IntentUtils;
@@ -21,30 +21,30 @@ import java.util.HashMap;
 /**
  * 身份验证
  */
-@Route(path = Constants.ARouterUriConst.NAMECARDCHECK)
-public class NameCardCheckActivity extends JMEBaseActivity {
+@Route(path = Constants.ARouterUriConst.AUTHENTICATION)
+public class AuthenticationActivity extends JMEBaseActivity {
 
-    private ActivityNameCardCheckBinding mBinding;
+    private ActivityAuthenticationBinding mBinding;
     private String tag;
     private String name;
     private String idCard;
 
     @Override
     protected int getContentViewId() {
-        return R.layout.activity_name_card_check;
+        return R.layout.activity_authentication;
     }
 
     @Override
     protected void initView() {
         super.initView();
-        mBinding = (ActivityNameCardCheckBinding) mBindingUtil;
+        mBinding = (ActivityAuthenticationBinding) mBindingUtil;
         initToolbar("身份验证", true);
     }
 
     @Override
     protected void initData(Bundle savedInstanceState) {
         super.initData(savedInstanceState);
-        tag = getIntent().getStringExtra("tag");
+        tag = getIntent().getStringExtra("Type");
         if ("1".equals(tag)) {
             mBinding.btnBind.setText("立即绑定");
         } else {
@@ -105,7 +105,7 @@ public class NameCardCheckActivity extends JMEBaseActivity {
                         String name = mBinding.etName.getText().toString().trim();
                         String namecard = mBinding.etNameCard.getText().toString().trim();
                         ARouter.getInstance()
-                                .build(Constants.ARouterUriConst.BINDUSERNAME)
+                                .build(Constants.ARouterUriConst.BINDACCOUNT)
                                 .withString("name", name)
                                 .withString("card", namecard)
                                 .navigation();

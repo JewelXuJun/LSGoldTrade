@@ -3,16 +3,24 @@ package com.jme.lsgoldtrade.domain;
 public class IdentityInfoVo {
 
     /**
-     * name : 张三
-     * idCard : 320981198525478550
-     * account : 1311015122103
+     * "flag":"N",
+     * "name":null,
+     * "idCard":null
      */
+
+    private String flag;
 
     private String name;
 
     private String idCard;
 
-    private String account;
+    public String getFlag() {
+        return flag;
+    }
+
+    public void setFlag(String flag) {
+        this.flag = flag;
+    }
 
     public String getName() {
         return name;
@@ -28,13 +36,5 @@ public class IdentityInfoVo {
 
     public void setIdCard(String idCard) {
         this.idCard = idCard;
-    }
-
-    public String getAccount() {
-        return account;
-    }
-
-    public void setAccount(String account) {
-        this.account = account;
     }
 }

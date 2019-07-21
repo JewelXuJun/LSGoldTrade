@@ -152,9 +152,9 @@ public class Constants {
         public static final String QUESTIONABOUT = "/Personal/QuestionAboutActivity";
         public static final String REGISTERSUCCESS = "/PersonalFragment/RegisterSuccessActivity";
         public static final String MYSUBSCRIBE = "/PersonalFragment/MySubscribeActivity";
-        public static final String BINDUSERNAME = "/Login/BindUserNameActivity";
+        public static final String BINDACCOUNT = "/Login/BindAccountActivity";
         public static final String LOGINPWD = "/Login/LoginPwdActivity";
-        public static final String NAMECARDCHECK = "/Login/NameCardCheckActivity";
+        public static final String AUTHENTICATION = "/Login/AuthenticationActivity";
         public static final String VALUESERVICESUCCESS = "/Personal/ValueServiceSuccessActivity";
         public static final String RECHARGE = "/Personal/RechargeActivity";
         public static final String CHECKSERVICE = "/Personal/CheckServiceActivity";

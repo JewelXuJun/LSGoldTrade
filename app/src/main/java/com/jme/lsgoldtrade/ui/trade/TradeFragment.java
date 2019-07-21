@@ -43,8 +43,6 @@ public class TradeFragment extends JMEBaseFragment {
 
     private TabViewPagerAdapter mAdapter;
 
-    private IdentityInfoVo mIdentityInfoVo;
-
     private Subscription mRxbus;
 
     @Override
@@ -93,12 +91,10 @@ public class TradeFragment extends JMEBaseFragment {
         if (null == mUser || !mUser.isLogin()) {
             setUnLoginLayout();
         } else {
-            if (TextUtils.isEmpty(mUser.getAccountID())) {
+            if (TextUtils.isEmpty(mUser.getAccountID()))
                 setUnLoginLayout();
-                getWhetherIdCard();
-            } else {
+            else
                 setLoginLayout();
-            }
         }
     }
 
@@ -182,7 +178,7 @@ public class TradeFragment extends JMEBaseFragment {
     }
 
     private void getWhetherIdCard() {
-        sendRequest(TradeService.getInstance().whetherIdCard, new HashMap<>(), false, false, false);
+        sendRequest(TradeService.getInstance().whetherIdCard, new HashMap<>(), true);
     }
 
     @Override
@@ -192,12 +188,35 @@ public class TradeFragment extends JMEBaseFragment {
         switch (request.getApi().getName()) {
             case "WhetherIdCard":
                 if (head.isSuccess()) {
+                    IdentityInfoVo identityInfoVo;
+
                     try {
-                        mIdentityInfoVo = (IdentityInfoVo) response;
+                        identityInfoVo = (IdentityInfoVo) response;
                     } catch (Exception e) {
-                        mIdentityInfoVo = null;
+                        identityInfoVo = null;
 
                         e.printStackTrace();
+                    }
+
+                    if (null == identityInfoVo)
+                        return;
+
+                    String flag = identityInfoVo.getFlag();
+
+                    if (TextUtils.isEmpty(flag))
+                        return;
+
+                    if (flag.equals("Y")) {
+                        ARouter.getInstance()
+                                .build(Constants.ARouterUriConst.BINDACCOUNT)
+                                .withString("name", identityInfoVo.getName())
+                                .withString("card", identityInfoVo.getIdCard())
+                                .navigation();
+                    } else {
+                        ARouter.getInstance()
+                                .build(Constants.ARouterUriConst.AUTHENTICATION)
+                                .withString("Type", "2")
+                                .navigation();
                     }
                 }
 
@@ -219,31 +238,16 @@ public class TradeFragment extends JMEBaseFragment {
                 ARouter.getInstance().build(Constants.ARouterUriConst.ACCOUNTLOGIN).navigation();
             else
                 ARouter.getInstance()
-                        .build(Constants.ARouterUriConst.NAMECARDCHECK)
-                        .withString("tag", "1")
+                        .build(Constants.ARouterUriConst.AUTHENTICATION)
+                        .withString("Type", "1")
                         .navigation();
         }
 
         public void onClickBind() {
-            if (null == mUser || !mUser.isLogin()) {
+            if (null == mUser || !mUser.isLogin())
                 ARouter.getInstance().build(Constants.ARouterUriConst.ACCOUNTLOGIN).navigation();
-            } else {
-                String name = mIdentityInfoVo.getName();
-
-                if (TextUtils.isEmpty(name)) {
-                    ARouter.getInstance()
-                            .build(Constants.ARouterUriConst.NAMECARDCHECK)
-                            .withString("tag", "2")
-                            .navigation();
-                } else {
-                    String idCard = mIdentityInfoVo.getIdCard();
-                    ARouter.getInstance()
-                            .build(Constants.ARouterUriConst.BINDUSERNAME)
-                            .withString("name", name)
-                            .withString("card", idCard)
-                            .navigation();
-                }
-            }
+            else
+                getWhetherIdCard();
         }
     }
 

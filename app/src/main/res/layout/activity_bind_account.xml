@@ -6,7 +6,7 @@
 
         <variable
             name="handlers"
-            type="com.jme.lsgoldtrade.ui.login.BindUserNameActivity.ClickHandlers" />
+            type="com.jme.lsgoldtrade.ui.trade.BindAccountActivity.ClickHandlers" />
 
     </data>
 

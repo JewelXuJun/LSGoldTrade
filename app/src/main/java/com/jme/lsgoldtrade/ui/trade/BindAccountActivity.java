@@ -1,4 +1,4 @@
-package com.jme.lsgoldtrade.ui.login;
+package com.jme.lsgoldtrade.ui.trade;
 
 import android.os.Bundle;
 import android.os.Handler;
@@ -16,10 +16,8 @@ import com.jme.common.util.AppManager;
 import com.jme.lsgoldtrade.R;
 import com.jme.lsgoldtrade.base.JMEBaseActivity;
 import com.jme.lsgoldtrade.config.Constants;
-import com.jme.lsgoldtrade.config.User;
-import com.jme.lsgoldtrade.databinding.ActivityBindUserNameBinding;
+import com.jme.lsgoldtrade.databinding.ActivityBindAccountBinding;
 import com.jme.lsgoldtrade.domain.BindUserNameVo;
-import com.jme.lsgoldtrade.domain.UserInfoVo;
 import com.jme.lsgoldtrade.service.TradeService;
 import com.jme.lsgoldtrade.util.NormalUtils;
 import com.jme.lsgoldtrade.view.BindSuccessPopupWindow;
@@ -29,10 +27,10 @@ import java.util.HashMap;
 /**
  * 账号绑定
  */
-@Route(path = Constants.ARouterUriConst.BINDUSERNAME)
-public class BindUserNameActivity extends JMEBaseActivity {
+@Route(path = Constants.ARouterUriConst.BINDACCOUNT)
+public class BindAccountActivity extends JMEBaseActivity {
 
-    private ActivityBindUserNameBinding mBinding;
+    private ActivityBindAccountBinding mBinding;
 
     private JMECountDownTimer mCountDownTimer;
 
@@ -68,13 +66,13 @@ public class BindUserNameActivity extends JMEBaseActivity {
 
     @Override
     protected int getContentViewId() {
-        return R.layout.activity_bind_user_name;
+        return R.layout.activity_bind_account;
     }
 
     @Override
     protected void initView() {
         super.initView();
-        mBinding = (ActivityBindUserNameBinding) mBindingUtil;
+        mBinding = (ActivityBindAccountBinding) mBindingUtil;
         initToolbar("账号绑定", true);
         name = getIntent().getStringExtra("name");
         card = getIntent().getStringExtra("card");
