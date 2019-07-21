@@ -15,7 +15,7 @@
             android:gravity="center"
             android:text="盈亏设置风险报告"
             android:textSize="@dimen/sp_18"
-            android:textColor="@color/color_333"
+            android:textColor="@color/black_deep"
             />
 
         <include layout="@layout/item_line_vertical" />

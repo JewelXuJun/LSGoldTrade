@@ -13,7 +13,7 @@
             android:layout_height="60dp"
             android:text="浮动成交机制"
             android:textSize="@dimen/sp_18"
-            android:textColor="@color/color_333"
+            android:textColor="@color/black_deep"
             android:gravity="center"
             />
 

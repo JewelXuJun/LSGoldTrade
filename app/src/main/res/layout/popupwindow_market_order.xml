@@ -28,7 +28,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="@dimen/sp_18"
-                android:textColor="@color/color_333"
+                android:textColor="@color/black_deep"
                 android:layout_centerInParent="true"
                 />
 
@@ -69,7 +69,7 @@
                     android:layout_height="wrap_content"
                     android:text="黄金账号"
                     android:textSize="@dimen/sp_14"
-                    android:textColor="@color/color_333"
+                    android:textColor="@color/black_deep"
                     android:layout_marginRight="17dp"
                     />
 
@@ -78,7 +78,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="@dimen/sp_18"
-                    android:textColor="@color/color_333"
+                    android:textColor="@color/black_deep"
                     />
 
             </LinearLayout>
@@ -95,7 +95,7 @@
                     android:layout_height="wrap_content"
                     android:text="交易类型"
                     android:textSize="@dimen/sp_14"
-                    android:textColor="@color/color_333"
+                    android:textColor="@color/black_deep"
                     android:layout_marginRight="17dp"
                     />
 
@@ -104,7 +104,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="@dimen/sp_18"
-                    android:textColor="@color/color_333"
+                    android:textColor="@color/black_deep"
                     />
 
             </LinearLayout>
@@ -121,7 +121,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="委托价格"
-                    android:textColor="@color/color_333"
+                    android:textColor="@color/black_deep"
                     android:textSize="@dimen/sp_14" />
 
                 <LinearLayout
@@ -193,7 +193,7 @@
                     android:layout_height="wrap_content"
                     android:text="委托手数"
                     android:textSize="@dimen/sp_14"
-                    android:textColor="@color/color_333"
+                    android:textColor="@color/black_deep"
                     />
 
                 <LinearLayout
@@ -257,7 +257,7 @@
                     android:layout_height="wrap_content"
                     android:text="最大可买手数:"
                     android:textSize="@dimen/sp_12"
-                    android:textColor="@color/color_333"
+                    android:textColor="@color/black_deep"
                     />
 
             </LinearLayout>

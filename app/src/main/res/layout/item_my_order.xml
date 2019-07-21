@@ -102,7 +102,7 @@
             android:layout_height="wrap_content"
             android:text="2019/0301 17:17:17"
             android:textSize="@dimen/sp_12"
-            android:textColor="@color/color_ccc"
+            android:textColor="@color/color_text_gray_hint"
             />
 
         <TextView
@@ -110,7 +110,7 @@
             android:layout_width="44dp"
             android:layout_height="30dp"
             android:textSize="@dimen/sp_12"
-            android:textColor="@color/color_999"
+            android:textColor="@color/gray"
             android:gravity="center"
             android:layout_alignParentRight="true"
             android:layout_marginRight="10dp"

@@ -24,7 +24,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="请选择支付方式"
-                android:textColor="@color/color_333"
+                android:textColor="@color/black_deep"
                 android:textSize="@dimen/sp_18"
                 android:layout_centerInParent="true"
                 />

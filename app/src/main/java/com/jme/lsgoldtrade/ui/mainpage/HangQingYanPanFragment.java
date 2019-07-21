@@ -551,43 +551,43 @@ public class HangQingYanPanFragment extends JMEBaseFragment implements OnKChartS
     }
 
     private void FridayShow() {
-        mBinding.monday.setTextColor(getResources().getColor(R.color.color_333));
-        mBinding.tuesday.setTextColor(getResources().getColor(R.color.color_333));
-        mBinding.wednesday.setTextColor(getResources().getColor(R.color.color_333));
-        mBinding.thursday.setTextColor(getResources().getColor(R.color.color_333));
+        mBinding.monday.setTextColor(getResources().getColor(R.color.black_deep));
+        mBinding.tuesday.setTextColor(getResources().getColor(R.color.black_deep));
+        mBinding.wednesday.setTextColor(getResources().getColor(R.color.black_deep));
+        mBinding.thursday.setTextColor(getResources().getColor(R.color.black_deep));
         mBinding.friday.setTextColor(getResources().getColor(R.color.color_blue_deep));
     }
 
     private void ThursdayShow() {
-        mBinding.monday.setTextColor(getResources().getColor(R.color.color_333));
-        mBinding.tuesday.setTextColor(getResources().getColor(R.color.color_333));
-        mBinding.wednesday.setTextColor(getResources().getColor(R.color.color_333));
+        mBinding.monday.setTextColor(getResources().getColor(R.color.black_deep));
+        mBinding.tuesday.setTextColor(getResources().getColor(R.color.black_deep));
+        mBinding.wednesday.setTextColor(getResources().getColor(R.color.black_deep));
         mBinding.thursday.setTextColor(getResources().getColor(R.color.color_blue_deep));
-        mBinding.friday.setTextColor(getResources().getColor(R.color.color_333));
+        mBinding.friday.setTextColor(getResources().getColor(R.color.black_deep));
     }
 
     private void WednesdayShow() {
-        mBinding.monday.setTextColor(getResources().getColor(R.color.color_333));
-        mBinding.tuesday.setTextColor(getResources().getColor(R.color.color_333));
+        mBinding.monday.setTextColor(getResources().getColor(R.color.black_deep));
+        mBinding.tuesday.setTextColor(getResources().getColor(R.color.black_deep));
         mBinding.wednesday.setTextColor(getResources().getColor(R.color.color_blue_deep));
-        mBinding.thursday.setTextColor(getResources().getColor(R.color.color_333));
-        mBinding.friday.setTextColor(getResources().getColor(R.color.color_333));
+        mBinding.thursday.setTextColor(getResources().getColor(R.color.black_deep));
+        mBinding.friday.setTextColor(getResources().getColor(R.color.black_deep));
     }
 
     private void TuesdayShow() {
-        mBinding.monday.setTextColor(getResources().getColor(R.color.color_333));
+        mBinding.monday.setTextColor(getResources().getColor(R.color.black_deep));
         mBinding.tuesday.setTextColor(getResources().getColor(R.color.color_blue_deep));
-        mBinding.wednesday.setTextColor(getResources().getColor(R.color.color_333));
-        mBinding.thursday.setTextColor(getResources().getColor(R.color.color_333));
-        mBinding.friday.setTextColor(getResources().getColor(R.color.color_333));
+        mBinding.wednesday.setTextColor(getResources().getColor(R.color.black_deep));
+        mBinding.thursday.setTextColor(getResources().getColor(R.color.black_deep));
+        mBinding.friday.setTextColor(getResources().getColor(R.color.black_deep));
     }
 
     private void mondayShow() {
         mBinding.monday.setTextColor(getResources().getColor(R.color.color_blue_deep));
-        mBinding.tuesday.setTextColor(getResources().getColor(R.color.color_333));
-        mBinding.wednesday.setTextColor(getResources().getColor(R.color.color_333));
-        mBinding.thursday.setTextColor(getResources().getColor(R.color.color_333));
-        mBinding.friday.setTextColor(getResources().getColor(R.color.color_333));
+        mBinding.tuesday.setTextColor(getResources().getColor(R.color.black_deep));
+        mBinding.wednesday.setTextColor(getResources().getColor(R.color.black_deep));
+        mBinding.thursday.setTextColor(getResources().getColor(R.color.black_deep));
+        mBinding.friday.setTextColor(getResources().getColor(R.color.black_deep));
     }
 
     public void getInitKChartData() {

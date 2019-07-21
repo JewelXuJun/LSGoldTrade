@@ -81,7 +81,7 @@
                     android:layout_height="wrap_content"
                     android:text="已添加的快捷入口"
                     android:textSize="@dimen/sp_14"
-                    android:textColor="@color/color_333"
+                    android:textColor="@color/black_deep"
                     android:layout_marginTop="10dp"
                     android:layout_marginBottom="10dp"
                     />
@@ -98,7 +98,7 @@
                     android:layout_height="wrap_content"
                     android:text="未添加的快捷入口"
                     android:textSize="@dimen/sp_14"
-                    android:textColor="@color/color_333"
+                    android:textColor="@color/black_deep"
                     android:layout_marginTop="10dp"
                     android:layout_marginBottom="10dp"
                     />

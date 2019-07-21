@@ -54,7 +54,7 @@
                         android:layout_height="wrap_content"
                         android:text="起始时间"
                         android:textSize="@dimen/sp_12"
-                        android:textColor="@color/color_333"
+                        android:textColor="@color/black_deep"
                         />
 
                     <TextView
@@ -88,7 +88,7 @@
                         android:layout_height="wrap_content"
                         android:text="结束时间"
                         android:textSize="@dimen/sp_12"
-                        android:textColor="@color/color_333"
+                        android:textColor="@color/black_deep"
                         />
 
                     <TextView

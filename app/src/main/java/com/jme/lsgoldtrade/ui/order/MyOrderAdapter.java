@@ -27,10 +27,10 @@ public class MyOrderAdapter extends BaseQuickAdapter<MyOrderVo, BaseViewHolder> 
     protected void convert(BaseViewHolder helper, MyOrderVo item) {
         if ("0".equals(item.getEntrustTheDirection())) {
             helper.setText(R.id.fangxiang, "多");
-            helper.setTextColor(R.id.fangxiang, context.getResources().getColor(R.color.color_ff3300));
+            helper.setTextColor(R.id.fangxiang, context.getResources().getColor(R.color.color_red));
         } else {
             helper.setText(R.id.fangxiang, "空");
-            helper.setTextColor(R.id.fangxiang, context.getResources().getColor(R.color.color_00cc00));
+            helper.setTextColor(R.id.fangxiang, context.getResources().getColor(R.color.color_green));
         }
         helper.setText(R.id.pingzhong, item.getOrders());
         helper.setText(R.id.time, item.getCratedTime());

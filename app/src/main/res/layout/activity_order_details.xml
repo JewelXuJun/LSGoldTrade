@@ -52,7 +52,7 @@
                         android:layout_height="wrap_content"
                         android:text="委托交易品种"
                         android:textSize="@dimen/sp_14"
-                        android:textColor="@color/color_333"
+                        android:textColor="@color/black_deep"
                         />
 
                     <TextView
@@ -61,7 +61,7 @@
                         android:layout_height="wrap_content"
                         android:text="Au(T+D)"
                         android:textSize="@dimen/sp_18"
-                        android:textColor="@color/color_333"
+                        android:textColor="@color/black_deep"
                         />
 
                 </LinearLayout>
@@ -80,7 +80,7 @@
                         android:layout_height="wrap_content"
                         android:text="委托方向"
                         android:textSize="@dimen/sp_14"
-                        android:textColor="@color/color_333"
+                        android:textColor="@color/black_deep"
                         />
 
                     <TextView
@@ -108,7 +108,7 @@
                         android:layout_height="wrap_content"
                         android:text="委托开仓时间段"
                         android:textSize="@dimen/sp_14"
-                        android:textColor="@color/color_333"
+                        android:textColor="@color/black_deep"
                         />
 
                     <LinearLayout
@@ -196,7 +196,7 @@
                         android:layout_height="wrap_content"
                         android:text="委托平仓时间段"
                         android:textSize="@dimen/sp_14"
-                        android:textColor="@color/color_333"
+                        android:textColor="@color/black_deep"
                         />
 
                     <LinearLayout
@@ -285,7 +285,7 @@
                         android:layout_height="wrap_content"
                         android:text="委托开仓价格"
                         android:textSize="@dimen/sp_14"
-                        android:textColor="@color/color_333"
+                        android:textColor="@color/black_deep"
                         />
 
                     <TextView
@@ -313,7 +313,7 @@
                         android:layout_height="wrap_content"
                         android:text="委托手数"
                         android:textSize="@dimen/sp_14"
-                        android:textColor="@color/color_333"
+                        android:textColor="@color/black_deep"
                         />
 
                     <TextView
@@ -343,7 +343,7 @@
                         android:layout_weight="1"
                         android:text="盈亏设置"
                         android:textSize="@dimen/sp_14"
-                        android:textColor="@color/color_333"
+                        android:textColor="@color/black_deep"
                         android:layout_marginTop="20dp"
                         />
 
@@ -360,7 +360,7 @@
                             android:layout_height="wrap_content"
                             android:text="盈利平仓线 50点"
                             android:textSize="@dimen/sp_15"
-                            android:textColor="@color/color_ff3300"
+                            android:textColor="@color/color_red"
                             android:layout_marginTop="20dp"
                             android:layout_marginBottom="20dp"
                             />
@@ -373,7 +373,7 @@
                             android:layout_height="wrap_content"
                             android:text="亏损平仓线 50点"
                             android:textSize="@dimen/sp_15"
-                            android:textColor="@color/color_00cc00"
+                            android:textColor="@color/color_green"
                             android:layout_marginTop="20dp"
                             android:layout_marginBottom="20dp"
                             />
@@ -418,7 +418,7 @@
                         android:layout_height="wrap_content"
                         android:text="下单时间"
                         android:textSize="@dimen/sp_14"
-                        android:textColor="@color/color_333"
+                        android:textColor="@color/black_deep"
                         />
 
                     <TextView
@@ -427,7 +427,7 @@
                         android:layout_height="wrap_content"
                         android:text="2019/0303 17:17:17"
                         android:textSize="@dimen/sp_18"
-                        android:textColor="@color/color_333"
+                        android:textColor="@color/black_deep"
                         />
 
                 </LinearLayout>
@@ -446,7 +446,7 @@
                         android:layout_height="wrap_content"
                         android:text="状态"
                         android:textSize="@dimen/sp_14"
-                        android:textColor="@color/color_333"
+                        android:textColor="@color/black_deep"
                         />
 
                     <TextView
@@ -455,7 +455,7 @@
                         android:layout_height="wrap_content"
                         android:text="委托中"
                         android:textSize="@dimen/sp_18"
-                        android:textColor="@color/color_333"
+                        android:textColor="@color/black_deep"
                         />
 
                 </LinearLayout>

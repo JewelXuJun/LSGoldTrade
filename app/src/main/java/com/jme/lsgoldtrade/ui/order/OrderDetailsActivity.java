@@ -99,10 +99,10 @@ public class OrderDetailsActivity extends JMEBaseActivity {
                     String entrustTheDirection = value.getEntrustTheDirection();
                     if ("0".equals(entrustTheDirection)) {
                         mBinding.chooseDirection.setText("多");
-                        mBinding.chooseDirection.setTextColor(getResources().getColor(R.color.color_ff3300));
+                        mBinding.chooseDirection.setTextColor(getResources().getColor(R.color.color_red));
                     } else if ("1".equals(entrustTheDirection)) {
                         mBinding.chooseDirection.setText("空");
-                        mBinding.chooseDirection.setTextColor(getResources().getColor(R.color.color_00cc00));
+                        mBinding.chooseDirection.setTextColor(getResources().getColor(R.color.color_green));
                     }
                     mBinding.kaicangjiage.setText(value.getAuthorizedOpeningPrice() + "");
                     mBinding.time.setText(value.getCratedTime());

@@ -25,7 +25,7 @@
                 android:layout_height="wrap_content"
                 android:text="盈亏设置"
                 android:textSize="@dimen/sp_18"
-                android:textColor="@color/color_333"
+                android:textColor="@color/black_deep"
                 android:layout_centerInParent="true"
                 />
 
@@ -96,7 +96,7 @@
                     android:layout_weight="1"
                     android:text="价格"
                     android:textSize="@dimen/sp_14"
-                    android:textColor="@color/color_333"
+                    android:textColor="@color/black_deep"
                     android:gravity="center"
                     android:background="@drawable/drawable_price"
 
@@ -109,7 +109,7 @@
                     android:layout_weight="1"
                     android:text="点数"
                     android:textSize="@dimen/sp_18"
-                    android:textColor="@color/color_333"
+                    android:textColor="@color/black_deep"
                     android:gravity="center"
                     />
 
@@ -155,7 +155,7 @@
                             android:layout_height="wrap_content"
                             android:text="盈利平仓线"
                             android:textSize="@dimen/sp_14"
-                            android:textColor="@color/color_ff3300"
+                            android:textColor="@color/color_red"
                             />
 
                     </LinearLayout>
@@ -195,7 +195,7 @@
                             android:gravity="center"
                             android:inputType="numberDecimal"
                             android:maxLines="1"
-                            android:textColor="@color/color_ff3300"
+                            android:textColor="@color/color_red"
                             android:textColorHint="@color/color_text_hint"
                             android:textSize="@dimen/sp_16" />
 
@@ -223,7 +223,7 @@
                         android:layout_height="wrap_content"
                         android:text="元"
                         android:textSize="@dimen/sp_15"
-                        android:textColor="@color/color_ff3300"
+                        android:textColor="@color/color_red"
                         android:layout_marginLeft="8dp"
                         />
 
@@ -261,7 +261,7 @@
                             android:layout_height="wrap_content"
                             android:text="亏损平仓线"
                             android:textSize="@dimen/sp_14"
-                            android:textColor="@color/color_00cc00"
+                            android:textColor="@color/color_green"
                             />
 
                     </LinearLayout>
@@ -301,7 +301,7 @@
                             android:gravity="center"
                             android:inputType="numberDecimal"
                             android:maxLines="1"
-                            android:textColor="@color/color_00cc00"
+                            android:textColor="@color/color_green"
                             android:textColorHint="@color/color_text_hint"
                             android:textSize="@dimen/sp_16" />
 
@@ -329,7 +329,7 @@
                         android:layout_height="wrap_content"
                         android:text="元"
                         android:textSize="@dimen/sp_15"
-                        android:textColor="@color/color_00cc00"
+                        android:textColor="@color/color_green"
                         android:layout_marginLeft="8dp"
                         />
 
@@ -377,7 +377,7 @@
                             android:layout_height="wrap_content"
                             android:text="盈利平仓线"
                             android:textSize="@dimen/sp_14"
-                            android:textColor="@color/color_ff3300"
+                            android:textColor="@color/color_red"
                             />
 
                     </LinearLayout>
@@ -417,7 +417,7 @@
                             android:gravity="center"
                             android:inputType="numberDecimal"
                             android:maxLines="1"
-                            android:textColor="@color/color_ff3300"
+                            android:textColor="@color/color_red"
                             android:textColorHint="@color/color_text_hint"
                             android:textSize="@dimen/sp_16" />
 
@@ -445,7 +445,7 @@
                         android:layout_height="wrap_content"
                         android:text="点"
                         android:textSize="@dimen/sp_15"
-                        android:textColor="@color/color_ff3300"
+                        android:textColor="@color/color_red"
                         android:layout_marginLeft="8dp"
                         />
 
@@ -483,7 +483,7 @@
                             android:layout_height="wrap_content"
                             android:text="亏损平仓线"
                             android:textSize="@dimen/sp_14"
-                            android:textColor="@color/color_00cc00"
+                            android:textColor="@color/color_green"
                             />
 
                     </LinearLayout>
@@ -523,7 +523,7 @@
                             android:gravity="center"
                             android:inputType="numberDecimal"
                             android:maxLines="1"
-                            android:textColor="@color/color_00cc00"
+                            android:textColor="@color/color_green"
                             android:textColorHint="@color/color_text_hint"
                             android:textSize="@dimen/sp_16" />
 
@@ -551,7 +551,7 @@
                         android:layout_height="wrap_content"
                         android:text="点"
                         android:textSize="@dimen/sp_15"
-                        android:textColor="@color/color_00cc00"
+                        android:textColor="@color/color_green"
                         android:layout_marginLeft="8dp"
                         />
 

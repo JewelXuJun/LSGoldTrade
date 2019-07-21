@@ -25,7 +25,7 @@
                 android:layout_height="wrap_content"
                 android:text="盈亏设置"
                 android:textSize="@dimen/sp_18"
-                android:textColor="@color/color_333"
+                android:textColor="@color/black_deep"
                 android:layout_centerInParent="true"
                 />
 
@@ -66,7 +66,7 @@
                     android:layout_height="wrap_content"
                     android:text="黄金账号"
                     android:textSize="@dimen/sp_14"
-                    android:textColor="@color/color_333"
+                    android:textColor="@color/black_deep"
                     android:layout_marginRight="17dp"
                     />
 
@@ -76,7 +76,7 @@
                     android:layout_height="wrap_content"
                     android:text="黄金账号"
                     android:textSize="@dimen/sp_18"
-                    android:textColor="@color/color_333"
+                    android:textColor="@color/black_deep"
                     />
 
             </LinearLayout>
@@ -93,7 +93,7 @@
                     android:layout_height="wrap_content"
                     android:text="交易类型"
                     android:textSize="@dimen/sp_14"
-                    android:textColor="@color/color_333"
+                    android:textColor="@color/black_deep"
                     android:layout_marginRight="17dp"
                     />
 
@@ -103,7 +103,7 @@
                     android:layout_height="wrap_content"
                     android:text="买入开仓"
                     android:textSize="@dimen/sp_18"
-                    android:textColor="@color/color_333"
+                    android:textColor="@color/black_deep"
                     />
 
             </LinearLayout>
@@ -120,7 +120,7 @@
                     android:layout_height="wrap_content"
                     android:text="委托品种"
                     android:textSize="@dimen/sp_14"
-                    android:textColor="@color/color_333"
+                    android:textColor="@color/black_deep"
                     android:layout_marginRight="17dp"
                     />
 
@@ -130,7 +130,7 @@
                     android:layout_height="wrap_content"
                     android:text="Au(T+D)"
                     android:textSize="@dimen/sp_18"
-                    android:textColor="@color/color_333"
+                    android:textColor="@color/black_deep"
                     />
 
             </LinearLayout>
@@ -147,7 +147,7 @@
                     android:layout_height="wrap_content"
                     android:text="委托价格"
                     android:textSize="@dimen/sp_14"
-                    android:textColor="@color/color_333"
+                    android:textColor="@color/black_deep"
                     android:layout_marginRight="17dp"
                     />
 
@@ -157,7 +157,7 @@
                     android:layout_height="wrap_content"
                     android:text="3500"
                     android:textSize="@dimen/sp_18"
-                    android:textColor="@color/color_333"
+                    android:textColor="@color/black_deep"
                     />
 
             </LinearLayout>
@@ -174,7 +174,7 @@
                     android:layout_height="wrap_content"
                     android:text="委托数量"
                     android:textSize="@dimen/sp_14"
-                    android:textColor="@color/color_333"
+                    android:textColor="@color/black_deep"
                     android:layout_marginRight="17dp"
                     />
 
@@ -184,7 +184,7 @@
                     android:layout_height="wrap_content"
                     android:text="1"
                     android:textSize="@dimen/sp_18"
-                    android:textColor="@color/color_333"
+                    android:textColor="@color/black_deep"
                     />
 
             </LinearLayout>

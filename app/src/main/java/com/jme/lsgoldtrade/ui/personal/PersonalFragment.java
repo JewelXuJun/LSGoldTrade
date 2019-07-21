@@ -98,7 +98,7 @@ public class PersonalFragment extends JMEBaseFragment {
                 mBinding.tvIncrementState.setText(mIncrementState.equals("T") ? R.string.personal_increment_state_open
                         : R.string.personal_increment_state_unopen);
                 mBinding.tvIncrementState.setTextColor(mIncrementState.equals("T") ? ContextCompat.getColor(mContext, R.color.color_text_black)
-                        : ContextCompat.getColor(mContext, R.color.color_ff3300));
+                        : ContextCompat.getColor(mContext, R.color.color_red));
 
                 break;
         }

@@ -46,7 +46,7 @@
                 android:layout_height="wrap_content"
                 android:text="323.62"
                 android:textSize="@dimen/sp_18"
-                android:textColor="@color/color_ff3300"
+                android:textColor="@color/color_red"
                 />
 
         </LinearLayout>
@@ -84,7 +84,7 @@
             android:layout_weight="1"
             android:text="查看详情"
             android:textSize="@dimen/sp_14"
-            android:textColor="@color/color_999"
+            android:textColor="@color/gray"
             android:lineSpacingExtra="6dp"
             android:gravity="center"
             />

@@ -102,7 +102,7 @@ public class PlaceOrderActivity extends JMEBaseActivity {
             mBinding.more.setBackground(getResources().getDrawable(R.drawable.choose_more));
             mBinding.kong.setBackground(getResources().getDrawable(R.drawable.bg_btn_kong_solid));
             mBinding.more.setTextColor(getResources().getColor(R.color.white));
-            mBinding.kong.setTextColor(getResources().getColor(R.color.color_00cc00));
+            mBinding.kong.setTextColor(getResources().getColor(R.color.color_green));
             isMore = "0";
         } else if ("1".equals(type)) {
             mBinding.more.setVisibility(View.VISIBLE);
@@ -110,7 +110,7 @@ public class PlaceOrderActivity extends JMEBaseActivity {
             mBinding.chooseDirection.setVisibility(View.GONE);
             mBinding.more.setBackground(getResources().getDrawable(R.drawable.bg_btn_more_solid));
             mBinding.kong.setBackground(getResources().getDrawable(R.drawable.choose_kong));
-            mBinding.more.setTextColor(getResources().getColor(R.color.color_ff3300));
+            mBinding.more.setTextColor(getResources().getColor(R.color.color_red));
             mBinding.kong.setTextColor(getResources().getColor(R.color.white));
             isMore = "1";
         } else if ("2".equals(type)) {
@@ -119,14 +119,14 @@ public class PlaceOrderActivity extends JMEBaseActivity {
                 mBinding.kong.setVisibility(View.GONE);
                 mBinding.chooseDirection.setVisibility(View.VISIBLE);
                 mBinding.chooseDirection.setText("多");
-                mBinding.chooseDirection.setTextColor(getResources().getColor(R.color.color_ff3300));
+                mBinding.chooseDirection.setTextColor(getResources().getColor(R.color.color_red));
                 isMore = "0";
             } else {
                 mBinding.more.setVisibility(View.GONE);
                 mBinding.kong.setVisibility(View.GONE);
                 mBinding.chooseDirection.setVisibility(View.VISIBLE);
                 mBinding.chooseDirection.setText("空");
-                mBinding.chooseDirection.setTextColor(getResources().getColor(R.color.color_00cc00));
+                mBinding.chooseDirection.setTextColor(getResources().getColor(R.color.color_green));
                 isMore = "1";
             }
 
@@ -136,14 +136,14 @@ public class PlaceOrderActivity extends JMEBaseActivity {
                 mBinding.kong.setVisibility(View.GONE);
                 mBinding.chooseDirection.setVisibility(View.VISIBLE);
                 mBinding.chooseDirection.setText("多");
-                mBinding.chooseDirection.setTextColor(getResources().getColor(R.color.color_ff3300));
+                mBinding.chooseDirection.setTextColor(getResources().getColor(R.color.color_red));
                 isMore = "0";
             } else {
                 mBinding.more.setVisibility(View.GONE);
                 mBinding.kong.setVisibility(View.GONE);
                 mBinding.chooseDirection.setVisibility(View.VISIBLE);
                 mBinding.chooseDirection.setText("空");
-                mBinding.chooseDirection.setTextColor(getResources().getColor(R.color.color_00cc00));
+                mBinding.chooseDirection.setTextColor(getResources().getColor(R.color.color_green));
                 isMore = "1";
             }
         }
@@ -571,14 +571,14 @@ public class PlaceOrderActivity extends JMEBaseActivity {
             mBinding.more.setBackground(getResources().getDrawable(R.drawable.choose_more));
             mBinding.kong.setBackground(getResources().getDrawable(R.drawable.bg_btn_kong_solid));
             mBinding.more.setTextColor(getResources().getColor(R.color.white));
-            mBinding.kong.setTextColor(getResources().getColor(R.color.color_00cc00));
+            mBinding.kong.setTextColor(getResources().getColor(R.color.color_green));
             isMore = "0";
         }
 
         public void onClickKong() {
             mBinding.more.setBackground(getResources().getDrawable(R.drawable.bg_btn_more_solid));
             mBinding.kong.setBackground(getResources().getDrawable(R.drawable.choose_kong));
-            mBinding.more.setTextColor(getResources().getColor(R.color.color_ff3300));
+            mBinding.more.setTextColor(getResources().getColor(R.color.color_red));
             mBinding.kong.setTextColor(getResources().getColor(R.color.white));
             isMore = "1";
         }

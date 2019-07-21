@@ -198,7 +198,7 @@ public class TradingBoxActivity extends JMEBaseActivity {
         int closeTime = historyListVoList.get(i).getCloseTime();
         if (closeTime <= 0) {
             mBinding.tradingBuy.setEnabled(false);
-            mBinding.tradingBuy.setBackgroundResource(R.color.color_bfc9d3);
+            mBinding.tradingBuy.setBackgroundResource(R.color.color_white);
         } else {
             mBinding.tradingBuy.setEnabled(true);
             mBinding.tradingBuy.setBackgroundResource(R.color.color_blue_deep);

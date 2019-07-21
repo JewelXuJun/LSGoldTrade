@@ -29,7 +29,7 @@ public class DialogUtils {
                 .positiveText(positive)
                 .positiveColor(context.getResources().getColor(R.color.color_blue_deep))
                 .negativeText(negative)
-                .negativeColor(context.getResources().getColor(R.color.color_333))
+                .negativeColor(context.getResources().getColor(R.color.black_deep))
                 .onPositive(new MaterialDialog.SingleButtonCallback() {
                     @Override
                     public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
@@ -55,7 +55,7 @@ public class DialogUtils {
                 .positiveText(positive)
                 .positiveColor(context.getResources().getColor(R.color.color_blue_deep))
                 .negativeText(negative)
-                .negativeColor(context.getResources().getColor(R.color.color_333))
+                .negativeColor(context.getResources().getColor(R.color.black_deep))
                 .onPositive(new MaterialDialog.SingleButtonCallback() {
                     @Override
                     public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
@@ -81,7 +81,7 @@ public class DialogUtils {
                 .positiveText(positive)
                 .positiveColor(context.getResources().getColor(R.color.color_blue_deep))
                 .negativeText(negative)
-                .negativeColor(context.getResources().getColor(R.color.color_333))
+                .negativeColor(context.getResources().getColor(R.color.black_deep))
                 .onPositive(new MaterialDialog.SingleButtonCallback() {
                     @Override
                     public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {

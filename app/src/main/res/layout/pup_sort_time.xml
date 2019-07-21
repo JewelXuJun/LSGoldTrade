@@ -25,7 +25,7 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="@color/color_e6e6e6"
+        android:background="@color/common_line_divider_list"
         />
 
     <TextView
@@ -42,7 +42,7 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="@color/color_e6e6e6"
+        android:background="@color/common_line_divider_list"
         />
 
     <TextView
@@ -59,7 +59,7 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="@color/color_e6e6e6"
+        android:background="@color/common_line_divider_list"
         />
 
     <TextView
@@ -76,7 +76,7 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="@color/color_e6e6e6"
+        android:background="@color/common_line_divider_list"
         />
 
     <TextView

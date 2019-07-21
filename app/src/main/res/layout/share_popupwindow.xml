@@ -30,7 +30,7 @@
                 android:layout_weight="1"
                 android:text="微信"
                 android:textSize="@dimen/sp_12"
-                android:textColor="@color/color_999"
+                android:textColor="@color/gray"
                 android:gravity="center"
                 android:drawablePadding="5dp"
                 />
@@ -44,7 +44,7 @@
                 android:layout_weight="1"
                 android:text="朋友圈"
                 android:textSize="@dimen/sp_12"
-                android:textColor="@color/color_999"
+                android:textColor="@color/gray"
                 android:gravity="center"
                 android:drawablePadding="5dp"
                 />
@@ -59,7 +59,7 @@
                 android:layout_weight="1"
                 android:text="微博"
                 android:textSize="@dimen/sp_12"
-                android:textColor="@color/color_999"
+                android:textColor="@color/gray"
                 android:gravity="center"
                 android:drawablePadding="5dp"
                 />
@@ -82,7 +82,7 @@
             android:layout_weight="1"
             android:text="取消"
             android:textSize="@dimen/sp_14"
-            android:textColor="@color/color_999"
+            android:textColor="@color/gray"
             android:gravity="center"
             />
 

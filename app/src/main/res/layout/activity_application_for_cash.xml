@@ -43,7 +43,7 @@
                 android:layout_height="wrap_content"
                 android:text="可提现金额"
                 android:textSize="@dimen/sp_14"
-                android:textColor="@color/color_333"
+                android:textColor="@color/black_deep"
                 android:layout_gravity="center_vertical"
                 />
 
@@ -53,7 +53,7 @@
                 android:layout_height="wrap_content"
                 android:text="当前账户余额"
                 android:textSize="@dimen/sp_14"
-                android:textColor="@color/color_333"
+                android:textColor="@color/black_deep"
                 android:layout_gravity="center_vertical"
                 android:layout_marginLeft="30dp"
                 />
@@ -85,7 +85,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="@dimen/sp_18"
-                android:textColor="@color/color_333"
+                android:textColor="@color/black_deep"
                 android:layout_gravity="center_vertical"
                 android:layout_marginLeft="30dp"
                 />
@@ -100,7 +100,7 @@
             android:textColor="@color/color_text_normal"
             android:paddingLeft="25dp"
             android:gravity="center_vertical"
-            android:background="@color/color_fafafa"
+            android:background="@color/color_tabhost"
             />
 
         <include layout="@layout/item_line_vertical" />

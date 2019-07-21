@@ -5,7 +5,7 @@
     android:layout_height="44dp"
     android:text="以上内容及建议，仅供参考，据此操作盈亏自负。"
     android:textSize="@dimen/sp_12"
-    android:textColor="@color/color_999"
+    android:textColor="@color/gray"
     android:gravity="center_vertical"
     android:layout_gravity="center_horizontal"
     />
