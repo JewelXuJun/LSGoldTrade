@@ -93,10 +93,12 @@ public class TradeFragment extends JMEBaseFragment {
         if (null == mUser || !mUser.isLogin()) {
             setUnLoginLayout();
         } else {
-            if (TextUtils.isEmpty(mUser.getAccountID()))
+            if (TextUtils.isEmpty(mUser.getAccountID())) {
                 setUnLoginLayout();
-            else
+                getWhetherIdCard();
+            } else {
                 setLoginLayout();
+            }
         }
     }
 
@@ -131,7 +133,6 @@ public class TradeFragment extends JMEBaseFragment {
         setCourseLayout(mContext.getResources().getString(R.string.trade_open_account_course));
 
 //            PicassoUtils.getInstance().loadImg(mContext, url, mBinding.imgBanner);
-        getWhetherIdCard();
     }
 
     private void setLoginLayout() {
