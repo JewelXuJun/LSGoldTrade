@@ -8,14 +8,6 @@
 
     <include layout="@layout/item_line_vertical" />
 
-    <ProgressBar
-        android:id="@+id/pb"
-        style="?android:attr/progressBarStyleHorizontal"
-        android:layout_width="match_parent"
-        android:layout_height="3dp"
-        android:max="100"
-        android:progressDrawable="@drawable/gress" />
-
     <WebView
         android:id="@+id/webview"
         android:layout_width="match_parent"

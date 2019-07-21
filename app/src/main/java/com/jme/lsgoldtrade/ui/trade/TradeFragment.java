@@ -5,7 +5,14 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.content.ContextCompat;
+import android.text.SpannableString;
+import android.text.Spanned;
+import android.text.TextPaint;
 import android.text.TextUtils;
+import android.text.method.LinkMovementMethod;
+import android.text.style.ClickableSpan;
+import android.text.style.ForegroundColorSpan;
 import android.view.View;
 
 import com.alibaba.android.arouter.launcher.ARouter;
@@ -16,12 +23,9 @@ import com.jme.common.util.StatusBarUtil;
 import com.jme.lsgoldtrade.R;
 import com.jme.lsgoldtrade.base.JMEBaseFragment;
 import com.jme.lsgoldtrade.config.Constants;
-import com.jme.lsgoldtrade.config.User;
 import com.jme.lsgoldtrade.databinding.FragmentTradeBinding;
-import com.jme.lsgoldtrade.domain.VerifyIdCardVo;
+import com.jme.lsgoldtrade.domain.IdentityInfoVo;
 import com.jme.lsgoldtrade.service.TradeService;
-import com.jme.lsgoldtrade.util.SpanUtils;
-import com.orhanobut.logger.Logger;
 
 import java.util.HashMap;
 
@@ -35,17 +39,13 @@ public class TradeFragment extends JMEBaseFragment {
     private FragmentTradeBinding mBinding;
 
     private Fragment[] mFragmentArrays;
-
     private String[] mTabTitles;
 
     private TabViewPagerAdapter mAdapter;
 
-    private Subscription mRxbus;
+    private IdentityInfoVo mIdentityInfoVo;
 
-    private String url = "";
-    private String name;
-    private String idCard;
-    private VerifyIdCardVo value;
+    private Subscription mRxbus;
 
     @Override
     protected int getContentViewId() {
@@ -67,30 +67,6 @@ public class TradeFragment extends JMEBaseFragment {
     }
 
     @Override
-    public void onResume() {
-        super.onResume();
-
-        if (User.getInstance().isLogin() && !TextUtils.isEmpty(User.getInstance().getAccountID())) {
-            mBinding.layoutLogin.setVisibility(View.VISIBLE);
-            mBinding.layoutNoLogin.setVisibility(View.GONE);
-            mAdapter = new TabViewPagerAdapter(getChildFragmentManager());
-            initInfoTabs();
-
-            sendRequest(TradeService.getInstance().whetherIdCard, new HashMap<>(), true);
-        } else {
-            mBinding.layoutLogin.setVisibility(View.GONE);
-            mBinding.layoutNoLogin.setVisibility(View.VISIBLE);
-            mBinding.kaihujiaocheng.setText(new SpanUtils(mContext)
-                    .append("开户有疑问?来看看")
-                    .setForegroundColor(getResources().getColor(R.color.black))
-                    .append("开户教程")
-                    .setForegroundColor(getResources().getColor(R.color.color_blue_deep))
-                    .create());
-//            PicassoUtils.getInstance().loadImg(mContext, url, mBinding.imgBanner);
-        }
-    }
-
-    @Override
     protected void initListener() {
         super.initListener();
     }
@@ -103,24 +79,78 @@ public class TradeFragment extends JMEBaseFragment {
     }
 
     @Override
-    protected void DataReturn(DTRequest request, Head head, Object response) {
-        super.DataReturn(request, head, response);
-        switch (request.getApi().getName()) {
-            case "WhetherIdCard":
-                if (head.isSuccess()) {
-                    try {
-                        value = (VerifyIdCardVo) response;
-                    } catch (Exception e) {
-                        value = null;
-                        e.printStackTrace();
-                    }
+    public void onHiddenChanged(boolean hidden) {
+        super.onHiddenChanged(hidden);
 
-                    if (value == null) {
-                        return;
-                    }
-                }
-                break;
+        if (null != mBinding && null != mBinding.tabViewpager && null != mAdapter)
+            mAdapter.getItem(mBinding.tabViewpager.getCurrentItem()).onHiddenChanged(hidden);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        if (null == mUser || !mUser.isLogin()) {
+            setUnLoginLayout();
+        } else {
+            if (TextUtils.isEmpty(mUser.getAccountID()))
+                setUnLoginLayout();
+            else
+                setLoginLayout();
         }
+    }
+
+    private void initRxBus() {
+        mRxbus = RxBus.getInstance().toObserverable(RxBus.Message.class).subscribe(message -> {
+            String callType = message.getObject().toString();
+
+            if (TextUtils.isEmpty(callType))
+                return;
+
+            switch (callType) {
+                case Constants.RxBusConst.RXBUS_CHICANG_FRAGMENT:
+                    mActivity.runOnUiThread(() -> mBinding.tabViewpager.setCurrentItem(0));
+
+                    break;
+                case Constants.RxBusConst.RXBUS_TRADE:
+                    mActivity.runOnUiThread(() -> mBinding.tabViewpager.setCurrentItem(1));
+
+                    break;
+                case Constants.RxBusConst.RXBUS_CHEDAN_FRAGMENT:
+                    mActivity.runOnUiThread(() -> mBinding.tabViewpager.setCurrentItem(2));
+
+                    break;
+            }
+        });
+    }
+
+    private void setUnLoginLayout() {
+        mBinding.layoutLogin.setVisibility(View.GONE);
+        mBinding.layoutNoLogin.setVisibility(View.VISIBLE);
+
+        setCourseLayout(mContext.getResources().getString(R.string.trade_open_account_course));
+
+//            PicassoUtils.getInstance().loadImg(mContext, url, mBinding.imgBanner);
+        getWhetherIdCard();
+    }
+
+    private void setLoginLayout() {
+        mBinding.layoutLogin.setVisibility(View.VISIBLE);
+        mBinding.layoutNoLogin.setVisibility(View.GONE);
+
+        mAdapter = new TabViewPagerAdapter(getChildFragmentManager());
+
+        initInfoTabs();
+    }
+
+    private void setCourseLayout(String value) {
+        SpannableString spannableString = new SpannableString(value);
+        spannableString.setSpan(new ForegroundColorSpan(ContextCompat.getColor(mContext, R.color.color_blue_deep)),
+                value.length() - 4, value.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        spannableString.setSpan(new TextClick(), value.length() - 4, value.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+        mBinding.tvOpenAccountCourse.setMovementMethod(LinkMovementMethod.getInstance());
+        mBinding.tvOpenAccountCourse.setText(spannableString);
     }
 
     private void initInfoTabs() {
@@ -150,52 +180,42 @@ public class TradeFragment extends JMEBaseFragment {
         initRxBus();
     }
 
-    private void initRxBus() {
-        mRxbus = RxBus.getInstance().toObserverable(RxBus.Message.class).subscribe(message -> {
-            String callType = message.getObject().toString();
-
-            if (TextUtils.isEmpty(callType))
-                return;
-
-            switch (callType) {
-                case Constants.RxBusConst.RXBUS_CHICANG_FRAGMENT:
-                    mActivity.runOnUiThread(() -> mBinding.tabViewpager.setCurrentItem(0));
-
-                    break;
-                case Constants.RxBusConst.RXBUS_TRADE:
-                    mActivity.runOnUiThread(() -> mBinding.tabViewpager.setCurrentItem(1));
-
-                    break;
-                case Constants.RxBusConst.RXBUS_CHEDAN_FRAGMENT:
-                    mActivity.runOnUiThread(() -> mBinding.tabViewpager.setCurrentItem(2));
-
-                    break;
-            }
-        });
+    private void getWhetherIdCard() {
+        sendRequest(TradeService.getInstance().whetherIdCard, new HashMap<>(), false, false, false);
     }
 
     @Override
-    public void onHiddenChanged(boolean hidden) {
-        super.onHiddenChanged(hidden);
+    protected void DataReturn(DTRequest request, Head head, Object response) {
+        super.DataReturn(request, head, response);
 
-        if (null != mBinding && null != mBinding.tabViewpager && null != mAdapter)
-            mAdapter.getItem(mBinding.tabViewpager.getCurrentItem()).onHiddenChanged(hidden);
+        switch (request.getApi().getName()) {
+            case "WhetherIdCard":
+                if (head.isSuccess()) {
+                    try {
+                        mIdentityInfoVo = (IdentityInfoVo) response;
+                    } catch (Exception e) {
+                        mIdentityInfoVo = null;
+
+                        e.printStackTrace();
+                    }
+                }
+
+                break;
+        }
     }
 
     public class ClickHandlers {
 
         public void onClickNews() {
             if (null == mUser || !mUser.isLogin())
-                showNeedLoginDialog();
+                ARouter.getInstance().build(Constants.ARouterUriConst.ACCOUNTLOGIN).navigation();
             else
-                ARouter.getInstance()
-                        .build(Constants.ARouterUriConst.NEWSCENTERACTIVITY)
-                        .navigation();
+                ARouter.getInstance().build(Constants.ARouterUriConst.NEWSCENTERACTIVITY).navigation();
         }
 
-        public void onClickKaiHu() {
+        public void onClickOpenAccountFree() {
             if (null == mUser || !mUser.isLogin())
-                showNeedLoginDialog();
+                ARouter.getInstance().build(Constants.ARouterUriConst.ACCOUNTLOGIN).navigation();
             else
                 ARouter.getInstance()
                         .build(Constants.ARouterUriConst.NAMECARDCHECK)
@@ -203,27 +223,19 @@ public class TradeFragment extends JMEBaseFragment {
                         .navigation();
         }
 
-        public void onClickKaiHuJiaoCheng() {
-            String url = "http://www.taijs.com/upload/glht/khjc.html";
-            ARouter.getInstance()
-                    .build(Constants.ARouterUriConst.JMEWEBVIEW)
-                    .withString("title", "开户教程")
-                    .withString("url", url)
-                    .navigation();
-        }
-
-        public void onClickBangDing() {
+        public void onClickBind() {
             if (null == mUser || !mUser.isLogin()) {
-                showNeedLoginDialog();
+                ARouter.getInstance().build(Constants.ARouterUriConst.ACCOUNTLOGIN).navigation();
             } else {
-                if (TextUtils.isEmpty(value.getName())) {
+                String name = mIdentityInfoVo.getName();
+
+                if (TextUtils.isEmpty(name)) {
                     ARouter.getInstance()
                             .build(Constants.ARouterUriConst.NAMECARDCHECK)
                             .withString("tag", "2")
                             .navigation();
                 } else {
-                    String name = value.getName();
-                    String idCard = value.getIdCard();
+                    String idCard = mIdentityInfoVo.getIdCard();
                     ARouter.getInstance()
                             .build(Constants.ARouterUriConst.BINDUSERNAME)
                             .withString("name", name)
@@ -231,6 +243,23 @@ public class TradeFragment extends JMEBaseFragment {
                             .navigation();
                 }
             }
+        }
+    }
+
+    private class TextClick extends ClickableSpan {
+
+        @Override
+        public void onClick(View widget) {
+            ARouter.getInstance()
+                    .build(Constants.ARouterUriConst.JMEWEBVIEW)
+                    .withString("title", mContext.getResources().getString(R.string.trade_open_account_course_title))
+                    .withString("url", Constants.HttpConst.URL_OPEN_ACCOUNT_COURSE)
+                    .navigation();
+        }
+
+        @Override
+        public void updateDrawState(TextPaint ds) {
+            ds.setUnderlineText(false);
         }
     }
 

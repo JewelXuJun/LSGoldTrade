@@ -1,6 +1,6 @@
 package com.jme.lsgoldtrade.domain;
 
-public class VerifyIdCardVo {
+public class IdentityInfoVo {
 
     /**
      * name : 张三
@@ -9,7 +9,9 @@ public class VerifyIdCardVo {
      */
 
     private String name;
+
     private String idCard;
+
     private String account;
 
     public String getName() {

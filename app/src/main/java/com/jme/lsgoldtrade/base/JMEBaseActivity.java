@@ -45,7 +45,6 @@ public abstract class JMEBaseActivity<T> extends BaseActivity {
     private Subscription mRxbus;
 
     protected static Dialog mDialog;
-    private AlertDialog.Builder mNeedLoginDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -177,19 +176,6 @@ public abstract class JMEBaseActivity<T> extends BaseActivity {
     private void returnToHomePage() {
         RxBus.getInstance().post(Constants.RxBusConst.RXBUS_CANCEL, null);
         ARouter.getInstance().build(Constants.ARouterUriConst.MAIN).navigation();
-    }
-
-    protected void showNeedLoginDialog() {
-        if (null == mNeedLoginDialog) {
-            mNeedLoginDialog = new AlertDialog.Builder(this);
-            mNeedLoginDialog.setTitle(mContext.getResources().getString(R.string.text_tips));
-            mNeedLoginDialog.setMessage(mContext.getResources().getString(R.string.login_message));
-            mNeedLoginDialog.setPositiveButton(mContext.getResources().getString(R.string.text_login), (dialog, which) -> ARouter.getInstance().build(Constants.ARouterUriConst.ACCOUNTLOGIN).navigation());
-            mNeedLoginDialog.setNegativeButton(mContext.getResources().getString(R.string.text_cancel), null);
-            mNeedLoginDialog.show();
-        } else {
-            mNeedLoginDialog.show();
-        }
     }
 
     @Override

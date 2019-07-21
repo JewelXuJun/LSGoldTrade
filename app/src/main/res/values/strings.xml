@@ -186,6 +186,18 @@
     <string name="trade_guarantee_fund_message3">尊敬的客户，该保底资金设置的当前风险率为%1$s，小于保底预警指标，系统将限制开仓，是否继续设置?</string>
     <string name="trade_guarantee_fund_message4">尊敬的客户，该保底资金设置的当前风险率为%1$s，祝您投资愉快。</string>
     <string name="trade_guarantee_fund_message5">尊敬的客户，保底资金的设置不能超过当前总权益，是否继续设置?</string>
+    <string name="trade_time_rule">T+0交易</string>
+    <string name="trade_time_rule_message">当日即买即卖</string>
+    <string name="trade_side_rule">双向交易</string>
+    <string name="trade_side_rule_message">即可买涨，又可买跌</string>
+    <string name="trade_bond_rule">保证金交易</string>
+    <string name="trade_bond_rule_message">小资金撬动大收益</string>
+    <string name="trade_open_account_rule">极速开户</string>
+    <string name="trade_open_account_rule_message">三分钟即可完成开户</string>
+    <string name="trade_open_account_free">免费开户</string>
+    <string name="trade_open_account_course">开户有疑问？&#160;来看看&#160;开户教程</string>
+    <string name="trade_open_account_course_title">开户教程</string>
+    <string name="trade_open_account_bind">已有黄金账号，去绑定</string>
 
     <!-- Personal -->
     <string name="personal_login">登录/注册</string>

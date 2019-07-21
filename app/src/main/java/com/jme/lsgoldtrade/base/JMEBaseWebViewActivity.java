@@ -28,7 +28,6 @@ import java.net.URL;
 public class JMEBaseWebViewActivity extends BaseActivity {
 
     private WebView mWebView;
-    private ProgressBar mProgressBar;
 
     protected String mTitle = "";
     protected String mUrl = "";
@@ -41,7 +40,6 @@ public class JMEBaseWebViewActivity extends BaseActivity {
     @Override
     protected void initView() {
         mWebView = findViewById(R.id.webview);
-        mProgressBar = findViewById(R.id.pb);
 
         mWebView.getSettings().setJavaScriptEnabled(true);
         mWebView.getSettings().setUserAgentString(mWebView.getSettings().getUserAgentString() + "LSGoldTradeAndroid");
@@ -73,21 +71,6 @@ public class JMEBaseWebViewActivity extends BaseActivity {
 
     @Override
     protected void initListener() {
-        mWebView.setWebChromeClient(new WebChromeClient() {
-
-            @Override
-            public void onProgressChanged(WebView view, int progress) {
-                super.onProgressChanged(view, progress);
-
-                mProgressBar.setProgress(progress);
-
-                if (null != mProgressBar && progress != 100)
-                    mProgressBar.setVisibility(View.VISIBLE);
-                else if (null != mProgressBar)
-                    mProgressBar.setVisibility(View.GONE);
-            }
-        });
-
         mWebView.setWebViewClient(new WebViewClient() {
 
             @Override

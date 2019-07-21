@@ -111,7 +111,7 @@ public class PersonalFragment extends JMEBaseFragment {
                 ARouter.getInstance().build(Constants.ARouterUriConst.ACCOUNTLOGIN).navigation();
         }
 
-        public void onClickOpenAccountOnline() {
+        public void onClickOpenAccount() {
             if (null == mUser || !mUser.isLogin())
                 ARouter.getInstance().build(Constants.ARouterUriConst.ACCOUNTLOGIN).navigation();
             else if (TextUtils.isEmpty(mUser.getAccountID()))

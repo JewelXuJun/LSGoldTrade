@@ -325,7 +325,7 @@ public class TradingBoxDetailsActivity extends JMEBaseActivity {
         public void onClickMore() {
             String toupiao = "";
             if (TextUtils.isEmpty(User.getInstance().getToken())) {
-                showNeedLoginDialog();
+                ARouter.getInstance().build(Constants.ARouterUriConst.ACCOUNTLOGIN).navigation();
             } else {
                 rate("0");
                 if ("0".equals(direction)) {
@@ -347,7 +347,7 @@ public class TradingBoxDetailsActivity extends JMEBaseActivity {
         public void onClickKong() {
             String toupiao = "";
             if (TextUtils.isEmpty(User.getInstance().getToken())) {
-                showNeedLoginDialog();
+                ARouter.getInstance().build(Constants.ARouterUriConst.ACCOUNTLOGIN).navigation();
             } else {
                 rate("1");
                 if ("0".equals(direction)) {

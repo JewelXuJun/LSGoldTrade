@@ -455,7 +455,7 @@ public class MainPageFragment extends JMEBaseFragment implements OnRefreshListen
     public class ClickHandlers {
         public void onClickNews() {
             if (null == mUser || !mUser.isLogin())
-                showNeedLoginDialog();
+                ARouter.getInstance().build(Constants.ARouterUriConst.ACCOUNTLOGIN).navigation();
             else
                 ARouter.getInstance()
                         .build(Constants.ARouterUriConst.NEWSCENTERACTIVITY)
@@ -468,7 +468,7 @@ public class MainPageFragment extends JMEBaseFragment implements OnRefreshListen
 
         public void onClickQuickOrder() {
             if (null == mUser || !mUser.isLogin())
-                showNeedLoginDialog();
+                ARouter.getInstance().build(Constants.ARouterUriConst.ACCOUNTLOGIN).navigation();
             else
                 RxBus.getInstance().post(Constants.RxBusConst.RXBUS_TRADE, null);
         }

@@ -11,7 +11,7 @@ import com.jme.lsgoldtrade.R;
 import com.jme.lsgoldtrade.base.JMEBaseActivity;
 import com.jme.lsgoldtrade.config.Constants;
 import com.jme.lsgoldtrade.databinding.ActivityNameCardCheckBinding;
-import com.jme.lsgoldtrade.domain.VerifyIdCardVo;
+import com.jme.lsgoldtrade.domain.IdentityInfoVo;
 import com.jme.lsgoldtrade.service.TradeService;
 import com.jme.lsgoldtrade.util.IntentUtils;
 import com.jme.lsgoldtrade.util.NormalUtils;
@@ -76,10 +76,10 @@ public class NameCardCheckActivity extends JMEBaseActivity {
             case "WhetherIdCard":
                 if (head.isSuccess()) {
 
-                    VerifyIdCardVo value;
+                    IdentityInfoVo value;
 
                     try {
-                        value = (VerifyIdCardVo) response;
+                        value = (IdentityInfoVo) response;
                     } catch (Exception e) {
                         value = null;
                         e.printStackTrace();

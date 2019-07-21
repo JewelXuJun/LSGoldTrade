@@ -15,8 +15,7 @@ import com.jme.lsgoldtrade.domain.InOutTurnOverVo;
 import com.jme.lsgoldtrade.domain.OrderHisPageVo;
 import com.jme.lsgoldtrade.domain.OrderPageVo;
 import com.jme.lsgoldtrade.domain.PositionPageVo;
-import com.jme.lsgoldtrade.domain.UserInfoVo;
-import com.jme.lsgoldtrade.domain.VerifyIdCardVo;
+import com.jme.lsgoldtrade.domain.IdentityInfoVo;
 import com.jme.lsgoldtrade.domain.WarmVo;
 
 import java.util.HashMap;
@@ -248,7 +247,7 @@ public class TradeService extends IService<TradeApi> {
         }
     };
 
-    public API whetherIdCard = new API<VerifyIdCardVo>("WhetherIdCard") {
+    public API whetherIdCard = new API<IdentityInfoVo>("WhetherIdCard") {
         @Override
         public Call<DTResponse> request(HashMap<String, String> params) {
 

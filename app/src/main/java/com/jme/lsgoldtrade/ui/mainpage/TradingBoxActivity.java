@@ -245,7 +245,7 @@ public class TradingBoxActivity extends JMEBaseActivity {
 
         public void onClickBuy() {
             if (TextUtils.isEmpty(User.getInstance().getToken())) {
-                showNeedLoginDialog();
+                ARouter.getInstance().build(Constants.ARouterUriConst.ACCOUNTLOGIN).navigation();
             } else {
                 if (tradingBoxFragment != null) {
                     int currentItem = mBinding.viewpager.getCurrentItem();

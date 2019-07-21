@@ -16,7 +16,8 @@
         android:background="@color/common_background"
         android:clipToPadding="false"
         android:fitsSystemWindows="true"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:visibility="visible">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -61,51 +62,226 @@
             <ImageView
                 android:id="@+id/img_banner"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/height_trade_box_banner"
+                android:layout_height="@dimen/height_trade_banner"
                 android:scaleType="centerCrop" />
 
-            <ImageView
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@mipmap/trading_no_login"
-                android:scaleType="centerCrop" />
+                android:layout_height="@dimen/height_trade_rule"
+                android:background="@color/white"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="@dimen/common_area_margin_big"
+                    android:layout_marginTop="@dimen/margin_trade_rule"
+                    android:layout_marginRight="@dimen/common_area_margin_big"
+                    android:layout_weight="1"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:layout_width="@dimen/icon_middle"
+                            android:layout_height="@dimen/icon_middle"
+                            android:layout_gravity="center"
+                            android:background="@mipmap/ic_trade_time" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginLeft="@dimen/common_page_margin"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/trade_time_rule"
+                                android:textColor="@color/black"
+                                android:textSize="@dimen/sp_14"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/margin_small"
+                                android:text="@string/trade_time_rule_message"
+                                android:textColor="@color/black"
+                                android:textSize="@dimen/sp_14" />
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:layout_width="@dimen/icon_middle"
+                            android:layout_height="@dimen/icon_middle"
+                            android:layout_gravity="center"
+                            android:background="@mipmap/ic_trade_side" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginLeft="@dimen/common_page_margin"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/trade_side_rule"
+                                android:textColor="@color/black"
+                                android:textSize="@dimen/sp_14"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/margin_small"
+                                android:text="@string/trade_side_rule_message"
+                                android:textColor="@color/black"
+                                android:textSize="@dimen/sp_14" />
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="@dimen/common_area_margin_big"
+                    android:layout_marginRight="@dimen/common_area_margin_big"
+                    android:layout_marginBottom="@dimen/margin_trade_rule"
+                    android:layout_weight="1"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:layout_width="@dimen/icon_middle"
+                            android:layout_height="@dimen/icon_middle"
+                            android:layout_gravity="center"
+                            android:background="@mipmap/ic_trade_bond" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginLeft="@dimen/common_page_margin"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/trade_bond_rule"
+                                android:textColor="@color/black"
+                                android:textSize="@dimen/sp_14"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/margin_small"
+                                android:text="@string/trade_bond_rule_message"
+                                android:textColor="@color/black"
+                                android:textSize="@dimen/sp_14" />
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:layout_width="@dimen/icon_middle"
+                            android:layout_height="@dimen/icon_middle"
+                            android:layout_gravity="center"
+                            android:background="@mipmap/ic_trade_open_account" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginLeft="@dimen/common_page_margin"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/trade_open_account_rule"
+                                android:textColor="@color/black"
+                                android:textSize="@dimen/sp_14"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/margin_small"
+                                android:text="@string/trade_open_account_rule_message"
+                                android:textColor="@color/black"
+                                android:textSize="@dimen/sp_14" />
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </LinearLayout>
 
             <Button
-                android:id="@+id/btn_kaihu"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/height_login_btn"
-                android:layout_marginLeft="35dp"
-                android:layout_marginTop="@dimen/margin_main_page_info"
-                android:layout_marginRight="35dp"
+                android:layout_marginLeft="@dimen/margin_login"
+                android:layout_marginTop="@dimen/common_area_margin_big"
+                android:layout_marginRight="@dimen/margin_login"
                 android:background="@drawable/bg_btn_blue_solid"
-                android:onClick="@{() -> handlers.onClickKaiHu()}"
-                android:text="免费开户"
+                android:onClick="@{() -> handlers.onClickOpenAccountFree()}"
+                android:text="@string/trade_open_account_free"
                 android:textColor="@color/white"
                 android:textSize="@dimen/common_font_size" />
 
             <TextView
-                android:id="@+id/kaihujiaocheng"
+                android:id="@+id/tv_open_account_course"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginTop="15dp"
-                android:onClick="@{() -> handlers.onClickKaiHuJiaoCheng()}"
+                android:layout_marginTop="@dimen/common_area_margin"
+                android:textColor="@color/black"
                 android:textSize="@dimen/sp_14" />
 
-            <TextView
-                android:id="@+id/bangding"
+            <Button
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginLeft="35dp"
-                android:layout_marginTop="20dp"
-                android:layout_marginRight="35dp"
+                android:layout_height="@dimen/height_login_btn"
+                android:layout_marginLeft="@dimen/margin_login"
+                android:layout_marginTop="@dimen/common_area_margin_big"
+                android:layout_marginRight="@dimen/margin_login"
                 android:background="@drawable/bg_btn_blue_stroke"
                 android:gravity="center"
-                android:onClick="@{() -> handlers.onClickBangDing()}"
-                android:paddingTop="13dp"
-                android:paddingBottom="13dp"
-                android:text="已有黄金账号，去绑定"
+                android:onClick="@{() -> handlers.onClickBind()}"
+                android:text="@string/trade_open_account_bind"
                 android:textColor="@color/color_blue_deep"
                 android:textSize="@dimen/sp_18" />
 
@@ -115,7 +291,8 @@
             android:id="@+id/layout_login"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:visibility="gone">
 
             <android.support.design.widget.TabLayout
                 android:id="@+id/tablayout"
@@ -124,7 +301,7 @@
                 android:background="@color/white"
                 app:tabIndicatorColor="@color/color_blue"
                 app:tabIndicatorFullWidth="true"
-                app:tabIndicatorHeight="2dp"
+                app:tabIndicatorHeight="@dimen/height_line"
                 app:tabRippleColor="@null"
                 app:tabSelectedTextColor="@color/color_blue_deep"
                 app:tabTextColor="@color/color_text_normal" />

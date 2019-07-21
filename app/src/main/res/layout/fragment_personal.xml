@@ -82,7 +82,7 @@
                     android:id="@+id/layout_open_account"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/height_item_normal"
-                    android:onClick="@{() -> handlers.onClickOpenAccountOnline()}"
+                    android:onClick="@{() -> handlers.onClickOpenAccount()}"
                     android:paddingLeft="@dimen/common_area_margin_big"
                     android:paddingRight="@dimen/common_area_margin">
 

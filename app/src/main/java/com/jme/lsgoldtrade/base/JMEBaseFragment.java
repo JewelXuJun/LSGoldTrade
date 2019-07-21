@@ -33,8 +33,6 @@ public abstract class JMEBaseFragment<T> extends BaseFragment {
     protected User mUser;
     protected Contract mContract;
 
-    private AlertDialog.Builder mDialog;
-
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
@@ -109,19 +107,6 @@ public abstract class JMEBaseFragment<T> extends BaseFragment {
         if (head.getCode() != null) {
             if (head.getCode().equals("-2000"))
                 RxBus.getInstance().post(Constants.RxBusConst.RXBUS_SYNTIME, null);
-        }
-    }
-
-    protected void showNeedLoginDialog() {
-        if (null == mDialog) {
-            mDialog = new AlertDialog.Builder(mContext);
-            mDialog.setTitle(mContext.getResources().getString(R.string.text_tips));
-            mDialog.setMessage(mContext.getResources().getString(R.string.login_message));
-            mDialog.setPositiveButton(mContext.getResources().getString(R.string.text_login), (dialog, which) -> ARouter.getInstance().build(Constants.ARouterUriConst.ACCOUNTLOGIN).navigation());
-            mDialog.setNegativeButton(mContext.getResources().getString(R.string.text_cancel), null);
-            mDialog.show();
-        } else {
-            mDialog.show();
         }
     }
 
