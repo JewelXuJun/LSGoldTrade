@@ -8,6 +8,7 @@ import com.alibaba.android.arouter.launcher.ARouter;
 import com.jme.common.network.DTRequest;
 import com.jme.common.network.Head;
 import com.jme.common.util.IDUtils;
+import com.jme.common.util.RxBus;
 import com.jme.lsgoldtrade.R;
 import com.jme.lsgoldtrade.base.JMEBaseActivity;
 import com.jme.lsgoldtrade.config.Constants;
@@ -18,6 +19,8 @@ import com.jme.lsgoldtrade.util.IntentUtils;
 
 import java.util.HashMap;
 
+import rx.Subscription;
+
 /**
  * 身份验证
  */
@@ -27,6 +30,8 @@ public class AuthenticationActivity extends JMEBaseActivity {
     private ActivityAuthenticationBinding mBinding;
 
     private String mType;
+
+    private Subscription mRxbus;
 
     @Override
     protected int getContentViewId() {
@@ -54,6 +59,8 @@ public class AuthenticationActivity extends JMEBaseActivity {
     @Override
     protected void initListener() {
         super.initListener();
+
+        initRxBus();
     }
 
     @Override
@@ -62,6 +69,22 @@ public class AuthenticationActivity extends JMEBaseActivity {
 
         mBinding = (ActivityAuthenticationBinding) mBindingUtil;
         mBinding.setHandlers(new ClickHandlers());
+    }
+
+    private void initRxBus() {
+        mRxbus = RxBus.getInstance().toObserverable(RxBus.Message.class).subscribe(message -> {
+            String callType = message.getObject().toString();
+
+            if (TextUtils.isEmpty(callType))
+                return;
+
+            switch (callType) {
+                case Constants.RxBusConst.RXBUS_BIND_SUCCESS:
+                    finish();
+
+                    break;
+            }
+        });
     }
 
     private void getWhetherIdCard() {
@@ -97,7 +120,12 @@ public class AuthenticationActivity extends JMEBaseActivity {
                         return;
 
                     mBinding.etName.setText(identityInfoVo.getName());
+                    mBinding.etName.setEnabled(false);
+                    mBinding.etName.setFocusable(false);
+
                     mBinding.etIdCard.setText(identityInfoVo.getIdCard());
+                    mBinding.etIdCard.setEnabled(false);
+                    mBinding.etIdCard.setFocusable(false);
                 }
 
                 break;
@@ -134,4 +162,13 @@ public class AuthenticationActivity extends JMEBaseActivity {
                 verifyIdCard(name, idCard);
         }
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+        if (!mRxbus.isUnsubscribed())
+            mRxbus.unsubscribe();
+    }
+
 }

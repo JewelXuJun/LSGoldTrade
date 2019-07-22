@@ -49,7 +49,6 @@ public class JMEBaseWebViewActivity extends BaseActivity {
         mWebView.getSettings().setLoadWithOverviewMode(true);
         mWebView.getSettings().setDisplayZoomControls(true);
         mWebView.getSettings().setSupportZoom(true);
-        mWebView.getSettings().setTextSize(WebSettings.TextSize.LARGER);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
             mWebView.getSettings().setMixedContentMode(WebSettings.MIXED_CONTENT_ALWAYS_ALLOW);

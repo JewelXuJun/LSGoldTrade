@@ -39,6 +39,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="3"
+                    android:paddingLeft="@dimen/common_area_margin_tiny"
                     android:text="@string/trade_name"
                     android:textColor="@color/color_text_normal"
                     android:textSize="@dimen/sp_14" />
@@ -50,6 +51,7 @@
                     android:layout_weight="1"
                     android:background="@null"
                     android:hint="@string/trade_name_hint"
+                    android:paddingRight="@dimen/common_area_margin_tiny"
                     android:textColor="@color/color_text_normal"
                     android:textColorHint="@color/color_text_hint"
                     android:textSize="@dimen/sp_14" />
@@ -68,6 +70,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="3"
+                    android:paddingLeft="@dimen/common_area_margin_tiny"
                     android:text="@string/trade_id_card"
                     android:textColor="@color/color_text_normal"
                     android:textSize="@dimen/sp_14" />
@@ -79,6 +82,7 @@
                     android:layout_weight="1"
                     android:background="@null"
                     android:hint="@string/trade_id_card_hint"
+                    android:paddingRight="@dimen/common_area_margin_tiny"
                     android:textColor="@color/color_text_normal"
                     android:textColorHint="@color/color_text_hint"
                     android:textSize="@dimen/sp_14" />
@@ -93,8 +97,8 @@
             android:id="@+id/btn_bind"
             android:layout_width="match_parent"
             android:layout_height="@dimen/height_login_btn"
-            android:layout_marginTop="@dimen/common_area_margin"
             android:layout_marginLeft="@dimen/common_area_margin"
+            android:layout_marginTop="@dimen/common_area_margin"
             android:layout_marginRight="@dimen/common_area_margin"
             android:background="@drawable/selector_btn"
             android:onClick="@{() -> handlers.onClickBind()}"

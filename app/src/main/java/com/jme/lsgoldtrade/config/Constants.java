@@ -90,6 +90,7 @@ public class Constants {
         public static final String RXBUS_CHEDAN_FRAGMENT = "chedanfragment";
         public static final String RXBUS_CHICANG_FRAGMENT = "chicangfragment";
         public static final String RXBUS_CUSTOMER_SERVICE = "customerservice";
+        public static final String RXBUS_BIND_SUCCESS = "BindSuccess";
     }
 
     public static final class Msg {
@@ -157,7 +158,7 @@ public class Constants {
         public static final String REGISTERSUCCESS = "/PersonalFragment/RegisterSuccessActivity";
         public static final String MYSUBSCRIBE = "/PersonalFragment/MySubscribeActivity";
         public static final String BINDACCOUNT = "/Login/BindAccountActivity";
-        public static final String LOGINPWD = "/Login/LoginPwdActivity";
+        public static final String SETLOGINPASSWORD = "/Login/SetLoginPasswordActivity";
         public static final String AUTHENTICATION = "/Login/AuthenticationActivity";
         public static final String VALUESERVICESUCCESS = "/Personal/ValueServiceSuccessActivity";
         public static final String RECHARGE = "/Personal/RechargeActivity";

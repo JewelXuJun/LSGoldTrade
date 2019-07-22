@@ -79,7 +79,7 @@ public interface TradeApi {
     Call<DTResponse> resetLoginPassword(@Body Map<String, String> map);
 
     @POST("/gold-trade/v1.0.0/android/bindAccount")
-    Call<DTResponse> bindaccount(@Body Map<String, String> map);
+    Call<DTResponse> bindAccount(@Body Map<String, String> map);
 
     @POST("/gold-trade/v1.0.0/android/setLoginPassword")
     Call<DTResponse> setLoginPassword(@Body Map<String, String> map);

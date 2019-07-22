@@ -6,7 +6,7 @@ import com.jme.common.network.IService;
 import com.jme.lsgoldtrade.config.Constants;
 import com.jme.lsgoldtrade.config.User;
 import com.jme.lsgoldtrade.domain.AccountVo;
-import com.jme.lsgoldtrade.domain.BindUserNameVo;
+import com.jme.lsgoldtrade.domain.BindAccountVo;
 import com.jme.lsgoldtrade.domain.ContractInfoVo;
 import com.jme.lsgoldtrade.domain.DailyStatementVo;
 import com.jme.lsgoldtrade.domain.DealHistoryPageVo;
@@ -231,11 +231,11 @@ public class TradeService extends IService<TradeApi> {
         }
     };
 
-    public API bindaccount = new API<BindUserNameVo>("Bindaccount") {
+    public API bindAccount = new API<BindAccountVo>("BindAccount") {
         @Override
         public Call<DTResponse> request(HashMap<String, String> params) {
 
-            return mApi.bindaccount(params);
+            return mApi.bindAccount(params);
         }
     };
 

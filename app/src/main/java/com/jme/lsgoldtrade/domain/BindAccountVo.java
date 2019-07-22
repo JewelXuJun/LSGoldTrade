@@ -1,6 +1,6 @@
 package com.jme.lsgoldtrade.domain;
 
-public class BindUserNameVo {
+public class BindAccountVo {
 
     /**
      * accountId : 2
@@ -8,6 +8,7 @@ public class BindUserNameVo {
      */
 
     private String accountId;
+
     private String account;
 
     public String getAccountId() {

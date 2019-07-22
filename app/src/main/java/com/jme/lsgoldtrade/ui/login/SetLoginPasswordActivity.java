@@ -14,7 +14,6 @@ import com.jme.lsgoldtrade.config.Constants;
 import com.jme.lsgoldtrade.config.User;
 import com.jme.lsgoldtrade.databinding.ActivityLoginPwdBinding;
 import com.jme.lsgoldtrade.service.TradeService;
-import com.jme.lsgoldtrade.service.UserService;
 import com.jme.lsgoldtrade.util.AESUtil;
 
 import java.util.HashMap;
@@ -22,14 +21,14 @@ import java.util.HashMap;
 /**
  * 设置登录密码
  */
-@Route(path = Constants.ARouterUriConst.LOGINPWD)
-public class LoginPwdActivity extends JMEBaseActivity {
+@Route(path = Constants.ARouterUriConst.SETLOGINPASSWORD)
+public class SetLoginPasswordActivity extends JMEBaseActivity {
 
     private ActivityLoginPwdBinding mBinding;
 
     @Override
     protected int getContentViewId() {
-        return R.layout.activity_login_pwd;
+        return R.layout.activity_set_login_password;
     }
 
     @Override

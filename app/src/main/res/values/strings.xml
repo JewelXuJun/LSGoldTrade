@@ -205,6 +205,17 @@
     <string name="trade_name_hint">请输入姓名</string>
     <string name="trade_id_card">身份证号</string>
     <string name="trade_id_card_hint">请输入身份证号</string>
+    <string name="trade_gold_account">黄金账号</string>
+    <string name="trade_gold_account_hint">请输入开头为000131的16位黄金账号</string>
+    <string name="trade_soft_aggrement">《软件服务协议》</string>
+    <string name="trade_soft_aggrement_title">软件服务协议</string>
+    <string name="trade_and">和</string>
+    <string name="trade_business_aggrement">《业务服务协议》</string>
+    <string name="trade_business_aggrement_title">业务服务协议</string>
+    <string name="trade_bind_account">账号绑定</string>
+    <string name="trade_bind">立即绑定</string>
+    <string name="trade_bind_success">恭喜您已绑定成功！</string>
+    <string name="trade_bind_success_time">%1$s秒后自动关闭</string>
 
     <!-- Personal -->
     <string name="personal_login">登录/注册</string>

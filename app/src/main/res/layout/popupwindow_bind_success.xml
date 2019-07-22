@@ -5,37 +5,33 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/bg_white"
-        android:orientation="vertical"
-        >
+        android:orientation="vertical">
 
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@mipmap/register_success"
             android:layout_gravity="center"
-            android:layout_marginTop="50dp"
-            />
+            android:layout_marginTop="@dimen/margin_large"
+            android:src="@mipmap/ic_register_success" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="恭喜您绑定成功!"
-            android:textSize="@dimen/sp_18"
+            android:layout_gravity="center"
+            android:layout_marginTop="@dimen/common_page_margin"
+            android:text="@string/trade_bind_success"
             android:textColor="@color/black"
-            android:layout_marginTop="10dp"
-            android:layout_gravity="center"
-            />
+            android:textSize="@dimen/sp_18" />
 
         <TextView
-            android:id="@+id/timer"
+            android:id="@+id/tv_time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="3秒后自动关闭"
-            android:textSize="@dimen/sp_14"
-            android:textColor="@color/color_blue_deep"
-            android:layout_margin="33dp"
             android:layout_gravity="center"
-            />
+            android:layout_margin="@dimen/common_area_margin_large"
+            android:text="3秒后自动关闭"
+            android:textColor="@color/color_blue_deep"
+            android:textSize="@dimen/sp_14" />
 
     </LinearLayout>
 

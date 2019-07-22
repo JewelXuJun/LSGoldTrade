@@ -31,7 +31,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginTop="@dimen/margin_normal"
-                android:background="@mipmap/register_success" />
+                android:background="@mipmap/ic_register_success" />
 
             <TextView
                 android:layout_width="wrap_content"
