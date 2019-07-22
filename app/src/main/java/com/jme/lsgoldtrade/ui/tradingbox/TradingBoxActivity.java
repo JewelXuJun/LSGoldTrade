@@ -1,4 +1,4 @@
-package com.jme.lsgoldtrade.ui.mainpage;
+package com.jme.lsgoldtrade.ui.tradingbox;
 
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
@@ -19,7 +19,7 @@ import com.jme.lsgoldtrade.databinding.ActivityTradingBoxBinding;
 import com.jme.lsgoldtrade.domain.IsSubscribeVo;
 import com.jme.lsgoldtrade.domain.TradingBoxVo;
 import com.jme.lsgoldtrade.service.ManagementService;
-import com.jme.lsgoldtrade.util.TradeBoxTitleUtils;
+import com.jme.lsgoldtrade.util.TradeBoxFunctionUtils;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -32,6 +32,7 @@ import java.util.List;
 public class TradingBoxActivity extends JMEBaseActivity {
 
     private ActivityTradingBoxBinding mBinding;
+
     private ArrayList<JMEBaseFragment> listFragment = new ArrayList<>();
     private TradingBoxAdapter adapter;
     private TradingBoxFragment tradingBoxFragment;
@@ -49,15 +50,10 @@ public class TradingBoxActivity extends JMEBaseActivity {
     @Override
     protected void initView() {
         super.initView();
-        mBinding = (ActivityTradingBoxBinding) mBindingUtil;
-        initToolbar(R.string.trade_box, true);
-        setRightNavigation();
-    }
 
-    private void setRightNavigation() {
-        setRightNavigation("", R.mipmap.function, 0, () -> {
-            TradeBoxTitleUtils.popup(this, "");
-        });
+        initToolbar("", true);
+
+        setRightNavigation("", R.mipmap.function, 0, () -> TradeBoxFunctionUtils.popup(this, ""));
     }
 
     @Override
@@ -89,6 +85,8 @@ public class TradingBoxActivity extends JMEBaseActivity {
     @Override
     protected void initBinding() {
         super.initBinding();
+
+        mBinding = (ActivityTradingBoxBinding) mBindingUtil;
         mBinding.setHandlers(new ClickHandlers());
     }
 
@@ -113,12 +111,12 @@ public class TradingBoxActivity extends JMEBaseActivity {
                     subscriberCount = value.getSubscriberCount();
                     String periodName = value.getPeriodName();
                     String periodId = value.getPeriodId();
-                    mBinding.subscribeNum.setText("已有" + subscriberCount + "位用户使用");
+                    mBinding.tvSubscribeNumber.setText("已有" + subscriberCount + "位用户使用");
                     historyListVoList = value.getHistoryListVoList();
 
-                    mBinding.subscribe.setText("订 阅");
-                    mBinding.subscribe.setTextColor(getResources().getColor(R.color.white));
-                    mBinding.subscribe.setBackground(getResources().getDrawable(R.drawable.bg_btn_blue_solid));
+                    mBinding.tvSubscribe.setText("订 阅");
+                    mBinding.tvSubscribe.setTextColor(getResources().getColor(R.color.white));
+                    mBinding.tvSubscribe.setBackground(getResources().getDrawable(R.drawable.bg_btn_blue_solid));
 
                     for (int i = 0; i < historyListVoList.size(); i++) {
                         tradingBoxFragment = new TradingBoxFragment();
@@ -129,11 +127,11 @@ public class TradingBoxActivity extends JMEBaseActivity {
                     mBinding.viewpager.setAdapter(adapter);
                     mBinding.viewpager.setOffscreenPageLimit(2);
                     if (historyListVoList != null && historyListVoList.size() <= 1) {
-                        mBinding.left.setVisibility(View.GONE);
-                        mBinding.right.setVisibility(View.GONE);
+                        mBinding.btnPrevious.setVisibility(View.GONE);
+                        mBinding.btnNext.setVisibility(View.GONE);
                     } else {
-                        mBinding.left.setVisibility(View.VISIBLE);
-                        mBinding.right.setVisibility(View.VISIBLE);
+                        mBinding.btnPrevious.setVisibility(View.VISIBLE);
+                        mBinding.btnNext.setVisibility(View.VISIBLE);
                     }
                     isBuy(0);
 
@@ -173,22 +171,22 @@ public class TradingBoxActivity extends JMEBaseActivity {
                     }
                     list = value.getList();
                     if (list != null && list.size() > 0) {
-                        mBinding.subscribeNum.setText("已有" + list.size() + "位用户使用");
-                        mBinding.subscribe.setText("已订阅");
-                        mBinding.subscribe.setTextColor(getResources().getColor(R.color.color_blue_deep));
-                        mBinding.subscribe.setBackground(getResources().getDrawable(R.drawable.bg_btn_blue_stroke));
+                        mBinding.tvSubscribeNumber.setText("已有" + list.size() + "位用户使用");
+                        mBinding.tvSubscribe.setText("已订阅");
+                        mBinding.tvSubscribe.setTextColor(getResources().getColor(R.color.color_blue_deep));
+                        mBinding.tvSubscribe.setBackground(getResources().getDrawable(R.drawable.bg_btn_blue_stroke));
                     } else {
-                        mBinding.subscribe.setText("订 阅");
+                        mBinding.tvSubscribe.setText("订 阅");
                     }
                 }
                 break;
             case "Subscribe":
                 if (head.isSuccess()) {
                     subscriberCount += 1;
-                    mBinding.subscribeNum.setText("已有" + subscriberCount + "位用户使用");
-                    mBinding.subscribe.setText("已订阅");
-                    mBinding.subscribe.setTextColor(getResources().getColor(R.color.color_blue_deep));
-                    mBinding.subscribe.setBackground(getResources().getDrawable(R.drawable.bg_btn_blue_stroke));
+                    mBinding.tvSubscribeNumber.setText("已有" + subscriberCount + "位用户使用");
+                    mBinding.tvSubscribe.setText("已订阅");
+                    mBinding.tvSubscribe.setTextColor(getResources().getColor(R.color.color_blue_deep));
+                    mBinding.tvSubscribe.setBackground(getResources().getDrawable(R.drawable.bg_btn_blue_stroke));
                 }
                 break;
         }
@@ -197,11 +195,11 @@ public class TradingBoxActivity extends JMEBaseActivity {
     private void isBuy(int i) {
         int closeTime = historyListVoList.get(i).getCloseTime();
         if (closeTime <= 0) {
-            mBinding.tradingBuy.setEnabled(false);
-            mBinding.tradingBuy.setBackgroundResource(R.color.color_white);
+            mBinding.tvBuy.setEnabled(false);
+            mBinding.tvBuy.setBackgroundResource(R.color.color_white);
         } else {
-            mBinding.tradingBuy.setEnabled(true);
-            mBinding.tradingBuy.setBackgroundResource(R.color.color_blue_deep);
+            mBinding.tvBuy.setEnabled(true);
+            mBinding.tvBuy.setBackgroundResource(R.color.color_blue_deep);
         }
     }
 

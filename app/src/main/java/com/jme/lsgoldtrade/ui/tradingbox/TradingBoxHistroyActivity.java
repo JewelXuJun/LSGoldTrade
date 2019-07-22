@@ -12,14 +12,11 @@ import com.jme.common.network.DTRequest;
 import com.jme.common.network.Head;
 import com.jme.lsgoldtrade.R;
 import com.jme.lsgoldtrade.base.JMEBaseActivity;
-import com.jme.lsgoldtrade.bean.MySection;
-import com.jme.lsgoldtrade.bean.SectionBean;
 import com.jme.lsgoldtrade.config.Constants;
 import com.jme.lsgoldtrade.databinding.ActivityHistoryBoxBinding;
 import com.jme.lsgoldtrade.domain.HistoryBoxVo;
 import com.jme.lsgoldtrade.domain.HistoryItemVo;
 import com.jme.lsgoldtrade.service.ManagementService;
-import com.jme.lsgoldtrade.view.EmptyView;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -28,12 +25,12 @@ import java.util.List;
 /**
  * 历史匣子
  */
-@Route(path = Constants.ARouterUriConst.HISTORYBOX)
-public class HistoryBoxActivity extends JMEBaseActivity {
+@Route(path = Constants.ARouterUriConst.TRADINGBOXHISTROY)
+public class TradingBoxHistroyActivity extends JMEBaseActivity {
 
     private ActivityHistoryBoxBinding mBinding;
 
-    private HistroyBoxAdapter adapter;
+    private TradingBoxHistroyAdapter adapter;
 
     private int mCurrentPage = 1;
 
@@ -48,8 +45,8 @@ public class HistoryBoxActivity extends JMEBaseActivity {
     protected void initView() {
         super.initView();
         mBinding = (ActivityHistoryBoxBinding) mBindingUtil;
-//        adapter = new HistroyBoxAdapter(R.layout.item_history_box, null);
-        adapter = new HistroyBoxAdapter(R.layout.item_history_box, null, mContext);
+//        adapter = new TradingBoxHistroyAdapter(R.layout.item_history_box, null);
+        adapter = new TradingBoxHistroyAdapter(R.layout.item_history_box, null, mContext);
 
         mBinding.recyclerView.setHasFixedSize(false);
         mBinding.recyclerView.setLayoutManager(new LinearLayoutManager(this));

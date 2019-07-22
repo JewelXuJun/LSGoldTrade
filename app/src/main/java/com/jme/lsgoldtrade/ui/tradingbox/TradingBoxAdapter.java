@@ -1,4 +1,4 @@
-package com.jme.lsgoldtrade.ui.mainpage;
+package com.jme.lsgoldtrade.ui.tradingbox;
 
 import android.content.Context;
 import android.support.v4.app.Fragment;

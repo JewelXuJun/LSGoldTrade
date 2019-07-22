@@ -15,7 +15,6 @@ import com.jme.lsgoldtrade.bean.UserDetailsVo;
 import com.jme.lsgoldtrade.config.Constants;
 import com.jme.lsgoldtrade.databinding.ActivityDetailsBinding;
 import com.jme.lsgoldtrade.service.AccountService;
-import com.jme.lsgoldtrade.ui.tradingbox.HistroyBoxAdapter;
 
 import java.util.Calendar;
 import java.util.Date;

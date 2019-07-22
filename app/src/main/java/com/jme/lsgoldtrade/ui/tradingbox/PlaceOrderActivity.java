@@ -28,10 +28,9 @@ import com.jme.lsgoldtrade.service.MarketService;
 import com.jme.lsgoldtrade.service.TradeService;
 import com.jme.lsgoldtrade.util.MarketUtil;
 import com.jme.lsgoldtrade.util.SpanUtils;
-import com.jme.lsgoldtrade.util.TradeBoxTitleUtils;
+import com.jme.lsgoldtrade.util.TradeBoxFunctionUtils;
 import com.jme.lsgoldtrade.view.FuDongJiZhiPopupWindow;
 import com.jme.lsgoldtrade.view.HasProfitLossRiskSignPopupWindow;
-import com.orhanobut.logger.Logger;
 import com.suke.widget.SwitchButton;
 
 import java.math.BigDecimal;
@@ -85,7 +84,7 @@ public class PlaceOrderActivity extends JMEBaseActivity {
 
     private void setRightNavigation() {
         setRightNavigation("", R.mipmap.function, 0, () -> {
-            TradeBoxTitleUtils.popup(this, "");
+            TradeBoxFunctionUtils.popup(this, "");
         });
     }
 
@@ -405,7 +404,7 @@ public class PlaceOrderActivity extends JMEBaseActivity {
             case "SubmitTradingBox":
                 if (head.isSuccess()) {
                     ARouter.getInstance()
-                            .build(Constants.ARouterUriConst.MYORDER)
+                            .build(Constants.ARouterUriConst.TRADINGBOXORDER)
                             .navigation();
                 } else {
                     showShortToast(head.getMsg());

@@ -21,8 +21,7 @@ import com.jme.lsgoldtrade.domain.HistoryBoxVo;
 import com.jme.lsgoldtrade.domain.HistoryItemVo;
 import com.jme.lsgoldtrade.domain.TradingBoxDetailsVo;
 import com.jme.lsgoldtrade.service.ManagementService;
-import com.jme.lsgoldtrade.util.TradeBoxTitleUtils;
-import com.orhanobut.logger.Logger;
+import com.jme.lsgoldtrade.util.TradeBoxFunctionUtils;
 
 import java.util.HashMap;
 import java.util.List;
@@ -60,7 +59,7 @@ public class TradingBoxDetailsActivity extends JMEBaseActivity {
 
     private void setRightNavigation() {
         setRightNavigation("", R.mipmap.function, 0, () -> {
-            TradeBoxTitleUtils.popup(this, tradeId);
+            TradeBoxFunctionUtils.popup(this, tradeId);
         });
     }
 

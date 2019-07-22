@@ -2,10 +2,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/toolbar"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="@dimen/common_item_height_normal"
     android:background="@color/white"
     android:fitsSystemWindows="true"
-    android:minHeight="?attr/actionBarSize"
     android:theme="@style/mToolbarTheme"
     android:elevation="0dp"
     app:popupTheme="@style/ThemeOverlay.AppCompat.Light">

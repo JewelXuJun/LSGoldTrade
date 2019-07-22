@@ -171,10 +171,10 @@
             android:name=".ui.order.OrderDetailsActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.order.MyOrderActivity"
+            android:name=".ui.tradingbox.TradingBoxOrderActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.tradingbox.HistoryBoxActivity"
+            android:name=".ui.tradingbox.TradingBoxHistroyActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.tradingbox.PlaceOrderActivity"
@@ -186,7 +186,7 @@
             android:name=".ui.tradingbox.TradingBoxDetailsActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.mainpage.TradingBoxActivity"
+            android:name=".ui.tradingbox.TradingBoxActivity"
             android:screenOrientation="portrait" />
 
         <service

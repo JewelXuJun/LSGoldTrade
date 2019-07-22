@@ -5,7 +5,7 @@
 
         <variable
             name="handlers"
-            type="com.jme.lsgoldtrade.ui.tradingbox.HistoryBoxActivity" />
+            type="com.jme.lsgoldtrade.ui.tradingbox.TradingBoxHistroyActivity" />
 
     </data>
 

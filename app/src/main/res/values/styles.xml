@@ -30,7 +30,7 @@
         <item name="android:button">@drawable/selector_checkbox</item>
     </style>
 
-    <style name="collect_dialog" parent="@android:style/Theme.Dialog">
+    <style name="function_dialog" parent="@android:style/Theme.Dialog">
         <item name="android:windowFrame">@null</item><!--边框-->
         <item name="android:windowIsFloating">true</item><!--是否浮现在activity之上-->
         <item name="android:windowIsTranslucent">false</item><!--半透明-->

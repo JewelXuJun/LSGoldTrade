@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="@dimen/width_popupwindow"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="@dimen/margin_login"
+    android:orientation="vertical"
+    android:paddingRight="@dimen/common_page_padding">
+
+    <ImageView
+        android:id="@+id/img_triangle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginLeft="@dimen/margin_large"
+        android:src="@drawable/bg_triangle_up" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_function"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tv_share"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/common_page_margin"
+            android:text="@string/trading_box_function_share"
+            android:textColor="@color/black"
+            android:textSize="@dimen/size_normal" />
+
+        <include layout="@layout/item_line_vertical_list" />
+
+        <TextView
+            android:id="@+id/tv_history"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/common_page_margin"
+            android:text="@string/trading_box_function_history"
+            android:textColor="@color/black"
+            android:textSize="@dimen/size_normal" />
+
+        <include layout="@layout/item_line_vertical_list" />
+
+        <TextView
+            android:id="@+id/tv_order"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/common_page_margin"
+            android:text="@string/trading_box_function_order"
+            android:textColor="@color/black"
+            android:textSize="@dimen/size_normal" />
+
+        <include layout="@layout/item_line_vertical_list" />
+
+        <TextView
+            android:id="@+id/tv_introduction"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/common_page_margin"
+            android:text="@string/trading_box_function_introduction"
+            android:textColor="@color/black"
+            android:textSize="@dimen/size_normal" />
+
+        <include layout="@layout/item_line_vertical_list" />
+
+        <TextView
+            android:id="@+id/tv_question"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/common_page_margin"
+            android:text="@string/trading_box_function_question"
+            android:textColor="@color/black"
+            android:textSize="@dimen/size_normal" />
+
+    </LinearLayout>
+
+</LinearLayout>

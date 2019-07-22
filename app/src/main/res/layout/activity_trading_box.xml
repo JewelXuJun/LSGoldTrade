@@ -5,20 +5,20 @@
 
         <variable
             name="handlers"
-            type="com.jme.lsgoldtrade.ui.mainpage.TradingBoxActivity.ClickHandlers" />
+            type="com.jme.lsgoldtrade.ui.tradingbox.TradingBoxActivity.ClickHandlers" />
 
     </data>
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@color/common_background">
 
         <LinearLayout
-            android:id="@+id/lltitle"
+            android:id="@+id/layout_toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            >
+            android:orientation="vertical">
 
             <include layout="@layout/layout_toolbar" />
 
@@ -26,69 +26,73 @@
 
         </LinearLayout>
 
-        <LinearLayout
-            android:id="@+id/subcribenum"
+        <RelativeLayout
+            android:id="@+id/layout_subcribe_number"
             android:layout_width="match_parent"
-            android:layout_height="44dp"
+            android:layout_height="@dimen/common_item_height_normal"
+            android:layout_below="@id/layout_toolbar"
+            android:background="@color/white"
             android:orientation="horizontal"
-            android:paddingLeft="15dp"
-            android:paddingRight="15dp"
-            android:layout_below="@id/lltitle"
-            >
+            android:paddingLeft="@dimen/common_area_margin"
+            android:paddingRight="@dimen/common_area_margin">
 
             <TextView
-                android:id="@+id/subscribe_num"
-                android:layout_width="0dp"
+                android:id="@+id/tv_subscribe_number"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:textSize="@dimen/sp_14"
+                android:layout_centerVertical="true"
                 android:textColor="@color/black"
-                android:layout_gravity="center_vertical"
-                />
+                android:textSize="@dimen/sp_14" />
 
             <TextView
-                android:id="@+id/subscribe"
-                android:layout_width="55dp"
-                android:layout_height="27dp"
+                android:id="@+id/tv_subscribe"
+                android:layout_width="@dimen/width_subscribe"
+                android:layout_height="@dimen/height_subscribe"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
                 android:gravity="center"
-                android:textSize="@dimen/sp_14"
-                android:layout_gravity="center_vertical"
                 android:onClick="@{() -> handlers.onClickSubcribe()}"
-                />
+                android:textSize="@dimen/sp_14" />
 
-        </LinearLayout>
+        </RelativeLayout>
 
         <LinearLayout
-            android:id="@+id/llbottom"
+            android:id="@+id/layout_bottom"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:orientation="horizontal"
+            android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            >
+            android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/trading_details"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="2"
-                android:text="查看详情"
-                android:textSize="@dimen/sp_18"
-                android:textColor="@color/color_blue_deep"
-                android:gravity="center"
-                android:onClick="@{() -> handlers.onClickDetails()}"
-                />
+            <include layout="@layout/item_line_vertical_list" />
 
-            <TextView
-                android:id="@+id/trading_buy"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:text="去下单"
-                android:textSize="@dimen/sp_18"
-                android:textColor="@color/white"
-                android:gravity="center"
-                android:onClick="@{() -> handlers.onClickBuy()}"
-                />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/height_btn"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:onClick="@{() -> handlers.onClickDetails()}"
+                    android:text="@string/trading_box_detail"
+                    android:textColor="@color/color_blue_deep"
+                    android:textSize="@dimen/sp_18" />
+
+                <TextView
+                    android:id="@+id/tv_buy"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="2"
+                    android:background="@color/color_text_gray_hint"
+                    android:gravity="center"
+                    android:onClick="@{() -> handlers.onClickBuy()}"
+                    android:text="@string/trading_box_buy"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/sp_18" />
+
+            </LinearLayout>
 
         </LinearLayout>
 
@@ -96,30 +100,27 @@
             android:id="@+id/viewpager"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_below="@id/subcribenum"
-            android:layout_above="@id/llbottom"
-            />
+            android:layout_above="@id/layout_bottom"
+            android:layout_below="@id/layout_subcribe_number" />
 
         <ImageView
-            android:id="@+id/left"
+            android:id="@+id/btn_previous"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/lltitle"
-            android:layout_marginTop="108dp"
-            android:onClick="@{() -> handlers.onClickLeft()}"
-            android:src="@mipmap/left"
-            />
+            android:layout_below="@+id/layout_subcribe_number"
+            android:layout_marginTop="@dimen/margin_trading_box_next"
+            android:background="@mipmap/ic_trading_box_previous"
+            android:onClick="@{() -> handlers.onClickLeft()}" />
 
         <ImageView
-            android:id="@+id/right"
+            android:id="@+id/btn_next"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_below="@+id/layout_subcribe_number"
             android:layout_alignParentRight="true"
-            android:layout_below="@+id/lltitle"
-            android:layout_marginTop="108dp"
-            android:onClick="@{() -> handlers.onClickRight()}"
-            android:src="@mipmap/right"
-            />
+            android:layout_marginTop="@dimen/margin_trading_box_next"
+            android:background="@mipmap/ic_trading_box_next"
+            android:onClick="@{() -> handlers.onClickRight()}" />
 
     </RelativeLayout>
 

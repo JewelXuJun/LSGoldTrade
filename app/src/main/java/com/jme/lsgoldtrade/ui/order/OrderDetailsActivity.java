@@ -9,16 +9,13 @@ import com.jme.common.network.Head;
 import com.jme.lsgoldtrade.R;
 import com.jme.lsgoldtrade.base.JMEBaseActivity;
 import com.jme.lsgoldtrade.config.Constants;
-import com.jme.lsgoldtrade.config.User;
 import com.jme.lsgoldtrade.databinding.ActivityOrderDetailsBinding;
 import com.jme.lsgoldtrade.domain.MyOrderVo;
 import com.jme.lsgoldtrade.service.ManagementService;
-import com.jme.lsgoldtrade.util.TradeBoxTitleUtils;
-import com.jme.lsgoldtrade.view.EmptyView;
+import com.jme.lsgoldtrade.util.TradeBoxFunctionUtils;
 import com.jme.lsgoldtrade.view.ShareSelectWindow;
 
 import java.util.HashMap;
-import java.util.List;
 
 /**
  * 订单详情
@@ -45,7 +42,7 @@ public class OrderDetailsActivity extends JMEBaseActivity {
 
     private void setRightNavigation() {
         setRightNavigation("", R.mipmap.function, 0, () -> {
-            TradeBoxTitleUtils.popup(this, "");
+            TradeBoxFunctionUtils.popup(this, "");
         });
     }
 

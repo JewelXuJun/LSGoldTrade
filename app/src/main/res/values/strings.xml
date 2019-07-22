@@ -332,4 +332,13 @@
 4.浮动成交机制是为您按照市价指令最快速的进行下单，根据上金所交易规则,市价指令可能会导致您的成交价格与您设置的盈亏线不一致。\n
 5.我们仅通过上金所的撮合交易规则为您最大程度的进行委托,实际成交依请参考上金所的交易规则。</string>
 
+    <!-- 交易匣子 -->
+    <string name="trading_box_detail">查看详情</string>
+    <string name="trading_box_buy">去下单</string>
+    <string name="trading_box_function_share">分享</string>
+    <string name="trading_box_function_history">历史匣子</string>
+    <string name="trading_box_function_order">我的订单</string>
+    <string name="trading_box_function_introduction">使用攻略</string>
+    <string name="trading_box_function_question">常见问题</string>
+
 </resources>

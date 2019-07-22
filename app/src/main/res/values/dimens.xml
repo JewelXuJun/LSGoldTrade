@@ -26,6 +26,7 @@
     <dimen name="height_trade_banner">130dp</dimen>
     <dimen name="height_trade_rule">160dp</dimen>
     <dimen name="height_line">2dp</dimen>
+    <dimen name="height_subscribe">27dp</dimen>
 
     <dimen name="width_main_page_info_img">100dp</dimen>
     <dimen name="width_market_limit">100dp</dimen>
@@ -46,6 +47,8 @@
     <dimen name="width_send">80dp</dimen>
     <dimen name="width_customer_service_item">90dp</dimen>
     <dimen name="width_customer_service_question">278dp</dimen>
+    <dimen name="width_subscribe">55dp</dimen>
+    <dimen name="width_popupwindow">100dp</dimen>
 
     <dimen name="margin_main_page_info">30dp</dimen>
     <dimen name="margin_main_page_market">2.5dp</dimen>
@@ -65,6 +68,7 @@
     <dimen name="margin_trade_rule">18dp</dimen>
     <dimen name="margin_checkbox">67dp</dimen>
     <dimen name="margin_checkbox_text">87dp</dimen>
+    <dimen name="margin_trading_box_next">108dp</dimen>
 
     <dimen name="size_exiguity">8sp</dimen>
     <dimen name="size_tiny">9sp</dimen>

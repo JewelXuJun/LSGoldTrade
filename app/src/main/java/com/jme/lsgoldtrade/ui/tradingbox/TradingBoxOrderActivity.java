@@ -1,4 +1,4 @@
-package com.jme.lsgoldtrade.ui.order;
+package com.jme.lsgoldtrade.ui.tradingbox;
 
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -15,6 +15,7 @@ import com.jme.lsgoldtrade.databinding.ActivityMyOrderBinding;
 import com.jme.lsgoldtrade.domain.InfoVo;
 import com.jme.lsgoldtrade.domain.MyOrderVo;
 import com.jme.lsgoldtrade.service.ManagementService;
+import com.jme.lsgoldtrade.ui.order.MyOrderAdapter;
 import com.jme.lsgoldtrade.view.EmptyView;
 import com.jme.lsgoldtrade.view.NormalPopupwindow;
 
@@ -24,8 +25,8 @@ import java.util.List;
 /**
  * 我的订单
  */
-@Route(path = Constants.ARouterUriConst.MYORDER)
-public class MyOrderActivity extends JMEBaseActivity {
+@Route(path = Constants.ARouterUriConst.TRADINGBOXORDER)
+public class TradingBoxOrderActivity extends JMEBaseActivity {
 
     private ActivityMyOrderBinding mBinding;
 

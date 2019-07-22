@@ -9,11 +9,11 @@ import com.jme.lsgoldtrade.domain.HistoryItemVo;
 
 import java.util.List;
 
-public class HistroyBoxAdapter extends BaseQuickAdapter<HistoryItemVo, BaseViewHolder> {
+public class TradingBoxHistroyAdapter extends BaseQuickAdapter<HistoryItemVo, BaseViewHolder> {
 
     private Context context;
 
-    public HistroyBoxAdapter(int layoutResId, List<HistoryItemVo> data, Context context) {
+    public TradingBoxHistroyAdapter(int layoutResId, List<HistoryItemVo> data, Context context) {
         super(layoutResId, data);
         this.context = context;
     }
