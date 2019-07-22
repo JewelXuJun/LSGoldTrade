@@ -32,7 +32,7 @@ public class SetLoginPasswordSuccessActivity extends JMEBaseActivity {
     protected void initData(Bundle savedInstanceState) {
         super.initData(savedInstanceState);
 
-        mBinding.tvAccount.setText(User.getInstance().getTraderId());
+        mBinding.tvAccount.setText(String.format(getString(R.string.login_set_password_success_account), User.getInstance().getTraderId()));
     }
 
     @Override
