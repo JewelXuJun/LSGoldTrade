@@ -204,18 +204,17 @@ public class TradeFragment extends JMEBaseFragment {
                     if (TextUtils.isEmpty(flag))
                         return;
 
-                    if (flag.equals("Y")) {
+                    if (flag.equals("Y"))
                         ARouter.getInstance()
                                 .build(Constants.ARouterUriConst.BINDACCOUNT)
-                                .withString("name", identityInfoVo.getName())
-                                .withString("card", identityInfoVo.getIdCard())
+                                .withString("Name", identityInfoVo.getName())
+                                .withString("IDCard", identityInfoVo.getIdCard())
                                 .navigation();
-                    } else {
+                    else
                         ARouter.getInstance()
                                 .build(Constants.ARouterUriConst.AUTHENTICATION)
                                 .withString("Type", "2")
                                 .navigation();
-                    }
                 }
 
                 break;

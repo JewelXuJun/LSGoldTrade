@@ -15,7 +15,6 @@ import com.jme.lsgoldtrade.databinding.ActivityAuthenticationBinding;
 import com.jme.lsgoldtrade.domain.IdentityInfoVo;
 import com.jme.lsgoldtrade.service.TradeService;
 import com.jme.lsgoldtrade.util.IntentUtils;
-import com.jme.lsgoldtrade.util.NormalUtils;
 
 import java.util.HashMap;
 
@@ -104,17 +103,14 @@ public class AuthenticationActivity extends JMEBaseActivity {
                 break;
             case "VerifyIdCard":
                 if (head.isSuccess()) {
-                    if (mType.equals("1")) {
+                    if (mType.equals("1"))
                         IntentUtils.jumpBankSmall(this);
-                    } else {
-                        String name = mBinding.etName.getText().toString().trim();
-                        String namecard = mBinding.etIdCard.getText().toString().trim();
+                    else
                         ARouter.getInstance()
                                 .build(Constants.ARouterUriConst.BINDACCOUNT)
-                                .withString("name", name)
-                                .withString("card", namecard)
+                                .withString("Name", mBinding.etName.getText().toString().trim())
+                                .withString("IDCard", mBinding.etIdCard.getText().toString().trim())
                                 .navigation();
-                    }
                 }
 
                 break;

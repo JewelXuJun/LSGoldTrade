@@ -74,8 +74,8 @@ public class BindAccountActivity extends JMEBaseActivity {
         super.initView();
         mBinding = (ActivityBindAccountBinding) mBindingUtil;
         initToolbar("账号绑定", true);
-        name = getIntent().getStringExtra("name");
-        card = getIntent().getStringExtra("card");
+        name = getIntent().getStringExtra("Name");
+        card = getIntent().getStringExtra("IDCard");
 
         mBinding.etName.setText(name);
         mBinding.etNameCard.setText(card);
