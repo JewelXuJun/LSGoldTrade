@@ -127,8 +127,6 @@ public class TradeFragment extends JMEBaseFragment {
         mBinding.layoutNoLogin.setVisibility(View.VISIBLE);
 
         setCourseLayout(mContext.getResources().getString(R.string.trade_open_account_course));
-
-//            PicassoUtils.getInstance().loadImg(mContext, url, mBinding.imgBanner);
     }
 
     private void setLoginLayout() {
@@ -231,6 +229,14 @@ public class TradeFragment extends JMEBaseFragment {
                 ARouter.getInstance().build(Constants.ARouterUriConst.ACCOUNTLOGIN).navigation();
             else
                 ARouter.getInstance().build(Constants.ARouterUriConst.NEWSCENTERACTIVITY).navigation();
+        }
+
+        public void onClickBanner() {
+            ARouter.getInstance()
+                    .build(Constants.ARouterUriConst.JMEWEBVIEW)
+                    .withString("title", mContext.getResources().getString(R.string.trade_rule))
+                    .withString("url", Constants.HttpConst.URL_TRADE_RULE)
+                    .navigation();
         }
 
         public void onClickOpenAccountFree() {

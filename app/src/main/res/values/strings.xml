@@ -198,6 +198,7 @@
     <string name="trade_open_account_course">开户有疑问？&#160;来看看&#160;开户教程</string>
     <string name="trade_open_account_course_title">开户教程</string>
     <string name="trade_open_account_bind">已有黄金账号，去绑定</string>
+    <string name="trade_rule">交易规则</string>
 
     <!-- Personal -->
     <string name="personal_login">登录/注册</string>

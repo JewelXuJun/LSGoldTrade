@@ -32,6 +32,7 @@ public class Constants {
         public static String URL_DISCLAIMER = "http://www.taijs.com/upload/mianze.html";
         public static String URL_PRIVACY_POLICY = "http://www.taijs.com/upload/yszc.htm";
         public static String URL_OPEN_ACCOUNT_COURSE = "http://www.taijs.com/upload/glht/khjc.html";
+        public static String URL_TRADE_RULE = "http://www.taijs.com/upload/jygz/jygz.html";
 
 
         static {
