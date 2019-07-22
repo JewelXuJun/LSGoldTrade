@@ -25,6 +25,8 @@ public class QuestionTypeAdapter extends BaseQuickAdapter<QuestListTypeVo, BaseV
 
         Picasso.with(mContext)
                 .load(item.getPic())
+                .placeholder(R.mipmap.ic_img_default)
+                .error(R.mipmap.ic_img_default)
                 .into((ImageView) helper.getView(R.id.img_type));
     }
 }
