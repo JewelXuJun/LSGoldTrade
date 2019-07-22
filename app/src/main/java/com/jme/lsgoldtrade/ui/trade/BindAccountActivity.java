@@ -44,23 +44,28 @@ public class BindAccountActivity extends JMEBaseActivity {
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
 
-            if (null != mWindow) {
-                if (mTime == 0) {
-                    mWindow.setData(String.valueOf(mTime));
-                    mHandler.removeCallbacksAndMessages(null);
-                    mWindow.dismiss();
+            switch (msg.what) {
+                case Constants.Msg.MSG_BING_ACCOUNT_SUCCESS:
+                    if (null != mWindow) {
+                        if (mTime == 0) {
+                            mWindow.setData(String.valueOf(mTime));
+                            mHandler.removeCallbacksAndMessages(null);
+                            mWindow.dismiss();
 
-                    RxBus.getInstance().post(Constants.RxBusConst.RXBUS_BIND_SUCCESS, null);
-                    ARouter.getInstance().build(Constants.ARouterUriConst.SETLOGINPASSWORD).navigation();
+                            RxBus.getInstance().post(Constants.RxBusConst.RXBUS_BIND_SUCCESS, null);
+                            ARouter.getInstance().build(Constants.ARouterUriConst.SETLOGINPASSWORD).navigation();
 
-                    finish();
-                } else {
-                    mWindow.setData(String.valueOf(mTime));
-                    mHandler.removeCallbacksAndMessages(null);
-                    mHandler.sendEmptyMessageDelayed(1, 1000);
+                            finish();
+                        } else {
+                            mWindow.setData(String.valueOf(mTime));
+                            mHandler.removeCallbacksAndMessages(null);
+                            mHandler.sendEmptyMessageDelayed(Constants.Msg.MSG_BING_ACCOUNT_SUCCESS, 1000);
 
-                    --mTime;
-                }
+                            --mTime;
+                        }
+                    }
+
+                    break;
             }
         }
     };
@@ -152,7 +157,7 @@ public class BindAccountActivity extends JMEBaseActivity {
                         mWindow.setData(String.valueOf(mTime));
                         mWindow.showAtLocation(mBinding.btnBind, Gravity.CENTER, 0, 0);
 
-                        mHandler.sendEmptyMessageDelayed(1, 1000);
+                        mHandler.sendEmptyMessageDelayed(Constants.Msg.MSG_BING_ACCOUNT_SUCCESS, 1000);
 
                         --mTime;
                     }
