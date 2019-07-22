@@ -12,6 +12,7 @@
     <string name="text_submit">提交</string>
     <string name="text_tips">操作提示</string>
     <string name="text_login">登录</string>
+    <string name="text_next">下一步</string>
     <string name="text_message_notlogin">很抱歉，您还未登录</string>
     <string name="text_wechat_uninstalled">您还没有安装微信，请先进行安装！</string>
 
@@ -199,6 +200,11 @@
     <string name="trade_open_account_course_title">开户教程</string>
     <string name="trade_open_account_bind">已有黄金账号，去绑定</string>
     <string name="trade_rule">交易规则</string>
+    <string name="trade_authentication">身份验证</string>
+    <string name="trade_name">姓名</string>
+    <string name="trade_name_hint">请输入姓名</string>
+    <string name="trade_id_card">身份证号</string>
+    <string name="trade_id_card_hint">请输入身份证号</string>
 
     <!-- Personal -->
     <string name="personal_login">登录/注册</string>
