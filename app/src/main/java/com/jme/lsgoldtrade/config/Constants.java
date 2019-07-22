@@ -23,21 +23,22 @@ public class Constants {
 
         }
 
-        public static String URL_BASE_MARKET;
-        public static String URL_BASE_TRADE;
-        public static String URL_BASE_ACCOUNT;
-        public static String URL_BASE_MANAGEMENT;
+        public static String URL_BASE_MARKET;         // 行情
+        public static String URL_BASE_TRADE;          // 交易
+        public static String URL_BASE_ACCOUNT;        // 增值服务
+        public static String URL_BASE_MANAGEMENT;     // 管理后台 banner 资讯等
+        public static String URL_INFO;                // 资讯详情
         public static String URL_REGISTER_AGGREMENT = "http://www.taijs.com/upload/yhxy.htm";
         public static String URL_DISCLAIMER = "http://www.taijs.com/upload/mianze.html";
         public static String URL_PRIVACY_POLICY = "http://www.taijs.com/upload/yszc.htm";
         public static String URL_OPEN_ACCOUNT_COURSE = "http://www.taijs.com/upload/glht/khjc.html";
-        public static String URL_INFO;
+
 
         static {
             if (Envi == TEST_WAN) {
                 URL_BASE_MARKET = "https://222.190.245.2:18012";
                 URL_BASE_TRADE = "https://222.190.245.2:18012";
-                URL_BASE_ACCOUNT = "http://192.168.10.41:8008";
+                URL_BASE_ACCOUNT = "http://tjs418008.developer.jsdttec.com";
                 URL_BASE_MANAGEMENT = "http://tjs.developer.jsdttec.com";
                 URL_INFO = "http://tjs.developer.jsdttec.com/tjsmanage/infoapi/v1/android/cmsComtentTxt/get?contentId=";
             } else if (Envi == TEST_LAN) {
@@ -49,12 +50,14 @@ public class Constants {
             } else if (Envi == PRODUCE) {
                 URL_BASE_MARKET = "https://180.96.49.165:18002";
                 URL_BASE_TRADE = "https://180.96.49.165:18001";
-                URL_BASE_MANAGEMENT = "http://tjs.developer.jsdttec.com";
-                URL_INFO = "http://tjs.developer.jsdttec.com/tjsmanage/infoapi/v1/android/cmsComtentTxt/get?contentId=";
+                URL_BASE_ACCOUNT = "https://180.96.49.165:18001";
+                URL_BASE_MANAGEMENT = "https://u.taijs.com";
+                URL_INFO = "https://u.taijs.com/tjsmanage/infoapi/v1/android/cmsComtentTxt/get?contentId=";
             } else if (Envi == UAT) {
-                URL_BASE_MARKET = "http://192.168.10.186:6543";
-                URL_BASE_TRADE = "http://192.168.10.186:6666";
-                URL_BASE_MANAGEMENT = "http://192.168.10.188:18080";
+                URL_BASE_MARKET = "http://tjsuat1866543.developer.jsdttec.com";
+                URL_BASE_TRADE = "http://tjsuat1866666.developer.jsdttec.com";
+                URL_BASE_ACCOUNT = "http://192.168.10.189:8008";
+                URL_BASE_MANAGEMENT = "http://tjsuat.developer.jsdttec.com";
                 URL_INFO = "http://tjsuat.developer.jsdttec.com/tjsmanage/infoapi/v1/android/cmsComtentTxt/get?contentId=";
             }
         }
