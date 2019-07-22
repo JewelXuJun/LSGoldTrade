@@ -1,39 +1,36 @@
 package com.jme.lsgoldtrade.ui.tradingbox;
 
-import android.content.Context;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
-import com.jme.lsgoldtrade.base.JMEBaseFragment;
-import com.jme.lsgoldtrade.domain.TradingBoxVo;
+import com.jme.lsgoldtrade.domain.TradingBoxDataInfoVo;
 
 import java.util.List;
 
-public class TradingBoxAdapter  extends FragmentPagerAdapter {
+public class TradingBoxAdapter extends FragmentPagerAdapter {
 
-    private Context context;
+    private List<TradingBoxDataInfoVo.HistoryVoBean> mHistoryVoBeanList;
+    private List<TradingBoxFragment> mTradingBoxFragmentList;
 
-    private List<TradingBoxVo.HistoryListVoListBean> list;
-
-    private List<JMEBaseFragment> listFragment;
-
-    public TradingBoxAdapter(FragmentManager fm, Context context, List<TradingBoxVo.HistoryListVoListBean> list, List<JMEBaseFragment> listFragment) {
+    public TradingBoxAdapter(FragmentManager fm, List<TradingBoxDataInfoVo.HistoryVoBean> historyVoBeanList, List<TradingBoxFragment> tradingBoxFragmentList) {
         super(fm);
-        this.context = context;
-        this.list = list;
-        this.listFragment = listFragment;
+
+        mHistoryVoBeanList = historyVoBeanList;
+        mTradingBoxFragmentList = tradingBoxFragmentList;
     }
 
     @Override
     public Fragment getItem(int position) {
-        TradingBoxFragment tradingBoxFragment = (TradingBoxFragment) listFragment.get(position);
-        tradingBoxFragment.setData(list, position);
+        TradingBoxFragment tradingBoxFragment = mTradingBoxFragmentList.get(position);
+        tradingBoxFragment.setData(mHistoryVoBeanList.get(position));
+
         return tradingBoxFragment;
     }
 
     @Override
     public int getCount() {
-        return null == list ? 0 : list.size();
+        return null == mHistoryVoBeanList ? 0 : mHistoryVoBeanList.size();
     }
+
 }

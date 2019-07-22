@@ -110,7 +110,8 @@
             android:layout_below="@+id/layout_subcribe_number"
             android:layout_marginTop="@dimen/margin_trading_box_next"
             android:background="@mipmap/ic_trading_box_previous"
-            android:onClick="@{() -> handlers.onClickLeft()}" />
+            android:onClick="@{() -> handlers.onClickPrevious()}"
+            android:visibility="gone" />
 
         <ImageView
             android:id="@+id/btn_next"
@@ -120,7 +121,8 @@
             android:layout_alignParentRight="true"
             android:layout_marginTop="@dimen/margin_trading_box_next"
             android:background="@mipmap/ic_trading_box_next"
-            android:onClick="@{() -> handlers.onClickRight()}" />
+            android:onClick="@{() -> handlers.onClickNext()}"
+            android:visibility="gone" />
 
     </RelativeLayout>
 

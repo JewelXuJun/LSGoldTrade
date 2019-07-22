@@ -6,7 +6,7 @@ import android.view.Gravity;
 import com.jme.lsgoldtrade.R;
 import com.jme.lsgoldtrade.base.JMEBaseFragment;
 import com.jme.lsgoldtrade.databinding.FragmentTradingBoxBinding;
-import com.jme.lsgoldtrade.domain.TradingBoxVo;
+import com.jme.lsgoldtrade.domain.TradingBoxDataInfoVo;
 import com.jme.lsgoldtrade.util.PicassoUtils;
 import com.jme.lsgoldtrade.view.TradingBoxPopupwindow;
 
@@ -16,9 +16,7 @@ public class TradingBoxFragment extends JMEBaseFragment {
 
     private FragmentTradingBoxBinding mBinding;
 
-    private int position;
-
-    private List<TradingBoxVo.HistoryListVoListBean> list;
+    private TradingBoxDataInfoVo.HistoryVoBean mHistoryVoBean;
 
     private TradingBoxPopupwindow mWindow;
 
@@ -34,9 +32,8 @@ public class TradingBoxFragment extends JMEBaseFragment {
         return tradeId;
     }
 
-    public void setData(List<TradingBoxVo.HistoryListVoListBean> list, int position) {
-        this.position = position;
-        this.list = list;
+    public void setData(TradingBoxDataInfoVo.HistoryVoBean historyVoBean) {
+        mHistoryVoBean = historyVoBean;
     }
 
     @Override
@@ -60,16 +57,15 @@ public class TradingBoxFragment extends JMEBaseFragment {
     }
 
     private void getData() {
-        TradingBoxVo.HistoryListVoListBean historyListVoListBean = list.get(position);
-        String chance = historyListVoListBean.getChance();
-        String analystOpinion = historyListVoListBean.getAnalystOpinion();
-        direction = historyListVoListBean.getDirection();
-        String etfUrl = historyListVoListBean.getEtfUrl();
-        String moodUrl = historyListVoListBean.getMoodUrl();
-        String pushTime = historyListVoListBean.getPushTime();
-        tradeId = historyListVoListBean.getTradeId();
-        String variety = historyListVoListBean.getVariety();
-        int closeTime = historyListVoListBean.getCloseTime();
+        String chance = mHistoryVoBean.getChance();
+        String analystOpinion = mHistoryVoBean.getAnalystOpinion();
+        direction = mHistoryVoBean.getDirection();
+        String etfUrl = mHistoryVoBean.getEtfUrl();
+        String moodUrl = mHistoryVoBean.getMoodUrl();
+        String pushTime = mHistoryVoBean.getPushTime();
+        tradeId = mHistoryVoBean.getTradeId();
+        String variety = mHistoryVoBean.getVariety();
+        long closeTime = mHistoryVoBean.getCloseTime();
         if ("0".equals(direction)) {
             mBinding.kLine.setText(variety + "   多");
         } else {

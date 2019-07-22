@@ -43,7 +43,7 @@ public interface ManagementApi {
     Call<DTResponse> saveNavigatorList(@Body Map<String, String> map);
 
     @GET("/tjsmanage/infoapi/v1/android/tradingBox/tradeBoxHomedataInfo")
-    Call<DTResponse> tradingBox(@QueryMap Map<String, String> map);
+    Call<DTResponse> tradeBoxHomedataInfo(@QueryMap Map<String, String> map);
 
     @POST("/tjsmanage/infoapi/v1/android/setSubscribe")
     Call<DTResponse> subscribe(@Body Map<String, String> map);
@@ -64,7 +64,7 @@ public interface ManagementApi {
     Call<DTResponse> fenxishiList(@QueryMap Map<String, String> map);
 
     @GET("/tjsmanage/infoapi/v1/android/getListExt")
-    Call<DTResponse> isSubscribe(@QueryMap Map<String, String> map);
+    Call<DTResponse> getListExt(@QueryMap Map<String, String> map);
 
     @GET("/tjsmanage/infoapi/v1/android/embeddedSingle/list")
     Call<DTResponse> myOrder(@QueryMap Map<String, String> map);
@@ -103,7 +103,7 @@ public interface ManagementApi {
     Call<DTResponse> agree(@Body Map<String, String> map);
 
     @POST("/tjsmanage/infoapi/v1/android/setAppSubscribe")
-    Call<DTResponse> setSubscribe(@Body Map<String, String> map);
+    Call<DTResponse> setAppSubscribe(@Body Map<String, String> map);
 
     @POST("/tjsmanage/infoapi/v1/android/vote/add")
     Call<DTResponse> rate(@Body Map<String, String> map);

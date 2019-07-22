@@ -340,5 +340,7 @@
     <string name="trading_box_function_order">我的订单</string>
     <string name="trading_box_function_introduction">使用攻略</string>
     <string name="trading_box_function_question">常见问题</string>
+    <string name="trading_box_number">%1$s期交易匣子</string>
+    <string name="trading_box_subscribe_number">已有%1$s位用户使用</string>
 
 </resources>

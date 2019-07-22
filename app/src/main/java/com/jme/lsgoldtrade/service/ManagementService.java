@@ -24,7 +24,7 @@ import com.jme.lsgoldtrade.domain.StrategyVo;
 import com.jme.lsgoldtrade.domain.SubscribeVo;
 import com.jme.lsgoldtrade.domain.TradingBoxDetailsVo;
 import com.jme.lsgoldtrade.domain.TradingBoxInfoVo;
-import com.jme.lsgoldtrade.domain.TradingBoxVo;
+import com.jme.lsgoldtrade.domain.TradingBoxDataInfoVo;
 import com.jme.lsgoldtrade.domain.UpdateInfoVo;
 
 import java.util.HashMap;
@@ -130,10 +130,10 @@ public class ManagementService extends IService<ManagementApi> {
         }
     };
 
-    public API tradingBox = new API<TradingBoxVo>("TradingBox") {
+    public API tradeBoxHomedataInfo = new API<TradingBoxDataInfoVo>("TradeBoxHomedataInfo") {
         @Override
         public Call<DTResponse> request(HashMap<String, String> params) {
-            return mApi.tradingBox(params);
+            return mApi.tradeBoxHomedataInfo(params);
         }
     };
 
@@ -172,10 +172,10 @@ public class ManagementService extends IService<ManagementApi> {
         }
     };
 
-    public API setSubscribe = new API<SubscribeVo>("Subscribe") {
+    public API setAppSubscribe = new API<SubscribeVo>("SetAppSubscribe") {
         @Override
         public Call<DTResponse> request(HashMap<String, String> params) {
-            return mApi.setSubscribe(params);
+            return mApi.setAppSubscribe(params);
         }
     };
 
@@ -193,10 +193,10 @@ public class ManagementService extends IService<ManagementApi> {
         }
     };
 
-    public API isSubscribe = new API<IsSubscribeVo>("IsSubscribe") {
+    public API getListExt = new API<IsSubscribeVo>("GetListExt") {
         @Override
         public Call<DTResponse> request(HashMap<String, String> params) {
-            return mApi.isSubscribe(params);
+            return mApi.getListExt(params);
         }
     };
 
