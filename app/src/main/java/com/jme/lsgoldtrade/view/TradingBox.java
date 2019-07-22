@@ -48,13 +48,13 @@ public class TradingBox extends RelativeLayout {
             if (!bShow) {
                 show();
             } else {
-                if (User.getInstance().isLogin() && !TextUtils.isEmpty(User.getInstance().getToken())) {
-//                    if (TextUtils.isEmpty(User.getInstance().getAccountID()))
-                        RxBus.getInstance().post(Constants.RxBusConst.RXBUS_TRADE, null);
-//                    else
-//                        ARouter.getInstance().build(Constants.ARouterUriConst.TRADINGBOX).navigation();
-                } else {
+                if (!User.getInstance().isLogin()) {
                     ARouter.getInstance().build(Constants.ARouterUriConst.ACCOUNTLOGIN).navigation();
+                } else {
+                    if (TextUtils.isEmpty(User.getInstance().getAccountID()))
+                        RxBus.getInstance().post(Constants.RxBusConst.RXBUS_TRADE, null);
+                    else
+                        ARouter.getInstance().build(Constants.ARouterUriConst.TRADINGBOX).navigation();
                 }
             }
         });

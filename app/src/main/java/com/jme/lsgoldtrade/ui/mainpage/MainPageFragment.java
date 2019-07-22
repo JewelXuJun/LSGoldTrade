@@ -453,6 +453,7 @@ public class MainPageFragment extends JMEBaseFragment implements OnRefreshListen
     }
 
     public class ClickHandlers {
+
         public void onClickNews() {
             if (null == mUser || !mUser.isLogin())
                 ARouter.getInstance().build(Constants.ARouterUriConst.ACCOUNTLOGIN).navigation();
