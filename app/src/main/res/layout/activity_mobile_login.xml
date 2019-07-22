@@ -218,7 +218,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_alignParentRight="true"
                                 android:onClick="@{() -> handlers.onClickForgetPwd()}"
-                                android:text="@string/login_forget_passord"
+                                android:text="@string/login_forget_password"
                                 android:textColor="@color/color_blue_deep"
                                 android:textSize="@dimen/sp_14" />
 

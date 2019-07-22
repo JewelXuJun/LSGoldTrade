@@ -292,18 +292,24 @@
     <string name="login_register">还没有账号？立即开户</string>
     <string name="login_success">登录成功</string>
     <string name="login_message">该功能需要登录泰金所才能使用,去登录?</string>
-    <string name="login_forget_passord">忘记密码</string>
-    <string name="login_reset_passord">重置密码</string>
-    <string name="login_reset_passord_mobile">手机号</string>
-    <string name="login_reset_passord_verification_code">短信验证码</string>
-    <string name="login_reset_passord_verification_code_input">输入短信验证码</string>
-    <string name="login_reset_passord_new">新密码</string>
-    <string name="login_reset_passord_new_confirm">确认密码</string>
-    <string name="login_reset_passord_rule">请输入6-18位数字字母组合密码</string>
-    <string name="login_reset_passord_new_confirm_input">请再次输入您的新密码</string>
-    <string name="login_reset_passord_modify_confirm">确认修改</string>
-    <string name="login_reset_passord_not_equal">您两次输入的密码不一致</string>
-    <string name="login_reset_passord_success">重置密码成功</string>
+    <string name="login_forget_password">忘记密码</string>
+    <string name="login_reset_password">重置密码</string>
+    <string name="login_reset_password_mobile">手机号</string>
+    <string name="login_reset_password_verification_code">短信验证码</string>
+    <string name="login_reset_password_verification_code_input">输入短信验证码</string>
+    <string name="login_reset_password_new">新密码</string>
+    <string name="login_reset_password_new_confirm">确认密码</string>
+    <string name="login_reset_password_rule">请输入6-18位数字字母组合密码</string>
+    <string name="login_reset_password_new_confirm_input">请再次输入您的新密码</string>
+    <string name="login_reset_password_modify_confirm">确认修改</string>
+    <string name="login_reset_password_not_equal">您两次输入的密码不一致</string>
+    <string name="login_reset_password_success">重置密码成功</string>
+    <string name="login_set_password">设置登录密码</string>
+    <string name="login_set_password_again">再次输入密码</string>
+    <string name="login_set_password_new_confirm_input">请再次输入您的新密码</string>
+    <string name="login_set_password_success">密码已设置成功，请妥善保存。</string>
+    <string name="login_set_password_success_account">您的交易账号为%1$s。</string>
+    <string name="login_set_password_success_trade">前往交易</string>
 
     <!-- Register -->
     <string name="register">注册</string>

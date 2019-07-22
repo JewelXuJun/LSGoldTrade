@@ -132,6 +132,9 @@
             android:name=".ui.login.SetLoginPasswordActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:name=".ui.login.SetLoginPasswordSuccessActivity"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".ui.trade.BindAccountActivity"
             android:screenOrientation="portrait" />
         <activity

@@ -15,6 +15,7 @@ public class User {
     private String mToken = "";
     private String mAccount = "";
     private String mAccountID = "";
+    private String mTraderId = "";
 
     public static User getInstance() {
         if (null == mUser)
@@ -32,6 +33,7 @@ public class User {
         mToken = userInfoVo.getToken();
         mAccount = userInfoVo.getAccount();
         mAccountID = userInfoVo.getAccountId();
+        mTraderId = userInfoVo.getTraderId();
     }
 
     public void logout() {
@@ -59,4 +61,11 @@ public class User {
         return mAccountID;
     }
 
+    public String getTraderId() {
+        return mTraderId;
+    }
+
+    public void setTraderId(String traderId) {
+        mTraderId = traderId;
+    }
 }

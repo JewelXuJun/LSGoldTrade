@@ -46,7 +46,7 @@ public class ForgetPasswordActivity extends JMEBaseActivity {
     protected void initView() {
         super.initView();
 
-        initToolbar(R.string.login_reset_passord, true);
+        initToolbar(R.string.login_reset_password, true);
 
         mBinding = (ActivityForgetPasswordBinding) mBindingUtil;
     }
@@ -112,15 +112,15 @@ public class ForgetPasswordActivity extends JMEBaseActivity {
         else if (verifyCode.length() < 6)
             showShortToast(R.string.login_verification_code_error);
         else if (TextUtils.isEmpty(newPassword))
-            showShortToast(R.string.login_reset_passord_rule);
+            showShortToast(R.string.login_reset_password_rule);
         else if (newPassword.length() < 6 || newPassword.length() > 18)
-            showShortToast(R.string.login_reset_passord_rule);
+            showShortToast(R.string.login_reset_password_rule);
         else if (TextUtils.isEmpty(newPasswordConfirm))
-            showShortToast(R.string.login_reset_passord_new_confirm_input);
+            showShortToast(R.string.login_reset_password_new_confirm_input);
         else if (newPasswordConfirm.length() < 6 || newPasswordConfirm.length() > 18)
-            showShortToast(R.string.login_reset_passord_new_confirm_input);
+            showShortToast(R.string.login_reset_password_new_confirm_input);
         else if (!newPassword.equals(newPasswordConfirm))
-            showShortToast(R.string.login_reset_passord_not_equal);
+            showShortToast(R.string.login_reset_password_not_equal);
         else
             resetLoginPassword(mobile, verifyCode, imgVerifyCode, newPassword, newPasswordConfirm);
     }
@@ -199,7 +199,7 @@ public class ForgetPasswordActivity extends JMEBaseActivity {
                 break;
             case "ResetLoginPassword":
                 if (head.isSuccess()) {
-                    showShortToast(R.string.login_reset_passord_success);
+                    showShortToast(R.string.login_reset_password_success);
 
                     finish();
                 }
