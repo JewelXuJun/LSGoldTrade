@@ -8,24 +8,23 @@ public class CustomerServiceVo {
      * anwser : 是的，完全免费
      * typeId : 1.0
      * createTime : 2019-06-17 16:47:56
+     * jumpTxt:null
      * isSpread : 0
      */
 
     private String id;
+
     private String title;
+
     private String anwser;
+
     private String typeId;
+
     private String createTime;
+
+    private String jumpTxt;
+
     private String isSpread;
-    private String type;
-
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
-    }
 
     public String getId() {
         return id;
@@ -65,6 +64,14 @@ public class CustomerServiceVo {
 
     public void setCreateTime(String createTime) {
         this.createTime = createTime;
+    }
+
+    public String getJumpTxt() {
+        return jumpTxt;
+    }
+
+    public void setJumpTxt(String jumpTxt) {
+        this.jumpTxt = jumpTxt;
     }
 
     public String getIsSpread() {

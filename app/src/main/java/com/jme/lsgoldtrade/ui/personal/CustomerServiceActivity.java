@@ -250,6 +250,7 @@ public class CustomerServiceActivity extends JMEBaseActivity {
                         QuestionAnswerVo questionAnswerVo = new QuestionAnswerVo();
                         questionAnswerVo.setQuestion(mQuestion);
                         questionAnswerVo.setAsk(getString(R.string.personal_customer_service_cannot_answer));
+                        questionAnswerVo.setJumpTxt(getString(R.string.personal_customer_service_personal));
 
                         mList.add(questionAnswerVo);
                     } else {
@@ -258,6 +259,7 @@ public class CustomerServiceActivity extends JMEBaseActivity {
                             QuestionAnswerVo questionAnswerVo = new QuestionAnswerVo();
                             questionAnswerVo.setQuestion(customerServiceVo.getTitle());
                             questionAnswerVo.setAsk(customerServiceVo.getAnwser());
+                            questionAnswerVo.setJumpTxt(customerServiceVo.getJumpTxt());
 
                             mList.add(questionAnswerVo);
                         }

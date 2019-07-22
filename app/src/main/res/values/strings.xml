@@ -249,7 +249,7 @@
     <string name="personal_customer_service_guess">猜您想问</string>
     <string name="personal_customer_service_change">换一组</string>
     <string name="personal_customer_service_empty">您还没有输入想要问的问题</string>
-    <string name="personal_customer_service_cannot_answer">抱歉，暂时无法解决您的问题，请联系人工客服</string>
+    <string name="personal_customer_service_cannot_answer">抱歉，暂时无法解决您的问题，请联系人工客服。</string>
 
     <!-- News -->
     <string name="news_title">消息中心</string>

@@ -6,6 +6,8 @@ public class QuestionAnswerVo {
 
     private String ask;
 
+    private String jumpTxt;
+
     public String getQuestion() {
         return question;
     }
@@ -20,5 +22,13 @@ public class QuestionAnswerVo {
 
     public void setAsk(String ask) {
         this.ask = ask;
+    }
+
+    public String getJumpTxt() {
+        return jumpTxt;
+    }
+
+    public void setJumpTxt(String jumpTxt) {
+        this.jumpTxt = jumpTxt;
     }
 }
