@@ -474,7 +474,7 @@
 
                 </LinearLayout>
 
-                <include layout="@layout/item_line_5" />
+                <!--<include layout="@layout/item_line_5" />-->
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -561,7 +561,7 @@
                     android:visibility="gone"
                     >
 
-                    <include layout="@layout/item_line_5" />
+                    <!--<include layout="@layout/item_line_5" />-->
 
                     <!--<LinearLayout-->
                         <!--android:layout_width="match_parent"-->

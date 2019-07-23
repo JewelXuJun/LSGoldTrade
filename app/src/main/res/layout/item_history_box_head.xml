@@ -14,7 +14,7 @@
         android:textSize="@dimen/sp_14"
         android:textColor="@color/black"
         android:gravity="center_vertical"
-        android:drawableLeft="@drawable/drawleft_blue"
+        android:drawableLeft="@drawable/drawleft_blue_rectangle"
         android:drawablePadding="5dp"
         android:paddingLeft="15dp"
         />

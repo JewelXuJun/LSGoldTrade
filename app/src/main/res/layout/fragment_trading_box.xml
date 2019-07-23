@@ -17,183 +17,206 @@
         <android.support.v4.widget.NestedScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/common_background"
             android:scrollbars="none">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:background="@color/common_background"
                 android:orientation="vertical">
 
-                <RelativeLayout
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="173dp">
-
-                    <ImageView
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:background="@mipmap/xiazibeijing" />
+                    android:layout_height="@dimen/height_trading_box_info"
+                    android:background="@mipmap/ic_trading_box_bg"
+                    android:orientation="vertical">
 
                     <TextView
-                        android:id="@+id/trading_chance"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_centerHorizontal="true"
-                        android:layout_marginTop="15dp"
-                        android:text="交易机会"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="@dimen/common_area_margin"
+                        android:text="@string/trading_box_chance"
                         android:textColor="@color/white"
                         android:textSize="@dimen/sp_14" />
 
                     <TextView
-                        android:id="@+id/title"
+                        android:id="@+id/tv_abstract"
                         android:layout_width="match_parent"
-                        android:layout_height="40dp"
-                        android:layout_below="@id/trading_chance"
-                        android:layout_marginLeft="20dp"
-                        android:layout_marginTop="2dp"
-                        android:layout_marginRight="20dp"
+                        android:layout_height="@dimen/common_item_height_middle"
+                        android:layout_marginLeft="@dimen/common_area_margin_big"
+                        android:layout_marginTop="@dimen/common_area_margin_tiny"
+                        android:layout_marginRight="@dimen/common_area_margin_big"
                         android:background="@drawable/bg_translate"
                         android:ellipsize="end"
                         android:gravity="center"
                         android:maxLines="1"
-                        android:text="美联储"
                         android:textColor="@color/white"
                         android:textSize="@dimen/common_font_size" />
 
                     <TextView
-                        android:id="@+id/k_line"
+                        android:id="@+id/tv_contract"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_below="@+id/title"
-                        android:layout_centerHorizontal="true"
-                        android:layout_marginTop="15dp"
-                        android:text="Au(T+D) 多"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="@dimen/common_area_margin"
                         android:textColor="@color/white"
                         android:textSize="@dimen/common_font_size" />
 
                     <TextView
-                        android:id="@+id/time"
+                        android:id="@+id/tv_publish_time"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_below="@+id/k_line"
-                        android:layout_centerHorizontal="true"
-                        android:layout_marginTop="23dp"
-                        android:text="发布时间2019/3/12"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="@dimen/common_area_margin_big"
                         android:textColor="@color/white"
                         android:textSize="@dimen/sp_12" />
 
-                </RelativeLayout>
+                </LinearLayout>
 
                 <TextView
                     android:layout_width="match_parent"
-                    android:layout_height="44dp"
-                    android:drawableLeft="@drawable/drawleft_blue"
-                    android:drawablePadding="5dp"
-                    android:gravity="center_vertical"
-                    android:paddingLeft="15dp"
-                    android:text="分析师观点"
+                    android:layout_height="@dimen/common_item_height_normal"
+                    android:background="@color/white"
+                    android:drawableLeft="@drawable/drawleft_blue_rectangle"
+                    android:drawablePadding="@dimen/common_area_margin_tiny"
+                    android:gravity="center|left"
+                    android:paddingLeft="@dimen/common_area_margin"
+                    android:text="@string/trading_box_analyst"
                     android:textColor="@color/black"
                     android:textSize="@dimen/sp_14" />
 
-                <include layout="@layout/item_line_vertical" />
+                <include layout="@layout/item_line_vertical_list" />
 
                 <TextView
-                    android:id="@+id/tvAnalyst"
+                    android:id="@+id/tv_analyst"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:padding="15dp"
-                    android:text=""
+                    android:background="@color/white"
+                    android:paddingLeft="@dimen/common_area_margin"
+                    android:paddingTop="@dimen/common_page_padding"
+                    android:paddingRight="@dimen/common_area_margin"
+                    android:paddingBottom="@dimen/common_page_padding"
                     android:textColor="@color/color_text_normal"
                     android:textSize="@dimen/sp_14" />
 
-                <include layout="@layout/item_line_5" />
-
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="44dp"
+                    android:layout_height="@dimen/common_item_height_normal"
+                    android:layout_marginTop="@dimen/common_area_margin_tiny"
+                    android:background="@color/white"
                     android:orientation="horizontal">
 
                     <TextView
                         android:layout_width="wrap_content"
-                        android:layout_height="44dp"
-                        android:drawableLeft="@drawable/drawleft_blue"
-                        android:drawablePadding="5dp"
-                        android:gravity="center_vertical"
-                        android:paddingLeft="15dp"
-                        android:text="投机情绪"
+                        android:layout_height="match_parent"
+                        android:drawableLeft="@drawable/drawleft_blue_rectangle"
+                        android:drawablePadding="@dimen/common_area_margin_tiny"
+                        android:gravity="center|left"
+                        android:paddingLeft="@dimen/common_area_margin"
+                        android:text="@string/trading_box_speculation"
                         android:textColor="@color/black"
                         android:textSize="@dimen/sp_14" />
 
-                    <ImageView
-                        android:id="@+id/touji"
+                    <RelativeLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:layout_marginLeft="5dp"
-                        android:onClick="@{() -> handlers.onClickTouji()}"
-                        android:src="@mipmap/tanhuang" />
+                        android:layout_gravity="center"
+                        android:onClick="@{() -> handlers.onClickSpeculation()}"
+                        android:padding="@dimen/margin_market_price">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerInParent="true"
+                            android:src="@mipmap/ic_prompt" />
+
+                    </RelativeLayout>
 
                 </LinearLayout>
 
-                <include layout="@layout/item_line_vertical" />
-
-                <ImageView
-                    android:id="@+id/tvSpeculativeSentiment"
-                    android:layout_width="match_parent"
-                    android:layout_height="128dp"
-                    android:layout_marginLeft="15dp"
-                    android:layout_marginTop="11dp"
-                    android:layout_marginRight="15dp"
-                    android:layout_marginBottom="15dp"
-                    android:scaleType="centerCrop" />
-
-                <include layout="@layout/item_line_5" />
+                <include layout="@layout/item_line_vertical_list" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="44dp"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white">
+
+                    <ImageView
+                        android:id="@+id/img_speculation"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/height_analyst_picture"
+                        android:layout_marginLeft="@dimen/common_area_margin"
+                        android:layout_marginTop="@dimen/common_page_margin"
+                        android:layout_marginRight="@dimen/common_area_margin"
+                        android:layout_marginBottom="@dimen/common_page_margin"
+                        android:background="@color/color_bg_img"
+                        android:scaleType="fitXY" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/common_item_height_normal"
+                    android:layout_marginTop="@dimen/common_area_margin_tiny"
+                    android:background="@color/white"
                     android:orientation="horizontal">
 
                     <TextView
                         android:layout_width="wrap_content"
-                        android:layout_height="44dp"
-                        android:drawableLeft="@drawable/drawleft_blue"
-                        android:drawablePadding="5dp"
-                        android:gravity="center_vertical"
-                        android:paddingLeft="15dp"
-                        android:text="黄金ETF报告"
+                        android:layout_height="match_parent"
+                        android:drawableLeft="@drawable/drawleft_blue_rectangle"
+                        android:drawablePadding="@dimen/common_area_margin_tiny"
+                        android:gravity="center|left"
+                        android:paddingLeft="@dimen/common_area_margin"
+                        android:text="@string/trading_box_gold_etf"
                         android:textColor="@color/black"
                         android:textSize="@dimen/sp_14" />
 
-                    <ImageView
-                        android:id="@+id/baogao"
+                    <RelativeLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:layout_marginLeft="5dp"
-                        android:onClick="@{() -> handlers.onClickBaogao()}"
-                        android:src="@mipmap/tanhuang" />
+                        android:layout_gravity="center"
+                        android:onClick="@{() -> handlers.onClickETF()}"
+                        android:padding="@dimen/margin_market_price">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerInParent="true"
+                            android:src="@mipmap/ic_prompt" />
+
+                    </RelativeLayout>
 
                 </LinearLayout>
 
-                <include layout="@layout/item_line_vertical" />
+                <include layout="@layout/item_line_vertical_list" />
 
-                <ImageView
-                    android:id="@+id/glodetf"
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="128dp"
-                    android:layout_marginLeft="15dp"
-                    android:layout_marginTop="11dp"
-                    android:layout_marginRight="15dp"
-                    android:layout_marginBottom="15dp"
-                    android:scaleType="centerCrop" />
+                    android:layout_height="wrap_content"
+                    android:background="@color/white">
+
+                    <ImageView
+                        android:id="@+id/img_etf"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/height_analyst_picture"
+                        android:layout_marginLeft="@dimen/common_area_margin"
+                        android:layout_marginTop="@dimen/common_page_margin"
+                        android:layout_marginRight="@dimen/common_area_margin"
+                        android:layout_marginBottom="@dimen/common_page_margin"
+                        android:background="@color/color_bg_img"
+                        android:scaleType="fitXY" />
+
+                </LinearLayout>
 
                 <TextView
                     android:layout_width="wrap_content"
-                    android:layout_height="44dp"
-                    android:layout_gravity="center_horizontal"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="@dimen/common_page_margin"
                     android:gravity="center_vertical"
-                    android:text="以上内容及建议，仅供参考，据此操作盈亏自负。"
+                    android:text="@string/trading_box_suggest"
                     android:textColor="@color/gray"
                     android:textSize="@dimen/sp_12" />
 

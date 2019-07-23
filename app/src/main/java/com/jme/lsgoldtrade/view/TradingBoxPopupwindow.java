@@ -2,6 +2,8 @@ package com.jme.lsgoldtrade.view;
 
 import android.content.Context;
 import android.databinding.DataBindingUtil;
+import android.text.Html;
+import android.text.SpannableString;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -36,10 +38,12 @@ public class TradingBoxPopupwindow extends JMEBasePopupWindow {
             return;
 
         setContentView(mBinding.getRoot());
+
+        mBinding.layoutCancel.setOnClickListener((view) -> dismiss());
     }
 
-    public void setData(int res, View.OnClickListener cancelListener) {
-        mBinding.content.setImageResource(res);
-        mBinding.cancel.setOnClickListener(cancelListener);
+    public void setData(String title, SpannableString content) {
+        mBinding.tvTitle.setText(title);
+        mBinding.tvContent.setText(content);
     }
 }

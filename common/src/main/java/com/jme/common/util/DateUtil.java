@@ -143,7 +143,7 @@ public class DateUtil {
     }
 
     public static String dataToStringWithData2(Long date) {
-        format = new SimpleDateFormat("yy/MM/dd");
+        format = new SimpleDateFormat("yyyy-MM-dd");
         return format.format(date);
     }
 

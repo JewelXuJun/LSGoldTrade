@@ -36,7 +36,7 @@
                 android:layout_alignParentRight="true"
                 android:layout_marginTop="16dp"
                 android:padding="8dp"
-                android:src="@mipmap/change_set" />
+                android:src="@mipmap/ic_close_blue" />
 
         </RelativeLayout>
 

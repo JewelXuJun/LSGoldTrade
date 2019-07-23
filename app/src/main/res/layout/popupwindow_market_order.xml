@@ -36,7 +36,7 @@
                 android:id="@+id/iv_cancel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@mipmap/change_set"
+                android:src="@mipmap/ic_close_blue"
                 android:layout_centerVertical="true"
                 android:layout_alignParentRight="true"
                 android:padding="10dp"

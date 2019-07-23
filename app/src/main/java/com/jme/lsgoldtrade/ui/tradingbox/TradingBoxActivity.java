@@ -13,7 +13,6 @@ import com.jme.common.network.Head;
 import com.jme.lsgoldtrade.R;
 import com.jme.lsgoldtrade.base.JMEBaseActivity;
 import com.jme.lsgoldtrade.config.Constants;
-import com.jme.lsgoldtrade.config.User;
 import com.jme.lsgoldtrade.databinding.ActivityTradingBoxBinding;
 import com.jme.lsgoldtrade.domain.SubscribeStateVo;
 import com.jme.lsgoldtrade.domain.TradingBoxDataInfoVo;

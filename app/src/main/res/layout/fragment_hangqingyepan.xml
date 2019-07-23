@@ -300,7 +300,7 @@
                 android:background="@drawable/hangqing_biankuang"
                 />
 
-            <include layout="@layout/item_line_5" />
+            <!--<include layout="@layout/item_line_5" />-->
 
             <LinearLayout
                 android:layout_width="match_parent"
