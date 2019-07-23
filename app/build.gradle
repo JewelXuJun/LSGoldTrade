@@ -128,4 +128,7 @@ dependencies {
     implementation 'com.yanzhenjie:permission:2.0.0-rc3'
     implementation 'com.yanzhenjie.alertdialog:alertdialog:1.0.1'
     implementation 'com.getui:sdk:2.13.2.0'
+
+    // 支付宝 SDK AAR 包所需的配置
+    implementation (name: 'alipaySdk-15.6.4-20190611174341', ext: 'aar')
 }
