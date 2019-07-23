@@ -215,6 +215,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_marginTop="@dimen/common_page_margin"
+                    android:layout_marginBottom="@dimen/common_area_margin_big"
                     android:gravity="center_vertical"
                     android:text="@string/trading_box_suggest"
                     android:textColor="@color/gray"

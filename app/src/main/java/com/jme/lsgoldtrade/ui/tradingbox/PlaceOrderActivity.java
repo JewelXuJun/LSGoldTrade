@@ -84,7 +84,7 @@ public class PlaceOrderActivity extends JMEBaseActivity {
 
     private void setRightNavigation() {
         setRightNavigation("", R.mipmap.ic_more, 0, () -> {
-            TradeBoxFunctionUtils.popup(this, "");
+            TradeBoxFunctionUtils.show(this, "");
         });
     }
 

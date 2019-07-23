@@ -59,7 +59,7 @@ public class TradingBoxDetailActivity extends JMEBaseActivity {
 
     private void setRightNavigation() {
         setRightNavigation("", R.mipmap.ic_more, 0, () -> {
-            TradeBoxFunctionUtils.popup(this, tradeId);
+            TradeBoxFunctionUtils.show(this, tradeId);
         });
     }
 

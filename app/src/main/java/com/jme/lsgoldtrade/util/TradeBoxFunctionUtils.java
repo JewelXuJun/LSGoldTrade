@@ -14,7 +14,7 @@ import com.jme.lsgoldtrade.config.User;
 
 public class TradeBoxFunctionUtils {
 
-    public static void popup(Activity activity, String type) {
+    public static void show(Activity activity, String type) {
         final AlertDialog alertDialog = new AlertDialog.Builder(activity, R.style.function_dialog).create();
         alertDialog.show();
         alertDialog.setContentView(R.layout.pupupwindow_function);
