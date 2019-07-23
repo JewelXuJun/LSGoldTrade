@@ -13,14 +13,13 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        >
+        android:background="@color/common_background">
 
         <LinearLayout
             android:id="@+id/lltitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            >
+            android:orientation="vertical">
 
             <include layout="@layout/layout_toolbar" />
 
@@ -32,20 +31,20 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            >
+            android:padding="15dp"
+            android:background="@color/white">
 
             <LinearLayout
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:gravity="center|left"
+                android:gravity="center_vertical"
                 android:orientation="vertical">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/common_area_margin_tiny"
-                    android:text="可用余额(元)"
+                    android:text="可用余额（元）"
                     android:textColor="@color/black_pale"
                     android:textSize="@dimen/sp_12" />
 
@@ -53,7 +52,6 @@
                     android:id="@+id/tv_available_funds"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/common_area_margin_tiny"
                     android:layout_marginTop="@dimen/common_area_margin_tiny"
                     android:text="@string/text_no_data_default"
                     android:textColor="@color/black_deep"
@@ -62,17 +60,16 @@
             </LinearLayout>
 
             <LinearLayout
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:gravity="center|left"
+                android:gravity="center_vertical"
                 android:orientation="vertical">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/common_area_margin_tiny"
-                    android:text="冻结资金(元)"
+                    android:text="冻结资（元）"
                     android:textColor="@color/black_pale"
                     android:textSize="@dimen/sp_12" />
 
@@ -80,7 +77,6 @@
                     android:id="@+id/tv_frozen_funds"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/common_area_margin_tiny"
                     android:layout_marginTop="@dimen/common_area_margin_tiny"
                     android:text="@string/text_no_data_default"
                     android:textColor="@color/black_deep"
@@ -94,80 +90,78 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:paddingLeft="5dp"
-            android:paddingRight="5dp"
-            >
+            android:background="@color/white"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:paddingBottom="20dp">
 
             <Button
                 android:layout_width="0dp"
-                android:layout_height="@dimen/height_login_btn"
+                android:layout_height="35dp"
                 android:layout_weight="1"
                 android:background="@drawable/selector_btn"
                 android:onClick="@{() -> handlers.onClickRecharge()}"
                 android:text="充值"
                 android:textColor="@color/white"
-                android:textSize="@dimen/common_font_size"
-                android:layout_margin="5dp"
-                />
+                android:textSize="@dimen/sp_16"
+                android:layout_margin="5dp"/>
+
             <Button
                 android:layout_width="0dp"
-                android:layout_height="@dimen/height_login_btn"
+                android:layout_height="35dp"
                 android:layout_weight="1"
                 android:background="@drawable/selector_btn"
                 android:onClick="@{() -> handlers.onClickCash()}"
                 android:text="提现"
                 android:textColor="@color/white"
-                android:textSize="@dimen/common_font_size"
-                android:layout_margin="5dp"
-                />
+                android:textSize="@dimen/sp_16"
+                android:layout_margin="5dp"/>
+
             <Button
                 android:layout_width="0dp"
-                android:layout_height="@dimen/height_login_btn"
+                android:layout_height="35dp"
                 android:layout_weight="1"
                 android:background="@drawable/selector_btn"
                 android:onClick="@{() -> handlers.onClickThaw()}"
                 android:text="申请解冻"
                 android:textColor="@color/white"
-                android:textSize="@dimen/common_font_size"
-                android:layout_margin="5dp"
-                />
+                android:textSize="@dimen/sp_16"
+                android:layout_margin="5dp"/>
+
             <Button
                 android:layout_width="0dp"
-                android:layout_height="@dimen/height_login_btn"
+                android:layout_height="35dp"
                 android:layout_weight="1"
                 android:background="@drawable/selector_btn"
                 android:onClick="@{() -> handlers.onClickDetailed()}"
                 android:text="账户明细"
                 android:textColor="@color/white"
-                android:textSize="@dimen/common_font_size"
-                android:layout_margin="5dp"
-                />
+                android:textSize="@dimen/sp_16"
+                android:layout_margin="5dp"/>
 
         </LinearLayout>
-
-        <include layout="@layout/item_line_10" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="100dp"
+            android:layout_marginTop="@dimen/dp_10"
+            android:background="@color/white"
             android:orientation="horizontal"
             android:gravity="center_vertical"
-            android:paddingLeft="28dp"
-            android:paddingRight="15dp"
-            >
+            android:paddingLeft="25dp"
+            android:paddingRight="15dp">
 
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-
-                />
+                android:src="@mipmap/ic_box"/>
 
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:orientation="vertical"
-                >
+                android:layout_marginLeft="20dp"
+                android:orientation="vertical">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -175,55 +169,53 @@
                     android:text="交易匣子"
                     android:textSize="@dimen/sp_15"
                     android:textColor="@color/black"
-                    />
+                    android:textStyle="bold"/>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
                     android:text="把握非农，一键下单"
                     android:textSize="@dimen/sp_14"
-                    android:textColor="@color/black"
-                    />
+                    android:textColor="@color/black"/>
 
             </LinearLayout>
 
             <TextView
-                android:layout_width="75dp"
-                android:layout_height="40dp"
+                android:layout_width="65dp"
+                android:layout_height="35dp"
                 android:text="去使用"
-                android:textSize="@dimen/sp_18"
+                android:textSize="@dimen/sp_14"
                 android:textColor="@color/color_blue_deep"
                 android:layout_gravity="center"
                 android:gravity="center"
                 android:background="@drawable/bg_btn_blue_stroke"
-                android:onClick="@{() -> handlers.onClickTradingBox()}"
-                />
+                android:onClick="@{() -> handlers.onClickTradingBox()}"/>
 
         </LinearLayout>
 
-        <include layout="@layout/item_line_vertical" />
+        <include layout="@layout/item_line_vertical_margin" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="100dp"
             android:orientation="horizontal"
+            android:background="@color/white"
             android:gravity="center_vertical"
-            android:paddingLeft="28dp"
-            android:paddingRight="15dp"
-            >
+            android:paddingLeft="25dp"
+            android:paddingRight="15dp">
 
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-
-                />
+                android:src="@mipmap/ic_entrust_risk"/>
 
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:orientation="vertical"
-                >
+                android:layout_marginLeft="20dp"
+                android:orientation="vertical">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -231,33 +223,32 @@
                     android:text="委托风控"
                     android:textSize="@dimen/sp_15"
                     android:textColor="@color/black"
-                    />
+                    android:textStyle="bold"/>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
                     android:text="实时监控，交易安全"
                     android:textSize="@dimen/sp_14"
-                    android:textColor="@color/black"
-                    />
+                    android:textColor="@color/black"/>
 
             </LinearLayout>
 
             <TextView
-                android:layout_width="75dp"
-                android:layout_height="40dp"
+                android:layout_width="65dp"
+                android:layout_height="35dp"
                 android:text="去使用"
-                android:textSize="@dimen/sp_18"
+                android:textSize="@dimen/sp_14"
                 android:textColor="@color/color_blue_deep"
                 android:layout_gravity="center"
                 android:gravity="center"
                 android:background="@drawable/bg_btn_blue_stroke"
-                android:onClick="@{() -> handlers.onClickEntrust()}"
-                />
+                android:onClick="@{() -> handlers.onClickEntrust()}"/>
 
         </LinearLayout>
 
-        <include layout="@layout/item_line_vertical" />
+        <include layout="@layout/item_line_vertical_margin" />
 
         <LinearLayout
             android:layout_width="match_parent"
