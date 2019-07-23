@@ -41,7 +41,7 @@ public class OrderDetailsActivity extends JMEBaseActivity {
     }
 
     private void setRightNavigation() {
-        setRightNavigation("", R.mipmap.function, 0, () -> {
+        setRightNavigation("", R.mipmap.ic_more, 0, () -> {
             TradeBoxFunctionUtils.popup(this, "");
         });
     }

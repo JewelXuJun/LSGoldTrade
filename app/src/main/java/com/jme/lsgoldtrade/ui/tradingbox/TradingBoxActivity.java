@@ -51,7 +51,7 @@ public class TradingBoxActivity extends JMEBaseActivity {
 
         initToolbar("", true);
 
-        setRightNavigation("", R.mipmap.function, 0, () -> TradeBoxFunctionUtils.popup(this, ""));
+        setRightNavigation("", R.mipmap.ic_more, 0, () -> TradeBoxFunctionUtils.popup(this, ""));
     }
 
     @Override

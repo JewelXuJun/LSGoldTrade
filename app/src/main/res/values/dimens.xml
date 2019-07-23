@@ -86,7 +86,7 @@
     <dimen name="icon_cancel">10dp</dimen>
     <dimen name="icon_checkbox">20dp</dimen>
     <dimen name="icon_arrow">15dp</dimen>
-    <dimen name="icon_trading_box">50dp</dimen>
+    <dimen name="icon_trading_box">60dp</dimen>
     <dimen name="icon_trading_box_cancel">15dp</dimen>
     <dimen name="icon_normal">40dp</dimen>
     <dimen name="icon_middle">30dp</dimen>
