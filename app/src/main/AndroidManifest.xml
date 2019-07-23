@@ -183,7 +183,7 @@
             android:name=".ui.tradingbox.AboutNewsActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.tradingbox.TradingBoxDetailsActivity"
+            android:name=".ui.tradingbox.TradingBoxDetailActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.tradingbox.TradingBoxActivity"

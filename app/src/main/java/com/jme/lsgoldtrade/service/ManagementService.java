@@ -14,7 +14,7 @@ import com.jme.lsgoldtrade.domain.FenXiShiListVo;
 import com.jme.lsgoldtrade.domain.FenXiShiVo;
 import com.jme.lsgoldtrade.domain.HistoryBoxVo;
 import com.jme.lsgoldtrade.domain.InfoVo;
-import com.jme.lsgoldtrade.domain.IsSubscribeVo;
+import com.jme.lsgoldtrade.domain.SubscribeStateVo;
 import com.jme.lsgoldtrade.domain.MyOrderVo;
 import com.jme.lsgoldtrade.domain.NavigatorVo;
 import com.jme.lsgoldtrade.domain.QuestListTypeVo;
@@ -193,7 +193,7 @@ public class ManagementService extends IService<ManagementApi> {
         }
     };
 
-    public API getListExt = new API<IsSubscribeVo>("GetListExt") {
+    public API getListExt = new API<SubscribeStateVo>("GetListExt") {
         @Override
         public Call<DTResponse> request(HashMap<String, String> params) {
             return mApi.getListExt(params);

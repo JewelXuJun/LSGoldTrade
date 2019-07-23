@@ -8,7 +8,7 @@
 
         <variable
             name="handlers"
-            type="com.jme.lsgoldtrade.ui.tradingbox.TradingBoxDetailsActivity.ClickHandlers" />
+            type="com.jme.lsgoldtrade.ui.tradingbox.TradingBoxDetailActivity.ClickHandlers" />
 
     </data>
 

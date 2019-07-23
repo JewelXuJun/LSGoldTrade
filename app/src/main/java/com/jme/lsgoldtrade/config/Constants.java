@@ -143,7 +143,7 @@ public class Constants {
         public static final String BEGINNERSACTIVITY = "/MainPageFragment/BeginnersActivity";
         public static final String GUARANTEEFUNDSETTINGACTIVITY = "/HoldPositionFragment/GuaranteeFundSettingActivity";
         public static final String TRADINGBOX = "/MainPageFragment/TradingBoxActivity";
-        public static final String TRADINGBOXDETAILS = "/TradingboxDetails/TradingBoxDetailsActivity";
+        public static final String TRADINGBOXDETAIL = "/TradingboxDetails/TradingBoxDetailActivity";
         public static final String ABOUTNEWS = "/TradingboxDetails/AboutNewsActivity";
         public static final String PLACEORDER = "/TradingboxDetails/PlaceOrderActivity";
         public static final String TRADINGBOXHISTROY = "/TradingBoxActivity/TradingBoxHistroyActivity";

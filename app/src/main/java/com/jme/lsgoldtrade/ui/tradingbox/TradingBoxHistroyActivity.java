@@ -75,9 +75,9 @@ public class TradingBoxHistroyActivity extends JMEBaseActivity {
                 String json = new Gson().toJson(historyListVoList);
 
                 ARouter.getInstance()
-                        .build(Constants.ARouterUriConst.TRADINGBOXDETAILS)
-                        .withString("tradeId", json)
-                        .withString("type", "2")
+                        .build(Constants.ARouterUriConst.TRADINGBOXDETAIL)
+                        .withString("TradeId", json)
+                        .withString("Type", "2")
                         .navigation();
             }
         });

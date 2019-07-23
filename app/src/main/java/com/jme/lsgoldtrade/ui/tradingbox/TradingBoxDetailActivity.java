@@ -16,7 +16,7 @@ import com.jme.lsgoldtrade.R;
 import com.jme.lsgoldtrade.base.JMEBaseActivity;
 import com.jme.lsgoldtrade.config.Constants;
 import com.jme.lsgoldtrade.config.User;
-import com.jme.lsgoldtrade.databinding.ActivityTradingBoxDetailsBinding;
+import com.jme.lsgoldtrade.databinding.ActivityTradingBoxDetailBinding;
 import com.jme.lsgoldtrade.domain.HistoryBoxVo;
 import com.jme.lsgoldtrade.domain.HistoryItemVo;
 import com.jme.lsgoldtrade.domain.TradingBoxDetailsVo;
@@ -29,10 +29,10 @@ import java.util.List;
 /**
  * 交易匣子详情
  */
-@Route(path = Constants.ARouterUriConst.TRADINGBOXDETAILS)
-public class TradingBoxDetailsActivity extends JMEBaseActivity {
+@Route(path = Constants.ARouterUriConst.TRADINGBOXDETAIL)
+public class TradingBoxDetailActivity extends JMEBaseActivity {
 
-    private ActivityTradingBoxDetailsBinding mBinding;
+    private ActivityTradingBoxDetailBinding mBinding;
     private String tradeId, type = "";
     private List<TradingBoxDetailsVo.RelevantInfoListVosBean> relevantInfoListVos;
     private String infoList = "";
@@ -44,14 +44,14 @@ public class TradingBoxDetailsActivity extends JMEBaseActivity {
 
     @Override
     protected int getContentViewId() {
-        return R.layout.activity_trading_box_details;
+        return R.layout.activity_trading_box_detail;
     }
 
     @Override
     protected void initView() {
         super.initView();
-        mBinding = (ActivityTradingBoxDetailsBinding) mBindingUtil;
-        type = getIntent().getStringExtra("type");
+        mBinding = (ActivityTradingBoxDetailBinding) mBindingUtil;
+        type = getIntent().getStringExtra("Type");
 
         initToolbar(R.string.trade_box, true);
         setRightNavigation();
@@ -69,9 +69,9 @@ public class TradingBoxDetailsActivity extends JMEBaseActivity {
         if ("1".equals(type)) {
             mBinding.left.setVisibility(View.GONE);
             mBinding.right.setVisibility(View.GONE);
-            tradeId = getIntent().getStringExtra("tradeId");
+            tradeId = getIntent().getStringExtra("TradeId");
         } else if ("2".equals(type)) {
-            String json = getIntent().getStringExtra("tradeId");
+            String json = getIntent().getStringExtra("TradeId");
             historyItemVoList = new Gson().fromJson(json, new TypeToken<List<HistoryItemVo>>(){}.getType());
             position = 0;
             tradeId = historyItemVoList.get(position).getTradeId();
@@ -336,9 +336,9 @@ public class TradingBoxDetailsActivity extends JMEBaseActivity {
                 }
                 ARouter.getInstance()
                         .build(Constants.ARouterUriConst.PLACEORDER)
-                        .withString("type", "2")
-                        .withString("direction", toupiao)
-                        .withString("tradeId", tradeId)
+                        .withString("Type", "2")
+                        .withString("Direction", toupiao)
+                        .withString("TradeId", tradeId)
                         .navigation();
             }
         }
@@ -358,9 +358,9 @@ public class TradingBoxDetailsActivity extends JMEBaseActivity {
                 }
                 ARouter.getInstance()
                         .build(Constants.ARouterUriConst.PLACEORDER)
-                        .withString("direction", toupiao)
-                        .withString("type", "3")
-                        .withString("tradeId", tradeId)
+                        .withString("Direction", toupiao)
+                        .withString("Type", "3")
+                        .withString("TradeId", tradeId)
                         .navigation();
             }
         }

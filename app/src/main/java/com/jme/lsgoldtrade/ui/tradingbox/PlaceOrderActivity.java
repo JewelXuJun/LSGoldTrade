@@ -91,9 +91,9 @@ public class PlaceOrderActivity extends JMEBaseActivity {
     @Override
     protected void initData(Bundle savedInstanceState) {
         super.initData(savedInstanceState);
-        type = getIntent().getStringExtra("type");
-        id = getIntent().getStringExtra("tradeId");
-        direction = getIntent().getStringExtra("direction");
+        type = getIntent().getStringExtra("Type");
+        id = getIntent().getStringExtra("TradeId");
+        direction = getIntent().getStringExtra("Direction");
         if ("0".equals(type)) {
             mBinding.more.setVisibility(View.VISIBLE);
             mBinding.kong.setVisibility(View.VISIBLE);
