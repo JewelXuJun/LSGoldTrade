@@ -2,20 +2,18 @@ package com.jme.lsgoldtrade.ui.tradingbox;
 
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
-import android.view.View;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
-import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.google.gson.Gson;
 import com.jme.common.network.DTRequest;
 import com.jme.common.network.Head;
 import com.jme.lsgoldtrade.R;
 import com.jme.lsgoldtrade.base.JMEBaseActivity;
 import com.jme.lsgoldtrade.config.Constants;
-import com.jme.lsgoldtrade.databinding.ActivityHistoryBoxBinding;
-import com.jme.lsgoldtrade.domain.HistoryBoxVo;
-import com.jme.lsgoldtrade.domain.HistoryItemVo;
+import com.jme.lsgoldtrade.databinding.ActivityTradingBoxHistoryBinding;
+import com.jme.lsgoldtrade.domain.TradingBoxHistoryItemVo;
+import com.jme.lsgoldtrade.domain.TradingBoxHistoryItemSimpleVo;
 import com.jme.lsgoldtrade.service.ManagementService;
 
 import java.util.ArrayList;
@@ -28,126 +26,116 @@ import java.util.List;
 @Route(path = Constants.ARouterUriConst.TRADINGBOXHISTROY)
 public class TradingBoxHistroyActivity extends JMEBaseActivity {
 
-    private ActivityHistoryBoxBinding mBinding;
+    private ActivityTradingBoxHistoryBinding mBinding;
 
-    private TradingBoxHistroyAdapter adapter;
+    private TradingBoxHistroyAdapter mAdapter;
 
-    private int mCurrentPage = 1;
-
-    private List<HistoryBoxVo> value = new ArrayList<>();
+    private List<TradingBoxHistoryItemVo> mTradingBoxHistoryItemVoList;
 
     @Override
     protected int getContentViewId() {
-        return R.layout.activity_history_box;
+        return R.layout.activity_trading_box_history;
     }
 
     @Override
     protected void initView() {
         super.initView();
-        mBinding = (ActivityHistoryBoxBinding) mBindingUtil;
-//        adapter = new TradingBoxHistroyAdapter(R.layout.item_history_box, null);
-        adapter = new TradingBoxHistroyAdapter(R.layout.item_history_box, null, mContext);
+
+        initToolbar(R.string.trading_box_function_history, true);
+
+        mBinding = (ActivityTradingBoxHistoryBinding) mBindingUtil;
+
+        mAdapter = new TradingBoxHistroyAdapter(R.layout.item_trading_box_history, null);
 
         mBinding.recyclerView.setHasFixedSize(false);
         mBinding.recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        mBinding.recyclerView.setAdapter(adapter);
-
-        initToolbar("历史匣子", true);
+        mBinding.recyclerView.setAdapter(mAdapter);
     }
 
     @Override
     protected void initData(Bundle savedInstanceState) {
         super.initData(savedInstanceState);
-        getDataFromNet();
-    }
 
-    private void getDataFromNet() {
-        sendRequest(ManagementService.getInstance().historyBox, new HashMap<>(), false);
+        getTradeBoxHistoryInfo();
     }
 
     @Override
     protected void initListener() {
         super.initListener();
-        adapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                List<HistoryBoxVo.HistoryListVoListBean> historyListVoList = value.get(position).getHistoryListVoList();
-                String json = new Gson().toJson(historyListVoList);
 
-                ARouter.getInstance()
-                        .build(Constants.ARouterUriConst.TRADINGBOXDETAIL)
-                        .withString("TradeId", json)
-                        .withString("Type", "2")
-                        .navigation();
-            }
+        mAdapter.setOnItemClickListener((adapter, view, position) -> {
+            if (null == mTradingBoxHistoryItemVoList || 0 == mTradingBoxHistoryItemVoList.size())
+                return;
+
+            TradingBoxHistoryItemVo tradingBoxHistoryItemVo = mTradingBoxHistoryItemVoList.get(position);
+
+            if (null == tradingBoxHistoryItemVo)
+                return;
+
+            List<TradingBoxHistoryItemVo.HistoryListVoListBean> historyListVoListBeans = tradingBoxHistoryItemVo.getHistoryListVoList();
+
+            if (null == historyListVoListBeans || 0 == historyListVoListBeans.size())
+                return;
+
+            String json = new Gson().toJson(historyListVoListBeans);
+
+            ARouter.getInstance()
+                    .build(Constants.ARouterUriConst.TRADINGBOXDETAIL)
+                    .withString("TradeId", json)
+                    .withString("Type", "2")
+                    .navigation();
         });
+    }
+
+    @Override
+    protected void initBinding() {
+        super.initBinding();
+    }
+
+    private void getTradeBoxHistoryInfo() {
+        sendRequest(ManagementService.getInstance().tradeBoxHistoryInfo, new HashMap<>(), true);
     }
 
     @Override
     protected void DataReturn(DTRequest request, Head head, Object response) {
         super.DataReturn(request, head, response);
+
         switch (request.getApi().getName()) {
-            case "HistoryBox":
+            case "TradeBoxHistoryInfo":
                 if (head.isSuccess()) {
                     try {
-                        value = (List<HistoryBoxVo>) response;
+                        mTradingBoxHistoryItemVoList = (List<TradingBoxHistoryItemVo>) response;
                     } catch (Exception e) {
-                        value = null;
+                        mTradingBoxHistoryItemVoList = null;
+
                         e.printStackTrace();
                     }
 
-                    if (null == value) {
+                    if (null == mTradingBoxHistoryItemVoList || 0 == mTradingBoxHistoryItemVoList.size())
                         return;
+
+                    List<TradingBoxHistoryItemSimpleVo> list = new ArrayList<>();
+
+                    for (int i = 0; i < mTradingBoxHistoryItemVoList.size(); i++) {
+                        List<TradingBoxHistoryItemVo.HistoryListVoListBean> historyListVoListBeanList = mTradingBoxHistoryItemVoList.get(i).getHistoryListVoList();
+
+                        if (null != historyListVoListBeanList && historyListVoListBeanList.size() > 0) {
+                            TradingBoxHistoryItemVo.HistoryListVoListBean historyListVoListBean = historyListVoListBeanList.get(0);
+                            TradingBoxHistoryItemSimpleVo tradingBoxHistoryItemSimpleVo = new TradingBoxHistoryItemSimpleVo();
+                            tradingBoxHistoryItemSimpleVo.setChance(historyListVoListBean.getChance());
+                            tradingBoxHistoryItemSimpleVo.setDirection(historyListVoListBean.getDirection());
+                            tradingBoxHistoryItemSimpleVo.setPushTime(historyListVoListBean.getPushTime());
+                            tradingBoxHistoryItemSimpleVo.setTradeId(historyListVoListBean.getTradeId());
+                            tradingBoxHistoryItemSimpleVo.setVariety(historyListVoListBean.getVariety());
+                            tradingBoxHistoryItemSimpleVo.setPeriodName(mTradingBoxHistoryItemVoList.get(i).getPeriodName());
+
+                            list.add(tradingBoxHistoryItemSimpleVo);
+                        }
                     }
 
-                    List<HistoryItemVo> list = new ArrayList<>();
-                    for (int i = 0; i < value.size(); i++) {
-                        HistoryBoxVo.HistoryListVoListBean historyListVoListBean = value.get(i).getHistoryListVoList().get(0);
-                        HistoryItemVo historyItemVo = new HistoryItemVo();
-                        historyItemVo.setChance(historyListVoListBean.getChance());
-                        historyItemVo.setDirection(historyListVoListBean.getDirection());
-                        historyItemVo.setPushTime(historyListVoListBean.getPushTime());
-                        historyItemVo.setTradeId(historyListVoListBean.getTradeId());
-                        historyItemVo.setVariety(historyListVoListBean.getVariety());
-                        historyItemVo.setPeriodName(value.get(i).getPeriodName());
-                        list.add(historyItemVo);
-                    }
-                    adapter.setNewData(list);
-
-
-//                    List<MySection> mySectionList = new ArrayList<>();
-//                    for (int i = 0; i < value.size(); i++) {
-//                        HistoryBoxVo historyBoxVo = value.get(i);
-//                        String time = historyBoxVo.getPeriodName();
-//                        mySectionList.add(new MySection(true, time));
-//
-//                        List<HistoryBoxVo.HistoryListVoListBean> listContent = historyBoxVo.getHistoryListVoList();
-//
-//                        for (int j = 0; j < 1; j++) {
-//                            HistoryBoxVo.HistoryListVoListBean listBean = listContent.get(j);
-//                            String chance = listBean.getChance();
-//                            String direction = listBean.getDirection();
-//                            String pushTime = listBean.getPushTime();
-//                            String tradeId = listBean.getTradeId();
-//                            String variety = listBean.getVariety();
-//                            MySection mySection = new MySection(new SectionBean(chance, direction, pushTime, tradeId, variety));
-//                            mySectionList.add(mySection);
-//                        }
-//                    }
-//                    adapter.setNewData(mySectionList);
-
-//                    if (mCurrentPage == 1) {
-//                        adapter.setNewData(mySectionList);
-//                        if (null == historyListVoList || 0 == historyListVoList.size())
-//                            adapter.setEmptyView(EmptyView.getEmptyView(this));
-//                    } else {
-//                        adapter.addData(mySectionList);
-//                        adapter.loadMoreComplete();
-//                    }
-//                    mBinding.swipeRefreshLayout.finishRefresh(true);
-                } else {
-                    mBinding.swipeRefreshLayout.finishRefresh(false);
+                    mAdapter.setNewData(list);
                 }
+
                 break;
         }
     }

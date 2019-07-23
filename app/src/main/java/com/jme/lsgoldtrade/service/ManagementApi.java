@@ -55,7 +55,7 @@ public interface ManagementApi {
     Call<DTResponse> tradingBoxInfo(@QueryMap Map<String, String> map);
 
     @GET("/tjsmanage/infoapi/v1/android/tradingBox/tradeBoxHistoryInfo")
-    Call<DTResponse> historyBox(@QueryMap Map<String, String> map);
+    Call<DTResponse> tradeBoxHistoryInfo(@QueryMap Map<String, String> map);
 
     @GET("/tjsmanage/infoapi/v1/android/marketJudge/analystList")
     Call<DTResponse> fenxishi(@QueryMap Map<String, String> map);

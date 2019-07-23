@@ -353,6 +353,7 @@
     <string name="trading_box_suggest">以上内容及建议，仅供参考，据此操作盈亏自负。</string>
     <string name="trading_box_variety">%1$s&#160;&#160;%2$s</string>
     <string name="trading_box_publist_time">发布时间%1$s</string>
+    <string name="trading_box_number_title">%1$s期</string>
     <string name="trading_box_speculation_message">数据来源：投机情绪工具网站SHARKFX \n
         \n统计方法：由Shark - fx整合全球多家交易平台的多空投机仓位数据而成。\n
         \n数据释义：外汇投机情绪报告显示当前市场多空仓位比例。传统上多数交易者依据“逢低买进，逢高卖出”原则进行交易，然而当大多数人认为触顶或者触底即将来临时，他们其实是在错过那些超级趋势！\n

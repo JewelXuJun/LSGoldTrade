@@ -12,7 +12,7 @@ import com.jme.lsgoldtrade.domain.ChannelVo;
 import com.jme.lsgoldtrade.domain.CustomerServiceVo;
 import com.jme.lsgoldtrade.domain.FenXiShiListVo;
 import com.jme.lsgoldtrade.domain.FenXiShiVo;
-import com.jme.lsgoldtrade.domain.HistoryBoxVo;
+import com.jme.lsgoldtrade.domain.TradingBoxHistoryItemVo;
 import com.jme.lsgoldtrade.domain.InfoVo;
 import com.jme.lsgoldtrade.domain.SubscribeStateVo;
 import com.jme.lsgoldtrade.domain.MyOrderVo;
@@ -137,10 +137,10 @@ public class ManagementService extends IService<ManagementApi> {
         }
     };
 
-    public API historyBox = new API<List<HistoryBoxVo>>("HistoryBox") {
+    public API tradeBoxHistoryInfo = new API<List<TradingBoxHistoryItemVo>>("TradeBoxHistoryInfo") {
         @Override
         public Call<DTResponse> request(HashMap<String, String> params) {
-            return mApi.historyBox(params);
+            return mApi.tradeBoxHistoryInfo(params);
         }
     };
 

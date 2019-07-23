@@ -1,6 +1,6 @@
 package com.jme.lsgoldtrade.domain;
 
-public class HistoryItemVo {
+public class TradingBoxHistoryItemSimpleVo {
 
     /**
      * tradeId : 1145564307464060930

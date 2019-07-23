@@ -17,8 +17,8 @@ import com.jme.lsgoldtrade.base.JMEBaseActivity;
 import com.jme.lsgoldtrade.config.Constants;
 import com.jme.lsgoldtrade.config.User;
 import com.jme.lsgoldtrade.databinding.ActivityTradingBoxDetailBinding;
-import com.jme.lsgoldtrade.domain.HistoryBoxVo;
-import com.jme.lsgoldtrade.domain.HistoryItemVo;
+import com.jme.lsgoldtrade.domain.TradingBoxHistoryItemVo;
+import com.jme.lsgoldtrade.domain.TradingBoxHistoryItemSimpleVo;
 import com.jme.lsgoldtrade.domain.TradingBoxDetailsVo;
 import com.jme.lsgoldtrade.service.ManagementService;
 import com.jme.lsgoldtrade.util.TradeBoxFunctionUtils;
@@ -39,8 +39,8 @@ public class TradingBoxDetailActivity extends JMEBaseActivity {
     private String direction;
     private String variety;
     private int position = -1;
-    private List<HistoryBoxVo.HistoryListVoListBean> historyListVoList;
-    private List<HistoryItemVo> historyItemVoList;
+    private List<TradingBoxHistoryItemVo.HistoryListVoListBean> historyListVoList;
+    private List<TradingBoxHistoryItemSimpleVo> historyItemVoList;
 
     @Override
     protected int getContentViewId() {
@@ -72,7 +72,7 @@ public class TradingBoxDetailActivity extends JMEBaseActivity {
             tradeId = getIntent().getStringExtra("TradeId");
         } else if ("2".equals(type)) {
             String json = getIntent().getStringExtra("TradeId");
-            historyItemVoList = new Gson().fromJson(json, new TypeToken<List<HistoryItemVo>>(){}.getType());
+            historyItemVoList = new Gson().fromJson(json, new TypeToken<List<TradingBoxHistoryItemSimpleVo>>(){}.getType());
             position = 0;
             tradeId = historyItemVoList.get(position).getTradeId();
             if (historyItemVoList != null && historyItemVoList.size() > 1) {

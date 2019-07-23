@@ -1,60 +1,36 @@
 package com.jme.lsgoldtrade.ui.tradingbox;
 
-import android.content.Context;
+import android.text.TextUtils;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
+import com.jme.common.util.DateUtil;
 import com.jme.lsgoldtrade.R;
-import com.jme.lsgoldtrade.domain.HistoryItemVo;
+import com.jme.lsgoldtrade.domain.TradingBoxHistoryItemSimpleVo;
 
 import java.util.List;
 
-public class TradingBoxHistroyAdapter extends BaseQuickAdapter<HistoryItemVo, BaseViewHolder> {
+public class TradingBoxHistroyAdapter extends BaseQuickAdapter<TradingBoxHistoryItemSimpleVo, BaseViewHolder> {
 
-    private Context context;
-
-    public TradingBoxHistroyAdapter(int layoutResId, List<HistoryItemVo> data, Context context) {
+    public TradingBoxHistroyAdapter(int layoutResId, List<TradingBoxHistoryItemSimpleVo> data) {
         super(layoutResId, data);
-        this.context = context;
     }
 
-//    @Override
-//    protected void convertHead(BaseViewHolder helper, MySection item) {
-//        helper.setText(R.id.time, item.header + "期");
-//    }
-
-//    @Override
-//    protected void convert(BaseViewHolder helper, MySection item) {
-//        final SectionBean sectionBean = item.t;
-//        helper.setText(R.id.title, sectionBean.getChance());
-//        helper.setText(R.id.k_line, sectionBean.getVariety());
-//        helper.setText(R.id.time, sectionBean.getPushTime());
-//        String pushTime = sectionBean.getPushTime().substring(0, sectionBean.getPushTime().lastIndexOf(" ")).replaceAll("-", "/");
-//        helper.setText(R.id.time, "发布时间" + pushTime);
-//        helper.setText(R.id.time_1, item.header + "期");
-//
-//        String direction = sectionBean.getDirection();
-//        if ("0".equals(direction)) {
-//            helper.setText(R.id.more_kong, "多");
-//        } else {
-//            helper.setText(R.id.more_kong, "空");
-//        }
-//    }
-
     @Override
-    protected void convert(BaseViewHolder helper, HistoryItemVo item) {
-        helper.setText(R.id.title, "交易机会  " + item.getChance());
-        helper.setText(R.id.k_line, item.getVariety());
-        helper.setText(R.id.time, item.getPushTime());
-        String pushTime = item.getPushTime().substring(0, item.getPushTime().lastIndexOf(" ")).replaceAll("-", "/");
-        helper.setText(R.id.time, "发布时间" + pushTime);
-        helper.setText(R.id.time_1, item.getPeriodName() + "期");
+    protected void convert(BaseViewHolder helper, TradingBoxHistoryItemSimpleVo item) {
+        if (null == item)
+            return;
 
         String direction = item.getDirection();
-        if ("0".equals(direction)) {
-            helper.setText(R.id.more_kong, "多");
-        } else {
-            helper.setText(R.id.more_kong, "空");
-        }
+        String pushTime = item.getPushTime();
+
+        helper.setText(R.id.tv_number, String.format(mContext.getResources().getString(R.string.trading_box_number_title), item.getPeriodName()))
+                .setText(R.id.tv_abstract, String.format(mContext.getResources().getString(R.string.trading_box_variety),
+                        mContext.getResources().getString(R.string.trading_box_chance), item.getChance()))
+                .setText(R.id.tv_contract, item.getVariety())
+                .setText(R.id.tv_direction, TextUtils.isEmpty(direction) ? ""
+                        : direction.equals("0") ? mContext.getResources().getString(R.string.text_more) : mContext.getResources().getString(R.string.text_empty))
+                .setText(R.id.tv_publish_time, TextUtils.isEmpty(pushTime) ? "" : String.format(mContext.getResources().getString(R.string.trading_box_publist_time),
+                        DateUtil.dataToStringWithData2(DateUtil.dateToLong(pushTime))));
     }
 }
