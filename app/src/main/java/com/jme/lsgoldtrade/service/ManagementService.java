@@ -144,10 +144,10 @@ public class ManagementService extends IService<ManagementApi> {
         }
     };
 
-    public API tradingBoxDetails = new API<TradingBoxDetailsVo>("TradingBoxDetails") {
+    public API tradeBoxByTradeId = new API<TradingBoxDetailsVo>("TradeBoxByTradeId") {
         @Override
         public Call<DTResponse> request(HashMap<String, String> params) {
-            return mApi.tradingBoxDetails(params);
+            return mApi.tradeBoxByTradeId(params);
         }
     };
 

@@ -49,7 +49,7 @@ public interface ManagementApi {
     Call<DTResponse> subscribe(@Body Map<String, String> map);
 
     @GET("/tjsmanage/infoapi/v1/android/tradingBox/tradeBoxByTradeId")
-    Call<DTResponse> tradingBoxDetails(@QueryMap Map<String, String> map);
+    Call<DTResponse> tradeBoxByTradeId(@QueryMap Map<String, String> map);
 
     @GET("/tjsmanage/infoapi/v1/android/tradingBox/getBoxInfo")
     Call<DTResponse> tradingBoxInfo(@QueryMap Map<String, String> map);

@@ -30,6 +30,8 @@
     <dimen name="height_trading_box_info">173dp</dimen>
     <dimen name="height_blue">16dp</dimen>
     <dimen name="height_analyst_picture">128dp</dimen>
+    <dimen name="height_trading_box_info_small">94dp</dimen>
+    <dimen name="height_btn_aggree">33dp</dimen>
 
     <dimen name="width_main_page_info_img">100dp</dimen>
     <dimen name="width_market_limit">100dp</dimen>
@@ -73,6 +75,7 @@
     <dimen name="margin_checkbox">67dp</dimen>
     <dimen name="margin_checkbox_text">87dp</dimen>
     <dimen name="margin_trading_box_next">108dp</dimen>
+    <dimen name="margin_trading_box_next_big">150dp</dimen>
 
     <dimen name="size_exiguity">8sp</dimen>
     <dimen name="size_tiny">9sp</dimen>
@@ -94,6 +97,7 @@
     <dimen name="icon_trading_box_cancel">15dp</dimen>
     <dimen name="icon_normal">40dp</dimen>
     <dimen name="icon_middle">30dp</dimen>
+    <dimen name="icon_time">22dp</dimen>
 
     <dimen name="radius_small">2dp</dimen>
     <dimen name="radius_middle">3dp</dimen>

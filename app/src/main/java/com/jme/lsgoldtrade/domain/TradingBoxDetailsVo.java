@@ -27,25 +27,45 @@ public class TradingBoxDetailsVo {
      */
 
     private String analystOpinion;
+
     private String chance;
+
     private String closePositionsTimeBegin;
+
     private String closePositionsTimeEnd;
-    private int closeTime;
+
+    private long closeTime;
+
     private String closeTimeStr;
+
     private String direction;
+
     private int directionDownNum;
+
     private String directionDownRate;
+
     private int directionUpNum;
+
     private String directionUpRate;
+
     private String fundamentalAnalysis;
+
     private String id;
+
     private String openPositionsTimeBegin;
+
     private String openPositionsTimeEnd;
+
     private String periodId;
+
     private String periodName;
+
     private String variety;
+
     private String earningsLine;
+
     private String lossLine;
+
     private List<RelevantInfoListVosBean> relevantInfoListVos;
 
     public String getLossLine() {
@@ -96,11 +116,11 @@ public class TradingBoxDetailsVo {
         this.closePositionsTimeEnd = closePositionsTimeEnd;
     }
 
-    public int getCloseTime() {
+    public long getCloseTime() {
         return closeTime;
     }
 
-    public void setCloseTime(int closeTime) {
+    public void setCloseTime(long closeTime) {
         this.closeTime = closeTime;
     }
 
@@ -223,6 +243,7 @@ public class TradingBoxDetailsVo {
          */
 
         private String content;
+
         private String id;
 
         public String getContent() {

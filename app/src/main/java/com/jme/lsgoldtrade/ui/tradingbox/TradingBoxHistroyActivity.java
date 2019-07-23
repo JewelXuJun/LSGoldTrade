@@ -72,16 +72,9 @@ public class TradingBoxHistroyActivity extends JMEBaseActivity {
             if (null == tradingBoxHistoryItemVo)
                 return;
 
-            List<TradingBoxHistoryItemVo.HistoryListVoListBean> historyListVoListBeans = tradingBoxHistoryItemVo.getHistoryListVoList();
-
-            if (null == historyListVoListBeans || 0 == historyListVoListBeans.size())
-                return;
-
-            String json = new Gson().toJson(historyListVoListBeans);
-
             ARouter.getInstance()
                     .build(Constants.ARouterUriConst.TRADINGBOXDETAIL)
-                    .withString("TradeId", json)
+                    .withString("Value", new Gson().toJson(tradingBoxHistoryItemVo))
                     .withString("Type", "2")
                     .navigation();
         });

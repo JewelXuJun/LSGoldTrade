@@ -11,10 +11,15 @@ public class TradingBoxHistoryItemSimpleVo {
      */
 
     private String tradeId;
+
     private String chance;
+
     private String variety;
+
     private String direction;
+
     private String pushTime;
+
     private String periodName;
 
     public String getPeriodName() {

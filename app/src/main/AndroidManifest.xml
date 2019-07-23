@@ -180,7 +180,7 @@
             android:name=".ui.tradingbox.PlaceOrderActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.tradingbox.AboutNewsActivity"
+            android:name=".ui.tradingbox.RelevantInfoActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.tradingbox.TradingBoxDetailActivity"

@@ -1,29 +1,22 @@
 package com.jme.lsgoldtrade.ui.tradingbox;
 
 import android.os.Bundle;
-import android.os.Handler;
-import android.text.TextUtils;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.view.View;
-import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
-import com.alibaba.android.arouter.launcher.ARouter;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import com.jme.common.network.DTRequest;
-import com.jme.common.network.Head;
 import com.jme.lsgoldtrade.R;
 import com.jme.lsgoldtrade.base.JMEBaseActivity;
 import com.jme.lsgoldtrade.config.Constants;
-import com.jme.lsgoldtrade.config.User;
 import com.jme.lsgoldtrade.databinding.ActivityTradingBoxDetailBinding;
 import com.jme.lsgoldtrade.domain.TradingBoxHistoryItemVo;
-import com.jme.lsgoldtrade.domain.TradingBoxHistoryItemSimpleVo;
-import com.jme.lsgoldtrade.domain.TradingBoxDetailsVo;
-import com.jme.lsgoldtrade.service.ManagementService;
-import com.jme.lsgoldtrade.util.TradeBoxFunctionUtils;
 
-import java.util.HashMap;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -33,14 +26,14 @@ import java.util.List;
 public class TradingBoxDetailActivity extends JMEBaseActivity {
 
     private ActivityTradingBoxDetailBinding mBinding;
-    private String tradeId, type = "";
-    private List<TradingBoxDetailsVo.RelevantInfoListVosBean> relevantInfoListVos;
-    private String infoList = "";
-    private String direction;
-    private String variety;
-    private int position = -1;
-    private List<TradingBoxHistoryItemVo.HistoryListVoListBean> historyListVoList;
-    private List<TradingBoxHistoryItemSimpleVo> historyItemVoList;
+
+    private String mType;
+    private String mTradeId;
+
+    private List<TradingBoxHistoryItemVo.HistoryListVoListBean> mHistoryListVoListBeanList;
+    private ArrayList<TradingBoxHistoryFragment> mFragmentList = new ArrayList<>();
+
+    private TradingBoxHistoryAdapter mAdapter;
 
     @Override
     protected int getContentViewId() {
@@ -50,63 +43,103 @@ public class TradingBoxDetailActivity extends JMEBaseActivity {
     @Override
     protected void initView() {
         super.initView();
-        mBinding = (ActivityTradingBoxDetailBinding) mBindingUtil;
-        type = getIntent().getStringExtra("Type");
 
-        initToolbar(R.string.trade_box, true);
-        setRightNavigation();
-    }
-
-    private void setRightNavigation() {
-        setRightNavigation("", R.mipmap.ic_more, 0, () -> {
-            TradeBoxFunctionUtils.show(this, tradeId);
-        });
+        initToolbar("", true);
     }
 
     @Override
     protected void initData(Bundle savedInstanceState) {
         super.initData(savedInstanceState);
-        if ("1".equals(type)) {
-            mBinding.left.setVisibility(View.GONE);
-            mBinding.right.setVisibility(View.GONE);
-            tradeId = getIntent().getStringExtra("TradeId");
-        } else if ("2".equals(type)) {
-            String json = getIntent().getStringExtra("TradeId");
-            historyItemVoList = new Gson().fromJson(json, new TypeToken<List<TradingBoxHistoryItemSimpleVo>>(){}.getType());
-            position = 0;
-            tradeId = historyItemVoList.get(position).getTradeId();
-            if (historyItemVoList != null && historyItemVoList.size() > 1) {
-                mBinding.left.setVisibility(View.VISIBLE);
-                mBinding.right.setVisibility(View.VISIBLE);
-            } else {
-                mBinding.left.setVisibility(View.GONE);
-                mBinding.right.setVisibility(View.GONE);
-            }
+
+        mType = getIntent().getStringExtra("Type");
+
+        if (mType.equals("1")) {
+            mTradeId = getIntent().getStringExtra("Value");
+
+            mBinding.btnPrevious.setVisibility(View.GONE);
+            mBinding.btnNext.setVisibility(View.GONE);
+        } else if (mType.equals("2")) {
+            TradingBoxHistoryItemVo tradingBoxHistoryItemVo = new Gson().fromJson(getIntent().getStringExtra("Value"), new TypeToken<TradingBoxHistoryItemVo>() {
+            }.getType());
+
+            if (null == tradingBoxHistoryItemVo)
+                return;
+
+            initToolbar(String.format(getString(R.string.trading_box_number), tradingBoxHistoryItemVo.getPeriodName()), true);
+
+            mHistoryListVoListBeanList = tradingBoxHistoryItemVo.getHistoryListVoList();
+
+            if (null == mHistoryListVoListBeanList || 0 == mHistoryListVoListBeanList.size())
+                return;
+
+            initViewPager();
         }
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        getDateFromNet();
-    }
-
-    private void getDateFromNet() {
-        HashMap<String, String> params = new HashMap<>();
-        params.put("tradeId", tradeId);
-        sendRequest(ManagementService.getInstance().tradingBoxDetails, params, false);
     }
 
     @Override
     protected void initListener() {
         super.initListener();
-
     }
 
     @Override
     protected void initBinding() {
         super.initBinding();
+
+        mBinding = (ActivityTradingBoxDetailBinding) mBindingUtil;
         mBinding.setHandlers(new ClickHandlers());
+    }
+
+    private void initViewPager() {
+        for (int i = 0; i < mHistoryListVoListBeanList.size(); i++) {
+            mFragmentList.add(new TradingBoxHistoryFragment());
+        }
+
+        mAdapter = new TradingBoxHistoryAdapter(getSupportFragmentManager());
+
+        mBinding.viewpager.removeAllViewsInLayout();
+        mBinding.viewpager.setAdapter(mAdapter);
+        mBinding.viewpager.setOffscreenPageLimit(2);
+
+        mBinding.btnPrevious.setVisibility(mHistoryListVoListBeanList.size() == 1 ? View.GONE : View.VISIBLE);
+        mBinding.btnNext.setVisibility(mHistoryListVoListBeanList.size() == 1 ? View.GONE : View.VISIBLE);
+
+        setChangeLayout();
+
+        mBinding.viewpager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int i, float v, int i1) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                setChangeLayout();
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int i) {
+
+            }
+        });
+    }
+
+    private void setChangeLayout() {
+        if (mHistoryListVoListBeanList.size() > 1) {
+            int currentPage = mBinding.viewpager.getCurrentItem();
+
+            mBinding.btnPrevious.setAlpha(currentPage == 0 ? 0.5f : 1.0f);
+            mBinding.btnNext.setAlpha(currentPage == mFragmentList.size() - 1 ? 0.5f : 1.0f);
+        }
+    }
+
+   /*
+
+    public void rate(String type) {
+        HashMap<String, String> params = new HashMap<>();
+        params.put("boxId", mTradeId);
+        params.put("direction", type);
+        params.put("variety", variety);
+        sendRequest(ManagementService.getInstance().rate, params, false);
     }
 
     @Override
@@ -149,45 +182,45 @@ public class TradingBoxDetailActivity extends JMEBaseActivity {
 
                     time = (long) value.getCloseTime();
                     if (time == 0) {
-                        mBinding.daojishi.setVisibility(View.GONE);
-                        mBinding.moreChoose.setBackground(getResources().getDrawable(R.drawable.bg_close));
-                        mBinding.kongChoose.setBackground(getResources().getDrawable(R.drawable.bg_close));
-                        mBinding.moreChoose.setEnabled(false);
-                        mBinding.kongChoose.setEnabled(false);
+                        mBinding.layoutTime.setVisibility(View.GONE);
+                        mBinding.tvAgree.setBackground(getResources().getDrawable(R.drawable.bg_click_not));
+                        mBinding.tvOpposition.setBackground(getResources().getDrawable(R.drawable.bg_click_not));
+                        mBinding.tvAgree.setEnabled(false);
+                        mBinding.tvOpposition.setEnabled(false);
                     } else {
-                        mBinding.daojishi.setVisibility(View.VISIBLE);
-                        mBinding.moreChoose.setBackground(getResources().getDrawable(R.drawable.bg_btn_blue_solid));
-                        mBinding.kongChoose.setBackground(getResources().getDrawable(R.drawable.bg_btn_blue_solid));
-                        mBinding.moreChoose.setEnabled(true);
-                        mBinding.kongChoose.setEnabled(true);
+                        mBinding.layoutTime.setVisibility(View.VISIBLE);
+                        mBinding.tvAgree.setBackground(getResources().getDrawable(R.drawable.bg_btn_blue_solid));
+                        mBinding.tvOpposition.setBackground(getResources().getDrawable(R.drawable.bg_btn_blue_solid));
+                        mBinding.tvAgree.setEnabled(true);
+                        mBinding.tvOpposition.setEnabled(true);
                     }
 
-                    mBinding.moreNum.setText(directionUpNum + "票");
-                    mBinding.kongNum.setText(directionDownNum + "票");
-                    mBinding.moreRate.setText(directionUpRate + "%");
-                    mBinding.kongRate.setText(directionDownRate + "%");
-                    mBinding.title.setText(chance);
+                    mBinding.tvAgreeNumber.setText(directionUpNum + "票");
+                    mBinding.tvOppositionNumber.setText(directionDownNum + "票");
+                    mBinding.tvAgreePercent.setText(directionUpRate + "%");
+                    mBinding.tvOppositionPercent.setText(directionDownRate + "%");
+                    mBinding.tvAbstract.setText(chance);
 
-                    mBinding.jibenmian.setDesc(fundamentalAnalysis, TextView.BufferType.NORMAL);
-                    mBinding.fenxishi.setDesc(analystOpinion, TextView.BufferType.NORMAL);
-                    mBinding.variety.setText(variety);
+                    mBinding.tvFundamentalAnalysis.setText(fundamentalAnalysis);
+                    mBinding.tvAnalyst.setText(analystOpinion);
+                    mBinding.tvContract.setText(variety);
                     if ("0".equals(direction)) {
-                        mBinding.direction.setText("多");
+                        mBinding.tvDirection.setText("多");
                     } else {
-                        mBinding.direction.setText("空");
+                        mBinding.tvDirection.setText("空");
                     }
                     String[] openBegin = openPositionsTimeBegin.split(" ");
                     String[] openEnd = openPositionsTimeEnd.split(" ");
                     String[] closeBegin = closePositionsTimeBegin.split(" ");
                     String[] closeEnd = closePositionsTimeEnd.split(" ");
-                    mBinding.kaicangbeginyear.setText(openBegin[0]);
-                    mBinding.kaicangbeginclock.setText(openBegin[1]);
-                    mBinding.kaicangcloseyear.setText(openEnd[0]);
-                    mBinding.kaicangcloseclock.setText(openEnd[1]);
-                    mBinding.pingcangbeginyear.setText(closeBegin[0]);
-                    mBinding.pingcangbeginclock.setText(closeBegin[1]);
-                    mBinding.pingcangendyear.setText(closeEnd[0]);
-                    mBinding.pingcangendclock.setText(closeEnd[1]);
+                    mBinding.tvOpenTimeStartDate.setText(openBegin[0]);
+                    mBinding.tvOpenTimeStartHour.setText(openBegin[1]);
+                    mBinding.tvOpenTimeEndDate.setText(openEnd[0]);
+                    mBinding.tvOpenTimeEndHour.setText(openEnd[1]);
+                    mBinding.tvOpenTimeEqualStartDate.setText(closeBegin[0]);
+                    mBinding.tvOpenTimeEqualStartHour.setText(closeBegin[1]);
+                    mBinding.tvOpenTimeEqualEndDate.setText(closeEnd[0]);
+                    mBinding.tvOpenTimeEqualEndHour.setText(closeEnd[1]);
 
                     if (!TextUtils.isEmpty(directionUpRate)) {
                         if (directionUpRate.contains(".")) {
@@ -205,112 +238,25 @@ public class TradingBoxDetailActivity extends JMEBaseActivity {
                 }
                 break;
         }
-    }
-
-    private void initClock() {
-        handler.postDelayed(runnable, 1000);
-    }
-
-    private long time = 0;
-    Handler handler = new Handler();
-    Runnable runnable = new Runnable() {
-        @Override
-        public void run() {
-            time--;
-            String formatLongToTimeStr = formatLongToTimeStr(time);
-            String[] split = formatLongToTimeStr.split("：");
-            for (int i = 0; i < split.length; i++) {
-                if(i==0){
-                    mBinding.tvtime0.setText(split[0]);
-                }
-                if(i==1){
-                    mBinding.tvtime1.setText(split[1]);
-                }
-                if(i==2){
-                    mBinding.tvtime2.setText(split[2]);
-                }
-                if(i==3){
-                    mBinding.tvtime3.setText(split[3]);
-                }
-            }
-            if(time>0){
-                handler.postDelayed(this, 1000);
-            }
-        }
-    };
-
-    public  String formatLongToTimeStr(Long l) {
-        int day = 0;
-        int hour = 0;
-        int minute = 0;
-        int second = 0;
-        String day1 = "";
-        String hour1 = "";
-        String minute1 = "";
-        String second1 = "";
-        second = l.intValue() ;
-        if (second > 60) {
-            minute = second / 60;         //取整
-            second = second % 60;         //取余
-        }
-
-        if (minute > 60) {
-            hour = minute / 60;
-            minute = minute % 60;
-        }
-
-        if (hour > 24) {
-            day = hour / 24;
-            hour = hour % 24;
-        }
-
-
-        if (day < 10) {
-            day1 = "0" + day;
-        } else {
-            day1 = day + "";
-        }
-
-        if (hour < 10) {
-            hour1 = "0" + hour;
-        }else {
-            hour1 = hour + "";
-        }
-        if (minute < 10) {
-            minute1 = "0" + minute;
-        } else {
-            minute1 = minute + "";
-        }
-        if (second < 10) {
-            second1 = "0" + second;
-        } else {
-            second1 = second + "";
-        }
-        String strtime = day1 + "：" + hour1 + "：" + minute1 + "：" + second1;
-        return strtime;
-
-    }
+    }*/
 
     public class ClickHandlers {
 
-        public void onClickLeft() {
-            if (position > 0) {
-                position = position - 1;
-                tradeId = historyItemVoList.get(position).getTradeId();
-                getDateFromNet();
-            }
+        public void onClickPrevious() {
+            int currentItem = mBinding.viewpager.getCurrentItem();
+
+            if (currentItem != 0)
+                mBinding.viewpager.setCurrentItem(currentItem - 1, true);
         }
 
-        public void onClickRight() {
-            if (position < historyItemVoList.size() - 1) {
-                position = position + 1;
-                tradeId = historyItemVoList.get(position).getTradeId();
+        public void onClickNext() {
+            int currentItem = mBinding.viewpager.getCurrentItem();
 
-                getDateFromNet();
-            }
+            if (currentItem < mHistoryListVoListBeanList.size() - 1)
+                mBinding.viewpager.setCurrentItem(currentItem + 1, true);
         }
 
-        public void onClickAboutNews() {
+      /*  public void onClickInfo() {
             if (relevantInfoListVos != null && !relevantInfoListVos.isEmpty()) {
                 infoList = new Gson().toJson(relevantInfoListVos);
             }
@@ -321,7 +267,7 @@ public class TradingBoxDetailActivity extends JMEBaseActivity {
                     .navigation();
         }
 
-        public void onClickMore() {
+        public void onClickAgree() {
             String toupiao = "";
             if (TextUtils.isEmpty(User.getInstance().getToken())) {
                 ARouter.getInstance().build(Constants.ARouterUriConst.ACCOUNTLOGIN).navigation();
@@ -338,12 +284,12 @@ public class TradingBoxDetailActivity extends JMEBaseActivity {
                         .build(Constants.ARouterUriConst.PLACEORDER)
                         .withString("Type", "2")
                         .withString("Direction", toupiao)
-                        .withString("TradeId", tradeId)
+                        .withString("TradeId", mTradeId)
                         .navigation();
             }
         }
 
-        public void onClickKong() {
+        public void onClickOpposition() {
             String toupiao = "";
             if (TextUtils.isEmpty(User.getInstance().getToken())) {
                 ARouter.getInstance().build(Constants.ARouterUriConst.ACCOUNTLOGIN).navigation();
@@ -360,17 +306,31 @@ public class TradingBoxDetailActivity extends JMEBaseActivity {
                         .build(Constants.ARouterUriConst.PLACEORDER)
                         .withString("Direction", toupiao)
                         .withString("Type", "3")
-                        .withString("TradeId", tradeId)
+                        .withString("TradeId", mTradeId)
                         .navigation();
             }
-        }
+        }*/
     }
 
-    public void rate(String type) {
-        HashMap<String, String> params = new HashMap<>();
-        params.put("boxId", tradeId);
-        params.put("direction", type);
-        params.put("variety", variety);
-        sendRequest(ManagementService.getInstance().rate, params, false);
+    public class TradingBoxHistoryAdapter extends FragmentPagerAdapter {
+
+        public TradingBoxHistoryAdapter(FragmentManager fragmentManager) {
+            super(fragmentManager);
+        }
+
+        @Override
+        public Fragment getItem(int position) {
+            TradingBoxHistoryFragment tradingBoxHistoryFragment = mFragmentList.get(position);
+            tradingBoxHistoryFragment.setData(mHistoryListVoListBeanList.get(position).getTradeId());
+
+            return tradingBoxHistoryFragment;
+        }
+
+        @Override
+        public int getCount() {
+            return null == mHistoryListVoListBeanList ? 0 : mHistoryListVoListBeanList.size();
+        }
+
     }
+
 }
