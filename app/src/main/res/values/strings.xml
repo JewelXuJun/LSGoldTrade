@@ -358,7 +358,7 @@
     <string name="trading_box_info">相关资讯</string>
     <string name="trading_box_forecast">预测交易品种</string>
     <string name="trading_box_forecast_direction">预测方向</string>
-    <string name="trading_box_result">投票结果</string>
+    <string name="trading_box_result">投票</string>
     <string name="trading_box_time_end">距结束还有</string>
     <string name="trading_box_colon">:</string>
     <string name="trading_box_agree">同意</string>
