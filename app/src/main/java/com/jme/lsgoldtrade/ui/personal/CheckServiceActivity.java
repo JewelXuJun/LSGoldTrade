@@ -1,13 +1,19 @@
 package com.jme.lsgoldtrade.ui.personal;
 
 import android.os.Bundle;
-
+import android.text.TextUtils;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
+import com.jme.common.network.DTRequest;
+import com.jme.common.network.Head;
+import com.jme.common.util.BigDecimalUtil;
 import com.jme.lsgoldtrade.R;
 import com.jme.lsgoldtrade.base.JMEBaseActivity;
 import com.jme.lsgoldtrade.config.Constants;
 import com.jme.lsgoldtrade.databinding.ActivityCheckServiceBinding;
+import com.jme.lsgoldtrade.domain.UsernameVo;
+import com.jme.lsgoldtrade.service.AccountService;
+import java.util.HashMap;
 
 /**
  * 查看增值服务
@@ -32,19 +38,42 @@ public class CheckServiceActivity extends JMEBaseActivity {
     @Override
     protected void initData(Bundle savedInstanceState) {
         super.initData(savedInstanceState);
-
+        getUserInfo();
     }
 
-    @Override
-    protected void initListener() {
-        super.initListener();
-
+    private void getUserInfo() {
+        sendRequest(AccountService.getInstance().getUserInfo, new HashMap<>(), true);
     }
 
     @Override
     protected void initBinding() {
         super.initBinding();
         mBinding.setHandlers(new ClickHandlers());
+    }
+
+    @Override
+    protected void DataReturn(DTRequest request, Head head, Object response) {
+        super.DataReturn(request, head, response);
+        switch (request.getApi().getName()) {
+            case "GetUserInfo":
+                if (head.isSuccess()) {
+                    UsernameVo value;
+                    try {
+                        value = (UsernameVo) response;
+                    } catch (Exception e) {
+                        value = null;
+                        e.printStackTrace();
+                    }
+                    if (value == null)
+                        return;
+
+                    mBinding.tvAvailableFunds.setText(TextUtils.isEmpty(value.getBalance()) ? getString(R.string.text_no_data_default) : BigDecimalUtil.formatMoney(value.getBalance()));
+                    mBinding.tvFrozenFunds.setText(TextUtils.isEmpty(value.getFrozenBalance()) ? getString(R.string.text_no_data_default) : BigDecimalUtil.formatMoney(value.getFrozenBalance()));
+                }
+                break;
+            default:
+                break;
+        }
     }
 
     public class ClickHandlers {
@@ -56,15 +85,17 @@ public class CheckServiceActivity extends JMEBaseActivity {
         }
 
         public void onClickCash() {
-            ARouter.getInstance()
-                    .build(Constants.ARouterUriConst.CASH)
-                    .navigation();
+            showShortToast(R.string.personal_expect);
+//            ARouter.getInstance()
+//                    .build(Constants.ARouterUriConst.CASH)
+//                    .navigation();
         }
 
         public void onClickThaw() {
-            ARouter.getInstance()
-                    .build(Constants.ARouterUriConst.THAW)
-                    .navigation();
+            showShortToast(R.string.personal_expect);
+//            ARouter.getInstance()
+//                    .build(Constants.ARouterUriConst.THAW)
+//                    .navigation();
         }
 
         public void onClickDetailed() {
