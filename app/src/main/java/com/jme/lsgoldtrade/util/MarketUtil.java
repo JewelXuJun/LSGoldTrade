@@ -406,7 +406,31 @@ public class MarketUtil {
             value = "";
 
         return value;
+    }
 
+    public static String getOrderStatus(String status) {
+        String value = "";
+
+        if (status.equals("0"))
+            value = "委托中";
+        else if (status.equals("1"))
+            value = "建仓";
+        else if (status.equals("2"))
+            value = "建仓中";
+        else if (status.equals("3"))
+            value = "平仓";
+        else if (status.equals("4"))
+            value = "平仓中";
+        else if (status.equals("5"))
+            value = "委托完成";
+        else if (status.equals("6"))
+            value = "撤销中";
+        else if (status.equals("7"))
+            value = "已撤销";
+        else if (status.equals("8"))
+            value = "建仓完成";
+
+        return value;
     }
 
     public static BigDecimal valueDivisor(BigDecimal original, BigDecimal divisor) {

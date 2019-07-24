@@ -1,7 +1,8 @@
 package com.jme.lsgoldtrade.ui.order;
 
 import android.os.Bundle;
-import android.view.Gravity;
+import android.support.v4.content.ContextCompat;
+import android.text.TextUtils;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.jme.common.network.DTRequest;
@@ -9,11 +10,10 @@ import com.jme.common.network.Head;
 import com.jme.lsgoldtrade.R;
 import com.jme.lsgoldtrade.base.JMEBaseActivity;
 import com.jme.lsgoldtrade.config.Constants;
-import com.jme.lsgoldtrade.databinding.ActivityOrderDetailsBinding;
+import com.jme.lsgoldtrade.databinding.ActivityOrderDetailBinding;
 import com.jme.lsgoldtrade.domain.TradingBoxOrderVo;
 import com.jme.lsgoldtrade.service.ManagementService;
-import com.jme.lsgoldtrade.util.TradeBoxFunctionUtils;
-import com.jme.lsgoldtrade.view.ShareSelectWindow;
+import com.jme.lsgoldtrade.util.MarketUtil;
 
 import java.util.HashMap;
 
@@ -23,138 +23,106 @@ import java.util.HashMap;
 @Route(path = Constants.ARouterUriConst.ORDERDETAILS)
 public class OrderDetailsActivity extends JMEBaseActivity {
 
-    private ActivityOrderDetailsBinding mBinding;
-    private String id;
+    private ActivityOrderDetailBinding mBinding;
+
+    private String mID;
 
     @Override
     protected int getContentViewId() {
-        return R.layout.activity_order_details;
+        return R.layout.activity_order_detail;
     }
 
     @Override
     protected void initView() {
         super.initView();
-        mBinding = (ActivityOrderDetailsBinding) mBindingUtil;
-        initToolbar("订单详情", true);
-        setRightNavigation();
-        id = getIntent().getStringExtra("id");
-    }
 
-    private void setRightNavigation() {
-        setRightNavigation("", R.mipmap.ic_more, 0, () -> {
-            TradeBoxFunctionUtils.show(this, "");
-        });
+        initToolbar(R.string.trading_box_order_title, true);
     }
 
     @Override
     protected void initData(Bundle savedInstanceState) {
         super.initData(savedInstanceState);
-        HashMap<String, String> map = new HashMap<>();
-        map.put("id", id);
-        sendRequest(ManagementService.getInstance().orderDetails, map, false);
-    }
 
-    @Override
-    protected void DataReturn(DTRequest request, Head head, Object response) {
-        super.DataReturn(request, head, response);
-        switch (request.getApi().getName()) {
-            case "OrderDetails":
-                if (head.isSuccess()) {
-                    TradingBoxOrderVo value;
-                    try {
-                        value = (TradingBoxOrderVo) response;
-                    } catch (Exception e) {
-                        value = null;
-                        e.printStackTrace();
-                    }
+        mID = getIntent().getStringExtra("ID");
 
-                    if (null == value) {
-                        return;
-                    }
+        if (TextUtils.isEmpty(mID))
+            return;
 
-                    String status = value.getStatus();
-                    if ("0".equals(status)) {
-                        mBinding.status.setText("委托中");
-                    } else if ("1".equals(status)) {
-                        mBinding.status.setText("建仓");
-                    } else if ("2".equals(status)) {
-                        mBinding.status.setText("建仓中");
-                    } else if ("3".equals(status)) {
-                        mBinding.status.setText("平仓");
-                    } else if ("4".equals(status)) {
-                        mBinding.status.setText("平仓中");
-                    } else if ("5".equals(status)) {
-                        mBinding.status.setText("委托完成");
-                    } else if ("6".equals(status)) {
-                        mBinding.status.setText("撤销中");
-                    } else if ("7".equals(status)) {
-                        mBinding.status.setText("已撤销");
-                    } else if ("8".equals(status)) {
-                        mBinding.status.setText("建仓完成");
-                    }
-
-                    String entrustTheDirection = value.getEntrustTheDirection();
-                    if ("0".equals(entrustTheDirection)) {
-                        mBinding.chooseDirection.setText("多");
-                        mBinding.chooseDirection.setTextColor(getResources().getColor(R.color.color_red));
-                    } else if ("1".equals(entrustTheDirection)) {
-                        mBinding.chooseDirection.setText("空");
-                        mBinding.chooseDirection.setTextColor(getResources().getColor(R.color.color_green));
-                    }
-                    mBinding.kaicangjiage.setText(value.getAuthorizedOpeningPrice() + "");
-                    mBinding.time.setText(value.getCratedTime());
-                    mBinding.yingli.setText("盈利平仓线 " + value.getEarningsLine() + "点");
-                    mBinding.kuisun.setText("亏损平仓线 " + value.getLossLine() + "点");
-                    mBinding.weituoshu.setText(value.getEntrustTheHandCount());
-                    mBinding.pinzhong.setText(value.getOrders());
-
-                    String authorizedOpeningTimeBegin = value.getAuthorizedOpeningTimeBegin();
-                    String authorizedOpeningTimeEND = value.getAuthorizedOpeningTimeEND();
-                    String preOrderCloseDateBegin = value.getPreOrderCloseDateBegin();
-                    String preOrderCloseDateEnd = value.getPreOrderCloseDateEnd();
-
-                    String[] openBegin = authorizedOpeningTimeBegin.split(" ");
-                    String[] openEnd = authorizedOpeningTimeEND.split(" ");
-                    String[] closeBegin = preOrderCloseDateBegin.split(" ");
-                    String[] closeEnd = preOrderCloseDateEnd.split(" ");
-                    mBinding.kaicangbeginyear.setText(openBegin[0]);
-                    mBinding.kaicangbeginclock.setText(openBegin[1]);
-                    mBinding.kaicangcloseyear.setText(openEnd[0]);
-                    mBinding.kaicangcloseclock.setText(openEnd[1]);
-                    mBinding.pingcangbeginyear.setText(closeBegin[0]);
-                    mBinding.pingcangbeginclock.setText(closeBegin[1]);
-                    mBinding.pingcangendyear.setText(closeEnd[0]);
-                    mBinding.pingcangendclock.setText(closeEnd[1]);
-                }
-                break;
-        }
+        getDetailInfo();
     }
 
     @Override
     protected void initListener() {
         super.initListener();
-
     }
 
     @Override
     protected void initBinding() {
         super.initBinding();
-        mBinding.setHandlers(new ClickHandlers());
+
+        mBinding = (ActivityOrderDetailBinding) mBindingUtil;
     }
 
-    public class ClickHandlers {
+    private void getDetailInfo() {
+        HashMap<String, String> params = new HashMap<>();
+        params.put("id", mID);
 
-        public void onClickChangeSet() {
-//            share();
+        sendRequest(ManagementService.getInstance().getDetailInfo, params, true);
+    }
+
+    @Override
+    protected void DataReturn(DTRequest request, Head head, Object response) {
+        super.DataReturn(request, head, response);
+
+        switch (request.getApi().getName()) {
+            case "GetDetailInfo":
+                if (head.isSuccess()) {
+                    TradingBoxOrderVo tradingBoxOrderVo;
+
+                    try {
+                        tradingBoxOrderVo = (TradingBoxOrderVo) response;
+                    } catch (Exception e) {
+                        tradingBoxOrderVo = null;
+
+                        e.printStackTrace();
+                    }
+
+                    if (null == tradingBoxOrderVo)
+                        return;
+
+                    String entrustTheDirection = tradingBoxOrderVo.getEntrustTheDirection();
+                    String authorizedOpeningTimeBegin = tradingBoxOrderVo.getAuthorizedOpeningTimeBegin();
+                    String authorizedOpeningTimeEND = tradingBoxOrderVo.getAuthorizedOpeningTimeEND();
+                    String preOrderCloseDateBegin = tradingBoxOrderVo.getPreOrderCloseDateBegin();
+                    String preOrderCloseDateEnd = tradingBoxOrderVo.getPreOrderCloseDateEnd();
+
+                    String[] openTimeStart = authorizedOpeningTimeBegin.split(" ");
+                    String[] openTimeEnd = authorizedOpeningTimeEND.split(" ");
+                    String[] equalTimeStart = preOrderCloseDateBegin.split(" ");
+                    String[] equalTimeEnd = preOrderCloseDateEnd.split(" ");
+
+
+                    mBinding.tvContract.setText(tradingBoxOrderVo.getOrders());
+                    mBinding.tvDirection.setText(entrustTheDirection.equals("0") ? R.string.text_more : R.string.text_empty);
+                    mBinding.tvDirection.setTextColor(entrustTheDirection.equals("0") ? ContextCompat.getColor(this, R.color.color_red)
+                            : ContextCompat.getColor(this, R.color.color_green));
+                    mBinding.tvOpenTimeStartDate.setText(openTimeStart[0].replace("-", "/"));
+                    mBinding.tvOpenTimeStartHour.setText(openTimeStart[1]);
+                    mBinding.tvOpenTimeEndDate.setText(openTimeEnd[0].replace("-", "/"));
+                    mBinding.tvOpenTimeEndHour.setText(openTimeEnd[1]);
+                    mBinding.tvEqualTimeStartDate.setText(equalTimeStart[0].replace("-", "/"));
+                    mBinding.tvEqualTimeStartHour.setText(equalTimeStart[1]);
+                    mBinding.tvEqualTimeEndDate.setText(equalTimeEnd[0].replace("-", "/"));
+                    mBinding.tvEqualTimeEndHour.setText(equalTimeEnd[1]);
+                    mBinding.tvAmount.setText(tradingBoxOrderVo.getEntrustTheHandCount());
+                    mBinding.tvProfit.setText(String.format(getString(R.string.trading_box_order_profit_line), tradingBoxOrderVo.getEarningsLine()));
+                    mBinding.tvLoss.setText(String.format(getString(R.string.trading_box_order_loss_line), tradingBoxOrderVo.getLossLine()));
+                    mBinding.tvTime.setText(tradingBoxOrderVo.getCratedTime());
+                    mBinding.tvStatus.setText(MarketUtil.getOrderStatus(tradingBoxOrderVo.getStatus()));
+                }
+
+                break;
         }
-
     }
 
-    public void share() {
-        // 实例化试图
-        ShareSelectWindow menuWindow = new ShareSelectWindow(this);
-        // 显示窗体
-        menuWindow.showAtLocation(findViewById(R.id.pinzhong),
-                Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);// 设置layout在popupwindow中显示的位置
-    }
 }

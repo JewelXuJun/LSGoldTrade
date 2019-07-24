@@ -8,6 +8,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.jme.lsgoldtrade.R;
 import com.jme.lsgoldtrade.domain.TradingBoxOrderVo;
+import com.jme.lsgoldtrade.util.MarketUtil;
 
 import java.util.List;
 
@@ -34,36 +35,11 @@ public class TradingBoxOrderAdapter extends BaseQuickAdapter<TradingBoxOrderVo, 
                         : ContextCompat.getColor(mContext, R.color.color_green))
                 .setText(R.id.tv_number, item.getEntrustTheHandCount())
                 .setText(R.id.tv_time, TextUtils.isEmpty(createTime) ? "" : createTime.replace("-", "/"))
-                .setText(R.id.tv_status, getStatus(status))
+                .setText(R.id.tv_status, MarketUtil.getOrderStatus(status))
                 .setGone(R.id.btn_cancel, flag.equals("false") ? false
                         : status.equals("0") || status.equals("1") || status.equals("2") || status.equals("3") ? true : false)
                 .addOnClickListener(R.id.btn_cancel)
                 .addOnClickListener(R.id.btn_detail);
-    }
-
-    private String getStatus(String status) {
-        String value = "";
-
-        if (status.equals("0"))
-            value = "委托中";
-        else if (status.equals("1"))
-            value = "建仓";
-        else if (status.equals("2"))
-            value = "建仓中";
-        else if (status.equals("3"))
-            value = "平仓";
-        else if (status.equals("4"))
-            value = "平仓中";
-        else if (status.equals("5"))
-            value = "委托完成";
-        else if (status.equals("6"))
-            value = "撤销中";
-        else if (status.equals("7"))
-            value = "已撤销";
-        else if (status.equals("8"))
-            value = "建仓完成";
-
-        return value;
     }
 
 }

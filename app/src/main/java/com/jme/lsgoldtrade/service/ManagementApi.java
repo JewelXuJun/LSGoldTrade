@@ -68,7 +68,7 @@ public interface ManagementApi {
     Call<DTResponse> getOrderList(@QueryMap Map<String, String> map);
 
     @GET("/tjsmanage/infoapi/v1/android/embeddedSingle/getDetailInfo")
-    Call<DTResponse> orderDetails(@QueryMap Map<String, String> map);
+    Call<DTResponse> getDetailInfo(@QueryMap Map<String, String> map);
 
     @GET("/tjsmanage/infoapi/v1/android/embeddedSingle/revocation")
     Call<DTResponse> revocation(@QueryMap Map<String, String> map);

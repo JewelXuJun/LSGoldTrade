@@ -91,7 +91,7 @@ public class TradingBoxOrderActivity extends JMEBaseActivity implements OnRefres
                 case R.id.btn_detail:
                     ARouter.getInstance()
                             .build(Constants.ARouterUriConst.ORDERDETAILS)
-                            .withString("id", tradingBoxOrderVo.getId())
+                            .withString("ID", tradingBoxOrderVo.getId())
                             .navigation();
 
                     break;

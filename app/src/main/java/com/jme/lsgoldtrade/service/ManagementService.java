@@ -212,10 +212,10 @@ public class ManagementService extends IService<ManagementApi> {
         }
     };
 
-    public API orderDetails = new API<TradingBoxOrderVo>("OrderDetails") {
+    public API getDetailInfo = new API<TradingBoxOrderVo>("GetDetailInfo") {
         @Override
         public Call<DTResponse> request(HashMap<String, String> params) {
-            return mApi.orderDetails(params);
+            return mApi.getDetailInfo(params);
         }
     };
 
