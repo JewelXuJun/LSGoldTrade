@@ -331,14 +331,13 @@
                         android:background="@mipmap/ic_next" />
 
                     <TextView
-                        android:id="@+id/tv_message_box"
+                        android:id="@+id/tv_trading_box"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
                         android:layout_marginLeft="@dimen/common_area_margin"
                         android:layout_marginRight="@dimen/common_page_margin"
                         android:layout_toLeftOf="@+id/next"
-                        android:text="@string/personal_message_box_new"
                         android:textColor="@color/color_text_normal"
                         android:textSize="@dimen/sp_15" />
 

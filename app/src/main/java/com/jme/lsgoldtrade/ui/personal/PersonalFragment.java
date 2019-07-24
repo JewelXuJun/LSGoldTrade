@@ -15,9 +15,11 @@ import com.jme.lsgoldtrade.R;
 import com.jme.lsgoldtrade.base.JMEBaseFragment;
 import com.jme.lsgoldtrade.config.Constants;
 import com.jme.lsgoldtrade.databinding.FragmentPersonalBinding;
+import com.jme.lsgoldtrade.domain.SubscribeStateVo;
 import com.jme.lsgoldtrade.service.ManagementService;
 
 import java.util.HashMap;
+import java.util.List;
 
 /**
  * 我的
@@ -77,11 +79,16 @@ public class PersonalFragment extends JMEBaseFragment {
             mBinding.layoutSubscribe.setVisibility(View.VISIBLE);
 
             getUserAddedServicesStatus();
+            getListExt();
         }
     }
 
     private void getUserAddedServicesStatus() {
         sendRequest(ManagementService.getInstance().getUserAddedServicesStatus, new HashMap<>(), false, false, false);
+    }
+
+    private void getListExt() {
+        sendRequest(ManagementService.getInstance().getListExt, new HashMap<>(), false, false, false);
     }
 
     @Override
@@ -99,6 +106,42 @@ public class PersonalFragment extends JMEBaseFragment {
                         : R.string.personal_increment_state_unopen);
                 mBinding.tvIncrementState.setTextColor(mIncrementState.equals("T") ? ContextCompat.getColor(mContext, R.color.color_text_black)
                         : ContextCompat.getColor(mContext, R.color.color_red));
+
+                break;
+            case "GetListExt":
+                if (head.isSuccess()) {
+                    SubscribeStateVo subscribeStateVo;
+
+                    try {
+                        subscribeStateVo = (SubscribeStateVo) response;
+                    } catch (Exception e) {
+                        subscribeStateVo = null;
+
+                        e.printStackTrace();
+                    }
+
+                    if (null == subscribeStateVo) {
+                        mBinding.tvTradingBox.setText(R.string.personal_trading_box_new);
+                        mBinding.tvTradingBox.setTextColor(ContextCompat.getColor(mContext, R.color.color_text_normal));
+                    } else {
+                        String num = subscribeStateVo.getNum();
+
+                        if (TextUtils.isEmpty(num)) {
+                            mBinding.tvTradingBox.setText(R.string.personal_trading_box_new);
+                            mBinding.tvTradingBox.setTextColor(ContextCompat.getColor(mContext, R.color.color_text_normal));
+                        } else {
+                            if (num.equals("0")) {
+                                mBinding.tvTradingBox.setText(R.string.personal_trading_box_new);
+                                mBinding.tvTradingBox.setTextColor(ContextCompat.getColor(mContext, R.color.color_text_normal));
+                            } else {
+                                mBinding.tvTradingBox.setText(R.string.personal_trading_box_publish);
+                                mBinding.tvTradingBox.setTextColor(ContextCompat.getColor(mContext, R.color.color_red));
+                            }
+                        }
+                    }
+
+
+                }
 
                 break;
         }
@@ -147,9 +190,7 @@ public class PersonalFragment extends JMEBaseFragment {
         }
 
         public void onClickSubscribe() {
-            ARouter.getInstance()
-                    .build(Constants.ARouterUriConst.TRADINGBOX)
-                    .navigation();
+            ARouter.getInstance().build(Constants.ARouterUriConst.TRADINGBOX).navigation();
         }
 
         public void onClickShare() {
