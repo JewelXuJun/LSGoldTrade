@@ -33,6 +33,8 @@
     <dimen name="height_trading_box_info_small">94dp</dimen>
     <dimen name="height_btn_aggree">33dp</dimen>
     <dimen name="height_buy_item">56dp</dimen>
+    <dimen name="height_order_item">72dp</dimen>
+    <dimen name="height_order_btn">28dp</dimen>
 
     <dimen name="width_main_page_info_img">100dp</dimen>
     <dimen name="width_market_limit">100dp</dimen>

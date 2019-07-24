@@ -67,7 +67,7 @@ public interface ManagementApi {
     Call<DTResponse> getListExt(@QueryMap Map<String, String> map);
 
     @GET("/tjsmanage/infoapi/v1/android/embeddedSingle/list")
-    Call<DTResponse> myOrder(@QueryMap Map<String, String> map);
+    Call<DTResponse> getOrderList(@QueryMap Map<String, String> map);
 
     @GET("/tjsmanage/infoapi/v1/android/embeddedSingle/getDetailInfo")
     Call<DTResponse> orderDetails(@QueryMap Map<String, String> map);

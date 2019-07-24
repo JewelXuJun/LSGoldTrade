@@ -36,7 +36,10 @@ public class TradeBoxFunctionUtils {
         });
 
         tv_history.setOnClickListener((view) -> {
-            ARouter.getInstance().build(Constants.ARouterUriConst.TRADINGBOXHISTROY).navigation();
+            if (User.getInstance().isLogin())
+                ARouter.getInstance().build(Constants.ARouterUriConst.TRADINGBOXHISTROY).navigation();
+            else
+                ARouter.getInstance().build(Constants.ARouterUriConst.ACCOUNTLOGIN).navigation();
 
             alertDialog.dismiss();
         });

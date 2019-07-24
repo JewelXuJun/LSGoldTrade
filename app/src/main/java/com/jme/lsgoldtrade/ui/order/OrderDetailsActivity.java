@@ -10,7 +10,7 @@ import com.jme.lsgoldtrade.R;
 import com.jme.lsgoldtrade.base.JMEBaseActivity;
 import com.jme.lsgoldtrade.config.Constants;
 import com.jme.lsgoldtrade.databinding.ActivityOrderDetailsBinding;
-import com.jme.lsgoldtrade.domain.MyOrderVo;
+import com.jme.lsgoldtrade.domain.TradingBoxOrderVo;
 import com.jme.lsgoldtrade.service.ManagementService;
 import com.jme.lsgoldtrade.util.TradeBoxFunctionUtils;
 import com.jme.lsgoldtrade.view.ShareSelectWindow;
@@ -60,9 +60,9 @@ public class OrderDetailsActivity extends JMEBaseActivity {
         switch (request.getApi().getName()) {
             case "OrderDetails":
                 if (head.isSuccess()) {
-                    MyOrderVo value;
+                    TradingBoxOrderVo value;
                     try {
-                        value = (MyOrderVo) response;
+                        value = (TradingBoxOrderVo) response;
                     } catch (Exception e) {
                         value = null;
                         e.printStackTrace();

@@ -1,6 +1,6 @@
 package com.jme.lsgoldtrade.domain;
 
-public class MyOrderVo {
+public class TradingBoxOrderVo {
 
     /**
      * authorizedOpeningPrice : 0
@@ -34,39 +34,72 @@ public class MyOrderVo {
      * status : string
      * tradeNo : string
      * updateTime : 2019-06-03T03:20:54.501Z
+     * "flag":"false"
      */
 
     private int authorizedOpeningPrice;
+
     private String authorizedOpeningTimeBegin;
+
     private String authorizedOpeningTimeEND;
+
     private String boxId;
+
     private String cancellationsReasion;
+
     private String cancellationsTime;
+
     private String closeOutOrderNo;
+
     private String closeOutTradeNo;
+
     private String closeOutType;
+
     private String closingTimeEntrusted;
+
     private String cratedTime;
+
     private String customerNo;
+
     private String earningsLine;
+
     private String earningsLinePrice;
+
     private String entrustTheDirection;
+
     private String entrustTheHandCount;
+
     private String id;
+
     private String isDelete;
+
     private String lossLine;
+
     private String lossLinePrice;
+
     private String operator;
+
     private String orderNo;
+
     private String orderStatus;
+
     private String orders;
+
     private String personNo;
+
     private String preOrderCloseDateBegin;
+
     private String preOrderCloseDateEnd;
+
     private String stage;
+
     private String status;
+
     private String tradeNo;
+
     private String updateTime;
+
+    private String flag;
 
     public int getAuthorizedOpeningPrice() {
         return authorizedOpeningPrice;
@@ -314,5 +347,13 @@ public class MyOrderVo {
 
     public void setUpdateTime(String updateTime) {
         this.updateTime = updateTime;
+    }
+
+    public String getFlag() {
+        return flag;
+    }
+
+    public void setFlag(String flag) {
+        this.flag = flag;
     }
 }

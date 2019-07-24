@@ -15,7 +15,7 @@ import com.jme.lsgoldtrade.domain.FenXiShiVo;
 import com.jme.lsgoldtrade.domain.TradingBoxHistoryItemVo;
 import com.jme.lsgoldtrade.domain.InfoVo;
 import com.jme.lsgoldtrade.domain.SubscribeStateVo;
-import com.jme.lsgoldtrade.domain.MyOrderVo;
+import com.jme.lsgoldtrade.domain.TradingBoxOrderVo;
 import com.jme.lsgoldtrade.domain.NavigatorVo;
 import com.jme.lsgoldtrade.domain.QuestListTypeVo;
 import com.jme.lsgoldtrade.domain.QuestionGuessVo;
@@ -200,10 +200,10 @@ public class ManagementService extends IService<ManagementApi> {
         }
     };
 
-    public API myOrder = new API<List<MyOrderVo>>("MyOrder") {
+    public API getOrderList = new API<List<TradingBoxOrderVo>>("GetOrderList") {
         @Override
         public Call<DTResponse> request(HashMap<String, String> params) {
-            return mApi.myOrder(params);
+            return mApi.getOrderList(params);
         }
     };
 
@@ -214,7 +214,7 @@ public class ManagementService extends IService<ManagementApi> {
         }
     };
 
-    public API orderDetails = new API<MyOrderVo>("OrderDetails") {
+    public API orderDetails = new API<TradingBoxOrderVo>("OrderDetails") {
         @Override
         public Call<DTResponse> request(HashMap<String, String> params) {
             return mApi.orderDetails(params);

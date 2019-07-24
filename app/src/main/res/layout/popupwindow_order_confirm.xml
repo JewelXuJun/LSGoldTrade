@@ -10,10 +10,11 @@
         <TextView
             android:id="@+id/tvContent"
             android:layout_width="match_parent"
-            android:layout_height="106dp"
+            android:layout_height="wrap_content"
+            android:paddingTop="@dimen/margin_big"
+            android:paddingBottom="@dimen/margin_big"
             android:gravity="center"
-            android:text="您确认取消该笔委托吗?"
-            android:textColor="@color/black_deep"
+            android:textColor="@color/black"
             android:textSize="@dimen/sp_16" />
 
         <include layout="@layout/item_line_vertical" />
@@ -29,10 +30,9 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:text="@string/text_cancel"
-                android:textColor="@color/black_deep"
+                android:textColor="@color/black"
                 android:textSize="@dimen/sp_16"
-                android:background="@drawable/drawable_white_solid"
-                />
+                android:background="@drawable/drawable_white_solid" />
 
             <Button
                 android:id="@+id/btn_confirm"
