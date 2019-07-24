@@ -276,14 +276,13 @@ public class TradingBoxHistoryFragment extends JMEBaseFragment {
                 break;
             case "Add":
                 if (head.isSuccess()) {
-                    showShortToast(R.string.trading_box_ticket_success);
-
-                   /* ARouter.getInstance()
+                    ARouter.getInstance()
                             .build(Constants.ARouterUriConst.PLACEORDER)
-                            .withString("Type", "2")
-                            .withString("Direction", toupiao)
+                            .withString("Type", "Vote")
+                            .withString("Direction", request.getParams().get("direction").equals("0") ? mDirection
+                                    : mDirection.equals("0") ? "1" : "0")
                             .withString("TradeId", mTradeId)
-                            .navigation();*/
+                            .navigation();
                 }
 
                 break;
@@ -307,40 +306,13 @@ public class TradingBoxHistoryFragment extends JMEBaseFragment {
                 ARouter.getInstance().build(Constants.ARouterUriConst.ACCOUNTLOGIN).navigation();
             else
                 add("0");
-
-           /* ARouter.getInstance()
-                    .build(Constants.ARouterUriConst.PLACEORDER)
-                    .withString("Direction", toupiao)
-                    .withString("Type", "2")
-                    .withString("TradeId", mTradeId)
-                    .navigation();*/
         }
 
         public void onClickOpposition() {
             if (null == mUser || !mUser.isLogin())
                 ARouter.getInstance().build(Constants.ARouterUriConst.ACCOUNTLOGIN).navigation();
             else
-                add("0");
-
-         /*   String toupiao = "";
-            if (TextUtils.isEmpty(User.getInstance().getToken())) {
-                ARouter.getInstance().build(Constants.ARouterUriConst.ACCOUNTLOGIN).navigation();
-            } else {
-                rate("1");
-                if ("0".equals(direction)) {
-                    toupiao = "1";
-//                    rate(toupiao);
-                } else {
-                    toupiao = "0";
-//                    rate(toupiao);
-                }
-                ARouter.getInstance()
-                        .build(Constants.ARouterUriConst.PLACEORDER)
-                        .withString("Direction", toupiao)
-                        .withString("Type", "3")
-                        .withString("TradeId", mTradeId)
-                        .navigation();
-            }*/
+                add("1");
         }
 
     }

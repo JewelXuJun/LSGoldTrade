@@ -40,38 +40,71 @@ public class TradingBoxInfoVo implements Serializable {
      */
 
     private String analystOpinion;
+
     private String chance;
+
     private String checkOpinion;
+
     private String checkStatus;
+
     private String checkTime;
+
     private String checker;
+
     private int checkerId;
+
     private String closePositionsTimeBegin;
+
     private String closePositionsTimeEnd;
+
     private String closeTime;
+
     private String createTime;
+
     private String direction;
+
     private String etfUrl;
+
     private String etfUrlShow;
+
     private String fundamentalAnalysis;
+
     private String id;
+
     private String moodUrl;
+
     private String moodUrlShow;
+
     private String name;
+
     private String openPositionsTimeBegin;
+
     private String openPositionsTimeEnd;
+
     private String openPrice;
+
     private String periodId;
+
     private String pushTime;
+
     private String putaway;
+
     private String relevantInfoIds;
+
     private int serviceId;
+
     private String status;
+
     private String submitPeople;
+
     private int submitPeopleId;
+
     private String updateTime;
+
     private String variety;
+
     private String earningsLine;
+
     private String lossLine;
 
     public String getLossLine() {

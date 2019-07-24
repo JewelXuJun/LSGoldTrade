@@ -271,7 +271,8 @@ public class TradingBoxActivity extends JMEBaseActivity {
 
                 ARouter.getInstance()
                         .build(Constants.ARouterUriConst.PLACEORDER)
-                        .withString("Type", direction)
+                        .withString("Type", "Place")
+                        .withString("Direction", direction)
                         .withString("TradeId", tradeId)
                         .navigation();
             }

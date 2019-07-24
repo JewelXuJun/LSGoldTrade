@@ -151,17 +151,17 @@ public class ManagementService extends IService<ManagementApi> {
         }
     };
 
-    public API tradingBoxInfo = new API<TradingBoxInfoVo>("TradingBoxInfo") {
+    public API getBoxInfo = new API<TradingBoxInfoVo>("GetBoxInfo") {
         @Override
         public Call<DTResponse> request(HashMap<String, String> params) {
-            return mApi.tradingBoxInfo(params);
+            return mApi.getBoxInfo(params);
         }
     };
 
-    public API submitTradingBox = new API<String>("SubmitTradingBox") {
+    public API placeOrder = new API<String>("PlaceOrder") {
         @Override
         public Call<DTResponse> request(HashMap<String, String> params) {
-            return mApi.submitTradingBox(params);
+            return mApi.placeOrder(params);
         }
     };
 

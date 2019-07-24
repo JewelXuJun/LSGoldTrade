@@ -71,7 +71,7 @@
                     android:id="@+id/jizhi"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@mipmap/tanhuang"
+                    android:src="@mipmap/ic_prompt"
                     android:layout_gravity="center_vertical"
                     android:layout_marginLeft="5dp"
                     />

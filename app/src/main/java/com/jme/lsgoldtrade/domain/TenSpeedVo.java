@@ -607,6 +607,10 @@ public class TenSpeedVo implements Serializable {
         this.tradeWeight = tradeWeight;
     }
 
+    public long getHighLimitPriceValue() {
+        return highLimitPrice;
+    }
+
     public String getHighLimitPrice() {
         return MarketUtil.getPriceValue(highLimitPrice);
     }

@@ -52,7 +52,7 @@ public interface ManagementApi {
     Call<DTResponse> tradeBoxByTradeId(@QueryMap Map<String, String> map);
 
     @GET("/tjsmanage/infoapi/v1/android/tradingBox/getBoxInfo")
-    Call<DTResponse> tradingBoxInfo(@QueryMap Map<String, String> map);
+    Call<DTResponse> getBoxInfo(@QueryMap Map<String, String> map);
 
     @GET("/tjsmanage/infoapi/v1/android/tradingBox/tradeBoxHistoryInfo")
     Call<DTResponse> tradeBoxHistoryInfo(@QueryMap Map<String, String> map);
@@ -109,6 +109,6 @@ public interface ManagementApi {
     Call<DTResponse> add(@Body Map<String, String> map);
 
     @POST("/tjsmanage/infoapi/v1/android/embeddedSingle/placeOrder")
-    Call<DTResponse> submitTradingBox(@Body Map<String, String> map);
+    Call<DTResponse> placeOrder(@Body Map<String, String> map);
 
 }
