@@ -1,18 +1,22 @@
 package com.jme.lsgoldtrade.ui.personal;
 
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
-
 import com.alibaba.android.arouter.facade.annotation.Route;
+import com.jme.common.network.DTRequest;
+import com.jme.common.network.Head;
+import com.jme.common.util.BigDecimalUtil;
 import com.jme.lsgoldtrade.R;
 import com.jme.lsgoldtrade.base.JMEBaseActivity;
 import com.jme.lsgoldtrade.config.Constants;
 import com.jme.lsgoldtrade.databinding.ActivityRechargeBinding;
+import com.jme.lsgoldtrade.domain.UsernameVo;
+import com.jme.lsgoldtrade.service.AccountService;
 import com.jme.lsgoldtrade.view.PayPopupwindow;
+import java.util.HashMap;
 
 /**
- * 去充值
+ * 在线充值
  */
 @Route(path = Constants.ARouterUriConst.RECHARGE)
 public class RechargeActivity extends JMEBaseActivity {
@@ -34,13 +38,35 @@ public class RechargeActivity extends JMEBaseActivity {
     @Override
     protected void initData(Bundle savedInstanceState) {
         super.initData(savedInstanceState);
+        getUserInfo();
+    }
 
+    private void getUserInfo() {
+        sendRequest(AccountService.getInstance().getUserInfo, new HashMap<>(), true);
     }
 
     @Override
-    protected void initListener() {
-        super.initListener();
+    protected void DataReturn(DTRequest request, Head head, Object response) {
+        super.DataReturn(request, head, response);
+        switch (request.getApi().getName()) {
+            case "GetUserInfo":
+                if (head.isSuccess()) {
+                    UsernameVo value;
+                    try {
+                        value = (UsernameVo) response;
+                    } catch (Exception e) {
+                        value = null;
+                        e.printStackTrace();
+                    }
+                    if (value == null)
+                        return;
 
+                    mBinding.tvBanlace.setText(TextUtils.isEmpty(value.getBalance()) ? getString(R.string.text_no_data_default) : BigDecimalUtil.formatMoney(value.getBalance()) + "元");
+                }
+                break;
+            default:
+                break;
+        }
     }
 
     @Override
@@ -52,8 +78,8 @@ public class RechargeActivity extends JMEBaseActivity {
     public class ClickHandlers {
 
         public void onClickPay() {
-            String chongzhi = mBinding.etGoldAccount.getText().toString().trim();
-            if (TextUtils.isEmpty(chongzhi)) {
+            String funds = mBinding.etGoldAccount.getText().toString().trim();
+            if (TextUtils.isEmpty(funds)) {
                 showShortToast("请输入充值金额");
                 return;
             }

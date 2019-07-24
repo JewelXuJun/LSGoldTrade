@@ -1,25 +1,23 @@
 package com.jme.lsgoldtrade.ui.personal;
 
-import android.content.Context;
-
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
+import com.jme.common.util.BigDecimalUtil;
 import com.jme.lsgoldtrade.R;
 import com.jme.lsgoldtrade.bean.UserDetailsVo;
-
 import java.util.List;
 
 public class DetailsAdapter extends BaseQuickAdapter<UserDetailsVo, BaseViewHolder> {
 
-    public DetailsAdapter(int layoutResId, List<UserDetailsVo> data, Context context) {
-        super(layoutResId, data);
+    public DetailsAdapter(List<UserDetailsVo> data) {
+        super(R.layout.item_user_details, data);
     }
 
     @Override
     protected void convert(BaseViewHolder helper, UserDetailsVo item) {
-        helper.setText(R.id.cashtype, item.getType());
-        helper.setText(R.id.cashstatus, item.getStatus());
-        helper.setText(R.id.cashmoney, item.getAmount());
+        helper.setText(R.id.tv_type, item.getType());
+        helper.setText(R.id.tv_status, item.getStatus());
+        helper.setText(R.id.tv_funds, BigDecimalUtil.formatMoney(item.getAmount()));
     }
 }
 
