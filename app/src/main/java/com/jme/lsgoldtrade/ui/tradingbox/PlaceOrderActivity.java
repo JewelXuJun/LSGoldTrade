@@ -94,21 +94,13 @@ public class PlaceOrderActivity extends JMEBaseActivity {
             mBinding.tvDirection.setText(mDirection.equals("0") ? R.string.text_more : R.string.text_empty);
             mBinding.tvDirection.setTextColor(mDirection.equals("0") ? ContextCompat.getColor(this, R.color.color_red)
                     : ContextCompat.getColor(this, R.color.color_green));
-            mBinding.layoutSetting.setVisibility(View.VISIBLE);
             mDirectionSelected = mDirection;
         } else {
             mBinding.layoutDirection.setVisibility(View.VISIBLE);
             mBinding.tvDirection.setVisibility(View.GONE);
-            mBinding.tvMore.setBackground(mDirection.equals("0") ? ContextCompat.getDrawable(this, R.drawable.bg_btn_more_fill)
-                    : ContextCompat.getDrawable(this, R.drawable.bg_btn_more_solid));
-            mBinding.tvMore.setTextColor(mDirection.equals("0") ? ContextCompat.getColor(this, R.color.white)
-                    : ContextCompat.getColor(this, R.color.color_red));
-            mBinding.tvEmpty.setBackground(mDirection.equals("0") ? ContextCompat.getDrawable(this, R.drawable.bg_btn_empty_solid)
-                    : ContextCompat.getDrawable(this, R.drawable.bg_btn_empty_fill));
-            mBinding.tvEmpty.setTextColor(mDirection.equals("0") ? ContextCompat.getColor(this, R.color.color_orange)
-                    : ContextCompat.getColor(this, R.color.white));
-            mBinding.layoutSetting.setVisibility(View.GONE);
             mDirectionSelected = mDirection;
+
+            setEntrustDirectionLayout();
         }
 
         if (TextUtils.isEmpty(mTradeId))
@@ -152,6 +144,19 @@ public class PlaceOrderActivity extends JMEBaseActivity {
         super.onResume();
 
         getAccount();
+    }
+
+    private void setEntrustDirectionLayout() {
+        mBinding.tvMore.setBackground(mDirectionSelected.equals("0") ? ContextCompat.getDrawable(this, R.drawable.bg_btn_more_fill)
+                : ContextCompat.getDrawable(this, R.drawable.bg_btn_more_solid));
+        mBinding.tvMore.setTextColor(mDirectionSelected.equals("0") ? ContextCompat.getColor(this, R.color.white)
+                : ContextCompat.getColor(this, R.color.color_red));
+        mBinding.tvEmpty.setBackground(mDirectionSelected.equals("0") ? ContextCompat.getDrawable(this, R.drawable.bg_btn_empty_solid)
+                : ContextCompat.getDrawable(this, R.drawable.bg_btn_empty_fill));
+        mBinding.tvEmpty.setTextColor(mDirectionSelected.equals("0") ? ContextCompat.getColor(this, R.color.color_green)
+                : ContextCompat.getColor(this, R.color.white));
+        mBinding.imgMore.setVisibility(mDirectionSelected.equals("0") ? View.VISIBLE : View.GONE);
+        mBinding.imgEmpty.setVisibility(mDirectionSelected.equals("0") ? View.GONE : View.VISIBLE);
     }
 
     private void calculateMoneyEnough(String number) {
@@ -358,19 +363,15 @@ public class PlaceOrderActivity extends JMEBaseActivity {
     public class ClickHandlers {
 
         public void onClickMore() {
-            mBinding.tvMore.setBackground(getResources().getDrawable(R.drawable.choose_more));
-            mBinding.tvEmpty.setBackground(getResources().getDrawable(R.drawable.bg_btn_empty_solid));
-            mBinding.tvMore.setTextColor(getResources().getColor(R.color.white));
-            mBinding.tvEmpty.setTextColor(getResources().getColor(R.color.color_green));
             mDirectionSelected = "0";
+
+            setEntrustDirectionLayout();
         }
 
         public void onClickEmpty() {
-            mBinding.tvMore.setBackground(getResources().getDrawable(R.drawable.bg_btn_more_solid));
-            mBinding.tvEmpty.setBackground(getResources().getDrawable(R.drawable.choose_kong));
-            mBinding.tvMore.setTextColor(getResources().getColor(R.color.color_red));
-            mBinding.tvEmpty.setTextColor(getResources().getColor(R.color.white));
             mDirectionSelected = "1";
+
+            setEntrustDirectionLayout();
         }
 
         public void onClickAmountMinus() {

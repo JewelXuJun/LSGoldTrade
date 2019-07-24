@@ -85,7 +85,7 @@
 
                         <RelativeLayout
                             android:layout_width="match_parent"
-                            android:layout_height="@dimen/height_btn_dircetion"
+                            android:layout_height="@dimen/common_item_height_middle"
                             android:layout_marginRight="@dimen/common_area_margin_tiny"
                             android:layout_weight="1"
                             android:background="@drawable/bg_btn_more_solid">
@@ -113,7 +113,7 @@
 
                         <RelativeLayout
                             android:layout_width="match_parent"
-                            android:layout_height="@dimen/height_btn_dircetion"
+                            android:layout_height="@dimen/common_item_height_middle"
                             android:layout_marginLeft="@dimen/common_area_margin_tiny"
                             android:layout_weight="1"
                             android:background="@drawable/bg_btn_empty_solid">
@@ -428,12 +428,10 @@
                 </LinearLayout>
 
                 <LinearLayout
-                    android:id="@+id/layout_setting"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/common_area_margin_tiny"
-                    android:orientation="vertical"
-                    android:visibility="gone">
+                    android:orientation="vertical">
 
                     <RelativeLayout
                         android:layout_width="match_parent"

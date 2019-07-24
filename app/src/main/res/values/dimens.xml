@@ -32,7 +32,6 @@
     <dimen name="height_analyst_picture">128dp</dimen>
     <dimen name="height_trading_box_info_small">94dp</dimen>
     <dimen name="height_btn_aggree">33dp</dimen>
-    <dimen name="height_btn_dircetion">42dp</dimen>
     <dimen name="height_buy_item">56dp</dimen>
 
     <dimen name="width_main_page_info_img">100dp</dimen>
