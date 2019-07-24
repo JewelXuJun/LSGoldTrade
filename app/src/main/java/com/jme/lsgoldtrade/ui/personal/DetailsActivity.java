@@ -4,7 +4,6 @@ import android.annotation.TargetApi;
 import android.app.DatePickerDialog;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
-
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.jme.common.network.DTRequest;
 import com.jme.common.network.Head;
@@ -15,7 +14,6 @@ import com.jme.lsgoldtrade.bean.UserDetailsVo;
 import com.jme.lsgoldtrade.config.Constants;
 import com.jme.lsgoldtrade.databinding.ActivityDetailsBinding;
 import com.jme.lsgoldtrade.service.AccountService;
-
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
@@ -50,7 +48,7 @@ public class DetailsActivity extends JMEBaseActivity {
         initToolbar("账户明细", true);
         mBinding = (ActivityDetailsBinding) mBindingUtil;
 
-        adapter = new DetailsAdapter(R.layout.item_userdetails, null, mContext);
+        adapter = new DetailsAdapter(null);
 
         mBinding.recyclerView.setHasFixedSize(false);
         mBinding.recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -68,13 +66,7 @@ public class DetailsActivity extends JMEBaseActivity {
     private void getDateFromNet(String time) {
         HashMap<String, String> params = new HashMap<>();
         params.put("date", time);
-        sendRequest(AccountService.getInstance().accountDetailList, params, false);
-    }
-
-    @Override
-    protected void initListener() {
-        super.initListener();
-
+        sendRequest(AccountService.getInstance().accountDetailList, params, true);
     }
 
     @Override
@@ -84,7 +76,6 @@ public class DetailsActivity extends JMEBaseActivity {
     }
 
     public class ClickHandlers {
-
         @TargetApi(24)
         public void onClickTimeChoose() {
             //时间选择器
@@ -131,7 +122,6 @@ public class DetailsActivity extends JMEBaseActivity {
         super.DataReturn(request, head, response);
         switch (request.getApi().getName()) {
             case "AccountDetailList":
-
                 if (head.isSuccess()) {
                     List<UserDetailsVo> value;
 
@@ -148,6 +138,8 @@ public class DetailsActivity extends JMEBaseActivity {
 
                     adapter.setNewData(value);
                 }
+                break;
+            default:
                 break;
         }
     }
