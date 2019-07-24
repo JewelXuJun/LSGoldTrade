@@ -2,8 +2,6 @@ package com.jme.lsgoldtrade.ui.personal;
 
 import android.os.Bundle;
 import android.view.Gravity;
-import android.widget.CompoundButton;
-
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.jme.common.network.DTRequest;
@@ -12,13 +10,12 @@ import com.jme.lsgoldtrade.R;
 import com.jme.lsgoldtrade.base.JMEBaseActivity;
 import com.jme.lsgoldtrade.config.Constants;
 import com.jme.lsgoldtrade.databinding.ActivityValueAddedServiceBinding;
-import com.jme.lsgoldtrade.service.AccountService;
+import com.jme.lsgoldtrade.service.ManagementService;
 import com.jme.lsgoldtrade.view.OpenServicePopupWindow;
-
 import java.util.HashMap;
 
 /**
- * 我的增值业务
+ * 开通增值服务
  */
 @Route(path = Constants.ARouterUriConst.VALUEADDEDSERVICE)
 public class ValueAddedServiceActivity extends JMEBaseActivity {
@@ -52,14 +49,11 @@ public class ValueAddedServiceActivity extends JMEBaseActivity {
     @Override
     protected void initListener() {
         super.initListener();
-        mBinding.cbAgree.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked) {
-                    isAgree = 1;
-                } else {
-                    isAgree = 0;
-                }
+        mBinding.cbAgree.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            if (isChecked) {
+                isAgree = 1;
+            } else {
+                isAgree = 0;
             }
         });
     }
@@ -85,7 +79,7 @@ public class ValueAddedServiceActivity extends JMEBaseActivity {
             if (isAgree == 0)
                 showShortToast("请阅读并同意以下协议");
             else
-                sendRequest(AccountService.getInstance().openValueAddedServices, new HashMap<>(), false);
+                sendRequest(ManagementService.getInstance().openValueAddedServices, new HashMap<>(), true);
         }
     }
 
@@ -99,7 +93,8 @@ public class ValueAddedServiceActivity extends JMEBaseActivity {
                             .build(Constants.ARouterUriConst.VALUESERVICESUCCESS)
                             .navigation();
                 } else {
-                    if (head.getMsg().contains("需要在泰金所完成2笔以上的交易才能开通增值服务！")) {
+                    if (head.getCode().equals("-1")) {
+                        mToast.cancel();
                         if (null != mWindow) {
                             mWindow.setData(head.getMsg());
                             mWindow.showAtLocation(mBinding.lltitle, Gravity.CENTER, 0, 0);

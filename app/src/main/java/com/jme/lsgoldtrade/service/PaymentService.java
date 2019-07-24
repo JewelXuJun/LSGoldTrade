@@ -3,26 +3,22 @@ package com.jme.lsgoldtrade.service;
 import com.jme.common.network.API;
 import com.jme.common.network.DTResponse;
 import com.jme.common.network.IService;
-import com.jme.lsgoldtrade.bean.UserDetailsVo;
 import com.jme.lsgoldtrade.config.Constants;
 import com.jme.lsgoldtrade.config.User;
-import com.jme.lsgoldtrade.domain.UsernameVo;
-import com.jme.lsgoldtrade.domain.WithDraw;
 import java.util.HashMap;
-import java.util.List;
 import okhttp3.Interceptor;
 import okhttp3.Request;
 import okhttp3.Response;
 import retrofit2.Call;
 
-public class AccountService extends IService<AccountApi> {
+public class PaymentService extends IService<PaymentApi> {
 
-    public AccountService() {
+    public PaymentService() {
         super(Constants.HttpConst.URL_BASE_ACCOUNT, true);
     }
 
-    public static AccountService getInstance() {
-        return (AccountService) getInstance(AccountService.class);
+    public static PaymentService getInstance() {
+        return (PaymentService) getInstance(PaymentService.class);
     }
 
     protected Interceptor addHeader() {
@@ -39,24 +35,18 @@ public class AccountService extends IService<AccountApi> {
         return interceptor;
     }
 
-    public API getUserInfo = new API<UsernameVo>("GetUserInfo") {
+    public API getTradeAppPayResponse = new API<String>("GetTradeAppPayResponse") {
         @Override
         public Call<DTResponse> request(HashMap<String, String> params) {
-            return mApi.getUserInfo(params);
+            return mApi.getTradeAppPayResponse(params);
         }
     };
 
-    public API accountDetailList = new API<List<UserDetailsVo>>("AccountDetailList") {
+    public API wechatPay = new API<String>("WechatPay") {
         @Override
         public Call<DTResponse> request(HashMap<String, String> params) {
-            return mApi.accountDetailList(params);
+            return mApi.wechatPay(params);
         }
     };
 
-    public API withdraw = new API<WithDraw>("Withdraw") {
-        @Override
-        public Call<DTResponse> request(HashMap<String, String> params) {
-            return mApi.withdraw(params);
-        }
-    };
 }
