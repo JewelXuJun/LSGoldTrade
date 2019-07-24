@@ -254,7 +254,7 @@ public abstract class BaseActivity extends AppCompatActivity implements OnResult
     @Override
     public void OnResult(DTRequest request, Head head, Object response) {
         dismissLoadingDialog();
-        handleErrorInfo(request, head);
+//        handleErrorInfo(request, head);
         DataReturn(request, head.getCode(), response);
         DataReturn(request, head, response);
     }
@@ -267,7 +267,7 @@ public abstract class BaseActivity extends AppCompatActivity implements OnResult
 
     }
 
-    private void handleErrorInfo(DTRequest request, Head head) {
+    public void handleErrorInfo(DTRequest request, Head head) {
         if (head.getCode() != null && !head.getCode().equals("0")) {
             if (!request.isShowErrorMsg()) {
                 return;

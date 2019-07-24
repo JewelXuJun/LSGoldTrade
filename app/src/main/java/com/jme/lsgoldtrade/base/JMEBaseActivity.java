@@ -142,6 +142,8 @@ public abstract class JMEBaseActivity<T> extends BaseActivity {
 
         if (head.getCode().equals("-2000"))
             showLoginDialog();
+        else
+            handleErrorInfo(request, head);
     }
 
     protected void showLoginDialog() {
