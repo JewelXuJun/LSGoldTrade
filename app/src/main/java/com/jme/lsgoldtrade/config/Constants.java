@@ -59,7 +59,7 @@ public class Constants {
             } else if (Envi == UAT) {
                 URL_BASE_MARKET = "http://tjsuat1866543.developer.jsdttec.com";
                 URL_BASE_TRADE = "http://tjsuat1866666.developer.jsdttec.com";
-                URL_BASE_ACCOUNT = "http://192.168.10.189:8008";
+                URL_BASE_ACCOUNT = "https://wxtest.jsdttec.com";
                 URL_BASE_MANAGEMENT = "http://tjsuat.developer.jsdttec.com";
                 URL_INFO = "http://tjsuat.developer.jsdttec.com/tjsmanage/infoapi/v1/android/cmsComtentTxt/get?contentId=";
             }
