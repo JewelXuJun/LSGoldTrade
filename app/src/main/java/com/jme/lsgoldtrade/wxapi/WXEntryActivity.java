@@ -12,7 +12,6 @@ import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 import com.umeng.socialize.weixin.view.WXCallbackActivity;
 
 public class WXEntryActivity extends WXCallbackActivity implements IWXAPIEventHandler{
-	private static String TAG = "MicroMsg.WXEntryActivity";
 
     private IWXAPI api;
 

@@ -11,35 +11,16 @@ import com.jme.common.network.Head;
 import com.jme.common.util.AppManager;
 import com.jme.lsgoldtrade.R;
 import com.jme.lsgoldtrade.base.JMEBaseActivity;
+import com.jme.lsgoldtrade.config.AppConfig;
 import com.jme.lsgoldtrade.config.Constants;
-import com.jme.lsgoldtrade.config.GLobleConstants;
 import com.jme.lsgoldtrade.config.User;
 import com.jme.lsgoldtrade.databinding.ActivityFastEntryBinding;
-import com.jme.lsgoldtrade.domain.HomeTabChooseVo;
 import com.jme.lsgoldtrade.domain.NavigatorVo;
-import com.jme.lsgoldtrade.domain.SaveNavigatorVo;
 import com.jme.lsgoldtrade.service.ManagementService;
-import com.orhanobut.logger.Logger;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-
-import okhttp3.RequestBody;
-import okhttp3.ResponseBody;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
-import retrofit2.http.Body;
-import retrofit2.http.FieldMap;
-import retrofit2.http.Headers;
-import retrofit2.http.Multipart;
-import retrofit2.http.POST;
-import retrofit2.http.PartMap;
-import retrofit2.http.QueryMap;
 
 /**
  * 快捷入口管理
@@ -97,7 +78,7 @@ public class FastEntryActivity extends JMEBaseActivity {
     private void getDateFromNet() {
         HashMap<String, String> params = new HashMap<>();
         params.put("token", User.getInstance().getToken());
-        params.put("uuid", GLobleConstants.UUID);
+        params.put("uuid", AppConfig.UUID);
         sendRequest(ManagementService.getInstance().navigatorList, params, false);
     }
 
@@ -227,7 +208,7 @@ public class FastEntryActivity extends JMEBaseActivity {
         } else {
             params.put("token", User.getInstance().getToken());
         }
-        params.put("uuid", GLobleConstants.UUID);
+        params.put("uuid", AppConfig.UUID);
         params.put("usedModuleCodes", s1);
         params.put("notUsedModuleCodes", s2);
         sendRequest(ManagementService.getInstance().saveNavigatorList, params, false);

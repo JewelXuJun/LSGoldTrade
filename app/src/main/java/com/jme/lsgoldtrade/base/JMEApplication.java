@@ -21,7 +21,6 @@ import com.jme.common.network.ImageDownLoader;
 import com.jme.common.util.SharedPreUtils;
 import com.jme.lsgoldtrade.R;
 import com.jme.lsgoldtrade.config.AppConfig;
-import com.jme.lsgoldtrade.config.GLobleConstants;
 import com.jme.lsgoldtrade.domain.PushVo;
 import com.jme.lsgoldtrade.push.CustIntentService;
 import com.jme.lsgoldtrade.ui.splash.SplashActivity;
@@ -67,11 +66,10 @@ public class JMEApplication extends BaseApplication {
         }
 
         ARouter.init(this);
-        UMConfigure.init(this,"5cdb7eca570df3dfe70011b6","umeng",UMConfigure.DEVICE_TYPE_PHONE,"");
+        UMConfigure.init(this, "5cdb7eca570df3dfe70011b6", "umeng", UMConfigure.DEVICE_TYPE_PHONE, "");
         //友盟相关平台配置。注意友盟官方新文档中没有这项配置，但是如果不配置会吊不起来相关平台的授权界面
         PlatformConfig.setWeixin(AppConfig.WECHATAPPID, AppConfig.WECHATAPPSECRET);//微信APPID和AppSecret
         PlatformConfig.setQQZone(AppConfig.QQAPPID, AppConfig.QQAPPKEY);//QQAPPID和AppSecret
-//        PlatformConfig.setSinaWeibo("你的微博APPID", "你的微博APPSecret","微博的后台配置回调地址");//微博
         UMConfigure.setLogEnabled(true);
         // com.getui.demo.DemoPushService 为第三方自定义推送服务
         PushManager.getInstance().initialize(getApplicationContext(), CustIntentService.class);
@@ -80,12 +78,12 @@ public class JMEApplication extends BaseApplication {
         Intent serviceIntent = new Intent(this, JMEAppService.class);
         startService(serviceIntent);
 
-        String account = SharedPreUtils.getString(this, SharedPreUtils.Uuid);
+        String account = SharedPreUtils.getString(this, SharedPreUtils.UUID);
         if (TextUtils.isEmpty(account)) {
-            GLobleConstants.UUID = UUID.randomUUID().toString();
-            SharedPreUtils.setString(this, SharedPreUtils.Uuid, GLobleConstants.UUID);
+            AppConfig.UUID = UUID.randomUUID().toString();
+            SharedPreUtils.setString(this, SharedPreUtils.UUID, AppConfig.UUID);
         } else {
-            GLobleConstants.UUID = account;
+            AppConfig.UUID = account;
         }
     }
 
@@ -108,17 +106,17 @@ public class JMEApplication extends BaseApplication {
         if (sOkHttpClient == null) {
             //信任规则全部信任
             sOkHttpClient = new OkHttpClient.Builder()
-                            .readTimeout(20000, TimeUnit.SECONDS)//设置读取超时时间
-                            .writeTimeout(20000, TimeUnit.SECONDS)//设置写的超时时间
-                            .connectTimeout(20000, TimeUnit.SECONDS)//设置连接超时时间
-                            .sslSocketFactory(new CustomerSSL(trustManagerForCertificates), trustManagerForCertificates)    //添加信任所有证书
-                            .hostnameVerifier(new HostnameVerifier() {
-                                @Override
-                                public boolean verify(String hostname, SSLSession session) {
-                                    return true;
-                                }
-                            })
-                            .build();
+                    .readTimeout(20000, TimeUnit.SECONDS)//设置读取超时时间
+                    .writeTimeout(20000, TimeUnit.SECONDS)//设置写的超时时间
+                    .connectTimeout(20000, TimeUnit.SECONDS)//设置连接超时时间
+                    .sslSocketFactory(new CustomerSSL(trustManagerForCertificates), trustManagerForCertificates)    //添加信任所有证书
+                    .hostnameVerifier(new HostnameVerifier() {
+                        @Override
+                        public boolean verify(String hostname, SSLSession session) {
+                            return true;
+                        }
+                    })
+                    .build();
         }
         return sOkHttpClient;
     }

@@ -35,7 +35,8 @@ public class Constants {
         public static String URL_TRADE_RULE = "http://www.taijs.com/upload/jygz/jygz.html";
         public static String URL_TRADE_BOX_INTRODUCTION = "http://www.taijs.com/upload/jyxz/jyxz.html";
         public static String URL_TRADE_BOX_QUESTION = "http://www.taijs.com/upload/jyxz/cjwt.html";
-
+        public static String URL_TRADINGBOX;
+        public static String URL_TRADINGBOXINFO;
 
         static {
             if (Envi == TEST_WAN) {
@@ -44,24 +45,32 @@ public class Constants {
                 URL_BASE_ACCOUNT = "http://tjs418008.developer.jsdttec.com";
                 URL_BASE_MANAGEMENT = "http://tjs.developer.jsdttec.com";
                 URL_INFO = "http://tjs.developer.jsdttec.com/tjsmanage/infoapi/v1/android/cmsComtentTxt/get?contentId=";
+                URL_TRADINGBOX = "http://192.168.10.171:18080/tjsmanage/openacct/wap/tradingBox.html";
+                URL_TRADINGBOXINFO = "http://192.168.10.171:18080/tjsmanage/openacct/wap/tradingBoxDetail.html?tradeId=";
             } else if (Envi == TEST_LAN) {
                 URL_BASE_MARKET = "http://192.168.10.171:8080";
                 URL_BASE_TRADE = "http://192.168.10.171:8081";
                 URL_BASE_ACCOUNT = "http://192.168.10.41:8008";
                 URL_BASE_MANAGEMENT = "http://tjs.developer.jsdttec.com";
                 URL_INFO = "http://tjs.developer.jsdttec.com/tjsmanage/infoapi/v1/android/cmsComtentTxt/get?contentId=";
+                URL_TRADINGBOX = "http://192.168.10.171:18080/tjsmanage/openacct/wap/tradingBox.html";
+                URL_TRADINGBOXINFO = "http://192.168.10.171:18080/tjsmanage/openacct/wap/tradingBoxDetail.html?tradeId=";
             } else if (Envi == PRODUCE) {
                 URL_BASE_MARKET = "https://180.96.49.165:18002";
                 URL_BASE_TRADE = "https://180.96.49.165:18001";
                 URL_BASE_ACCOUNT = "https://180.96.49.165:18001";
                 URL_BASE_MANAGEMENT = "https://u.taijs.com";
                 URL_INFO = "https://u.taijs.com/tjsmanage/infoapi/v1/android/cmsComtentTxt/get?contentId=";
+                URL_TRADINGBOX = "http://tjsuat.developer.jsdttec.com/tjsmanage/openacct/wap/tradingBox.html";
+                URL_TRADINGBOXINFO = "http://tjsuat.developer.jsdttec.com/tjsmanage/openacct/wap/tradingBoxDetail.html?tradeId=";
             } else if (Envi == UAT) {
                 URL_BASE_MARKET = "http://tjsuat1866543.developer.jsdttec.com";
                 URL_BASE_TRADE = "http://tjsuat1866666.developer.jsdttec.com";
                 URL_BASE_ACCOUNT = "https://wxtest.jsdttec.com";
                 URL_BASE_MANAGEMENT = "http://tjsuat.developer.jsdttec.com";
                 URL_INFO = "http://tjsuat.developer.jsdttec.com/tjsmanage/infoapi/v1/android/cmsComtentTxt/get?contentId=";
+                URL_TRADINGBOX = "http://tjsuat.developer.jsdttec.com/tjsmanage/openacct/wap/tradingBox.html";
+                URL_TRADINGBOXINFO = "http://tjsuat.developer.jsdttec.com/tjsmanage/openacct/wap/tradingBoxDetail.html?tradeId=";
             }
         }
 

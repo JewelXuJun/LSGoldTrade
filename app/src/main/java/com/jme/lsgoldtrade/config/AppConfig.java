@@ -10,7 +10,6 @@ public class AppConfig {
     public static final long Second10 = 10 * Second;
     public static final long Second15 = 15 * Second;
     public static final long Minute = 60 * Second;
-    public static final long Minute240 = 240 * Second;
 
     public static final long TimeInterval_SYNC = 5 * Second;
 
@@ -30,11 +29,11 @@ public class AppConfig {
 
     public static final String WECHATAPPID = "wx16fbbdbe78667176";
     public static final String WECHATAPPSECRET = "67ce0917460f56030bae7a54e714b4f9";
-
     public static final String QQAPPID = "1108077613";
     public static final String QQAPPKEY = "8ALsoQXqkB5WbNgn";
+    public static final String WEIXIN_SMALLROUTINE_ID = "gh_b34d258a1e44";
+    public static final String WEIXIN_ICBC_SMALLROUTINE_ID = "gh_e708a3acc47a";
 
-    public static final String WEIXIN_XIAOCHENGXU_ID = "gh_b34d258a1e44";
+    public static String UUID = "";
 
-    public static final String WEIXIN_GOGNHANG_XIAOCHENGXU_ID = "gh_e708a3acc47a";
 }

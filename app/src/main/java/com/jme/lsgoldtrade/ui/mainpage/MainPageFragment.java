@@ -28,7 +28,6 @@ import com.jme.lsgoldtrade.R;
 import com.jme.lsgoldtrade.base.JMEBaseFragment;
 import com.jme.lsgoldtrade.config.AppConfig;
 import com.jme.lsgoldtrade.config.Constants;
-import com.jme.lsgoldtrade.config.GLobleConstants;
 import com.jme.lsgoldtrade.config.User;
 import com.jme.lsgoldtrade.databinding.FragmentMainPageBinding;
 import com.jme.lsgoldtrade.domain.AdvertisementVo;
@@ -215,7 +214,7 @@ public class MainPageFragment extends JMEBaseFragment implements OnRefreshListen
     private void getUserTab() {
         HashMap<String, String> params = new HashMap<>();
         params.put("token", User.getInstance().getToken());
-        params.put("uuid", GLobleConstants.UUID);
+        params.put("uuid", AppConfig.UUID);
         sendRequest(ManagementService.getInstance().navigatorList, params, false);
     }
 

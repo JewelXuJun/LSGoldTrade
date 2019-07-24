@@ -21,24 +21,24 @@ import java.util.List;
 public class IntentUtils {
 
     public static void jumpSmall(Context context) {
-        String appId = AppConfig.WECHATAPPID; // 填应用AppId
+        String appId = AppConfig.WECHATAPPID;
         IWXAPI api = WXAPIFactory.createWXAPI(context, appId);
 
         WXLaunchMiniProgram.Req req = new WXLaunchMiniProgram.Req();
-        req.userName = AppConfig.WEIXIN_XIAOCHENGXU_ID;         // 填小程序原始id
-        req.path = "pages/index/index?sid=&type=a";                   //拉起小程序页面的可带参路径，不填默认拉起小程序首页
-        req.miniprogramType = WXLaunchMiniProgram.Req.MINIPTOGRAM_TYPE_RELEASE;// 可选打开 开发版，体验版和正式版
+        req.userName = AppConfig.WEIXIN_SMALLROUTINE_ID;
+        req.path = "pages/index/index?sid=&type=a";
+        req.miniprogramType = WXLaunchMiniProgram.Req.MINIPTOGRAM_TYPE_RELEASE;
         api.sendReq(req);
     }
 
     public static void jumpBankSmall(Context context) {
-        String appId = AppConfig.WECHATAPPID; // 填应用AppId
+        String appId = AppConfig.WECHATAPPID;
         IWXAPI api = WXAPIFactory.createWXAPI(context, appId);
 
         WXLaunchMiniProgram.Req req = new WXLaunchMiniProgram.Req();
-        req.userName = AppConfig.WEIXIN_GOGNHANG_XIAOCHENGXU_ID;  // 填小程序原始id
-        req.path = "pages/index/index?scene=10000000000001036500";      //拉起小程序页面的可带参路径，不填默认拉起小程序首页
-        req.miniprogramType = WXLaunchMiniProgram.Req.MINIPTOGRAM_TYPE_RELEASE;// 可选打开 开发版，体验版和正式版
+        req.userName = AppConfig.WEIXIN_ICBC_SMALLROUTINE_ID;
+        req.path = "pages/index/index?scene=10000000000001036500";
+        req.miniprogramType = WXLaunchMiniProgram.Req.MINIPTOGRAM_TYPE_RELEASE;
         api.sendReq(req);
     }
 
