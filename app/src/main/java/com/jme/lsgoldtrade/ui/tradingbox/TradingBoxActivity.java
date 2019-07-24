@@ -37,6 +37,7 @@ public class TradingBoxActivity extends JMEBaseActivity {
     private TradingBoxAdapter mAdapter;
 
     private boolean bSubscribeFlag = false;
+    private String mPeriodName;
 
     @Override
     protected int getContentViewId() {
@@ -183,7 +184,9 @@ public class TradingBoxActivity extends JMEBaseActivity {
                     if (null == tradingBoxDataInfoVo)
                         return;
 
-                    initToolbar(String.format(getString(R.string.trading_box_number), tradingBoxDataInfoVo.getPeriodName()), true);
+                    mPeriodName = tradingBoxDataInfoVo.getPeriodName();
+
+                    initToolbar(String.format(getString(R.string.trading_box_number), mPeriodName), true);
 
                     mBinding.tvSubscribeNumber.setText(String.format(getString(R.string.trading_box_subscribe_number),
                             String.valueOf(tradingBoxDataInfoVo.getSubscriberCount())));
@@ -243,6 +246,7 @@ public class TradingBoxActivity extends JMEBaseActivity {
             ARouter.getInstance()
                     .build(Constants.ARouterUriConst.TRADINGBOXDETAIL)
                     .withString("Value", tradeId)
+                    .withString("PeriodName", mPeriodName)
                     .withString("Type", "1")
                     .navigation();
         }

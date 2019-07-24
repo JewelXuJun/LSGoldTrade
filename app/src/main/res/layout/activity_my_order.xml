@@ -4,15 +4,13 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        >
+        android:orientation="vertical">
 
         <LinearLayout
             android:id="@+id/lltitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            >
+            android:orientation="vertical">
 
             <include layout="@layout/layout_toolbar" />
 
@@ -23,16 +21,14 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="@dimen/height_tabhost"
-            android:orientation="horizontal"
             android:layout_marginLeft="15dp"
             android:layout_marginRight="15dp"
-            >
+            android:orientation="horizontal">
 
             <RelativeLayout
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="1.5"
-                >
+                android:layout_weight="1.5">
 
                 <TextView
                     android:id="@+id/tv_contract"
@@ -41,16 +37,14 @@
                     android:layout_centerVertical="true"
                     android:text="委托交易品种"
                     android:textColor="@color/color_text_tabhost"
-                    android:textSize="@dimen/sp_12"
-                    />
+                    android:textSize="@dimen/sp_12" />
 
             </RelativeLayout>
 
             <RelativeLayout
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="1"
-                >
+                android:layout_weight="1">
 
                 <TextView
                     android:id="@+id/tv_last_price"
@@ -66,18 +60,16 @@
             <RelativeLayout
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="1"
-                >
+                android:layout_weight="1">
 
                 <TextView
                     android:id="@+id/tv_range"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
                     android:text="委托数量"
                     android:textColor="@color/color_text_tabhost"
-                    android:textSize="@dimen/sp_12"
-                    android:layout_centerInParent="true"
-                    />
+                    android:textSize="@dimen/sp_12" />
 
             </RelativeLayout>
 

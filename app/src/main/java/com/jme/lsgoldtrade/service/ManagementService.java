@@ -221,10 +221,10 @@ public class ManagementService extends IService<ManagementApi> {
         }
     };
 
-    public API rate = new API<String>("Rate") {
+    public API add = new API<String>("Add") {
         @Override
         public Call<DTResponse> request(HashMap<String, String> params) {
-            return mApi.rate(params);
+            return mApi.add(params);
         }
     };
 

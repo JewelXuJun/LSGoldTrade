@@ -15,7 +15,6 @@ import com.jme.lsgoldtrade.base.JMEBaseFragment;
 import com.jme.lsgoldtrade.config.Constants;
 import com.jme.lsgoldtrade.databinding.FragmentTradingBoxHistoryBinding;
 import com.jme.lsgoldtrade.domain.TradingBoxDetailsVo;
-import com.jme.lsgoldtrade.domain.TradingBoxHistoryItemVo;
 import com.jme.lsgoldtrade.service.ManagementService;
 
 import java.math.BigDecimal;
@@ -29,13 +28,12 @@ public class TradingBoxHistoryFragment extends JMEBaseFragment {
     private String mTradeId;
     private String mContract;
     private String mDirection;
+    private String mType;
     private long mTime = 0;
 
     private CountDownTimer mCountDownTimer;
 
     private List<TradingBoxDetailsVo.RelevantInfoListVosBean> mRelevantInfoListVosBeanList;
-
-    private List<TradingBoxHistoryItemVo.HistoryListVoListBean> historyListVoList;
 
     @Override
     protected int getContentViewId() {
@@ -50,6 +48,8 @@ public class TradingBoxHistoryFragment extends JMEBaseFragment {
     @Override
     protected void initData(Bundle savedInstanceState) {
         super.initData(savedInstanceState);
+
+        mBinding.layoutDate.setVisibility(mType.equals("1") ? View.GONE : View.VISIBLE);
     }
 
     @Override
@@ -65,8 +65,9 @@ public class TradingBoxHistoryFragment extends JMEBaseFragment {
         mBinding.setHandlers(new ClickHandlers());
     }
 
-    public void setData(String tradeId) {
+    public void setData(String tradeId, String type) {
         mTradeId = tradeId;
+        mType = type;
     }
 
     @Override
@@ -195,6 +196,18 @@ public class TradingBoxHistoryFragment extends JMEBaseFragment {
         sendRequest(ManagementService.getInstance().tradeBoxByTradeId, params, true);
     }
 
+    public void add(String type) {
+        if (TextUtils.isEmpty(mTradeId) || TextUtils.isEmpty(mContract))
+            return;
+
+        HashMap<String, String> params = new HashMap<>();
+        params.put("boxId", mTradeId);
+        params.put("direction", type);
+        params.put("variety", mContract);
+
+        sendRequest(ManagementService.getInstance().add, params, true);
+    }
+
     @Override
     protected void DataReturn(DTRequest request, Head head, Object response) {
         super.DataReturn(request, head, response);
@@ -258,11 +271,19 @@ public class TradingBoxHistoryFragment extends JMEBaseFragment {
                     mBinding.tvOpenTimeEqualStartHour.setText(closeTimeStart[1]);
                     mBinding.tvOpenTimeEqualEndDate.setText(closeTimeEnd[0].replace("-", "/"));
                     mBinding.tvOpenTimeEqualEndHour.setText(closeTimeEnd[1]);
+                }
 
+                break;
+            case "Add":
+                if (head.isSuccess()) {
+                    showShortToast(R.string.trading_box_ticket_success);
 
-                    String id = tradingBoxDetailsVo.getId();
-                    String periodId = tradingBoxDetailsVo.getPeriodId();
-                    String periodName = tradingBoxDetailsVo.getPeriodName();
+                   /* ARouter.getInstance()
+                            .build(Constants.ARouterUriConst.PLACEORDER)
+                            .withString("Type", "2")
+                            .withString("Direction", toupiao)
+                            .withString("TradeId", mTradeId)
+                            .navigation();*/
                 }
 
                 break;
@@ -282,11 +303,44 @@ public class TradingBoxHistoryFragment extends JMEBaseFragment {
         }
 
         public void onClickAgree() {
+            if (null == mUser || !mUser.isLogin())
+                ARouter.getInstance().build(Constants.ARouterUriConst.ACCOUNTLOGIN).navigation();
+            else
+                add("0");
 
+           /* ARouter.getInstance()
+                    .build(Constants.ARouterUriConst.PLACEORDER)
+                    .withString("Direction", toupiao)
+                    .withString("Type", "2")
+                    .withString("TradeId", mTradeId)
+                    .navigation();*/
         }
 
         public void onClickOpposition() {
+            if (null == mUser || !mUser.isLogin())
+                ARouter.getInstance().build(Constants.ARouterUriConst.ACCOUNTLOGIN).navigation();
+            else
+                add("0");
 
+         /*   String toupiao = "";
+            if (TextUtils.isEmpty(User.getInstance().getToken())) {
+                ARouter.getInstance().build(Constants.ARouterUriConst.ACCOUNTLOGIN).navigation();
+            } else {
+                rate("1");
+                if ("0".equals(direction)) {
+                    toupiao = "1";
+//                    rate(toupiao);
+                } else {
+                    toupiao = "0";
+//                    rate(toupiao);
+                }
+                ARouter.getInstance()
+                        .build(Constants.ARouterUriConst.PLACEORDER)
+                        .withString("Direction", toupiao)
+                        .withString("Type", "3")
+                        .withString("TradeId", mTradeId)
+                        .navigation();
+            }*/
         }
 
     }

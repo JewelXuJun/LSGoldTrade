@@ -106,7 +106,7 @@ public interface ManagementApi {
     Call<DTResponse> setAppSubscribe(@Body Map<String, String> map);
 
     @POST("/tjsmanage/infoapi/v1/android/vote/add")
-    Call<DTResponse> rate(@Body Map<String, String> map);
+    Call<DTResponse> add(@Body Map<String, String> map);
 
     @POST("/tjsmanage/infoapi/v1/android/embeddedSingle/placeOrder")
     Call<DTResponse> submitTradingBox(@Body Map<String, String> map);
