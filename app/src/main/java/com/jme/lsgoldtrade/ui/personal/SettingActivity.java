@@ -8,7 +8,7 @@ import com.alibaba.android.arouter.launcher.ARouter;
 import com.jme.common.network.DTRequest;
 import com.jme.common.network.Head;
 import com.jme.common.util.FileUtil;
-import com.jme.common.util.ToastUtils;
+import com.jme.common.util.RxBus;
 import com.jme.lsgoldtrade.R;
 import com.jme.lsgoldtrade.base.JMEBaseActivity;
 import com.jme.lsgoldtrade.config.Constants;
@@ -75,11 +75,11 @@ public class SettingActivity extends JMEBaseActivity {
     }
 
     private void setLogoutLayout() {
-        mBinding.btnLogout.setVisibility(View.GONE);
-
         mUser.logout();
 
-        showShortToast(R.string.personal_logout_success);
+        RxBus.getInstance().post(Constants.RxBusConst.RXBUS_CANCEL, null);
+
+        finish();
     }
 
     private void logout() {
