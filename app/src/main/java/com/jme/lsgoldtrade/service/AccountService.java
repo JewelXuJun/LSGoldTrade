@@ -8,10 +8,8 @@ import com.jme.lsgoldtrade.config.Constants;
 import com.jme.lsgoldtrade.config.User;
 import com.jme.lsgoldtrade.domain.UsernameVo;
 import com.jme.lsgoldtrade.domain.WithDraw;
-
 import java.util.HashMap;
 import java.util.List;
-
 import okhttp3.Interceptor;
 import okhttp3.Request;
 import okhttp3.Response;
@@ -45,13 +43,6 @@ public class AccountService extends IService<AccountApi> {
         @Override
         public Call<DTResponse> request(HashMap<String, String> params) {
             return mApi.getUserInfo(params);
-        }
-    };
-
-    public API openValueAddedServices = new API<String>("OpenValueAddedServices") {
-        @Override
-        public Call<DTResponse> request(HashMap<String, String> params) {
-            return mApi.openValueAddedServices(params);
         }
     };
 

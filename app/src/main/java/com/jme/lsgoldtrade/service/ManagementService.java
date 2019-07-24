@@ -26,10 +26,8 @@ import com.jme.lsgoldtrade.domain.TradingBoxDetailsVo;
 import com.jme.lsgoldtrade.domain.TradingBoxInfoVo;
 import com.jme.lsgoldtrade.domain.TradingBoxDataInfoVo;
 import com.jme.lsgoldtrade.domain.UpdateInfoVo;
-
 import java.util.HashMap;
 import java.util.List;
-
 import okhttp3.Interceptor;
 import okhttp3.Request;
 import okhttp3.Response;
@@ -281,6 +279,13 @@ public class ManagementService extends IService<ManagementApi> {
         @Override
         public Call<DTResponse> request(HashMap<String, String> params) {
             return mApi.getMaxTradeNum(params);
+        }
+    };
+
+    public API openValueAddedServices = new API<String>("OpenValueAddedServices") {
+        @Override
+        public Call<DTResponse> request(HashMap<String, String> params) {
+            return mApi.openValueAddedServices(params);
         }
     };
 }

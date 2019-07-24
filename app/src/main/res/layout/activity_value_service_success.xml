@@ -13,14 +13,13 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        >
+        android:background="@color/white">
 
         <LinearLayout
             android:id="@+id/lltitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            >
+            android:orientation="vertical">
 
             <include layout="@layout/layout_toolbar" />
 
@@ -33,9 +32,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginTop="@dimen/common_area_margin_big"
-            android:background="@mipmap/ic_register_success"
-            />
+            android:layout_marginTop="60dp"
+            android:background="@mipmap/ic_register_success"/>
 
         <TextView
             android:layout_width="wrap_content"
@@ -45,19 +43,16 @@
             android:textColor="@color/black"
             android:layout_gravity="center"
             android:layout_marginTop="10dp"
-            android:layout_marginBottom="30dp"
-            />
+            android:layout_marginBottom="20dp"/>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:layout_margin="30dp"
-            android:layout_gravity="center"
-            >
+            android:layout_gravity="center">
 
             <Button
-                android:id="@+id/btn_kaihu"
                 android:layout_width="0dp"
                 android:layout_height="48dp"
                 android:layout_weight="1"
@@ -66,24 +61,18 @@
                 android:textColor="@color/white"
                 android:textSize="@dimen/common_font_size"
                 android:onClick="@{() -> handlers.onClickChongZhi()}"
-                android:layout_marginRight="10dp"
-                />
+                android:layout_marginRight="10dp"/>
 
             <TextView
-                android:id="@+id/bangding"
                 android:layout_width="0dp"
                 android:layout_height="48dp"
                 android:layout_weight="1"
                 android:text="查看我的服务"
                 android:textSize="@dimen/sp_18"
                 android:textColor="@color/color_blue_deep"
-                android:layout_gravity="center"
                 android:gravity="center"
                 android:background="@drawable/bg_btn_blue_stroke"
-                android:paddingTop="13dp"
-                android:paddingBottom="13dp"
-                android:onClick="@{() -> handlers.onClickCheckService()}"
-                />
+                android:onClick="@{() -> handlers.onClickCheckService()}"/>
 
         </LinearLayout>
 

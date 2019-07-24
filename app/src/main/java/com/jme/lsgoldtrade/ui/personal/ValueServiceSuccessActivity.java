@@ -1,7 +1,6 @@
 package com.jme.lsgoldtrade.ui.personal;
 
 import android.os.Bundle;
-
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.jme.lsgoldtrade.R;
@@ -32,13 +31,6 @@ public class ValueServiceSuccessActivity extends JMEBaseActivity {
     @Override
     protected void initData(Bundle savedInstanceState) {
         super.initData(savedInstanceState);
-
-    }
-
-    @Override
-    protected void initListener() {
-        super.initListener();
-
     }
 
     @Override
@@ -48,7 +40,6 @@ public class ValueServiceSuccessActivity extends JMEBaseActivity {
     }
 
     public class ClickHandlers {
-
         public void onClickChongZhi() {//充值
             ARouter.getInstance()
                     .build(Constants.ARouterUriConst.RECHARGE)
