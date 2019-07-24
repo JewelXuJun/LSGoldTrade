@@ -1,7 +1,12 @@
 package com.jme.lsgoldtrade.ui.personal;
 
 import android.os.Bundle;
+import android.support.design.widget.BottomSheetDialog;
 import android.text.TextUtils;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.jme.common.network.DTRequest;
 import com.jme.common.network.Head;
@@ -12,7 +17,6 @@ import com.jme.lsgoldtrade.config.Constants;
 import com.jme.lsgoldtrade.databinding.ActivityRechargeBinding;
 import com.jme.lsgoldtrade.domain.UsernameVo;
 import com.jme.lsgoldtrade.service.AccountService;
-import com.jme.lsgoldtrade.view.PayPopupwindow;
 import java.util.HashMap;
 
 /**
@@ -83,7 +87,42 @@ public class RechargeActivity extends JMEBaseActivity {
                 showShortToast("请输入充值金额");
                 return;
             }
-            PayPopupwindow.popupwindow(RechargeActivity.this, R.id.et_gold_account);
+
+            showPaymentBottomDialog();
+//            PayPopupwindow.popupwindow(RechargeActivity.this, R.id.et_gold_account);
         }
+    }
+
+    private void showPaymentBottomDialog() {
+        BottomSheetDialog dialog = new BottomSheetDialog(RechargeActivity.this);
+        View paymentView = View.inflate(this, R.layout.bottom_dialog_payment, null);
+
+        ImageView ivCancel = paymentView.findViewById(R.id.iv_cancel);
+        ImageView ivAlipaySelect = paymentView.findViewById(R.id.iv_alipay_select);
+        ImageView ivWechatSelect = paymentView.findViewById(R.id.iv_wechat_select);
+        RelativeLayout layoutAlipay = paymentView.findViewById(R.id.layout_alipay);
+        RelativeLayout layoutWechat = paymentView.findViewById(R.id.layout_wechat);
+        TextView tvPay = paymentView.findViewById(R.id.tv_pay);
+
+        ivAlipaySelect.setVisibility(View.VISIBLE);
+        ivWechatSelect.setVisibility(View.GONE);
+        ivCancel.setOnClickListener(v -> {
+            dialog.dismiss();
+        });
+        layoutAlipay.setOnClickListener(v -> {
+            ivAlipaySelect.setVisibility(View.VISIBLE);
+            ivWechatSelect.setVisibility(View.GONE);
+        });
+        layoutWechat.setOnClickListener(v -> {
+            ivAlipaySelect.setVisibility(View.GONE);
+            ivWechatSelect.setVisibility(View.VISIBLE);
+        });
+        tvPay.setOnClickListener(v -> {
+            dialog.dismiss();
+            showShortToast("开始付款");
+        });
+
+        dialog.setContentView(paymentView);
+        dialog.show();
     }
 }
