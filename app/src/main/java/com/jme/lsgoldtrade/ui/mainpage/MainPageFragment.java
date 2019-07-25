@@ -89,9 +89,9 @@ public class MainPageFragment extends JMEBaseFragment implements OnRefreshListen
             super.handleMessage(msg);
         }
     };
-    private List<NavigatorVo.UsedModulesBean> usedModules;
-    private List<NavigatorVo.NotUsedModulesBean> notUsedModules;
-    private List<List<NavigatorVo.UsedModulesBean>> allUsed = new ArrayList<>();
+    private List<NavigatorVo.NavigatorVoBean> usedModules;
+    private List<NavigatorVo.NavigatorVoBean> notUsedModules;
+    private List<List<NavigatorVo.NavigatorVoBean>> allUsed = new ArrayList<>();
 
     @Override
     protected int getContentViewId() {
@@ -329,7 +329,7 @@ public class MainPageFragment extends JMEBaseFragment implements OnRefreshListen
                     usedModules = navigator.getUsedModules();
 
 
-                    NavigatorVo.UsedModulesBean usedModulesBean = new NavigatorVo.UsedModulesBean();
+                    NavigatorVo.NavigatorVoBean usedModulesBean = new NavigatorVo.NavigatorVoBean();
                     usedModulesBean.setIsShow("1");
                     usedModulesBean.setSort("17.0");
                     usedModulesBean.setCode("QB");
@@ -353,7 +353,7 @@ public class MainPageFragment extends JMEBaseFragment implements OnRefreshListen
                         allUsed.clear();
                     }
                     for (int i = 0; i < size; i++) {
-                        List<NavigatorVo.UsedModulesBean> adapterUsedModule = new ArrayList<>();
+                        List<NavigatorVo.NavigatorVoBean> adapterUsedModule = new ArrayList<>();
                         for (int j = 0; j < 4; j++) {
                             if (i * 4 + j < usedModules.size()) {
                                 adapterUsedModule.add(usedModules.get(i * 4 + j));

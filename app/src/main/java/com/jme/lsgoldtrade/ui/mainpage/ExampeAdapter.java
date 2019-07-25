@@ -11,14 +11,14 @@ import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
-public class ExampeAdapter extends BaseQuickAdapter<NavigatorVo.UsedModulesBean, BaseViewHolder> {
+public class ExampeAdapter extends BaseQuickAdapter<NavigatorVo.NavigatorVoBean, BaseViewHolder> {
 
-    public ExampeAdapter(int layoutResId, @Nullable List<NavigatorVo.UsedModulesBean> data) {
+    public ExampeAdapter(int layoutResId, @Nullable List<NavigatorVo.NavigatorVoBean> data) {
         super(layoutResId, data);
     }
 
     @Override
-    protected void convert(BaseViewHolder helper, NavigatorVo.UsedModulesBean item) {
+    protected void convert(BaseViewHolder helper, NavigatorVo.NavigatorVoBean item) {
         helper.setText(R.id.tab, item.getName());
         Picasso.with(mContext)
                 .load(item.getImageName())

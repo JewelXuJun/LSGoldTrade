@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:orientation="vertical">
+
+        <include layout="@layout/layout_toolbar" />
+
+        <include layout="@layout/item_line_vertical" />
+
+        <android.support.v4.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/common_page_margin"
+                    android:layout_marginBottom="@dimen/common_area_margin_tiny"
+                    android:paddingLeft="@dimen/common_area_margin"
+                    android:paddingRight="@dimen/common_area_margin"
+                    android:text="@string/personal_fast_management_added"
+                    android:textColor="@color/black_deep"
+                    android:textSize="@dimen/sp_14" />
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/recyclerView_added"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/common_page_margin"
+                    android:layout_marginRight="@dimen/common_page_margin"
+                    android:nestedScrollingEnabled="false" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/common_area_margin_tiny"
+                    android:layout_marginBottom="@dimen/common_area_margin_tiny"
+                    android:paddingLeft="@dimen/common_area_margin"
+                    android:paddingRight="@dimen/common_area_margin"
+                    android:text="@string/personal_fast_management_not_added"
+                    android:textColor="@color/black_deep"
+                    android:textSize="@dimen/sp_14" />
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/recyclerView_not_added"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/common_page_margin"
+                    android:layout_marginRight="@dimen/common_page_margin"
+                    android:nestedScrollingEnabled="false" />
+
+            </LinearLayout>
+
+        </android.support.v4.widget.NestedScrollView>
+
+    </LinearLayout>
+
+</layout>

@@ -107,6 +107,7 @@
     <dimen name="radius_normal">4dp</dimen>
     <dimen name="radius_big">5dp</dimen>
     <dimen name="radius_large">20dp</dimen>
+    <dimen name="radius_fast_item">8dp</dimen>
 
     <dimen name="lineSpacingExtra_normal">3sp</dimen>
     <dimen name="lineSpacingExtra_big">5sp</dimen>

@@ -17,7 +17,7 @@ public class Constants {
         public static final int PRODUCE = 2;
         public static final int UAT = 3;
 
-        public static int Envi = PRODUCE;
+        public static int Envi = UAT;
 
         private HttpConst() {
 
@@ -159,7 +159,7 @@ public class Constants {
         public static final String TRADINGBOXHISTROY = "/TradingBoxActivity/TradingBoxHistroyActivity";
         public static final String TRADINGBOXORDER = "/TradingBoxActivity/TradingBoxOrderActivity";
         public static final String ORDERDETAILS = "/Order/OrderDetailsActivity";
-        public static final String FASTENTRY = "/Mainpager/FastEntryActivity";
+        public static final String FASTENTRY = "/Mainpager/FastManagementActivity";
         public static final String DIYAN = "/Mainpager/DiYanActivity";
         public static final String VALUEADDEDSERVICE = "/Personal/ValueAddedServiceActivity";
         public static final String YANPAN = "/Mainpager/HangQingYanPanActivity";

@@ -19,7 +19,6 @@ import com.jme.lsgoldtrade.domain.TradingBoxOrderVo;
 import com.jme.lsgoldtrade.domain.NavigatorVo;
 import com.jme.lsgoldtrade.domain.QuestListTypeVo;
 import com.jme.lsgoldtrade.domain.QuestionGuessVo;
-import com.jme.lsgoldtrade.domain.SaveNavigatorVo;
 import com.jme.lsgoldtrade.domain.StrategyVo;
 import com.jme.lsgoldtrade.domain.SubscribeVo;
 import com.jme.lsgoldtrade.domain.TradingBoxDetailsVo;
@@ -85,7 +84,7 @@ public class ManagementService extends IService<ManagementApi> {
         }
     };
 
-    public API saveNavigatorList = new API<SaveNavigatorVo>("SaveNavigatorList") {
+    public API saveNavigatorList = new API<String>("SaveNavigatorList") {
         @Override
         public Call<DTResponse> request(HashMap<String, String> params) {
             return mApi.saveNavigatorList(params);

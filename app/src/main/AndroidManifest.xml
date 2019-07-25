@@ -165,7 +165,7 @@
             android:name=".ui.mainpage.DiYanActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.mainpage.FastEntryActivity"
+            android:name=".ui.personal.FastManagementActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.order.OrderDetailsActivity"

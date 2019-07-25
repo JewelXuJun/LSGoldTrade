@@ -24,9 +24,9 @@ public class ExamplePagerAdapter extends PagerAdapter {
 
     private int size;
 
-    private List<List<NavigatorVo.UsedModulesBean>> allUsed;
+    private List<List<NavigatorVo.NavigatorVoBean>> allUsed;
 
-    public ExamplePagerAdapter(Context context, int size, List<List<NavigatorVo.UsedModulesBean>> allUsed) {
+    public ExamplePagerAdapter(Context context, int size, List<List<NavigatorVo.NavigatorVoBean>> allUsed) {
         this.context = context;
         this.size = size;
         this.allUsed = allUsed;
@@ -44,7 +44,7 @@ public class ExamplePagerAdapter extends PagerAdapter {
 
     @Override
     public Object instantiateItem(ViewGroup container, int position) {
-        List<NavigatorVo.UsedModulesBean> usedModulesBeans = allUsed.get(position);
+        List<NavigatorVo.NavigatorVoBean> usedModulesBeans = allUsed.get(position);
         View view = View.inflate(context, R.layout.home_tab, null);
         RecyclerView recyclerView = view.findViewById(R.id.recyclerView);
         ExampeAdapter mAdapter = new ExampeAdapter(R.layout.item_example, usedModulesBeans);

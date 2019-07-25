@@ -42,8 +42,8 @@ public class IntentUtils {
         api.sendReq(req);
     }
 
-    public static void jumpHomeTab(Context context, List<NavigatorVo.UsedModulesBean> usedModulesBeans, int position) {
-        NavigatorVo.UsedModulesBean usedModulesBean = usedModulesBeans.get(position);
+    public static void jumpHomeTab(Context context, List<NavigatorVo.NavigatorVoBean> usedModulesBeans, int position) {
+        NavigatorVo.NavigatorVoBean usedModulesBean = usedModulesBeans.get(position);
         switch (usedModulesBean.getCode()) {
             case "MFKH":
                 //免费开户
