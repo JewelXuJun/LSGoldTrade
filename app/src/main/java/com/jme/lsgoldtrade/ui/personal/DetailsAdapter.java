@@ -16,7 +16,10 @@ public class DetailsAdapter extends BaseQuickAdapter<UserDetailsVo, BaseViewHold
 
     @Override
     protected void convert(BaseViewHolder helper, UserDetailsVo item) {
-        helper.setText(R.id.tv_type, item.getType());
+        String type = item.getType();
+        if (type.equals("当日服务费"))
+            type += "\n(当日17点后更新)";
+        helper.setText(R.id.tv_type, type);
         helper.setText(R.id.tv_status, item.getStatus());
         helper.setText(R.id.tv_funds, BigDecimalUtil.formatMoney(new BigDecimal(item.getAmount()).divide(new BigDecimal(100)).toPlainString()));
     }
