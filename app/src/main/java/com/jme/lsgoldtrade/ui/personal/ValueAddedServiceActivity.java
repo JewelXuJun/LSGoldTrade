@@ -66,12 +66,19 @@ public class ValueAddedServiceActivity extends JMEBaseActivity {
 
     public class ClickHandlers {
 
-        public void onClickValueAddServiceAgreement() {
-            String url = "http://www.taijs.com/upload/fwxy.htm";
+        public void onClickTradingBoxAgreement() {
             ARouter.getInstance()
                     .build(Constants.ARouterUriConst.JMEWEBVIEW)
-                    .withString("title", "增值服务协议")
-                    .withString("url", url)
+                    .withString("title", "交易匣子服务协议")
+                    .withString("url", Constants.HttpConst.URL_TRADING_BOX_AGREEMENT)
+                    .navigation();
+        }
+
+        public void onClickEntrustRiskAgreement() {
+            ARouter.getInstance()
+                    .build(Constants.ARouterUriConst.JMEWEBVIEW)
+                    .withString("title", "委托风控服务协议")
+                    .withString("url", Constants.HttpConst.URL_ENTRUST_RISK_AGREEMENT)
                     .navigation();
         }
 

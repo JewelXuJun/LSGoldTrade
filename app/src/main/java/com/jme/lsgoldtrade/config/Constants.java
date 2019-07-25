@@ -35,6 +35,8 @@ public class Constants {
         public static String URL_TRADE_RULE = "http://www.taijs.com/upload/jygz/jygz.html";
         public static String URL_TRADE_BOX_INTRODUCTION = "http://www.taijs.com/upload/jyxz/jyxz.html";
         public static String URL_TRADE_BOX_QUESTION = "http://www.taijs.com/upload/jyxz/cjwt.html";
+        public static String URL_TRADING_BOX_AGREEMENT = "http://www.taijs.com/upload/jyxzfwxy.htm";
+        public static String URL_ENTRUST_RISK_AGREEMENT = "http://www.taijs.com/upload/wtfkfwxy.htm";
         public static String URL_TRADINGBOX;
         public static String URL_TRADINGBOXINFO;
 
