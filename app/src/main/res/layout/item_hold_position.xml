@@ -3,8 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@color/white"
-    android:orientation="vertical"
-    >
+    android:orientation="vertical">
 
     <LinearLayout
         android:id="@+id/layout_item"
@@ -85,7 +84,7 @@
                 android:textSize="@dimen/size_middle" />
 
             <TextView
-                android:id="@+id/yingkui"
+                android:id="@+id/tv_profit_loss"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/common_area_margin_tiny"
@@ -109,8 +108,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/text_no_data_default"
                 android:textColor="@color/color_text_black"
-                android:textSize="@dimen/size_middle"
-                />
+                android:textSize="@dimen/size_middle" />
 
             <TextView
                 android:id="@+id/tv_rate"

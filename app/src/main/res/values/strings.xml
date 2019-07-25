@@ -111,7 +111,7 @@
     <string name="trade_software_service_charge">软件服务费</string>
     <string name="trade_deferred_charges">递延费</string>
     <string name="trade_position_query">持仓查询</string>
-    <string name="trade_curren_hold_position">我的持仓</string>
+    <string name="trade_curren_hold_position">当日持仓</string>
     <string name="trade_history_hold_position">历史持仓</string>
     <string name="trade_trade_query">交易查询</string>
     <string name="trade_current_entrust">当日委托</string>

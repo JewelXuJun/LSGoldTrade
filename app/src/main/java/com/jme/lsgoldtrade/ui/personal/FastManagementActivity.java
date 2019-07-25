@@ -22,7 +22,7 @@ import java.util.List;
 /**
  * 快捷入口管理
  */
-@Route(path = Constants.ARouterUriConst.FASTENTRY)
+@Route(path = Constants.ARouterUriConst.FASTMANAGEMENT)
 public class FastManagementActivity extends JMEBaseActivity {
 
     private ActivityFastManagementBinding mBinding;

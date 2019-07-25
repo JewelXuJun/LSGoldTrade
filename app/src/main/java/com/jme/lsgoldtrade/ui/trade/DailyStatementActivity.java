@@ -1,5 +1,6 @@
 package com.jme.lsgoldtrade.ui.trade;
 
+import android.annotation.TargetApi;
 import android.app.DatePickerDialog;
 import android.os.Bundle;
 
@@ -16,6 +17,7 @@ import com.jme.lsgoldtrade.service.TradeService;
 import com.jme.lsgoldtrade.util.MarketUtil;
 
 import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 
 /**
@@ -145,21 +147,21 @@ public class DailyStatementActivity extends JMEBaseActivity {
 
     public class ClickHandlers {
 
-//        @TargetApi(24)
-//        public void onClickSelectDate() {
-//            if (null != mDatePickerDialog && mDatePickerDialog.isShowing())
-//                return;
-//
-//            getTodayCalendar();
-//
-//            mDatePickerDialog = new DatePickerDialog(DailyStatementActivity.this, (datePicker, year, month, dayOfMonth) ->
-//                    setQueryTime(year, month, dayOfMonth), mYear, mMonth, mDayOfMonth);
-//
-//            if (android.os.Build.VERSION.SDK_INT >= 11)
-//                mDatePickerDialog.getDatePicker().setMaxDate(new Date().getTime());
-//
-//            mDatePickerDialog.show();
-//        }
+        @TargetApi(24)
+        public void onClickSelectDate() {
+            if (null != mDatePickerDialog && mDatePickerDialog.isShowing())
+                return;
+
+            getTodayCalendar();
+
+            mDatePickerDialog = new DatePickerDialog(DailyStatementActivity.this, (datePicker, year, month, dayOfMonth) ->
+                    setQueryTime(year, month, dayOfMonth), mYear, mMonth, mDayOfMonth);
+
+            if (android.os.Build.VERSION.SDK_INT >= 11)
+                mDatePickerDialog.getDatePicker().setMaxDate(new Date().getTime());
+
+            mDatePickerDialog.show();
+        }
 
     }
 }

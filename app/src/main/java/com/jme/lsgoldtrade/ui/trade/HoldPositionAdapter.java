@@ -83,8 +83,8 @@ public class HoldPositionAdapter extends BaseQuickAdapter<PositionVo, BaseViewHo
                 .setTextColor(R.id.tv_pupil, isSelected ? ContextCompat.getColor(mContext, R.color.white)
                         : type.equals("多") ? ContextCompat.getColor(mContext, R.color.common_font_increase)
                         : ContextCompat.getColor(mContext, R.color.common_font_decrease))
-                .setText(R.id.yingkui, (floatProfit / 100) + "")
-                .setTextColor(R.id.yingkui, isSelected ? ContextCompat.getColor(mContext, R.color.white)
+                .setText(R.id.tv_profit_loss, (floatProfit / 100) + "")
+                .setTextColor(R.id.tv_profit_loss, isSelected ? ContextCompat.getColor(mContext, R.color.white)
                         : type.equals("多") ? ContextCompat.getColor(mContext, R.color.common_font_increase)
                         : ContextCompat.getColor(mContext, R.color.common_font_decrease))
                 .setText(R.id.tv_available, String.valueOf(position - frozen))
@@ -100,7 +100,7 @@ public class HoldPositionAdapter extends BaseQuickAdapter<PositionVo, BaseViewHo
 
         if (tag == 1) {
             helper.getView(R.id.tv_rate).setVisibility(View.VISIBLE);
-            helper.getView(R.id.yingkui).setVisibility(View.GONE);
+            helper.getView(R.id.tv_profit_loss).setVisibility(View.GONE);
             helper.setText(R.id.tv_float, TextUtils.isEmpty(floatValue) ? mContext.getResources().getString(R.string.text_no_data_default) : MarketUtil.decimalFormatMoney(floatValue))
                     .setTextColor(R.id.tv_float, isSelected ? ContextCompat.getColor(mContext, R.color.white)
                             : ContextCompat.getColor(mContext, MarketUtil.getPriceStateColor(typeValue)))
@@ -108,7 +108,7 @@ public class HoldPositionAdapter extends BaseQuickAdapter<PositionVo, BaseViewHo
                     .setTextColor(R.id.tv_rate, isSelected ? ContextCompat.getColor(mContext, R.color.white)
                             : ContextCompat.getColor(mContext, MarketUtil.getPriceStateColor(typeValue)));
         } else {
-            helper.getView(R.id.yingkui).setVisibility(View.VISIBLE);
+            helper.getView(R.id.tv_profit_loss).setVisibility(View.VISIBLE);
             TextView tv_float = helper.getView(R.id.tv_float);
             helper.getView(R.id.tv_rate).setVisibility(View.GONE);
             tv_float.setText("平仓");

@@ -5,6 +5,7 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 
 import com.alibaba.android.arouter.launcher.ARouter;
+import com.jme.common.util.DateUtil;
 import com.jme.common.util.RxBus;
 import com.jme.lsgoldtrade.config.AppConfig;
 import com.jme.lsgoldtrade.config.Constants;
@@ -53,7 +54,7 @@ public class IntentUtils {
 
                 break;
             case "KSXD":  //快速下单
-                if (null == User.getInstance() || !User.getInstance().isLogin()) {
+                if (null == user || !user.isLogin()) {
                     ARouter.getInstance().build(Constants.ARouterUriConst.ACCOUNTLOGIN).navigation();
                 } else {
                     RxBus.getInstance().post(Constants.RxBusConst.RXBUS_TRADE, null);
@@ -75,67 +76,88 @@ public class IntentUtils {
                         .navigation();
                 break;
             case "ZJHZ":  //资金划转
-                ARouter.getInstance()
-                        .build(Constants.ARouterUriConst.CAPITALTRANSFER)
-                        .navigation();
-                break;
-            case "DQCC":  //当前持仓
-                RxBus.getInstance().post(Constants.RxBusConst.RXBUS_TRADEFRAGMENT_HOLD, null);
-                break;
-            case "DRWT":  //当日委托
-                ARouter.getInstance()
-                        .build(Constants.ARouterUriConst.CURRENTENTRUST)
-                        .navigation();
-                break;
-            case "DRCC":  //当日持仓
-                ARouter.getInstance()
-                        .build(Constants.ARouterUriConst.CURRENTHOLDPOSITION)
-                        .navigation();
-                break;
-            case "DRCJ":  //当日成交
-                ARouter.getInstance()
-                        .build(Constants.ARouterUriConst.CURRENTDEAL)
-                        .navigation();
-                break;
-            case "LSWT":  //历史委托
-                ARouter.getInstance()
-                        .build(Constants.ARouterUriConst.HISTORYENTRUST)
-                        .navigation();
-                break;
-            case "LSCJ":  //历史成交
-                ARouter.getInstance()
-                        .build(Constants.ARouterUriConst.HISTORYDEAL)
-                        .navigation();
-                break;
-            case "RJD":   //日结单
-                ARouter.getInstance()
-                        .build(Constants.ARouterUriConst.DAILYSTATEMENT)
-                        .navigation();
-                break;
-            case "WDDY":  //我的订阅
-                if (User.getInstance().isLogin()) {
-                    ARouter.getInstance()
-                            .build(Constants.ARouterUriConst.TRADINGBOX)
-                            .navigation();
-                } else {
-                    ARouter.getInstance().build(Constants.ARouterUriConst.ACCOUNTLOGIN).navigation();
-                }
-                break;
-            case "LXKF":  //联系客服
-                ARouter.getInstance()
-                        .build(Constants.ARouterUriConst.CUSTOMSERVICE)
-                        .navigation();
-                break;
-            case "CD":  //撤单
-                if (null == User.getInstance() || !User.getInstance().isLogin())
+                if (null == user || !user.isLogin())
                     ARouter.getInstance().build(Constants.ARouterUriConst.ACCOUNTLOGIN).navigation();
                 else
+                    ARouter.getInstance()
+                            .build(Constants.ARouterUriConst.CAPITALTRANSFER)
+                            .navigation();
+                break;
+            case "DQCC":  //当前持仓
+                if (null == user || !user.isLogin()) {
+                    ARouter.getInstance().build(Constants.ARouterUriConst.ACCOUNTLOGIN).navigation();
+                } else {
+                    RxBus.getInstance().post(Constants.RxBusConst.RXBUS_TRADEFRAGMENT_HOLD, null);
+                    ARouter.getInstance().build(Constants.ARouterUriConst.MAIN).navigation();
+                }
+
+                break;
+            case "DRWT":  //当日委托
+                if (null == user || !user.isLogin())
+                    ARouter.getInstance().build(Constants.ARouterUriConst.ACCOUNTLOGIN).navigation();
+                else
+                    ARouter.getInstance().build(Constants.ARouterUriConst.CURRENTENTRUST).navigation();
+
+                break;
+            case "DRCC":  //当日持仓
+                if (null == user || !user.isLogin())
+                    ARouter.getInstance().build(Constants.ARouterUriConst.ACCOUNTLOGIN).navigation();
+                else
+                    ARouter.getInstance().build(Constants.ARouterUriConst.CURRENTHOLDPOSITION).navigation();
+
+                break;
+            case "DRCJ":  //当日成交
+                if (null == user || !user.isLogin())
+                    ARouter.getInstance().build(Constants.ARouterUriConst.ACCOUNTLOGIN).navigation();
+                else
+                    ARouter.getInstance().build(Constants.ARouterUriConst.CURRENTDEAL).navigation();
+
+                break;
+            case "LSWT":  //历史委托
+                if (null == user || !user.isLogin())
+                    ARouter.getInstance().build(Constants.ARouterUriConst.ACCOUNTLOGIN).navigation();
+                else
+                    ARouter.getInstance().build(Constants.ARouterUriConst.HISTORYENTRUST).navigation();
+
+                break;
+            case "LSCJ":  //历史成交
+                if (null == user || !user.isLogin())
+                    ARouter.getInstance().build(Constants.ARouterUriConst.ACCOUNTLOGIN).navigation();
+                else
+                    ARouter.getInstance().build(Constants.ARouterUriConst.HISTORYDEAL).navigation();
+
+                break;
+            case "RJD":   //日结单
+                if (null == user || !user.isLogin())
+                    ARouter.getInstance().build(Constants.ARouterUriConst.ACCOUNTLOGIN).navigation();
+                else
+                    ARouter.getInstance()
+                            .build(Constants.ARouterUriConst.DAILYSTATEMENT)
+                            .withString("time", DateUtil.dataToStringWithData2(System.currentTimeMillis()))
+                            .navigation();
+                break;
+            case "WDDY":  //我的订阅
+                if (null == user || !user.isLogin())
+                    ARouter.getInstance().build(Constants.ARouterUriConst.ACCOUNTLOGIN).navigation();
+                else
+                    ARouter.getInstance().build(Constants.ARouterUriConst.TRADINGBOX).navigation();
+
+                break;
+            case "LXKF":  //联系客服
+                ARouter.getInstance().build(Constants.ARouterUriConst.CUSTOMSERVICE).navigation();
+
+                break;
+            case "CD":  //撤单
+                if (null == user || !user.isLogin()) {
+                    ARouter.getInstance().build(Constants.ARouterUriConst.ACCOUNTLOGIN).navigation();
+                } else {
                     RxBus.getInstance().post(Constants.RxBusConst.RXBUS_CANCELORDERFRAGMENT, null);
+                    ARouter.getInstance().build(Constants.ARouterUriConst.MAIN).navigation();
+                }
                 break;
             case "QB":  //全部
-                ARouter.getInstance()
-                        .build(Constants.ARouterUriConst.FASTENTRY)
-                        .navigation();
+                ARouter.getInstance().build(Constants.ARouterUriConst.FASTMANAGEMENT).navigation();
+
                 break;
         }
     }
