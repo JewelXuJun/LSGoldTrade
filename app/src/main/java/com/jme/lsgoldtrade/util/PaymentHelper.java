@@ -8,6 +8,7 @@ import com.tencent.mm.opensdk.modelpay.PayReq;
 import com.tencent.mm.opensdk.openapi.IWXAPI;
 import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 
+
 /**
  * Created by Android Studio.
  * Author : zhangzhongqiang

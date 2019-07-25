@@ -18,6 +18,7 @@ import com.jme.common.util.BigDecimalUtil;
 import com.jme.common.util.DialogHelp;
 import com.jme.lsgoldtrade.R;
 import com.jme.lsgoldtrade.base.JMEBaseActivity;
+import com.jme.lsgoldtrade.config.AppConfig;
 import com.jme.lsgoldtrade.config.Constants;
 import com.jme.lsgoldtrade.databinding.ActivityRechargeBinding;
 import com.jme.lsgoldtrade.domain.UsernameVo;
@@ -26,6 +27,8 @@ import com.jme.lsgoldtrade.service.AccountService;
 import com.jme.lsgoldtrade.service.PaymentService;
 import com.jme.lsgoldtrade.util.PayResult;
 import com.jme.lsgoldtrade.util.PaymentHelper;
+import com.tencent.mm.opensdk.openapi.IWXAPI;
+import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Map;
@@ -41,6 +44,7 @@ public class RechargeActivity extends JMEBaseActivity {
     private int payType = 0;    // 支付宝支付-0 微信支付-1
 
     private PaymentHelper mPaymentHelper;
+    private IWXAPI wxapi;
 
     private static final int SDK_PAY_FLAG = 1;
 
@@ -87,6 +91,7 @@ public class RechargeActivity extends JMEBaseActivity {
     protected void initData(Bundle savedInstanceState) {
         super.initData(savedInstanceState);
         mPaymentHelper = new PaymentHelper();
+        wxapi = WXAPIFactory.createWXAPI(this, AppConfig.WECHATAPPID, true);
     }
 
     @Override
@@ -178,8 +183,13 @@ public class RechargeActivity extends JMEBaseActivity {
     private void gotoPayment() {
         if (payType == 0)
             alipay();
-        else
+        else {
+            if (!wxapi.isWXAppInstalled()) {
+                showShortToast("没有安装微信");
+                return;
+            }
             wechatPay();
+        }
     }
 
     private void alipay() {
