@@ -1,4 +1,4 @@
-package com.jme.lsgoldtrade.ui.mainpage;
+package com.jme.lsgoldtrade.ui.market;
 
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
@@ -17,13 +17,12 @@ import com.jme.lsgoldtrade.R;
 import com.jme.lsgoldtrade.base.JMEBaseActivity;
 import com.jme.lsgoldtrade.config.AppConfig;
 import com.jme.lsgoldtrade.config.Constants;
-import com.jme.lsgoldtrade.databinding.ActivityHangQingYanPanBinding;
+import com.jme.lsgoldtrade.databinding.ActivityMarketJudgmentBinding;
 import com.jme.lsgoldtrade.domain.FenXiShiVo;
 import com.jme.lsgoldtrade.domain.TenSpeedVo;
 import com.jme.lsgoldtrade.service.ManagementService;
 import com.jme.lsgoldtrade.service.MarketService;
 import com.jme.lsgoldtrade.service.TradeService;
-import com.jme.lsgoldtrade.ui.trade.OrderPopUpWindow;
 import com.jme.lsgoldtrade.view.HangQingWindow;
 
 import java.math.BigDecimal;
@@ -37,16 +36,16 @@ import rx.Subscription;
  * 行情研判
  * 展示30分钟Au(T+D)
  */
-@Route(path = Constants.ARouterUriConst.YANPAN)
-public class HangQingYanPanActivity extends JMEBaseActivity {
+@Route(path = Constants.ARouterUriConst.MARKETJUDGMENT)
+public class MarketJudgmentActivity extends JMEBaseActivity {
 
-    private ActivityHangQingYanPanBinding mBinding;
+    private ActivityMarketJudgmentBinding mBinding;
 
     private List<Fragment> fragmentList = new ArrayList<>();
 
     private List<String> mTabTitles = new ArrayList<>();
 
-    private HangQingYanPanFragment hangQingYanPanFragment;
+    private MarketJudgmentFragment hangQingYanPanFragment;
 
     private Subscription mRxbus;
 
@@ -61,13 +60,13 @@ public class HangQingYanPanActivity extends JMEBaseActivity {
 
     @Override
     protected int getContentViewId() {
-        return R.layout.activity_hang_qing_yan_pan;
+        return R.layout.activity_market_judgment;
     }
 
     @Override
     protected void initView() {
         super.initView();
-        mBinding = (ActivityHangQingYanPanBinding) mBindingUtil;
+        mBinding = (ActivityMarketJudgmentBinding) mBindingUtil;
         initToolbar("行情研判", true);
     }
 
@@ -121,7 +120,7 @@ public class HangQingYanPanActivity extends JMEBaseActivity {
 
                     for (FenXiShiVo fenXiShiVo : fenXiShiVoList) {
                         if (null != fenXiShiVo) {
-                            hangQingYanPanFragment = new HangQingYanPanFragment();
+                            hangQingYanPanFragment = new MarketJudgmentFragment();
                             fragmentList.add(hangQingYanPanFragment);
                             mTabTitles.add(fenXiShiVo.getName());
                         }
@@ -204,7 +203,7 @@ public class HangQingYanPanActivity extends JMEBaseActivity {
 
         @Override
         public Fragment getItem(int position) {
-            HangQingYanPanFragment fragment = (HangQingYanPanFragment) fragmentList.get(position);
+            MarketJudgmentFragment fragment = (MarketJudgmentFragment) fragmentList.get(position);
             fragment.getanalystId(fenXiShiVoList.get(position).getId());
             return fragmentList.get(position);
         }

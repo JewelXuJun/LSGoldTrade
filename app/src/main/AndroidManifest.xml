@@ -159,7 +159,7 @@
             android:name=".ui.market.YujingActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.mainpage.HangQingYanPanActivity"
+            android:name=".ui.market.MarketJudgmentActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.mainpage.DiYanActivity"

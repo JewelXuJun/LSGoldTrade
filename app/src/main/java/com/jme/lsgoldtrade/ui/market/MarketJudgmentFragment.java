@@ -1,4 +1,4 @@
-package com.jme.lsgoldtrade.ui.mainpage;
+package com.jme.lsgoldtrade.ui.market;
 
 import android.os.Bundle;
 import android.os.Handler;
@@ -21,7 +21,7 @@ import com.jme.lsgoldtrade.R;
 import com.jme.lsgoldtrade.base.JMEBaseFragment;
 import com.jme.lsgoldtrade.config.AppConfig;
 import com.jme.lsgoldtrade.config.Constants;
-import com.jme.lsgoldtrade.databinding.FragmentHangqingyepanBinding;
+import com.jme.lsgoldtrade.databinding.FragmentMarketJudgmentBinding;
 import com.jme.lsgoldtrade.domain.DetailVo;
 import com.jme.lsgoldtrade.domain.FenXiShiListVo;
 import com.jme.lsgoldtrade.domain.SectionVo;
@@ -41,9 +41,9 @@ import java.util.List;
 
 import rx.Subscription;
 
-public class HangQingYanPanFragment extends JMEBaseFragment implements OnKChartSelectedListener {
+public class MarketJudgmentFragment extends JMEBaseFragment implements OnKChartSelectedListener {
 
-    private FragmentHangqingyepanBinding mBinding;
+    private FragmentMarketJudgmentBinding mBinding;
 
     private static final int NONE = 0;
     private static final int INIT = 1;
@@ -106,13 +106,13 @@ public class HangQingYanPanFragment extends JMEBaseFragment implements OnKChartS
 
     @Override
     protected int getContentViewId() {
-        return R.layout.fragment_hangqingyepan;
+        return R.layout.fragment_market_judgment;
     }
 
     @Override
     protected void initView() {
         super.initView();
-        mBinding = (FragmentHangqingyepanBinding) mBindingUtil;
+        mBinding = (FragmentMarketJudgmentBinding) mBindingUtil;
         initKChart();
     }
 

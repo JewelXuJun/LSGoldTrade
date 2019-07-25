@@ -71,17 +71,15 @@ public class IntentUtils {
 
                 break;
             case "HQYP":  //行情研判
-                ARouter.getInstance()
-                        .build(Constants.ARouterUriConst.YANPAN)
-                        .navigation();
+                ARouter.getInstance().build(Constants.ARouterUriConst.MARKETJUDGMENT).navigation();
+
                 break;
             case "ZJHZ":  //资金划转
                 if (null == user || !user.isLogin())
                     ARouter.getInstance().build(Constants.ARouterUriConst.ACCOUNTLOGIN).navigation();
                 else
-                    ARouter.getInstance()
-                            .build(Constants.ARouterUriConst.CAPITALTRANSFER)
-                            .navigation();
+                    ARouter.getInstance().build(Constants.ARouterUriConst.CAPITALTRANSFER).navigation();
+
                 break;
             case "DQCC":  //当前持仓
                 if (null == user || !user.isLogin()) {
@@ -154,6 +152,7 @@ public class IntentUtils {
                     RxBus.getInstance().post(Constants.RxBusConst.RXBUS_CANCELORDERFRAGMENT, null);
                     ARouter.getInstance().build(Constants.ARouterUriConst.MAIN).navigation();
                 }
+
                 break;
             case "QB":  //全部
                 ARouter.getInstance().build(Constants.ARouterUriConst.FASTMANAGEMENT).navigation();
