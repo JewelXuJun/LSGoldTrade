@@ -17,7 +17,7 @@ import java.math.BigDecimal;
 import java.util.HashMap;
 
 /**
- * 查看增值服务
+ * 我的增值服务
  */
 @Route(path = Constants.ARouterUriConst.CHECKSERVICE)
 public class CheckServiceActivity extends JMEBaseActivity {

@@ -6,6 +6,6 @@
 	android:layout_height="match_parent"
 	android:orientation="vertical"
 	android:gravity="center_horizontal"
-	android:background="@color/common_background">
+	android:background="@android:color/transparent">
 	
 </LinearLayout>
