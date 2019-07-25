@@ -135,7 +135,7 @@ public class AccountLoginActivity extends JMEBaseActivity {
         if (bShowImgVerifyCode && TextUtils.isEmpty(imgVerifyCode))
             showShortToast(R.string.login_img_verify_code_error);
         else
-            login(account, AESUtil.encryptString2Base64(password,"0J4S9B5C0J4S9B5C","16-Bytes--String").trim(), imgVerifyCode);
+            login(account, AESUtil.encryptString2Base64(password, "0J4S9B5C0J4S9B5C", "16-Bytes--String").trim(), imgVerifyCode);
     }
 
     private void login(String account, String password, String imgVerifyCode) {
@@ -217,11 +217,17 @@ public class AccountLoginActivity extends JMEBaseActivity {
     }
 
     private void getContractInfo() {
-        HashMap<String, String> parmas = new HashMap<>();
-        parmas.put("contractId", "");
-        parmas.put("accountId", mUser.getAccountID());
+        String accountID = mUser.getAccountID();
 
-        sendRequest(TradeService.getInstance().contractInfo, parmas, true);
+        if (TextUtils.isEmpty(accountID)) {
+            finish();
+        } else {
+            HashMap<String, String> parmas = new HashMap<>();
+            parmas.put("contractId", "");
+            parmas.put("accountId", accountID);
+
+            sendRequest(TradeService.getInstance().contractInfo, parmas, true);
+        }
     }
 
     @Override

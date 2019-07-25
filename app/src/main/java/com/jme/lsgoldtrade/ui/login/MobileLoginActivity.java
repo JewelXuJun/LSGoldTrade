@@ -245,11 +245,17 @@ public class MobileLoginActivity extends JMEBaseActivity {
     }
 
     private void getContractInfo() {
-        HashMap<String, String> parmas = new HashMap<>();
-        parmas.put("contractId", "");
-        parmas.put("accountId", mUser.getAccountID());
+        String accountID = mUser.getAccountID();
 
-        sendRequest(TradeService.getInstance().contractInfo, parmas, true);
+        if (TextUtils.isEmpty(accountID)) {
+            finish();
+        } else {
+            HashMap<String, String> parmas = new HashMap<>();
+            parmas.put("contractId", "");
+            parmas.put("accountId", accountID);
+
+            sendRequest(TradeService.getInstance().contractInfo, parmas, true);
+        }
     }
 
     @Override

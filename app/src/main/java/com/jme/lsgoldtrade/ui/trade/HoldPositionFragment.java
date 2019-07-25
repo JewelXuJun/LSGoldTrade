@@ -333,15 +333,25 @@ public class HoldPositionFragment extends JMEBaseFragment implements OnRefreshLi
     }
 
     private void getAccount(boolean enable) {
+        String accountID = mUser.getAccountID();
+
+        if (TextUtils.isEmpty(accountID))
+            return;
+
         HashMap<String, String> params = new HashMap<>();
-        params.put("accountId", mUser.getAccountID());
+        params.put("accountId", accountID);
 
         sendRequest(TradeService.getInstance().account, params, enable);
     }
 
     private void position() {
+        String accountID = mUser.getAccountID();
+
+        if (TextUtils.isEmpty(accountID))
+            return;
+
         HashMap<String, String> params = new HashMap<>();
-        params.put("accountId", mUser.getAccountID());
+        params.put("accountId", accountID);
         params.put("pagingKey", mPagingKey);
 
         sendRequest(TradeService.getInstance().position, params, false, false, false);
