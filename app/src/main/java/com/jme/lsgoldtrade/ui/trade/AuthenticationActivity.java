@@ -119,13 +119,17 @@ public class AuthenticationActivity extends JMEBaseActivity {
                     if (null == identityInfoVo)
                         return;
 
-                    mBinding.etName.setText(identityInfoVo.getName());
-                    mBinding.etName.setEnabled(false);
-                    mBinding.etName.setFocusable(false);
+                    String flag = identityInfoVo.getFlag();
 
-                    mBinding.etIdCard.setText(identityInfoVo.getIdCard());
-                    mBinding.etIdCard.setEnabled(false);
-                    mBinding.etIdCard.setFocusable(false);
+                    if (flag.equals("Y")) {
+                        mBinding.etName.setText(identityInfoVo.getName());
+                        mBinding.etName.setEnabled(false);
+                        mBinding.etName.setFocusable(false);
+
+                        mBinding.etIdCard.setText(identityInfoVo.getIdCard());
+                        mBinding.etIdCard.setEnabled(false);
+                        mBinding.etIdCard.setFocusable(false);
+                    }
                 }
 
                 break;
