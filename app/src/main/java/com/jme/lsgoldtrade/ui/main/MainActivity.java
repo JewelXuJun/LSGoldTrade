@@ -125,6 +125,8 @@ public class MainActivity extends JMEBaseActivity implements TabHost.OnTabChange
 
                     break;
                 case Constants.RxBusConst.RXBUS_CANCELORDER:
+                    RxBus.getInstance().post(Constants.RxBusConst.RXBUS_CANCELORDER_FRAGMENT, null);
+
                     runOnUiThread(() -> mBinding.tabhost.setCurrentTab(2));
 
                     break;
