@@ -16,7 +16,10 @@ import com.jme.lsgoldtrade.base.JMEBaseActivity;
 import com.jme.lsgoldtrade.config.Constants;
 import com.jme.lsgoldtrade.databinding.ActivityRechargeBinding;
 import com.jme.lsgoldtrade.domain.UsernameVo;
+import com.jme.lsgoldtrade.domain.WechatPayVo;
 import com.jme.lsgoldtrade.service.AccountService;
+import com.jme.lsgoldtrade.service.PaymentService;
+import com.jme.lsgoldtrade.util.PaymentHelper;
 import java.util.HashMap;
 
 /**
@@ -26,6 +29,10 @@ import java.util.HashMap;
 public class RechargeActivity extends JMEBaseActivity {
 
     private ActivityRechargeBinding mBinding;
+
+    private int payType = 0;    // 支付宝支付-0 微信支付-1
+
+    private PaymentHelper mPaymentHelper;
 
     @Override
     protected int getContentViewId() {
@@ -42,6 +49,7 @@ public class RechargeActivity extends JMEBaseActivity {
     @Override
     protected void initData(Bundle savedInstanceState) {
         super.initData(savedInstanceState);
+        mPaymentHelper = new PaymentHelper();
         getUserInfo();
     }
 
@@ -68,6 +76,26 @@ public class RechargeActivity extends JMEBaseActivity {
                     mBinding.tvBanlace.setText(TextUtils.isEmpty(value.getBalance()) ? getString(R.string.text_no_data_default) : BigDecimalUtil.formatMoney(value.getBalance()) + "元");
                 }
                 break;
+            case "GetTradeAppPayResponse":
+                if (head.isSuccess()) {
+
+                }
+                break;
+            case "WechatPay":
+                if (head.isSuccess()) {
+                    WechatPayVo wechatPayVo;
+                    try {
+                        wechatPayVo = (WechatPayVo) response;
+                    } catch (Exception e) {
+                        wechatPayVo = null;
+                        e.printStackTrace();
+                    }
+                    if (wechatPayVo == null)
+                        return;
+
+                    mPaymentHelper.startWeChatPay(this, wechatPayVo);
+                }
+                break;
             default:
                 break;
         }
@@ -79,15 +107,32 @@ public class RechargeActivity extends JMEBaseActivity {
         mBinding.setHandlers(new ClickHandlers());
     }
 
-    public class ClickHandlers {
+    private void gotoPayment() {
+        if (payType == 0)
+            alipay();
+        else
+            wechatPay();
+    }
 
+    private void alipay() {
+        HashMap<String, String> params = new HashMap<>();
+        params.put("totalAmount", mBinding.etFunds.getText().toString().trim());
+        sendRequest(PaymentService.getInstance().getTradeAppPayResponse, params, true);
+    }
+
+    private void wechatPay() {
+        HashMap<String, String> params = new HashMap<>();
+        params.put("totalFee", mBinding.etFunds.getText().toString().trim());
+        sendRequest(PaymentService.getInstance().wechatPay, params, true);
+    }
+
+    public class ClickHandlers {
         public void onClickPay() {
-            String funds = mBinding.etGoldAccount.getText().toString().trim();
+            String funds = mBinding.etFunds.getText().toString().trim();
             if (TextUtils.isEmpty(funds)) {
                 showShortToast("请输入充值金额");
                 return;
             }
-
             showPaymentBottomDialog();
 //            PayPopupwindow.popupwindow(RechargeActivity.this, R.id.et_gold_account);
         }
@@ -104,22 +149,29 @@ public class RechargeActivity extends JMEBaseActivity {
         RelativeLayout layoutWechat = paymentView.findViewById(R.id.layout_wechat);
         TextView tvPay = paymentView.findViewById(R.id.tv_pay);
 
-        ivAlipaySelect.setVisibility(View.VISIBLE);
-        ivWechatSelect.setVisibility(View.GONE);
+        if (payType == 0) {
+            ivAlipaySelect.setVisibility(View.VISIBLE);
+            ivWechatSelect.setVisibility(View.GONE);
+        } else {
+            ivAlipaySelect.setVisibility(View.GONE);
+            ivWechatSelect.setVisibility(View.VISIBLE);
+        }
         ivCancel.setOnClickListener(v -> {
             dialog.dismiss();
         });
         layoutAlipay.setOnClickListener(v -> {
+            payType = 0;
             ivAlipaySelect.setVisibility(View.VISIBLE);
             ivWechatSelect.setVisibility(View.GONE);
         });
         layoutWechat.setOnClickListener(v -> {
+            payType = 1;
             ivAlipaySelect.setVisibility(View.GONE);
             ivWechatSelect.setVisibility(View.VISIBLE);
         });
         tvPay.setOnClickListener(v -> {
             dialog.dismiss();
-            showShortToast("开始付款");
+            gotoPayment();
         });
 
         dialog.setContentView(paymentView);

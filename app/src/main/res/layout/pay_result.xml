@@ -6,14 +6,6 @@
 	android:layout_height="match_parent"
 	android:orientation="vertical"
 	android:gravity="center_horizontal"
-	android:background="#FFE1E8EB">
-    
-	<TextView
-	    android:layout_width="fill_parent"
-	 	android:layout_height="fill_parent"
-		android:gravity="center"
-	 	android:textColor="#ff000000"
-	 	android:textSize="20dp"
-	 	android:text="@string/pay_result_tip"/>
+	android:background="@color/common_background">
 	
 </LinearLayout>
