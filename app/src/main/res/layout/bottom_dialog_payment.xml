@@ -66,8 +66,7 @@
                 android:layout_marginTop="5dp"
                 android:text="推荐工行用户使用"
                 android:textSize="@dimen/sp_12"
-                android:textColor="@color/black"
-                android:layout_toRightOf="@id/gonghang"/>
+                android:textColor="@color/black"/>
 
         </LinearLayout>
 
@@ -117,8 +116,7 @@
                 android:layout_marginTop="5dp"
                 android:text="推荐支付宝用户使用"
                 android:textSize="@dimen/sp_12"
-                android:textColor="@color/black"
-                android:layout_toRightOf="@id/gonghang"/>
+                android:textColor="@color/black"/>
 
         </LinearLayout>
 
@@ -170,8 +168,7 @@
                 android:layout_marginTop="5dp"
                 android:text="推荐微信用户使用"
                 android:textSize="@dimen/sp_12"
-                android:textColor="@color/black"
-                android:layout_toRightOf="@id/gonghang"/>
+                android:textColor="@color/black"/>
 
         </LinearLayout>
 

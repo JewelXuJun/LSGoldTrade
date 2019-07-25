@@ -5,6 +5,7 @@ import com.jme.common.network.DTResponse;
 import com.jme.common.network.IService;
 import com.jme.lsgoldtrade.config.Constants;
 import com.jme.lsgoldtrade.config.User;
+import com.jme.lsgoldtrade.domain.WechatPayVo;
 import java.util.HashMap;
 import okhttp3.Interceptor;
 import okhttp3.Request;
@@ -42,7 +43,7 @@ public class PaymentService extends IService<PaymentApi> {
         }
     };
 
-    public API wechatPay = new API<String>("WechatPay") {
+    public API wechatPay = new API<WechatPayVo>("WechatPay") {
         @Override
         public Call<DTResponse> request(HashMap<String, String> params) {
             return mApi.wechatPay(params);

@@ -13,6 +13,7 @@ import com.jme.lsgoldtrade.config.Constants;
 import com.jme.lsgoldtrade.databinding.ActivityCheckServiceBinding;
 import com.jme.lsgoldtrade.domain.UsernameVo;
 import com.jme.lsgoldtrade.service.AccountService;
+import java.math.BigDecimal;
 import java.util.HashMap;
 
 /**
@@ -38,6 +39,11 @@ public class CheckServiceActivity extends JMEBaseActivity {
     @Override
     protected void initData(Bundle savedInstanceState) {
         super.initData(savedInstanceState);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
         getUserInfo();
     }
 
@@ -67,8 +73,10 @@ public class CheckServiceActivity extends JMEBaseActivity {
                     if (value == null)
                         return;
 
-                    mBinding.tvAvailableFunds.setText(TextUtils.isEmpty(value.getBalance()) ? getString(R.string.text_no_data_default) : BigDecimalUtil.formatMoney(value.getBalance()));
-                    mBinding.tvFrozenFunds.setText(TextUtils.isEmpty(value.getFrozenBalance()) ? getString(R.string.text_no_data_default) : BigDecimalUtil.formatMoney(value.getFrozenBalance()));
+                    mBinding.tvAvailableFunds.setText(TextUtils.isEmpty(value.getBalance()) ? getString(R.string.text_no_data_default) :
+                            BigDecimalUtil.formatMoney(new BigDecimal(value.getBalance()).divide(new BigDecimal(100)).toPlainString()));
+                    mBinding.tvFrozenFunds.setText(TextUtils.isEmpty(value.getFrozenBalance()) ? getString(R.string.text_no_data_default) :
+                            BigDecimalUtil.formatMoney(new BigDecimal(value.getFrozenBalance()).divide(new BigDecimal(100)).toPlainString()));
                 }
                 break;
             default:
