@@ -26,23 +26,13 @@ public class InfoAdapter extends BaseQuickAdapter<InfoVo.InfoBean, BaseViewHolde
         if (null == item)
             return;
 
-        if (TextUtils.isEmpty(item.getTitleImg())) {
-            helper.getView(R.id.nocelve).setVisibility(View.GONE);
-            helper.getView(R.id.celve).setVisibility(View.VISIBLE);
-            CollapsibleTextView celvecontent = helper.getView(R.id.celvecontent);
-            celvecontent.setDesc(item.getTitle(), TextView.BufferType.NORMAL);
-            helper.setText(R.id.celvetime, item.getCreateTime());
-        } else {
-            helper.getView(R.id.nocelve).setVisibility(View.VISIBLE);
-            helper.getView(R.id.celve).setVisibility(View.GONE);
-            helper.setText(R.id.tv_title, item.getTitle())
-                    .setText(R.id.tv_time, item.getCreateTime());
+        Picasso.with(mContext)
+                .load(item.getTitleImg())
+                .placeholder(R.mipmap.ic_img_default)
+                .error(R.mipmap.ic_img_default)
+                .into((ImageView) helper.getView(R.id.img));
 
-            Picasso.with(mContext)
-                    .load(item.getTitleImg())
-                    .placeholder(R.mipmap.ic_img_default)
-                    .error(R.mipmap.ic_img_default)
-                    .into((ImageView) helper.getView(R.id.img));
-        }
+        helper.setText(R.id.tv_title, item.getTitle())
+                .setText(R.id.tv_time, item.getCreateTime());
     }
 }

@@ -186,7 +186,7 @@ public class InfoFragment extends JMEBaseFragment implements BaseQuickAdapter.Re
                         e.printStackTrace();
                     }
 
-                    if (strategyVo == null)
+                   /* if (strategyVo == null)
                         return;
 
                     if (infoBeanList != null && !infoBeanList.isEmpty())
@@ -201,7 +201,7 @@ public class InfoFragment extends JMEBaseFragment implements BaseQuickAdapter.Re
                     }
 
                     mAdapter.setNewData(infoBeanList);
-                    mAdapter.loadMoreComplete();
+                    mAdapter.loadMoreComplete();*/
                 }
                 break;
         }

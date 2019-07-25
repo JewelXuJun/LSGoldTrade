@@ -37,6 +37,8 @@ public class Constants {
         public static String URL_TRADE_BOX_QUESTION = "http://www.taijs.com/upload/jyxz/cjwt.html";
         public static String URL_TRADING_BOX_AGREEMENT = "http://www.taijs.com/upload/jyxzfwxy.htm";
         public static String URL_ENTRUST_RISK_AGREEMENT = "http://www.taijs.com/upload/wtfkfwxy.htm";
+        public static String URL_ECONOMIC_CALENDAR = "https://rili-d.jin10.com/open.php?fontSize=14px&theme=primary";
+        public static String URL_NEWS = "https://www.jin10.com/example/jin10.com.html?fontSize=14px&theme=white";
         public static String URL_TRADINGBOX;
         public static String URL_TRADINGBOXINFO;
 

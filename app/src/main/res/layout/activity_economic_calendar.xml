@@ -13,55 +13,84 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/white">
+        android:background="@color/white"
+        android:orientation="vertical">
 
         <RelativeLayout
-            android:id="@+id/title"
+            android:id="@+id/layout_title"
             android:layout_width="match_parent"
-            android:layout_height="55dp">
+            android:layout_height="@dimen/common_item_height_normal"
+            android:background="@color/white"
+            android:elevation="0dp"
+            android:fitsSystemWindows="true"
+            android:theme="@style/mToolbarTheme"
+            app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
 
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:layout_marginLeft="20dp"
-                android:onClick="@{() -> handlers.onClickback()}"
+                android:layout_marginLeft="@dimen/common_area_margin_tiny"
+                android:onClick="@{() -> handlers.onClickBack()}"
                 android:src="@drawable/ic_back" />
 
-            <android.support.design.widget.TabLayout
-                android:id="@+id/tablayout"
-                android:layout_width="wrap_content"
-                android:layout_height="40dp"
+            <LinearLayout
+                android:layout_width="@dimen/width_economic_calendar"
+                android:layout_height="@dimen/height_tabhost"
                 android:layout_centerInParent="true"
-                android:background="@color/white"
-                app:tabIndicatorColor="@color/color_blue"
-                app:tabIndicatorFullWidth="true"
-                app:tabIndicatorHeight="2dp"
-                app:tabRippleColor="@null"
-                app:tabSelectedTextColor="@color/color_blue_deep"
-                app:tabTextColor="@color/color_text_normal" />
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/tv_economic_calendar"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/bg_btn_blue_solid_left"
+                    android:gravity="center"
+                    android:onClick="@{() -> handlers.onClickEconomicCalendar()}"
+                    android:text="@string/personal_economic_calendar"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/sp_12" />
+
+                <TextView
+                    android:id="@+id/tv_news"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/bg_btn_white_solid_right"
+                    android:gravity="center"
+                    android:onClick="@{() -> handlers.onClickEconomicNews()}"
+                    android:text="@string/personal_news"
+                    android:textColor="@color/color_blue_deep"
+                    android:textSize="@dimen/sp_12" />
+
+            </LinearLayout>
 
         </RelativeLayout>
 
-        <View
+        <LinearLayout
+            android:id="@+id/layout_title_line"
             android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_below="@id/title"
-            android:background="#CCCCCC" />
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/layout_title">
 
-        <android.support.v4.view.ViewPager
-            android:id="@+id/tab_viewpager"
+            <include layout="@layout/item_line_vertical" />
+
+        </LinearLayout>
+
+        <WebView
+            android:id="@+id/webview"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_below="@id/title" />
+            android:layout_below="@+id/layout_title_line"
+            android:background="@color/white" />
 
         <com.jme.lsgoldtrade.view.TradingBox
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_alignParentBottom="true"
-            android:layout_marginRight="2dp"
-            android:layout_marginBottom="53dp" />
+            android:layout_marginBottom="@dimen/margin_large" />
 
     </RelativeLayout>
 

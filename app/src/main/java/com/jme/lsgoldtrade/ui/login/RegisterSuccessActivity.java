@@ -53,7 +53,7 @@ public class RegisterSuccessActivity extends JMEBaseActivity {
 
         public void onClickOpenAccount() {
             if (IntentUtils.isWeChatAvilible(RegisterSuccessActivity.this)) {
-                IntentUtils.jumpBankSmall(RegisterSuccessActivity.this);
+                IntentUtils.intentICBCSmall(RegisterSuccessActivity.this);
 
                 finish();
             } else {

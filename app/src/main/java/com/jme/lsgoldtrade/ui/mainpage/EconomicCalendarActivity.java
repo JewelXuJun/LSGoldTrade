@@ -1,11 +1,21 @@
 package com.jme.lsgoldtrade.ui.mainpage;
 
+import android.graphics.Bitmap;
+import android.net.http.SslError;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
+import android.webkit.SslErrorHandler;
+import android.webkit.WebResourceError;
+import android.webkit.WebResourceRequest;
+import android.webkit.WebSettings;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.jme.common.util.AppManager;
@@ -30,13 +40,6 @@ public class EconomicCalendarActivity extends JMEBaseActivity {
 
     private ActivityEconomicCalendarBinding mBinding;
 
-    private Fragment[] mFragmentArrays;
-    private String[] mTabTitles;
-
-    private TabViewPagerAdapter mAdapter;
-
-    private Subscription mRxbus;
-
     @Override
     protected int getContentViewId() {
         return R.layout.activity_economic_calendar;
@@ -45,100 +48,121 @@ public class EconomicCalendarActivity extends JMEBaseActivity {
     @Override
     protected void initView() {
         super.initView();
+
         mBinding = (ActivityEconomicCalendarBinding) mBindingUtil;
-        StatusBarUtil.setStatusBarMode(this, true, R.color.white);
+
+        setWebViewSettings();
     }
 
     @Override
     protected void initData(Bundle savedInstanceState) {
         super.initData(savedInstanceState);
-        mAdapter = new TabViewPagerAdapter(getSupportFragmentManager());
-        initInfoTabs();
+
+        mBinding.webview.loadUrl(Constants.HttpConst.URL_ECONOMIC_CALENDAR);
     }
 
     @Override
     protected void initListener() {
         super.initListener();
-        initRxBus();
+
+        mBinding.webview.setWebViewClient(new WebViewClient() {
+
+            @Override
+            public boolean shouldOverrideUrlLoading(WebView view, String url) {
+                mBinding.webview.loadUrl(url);
+
+                return true;
+            }
+
+            @Override
+            public void onReceivedSslError(WebView view, SslErrorHandler handler, SslError error) {
+                handler.proceed();
+            }
+
+            @Override
+            public void onPageStarted(WebView view, String url, Bitmap favicon) {
+                super.onPageStarted(view, url, favicon);
+            }
+
+            @Override
+            public void onPageFinished(WebView view, String url) {
+
+            }
+
+            @Override
+            public void onReceivedError(WebView view, WebResourceRequest request, WebResourceError error) {
+                super.onReceivedError(view, request, error);
+            }
+
+        });
+
+        mBinding.webview.setOnLongClickListener(v -> true);
     }
 
     @Override
     protected void initBinding() {
         super.initBinding();
+
         mBinding.setHandlers(new ClickHandlers());
     }
 
-    private void initInfoTabs() {
-        mTabTitles = new String[2];
-        mTabTitles[0] = "财经日历";
-        mTabTitles[1] = "快讯";
+    private void setWebViewSettings() {
+        mBinding.webview.getSettings().setJavaScriptEnabled(true);
+        mBinding.webview.getSettings().setUserAgentString(mBinding.webview.getSettings().getUserAgentString() + "LSGoldTradeAndroid");
+        mBinding.webview.getSettings().setDomStorageEnabled(true);
+        mBinding.webview.getSettings().setDatabaseEnabled(true);
+        mBinding.webview.getSettings().setUseWideViewPort(true);
+        mBinding.webview.getSettings().setLoadWithOverviewMode(true);
+        mBinding.webview.getSettings().setDisplayZoomControls(true);
+        mBinding.webview.getSettings().setSupportZoom(true);
 
-        mFragmentArrays = new Fragment[2];
-        mFragmentArrays[0] = new CaiJingRiLiFragment();
-        mFragmentArrays[1] = new KuaiXunFragment();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
+            mBinding.webview.getSettings().setMixedContentMode(WebSettings.MIXED_CONTENT_ALWAYS_ALLOW);
 
-        initTabLayout();
-    }
-
-    private void initTabLayout() {
-        mBinding.tabViewpager.removeAllViewsInLayout();
-        mBinding.tabViewpager.setAdapter(mAdapter);
-        mBinding.tabViewpager.setOffscreenPageLimit(1);
-        mBinding.tablayout.setTabMode(TabLayout.MODE_SCROLLABLE);
-        mBinding.tablayout.setSelectedTabIndicatorHeight(4);
-        mBinding.tablayout.setupWithViewPager(mBinding.tabViewpager);
-    }
-
-    private void initRxBus() {
-        mRxbus = RxBus.getInstance().toObserverable(RxBus.Message.class).subscribe(message -> {
-            String callType = message.getObject().toString();
-
-            if (TextUtils.isEmpty(callType))
-                return;
-
-            switch (callType) {
-                case Constants.RxBusConst.RXBUS_TRADE:
-                    runOnUiThread(() -> mBinding.tabViewpager.setCurrentItem(1));
-
-                    break;
-            }
-        });
+        if (Build.VERSION.SDK_INT >= 19)
+            mBinding.webview.getSettings().setCacheMode(WebSettings.LOAD_NO_CACHE);
     }
 
     public class ClickHandlers {
 
-        public void onClickback() {
-            AppManager.getAppManager().finishActivity();
+        public void onClickBack() {
+            finish();
         }
 
-    }
+        public void onClickEconomicCalendar() {
+            mBinding.tvEconomicCalendar.setBackground(ContextCompat.getDrawable(EconomicCalendarActivity.this, R.drawable.bg_btn_blue_solid_left));
+            mBinding.tvEconomicCalendar.setTextColor(ContextCompat.getColor(EconomicCalendarActivity.this, R.color.white));
+            mBinding.tvNews.setBackground(ContextCompat.getDrawable(EconomicCalendarActivity.this, R.drawable.bg_btn_white_solid_right));
+            mBinding.tvNews.setTextColor(ContextCompat.getColor(EconomicCalendarActivity.this, R.color.color_blue_deep));
 
-    final class TabViewPagerAdapter extends FragmentPagerAdapter {
-        public TabViewPagerAdapter(FragmentManager fm) {
-            super(fm);
+            mBinding.webview.loadUrl(Constants.HttpConst.URL_ECONOMIC_CALENDAR);
         }
 
-        @Override
-        public Fragment getItem(int position) {
-            return mFragmentArrays[position];
+        public void onClickEconomicNews() {
+            mBinding.tvEconomicCalendar.setBackground(ContextCompat.getDrawable(EconomicCalendarActivity.this, R.drawable.bg_btn_white_solid_left));
+            mBinding.tvEconomicCalendar.setTextColor(ContextCompat.getColor(EconomicCalendarActivity.this, R.color.color_blue_deep));
+            mBinding.tvNews.setBackground(ContextCompat.getDrawable(EconomicCalendarActivity.this, R.drawable.bg_btn_blue_solid_right));
+            mBinding.tvNews.setTextColor(ContextCompat.getColor(EconomicCalendarActivity.this, R.color.white));
+
+            mBinding.webview.loadUrl(Constants.HttpConst.URL_NEWS);
         }
 
-        @Override
-        public int getCount() {
-            return mFragmentArrays.length;
-        }
-
-        @Override
-        public CharSequence getPageTitle(int position) {
-            return mTabTitles[position];
-        }
     }
 
     @Override
-    public void onDestroy() {
-        super.onDestroy();
-
-        if (!mRxbus.isUnsubscribed())
-            mRxbus.unsubscribe();
+    public void onBackPressed() {
+        if (mBinding.webview.canGoBack())
+            mBinding.webview.goBack();
+        else
+            super.onBackPressed();
     }
+
+    @Override
+    protected void onDestroy() {
+        mBinding.webview.onPause();
+        mBinding.webview.destroy();
+
+        super.onDestroy();
+    }
+
 }

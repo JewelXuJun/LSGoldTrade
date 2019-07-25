@@ -13,6 +13,7 @@ import com.jme.lsgoldtrade.config.Constants;
 import com.jme.lsgoldtrade.databinding.ActivityFastManagementBinding;
 import com.jme.lsgoldtrade.domain.NavigatorVo;
 import com.jme.lsgoldtrade.service.ManagementService;
+import com.jme.lsgoldtrade.util.IntentUtils;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -97,6 +98,24 @@ public class FastManagementActivity extends JMEBaseActivity {
             } else {
                 showShortToast(R.string.personal_fast_management_length);
             }
+        });
+
+        mAddedAdapter.setOnItemClickListener((adapter, view, position) -> {
+            NavigatorVo.NavigatorVoBean navigatorVoBean = (NavigatorVo.NavigatorVoBean)adapter.getItem(position);
+
+            if (null == navigatorVoBean)
+                return;
+
+            IntentUtils.IntentFastTab(navigatorVoBean.getCode());
+        });
+
+        mNotAddedAdapter.setOnItemClickListener((adapter, view, position) -> {
+            NavigatorVo.NavigatorVoBean navigatorVoBean = (NavigatorVo.NavigatorVoBean)adapter.getItem(position);
+
+            if (null == navigatorVoBean)
+                return;
+
+            IntentUtils.IntentFastTab(navigatorVoBean.getCode());
         });
 
     }

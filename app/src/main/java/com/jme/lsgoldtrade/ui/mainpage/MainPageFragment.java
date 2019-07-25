@@ -463,7 +463,7 @@ public class MainPageFragment extends JMEBaseFragment implements OnRefreshListen
         }
 
         public void onClickOpenAccount() {
-            IntentUtils.jumpSmall(mContext);
+            IntentUtils.intentSmallProcedures(mContext);
         }
 
         public void onClickQuickOrder() {

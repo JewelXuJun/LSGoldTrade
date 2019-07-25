@@ -59,7 +59,7 @@ public class ExamplePagerAdapter extends PagerAdapter {
         mAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                IntentUtils.jumpHomeTab(context, usedModulesBeans, position);
+                IntentUtils.IntentFastTab(usedModulesBeans.get(position).getCode());
             }
         });
         return view;

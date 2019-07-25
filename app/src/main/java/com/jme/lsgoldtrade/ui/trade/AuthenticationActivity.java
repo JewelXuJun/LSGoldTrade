@@ -136,7 +136,7 @@ public class AuthenticationActivity extends JMEBaseActivity {
             case "VerifyIdCard":
                 if (head.isSuccess()) {
                     if (mType.equals("1"))
-                        IntentUtils.jumpBankSmall(this);
+                        IntentUtils.intentICBCSmall(this);
                     else
                         ARouter.getInstance()
                                 .build(Constants.ARouterUriConst.BINDACCOUNT)
