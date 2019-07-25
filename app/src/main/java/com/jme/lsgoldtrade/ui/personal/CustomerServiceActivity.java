@@ -86,7 +86,7 @@ public class CustomerServiceActivity extends JMEBaseActivity {
         mBinding.recyclerViewQuestion.setLayoutManager(new LinearLayoutManager(mContext));
         mBinding.recyclerViewQuestion.setAdapter(mQuestionGuessAdapter);
 
-        mQuestionAnswerAdapter = new QuestionAnswerAdapter(R.layout.item_question_answer, mList);
+        mQuestionAnswerAdapter = new QuestionAnswerAdapter(this, R.layout.item_question_answer, mList);
         mBinding.recyclerViewAnswer.setLayoutManager(new LinearLayoutManager(mContext));
         mBinding.recyclerViewAnswer.setAdapter(mQuestionAnswerAdapter);
 

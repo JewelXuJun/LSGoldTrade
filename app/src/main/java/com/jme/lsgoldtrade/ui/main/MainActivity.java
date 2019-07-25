@@ -124,16 +124,14 @@ public class MainActivity extends JMEBaseActivity implements TabHost.OnTabChange
                     runOnUiThread(() -> mBinding.tabhost.setCurrentTab(0));
 
                     break;
-                case Constants.RxBusConst.RXBUS_CHEDAN:
+                case Constants.RxBusConst.RXBUS_CANCELORDER:
                     runOnUiThread(() -> mBinding.tabhost.setCurrentTab(2));
-
-                    RxBus.getInstance().post(Constants.RxBusConst.RXBUS_CHEDAN_FRAGMENT, null);
 
                     break;
                 case Constants.RxBusConst.RXBUS_TRADEFRAGMENT_HOLD:
-                    runOnUiThread(() -> mBinding.tabhost.setCurrentTab(2));
+                    RxBus.getInstance().post(Constants.RxBusConst.RXBUS_HOLD_FRAGMENT, null);
 
-                    RxBus.getInstance().post(Constants.RxBusConst.RXBUS_CHICANG_FRAGMENT, null);
+                    runOnUiThread(() -> mBinding.tabhost.setCurrentTab(2));
 
                     break;
                 case Constants.RxBusConst.RXBUS_CANCEL_MAIN:

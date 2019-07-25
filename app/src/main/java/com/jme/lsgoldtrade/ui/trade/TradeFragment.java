@@ -106,7 +106,7 @@ public class TradeFragment extends JMEBaseFragment {
                 return;
 
             switch (callType) {
-                case Constants.RxBusConst.RXBUS_CHICANG_FRAGMENT:
+                case Constants.RxBusConst.RXBUS_HOLD_FRAGMENT:
                     mActivity.runOnUiThread(() -> mBinding.tabViewpager.setCurrentItem(0));
 
                     break;
@@ -114,7 +114,7 @@ public class TradeFragment extends JMEBaseFragment {
                     mActivity.runOnUiThread(() -> mBinding.tabViewpager.setCurrentItem(1));
 
                     break;
-                case Constants.RxBusConst.RXBUS_CHEDAN_FRAGMENT:
+                case Constants.RxBusConst.RXBUS_CANCELORDER_FRAGMENT:
                     mActivity.runOnUiThread(() -> mBinding.tabViewpager.setCurrentItem(2));
 
                     break;
