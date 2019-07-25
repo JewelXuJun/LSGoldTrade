@@ -131,5 +131,4 @@ dependencies {
 
     // 支付宝 SDK AAR 包所需的配置
     implementation (name: 'alipaySdk-15.6.4-20190611174341', ext: 'aar')
-//    implementation 'com.tencent.mm.opensdk:wechat-sdk-android-without-mta:+'
 }

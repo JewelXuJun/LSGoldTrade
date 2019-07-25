@@ -4,7 +4,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.jme.common.util.BigDecimalUtil;
 import com.jme.lsgoldtrade.R;
-import com.jme.lsgoldtrade.bean.UserDetailsVo;
+import com.jme.lsgoldtrade.domain.UserDetailsVo;
 import java.math.BigDecimal;
 import java.util.List;
 

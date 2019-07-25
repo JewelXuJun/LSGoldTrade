@@ -10,7 +10,7 @@ import com.jme.common.network.Head;
 import com.jme.common.util.DateUtil;
 import com.jme.lsgoldtrade.R;
 import com.jme.lsgoldtrade.base.JMEBaseActivity;
-import com.jme.lsgoldtrade.bean.UserDetailsVo;
+import com.jme.lsgoldtrade.domain.UserDetailsVo;
 import com.jme.lsgoldtrade.config.Constants;
 import com.jme.lsgoldtrade.databinding.ActivityDetailsBinding;
 import com.jme.lsgoldtrade.service.AccountService;

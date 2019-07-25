@@ -3,7 +3,7 @@ package com.jme.lsgoldtrade.service;
 import com.jme.common.network.API;
 import com.jme.common.network.DTResponse;
 import com.jme.common.network.IService;
-import com.jme.lsgoldtrade.bean.UserDetailsVo;
+import com.jme.lsgoldtrade.domain.UserDetailsVo;
 import com.jme.lsgoldtrade.config.Constants;
 import com.jme.lsgoldtrade.config.User;
 import com.jme.lsgoldtrade.domain.UsernameVo;

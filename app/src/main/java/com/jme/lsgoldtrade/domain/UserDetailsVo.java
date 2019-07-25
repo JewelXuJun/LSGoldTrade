@@ -1,4 +1,4 @@
-package com.jme.lsgoldtrade.bean;
+package com.jme.lsgoldtrade.domain;
 
 public class UserDetailsVo {
 
