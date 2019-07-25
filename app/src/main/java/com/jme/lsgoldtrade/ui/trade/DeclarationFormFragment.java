@@ -230,7 +230,7 @@ public class DeclarationFormFragment extends JMEBaseFragment {
     public void onResume() {
         super.onResume();
 
-        if (bVisibleToUser) {
+        if (null != mBinding && bVisibleToUser) {
             bFlag = true;
 
             setContractNameData();

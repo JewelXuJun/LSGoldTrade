@@ -146,7 +146,7 @@ public class CancelOrderFragment extends JMEBaseFragment implements OnRefreshLis
     public void onResume() {
         super.onResume();
 
-        if (bVisibleToUser)
+        if (null != mBinding && bVisibleToUser)
             initOrderPage(true);
     }
 

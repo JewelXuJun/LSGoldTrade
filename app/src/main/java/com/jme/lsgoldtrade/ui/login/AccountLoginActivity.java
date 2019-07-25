@@ -17,6 +17,7 @@ import com.google.gson.Gson;
 import com.jme.common.network.DTRequest;
 import com.jme.common.network.Head;
 import com.jme.common.ui.adapter.TextWatcherAdapter;
+import com.jme.common.util.RxBus;
 import com.jme.common.util.SharedPreUtils;
 import com.jme.lsgoldtrade.R;
 import com.jme.lsgoldtrade.base.JMEBaseActivity;
@@ -244,6 +245,8 @@ public class AccountLoginActivity extends JMEBaseActivity {
                         return;
 
                     mUser.login(userInfoVo);
+
+                    RxBus.getInstance().post(Constants.RxBusConst.RXBUS_LOGIN_SUCCESS, null);
 
                     getContractInfo();
 

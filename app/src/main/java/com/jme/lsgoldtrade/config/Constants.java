@@ -99,11 +99,10 @@ public class Constants {
         public static final String RXBUS_CANCEL = "cancel";
         public static final String RXBUS_CANCEL_MAIN = "cancelMain";
         public static final String RXBUS_ORDER_SUCCESS = "orderSuccess";
-        public static final String RXBUS_CANCELORDER = "cancelorder";
-        public static final String RXBUS_CANCELORDER_FRAGMENT = "cancelorderfragment";
-        public static final String RXBUS_HOLD_FRAGMENT = "holdfragment";
+        public static final String RXBUS_CANCELORDERFRAGMENT = "cancelorderfragment";
         public static final String RXBUS_CUSTOMER_SERVICE = "customerservice";
-        public static final String RXBUS_BIND_SUCCESS = "BindSuccess";
+        public static final String RXBUS_BIND_SUCCESS = "bindSuccess";
+        public static final String RXBUS_LOGIN_SUCCESS = "loginSuccess";
     }
 
     public static final class Msg {

@@ -98,7 +98,7 @@ public class QuestionAnswerAdapter extends BaseQuickAdapter<QuestionAnswerVo, Ba
                 if (null == user || !user.isLogin()) {
                     ARouter.getInstance().build(Constants.ARouterUriConst.ACCOUNTLOGIN).navigation();
                 } else {
-                    RxBus.getInstance().post(Constants.RxBusConst.RXBUS_CANCELORDER, null);
+                    RxBus.getInstance().post(Constants.RxBusConst.RXBUS_CANCELORDERFRAGMENT, null);
                     ARouter.getInstance().build(Constants.ARouterUriConst.MAIN).navigation();
 
                     mActivity.finish();

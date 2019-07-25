@@ -34,7 +34,7 @@ import rx.Subscription;
 /**
  * 交易
  */
-public class TradeFragment extends JMEBaseFragment {
+public class TradeFragment extends JMEBaseFragment implements TabLayout.OnTabSelectedListener{
 
     private FragmentTradeBinding mBinding;
 
@@ -62,11 +62,17 @@ public class TradeFragment extends JMEBaseFragment {
     @Override
     protected void initData(Bundle savedInstanceState) {
         super.initData(savedInstanceState);
+
+        initInfoTabs();
     }
 
     @Override
     protected void initListener() {
         super.initListener();
+
+        initRxBus();
+
+        mBinding.tablayout.addOnTabSelectedListener(this);
     }
 
     @Override
@@ -88,14 +94,7 @@ public class TradeFragment extends JMEBaseFragment {
     public void onResume() {
         super.onResume();
 
-        if (null == mUser || !mUser.isLogin()) {
-            setUnLoginLayout();
-        } else {
-            if (TextUtils.isEmpty(mUser.getAccountID()))
-                setUnLoginLayout();
-            else
-                setLoginLayout();
-        }
+        setLayout();
     }
 
     private void initRxBus() {
@@ -106,7 +105,11 @@ public class TradeFragment extends JMEBaseFragment {
                 return;
 
             switch (callType) {
-                case Constants.RxBusConst.RXBUS_HOLD_FRAGMENT:
+                case Constants.RxBusConst.RXBUS_LOGIN_SUCCESS:
+                    setLayout();
+
+                    break;
+                case Constants.RxBusConst.RXBUS_TRADEFRAGMENT_HOLD:
                     mActivity.runOnUiThread(() -> mBinding.tabViewpager.setCurrentItem(0));
 
                     break;
@@ -114,12 +117,23 @@ public class TradeFragment extends JMEBaseFragment {
                     mActivity.runOnUiThread(() -> mBinding.tabViewpager.setCurrentItem(1));
 
                     break;
-                case Constants.RxBusConst.RXBUS_CANCELORDER_FRAGMENT:
+                case Constants.RxBusConst.RXBUS_CANCELORDERFRAGMENT:
                     mActivity.runOnUiThread(() -> mBinding.tabViewpager.setCurrentItem(2));
 
                     break;
             }
         });
+    }
+
+    private void setLayout() {
+        if (null == mUser || !mUser.isLogin()) {
+            setUnLoginLayout();
+        } else {
+            if (TextUtils.isEmpty(mUser.getAccountID()))
+                setUnLoginLayout();
+            else
+                setLoginLayout();
+        }
     }
 
     private void setUnLoginLayout() {
@@ -132,10 +146,6 @@ public class TradeFragment extends JMEBaseFragment {
     private void setLoginLayout() {
         mBinding.layoutLogin.setVisibility(View.VISIBLE);
         mBinding.layoutNoLogin.setVisibility(View.GONE);
-
-        mAdapter = new TabViewPagerAdapter(getChildFragmentManager());
-
-        initInfoTabs();
     }
 
     private void setCourseLayout(String value) {
@@ -149,6 +159,8 @@ public class TradeFragment extends JMEBaseFragment {
     }
 
     private void initInfoTabs() {
+        mAdapter = new TabViewPagerAdapter(getChildFragmentManager());
+
         mTabTitles = new String[4];
         mTabTitles[0] = mContext.getResources().getString(R.string.trade_hold_position);
         mTabTitles[1] = mContext.getResources().getString(R.string.market_declaration_form);
@@ -167,12 +179,10 @@ public class TradeFragment extends JMEBaseFragment {
     private void initTabLayout() {
         mBinding.tabViewpager.removeAllViewsInLayout();
         mBinding.tabViewpager.setAdapter(mAdapter);
-        mBinding.tabViewpager.setOffscreenPageLimit(4);
+        mBinding.tabViewpager.setOffscreenPageLimit(3);
         mBinding.tablayout.setTabMode(TabLayout.MODE_FIXED);
         mBinding.tablayout.setSelectedTabIndicatorHeight(4);
         mBinding.tablayout.setupWithViewPager(mBinding.tabViewpager);
-
-        initRxBus();
     }
 
     private void getWhetherIdCard() {
@@ -219,6 +229,21 @@ public class TradeFragment extends JMEBaseFragment {
 
                 break;
         }
+    }
+
+    @Override
+    public void onTabSelected(TabLayout.Tab tab) {
+
+    }
+
+    @Override
+    public void onTabUnselected(TabLayout.Tab tab) {
+
+    }
+
+    @Override
+    public void onTabReselected(TabLayout.Tab tab) {
+
     }
 
     public class ClickHandlers {

@@ -141,7 +141,7 @@ public class IntentUtils {
                 if (null == User.getInstance() || !User.getInstance().isLogin())
                     showNeedLoginDialog(context);
                 else
-                    RxBus.getInstance().post(Constants.RxBusConst.RXBUS_CANCELORDER, null);
+                    RxBus.getInstance().post(Constants.RxBusConst.RXBUS_CANCELORDERFRAGMENT, null);
                 break;
             case "QB":
                 //全部
