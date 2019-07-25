@@ -6,6 +6,7 @@ import com.jme.common.util.DialogHelp;
 import com.jme.lsgoldtrade.R;
 import com.jme.lsgoldtrade.base.JMEBaseActivity;
 import com.jme.lsgoldtrade.config.AppConfig;
+import com.jme.lsgoldtrade.ui.personal.CheckServiceActivity;
 import com.tencent.mm.opensdk.constants.ConstantsAPI;
 import com.tencent.mm.opensdk.modelbase.BaseReq;
 import com.tencent.mm.opensdk.modelbase.BaseResp;
@@ -61,7 +62,9 @@ public class WXPayEntryActivity extends JMEBaseActivity implements IWXAPIEventHa
                     break;
             }
             DialogHelp.getMessageDialog(this, "提示", result, (dialog, which) -> {
-                this.finish();
+                Intent intent = new Intent(this, CheckServiceActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
             }).show();
         }
     }
