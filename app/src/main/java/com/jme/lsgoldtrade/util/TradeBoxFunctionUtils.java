@@ -14,7 +14,7 @@ import com.jme.lsgoldtrade.config.User;
 
 public class TradeBoxFunctionUtils {
 
-    public static void show(Activity activity, String type) {
+    public static void show(Activity activity, String url, String title, String content, int resId) {
         final AlertDialog alertDialog = new AlertDialog.Builder(activity, R.style.function_dialog).create();
         alertDialog.show();
         alertDialog.setContentView(R.layout.pupupwindow_function);
@@ -30,7 +30,7 @@ public class TradeBoxFunctionUtils {
         window.setGravity(Gravity.RIGHT | Gravity.TOP);
 
         tv_share.setOnClickListener((view) -> {
-            ShareUtils.share(activity, type);
+            ShareUtils.popupwidnow(activity, url, title, content, resId);
 
             alertDialog.dismiss();
         });

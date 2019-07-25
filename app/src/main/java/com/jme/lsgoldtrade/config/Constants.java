@@ -63,8 +63,8 @@ public class Constants {
                 URL_BASE_ACCOUNT = "https://180.96.49.165:18001";
                 URL_BASE_MANAGEMENT = "https://u.taijs.com";
                 URL_INFO = "https://u.taijs.com/tjsmanage/infoapi/v1/android/cmsComtentTxt/get?contentId=";
-                URL_TRADINGBOX = "http://tjsuat.developer.jsdttec.com/tjsmanage/openacct/wap/tradingBox.html";
-                URL_TRADINGBOXINFO = "http://tjsuat.developer.jsdttec.com/tjsmanage/openacct/wap/tradingBoxDetail.html?tradeId=";
+                URL_TRADINGBOX = "https://u.taijs.com/tjsmanage/openacct/wap/tradingBox.html";
+                URL_TRADINGBOXINFO = "https://u.taijs.com/tjsmanage/openacct/wap/tradingBoxDetail.html?tradeId=";
             } else if (Envi == UAT) {
                 URL_BASE_MARKET = "http://tjsuat1866543.developer.jsdttec.com";
                 URL_BASE_TRADE = "http://tjsuat1866666.developer.jsdttec.com";

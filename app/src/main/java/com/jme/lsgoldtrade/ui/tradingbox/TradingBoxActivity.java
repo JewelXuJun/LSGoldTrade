@@ -50,7 +50,9 @@ public class TradingBoxActivity extends JMEBaseActivity {
 
         initToolbar("", true);
 
-        setRightNavigation("", R.mipmap.ic_more, 0, () -> TradeBoxFunctionUtils.show(this, ""));
+        setRightNavigation("", R.mipmap.ic_more, 0, () ->
+                TradeBoxFunctionUtils.show(this, Constants.HttpConst.URL_TRADINGBOX, String.format(getString(R.string.trading_box_number), mPeriodName),
+                        getString(R.string.trading_box_share_content), mBinding.tvBuy.getId()));
     }
 
     @Override
@@ -277,6 +279,6 @@ public class TradingBoxActivity extends JMEBaseActivity {
                         .navigation();
             }
         }
-
     }
+
 }

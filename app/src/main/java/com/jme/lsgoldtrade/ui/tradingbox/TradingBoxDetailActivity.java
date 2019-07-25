@@ -59,7 +59,10 @@ public class TradingBoxDetailActivity extends JMEBaseActivity {
 
             initToolbar(String.format(getString(R.string.trading_box_number), getIntent().getStringExtra("PeriodName")), true);
 
-            setRightNavigation("", R.mipmap.ic_more, 0, () -> TradeBoxFunctionUtils.show(this, ""));
+            setRightNavigation("", R.mipmap.ic_more, 0, () ->
+                    TradeBoxFunctionUtils.show(this, Constants.HttpConst.URL_TRADINGBOXINFO + mTradeId,
+                    String.format(getString(R.string.trading_box_number), getIntent().getStringExtra("PeriodName")),
+                    getString(R.string.trading_box_share_content), mBinding.layout.getId()));
 
             initViewPagerSimple();
         } else if (mType.equals("2")) {
