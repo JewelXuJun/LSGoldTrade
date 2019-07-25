@@ -22,7 +22,7 @@ public class ValueAddedServiceActivity extends JMEBaseActivity {
 
     private ActivityValueAddedServiceBinding mBinding;
 
-    private int isAgree = 0;
+    private int isAgree = 1;
 
     private OpenServicePopupWindow mWindow;
 
@@ -44,6 +44,7 @@ public class ValueAddedServiceActivity extends JMEBaseActivity {
         mWindow = new OpenServicePopupWindow(mContext);
         mWindow.setOutsideTouchable(true);
         mWindow.setFocusable(true);
+        mBinding.cbAgree.setChecked(true);
     }
 
     @Override
@@ -84,7 +85,7 @@ public class ValueAddedServiceActivity extends JMEBaseActivity {
 
         public void onClickOpenService() {
             if (isAgree == 0)
-                showShortToast("请阅读并同意以下协议");
+                showShortToast("请先阅读并同意《交易匣子服务协议》《委托风控服务协议》");
             else
                 sendRequest(ManagementService.getInstance().openValueAddedServices, new HashMap<>(), true);
         }
