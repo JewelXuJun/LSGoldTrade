@@ -20,6 +20,7 @@ import com.jme.lsgoldtrade.domain.WechatPayVo;
 import com.jme.lsgoldtrade.service.AccountService;
 import com.jme.lsgoldtrade.service.PaymentService;
 import com.jme.lsgoldtrade.util.PaymentHelper;
+import java.math.BigDecimal;
 import java.util.HashMap;
 
 /**
@@ -50,6 +51,11 @@ public class RechargeActivity extends JMEBaseActivity {
     protected void initData(Bundle savedInstanceState) {
         super.initData(savedInstanceState);
         mPaymentHelper = new PaymentHelper();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
         getUserInfo();
     }
 
@@ -73,7 +79,8 @@ public class RechargeActivity extends JMEBaseActivity {
                     if (value == null)
                         return;
 
-                    mBinding.tvBanlace.setText(TextUtils.isEmpty(value.getBalance()) ? getString(R.string.text_no_data_default) : BigDecimalUtil.formatMoney(value.getBalance()) + "元");
+                    mBinding.tvBanlace.setText(TextUtils.isEmpty(value.getBalance()) ? getString(R.string.text_no_data_default) :
+                            BigDecimalUtil.formatMoney(new BigDecimal(value.getBalance()).divide(new BigDecimal(100)).toPlainString()) + "元");
                 }
                 break;
             case "GetTradeAppPayResponse":
