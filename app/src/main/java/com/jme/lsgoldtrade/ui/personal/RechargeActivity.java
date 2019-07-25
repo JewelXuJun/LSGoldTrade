@@ -57,19 +57,17 @@ public class RechargeActivity extends JMEBaseActivity {
                     /**
                      * 对于支付结果，请商户依赖服务端的异步通知结果。同步通知结果，仅作为支付结束的通知。
                      */
-                    String result = "";
                     String resultStatus = payResult.getResultStatus();
                     // 判断resultStatus 为9000则代表支付成功
                     if (TextUtils.equals(resultStatus, "9000")) {
                         // 该笔订单是否真实支付成功，需要依赖服务端的异步通知。
-                        result = "支付成功";
+                        DialogHelp.getMessageDialog(RechargeActivity.this, "提示", "充值成功", (dialog, which) -> {
+                            finish();
+                        }).setCancelable(false).show();
                     } else {
                         // 该笔订单真实的支付结果，需要依赖服务端的异步通知。
-                        result = "支付失败";
+                        DialogHelp.getMessageDialog(RechargeActivity.this, "提示", "充值失败").setCancelable(false).show();
                     }
-                    DialogHelp.getMessageDialog(RechargeActivity.this, "提示", result, (dialog, which) -> {
-                        finish();
-                    }).show();
                     break;
             }
         }

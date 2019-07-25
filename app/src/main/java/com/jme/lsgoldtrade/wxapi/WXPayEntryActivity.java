@@ -52,20 +52,24 @@ public class WXPayEntryActivity extends JMEBaseActivity implements IWXAPIEventHa
             String result = "";
             switch (code) {
                 case 0:
-                    result = "支付成功";
+                    result = "充值成功";
                     break;
                 case -1:
-                    result = "支付失败";
+                    result = "充值失败";
                     break;
                 case -2:
-                    result = "支付取消";
+                    result = "充值取消";
                     break;
             }
             DialogHelp.getMessageDialog(this, "提示", result, (dialog, which) -> {
-                Intent intent = new Intent(this, CheckServiceActivity.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                startActivity(intent);
-            }).show();
+                if (code == 0) {
+                    Intent intent = new Intent(this, CheckServiceActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(intent);
+                } else {
+                    this.finish();
+                }
+            }).setCancelable(false).show();
         }
     }
 }
