@@ -8,19 +8,24 @@ import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.Base64;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.EditText;
 
+import com.alibaba.android.arouter.launcher.ARouter;
 import com.jme.common.network.DTRequest;
 import com.jme.common.network.Head;
 import com.jme.common.ui.base.JMECountDownTimer;
 import com.jme.lsgoldtrade.R;
 import com.jme.lsgoldtrade.base.JMEBaseFragment;
 import com.jme.lsgoldtrade.config.AppConfig;
+import com.jme.lsgoldtrade.config.Constants;
 import com.jme.lsgoldtrade.databinding.FragmentMoneyOutBinding;
 import com.jme.lsgoldtrade.domain.AccountVo;
 import com.jme.lsgoldtrade.domain.ImageVerifyCodeVo;
+import com.jme.lsgoldtrade.domain.TradingBoxDataInfoVo;
 import com.jme.lsgoldtrade.domain.UserInfoVo;
+import com.jme.lsgoldtrade.service.ManagementService;
 import com.jme.lsgoldtrade.service.TradeService;
 import com.jme.lsgoldtrade.service.UserService;
 import com.jme.lsgoldtrade.util.MarketUtil;
@@ -41,6 +46,7 @@ public class MoneyOutFragment extends JMEBaseFragment implements OnRefreshListen
     private String mKaptchaId;
 
     private JMECountDownTimer mCountDownTimer;
+    private TradeMessagePopUpWindow mTradeMessagePopUpWindow;
 
     @Override
     protected int getContentViewId() {
@@ -52,6 +58,10 @@ public class MoneyOutFragment extends JMEBaseFragment implements OnRefreshListen
         super.initView();
 
         mBinding = (FragmentMoneyOutBinding) mBindingUtil;
+
+        mTradeMessagePopUpWindow = new TradeMessagePopUpWindow(mContext);
+        mTradeMessagePopUpWindow.setOutsideTouchable(true);
+        mTradeMessagePopUpWindow.setFocusable(true);
     }
 
     @Override
@@ -217,8 +227,6 @@ public class MoneyOutFragment extends JMEBaseFragment implements OnRefreshListen
 
         if (TextUtils.isEmpty(mExtractableBalance))
             showShortToast(R.string.trade_amount_error);
-        else if (new BigDecimal(mExtractableBalance).compareTo(new BigDecimal(0)) != 1)
-            showShortToast(R.string.trade_amount_error);
         else if (TextUtils.isEmpty(mobile))
             showShortToast(R.string.trade_mobile_error);
         else if (new BigDecimal(amount).compareTo(new BigDecimal(0)) != 1)
@@ -232,7 +240,7 @@ public class MoneyOutFragment extends JMEBaseFragment implements OnRefreshListen
         else if (bShowImgVerifyCode && TextUtils.isEmpty(imgVerifyCode))
             showShortToast(R.string.login_img_verify_code_error);
         else
-            inoutMoney(amount, verifyCode, imgVerifyCode);
+            getStatus();
     }
 
     private void getAccount(boolean enable) {
@@ -246,6 +254,10 @@ public class MoneyOutFragment extends JMEBaseFragment implements OnRefreshListen
         bFlag = true;
 
         sendRequest(UserService.getInstance().fundInoutMsg, new HashMap<>(), true);
+    }
+
+    private void getStatus() {
+        sendRequest(ManagementService.getInstance().getStatus, new HashMap<>(), true);
     }
 
     private void inoutMoney(String amount, String verifyCode, String imgVerifyCode) {
@@ -302,6 +314,31 @@ public class MoneyOutFragment extends JMEBaseFragment implements OnRefreshListen
 
                     if (null != mCountDownTimer)
                         mCountDownTimer.start();
+                }
+
+                break;
+            case "GetStatus":
+                String status;
+
+                if (null == response)
+                    status = "";
+                else
+                    status = response.toString();
+
+                if (status.equals("1")) {
+                    if (null != mTradeMessagePopUpWindow && !mTradeMessagePopUpWindow.isShowing()) {
+                        mTradeMessagePopUpWindow.setData(mContext.getResources().getString(R.string.trade_account_error),
+                                mContext.getResources().getString(R.string.trade_account_goto_recharge),
+                                (view) -> {
+                                    ARouter.getInstance().build(Constants.ARouterUriConst.RECHARGE).navigation();
+
+                                    mTradeMessagePopUpWindow.dismiss();
+                                });
+                        mTradeMessagePopUpWindow.showAtLocation(mBinding.etTransferAmount, Gravity.CENTER, 0, 0);
+                    }
+                } else {
+                    inoutMoney(mBinding.etTransferAmount.getText().toString(), mBinding.etVerificationCode.getText().toString(),
+                            mBinding.etImgVerifyCode.getText().toString());
                 }
 
                 break;
