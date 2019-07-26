@@ -1,4 +1,4 @@
-package com.jme.lsgoldtrade.view;
+package com.jme.lsgoldtrade.ui.tradingbox;
 
 import android.content.Context;
 import android.databinding.DataBindingUtil;

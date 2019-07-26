@@ -16,7 +16,7 @@ import com.jme.lsgoldtrade.databinding.ActivityTradingBoxOrderBinding;
 import com.jme.lsgoldtrade.domain.TradingBoxOrderVo;
 import com.jme.lsgoldtrade.service.ManagementService;
 import com.jme.lsgoldtrade.view.EmptyView;
-import com.jme.lsgoldtrade.view.OrderConfirmPopupwindow;
+import com.jme.lsgoldtrade.view.ConfirmPopupwindow;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 
@@ -31,7 +31,7 @@ public class TradingBoxOrderActivity extends JMEBaseActivity implements OnRefres
 
     private ActivityTradingBoxOrderBinding mBinding;
 
-    private OrderConfirmPopupwindow mWindow;
+    private ConfirmPopupwindow mWindow;
     private TradingBoxOrderAdapter adapter;
 
     @Override
@@ -45,7 +45,7 @@ public class TradingBoxOrderActivity extends JMEBaseActivity implements OnRefres
 
         initToolbar(R.string.trading_box_order, true);
 
-        mWindow = new OrderConfirmPopupwindow(this);
+        mWindow = new ConfirmPopupwindow(this);
         mWindow.setOutsideTouchable(true);
         mWindow.setFocusable(true);
     }
@@ -78,7 +78,7 @@ public class TradingBoxOrderActivity extends JMEBaseActivity implements OnRefres
             switch (view.getId()) {
                 case R.id.btn_cancel:
                     if (null != mWindow || !mWindow.isShowing()) {
-                        mWindow.setData(getString(R.string.trading_box_order_cancel_message),
+                        mWindow.setData(getString(R.string.trading_box_order_cancel_message), getString(R.string.text_confirm),
                                 (View) -> {
                                     revocateorder(tradingBoxOrderVo.getId());
 

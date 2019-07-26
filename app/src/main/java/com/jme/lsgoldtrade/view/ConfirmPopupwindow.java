@@ -9,13 +9,14 @@ import android.view.ViewGroup;
 import com.jme.common.util.DensityUtil;
 import com.jme.lsgoldtrade.R;
 import com.jme.lsgoldtrade.base.JMEBasePopupWindow;
+import com.jme.lsgoldtrade.databinding.PopupwindowConfirmBinding;
 import com.jme.lsgoldtrade.databinding.PopupwindowOrderConfirmBinding;
 
-public class OrderConfirmPopupwindow extends JMEBasePopupWindow {
+public class ConfirmPopupwindow extends JMEBasePopupWindow {
 
-    private PopupwindowOrderConfirmBinding mBinding;
+    private PopupwindowConfirmBinding mBinding;
 
-    public OrderConfirmPopupwindow(Context context) {
+    public ConfirmPopupwindow(Context context) {
         super(context);
     }
 
@@ -31,7 +32,7 @@ public class OrderConfirmPopupwindow extends JMEBasePopupWindow {
     public void iniWindow() {
         super.iniWindow();
 
-        mBinding = DataBindingUtil.inflate(LayoutInflater.from(getContext()), R.layout.popupwindow_order_confirm, null, false);
+        mBinding = DataBindingUtil.inflate(LayoutInflater.from(getContext()), R.layout.popupwindow_confirm, null, false);
 
         if (null == mBinding)
             return;
@@ -41,8 +42,9 @@ public class OrderConfirmPopupwindow extends JMEBasePopupWindow {
         mBinding.btnCancel.setOnClickListener((view) -> dismiss());
     }
 
-    public void setData(String code, View.OnClickListener confirmListener) {
-        mBinding.tvContent.setText(code);
+    public void setData(String content, String conrfirm, View.OnClickListener confirmListener) {
+        mBinding.tvContent.setText(content);
+        mBinding.btnConfirm.setText(conrfirm);
         mBinding.btnConfirm.setOnClickListener(confirmListener);
     }
 }

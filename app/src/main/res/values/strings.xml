@@ -166,7 +166,7 @@
     <string name="trade_popupwindow_type">交易类型</string>
     <string name="trade_buy">买入</string>
     <string name="trade_sale">卖出</string>
-    <string name="trade_success">下单成功</string>
+    <string name="trade_success">报单成功</string>
     <string name="trade_popupwindow_time">交易时间</string>
     <string name="trade_popupwindow_trade_price">交易价格</string>
     <string name="trade_popupwindow_surplus_amount">剩余数量</string>
@@ -225,6 +225,7 @@
     <string name="trade_buy_open">买入开仓</string>
     <string name="trade_sale_open">卖出开仓</string>
     <string name="trade_amount_unit">%1$s手</string>
+    <string name="trade_see_order">查看订单</string>
 
     <!-- Personal -->
     <string name="personal_login">登录/注册</string>

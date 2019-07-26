@@ -13,7 +13,6 @@ import com.jme.lsgoldtrade.base.JMEBaseFragment;
 import com.jme.lsgoldtrade.databinding.FragmentTradingBoxBinding;
 import com.jme.lsgoldtrade.domain.TradingBoxDataInfoVo;
 import com.jme.lsgoldtrade.util.PicassoUtils;
-import com.jme.lsgoldtrade.view.TradingBoxPopupwindow;
 
 public class TradingBoxFragment extends JMEBaseFragment {
 

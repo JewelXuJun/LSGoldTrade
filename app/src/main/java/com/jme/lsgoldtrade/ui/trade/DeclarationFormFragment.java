@@ -36,6 +36,7 @@ import com.jme.lsgoldtrade.service.MarketService;
 import com.jme.lsgoldtrade.service.TradeService;
 import com.jme.lsgoldtrade.util.EidtTextInputUtil;
 import com.jme.lsgoldtrade.util.MarketUtil;
+import com.jme.lsgoldtrade.view.ConfirmPopupwindow;
 
 import java.math.BigDecimal;
 import java.util.HashMap;
@@ -77,6 +78,7 @@ public class DeclarationFormFragment extends JMEBaseFragment {
     private int mOcFlag = 0;
 
     private TradeMessagePopUpWindow mTradeMessagePopUpWindow;
+    private ConfirmPopupwindow mConfirmPopupwindow;
 
     private Handler mHandler = new Handler() {
         public void handleMessage(Message msg) {
@@ -109,6 +111,10 @@ public class DeclarationFormFragment extends JMEBaseFragment {
         mTradeMessagePopUpWindow = new TradeMessagePopUpWindow(mContext);
         mTradeMessagePopUpWindow.setOutsideTouchable(true);
         mTradeMessagePopUpWindow.setFocusable(true);
+
+        mConfirmPopupwindow = new ConfirmPopupwindow(mContext);
+        mConfirmPopupwindow.setOutsideTouchable(true);
+        mConfirmPopupwindow.setFocusable(true);
     }
 
     @Override
@@ -613,7 +619,11 @@ public class DeclarationFormFragment extends JMEBaseFragment {
                 break;
             case "LimitOrder":
                 if (head.isSuccess()) {
-                    showShortToast(R.string.trade_success);
+                    if (null != mConfirmPopupwindow && !mConfirmPopupwindow.isShowing()) {
+                        mConfirmPopupwindow.setData(mContext.getResources().getString(R.string.trade_success),
+                                mContext.getResources().getString(R.string.trade_see_order),
+                                (view) -> ARouter.getInstance().build(Constants.ARouterUriConst.CURRENTENTRUST).navigation());
+                    }
 
                     bEveningUp = false;
 

@@ -33,7 +33,6 @@ import com.jme.lsgoldtrade.service.MarketService;
 import com.jme.lsgoldtrade.service.TradeService;
 import com.jme.lsgoldtrade.ui.trade.TradeMessagePopUpWindow;
 import com.jme.lsgoldtrade.util.MarketUtil;
-import com.jme.lsgoldtrade.view.TradingBoxPopupwindow;
 
 import java.math.BigDecimal;
 import java.util.HashMap;
