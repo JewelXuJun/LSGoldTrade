@@ -492,7 +492,7 @@ public class MarketDetailActivity extends JMEBaseActivity implements FChart.OnPr
         if (!TextUtils.isEmpty(lastSettlePrice))
             mTChart.setPreClose(lastSettlePrice);
 
-        mTChart.loadTradeInfoChartData(tenSpeedVo.getAskLists(), tenSpeedVo.getBidLists());
+        mTChart.loadTradeInfoChartData(tenSpeedVo.getTenAskLists(), tenSpeedVo.getTenBidLists());
 
 //        getMaxNum();
         if (null != mPopupWindow)
@@ -598,7 +598,7 @@ public class MarketDetailActivity extends JMEBaseActivity implements FChart.OnPr
         params.put("contractId", mContractId);
         params.put("detailId", "");
         params.put("qryFlag", DIRECTION_BEFORE);
-        params.put("count", AppConfig.PageSize_10);
+        params.put("count", AppConfig.PageSize_20);
 
         sendRequest(MarketService.getInstance().getDetail, params, false, false, false);
     }

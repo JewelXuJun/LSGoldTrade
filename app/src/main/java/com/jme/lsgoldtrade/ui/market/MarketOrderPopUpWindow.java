@@ -187,12 +187,12 @@ public class MarketOrderPopUpWindow extends JMEBasePopupWindow {
 //            return "";
 
             if (i == 1) {
-                List<String[]> askLists = mTenSpeedVo.getAskLists();
-                price = askLists.get(9)[1];
+//                List<String[]> askLists = mTenSpeedVo.getTenAskLists();
+//                price = askLists.get(9)[1];
 //            mBinding.etPrice.setText(askLists.get(9)[1]);
             } else {
-                List<String[]> bidLists = mTenSpeedVo.getBidLists();
-                price = bidLists.get(0)[1];
+//                List<String[]> bidLists = mTenSpeedVo.getTenBidLists();
+//                price = bidLists.get(0)[1];
 //            mBinding.etPrice.setText(bidLists.get(0)[1]);
             }
 

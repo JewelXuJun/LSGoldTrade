@@ -404,7 +404,7 @@ public class MarketDetailLandscapeActivity extends JMEBaseActivity implements FC
         if (!TextUtils.isEmpty(lastSettlePrice))
             mTChart.setPreClose(lastSettlePrice);
 
-        mTChart.loadTradeInfoChartData(tenSpeedVo.getAskLists(), tenSpeedVo.getBidLists());
+        mTChart.loadTradeInfoChartData(tenSpeedVo.getTenAskLists(), tenSpeedVo.getTenBidLists());
     }
 
     public void updateKChartData(List<KChartVo> list, KData.Unit unit) {

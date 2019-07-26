@@ -454,9 +454,9 @@ public class DeclarationFormFragment extends JMEBaseFragment {
 
         if (TextUtils.isEmpty(priceStr)) {
             if (mBsFlag == 1)
-                mDeclarationFormPrice = mTenSpeedVo.getAskLists().get(4)[1];
+                mDeclarationFormPrice = mTenSpeedVo.getFiveAskLists().get(4)[1];
             else
-                mDeclarationFormPrice = mTenSpeedVo.getBidLists().get(0)[1];
+                mDeclarationFormPrice = mTenSpeedVo.getFiveBidLists().get(0)[1];
         } else {
             mDeclarationFormPrice = priceStr;
         }
@@ -565,8 +565,8 @@ public class DeclarationFormFragment extends JMEBaseFragment {
                     mBinding.tvLimitDownPrice.setText(mLowerLimitPrice);
                     mBinding.tvLimitUpPrice.setText(mHighLimitPrice);
                     mBinding.tvAmount.setText(MarketUtil.getVolumeValue(String.valueOf(mTenSpeedVo.getTurnover()), false));
-                    mBinding.fchartSale.setData(mTenSpeedVo.getAskLists(), FData.TYPE_SELL, lastSettlePrice);
-                    mBinding.fchartBuy.setData(mTenSpeedVo.getBidLists(), FData.TYPE_BUY, lastSettlePrice);
+                    mBinding.fchartSale.setData(mTenSpeedVo.getFiveAskLists(), FData.TYPE_SELL, lastSettlePrice);
+                    mBinding.fchartBuy.setData(mTenSpeedVo.getFiveBidLists(), FData.TYPE_BUY, lastSettlePrice);
                 }
 
                 if (bFlag) {

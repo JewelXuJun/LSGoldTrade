@@ -675,7 +675,7 @@ public class TenSpeedVo implements Serializable {
         this.quoteTime = quoteTime;
     }
 
-    public List<String[]> getAskLists() {
+    public List<String[]> getFiveAskLists() {
         List<String[]> list = new ArrayList<>();
 
         String[] askValue5 = new String[3];
@@ -711,7 +711,7 @@ public class TenSpeedVo implements Serializable {
         return list;
     }
 
-    public List<String[]> getBidLists() {
+    public List<String[]> getFiveBidLists() {
         List<String[]> list = new ArrayList<>();
 
         String[] bidValue1 = new String[3];
@@ -743,6 +743,138 @@ public class TenSpeedVo implements Serializable {
         bidValue5[1] = MarketUtil.getPriceValue(bidPrice5);
         bidValue5[2] = String.valueOf(bidVolume5);
         list.add(bidValue5);
+
+        return list;
+    }
+
+    public List<String[]> getTenAskLists() {
+        List<String[]> list = new ArrayList<>();
+
+        String[] askValue10 = new String[3];
+        askValue10[0] = "卖10";
+        askValue10[1] = MarketUtil.getPriceValue(askPrice10);
+        askValue10[2] = String.valueOf(askVolume10);
+        list.add(askValue10);
+
+        String[] askValue9 = new String[3];
+        askValue9[0] = "卖9";
+        askValue9[1] = MarketUtil.getPriceValue(askPrice9);
+        askValue9[2] = String.valueOf(askVolume9);
+        list.add(askValue9);
+
+        String[] askValue8 = new String[3];
+        askValue8[0] = "卖8";
+        askValue8[1] = MarketUtil.getPriceValue(askPrice8);
+        askValue8[2] = String.valueOf(askVolume8);
+        list.add(askValue8);
+
+        String[] askValue7 = new String[3];
+        askValue7[0] = "卖7";
+        askValue7[1] = MarketUtil.getPriceValue(askPrice7);
+        askValue7[2] = String.valueOf(askVolume7);
+        list.add(askValue7);
+
+        String[] askValue6 = new String[3];
+        askValue6[0] = "卖6";
+        askValue6[1] = MarketUtil.getPriceValue(askPrice6);
+        askValue6[2] = String.valueOf(askVolume6);
+        list.add(askValue6);
+
+        String[] askValue5 = new String[3];
+        askValue5[0] = "卖5";
+        askValue5[1] = MarketUtil.getPriceValue(askPrice5);
+        askValue5[2] = String.valueOf(askVolume5);
+        list.add(askValue5);
+
+        String[] askValue4 = new String[3];
+        askValue4[0] = "卖4";
+        askValue4[1] = MarketUtil.getPriceValue(askPrice4);
+        askValue4[2] = String.valueOf(askVolume4);
+        list.add(askValue4);
+
+        String[] askValue3 = new String[3];
+        askValue3[0] = "卖3";
+        askValue3[1] = MarketUtil.getPriceValue(askPrice3);
+        askValue3[2] = String.valueOf(askVolume3);
+        list.add(askValue3);
+
+        String[] askValue2 = new String[3];
+        askValue2[0] = "卖2";
+        askValue2[1] = MarketUtil.getPriceValue(askPrice2);
+        askValue2[2] = String.valueOf(askVolume2);
+        list.add(askValue2);
+
+        String[] askValue1 = new String[3];
+        askValue1[0] = "卖1";
+        askValue1[1] = MarketUtil.getPriceValue(askPrice1);
+        askValue1[2] = String.valueOf(askVolume1);
+        list.add(askValue1);
+
+        return list;
+    }
+
+    public List<String[]> getTenBidLists() {
+        List<String[]> list = new ArrayList<>();
+
+        String[] bidValue1 = new String[3];
+        bidValue1[0] = "买1";
+        bidValue1[1] = MarketUtil.getPriceValue(bidPrice1);
+        bidValue1[2] = String.valueOf(bidVolume1);
+        list.add(bidValue1);
+
+        String[] bidValue2 = new String[3];
+        bidValue2[0] = "买2";
+        bidValue2[1] = MarketUtil.getPriceValue(bidPrice2);
+        bidValue2[2] = String.valueOf(bidVolume2);
+        list.add(bidValue2);
+
+        String[] bidValue3 = new String[3];
+        bidValue3[0] = "买3";
+        bidValue3[1] = MarketUtil.getPriceValue(bidPrice3);
+        bidValue3[2] = String.valueOf(bidVolume3);
+        list.add(bidValue3);
+
+        String[] bidValue4 = new String[3];
+        bidValue4[0] = "买4";
+        bidValue4[1] = MarketUtil.getPriceValue(bidPrice4);
+        bidValue4[2] = String.valueOf(bidVolume4);
+        list.add(bidValue4);
+
+        String[] bidValue5 = new String[3];
+        bidValue5[0] = "买5";
+        bidValue5[1] = MarketUtil.getPriceValue(bidPrice5);
+        bidValue5[2] = String.valueOf(bidVolume5);
+        list.add(bidValue5);
+
+        String[] bidValue6 = new String[3];
+        bidValue6[0] = "买6";
+        bidValue6[1] = MarketUtil.getPriceValue(bidPrice6);
+        bidValue6[2] = String.valueOf(bidVolume6);
+        list.add(bidValue6);
+
+        String[] bidValue7 = new String[3];
+        bidValue7[0] = "买7";
+        bidValue7[1] = MarketUtil.getPriceValue(bidPrice7);
+        bidValue7[2] = String.valueOf(bidVolume7);
+        list.add(bidValue7);
+
+        String[] bidValue8 = new String[3];
+        bidValue8[0] = "买8";
+        bidValue8[1] = MarketUtil.getPriceValue(bidPrice8);
+        bidValue8[2] = String.valueOf(bidVolume8);
+        list.add(bidValue8);
+
+        String[] bidValue9 = new String[3];
+        bidValue9[0] = "买9";
+        bidValue9[1] = MarketUtil.getPriceValue(bidPrice9);
+        bidValue9[2] = String.valueOf(bidVolume9);
+        list.add(bidValue9);
+
+        String[] bidValue10 = new String[3];
+        bidValue10[0] = "买10";
+        bidValue10[1] = MarketUtil.getPriceValue(bidPrice10);
+        bidValue10[2] = String.valueOf(bidVolume10);
+        list.add(bidValue10);
 
         return list;
     }

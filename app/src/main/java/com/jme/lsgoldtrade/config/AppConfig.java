@@ -3,6 +3,7 @@ package com.jme.lsgoldtrade.config;
 public class AppConfig {
 
     public static final String PageSize_10 = "10";
+    public static final String PageSize_20 = "20";
 
     public static final long Second = 1000;
     public static final long Second2 = 2 * Second;
