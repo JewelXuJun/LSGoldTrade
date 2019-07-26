@@ -44,12 +44,14 @@ public class ValueServiceSuccessActivity extends JMEBaseActivity {
             ARouter.getInstance()
                     .build(Constants.ARouterUriConst.RECHARGE)
                     .navigation();
+            finish();
         }
 
         public void onClickCheckService() {//查看服务
             ARouter.getInstance()
                     .build(Constants.ARouterUriConst.CHECKSERVICE)
                     .navigation();
+            finish();
         }
     }
 }

@@ -100,6 +100,7 @@ public class ValueAddedServiceActivity extends JMEBaseActivity {
                     ARouter.getInstance()
                             .build(Constants.ARouterUriConst.VALUESERVICESUCCESS)
                             .navigation();
+                    this.finish();
                 } else {
                     if (head.getCode().equals("-1")) {
                         mToast.cancel();
