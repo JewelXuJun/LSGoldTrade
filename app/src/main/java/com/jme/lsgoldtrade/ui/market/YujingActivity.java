@@ -70,6 +70,17 @@ public class YujingActivity extends JMEBaseActivity {
         mBinding.type.setText(type);
         mBinding.price.setText(price);
         mBinding.bili.setText(rate);
+        if (new BigDecimal(range).compareTo(new BigDecimal(0)) > 0) {
+            mBinding.price.setTextColor(getResources().getColor(R.color.common_font_increase));
+            mBinding.bili.setTextColor(getResources().getColor(R.color.common_font_increase));
+        } else if (new BigDecimal(range).compareTo(new BigDecimal(0)) == 0) {
+            mBinding.price.setTextColor(getResources().getColor(R.color.common_font_stable));
+            mBinding.bili.setTextColor(getResources().getColor(R.color.common_font_stable));
+        } else if (new BigDecimal(range).compareTo(new BigDecimal(0)) < 0) {
+            mBinding.price.setTextColor(getResources().getColor(R.color.common_font_decrease));
+            mBinding.bili.setTextColor(getResources().getColor(R.color.common_font_decrease));
+        }
+
     }
 
     @Override
