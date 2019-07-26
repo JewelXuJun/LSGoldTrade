@@ -361,7 +361,7 @@
                                     android:paddingRight="@dimen/margin_tiny"
                                     android:text="@string/text_no_data_default"
                                     android:textColor="@color/color_text_black"
-                                    android:textSize="@dimen/size_exiguity" />
+                                    android:textSize="@dimen/size_exiguity_tiny" />
 
                             </LinearLayout>
 

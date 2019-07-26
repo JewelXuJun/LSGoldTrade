@@ -36,7 +36,6 @@ import com.jme.lsgoldtrade.service.MarketService;
 import com.jme.lsgoldtrade.service.TradeService;
 import com.jme.lsgoldtrade.util.EidtTextInputUtil;
 import com.jme.lsgoldtrade.util.MarketUtil;
-import com.jme.lsgoldtrade.view.BaoDanWindow;
 
 import java.math.BigDecimal;
 import java.util.HashMap;
@@ -59,7 +58,7 @@ public class DeclarationFormFragment extends JMEBaseFragment {
     private ContractInfoVo mContractInfoVo;
     private TenSpeedVo mTenSpeedVo;
     private AlertDialog mDialog;
-    private BaoDanWindow mWindow;
+    private DeclarationFormWindow mWindow;
     private CancelOrderPopUpWindow mCancelWindow;
     private Subscription mRxbus;
 
@@ -73,6 +72,7 @@ public class DeclarationFormFragment extends JMEBaseFragment {
     private long mMaxHoldQty = 0;
     private String mLowerLimitPrice;
     private String mHighLimitPrice;
+    private String mDeclarationFormPrice;
     private int mBsFlag = 0;
     private int mOcFlag = 0;
 
@@ -116,7 +116,7 @@ public class DeclarationFormFragment extends JMEBaseFragment {
         super.initData(savedInstanceState);
 
         mAdapter = new TabViewPagerAdapter(getChildFragmentManager());
-        mWindow = new BaoDanWindow(mContext);
+        mWindow = new DeclarationFormWindow(mContext);
         mWindow.setOutsideTouchable(true);
         mWindow.setFocusable(true);
         mCancelWindow = new CancelOrderPopUpWindow(mContext);
@@ -451,13 +451,12 @@ public class DeclarationFormFragment extends JMEBaseFragment {
         return price;
     }
 
-    private void showPopupWindow(String contractID, String price, String amount, int bsFlag, int ocFlag) {
-        if (null == mWindow)
+    private void showPopupWindow(String contractID, String price, String amount, int bsFlag) {
+        if (null == mWindow || mWindow.isShowing())
             return;
 
-        mWindow.setData(mUser.getAccount(), contractID, price, amount,
-                bsFlag + "", (view) -> {
-                    limitOrder(contractID, price, amount, bsFlag, ocFlag);
+        mWindow.setData(mUser.getAccount(), contractID, price, amount, String.valueOf(bsFlag), (view) -> {
+                    getStatus();
 
                     mWindow.dismiss();
                 });
@@ -466,22 +465,31 @@ public class DeclarationFormFragment extends JMEBaseFragment {
 
     private void doTrade() {
         String contractID = mBinding.tvContractId.getText().toString();
-        String price = getPrice();
         String amount = mBinding.etAmount.getText().toString();
         long holdAmount = Long.parseLong(amount) + ((ItemHoldPositionFragment) mFragmentArrays[0]).getPosition(contractID);
 
+        String priceStr = mBinding.etPrice.getText().toString();
+
+        if (TextUtils.isEmpty(priceStr)) {
+            if (mBsFlag == 1)
+                mDeclarationFormPrice = mTenSpeedVo.getAskLists().get(4)[1];
+            else
+                mDeclarationFormPrice = mTenSpeedVo.getBidLists().get(0)[1];
+        } else {
+            mDeclarationFormPrice = priceStr;
+        }
+
         if (TextUtils.isEmpty(contractID))
             showShortToast(R.string.trade_contract_error);
-        else if (TextUtils.isEmpty(price) || price.equals(mContext.getResources().getString(R.string.text_no_data_default)))
+        else if (TextUtils.isEmpty(mDeclarationFormPrice) || mDeclarationFormPrice.equals(mContext.getResources().getString(R.string.text_no_data_default)))
             showShortToast(R.string.trade_price_error);
-        else if (new BigDecimal(price).compareTo(new BigDecimal(mLowerLimitPrice)) == -1)
+        else if (new BigDecimal(mDeclarationFormPrice).compareTo(new BigDecimal(mLowerLimitPrice)) == -1)
             showShortToast(R.string.trade_limit_down_price_error);
-        else if (new BigDecimal(price).compareTo(new BigDecimal(mHighLimitPrice)) == 1)
+        else if (new BigDecimal(mDeclarationFormPrice).compareTo(new BigDecimal(mHighLimitPrice)) == 1)
             showShortToast(R.string.trade_limit_up_price_error);
         else if (TextUtils.isEmpty(amount))
             showShortToast(R.string.trade_number_error);
-        else if (new BigDecimal(amount).compareTo(new BigDecimal(0)) == 0
-                || new BigDecimal(amount).compareTo(new BigDecimal(0)) == -1)
+        else if (new BigDecimal(amount).compareTo(new BigDecimal(0)) == 0)
             showShortToast(R.string.trade_number_error_zero);
         else if (mMinOrderQty != -1 && new BigDecimal(amount).compareTo(new BigDecimal(mMinOrderQty)) == -1)
             showShortToast(R.string.trade_limit_min_amount_error);
@@ -490,7 +498,7 @@ public class DeclarationFormFragment extends JMEBaseFragment {
         else if (mMaxHoldQty != -1 && new BigDecimal(holdAmount).compareTo(new BigDecimal(mMaxHoldQty)) == 1)
             showShortToast(R.string.trade_limit_max_amount_error2);
         else
-            getStatus();
+            showPopupWindow(contractID, mDeclarationFormPrice, amount, mBsFlag);
     }
 
     private void hiddenKeyBoard() {
@@ -599,8 +607,7 @@ public class DeclarationFormFragment extends JMEBaseFragment {
                         mTradeMessagePopUpWindow.showAtLocation(mBinding.etAmount, Gravity.CENTER, 0, 0);
                     }
                 } else {
-                    showPopupWindow(mBinding.tvContractId.getText().toString(), mBinding.etPrice.getText().toString(),
-                            mBinding.etAmount.getText().toString(), mBsFlag, mOcFlag);
+                    limitOrder(mBinding.tvContractId.getText().toString(), mDeclarationFormPrice, mBinding.etAmount.getText().toString(), mBsFlag, mOcFlag);
                 }
 
                 break;

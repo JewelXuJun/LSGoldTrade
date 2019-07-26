@@ -5,7 +5,7 @@
 
         <variable
             name="handlers"
-            type="com.jme.lsgoldtrade.view.BaoDanWindow.ClickHandlers" />
+            type="com.jme.lsgoldtrade.ui.trade.DeclarationFormWindow.ClickHandlers" />
 
     </data>
 
@@ -17,175 +17,166 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="60dp">
+            android:layout_height="wrap_content">
 
             <TextView
-                android:id="@+id/title"
+                android:id="@+id/tv_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="盈亏设置"
-                android:textSize="@dimen/sp_18"
-                android:textColor="@color/black_deep"
                 android:layout_centerInParent="true"
-                />
+                android:paddingTop="@dimen/common_area_margin"
+                android:paddingBottom="@dimen/common_area_margin"
+                android:text="盈亏设置"
+                android:textColor="@color/black_deep"
+                android:textSize="@dimen/sp_18" />
 
-            <ImageView
-                android:id="@+id/iv_cancel"
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@mipmap/ic_close_blue"
-                android:layout_centerVertical="true"
                 android:layout_alignParentRight="true"
-                android:padding="10dp"
-                android:layout_marginRight="15dp"
-                android:onClick="@{() -> handlers.onClickCancel()}"
-                />
+                android:layout_centerVertical="true"
+                android:layout_marginRight="@dimen/common_area_margin_tiny"
+                android:padding="@dimen/common_page_padding">
+
+                <ImageView
+                    android:id="@+id/img_cancel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:onClick="@{() -> handlers.onClickCancel()}"
+                    android:src="@mipmap/ic_close_blue" />
+
+            </LinearLayout>
 
         </RelativeLayout>
 
-        <include layout="@layout/item_line_vertical" />
+        <include layout="@layout/item_line_vertical_list" />
 
         <LinearLayout
-            android:id="@+id/yingkuisetting"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:paddingLeft="15dp"
-            android:paddingRight="15dp"
-            android:paddingTop="12dp"
-            >
+            android:paddingLeft="@dimen/common_area_margin"
+            android:paddingRight="@dimen/common_area_margin">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                >
+                android:layout_marginTop="@dimen/margin_middle"
+                android:layout_marginBottom="@dimen/margin_middle"
+                android:orientation="horizontal">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="黄金账号"
-                    android:textSize="@dimen/sp_14"
+                    android:text="@string/trade_popupwindow_account"
                     android:textColor="@color/black_deep"
-                    android:layout_marginRight="17dp"
-                    />
+                    android:textSize="@dimen/sp_14" />
 
                 <TextView
-                    android:id="@+id/back_username"
+                    android:id="@+id/tv_gold_account"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="黄金账号"
-                    android:textSize="@dimen/sp_18"
+                    android:layout_marginLeft="@dimen/margin_trade_rule"
                     android:textColor="@color/black_deep"
-                    />
+                    android:textSize="@dimen/sp_18" />
 
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_marginTop="30dp"
-                >
+                android:layout_marginTop="@dimen/margin_middle"
+                android:layout_marginBottom="@dimen/margin_middle"
+                android:orientation="horizontal">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="交易类型"
-                    android:textSize="@dimen/sp_14"
+                    android:text="@string/trade_popupwindow_type"
                     android:textColor="@color/black_deep"
-                    android:layout_marginRight="17dp"
-                    />
+                    android:textSize="@dimen/sp_14" />
 
                 <TextView
-                    android:id="@+id/business_type"
+                    android:id="@+id/tv_business_type"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="买入开仓"
-                    android:textSize="@dimen/sp_18"
+                    android:layout_marginLeft="@dimen/margin_trade_rule"
                     android:textColor="@color/black_deep"
-                    />
+                    android:textSize="@dimen/sp_18" />
 
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_marginTop="30dp"
-                >
+                android:layout_marginTop="@dimen/margin_middle"
+                android:layout_marginBottom="@dimen/margin_middle"
+                android:orientation="horizontal">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="委托品种"
-                    android:textSize="@dimen/sp_14"
+                    android:text="@string/trade_popupwindow_entrust_varieties"
                     android:textColor="@color/black_deep"
-                    android:layout_marginRight="17dp"
-                    />
+                    android:textSize="@dimen/sp_14" />
 
                 <TextView
-                    android:id="@+id/business_varieties"
+                    android:id="@+id/tv_business_varieties"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Au(T+D)"
-                    android:textSize="@dimen/sp_18"
+                    android:layout_marginLeft="@dimen/margin_trade_rule"
                     android:textColor="@color/black_deep"
-                    />
+                    android:textSize="@dimen/sp_18" />
 
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_marginTop="30dp"
-                >
+                android:layout_marginTop="@dimen/margin_middle"
+                android:layout_marginBottom="@dimen/margin_middle"
+                android:orientation="horizontal">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="委托价格"
-                    android:textSize="@dimen/sp_14"
+                    android:text="@string/trade_popupwindow_entrust_price"
                     android:textColor="@color/black_deep"
-                    android:layout_marginRight="17dp"
-                    />
+                    android:textSize="@dimen/sp_14" />
 
                 <TextView
-                    android:id="@+id/weituojiage"
+                    android:id="@+id/tv_price"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="3500"
-                    android:textSize="@dimen/sp_18"
+                    android:layout_marginLeft="@dimen/margin_trade_rule"
                     android:textColor="@color/black_deep"
-                    />
+                    android:textSize="@dimen/sp_18" />
 
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_marginTop="30dp"
-                >
+                android:layout_marginTop="@dimen/margin_middle"
+                android:layout_marginBottom="@dimen/margin_middle"
+                android:orientation="horizontal">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="委托数量"
-                    android:textSize="@dimen/sp_14"
+                    android:text="@string/trade_popupwindow_entrust_amount"
                     android:textColor="@color/black_deep"
-                    android:layout_marginRight="17dp"
-                    />
+                    android:textSize="@dimen/sp_14" />
 
                 <TextView
-                    android:id="@+id/weituoshuliang"
+                    android:id="@+id/tv_amount"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="1"
-                    android:textSize="@dimen/sp_18"
+                    android:layout_marginLeft="@dimen/margin_trade_rule"
                     android:textColor="@color/black_deep"
-                    />
+                    android:textSize="@dimen/sp_18" />
 
             </LinearLayout>
 
@@ -194,27 +185,33 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="@dimen/height_item_normal"
+            android:layout_marginLeft="@dimen/common_area_margin"
+            android:layout_marginTop="@dimen/margin_middle"
+            android:layout_marginRight="@dimen/common_area_margin"
+            android:layout_marginBottom="@dimen/common_area_margin"
             android:orientation="horizontal">
 
             <Button
+                android:id="@+id/btn_cancel"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_marginRight="@dimen/common_area_margin_middle"
                 android:layout_weight="1"
-                android:background="@color/white"
-                android:onClick="@{() -> handlers.onClickCancel()}"
+                android:background="@drawable/bg_btn_blue_stroke"
                 android:text="@string/text_cancel"
-                android:textColor="@color/black_deep"
-                android:textSize="@dimen/sp_16" />
+                android:textColor="@color/color_blue_deep"
+                android:textSize="@dimen/common_font_size" />
 
             <Button
                 android:id="@+id/btn_confirm"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_marginLeft="@dimen/common_area_margin_middle"
                 android:layout_weight="1"
-                android:background="@color/color_blue"
+                android:background="@drawable/bg_btn_blue_solid"
                 android:text="@string/text_confirm"
                 android:textColor="@color/white"
-                android:textSize="@dimen/sp_16" />
+                android:textSize="@dimen/common_font_size" />
 
         </LinearLayout>
 
