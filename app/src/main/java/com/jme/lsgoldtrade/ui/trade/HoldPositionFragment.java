@@ -520,8 +520,6 @@ public class HoldPositionFragment extends JMEBaseFragment implements OnRefreshLi
 
                 if (incrementState.equals("T")) {
                     getStatus();
-
-
                 } else {
                     if (null != mTradeMessagePopUpWindow && !mTradeMessagePopUpWindow.isShowing()) {
                         mTradeMessagePopUpWindow.setData(mContext.getResources().getString(R.string.trade_increment_error),

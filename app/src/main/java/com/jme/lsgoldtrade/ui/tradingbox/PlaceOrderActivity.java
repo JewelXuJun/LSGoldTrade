@@ -31,6 +31,7 @@ import com.jme.lsgoldtrade.domain.TradingBoxInfoVo;
 import com.jme.lsgoldtrade.service.ManagementService;
 import com.jme.lsgoldtrade.service.MarketService;
 import com.jme.lsgoldtrade.service.TradeService;
+import com.jme.lsgoldtrade.ui.trade.TradeMessagePopUpWindow;
 import com.jme.lsgoldtrade.util.MarketUtil;
 import com.jme.lsgoldtrade.view.TradingBoxPopupwindow;
 
@@ -47,6 +48,7 @@ public class PlaceOrderActivity extends JMEBaseActivity {
     private ActivityPlaceOrderBinding mBinding;
 
     private TradingBoxPopupwindow mWindow;
+    private TradeMessagePopUpWindow mTradeMessagePopUpWindow;
 
     private String mType;
     private String mDirection;
@@ -78,6 +80,10 @@ public class PlaceOrderActivity extends JMEBaseActivity {
         mWindow = new TradingBoxPopupwindow(this);
         mWindow.setOutsideTouchable(true);
         mWindow.setFocusable(true);
+
+        mTradeMessagePopUpWindow = new TradeMessagePopUpWindow(mContext);
+        mTradeMessagePopUpWindow.setOutsideTouchable(true);
+        mTradeMessagePopUpWindow.setFocusable(true);
     }
 
     @Override
@@ -237,6 +243,14 @@ public class PlaceOrderActivity extends JMEBaseActivity {
         sendRequest(MarketService.getInstance().getTenSpeedQuotes, params, false, false, false);
     }
 
+    private void getUserAddedServicesStatus() {
+        sendRequest(ManagementService.getInstance().getUserAddedServicesStatus, new HashMap<>(), true);
+    }
+
+    private void getStatus() {
+        sendRequest(ManagementService.getInstance().getStatus, new HashMap<>(), true);
+    }
+
     private void placeOrder(String number) {
         HashMap<String, String> params = new HashMap<>();
         params.put("authorizedOpeningTimeBegin", mOpenTimeStart);
@@ -352,6 +366,54 @@ public class PlaceOrderActivity extends JMEBaseActivity {
                 }
 
                 break;
+            case "GetUserAddedServicesStatus":
+                String incrementState;
+
+                if (null == response)
+                    incrementState = "";
+                else
+                    incrementState = response.toString();
+
+                if (incrementState.equals("T")) {
+                    getStatus();
+                } else {
+                    if (null != mTradeMessagePopUpWindow && !mTradeMessagePopUpWindow.isShowing()) {
+                        mTradeMessagePopUpWindow.setData(mContext.getResources().getString(R.string.trade_increment_error),
+                                mContext.getResources().getString(R.string.trade_increment_goto_open),
+                                (view) -> {
+                                    ARouter.getInstance().build(Constants.ARouterUriConst.VALUEADDEDSERVICE).navigation();
+
+                                    mTradeMessagePopUpWindow.dismiss();
+                                });
+                        mTradeMessagePopUpWindow.showAtLocation(mBinding.tvBalanceMessage, Gravity.CENTER, 0, 0);
+                    }
+                }
+
+                break;
+            case "GetStatus":
+                String status;
+
+                if (null == response)
+                    status = "";
+                else
+                    status = response.toString();
+
+                if (status.equals("1")) {
+                    if (null != mTradeMessagePopUpWindow && !mTradeMessagePopUpWindow.isShowing()) {
+                        mTradeMessagePopUpWindow.setData(mContext.getResources().getString(R.string.trade_account_error),
+                                mContext.getResources().getString(R.string.trade_account_goto_recharge),
+                                (view) -> {
+                                    ARouter.getInstance().build(Constants.ARouterUriConst.RECHARGE).navigation();
+
+                                    mTradeMessagePopUpWindow.dismiss();
+                                });
+                        mTradeMessagePopUpWindow.showAtLocation(mBinding.tvBalanceMessage, Gravity.CENTER, 0, 0);
+                    }
+                } else {
+                    placeOrder(mBinding.etAmount.getText().toString());
+                }
+
+                break;
             case "PlaceOrder":
                 if (head.isSuccess())
                     ARouter.getInstance().build(Constants.ARouterUriConst.TRADINGBOXORDER).navigation();
@@ -443,7 +505,7 @@ public class PlaceOrderActivity extends JMEBaseActivity {
             else if (!bEnoughFlag)
                 showShortToast(R.string.trading_box_balance_not_enough_message);
             else
-                placeOrder(amount);
+                getUserAddedServicesStatus();
         }
     }
 
