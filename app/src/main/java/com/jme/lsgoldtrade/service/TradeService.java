@@ -16,11 +16,9 @@ import com.jme.lsgoldtrade.domain.OrderHisPageVo;
 import com.jme.lsgoldtrade.domain.OrderPageVo;
 import com.jme.lsgoldtrade.domain.PositionPageVo;
 import com.jme.lsgoldtrade.domain.IdentityInfoVo;
-import com.jme.lsgoldtrade.domain.WarmVo;
-
+import com.jme.lsgoldtrade.domain.WarnVo;
 import java.util.HashMap;
 import java.util.List;
-
 import okhttp3.Interceptor;
 import okhttp3.Request;
 import okhttp3.Response;
@@ -167,15 +165,15 @@ public class TradeService extends IService<TradeApi> {
         }
     };
 
-    public API setWarm = new API<String>("SetWarm") {
+    public API setWarn = new API<String>("SetWarn") {
         @Override
         public Call<DTResponse> request(HashMap<String, String> params) {
 
-            return mApi.setWarm(params);
+            return mApi.setWarn(params);
         }
     };
 
-    public API warnInfo = new API<WarmVo>("GetWarm") {
+    public API warnInfo = new API<WarnVo>("WarnInfo") {
         @Override
         public Call<DTResponse> request(HashMap<String, String> params) {
 

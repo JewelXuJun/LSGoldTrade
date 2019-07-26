@@ -55,7 +55,7 @@ public interface TradeApi {
     Call<DTResponse> minReserveFund(@Body Map<String, String> map);
 
     @POST("/gold-trade/v1.0.0/android/setWarn")
-    Call<DTResponse> setWarm(@Body Map<String, String> map);
+    Call<DTResponse> setWarn(@Body Map<String, String> map);
 
     @GET("/gold-trade/v1.0.0/android/warnInfo")
     Call<DTResponse> warnInfo(@QueryMap Map<String, String> map);

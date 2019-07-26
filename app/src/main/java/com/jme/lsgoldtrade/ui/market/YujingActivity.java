@@ -9,22 +9,21 @@ import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.TextView;
-
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.jme.common.network.DTRequest;
 import com.jme.common.network.Head;
 import com.jme.common.util.AppManager;
+import com.jme.common.util.BigDecimalUtil;
 import com.jme.lsgoldtrade.R;
 import com.jme.lsgoldtrade.base.JMEBaseActivity;
 import com.jme.lsgoldtrade.config.AppConfig;
 import com.jme.lsgoldtrade.config.Constants;
 import com.jme.lsgoldtrade.databinding.ActivityYujingBinding;
+import com.jme.lsgoldtrade.domain.WarnVo;
 import com.jme.lsgoldtrade.service.TradeService;
 import com.jme.lsgoldtrade.util.MarketUtil;
-
 import java.math.BigDecimal;
 import java.util.HashMap;
 
@@ -45,6 +44,8 @@ public class YujingActivity extends JMEBaseActivity {
     private String upPriceIsOpen = "0";
 
     private String lowPriceIsOpen = "0";
+
+    private String id = "";
 
     @Override
     protected int getContentViewId() {
@@ -91,7 +92,7 @@ public class YujingActivity extends JMEBaseActivity {
     @Override
     protected void initListener() {
         super.initListener();
-        mBinding.etUpPrice.addTextChangedListener(new TextWatcher() {
+        mBinding.etCeilingPrice.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
@@ -103,22 +104,22 @@ public class YujingActivity extends JMEBaseActivity {
                     if (s.length() - 1 - s.toString().indexOf(".") > AppConfig.Length_Limit) {
                         s = s.toString().subSequence(0, s.toString().indexOf(".") + (AppConfig.Length_Limit + 1));
 
-                        mBinding.etUpPrice.setText(s);
-                        mBinding.etUpPrice.setSelection(s.length());
+                        mBinding.etCeilingPrice.setText(s);
+                        mBinding.etCeilingPrice.setSelection(s.length());
                     }
                 }
 
                 if (s.toString().trim().equals(".")) {
                     s = "0" + s;
 
-                    mBinding.etUpPrice.setText(s);
-                    mBinding.etUpPrice.setSelection(2);
+                    mBinding.etCeilingPrice.setText(s);
+                    mBinding.etCeilingPrice.setSelection(2);
                 }
 
                 if (s.toString().startsWith("0") && s.toString().trim().length() > 1) {
                     if (!s.toString().substring(1, 2).equals(".")) {
-                        mBinding.etUpPrice.setText(s.subSequence(0, 1));
-                        mBinding.etUpPrice.setSelection(1);
+                        mBinding.etCeilingPrice.setText(s.subSequence(0, 1));
+                        mBinding.etCeilingPrice.setSelection(1);
 
                         return;
                     }
@@ -130,7 +131,7 @@ public class YujingActivity extends JMEBaseActivity {
 
             }
         });
-        mBinding.etLowPrice.addTextChangedListener(new TextWatcher() {
+        mBinding.etFloorPrice.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
@@ -142,22 +143,22 @@ public class YujingActivity extends JMEBaseActivity {
                     if (s.length() - 1 - s.toString().indexOf(".") > AppConfig.Length_Limit) {
                         s = s.toString().subSequence(0, s.toString().indexOf(".") + (AppConfig.Length_Limit + 1));
 
-                        mBinding.etLowPrice.setText(s);
-                        mBinding.etLowPrice.setSelection(s.length());
+                        mBinding.etFloorPrice.setText(s);
+                        mBinding.etFloorPrice.setSelection(s.length());
                     }
                 }
 
                 if (s.toString().trim().equals(".")) {
                     s = "0" + s;
 
-                    mBinding.etLowPrice.setText(s);
-                    mBinding.etLowPrice.setSelection(2);
+                    mBinding.etFloorPrice.setText(s);
+                    mBinding.etFloorPrice.setSelection(2);
                 }
 
                 if (s.toString().startsWith("0") && s.toString().trim().length() > 1) {
                     if (!s.toString().substring(1, 2).equals(".")) {
-                        mBinding.etLowPrice.setText(s.subSequence(0, 1));
-                        mBinding.etLowPrice.setSelection(1);
+                        mBinding.etFloorPrice.setText(s.subSequence(0, 1));
+                        mBinding.etFloorPrice.setSelection(1);
 
                         return;
                     }
@@ -170,57 +171,42 @@ public class YujingActivity extends JMEBaseActivity {
             }
         });
 
-        mBinding.cb1.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked) {
-                    mBinding.cb1.setChecked(true);
-                    mBinding.cb3.setChecked(false);
-                    mBinding.cb7.setChecked(false);
-                    circle = "1";
-                }
+        mBinding.cb1.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            if (isChecked) {
+                mBinding.cb1.setChecked(true);
+                mBinding.cb3.setChecked(false);
+                mBinding.cb7.setChecked(false);
+                circle = "1";
             }
         });
-        mBinding.cb3.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked) {
-                    mBinding.cb1.setChecked(false);
-                    mBinding.cb3.setChecked(true);
-                    mBinding.cb7.setChecked(false);
-                    circle = "3";
-                }
+        mBinding.cb3.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            if (isChecked) {
+                mBinding.cb1.setChecked(false);
+                mBinding.cb3.setChecked(true);
+                mBinding.cb7.setChecked(false);
+                circle = "2";
             }
         });
-        mBinding.cb7.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked) {
-                    mBinding.cb1.setChecked(false);
-                    mBinding.cb3.setChecked(false);
-                    mBinding.cb7.setChecked(true);
-                    circle = "7";
-                }
+        mBinding.cb7.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            if (isChecked) {
+                mBinding.cb1.setChecked(false);
+                mBinding.cb3.setChecked(false);
+                mBinding.cb7.setChecked(true);
+                circle = "3";
             }
         });
-        mBinding.cbUpprice.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked) {
-                    upPriceIsOpen = "1";
-                } else {
-                    upPriceIsOpen = "0";
-                }
+        mBinding.cbCeiling.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            if (isChecked) {
+                upPriceIsOpen = "1";
+            } else {
+                upPriceIsOpen = "0";
             }
         });
-        mBinding.cbLowprice.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked) {
-                    lowPriceIsOpen = "1";
-                } else {
-                    lowPriceIsOpen = "0";
-                }
+        mBinding.cbFloor.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            if (isChecked) {
+                lowPriceIsOpen = "1";
+            } else {
+                lowPriceIsOpen = "0";
             }
         });
     }
@@ -236,7 +222,7 @@ public class YujingActivity extends JMEBaseActivity {
         public void onClickUpMinus() {
             hiddenKeyBoard();
 
-            String price = getPrice(mBinding.etUpPrice);
+            String price = getPrice(mBinding.etCeilingPrice);
 
             if (TextUtils.isEmpty(price))
                 return;
@@ -246,20 +232,20 @@ public class YujingActivity extends JMEBaseActivity {
             if (new BigDecimal(String.valueOf(value)).compareTo(new BigDecimal(0)) == -1) {
                 showShortToast(R.string.trade_limit_down_price_error);
 
-                mBinding.etUpPrice.setText(price);
-                mBinding.etUpPrice.setSelection(price.length());
+                mBinding.etCeilingPrice.setText(price);
+                mBinding.etCeilingPrice.setSelection(price.length());
             } else {
                 String valueStr = MarketUtil.formatValue(String.valueOf(value), 2);
 
-                mBinding.etUpPrice.setText(valueStr);
-                mBinding.etUpPrice.setSelection(valueStr.length());
+                mBinding.etCeilingPrice.setText(valueStr);
+                mBinding.etCeilingPrice.setSelection(valueStr.length());
             }
         }
 
         public void onClickUpPriceAdd() {
             hiddenKeyBoard();
 
-            String price = getPrice(mBinding.etUpPrice);
+            String price = getPrice(mBinding.etCeilingPrice);
 
             if (TextUtils.isEmpty(price))
                 return;
@@ -268,14 +254,14 @@ public class YujingActivity extends JMEBaseActivity {
 
             String valueStr = MarketUtil.formatValue(String.valueOf(value), 2);
 
-            mBinding.etUpPrice.setText(valueStr);
-            mBinding.etUpPrice.setSelection(valueStr.length());
+            mBinding.etCeilingPrice.setText(valueStr);
+            mBinding.etCeilingPrice.setSelection(valueStr.length());
         }
 
         public void onClickDownMinus() {
             hiddenKeyBoard();
 
-            String price = getPrice(mBinding.etLowPrice);
+            String price = getPrice(mBinding.etFloorPrice);
 
             if (TextUtils.isEmpty(price))
                 return;
@@ -285,20 +271,20 @@ public class YujingActivity extends JMEBaseActivity {
             if (new BigDecimal(String.valueOf(value)).compareTo(new BigDecimal(0)) == -1) {
                 showShortToast(R.string.trade_limit_down_price_error);
 
-                mBinding.etLowPrice.setText(price);
-                mBinding.etLowPrice.setSelection(price.length());
+                mBinding.etFloorPrice.setText(price);
+                mBinding.etFloorPrice.setSelection(price.length());
             } else {
                 String valueStr = MarketUtil.formatValue(String.valueOf(value), 2);
 
-                mBinding.etLowPrice.setText(valueStr);
-                mBinding.etLowPrice.setSelection(valueStr.length());
+                mBinding.etFloorPrice.setText(valueStr);
+                mBinding.etFloorPrice.setSelection(valueStr.length());
             }
         }
 
         public void onClickDownPriceAdd() {
             hiddenKeyBoard();
 
-            String price = getPrice(mBinding.etLowPrice);
+            String price = getPrice(mBinding.etFloorPrice);
 
             if (TextUtils.isEmpty(price))
                 return;
@@ -307,8 +293,8 @@ public class YujingActivity extends JMEBaseActivity {
 
             String valueStr = MarketUtil.formatValue(String.valueOf(value), 2);
 
-            mBinding.etLowPrice.setText(valueStr);
-            mBinding.etLowPrice.setSelection(valueStr.length());
+            mBinding.etFloorPrice.setText(valueStr);
+            mBinding.etFloorPrice.setSelection(valueStr.length());
         }
 
     }
@@ -317,50 +303,90 @@ public class YujingActivity extends JMEBaseActivity {
     protected void DataReturn(DTRequest request, Head head, Object response) {
         super.DataReturn(request, head, response);
         switch (request.getApi().getName()) {
-            case "SetWarm":
+            case "SetWarn":
                 if (head.isSuccess()) {
-                    showShortToast(head.getMsg());
-                    AppManager.getAppManager().finishActivity();
-//                    tipUser();
-                } else {
-                    showShortToast(head.getMsg());
+                    showShortToast("设置成功");
+                    finish();
                 }
                 break;
-            case "GetWarm":
+            case "WarnInfo":
                 if (head.isSuccess()) {
+                    WarnVo warnVo;
+                    try {
+                        warnVo = (WarnVo) response;
+                    } catch (Exception e) {
+                        warnVo = null;
+                        e.printStackTrace();
+                    }
+                    if (warnVo == null) {
+                        mBinding.cbCeiling.setChecked(false);
+                        mBinding.cbFloor.setChecked(false);
+                        mBinding.etCeilingPrice.setText(price);
+                        mBinding.etFloorPrice.setText(price);
+                        return;
+                    }
 
+                    setWarnData(warnVo);
                 }
                 break;
         }
     }
 
+    private void setWarnData(WarnVo warnVo) {
+        id = "" + warnVo.getId();
+        if (warnVo.getCeilingFlag().equals("1")) {
+            mBinding.cbCeiling.setChecked(true);
+            mBinding.etCeilingPrice.setText(BigDecimalUtil.formatMoney(new BigDecimal(warnVo.getPriceCeiling()).divide(new BigDecimal(100)).toPlainString()));
+        } else {
+            mBinding.cbCeiling.setChecked(false);
+            mBinding.etCeilingPrice.setText(price);
+        }
+        if (warnVo.getFloorFlag().equals("1")) {
+            mBinding.cbFloor.setChecked(true);
+            mBinding.etFloorPrice.setText(BigDecimalUtil.formatMoney(new BigDecimal(warnVo.getPriceFloor()).divide(new BigDecimal(100)).toPlainString()));
+        } else {
+            mBinding.cbFloor.setChecked(false);
+            mBinding.etFloorPrice.setText(price);
+        }
+        switch (warnVo.getCycle()) {
+            case "1":
+                mBinding.cb1.setChecked(true);
+                break;
+            case "2":
+                mBinding.cb3.setChecked(true);
+                break;
+            case "3":
+                mBinding.cb7.setChecked(true);
+                break;
+        }
+    }
+
     private void isUpData() {
-        String upPrice = mBinding.etUpPrice.getText().toString().trim().replace(".", "");
-        String lowPrice = mBinding.etLowPrice.getText().toString().trim().replace(".", "");
-        if (TextUtils.isEmpty(upPrice)) {
-            showShortToast("请输入价格上限");
+        String upPrice = mBinding.etCeilingPrice.getText().toString().trim();
+        String lowPrice = mBinding.etFloorPrice.getText().toString().trim();
+
+        if (upPriceIsOpen.equals("0") && lowPriceIsOpen.equals("0")) {
+            showShortToast("请选择价格上限或者下限");
             return;
-        }
-        if (TextUtils.isEmpty(lowPrice)) {
-            showShortToast("请输入价格下限");
+        } else if (upPriceIsOpen.equals("1") && TextUtils.isEmpty(upPrice)) {
+            showShortToast("请输入上限价格");
             return;
-        }
-        if (upPriceIsOpen.equals("0")) {
-            showShortToast("请勾选价格上限");
+        } else if (lowPriceIsOpen.equals("1") && TextUtils.isEmpty(lowPrice)) {
+            showShortToast("请输入下限价格");
             return;
-        }
-        if (lowPriceIsOpen.equals("0")) {
-            showShortToast("请勾选价格下限");
+        } else if (upPriceIsOpen.equals("1") && lowPriceIsOpen.equals("1") && new BigDecimal(upPrice).compareTo(new BigDecimal(lowPrice)) <= 0) {
+            showShortToast("请输入正确的价格上限和价格下限");
             return;
         }
         HashMap<String, String> params = new HashMap<>();
+        params.put("id", id);
         params.put("contractId", type);
-        params.put("priceCeiling", Long.parseLong(upPrice) * 100 + "");
-        params.put("priceFloor", Long.parseLong(lowPrice) * 100 + "");
+        params.put("priceCeiling", BigDecimalUtil.formatStrNumber(new BigDecimal(upPrice).multiply(new BigDecimal(100)).toPlainString()));
+        params.put("priceFloor", BigDecimalUtil.formatStrNumber(new BigDecimal(lowPrice).multiply(new BigDecimal(100)).toPlainString()));
         params.put("ceilingFlag", upPriceIsOpen);
         params.put("floorFlag", lowPriceIsOpen);
         params.put("cycle", circle);
-        sendRequest(TradeService.getInstance().setWarm, params, true);
+        sendRequest(TradeService.getInstance().setWarn, params, true);
     }
 
     private void tipUser() {
@@ -391,7 +417,7 @@ public class YujingActivity extends JMEBaseActivity {
 
     private void hiddenKeyBoard() {
         ((InputMethodManager) mContext.getSystemService(Context.INPUT_METHOD_SERVICE)).hideSoftInputFromWindow(
-                mBinding.etUpPrice.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+                mBinding.etCeilingPrice.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
     }
 
     private String getPrice(EditText editText) {
