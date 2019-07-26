@@ -16,6 +16,7 @@ import android.text.TextWatcher;
 import android.view.Gravity;
 import android.view.inputmethod.InputMethodManager;
 
+import com.alibaba.android.arouter.launcher.ARouter;
 import com.datai.common.charts.fchart.FData;
 import com.jme.common.network.DTRequest;
 import com.jme.common.network.Head;
@@ -30,6 +31,7 @@ import com.jme.lsgoldtrade.domain.ContractInfoVo;
 import com.jme.lsgoldtrade.domain.OrderPageVo;
 import com.jme.lsgoldtrade.domain.PositionVo;
 import com.jme.lsgoldtrade.domain.TenSpeedVo;
+import com.jme.lsgoldtrade.service.ManagementService;
 import com.jme.lsgoldtrade.service.MarketService;
 import com.jme.lsgoldtrade.service.TradeService;
 import com.jme.lsgoldtrade.util.EidtTextInputUtil;
@@ -74,11 +76,15 @@ public class DeclarationFormFragment extends JMEBaseFragment {
     private String mHighLimitPrice;
     private String mPositionType;
     private int isMore = 1;
+    private int mBsFlag = 0;
+    private int mOcFlag = 0;
 
     private static int TYPE_NONE = 0;
     private static int TYPE_RIVALPRICE = 1;
     private static int TYPE_QUEUINGPRICE = 2;
     private static int TYPE_LASTPRICE = 3;
+
+    private TradeMessagePopUpWindow mTradeMessagePopUpWindow;
 
     private Handler mHandler = new Handler() {
         public void handleMessage(Message msg) {
@@ -107,6 +113,10 @@ public class DeclarationFormFragment extends JMEBaseFragment {
         super.initView();
 
         mBinding = (FragmentDeclarationFormBinding) mBindingUtil;
+
+        mTradeMessagePopUpWindow = new TradeMessagePopUpWindow(mContext);
+        mTradeMessagePopUpWindow.setOutsideTouchable(true);
+        mTradeMessagePopUpWindow.setFocusable(true);
     }
 
     @Override
@@ -562,7 +572,7 @@ public class DeclarationFormFragment extends JMEBaseFragment {
         mWindow.showAtLocation(mBinding.etAmount, Gravity.BOTTOM, 0, 0);
     }
 
-    private void doTrade(int bsFlag, int ocFlag) {
+    private void doTrade() {
         String contractID = mBinding.tvContractId.getText().toString();
 //        String price = bsFlag == 1 ? mBinding.etPrice.getText().toString() : mBinding.tvPriceSaleEmpty.getText().toString();
         String price = mBinding.etPrice.getText().toString();
@@ -588,7 +598,7 @@ public class DeclarationFormFragment extends JMEBaseFragment {
         else if (mMaxHoldQty != -1 && new BigDecimal(holdAmount).compareTo(new BigDecimal(mMaxHoldQty)) == 1)
             showShortToast(R.string.trade_limit_max_amount_error2);
         else
-            showPopupWindow(contractID, price, amount, bsFlag, ocFlag);
+            getStatus();
     }
 
     private void hiddenKeyBoard() {
@@ -605,6 +615,10 @@ public class DeclarationFormFragment extends JMEBaseFragment {
         params.put("list", AppConfig.Select_ContractId);
 
         sendRequest(MarketService.getInstance().getTenSpeedQuotes, params, false, false, false);
+    }
+
+    private void getStatus() {
+        sendRequest(ManagementService.getInstance().getStatus, new HashMap<>(), true);
     }
 
     private void limitOrder(String contractId, String price, String amount, int bsFlag, int ocFlag) {
@@ -676,6 +690,31 @@ public class DeclarationFormFragment extends JMEBaseFragment {
                     bFlag = false;
 
                     mHandler.sendEmptyMessageDelayed(Constants.Msg.MSG_TRADE_UPDATE_DATA, getTimeInterval());
+                }
+
+                break;
+            case "GetStatus":
+                String status;
+
+                if (null == response)
+                    status = "";
+                else
+                    status = response.toString();
+
+                if (status.equals("1")) {
+                    if (null != mTradeMessagePopUpWindow && !mTradeMessagePopUpWindow.isShowing()) {
+                        mTradeMessagePopUpWindow.setData(mContext.getResources().getString(R.string.trade_account_error),
+                                mContext.getResources().getString(R.string.trade_account_goto_recharge),
+                                (view) -> {
+                                    ARouter.getInstance().build(Constants.ARouterUriConst.RECHARGE).navigation();
+
+                                    mTradeMessagePopUpWindow.dismiss();
+                                });
+                        mTradeMessagePopUpWindow.showAtLocation(mBinding.etAmount, Gravity.CENTER, 0, 0);
+                    }
+                } else {
+                    showPopupWindow(mBinding.tvContractId.getText().toString(), mBinding.etPrice.getText().toString(),
+                            mBinding.etAmount.getText().toString(), mBsFlag, mOcFlag);
                 }
 
                 break;
@@ -903,7 +942,10 @@ public class DeclarationFormFragment extends JMEBaseFragment {
 
             hiddenKeyBoard();
 
-            doTrade(1, 0);
+            mBsFlag = 1;
+            mOcFlag = 0;
+
+            doTrade();
         }
 
         public void onClickSaleEmpty() {
@@ -921,14 +963,21 @@ public class DeclarationFormFragment extends JMEBaseFragment {
 
             hiddenKeyBoard();
 
-            doTrade(2, 0);
+            mBsFlag = 2;
+            mOcFlag = 0;
+
+            doTrade();
         }
 
         public void onClickEveningUp() {
             hiddenKeyBoard();
 
-            if (bEveningUp)
-                doTrade(mPositionType.equals("多") ? 2 : 1, 1);
+            if (bEveningUp) {
+                mBsFlag = mPositionType.equals("多") ? 2 : 1;
+                mOcFlag = 1;
+
+                doTrade();
+            }
         }
 
     }

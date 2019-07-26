@@ -41,6 +41,7 @@ import com.jme.lsgoldtrade.service.ManagementService;
 import com.jme.lsgoldtrade.service.MarketService;
 import com.jme.lsgoldtrade.service.TradeService;
 import com.jme.lsgoldtrade.ui.trade.OrderPopUpWindow;
+import com.jme.lsgoldtrade.ui.trade.TradeMessagePopUpWindow;
 import com.jme.lsgoldtrade.util.MarketUtil;
 
 import java.math.BigDecimal;
@@ -85,6 +86,10 @@ public class MarketDetailActivity extends JMEBaseActivity implements FChart.OnPr
     private boolean bGetTradeDateFlag = false;
     private int iRequestKDataFlag = NONE;
     private int mTChartCount;
+
+    private List<String> mList;
+
+    private TradeMessagePopUpWindow mTradeMessagePopUpWindow;
 
     private Handler mHandler = new Handler() {
         public void handleMessage(Message msg) {
@@ -150,6 +155,10 @@ public class MarketDetailActivity extends JMEBaseActivity implements FChart.OnPr
 
         initTChart();
         initKChart();
+
+        mTradeMessagePopUpWindow = new TradeMessagePopUpWindow(mContext);
+        mTradeMessagePopUpWindow.setOutsideTouchable(true);
+        mTradeMessagePopUpWindow.setFocusable(true);
     }
 
     @Override
@@ -268,16 +277,15 @@ public class MarketDetailActivity extends JMEBaseActivity implements FChart.OnPr
                     if (null == object)
                         return;
 
-                    List<String> list = (List<String>) object;
+                    mList = (List<String>) object;
 
-                    if (null == list || 5 != list.size())
+                    if (null == mList || 5 != mList.size())
                         return;
 
-                    if (!mContractId.equals(list.get(0)))
+                    if (!mContractId.equals(mList.get(0)))
                         return;
 
-                    limitOrder(list.get(0), list.get(1), list.get(2), list.get(3), list.get(4));
-//                    showPopupWindow(list.get(0), list.get(1), list.get(2), list.get(3), list.get(4));
+                    getStatus();
 
                     break;
             }
@@ -631,6 +639,10 @@ public class MarketDetailActivity extends JMEBaseActivity implements FChart.OnPr
         sendRequest(MarketService.getInstance().getKChartQuotes, params, false, false, false);
     }
 
+    private void getStatus() {
+        sendRequest(ManagementService.getInstance().getStatus, new HashMap<>(), true);
+    }
+
     private void limitOrder(String contractId, String price, String amount, String bsFlag, String ocFlag) {
         HashMap<String, String> params = new HashMap<>();
         params.put("contractId", contractId);
@@ -771,6 +783,30 @@ public class MarketDetailActivity extends JMEBaseActivity implements FChart.OnPr
                 }
 
                 iRequestKDataFlag = NONE;
+
+                break;
+            case "GetStatus":
+                String status;
+
+                if (null == response)
+                    status = "";
+                else
+                    status = response.toString();
+
+                if (status.equals("1")) {
+                    if (null != mTradeMessagePopUpWindow && !mTradeMessagePopUpWindow.isShowing()) {
+                        mTradeMessagePopUpWindow.setData(mContext.getResources().getString(R.string.trade_account_error),
+                                mContext.getResources().getString(R.string.trade_account_goto_recharge),
+                                (view) -> {
+                                    ARouter.getInstance().build(Constants.ARouterUriConst.RECHARGE).navigation();
+
+                                    mTradeMessagePopUpWindow.dismiss();
+                                });
+                        mTradeMessagePopUpWindow.showAtLocation(mBinding.tvHigh, Gravity.CENTER, 0, 0);
+                    }
+                } else {
+                    limitOrder(mList.get(0), mList.get(1), mList.get(2), mList.get(3), mList.get(4));
+                }
 
                 break;
             case "LimitOrder":
