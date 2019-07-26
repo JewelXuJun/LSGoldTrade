@@ -133,7 +133,7 @@ public class MarketDetailActivity extends JMEBaseActivity implements FChart.OnPr
         initToolbar(MarketUtil.getContractCode(mContractId), true, ContextCompat.getColor(this, R.color.white));
         setBackGroundColor(R.color.common_font_stable);
         setBackNavigation(true, R.mipmap.ic_back_white);
-        setRightNavigation("预警", 0, R.style.ToolbarThemeWhite, () -> {
+        setRightNavigation(getString(R.string.market_warning), 0, R.style.ToolbarThemeWhite, () -> {
             if (null == mUser || !mUser.isLogin()) {
                 ARouter.getInstance().build(Constants.ARouterUriConst.ACCOUNTLOGIN).navigation();
             } else {

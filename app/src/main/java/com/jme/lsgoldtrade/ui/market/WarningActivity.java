@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.TextView;
+
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.jme.common.network.DTRequest;
 import com.jme.common.network.Head;
@@ -24,6 +25,7 @@ import com.jme.lsgoldtrade.databinding.ActivityWarningBinding;
 import com.jme.lsgoldtrade.domain.WarnVo;
 import com.jme.lsgoldtrade.service.TradeService;
 import com.jme.lsgoldtrade.util.MarketUtil;
+
 import java.math.BigDecimal;
 import java.util.HashMap;
 
@@ -37,14 +39,13 @@ public class WarningActivity extends JMEBaseActivity {
 
     private float mPriceMove = 0.00f;
 
-    private String type, price, range, rate = "";
-
+    private String type;
+    private String price;
+    private String range;
+    private String rate;
     private String circle = "1";
-
     private String upPriceIsOpen = "0";
-
     private String lowPriceIsOpen = "0";
-
     private String id = "";
 
     @Override
