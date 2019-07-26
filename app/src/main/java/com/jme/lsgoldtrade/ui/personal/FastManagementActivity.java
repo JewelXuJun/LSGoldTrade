@@ -6,6 +6,7 @@ import android.support.v7.widget.GridLayoutManager;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.jme.common.network.DTRequest;
 import com.jme.common.network.Head;
+import com.jme.common.util.RxBus;
 import com.jme.lsgoldtrade.R;
 import com.jme.lsgoldtrade.base.JMEBaseActivity;
 import com.jme.lsgoldtrade.config.AppConfig;
@@ -221,8 +222,11 @@ public class FastManagementActivity extends JMEBaseActivity {
 
                 break;
             case "SaveNavigatorList":
-                if (head.isSuccess())
+                if (head.isSuccess()) {
                     showShortToast(R.string.personal_fast_management_edit_success);
+
+                    RxBus.getInstance().post(Constants.RxBusConst.RXBUS_FAST_MANAGEMENT_EDIT, null);
+                }
 
                 break;
         }

@@ -7,6 +7,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.design.widget.TabLayout;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.text.TextUtils;
@@ -28,7 +29,6 @@ import com.jme.lsgoldtrade.R;
 import com.jme.lsgoldtrade.base.JMEBaseFragment;
 import com.jme.lsgoldtrade.config.AppConfig;
 import com.jme.lsgoldtrade.config.Constants;
-import com.jme.lsgoldtrade.config.User;
 import com.jme.lsgoldtrade.databinding.FragmentMainPageBinding;
 import com.jme.lsgoldtrade.domain.AdvertisementVo;
 import com.jme.lsgoldtrade.domain.BannerVo;
@@ -56,6 +56,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import rx.Subscription;
+
 /**
  * 首页
  */
@@ -65,6 +67,7 @@ public class MainPageFragment extends JMEBaseFragment implements OnRefreshListen
 
     private InfoPagerAdapter mInfoPagerAdapter;
     private RateMarketAdapter mRateMarketAdapter;
+    private MainPageFastAdapter mMainPageFastAdapter;
 
     private List<FiveSpeedVo> mList;
     private ArrayList<String> mTabs = new ArrayList<>();
@@ -72,6 +75,8 @@ public class MainPageFragment extends JMEBaseFragment implements OnRefreshListen
 
     private boolean bHidden = false;
     private boolean bFlag = true;
+
+    private Subscription mRxbus;
 
     private Handler mHandler = new Handler() {
         public void handleMessage(Message msg) {
@@ -89,9 +94,6 @@ public class MainPageFragment extends JMEBaseFragment implements OnRefreshListen
             super.handleMessage(msg);
         }
     };
-    private List<NavigatorVo.NavigatorVoBean> usedModules;
-    private List<NavigatorVo.NavigatorVoBean> notUsedModules;
-    private List<List<NavigatorVo.NavigatorVoBean>> allUsed = new ArrayList<>();
 
     @Override
     protected int getContentViewId() {
@@ -101,7 +103,9 @@ public class MainPageFragment extends JMEBaseFragment implements OnRefreshListen
     @Override
     protected void initView() {
         super.initView();
+
         mBinding = (FragmentMainPageBinding) mBindingUtil;
+
         StatusBarUtil.setStatusBarMode(mActivity, true, R.color.color_blue_deep);
     }
 
@@ -121,14 +125,17 @@ public class MainPageFragment extends JMEBaseFragment implements OnRefreshListen
         gridPagerSnapHelper.setRow(1).setColumn(3);
         gridPagerSnapHelper.attachToRecyclerView(mBinding.recyclerView);
 
+        getNavigatorList();
         getChannelAllList();
-        //获取滚动广告
+
         sendRequest(ManagementService.getInstance().firstThree, new HashMap<>(), false);
     }
 
     @Override
     protected void initListener() {
         super.initListener();
+
+        initRxBus();
 
         mBinding.swipeRefreshLayout.setOnRefreshListener(this);
 
@@ -156,6 +163,7 @@ public class MainPageFragment extends JMEBaseFragment implements OnRefreshListen
     @Override
     public void initBinding() {
         super.initBinding();
+
         mBinding.setHandlers(new ClickHandlers());
     }
 
@@ -169,7 +177,6 @@ public class MainPageFragment extends JMEBaseFragment implements OnRefreshListen
             bFlag = true;
 
             getMarket();
-            getUserTab();
             getBannerList();
         } else {
             mHandler.removeMessages(Constants.Msg.MSG_MAINPAGE_UPDATE_MARKET);
@@ -194,14 +201,57 @@ public class MainPageFragment extends JMEBaseFragment implements OnRefreshListen
             bFlag = true;
 
             getMarket();
-            getUserTab();
             getBannerList();
         }
+
         mBinding.banner.start();
+    }
+
+    private void initRxBus() {
+        mRxbus = RxBus.getInstance().toObserverable(RxBus.Message.class).subscribe(message -> {
+            String callType = message.getObject().toString();
+
+            if (TextUtils.isEmpty(callType))
+                return;
+
+            switch (callType) {
+                case Constants.RxBusConst.RXBUS_FAST_MANAGEMENT_EDIT:
+                    getNavigatorList();
+
+                    break;
+            }
+        });
+    }
+
+    private NavigatorVo.NavigatorVoBean getDefaultFastManagement() {
+        NavigatorVo.NavigatorVoBean navigatorVoBean = new NavigatorVo.NavigatorVoBean();
+        navigatorVoBean.setIsShow("1");
+        navigatorVoBean.setSort("17");
+        navigatorVoBean.setCode("QB");
+        navigatorVoBean.setName(getString(R.string.personal_fast_management_more));
+        navigatorVoBean.setImageName(Constants.HttpConst.URL_MORE_ICON);
+
+        return navigatorVoBean;
     }
 
     private long getTimeInterval() {
         return NetWorkUtils.isWifiConnected(mContext) ? AppConfig.TimeInterval_WiFi : AppConfig.TimeInterval_NetWork;
+    }
+
+    private void getBannerList() {
+        sendRequest(ManagementService.getInstance().bannerAllList, new HashMap<>(), false);
+    }
+
+    private void getNavigatorList() {
+        HashMap<String, String> params = new HashMap<>();
+        params.put("token", mUser.getToken());
+        params.put("uuid", AppConfig.UUID);
+
+        sendRequest(ManagementService.getInstance().navigatorList, params, false);
+    }
+
+    private void getChannelAllList() {
+        sendRequest(ManagementService.getInstance().channelAllList, new HashMap<>(), true);
     }
 
     private void getMarket() {
@@ -209,21 +259,6 @@ public class MainPageFragment extends JMEBaseFragment implements OnRefreshListen
         params.put("list", "");
 
         sendRequest(MarketService.getInstance().getFiveSpeedQuotes, params, false);
-    }
-
-    private void getUserTab() {
-        HashMap<String, String> params = new HashMap<>();
-        params.put("token", User.getInstance().getToken());
-        params.put("uuid", AppConfig.UUID);
-        sendRequest(ManagementService.getInstance().navigatorList, params, false);
-    }
-
-    private void getBannerList() {
-        sendRequest(ManagementService.getInstance().bannerAllList, new HashMap<>(), false);
-    }
-
-    private void getChannelAllList() {
-        sendRequest(ManagementService.getInstance().channelAllList, new HashMap<>(), true);
     }
 
     @Override
@@ -266,6 +301,49 @@ public class MainPageFragment extends JMEBaseFragment implements OnRefreshListen
                 } else {
                     mBinding.swipeRefreshLayout.finishRefresh(false);
                 }
+
+                break;
+            case "NavigatorList":
+                if (head.isSuccess()) {
+                    NavigatorVo navigatorVo;
+
+                    try {
+                        navigatorVo = (NavigatorVo) response;
+                    } catch (Exception e) {
+                        navigatorVo = null;
+
+                        e.printStackTrace();
+                    }
+
+                    List<NavigatorVo.NavigatorVoBean> navigatorVoBeanList = new ArrayList<>();
+
+                    if (null == navigatorVo) {
+                        navigatorVoBeanList.add(getDefaultFastManagement());
+                    } else {
+                        navigatorVoBeanList.clear();
+                        navigatorVoBeanList.addAll(navigatorVo.getUsedModules());
+                        navigatorVoBeanList.add(getDefaultFastManagement());
+                    }
+
+                    int length = navigatorVoBeanList.size();
+                    int size = 0 == length % 4 ? length / 4 : length / 4 + 1;
+
+                    List<List<NavigatorVo.NavigatorVoBean>> list = new ArrayList<>();
+
+                    for (int i = 0; i < size; i++) {
+                        List<NavigatorVo.NavigatorVoBean> navigatorVoBeanArrayList = new ArrayList<>();
+
+                        for (int j = 0; j < 4; j++) {
+                            if (i * 4 + j < length)
+                                navigatorVoBeanArrayList.add(navigatorVoBeanList.get(i * 4 + j));
+                        }
+
+                        list.add(navigatorVoBeanArrayList);
+                    }
+
+                    initMagicIndicator(list, size);
+                }
+
                 break;
             case "ChannelAllList":
                 if (head.isSuccess()) {
@@ -305,64 +383,6 @@ public class MainPageFragment extends JMEBaseFragment implements OnRefreshListen
                     mBinding.tabViewpager.removeAllViewsInLayout();
                     mBinding.tabViewpager.setAdapter(mInfoPagerAdapter);
                     mBinding.tablayout.setupWithViewPager(mBinding.tabViewpager);
-                }
-                break;
-            case "NavigatorList":
-                if (head.isSuccess()) {
-                    NavigatorVo navigator;
-                    try {
-                        navigator = (NavigatorVo) response;
-                    } catch (Exception e) {
-                        navigator = null;
-                        e.printStackTrace();
-                    }
-
-                    if (null == navigator)
-                        return;
-                    if (usedModules != null) {
-                        usedModules.clear();
-                    }
-                    if (notUsedModules != null) {
-                        notUsedModules.clear();
-                    }
-                    notUsedModules = navigator.getNotUsedModules();
-                    usedModules = navigator.getUsedModules();
-
-
-                    NavigatorVo.NavigatorVoBean usedModulesBean = new NavigatorVo.NavigatorVoBean();
-                    usedModulesBean.setIsShow("1");
-                    usedModulesBean.setSort("17.0");
-                    usedModulesBean.setCode("QB");
-                    usedModulesBean.setName("更多");
-                    usedModulesBean.setImageName("https://tjshj.oss-cn-beijing.aliyuncs.com/prod/syscofig/app/gengduo.png");
-                    usedModules.add(usedModulesBean);
-
-                    for (int i = 0; i < notUsedModules.size(); i++) {
-                        notUsedModules.get(i).setIsShow("2");
-                    }
-                    for (int i = 0; i < usedModules.size(); i++) {
-                        usedModules.get(i).setIsShow("1");
-                    }
-                    int size;
-                    if (0 == usedModules.size() % 4) {
-                        size = usedModules.size() / 4;
-                    } else {
-                        size = usedModules.size() / 4 + 1;
-                    }
-                    if (allUsed != null) {
-                        allUsed.clear();
-                    }
-                    for (int i = 0; i < size; i++) {
-                        List<NavigatorVo.NavigatorVoBean> adapterUsedModule = new ArrayList<>();
-                        for (int j = 0; j < 4; j++) {
-                            if (i * 4 + j < usedModules.size()) {
-                                adapterUsedModule.add(usedModules.get(i * 4 + j));
-                            }
-                        }
-                        allUsed.add(adapterUsedModule);
-                    }
-                    mExamplePagerAdapter = new ExamplePagerAdapter(mContext, size, allUsed);
-                    initMagicIndicator1(size);
                 }
                 break;
             case "FirstThree":
@@ -405,20 +425,23 @@ public class MainPageFragment extends JMEBaseFragment implements OnRefreshListen
         }
     }
 
-    private ExamplePagerAdapter mExamplePagerAdapter;
+    private void initMagicIndicator(List<List<NavigatorVo.NavigatorVoBean>> list, int size) {
+        mMainPageFastAdapter = new MainPageFastAdapter(mContext, size, list);
 
-    private void initMagicIndicator1(int size) {
-        mBinding.viewPager1.setAdapter(mExamplePagerAdapter);
-        mBinding.magicIndicator1.setBackgroundColor(Color.LTGRAY);
-        ViewGroup.LayoutParams lp = mBinding.magicIndicator1.getLayoutParams();
-        lp.width = DensityUtil.dpTopx(mContext, 20) * (size);
-        mBinding.magicIndicator1.setLayoutParams(lp);
+        ViewGroup.LayoutParams layoutParams = mBinding.magicIndicator.getLayoutParams();
+        layoutParams.width = DensityUtil.dpTopx(mContext, 20) * (size);
+
+        mBinding.viewPagerFastManagement.setAdapter(mMainPageFastAdapter);
+        mBinding.magicIndicator.setBackgroundColor(Color.LTGRAY);
+        mBinding.magicIndicator.setLayoutParams(layoutParams);
+
         CommonNavigator commonNavigator = new CommonNavigator(mContext);
         commonNavigator.setAdjustMode(true);
         commonNavigator.setAdapter(new CommonNavigatorAdapter() {
+
             @Override
             public int getCount() {
-                return size == -1 ? 0 : size;
+                return size;
             }
 
             @Override
@@ -431,22 +454,28 @@ public class MainPageFragment extends JMEBaseFragment implements OnRefreshListen
                 LinePagerIndicator indicator = new LinePagerIndicator(context);
                 float lineHeight = context.getResources().getDimension(R.dimen.radius_big);
                 float lineWidth = context.getResources().getDimension(R.dimen.icon_checkbox);
+
                 indicator.setLineHeight(lineHeight);
                 indicator.setLineWidth(lineWidth);
-                indicator.setColors(Color.parseColor("#0080ff"));
+                indicator.setColors(ContextCompat.getColor(mContext, R.color.color_blue_deep));
+
                 return indicator;
             }
         });
-        mBinding.magicIndicator1.setNavigator(commonNavigator);
-        ViewPagerHelper.bind(mBinding.magicIndicator1, mBinding.viewPager1);
+
+        mBinding.magicIndicator.setNavigator(commonNavigator);
+
+        ViewPagerHelper.bind(mBinding.magicIndicator, mBinding.viewPagerFastManagement);
     }
 
     @Override
     public void onRefresh(@NonNull RefreshLayout refreshLayout) {
         mHandler.removeMessages(Constants.Msg.MSG_MAINPAGE_UPDATE_MARKET);
+
         bFlag = true;
+
         getMarket();
-        getUserTab();
+        getNavigatorList();
         getBannerList();
         RxBus.getInstance().post(Constants.RxBusConst.RXBUS_MAINPAGE_REFRESH, null);
     }
@@ -478,6 +507,14 @@ public class MainPageFragment extends JMEBaseFragment implements OnRefreshListen
                     .build(Constants.ARouterUriConst.BEGINNERSACTIVITY)
                     .navigation();
         }
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+
+        if (!mRxbus.isUnsubscribed())
+            mRxbus.unsubscribe();
     }
 
     public static class BannerViewHolder implements MZViewHolder<BannerVo> {

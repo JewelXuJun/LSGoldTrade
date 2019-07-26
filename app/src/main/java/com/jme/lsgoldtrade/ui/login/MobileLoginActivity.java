@@ -281,6 +281,7 @@ public class MobileLoginActivity extends JMEBaseActivity {
                     mUser.login(userInfoVo);
 
                     RxBus.getInstance().post(Constants.RxBusConst.RXBUS_LOGIN_SUCCESS, null);
+                    RxBus.getInstance().post(Constants.RxBusConst.RXBUS_FAST_MANAGEMENT_EDIT, null);
 
                     getContractInfo();
 

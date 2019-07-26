@@ -39,6 +39,7 @@ public class Constants {
         public static String URL_ENTRUST_RISK_AGREEMENT = "http://www.taijs.com/upload/wtfkfwxy.htm";
         public static String URL_ECONOMIC_CALENDAR = "https://rili-d.jin10.com/open.php?fontSize=14px&theme=primary";
         public static String URL_NEWS = "https://www.jin10.com/example/jin10.com.html?fontSize=14px&theme=white";
+        public static String URL_MORE_ICON = "https://tjshj.oss-cn-beijing.aliyuncs.com/prod/syscofig/app/gengduo.png";
         public static String URL_TRADINGBOX;
         public static String URL_TRADINGBOXINFO;
 
@@ -105,6 +106,7 @@ public class Constants {
         public static final String RXBUS_CUSTOMER_SERVICE = "customerservice";
         public static final String RXBUS_BIND_SUCCESS = "bindSuccess";
         public static final String RXBUS_LOGIN_SUCCESS = "loginSuccess";
+        public static final String RXBUS_FAST_MANAGEMENT_EDIT = "fastManagementEdit";
     }
 
     public static final class Msg {
