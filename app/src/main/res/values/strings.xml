@@ -184,7 +184,7 @@
         2、风险率=客户总权益/保底金额*%1$s。 \n \n
         3、预警线：%2$s，即当风险率&#060;预警线时，系统将限制客户开仓，并对客户进行预警提示。\n \n
         4、平仓线：%3$s，即当风险率&#060;平仓线时，系统将自动发起平仓指令，进行平仓操作，防止用户产生超预期亏损，及时保障用户的资金权益。\n \n
-        5、委托风控在设置后的下一个交易日生效，在生效前可修改</string>
+        5、委托风控在设置后的下一个交易日生效，在生效前可修改。</string>
     <string name="trade_guarantee_fund_success">保底资金设置成功</string>
     <string name="trade_guarantee_total_error">总权益金额异常</string>
     <string name="trade_guarantee_fund_message1">尊敬的客户，您暂未设置保底资金，请注意交易风险。</string>

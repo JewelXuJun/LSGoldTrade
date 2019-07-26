@@ -1,9 +1,14 @@
 package com.jme.lsgoldtrade.ui.trade;
 
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.text.Editable;
+import android.text.SpannableString;
+import android.text.Spanned;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.text.method.LinkMovementMethod;
+import android.text.style.ForegroundColorSpan;
 import android.view.Gravity;
 import android.widget.EditText;
 
@@ -55,7 +60,7 @@ public class GuaranteeFundSettingActivity extends JMEBaseActivity {
         mWarnth = getIntent().getFloatExtra("Warnth", 1.2f);
         mForcecloseth = getIntent().getFloatExtra("Forcecloseth", 1.1f);
 
-        mBinding.tvMessage.setText(String.format(getResources().getString(R.string.trade_guarantee_fund_message), "100%",
+        setMessage(String.format(getResources().getString(R.string.trade_guarantee_fund_message), "100%",
                 new BigDecimal(mWarnth).multiply(new BigDecimal(100)).setScale(0, BigDecimal.ROUND_DOWN).toPlainString() + "%",
                 new BigDecimal(mForcecloseth).multiply(new BigDecimal(100)).setScale(0, BigDecimal.ROUND_DOWN).toPlainString() + "%"));
 
@@ -124,6 +129,14 @@ public class GuaranteeFundSettingActivity extends JMEBaseActivity {
 
     private boolean populated(final EditText editText) {
         return editText.length() > 0;
+    }
+
+    private void setMessage(String value) {
+        SpannableString spannableString = new SpannableString(value);
+        spannableString.setSpan(new ForegroundColorSpan(ContextCompat.getColor(this, R.color.color_red)),
+                value.indexOf("5、"), value.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        mBinding.tvMessage.setMovementMethod(LinkMovementMethod.getInstance());
+        mBinding.tvMessage.setText(spannableString);
     }
 
     private void getMinReserveFund() {
