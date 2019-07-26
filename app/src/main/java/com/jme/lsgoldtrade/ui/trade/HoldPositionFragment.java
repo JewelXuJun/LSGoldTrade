@@ -4,8 +4,10 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.NonNull;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.text.TextUtils;
+import android.view.Gravity;
 
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.chad.library.adapter.base.BaseQuickAdapter;
@@ -23,6 +25,7 @@ import com.jme.lsgoldtrade.domain.AccountVo;
 import com.jme.lsgoldtrade.domain.FiveSpeedVo;
 import com.jme.lsgoldtrade.domain.PositionPageVo;
 import com.jme.lsgoldtrade.domain.PositionVo;
+import com.jme.lsgoldtrade.service.ManagementService;
 import com.jme.lsgoldtrade.service.MarketService;
 import com.jme.lsgoldtrade.service.TradeService;
 import com.jme.lsgoldtrade.util.MarketUtil;
@@ -54,6 +57,9 @@ public class HoldPositionFragment extends JMEBaseFragment implements OnRefreshLi
     private boolean bVisibleToUser = false;
     private String mPagingKey = "";
     private String mTotal;
+    private BigDecimal mUnliquidatedProfitTotal = new BigDecimal(0);
+
+    private TradeMessagePopUpWindow mTradeMessagePopUpWindow;
 
     private Handler mHandler = new Handler() {
         public void handleMessage(Message msg) {
@@ -90,6 +96,10 @@ public class HoldPositionFragment extends JMEBaseFragment implements OnRefreshLi
         super.initView();
 
         mBinding = (FragmentHoldPositionBinding) mBindingUtil;
+
+        mTradeMessagePopUpWindow = new TradeMessagePopUpWindow(mContext);
+        mTradeMessagePopUpWindow.setOutsideTouchable(true);
+        mTradeMessagePopUpWindow.setFocusable(true);
     }
 
     @Override
@@ -210,6 +220,8 @@ public class HoldPositionFragment extends JMEBaseFragment implements OnRefreshLi
 
         mList.clear();
 
+        mUnliquidatedProfitTotal = new BigDecimal(0);
+
         for (PositionVo positionVo : positionVoList) {
             if (null != positionVo) {
                 String contractID = positionVo.getContractId();
@@ -226,6 +238,8 @@ public class HoldPositionFragment extends JMEBaseFragment implements OnRefreshLi
 
                             long margin;
                             String floatProfit;
+
+                            mUnliquidatedProfitTotal = mUnliquidatedProfitTotal.add(new BigDecimal(positionVo.getUnliquidatedProfitStr()));
 
                             if (new BigDecimal(latestprice).compareTo(new BigDecimal(0)) == 0
                                     || new BigDecimal(position).compareTo(new BigDecimal(0)) == 0) {
@@ -263,12 +277,11 @@ public class HoldPositionFragment extends JMEBaseFragment implements OnRefreshLi
                         .add(new BigDecimal(mAccountVo.getFreezeBalanceStr()))
                         .add(floatTotal)
                         .add(new BigDecimal(mAccountVo.getPositionMarginStr()))
-                        .subtract(new BigDecimal(mAccountVo.getRuntimeFeeStr()))
+                        .add(mUnliquidatedProfitTotal.compareTo(new BigDecimal(0)) == -1 ? new BigDecimal(0) : mUnliquidatedProfitTotal)
                         .toPlainString();
                 mBinding.tvTotal.setText(MarketUtil.decimalFormatMoney(mTotal));
 
                 String minReserveFund = mAccountVo.getMinReserveFundStr();
-                String runtimeFee = mAccountVo.getRuntimeFeeStr();
                 long value = Math.min((new BigDecimal(mTotal).subtract(new BigDecimal(minReserveFund))).multiply(new BigDecimal(100)).longValue(),
                         new BigDecimal(mAccountVo.getExtractableBalance()).subtract(new BigDecimal(mAccountVo.getRuntimeFee())).longValue());
                 mBinding.tvDesirableCapital.setText(MarketUtil.decimalFormatMoney(MarketUtil.getPriceValue(value)));
@@ -284,7 +297,7 @@ public class HoldPositionFragment extends JMEBaseFragment implements OnRefreshLi
             mBinding.tvFloating.setText(MarketUtil.decimalFormatMoney(floatTotal.toPlainString()));
 
             if (null != mAccountVo) {
-                    mTotal = new BigDecimal(mAccountVo.getTransactionBalanceStr())
+                mTotal = new BigDecimal(mAccountVo.getTransactionBalanceStr())
                         .add(new BigDecimal(mAccountVo.getFreezeBalanceStr()))
                         .add(floatTotal)
                         .add(new BigDecimal(mAccountVo.getPositionMarginStr()))
@@ -362,6 +375,14 @@ public class HoldPositionFragment extends JMEBaseFragment implements OnRefreshLi
         params.put("list", "");
 
         sendRequest(MarketService.getInstance().getFiveSpeedQuotes, params, false);
+    }
+
+    private void getUserAddedServicesStatus() {
+        sendRequest(ManagementService.getInstance().getUserAddedServicesStatus, new HashMap<>(), true);
+    }
+
+    private void getStatus() {
+        sendRequest(ManagementService.getInstance().getStatus, new HashMap<>(), true);
     }
 
     @Override
@@ -489,6 +510,61 @@ public class HoldPositionFragment extends JMEBaseFragment implements OnRefreshLi
                 }
 
                 break;
+            case "GetUserAddedServicesStatus":
+                String incrementState;
+
+                if (null == response)
+                    incrementState = "";
+                else
+                    incrementState = response.toString();
+
+                if (incrementState.equals("T")) {
+                    getStatus();
+
+
+                } else {
+                    if (null != mTradeMessagePopUpWindow && !mTradeMessagePopUpWindow.isShowing()) {
+                        mTradeMessagePopUpWindow.setData(mContext.getResources().getString(R.string.trade_increment_error),
+                                mContext.getResources().getString(R.string.trade_increment_goto_open),
+                                (view) -> {
+                                    ARouter.getInstance().build(Constants.ARouterUriConst.VALUEADDEDSERVICE).navigation();
+
+                                    mTradeMessagePopUpWindow.dismiss();
+                                });
+                        mTradeMessagePopUpWindow.showAtLocation(mBinding.tvRiskRate, Gravity.CENTER, 0, 0);
+                    }
+                }
+
+                break;
+            case "GetStatus":
+                String status;
+
+                if (null == response)
+                    status = "";
+                else
+                    status = response.toString();
+
+                if (status.equals("1")) {
+                    if (null != mTradeMessagePopUpWindow && !mTradeMessagePopUpWindow.isShowing()) {
+                        mTradeMessagePopUpWindow.setData(mContext.getResources().getString(R.string.trade_account_error),
+                                mContext.getResources().getString(R.string.trade_account_goto_recharge),
+                                (view) -> {
+                                    ARouter.getInstance().build(Constants.ARouterUriConst.RECHARGE).navigation();
+
+                                    mTradeMessagePopUpWindow.dismiss();
+                                });
+                        mTradeMessagePopUpWindow.showAtLocation(mBinding.tvRiskRate, Gravity.CENTER, 0, 0);
+                    }
+                } else {
+                    ARouter.getInstance()
+                            .build(Constants.ARouterUriConst.GUARANTEEFUNDSETTINGACTIVITY)
+                            .withString("Total", mTotal)
+                            .withFloat("Warnth", mAccountVo.getWarnth())
+                            .withFloat("Forcecloseth", mAccountVo.getForcecloseth())
+                            .navigation();
+                }
+
+                break;
         }
     }
 
@@ -519,12 +595,10 @@ public class HoldPositionFragment extends JMEBaseFragment implements OnRefreshLi
         }
 
         public void onClickGuaranteeFundSetting() {
-            ARouter.getInstance()
-                    .build(Constants.ARouterUriConst.GUARANTEEFUNDSETTINGACTIVITY)
-                    .withString("Total", mTotal)
-                    .withFloat("Warnth", mAccountVo.getWarnth())
-                    .withFloat("Forcecloseth", mAccountVo.getForcecloseth())
-                    .navigation();
+            if (null == mUser || !mUser.isLogin())
+                ARouter.getInstance().build(Constants.ARouterUriConst.ACCOUNTLOGIN).navigation();
+            else
+                getUserAddedServicesStatus();
         }
 
     }

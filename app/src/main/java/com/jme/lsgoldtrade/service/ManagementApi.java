@@ -112,4 +112,7 @@ public interface ManagementApi {
     @POST("/tjsmanage/infoapi/v1/android/openValueAddedServices")
     Call<DTResponse> openValueAddedServices(@QueryMap Map<String, String> map);
 
+    @GET("/tjsmanage/infoapi/v1/android/getStatus")
+    Call<DTResponse> getStatus(@QueryMap Map<String, String> map);
+
 }

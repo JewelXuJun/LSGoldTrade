@@ -44,7 +44,7 @@ public class GuaranteeFundSettingActivity extends JMEBaseActivity {
     protected void initView() {
         super.initView();
 
-        initToolbar(R.string.trade_guarantee_fund_title, true);
+        initToolbar(R.string.trade_guarantee_fund_text, true);
     }
 
     @Override
@@ -55,7 +55,7 @@ public class GuaranteeFundSettingActivity extends JMEBaseActivity {
         mWarnth = getIntent().getFloatExtra("Warnth", 1.2f);
         mForcecloseth = getIntent().getFloatExtra("Forcecloseth", 1.1f);
 
-        mBinding.tvMessage.setText(String.format(getResources().getString(R.string.trade_guarantee_fund_message),
+        mBinding.tvMessage.setText(String.format(getResources().getString(R.string.trade_guarantee_fund_message), "100%",
                 new BigDecimal(mWarnth).multiply(new BigDecimal(100)).setScale(0, BigDecimal.ROUND_DOWN).toPlainString() + "%",
                 new BigDecimal(mForcecloseth).multiply(new BigDecimal(100)).setScale(0, BigDecimal.ROUND_DOWN).toPlainString() + "%"));
 
@@ -106,6 +106,7 @@ public class GuaranteeFundSettingActivity extends JMEBaseActivity {
             public void afterTextChanged(Editable s) {
                 updateUIWithValidation();
             }
+
         });
     }
 

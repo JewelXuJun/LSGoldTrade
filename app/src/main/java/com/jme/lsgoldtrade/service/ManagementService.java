@@ -287,4 +287,12 @@ public class ManagementService extends IService<ManagementApi> {
             return mApi.openValueAddedServices(params);
         }
     };
+
+    public API getStatus = new API<String>("GetStatus") {
+        @Override
+        public Call<DTResponse> request(HashMap<String, String> params) {
+            return mApi.getStatus(params);
+        }
+    };
+
 }
