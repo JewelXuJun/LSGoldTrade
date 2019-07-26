@@ -146,14 +146,15 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginLeft="10dp"
-                                android:layout_marginBottom="4dp"
-                                android:text="委托价格"
-                                android:textColor="@color/black_deep"
+                                android:layout_marginTop="@dimen/common_area_margin"
+                                android:layout_marginLeft="@dimen/common_page_margin"
+                                android:text="@string/trade_popupwindow_entrust_price"
+                                android:textColor="@color/color_text_black"
                                 android:textSize="@dimen/sp_14" />
 
                             <LinearLayout
                                 android:layout_width="match_parent"
+                                android:layout_marginTop="@dimen/common_area_margin_tiny"
                                 android:layout_height="@dimen/common_item_height_middle"
                                 android:layout_marginLeft="@dimen/common_page_margin"
                                 android:layout_marginRight="@dimen/common_page_margin"
@@ -186,6 +187,7 @@
                                     android:gravity="center"
                                     android:inputType="numberDecimal"
                                     android:maxLines="1"
+                                    android:hint="@string/market_rival_price"
                                     android:textColor="@color/color_blue_deep"
                                     android:textColorHint="@color/color_text_hint"
                                     android:textSize="@dimen/sp_16" />
@@ -208,78 +210,18 @@
 
                             </LinearLayout>
 
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="@dimen/common_item_height_middle"
-                                android:layout_marginLeft="@dimen/common_area_margin_tiny"
-                                android:layout_marginTop="@dimen/common_area_margin"
-                                android:layout_marginRight="@dimen/common_area_margin_tiny"
-                                android:gravity="center"
-                                android:orientation="horizontal"
-                                android:visibility="gone">
-
-                                <Button
-                                    android:id="@+id/btn_rival_price"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="match_parent"
-                                    android:layout_marginLeft="@dimen/common_area_margin_tiny"
-                                    android:layout_marginRight="@dimen/common_area_margin_tiny"
-                                    android:layout_weight="1"
-                                    android:background="@drawable/selector_blue"
-                                    android:button="@null"
-                                    android:checked="false"
-                                    android:gravity="center"
-                                    android:onClick="@{() -> handlers.onClickRivalPrice()}"
-                                    android:text="@string/market_rival_price"
-                                    android:textColor="@drawable/selector_text_checked"
-                                    android:textSize="@dimen/sp_12" />
-
-                                <Button
-                                    android:id="@+id/btn_queuing_price"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="match_parent"
-                                    android:layout_marginLeft="@dimen/common_area_margin_tiny"
-                                    android:layout_marginRight="@dimen/common_area_margin_tiny"
-                                    android:layout_weight="1"
-                                    android:background="@drawable/selector_blue"
-                                    android:button="@null"
-                                    android:checked="false"
-                                    android:gravity="center"
-                                    android:onClick="@{() -> handlers.onClickQueuingPrice()}"
-                                    android:text="@string/market_queuing_price"
-                                    android:textColor="@drawable/selector_text_checked"
-                                    android:textSize="@dimen/sp_12" />
-
-                                <Button
-                                    android:id="@+id/btn_last_price"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="match_parent"
-                                    android:layout_marginLeft="@dimen/common_area_margin_tiny"
-                                    android:layout_marginRight="@dimen/common_area_margin_tiny"
-                                    android:layout_weight="1"
-                                    android:background="@drawable/selector_blue"
-                                    android:button="@null"
-                                    android:checked="false"
-                                    android:gravity="center"
-                                    android:onClick="@{() -> handlers.onClickLastPrice()}"
-                                    android:text="@string/market_last_price"
-                                    android:textColor="@drawable/selector_text_checked"
-                                    android:textSize="@dimen/sp_12" />
-
-                            </LinearLayout>
-
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginLeft="10dp"
-                                android:layout_marginTop="15dp"
-                                android:layout_marginBottom="4dp"
-                                android:text="委托手数"
-                                android:textColor="@color/black_deep"
+                                android:layout_marginLeft="@dimen/common_page_margin"
+                                android:layout_marginTop="@dimen/common_area_margin"
+                                android:text="@string/trading_box_entrust_amount"
+                                android:textColor="@color/color_text_black"
                                 android:textSize="@dimen/sp_14" />
 
                             <LinearLayout
                                 android:layout_width="match_parent"
+                                android:layout_marginTop="@dimen/common_area_margin_tiny"
                                 android:layout_height="@dimen/common_item_height_middle"
                                 android:layout_marginLeft="@dimen/common_page_margin"
                                 android:layout_marginRight="@dimen/common_page_margin"
@@ -334,115 +276,39 @@
 
                             </LinearLayout>
 
-                            <TextView
-                                android:id="@+id/maxMoney"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginLeft="10dp"
-                                android:layout_marginTop="4dp"
-                                android:layout_marginBottom="25dp"
-                                android:text="单笔下单最大量:"
-                                android:textColor="@color/black_deep"
-                                android:textSize="@dimen/sp_14"
-                                android:visibility="gone" />
-
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="44dp"
                                 android:layout_marginLeft="@dimen/common_area_margin_tiny"
-                                android:layout_marginTop="@dimen/common_page_margin"
+                                android:layout_marginTop="@dimen/common_area_margin_big"
                                 android:layout_marginRight="@dimen/common_area_margin_tiny"
                                 android:layout_marginBottom="@dimen/common_area_margin"
                                 android:gravity="center"
                                 android:orientation="horizontal">
 
-                                <LinearLayout
+                                <Button
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
                                     android:layout_marginLeft="@dimen/common_area_margin_tiny"
                                     android:layout_marginRight="@dimen/common_area_margin_tiny"
                                     android:layout_weight="1"
                                     android:background="@drawable/bg_btn_buy_more_solid"
-                                    android:gravity="center"
                                     android:onClick="@{() -> handlers.onClickBuyMore()}"
-                                    android:orientation="vertical">
+                                    android:text="@string/market_buy_more"
+                                    android:textColor="@color/white"
+                                    android:textSize="@dimen/size_normal" />
 
-                                    <TextView
-                                        android:id="@+id/tv_price_buy_more"
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:text="@string/text_no_data_default"
-                                        android:textColor="@color/white"
-                                        android:textSize="@dimen/size_middle"
-                                        android:visibility="gone" />
-
-                                    <TextView
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:text="@string/market_buy_more"
-                                        android:textColor="@color/white"
-                                        android:textSize="@dimen/size_normal" />
-
-                                </LinearLayout>
-
-                                <LinearLayout
+                                <Button
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
                                     android:layout_marginLeft="@dimen/common_area_margin_tiny"
                                     android:layout_marginRight="@dimen/common_area_margin_tiny"
                                     android:layout_weight="1"
                                     android:background="@drawable/bg_btn_sale_empty_solid"
-                                    android:gravity="center"
                                     android:onClick="@{() -> handlers.onClickSaleEmpty()}"
-                                    android:orientation="vertical">
-
-                                    <TextView
-                                        android:id="@+id/tv_price_sale_empty"
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:text="@string/text_no_data_default"
-                                        android:textColor="@color/white"
-                                        android:textSize="@dimen/size_middle"
-                                        android:visibility="gone" />
-
-                                    <TextView
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:text="@string/market_sale_empty"
-                                        android:textColor="@color/white"
-                                        android:textSize="@dimen/size_normal" />
-
-                                </LinearLayout>
-
-                                <LinearLayout
-                                    android:layout_width="match_parent"
-                                    android:layout_height="match_parent"
-                                    android:layout_marginLeft="@dimen/common_area_margin_tiny"
-                                    android:layout_marginRight="@dimen/common_area_margin_tiny"
-                                    android:layout_weight="1"
-                                    android:background="@drawable/bg_btn_equal_more_solid"
-                                    android:gravity="center"
-                                    android:onClick="@{() -> handlers.onClickEveningUp()}"
-                                    android:orientation="vertical"
-                                    android:visibility="gone">
-
-                                    <TextView
-                                        android:id="@+id/tv_price_equal"
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:text="@string/text_no_data_default"
-                                        android:textColor="@color/white"
-                                        android:textSize="@dimen/size_middle"
-                                        android:visibility="gone" />
-
-                                    <TextView
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:text="@string/trade_evening_up"
-                                        android:textColor="@color/white"
-                                        android:textSize="@dimen/size_normal" />
-
-                                </LinearLayout>
+                                    android:text="@string/market_sale_empty"
+                                    android:textColor="@color/white"
+                                    android:textSize="@dimen/size_normal" />
 
                             </LinearLayout>
 

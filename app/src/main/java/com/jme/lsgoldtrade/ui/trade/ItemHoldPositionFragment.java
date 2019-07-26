@@ -239,12 +239,12 @@ public class ItemHoldPositionFragment extends JMEBaseFragment implements BaseQui
 
             switch (callType) {
                 case Constants.RxBusConst.RXBUS_DECLARATIONFORM_HOLDPOSITION_UNSELECT:
-//                    mAdapter.setSelectPosition(-1);
+                    mAdapter.setSelectPosition(-1);
                     mAdapter.notifyDataSetChanged();
 
                     break;
                 case Constants.RxBusConst.RXBUS_DECLARATIONFORM_UPDATE:
-//                    mAdapter.setSelectPosition(-1);
+                    mAdapter.setSelectPosition(-1);
                     mAdapter.notifyDataSetChanged();
 
                     initPosition();

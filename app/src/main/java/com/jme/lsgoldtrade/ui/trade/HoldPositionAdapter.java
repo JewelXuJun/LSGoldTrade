@@ -25,14 +25,14 @@ public class HoldPositionAdapter extends BaseQuickAdapter<PositionVo, BaseViewHo
     private Context mContext;
     private List<String> mList;
     private int mPosition = -1;
-    private int tag;
+    private int mType;
 
-    public HoldPositionAdapter(Context context, int layoutResId, @Nullable List<PositionVo> data, int tag) {
+    public HoldPositionAdapter(Context context, int layoutResId, @Nullable List<PositionVo> data, int type) {
         super(layoutResId, data);
 
         mContext = context;
         mList = new ArrayList<>();
-        this.tag = tag;
+        mType = type;
     }
 
     public void setList(List<String> list) {
@@ -58,16 +58,11 @@ public class HoldPositionAdapter extends BaseQuickAdapter<PositionVo, BaseViewHo
 
         String contractID = item.getContractId();
         String type = item.getType();
-        if (null != mList && 0 != mList.size() && mList.size() > helper.getAdapterPosition()) {
+        if (null != mList && 0 != mList.size() && mList.size() > helper.getAdapterPosition())
             floatValue = mList.get(helper.getAdapterPosition());
-        }
         String average = item.getPositionAverageStr();
         long position = item.getPosition();
-        if (position == 0) {
-            helper.getView(R.id.layout_item).setVisibility(View.GONE);
-        } else {
-            helper.getView(R.id.layout_item).setVisibility(View.VISIBLE);
-        }
+        helper.getView(R.id.layout_item).setVisibility(position == 0 ? View.GONE : View.VISIBLE);
         long frozen = item.getOffsetFrozen();
         if (!TextUtils.isEmpty(floatValue))
             typeValue = new BigDecimal(floatValue).compareTo(new BigDecimal(0));
@@ -97,8 +92,7 @@ public class HoldPositionAdapter extends BaseQuickAdapter<PositionVo, BaseViewHo
                 .setTextColor(R.id.tv_average_price, isSelected ? ContextCompat.getColor(mContext, R.color.white)
                         : ContextCompat.getColor(mContext, R.color.color_text_black));
 
-
-        if (tag == 1) {
+        if (mType == 1) {
             helper.getView(R.id.tv_rate).setVisibility(View.VISIBLE);
             helper.getView(R.id.tv_profit_loss).setVisibility(View.GONE);
             helper.setText(R.id.tv_float, TextUtils.isEmpty(floatValue) ? mContext.getResources().getString(R.string.text_no_data_default) : MarketUtil.decimalFormatMoney(floatValue))
@@ -118,7 +112,7 @@ public class HoldPositionAdapter extends BaseQuickAdapter<PositionVo, BaseViewHo
             tv_float.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    HangQingWindow mWindow  = new HangQingWindow(mContext);
+                    HangQingWindow mWindow = new HangQingWindow(mContext);
                     mWindow.setOutsideTouchable(true);
                     mWindow.setFocusable(true);
                     if (listener != null) {

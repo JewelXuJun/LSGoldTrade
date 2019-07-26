@@ -67,7 +67,7 @@ public class FChartAdapter extends BaseAdapter {
 
     @Override
     public int getCount() {
-        return 10;
+        return null == mList ? 10 : mList.size();
     }
 
     @Override

@@ -678,36 +678,6 @@ public class TenSpeedVo implements Serializable {
     public List<String[]> getAskLists() {
         List<String[]> list = new ArrayList<>();
 
-        String[] askValue10 = new String[3];
-        askValue10[0] = "卖10";
-        askValue10[1] = MarketUtil.getPriceValue(askPrice10);
-        askValue10[2] = String.valueOf(askVolume10);
-        list.add(askValue10);
-
-        String[] askValue9 = new String[3];
-        askValue9[0] = "卖9";
-        askValue9[1] = MarketUtil.getPriceValue(askPrice9);
-        askValue9[2] = String.valueOf(askVolume9);
-        list.add(askValue9);
-
-        String[] askValue8 = new String[3];
-        askValue8[0] = "卖8";
-        askValue8[1] = MarketUtil.getPriceValue(askPrice8);
-        askValue8[2] = String.valueOf(askVolume8);
-        list.add(askValue8);
-
-        String[] askValue7 = new String[3];
-        askValue7[0] = "卖7";
-        askValue7[1] = MarketUtil.getPriceValue(askPrice7);
-        askValue7[2] = String.valueOf(askVolume7);
-        list.add(askValue7);
-
-        String[] askValue6 = new String[3];
-        askValue6[0] = "卖6";
-        askValue6[1] = MarketUtil.getPriceValue(askPrice6);
-        askValue6[2] = String.valueOf(askVolume6);
-        list.add(askValue6);
-
         String[] askValue5 = new String[3];
         askValue5[0] = "卖5";
         askValue5[1] = MarketUtil.getPriceValue(askPrice5);
@@ -773,36 +743,6 @@ public class TenSpeedVo implements Serializable {
         bidValue5[1] = MarketUtil.getPriceValue(bidPrice5);
         bidValue5[2] = String.valueOf(bidVolume5);
         list.add(bidValue5);
-
-        String[] bidValue6 = new String[3];
-        bidValue6[0] = "买6";
-        bidValue6[1] = MarketUtil.getPriceValue(bidPrice6);
-        bidValue6[2] = String.valueOf(bidVolume6);
-        list.add(bidValue6);
-
-        String[] bidValue7 = new String[3];
-        bidValue7[0] = "买7";
-        bidValue7[1] = MarketUtil.getPriceValue(bidPrice7);
-        bidValue7[2] = String.valueOf(bidVolume7);
-        list.add(bidValue7);
-
-        String[] bidValue8 = new String[3];
-        bidValue8[0] = "买8";
-        bidValue8[1] = MarketUtil.getPriceValue(bidPrice8);
-        bidValue8[2] = String.valueOf(bidVolume8);
-        list.add(bidValue8);
-
-        String[] bidValue9 = new String[3];
-        bidValue9[0] = "买9";
-        bidValue9[1] = MarketUtil.getPriceValue(bidPrice9);
-        bidValue9[2] = String.valueOf(bidVolume9);
-        list.add(bidValue9);
-
-        String[] bidValue10 = new String[3];
-        bidValue10[0] = "买10";
-        bidValue10[1] = MarketUtil.getPriceValue(bidPrice10);
-        bidValue10[2] = String.valueOf(bidVolume10);
-        list.add(bidValue10);
 
         return list;
     }

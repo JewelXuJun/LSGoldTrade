@@ -29,7 +29,7 @@
             android:gravity="center|left"
             android:text="   - - -   "
             android:textColor="#1a1a1a"
-            android:textSize="8sp" />
+            android:textSize="9sp" />
 
         <TextView
             android:id="@+id/tv_item_third"
@@ -40,7 +40,7 @@
             android:gravity="center|right"
             android:text="  - - -  "
             android:textColor="#1a1a1a"
-            android:textSize="8sp" />
+            android:textSize="9sp" />
 
     </LinearLayout>
 
