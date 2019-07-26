@@ -14,12 +14,19 @@ public class AdvertisementVo {
      */
 
     private String id;
+
     private String title;
+
     private double channelId;
+
     private String channelName;
+
     private String isTop;
+
     private String createTime;
+
     private String txt;
+
     private String titleImg;
 
     public String getId() {

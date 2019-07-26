@@ -94,22 +94,22 @@
 
                             <LinearLayout
                                 android:layout_width="match_parent"
-                                android:layout_height="40dp"
+                                android:layout_height="@dimen/common_item_height_middle"
                                 android:gravity="center_vertical"
-                                android:orientation="horizontal"
-                                android:paddingLeft="20dp">
+                                android:orientation="horizontal">
 
                                 <ImageView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:src="@mipmap/advertisement" />
+                                    android:layout_marginLeft="@dimen/common_area_margin_big"
+                                    android:src="@mipmap/ic_notice" />
 
                                 <ViewFlipper
                                     android:id="@+id/view_flipper"
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
                                     android:layout_gravity="center"
-                                    android:layout_marginLeft="4dp"
+                                    android:layout_marginLeft="@dimen/common_area_margin_tiny"
                                     android:inAnimation="@anim/anim_in"
                                     android:outAnimation="@anim/anim_out" />
 

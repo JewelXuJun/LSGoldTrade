@@ -5,13 +5,14 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class InfoPagerAdapter extends FragmentStatePagerAdapter {
 
-    private ArrayList<String> mTabHeaders;
-    private ArrayList<Long> mChannelIds;
+    private List<String> mTabHeaders;
+    private List<Long> mChannelIds;
 
-    public InfoPagerAdapter(FragmentManager fragmentManager, ArrayList<String> tabHeaders, ArrayList<Long> channelIds) {
+    public InfoPagerAdapter(FragmentManager fragmentManager, List<String> tabHeaders, List<Long> channelIds) {
         super(fragmentManager);
 
         this.mTabHeaders = tabHeaders;

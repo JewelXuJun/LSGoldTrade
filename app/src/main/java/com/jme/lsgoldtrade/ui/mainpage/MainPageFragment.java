@@ -70,8 +70,9 @@ public class MainPageFragment extends JMEBaseFragment implements OnRefreshListen
     private MainPageFastAdapter mMainPageFastAdapter;
 
     private List<FiveSpeedVo> mList;
-    private ArrayList<String> mTabs = new ArrayList<>();
-    private ArrayList<Long> mChannelIds = new ArrayList<>();
+    private List<String> mTabs = new ArrayList<>();
+    private List<Long> mChannelIds = new ArrayList<>();
+    private List<AdvertisementVo> mAdvertisementVoList;
 
     private boolean bHidden = false;
     private boolean bFlag = true;
@@ -125,10 +126,9 @@ public class MainPageFragment extends JMEBaseFragment implements OnRefreshListen
         gridPagerSnapHelper.setRow(1).setColumn(3);
         gridPagerSnapHelper.attachToRecyclerView(mBinding.recyclerView);
 
+        getFirstThree();
         getNavigatorList();
         getChannelAllList();
-
-        sendRequest(ManagementService.getInstance().firstThree, new HashMap<>(), false);
     }
 
     @Override
@@ -234,12 +234,59 @@ public class MainPageFragment extends JMEBaseFragment implements OnRefreshListen
         return navigatorVoBean;
     }
 
+    private void initMagicIndicator(List<List<NavigatorVo.NavigatorVoBean>> list, int size) {
+        mMainPageFastAdapter = new MainPageFastAdapter(mContext, size, list);
+
+        ViewGroup.LayoutParams layoutParams = mBinding.magicIndicator.getLayoutParams();
+        layoutParams.width = DensityUtil.dpTopx(mContext, 20) * (size);
+
+        mBinding.viewPagerFastManagement.setAdapter(mMainPageFastAdapter);
+        mBinding.magicIndicator.setBackgroundColor(Color.LTGRAY);
+        mBinding.magicIndicator.setLayoutParams(layoutParams);
+
+        CommonNavigator commonNavigator = new CommonNavigator(mContext);
+        commonNavigator.setAdjustMode(true);
+        commonNavigator.setAdapter(new CommonNavigatorAdapter() {
+
+            @Override
+            public int getCount() {
+                return size;
+            }
+
+            @Override
+            public IPagerTitleView getTitleView(Context context, final int index) {
+                return new DummyPagerTitleView(context);
+            }
+
+            @Override
+            public IPagerIndicator getIndicator(Context context) {
+                LinePagerIndicator indicator = new LinePagerIndicator(context);
+                float lineHeight = context.getResources().getDimension(R.dimen.radius_big);
+                float lineWidth = context.getResources().getDimension(R.dimen.icon_checkbox);
+
+                indicator.setLineHeight(lineHeight);
+                indicator.setLineWidth(lineWidth);
+                indicator.setColors(ContextCompat.getColor(mContext, R.color.color_blue_deep));
+
+                return indicator;
+            }
+        });
+
+        mBinding.magicIndicator.setNavigator(commonNavigator);
+
+        ViewPagerHelper.bind(mBinding.magicIndicator, mBinding.viewPagerFastManagement);
+    }
+
     private long getTimeInterval() {
         return NetWorkUtils.isWifiConnected(mContext) ? AppConfig.TimeInterval_WiFi : AppConfig.TimeInterval_NetWork;
     }
 
     private void getBannerList() {
         sendRequest(ManagementService.getInstance().bannerAllList, new HashMap<>(), false);
+    }
+
+    private void getFirstThree() {
+        sendRequest(ManagementService.getInstance().firstThree, new HashMap<>(), false);
     }
 
     private void getNavigatorList() {
@@ -300,6 +347,51 @@ public class MainPageFragment extends JMEBaseFragment implements OnRefreshListen
                     mBinding.banner.start();
                 } else {
                     mBinding.swipeRefreshLayout.finishRefresh(false);
+                }
+
+                break;
+            case "FirstThree":
+                if (head.isSuccess()) {
+                    try {
+                        mAdvertisementVoList = (List<AdvertisementVo>) response;
+                    } catch (Exception e) {
+                        mAdvertisementVoList = null;
+
+                        e.printStackTrace();
+                    }
+
+                    if (null == mAdvertisementVoList || 0 == mAdvertisementVoList.size())
+                        return;
+
+                    for (int i = 0; i < mAdvertisementVoList.size(); i++) {
+                        AdvertisementVo advertisementVo = mAdvertisementVoList.get(i);
+
+                        if (null != advertisementVo) {
+                            View view = getLayoutInflater().inflate(R.layout.item_flipper, null);
+                            TextView tv_notice = view.findViewById(R.id.tv_notice);
+                            tv_notice.setText(advertisementVo.getTitle());
+                            view.setId(i);
+
+                            mBinding.viewFlipper.addView(view);
+                        }
+                    }
+
+                    mBinding.viewFlipper.setOnClickListener((v) -> {
+                        int id = mBinding.viewFlipper.getCurrentView().getId();
+
+                        AdvertisementVo advertisementVo = mAdvertisementVoList.get(id);
+
+                        if (null == advertisementVo)
+                            return;
+
+                        ARouter.getInstance().build(Constants.ARouterUriConst.JMEWEBVIEW)
+                                .withString("title", advertisementVo.getTitle())
+                                .withString("url", Constants.HttpConst.URL_INFO + advertisementVo.getId())
+                                .navigation();
+                    });
+
+                    mBinding.viewFlipper.setFlipInterval(2000);
+                    mBinding.viewFlipper.startFlipping();
                 }
 
                 break;
@@ -384,100 +476,9 @@ public class MainPageFragment extends JMEBaseFragment implements OnRefreshListen
                     mBinding.tabViewpager.setAdapter(mInfoPagerAdapter);
                     mBinding.tablayout.setupWithViewPager(mBinding.tabViewpager);
                 }
-                break;
-            case "FirstThree":
-                if (head.isSuccess()) {
-                    List<AdvertisementVo> value;
-                    try {
-                        value = (List<AdvertisementVo>) response;
-                    } catch (Exception e) {
-                        value = null;
-                        e.printStackTrace();
-                    }
 
-                    if (null == value)
-                        return;
-
-                    if (value != null && !value.isEmpty()) {
-                        for (int i = 0; i < value.size(); i++) {
-                            View view = getLayoutInflater().inflate(R.layout.item_flipper, null);
-                            TextView advertisement = view.findViewById(R.id.advertisement);
-                            advertisement.setText(value.get(i).getTitle());
-                            view.setId(i);
-                            mBinding.viewFlipper.addView(view);
-                        }
-                        List<AdvertisementVo> finalValue = value;
-                        mBinding.viewFlipper.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                int id = mBinding.viewFlipper.getCurrentView().getId();
-                                ARouter.getInstance().build(Constants.ARouterUriConst.JMEWEBVIEW)
-                                        .withString("title", finalValue.get(id).getTitle())
-                                        .withString("url", finalValue.get(id).getTitleImg())
-                                        .navigation();
-                            }
-                        });
-                        mBinding.viewFlipper.setFlipInterval(2000);
-                        mBinding.viewFlipper.startFlipping();
-                    }
-                }
                 break;
         }
-    }
-
-    private void initMagicIndicator(List<List<NavigatorVo.NavigatorVoBean>> list, int size) {
-        mMainPageFastAdapter = new MainPageFastAdapter(mContext, size, list);
-
-        ViewGroup.LayoutParams layoutParams = mBinding.magicIndicator.getLayoutParams();
-        layoutParams.width = DensityUtil.dpTopx(mContext, 20) * (size);
-
-        mBinding.viewPagerFastManagement.setAdapter(mMainPageFastAdapter);
-        mBinding.magicIndicator.setBackgroundColor(Color.LTGRAY);
-        mBinding.magicIndicator.setLayoutParams(layoutParams);
-
-        CommonNavigator commonNavigator = new CommonNavigator(mContext);
-        commonNavigator.setAdjustMode(true);
-        commonNavigator.setAdapter(new CommonNavigatorAdapter() {
-
-            @Override
-            public int getCount() {
-                return size;
-            }
-
-            @Override
-            public IPagerTitleView getTitleView(Context context, final int index) {
-                return new DummyPagerTitleView(context);
-            }
-
-            @Override
-            public IPagerIndicator getIndicator(Context context) {
-                LinePagerIndicator indicator = new LinePagerIndicator(context);
-                float lineHeight = context.getResources().getDimension(R.dimen.radius_big);
-                float lineWidth = context.getResources().getDimension(R.dimen.icon_checkbox);
-
-                indicator.setLineHeight(lineHeight);
-                indicator.setLineWidth(lineWidth);
-                indicator.setColors(ContextCompat.getColor(mContext, R.color.color_blue_deep));
-
-                return indicator;
-            }
-        });
-
-        mBinding.magicIndicator.setNavigator(commonNavigator);
-
-        ViewPagerHelper.bind(mBinding.magicIndicator, mBinding.viewPagerFastManagement);
-    }
-
-    @Override
-    public void onRefresh(@NonNull RefreshLayout refreshLayout) {
-        mHandler.removeMessages(Constants.Msg.MSG_MAINPAGE_UPDATE_MARKET);
-
-        bFlag = true;
-
-        getMarket();
-        getNavigatorList();
-        getBannerList();
-        RxBus.getInstance().post(Constants.RxBusConst.RXBUS_MAINPAGE_REFRESH, null);
     }
 
     public class ClickHandlers {
@@ -510,6 +511,20 @@ public class MainPageFragment extends JMEBaseFragment implements OnRefreshListen
     }
 
     @Override
+    public void onRefresh(@NonNull RefreshLayout refreshLayout) {
+        mHandler.removeMessages(Constants.Msg.MSG_MAINPAGE_UPDATE_MARKET);
+
+        bFlag = true;
+
+        getMarket();
+        getBannerList();
+        getFirstThree();
+        getNavigatorList();
+
+        RxBus.getInstance().post(Constants.RxBusConst.RXBUS_MAINPAGE_REFRESH, null);
+    }
+
+    @Override
     public void onDestroy() {
         super.onDestroy();
 
@@ -525,6 +540,7 @@ public class MainPageFragment extends JMEBaseFragment implements OnRefreshListen
         public View createView(Context context) {
             View view = LayoutInflater.from(context).inflate(R.layout.item_banner, null);
             mImgBanner = view.findViewById(R.id.img_banner);
+
             return view;
         }
 
