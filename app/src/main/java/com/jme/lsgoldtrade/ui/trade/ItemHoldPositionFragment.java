@@ -5,7 +5,6 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.v7.widget.LinearLayoutManager;
 import android.text.TextUtils;
-import android.view.Gravity;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.jme.common.network.DTRequest;
@@ -23,7 +22,6 @@ import com.jme.lsgoldtrade.domain.PositionVo;
 import com.jme.lsgoldtrade.service.MarketService;
 import com.jme.lsgoldtrade.service.TradeService;
 import com.jme.lsgoldtrade.util.MarketUtil;
-import com.jme.lsgoldtrade.view.HangQingWindow;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -39,7 +37,7 @@ public class ItemHoldPositionFragment extends JMEBaseFragment implements BaseQui
 
     private FragmentItemHoldPositionBinding mBinding;
 
-    private HoldPositionAdapter mAdapter;
+    private DeclarationFormHoldPositionAdapter mAdapter;
     private List<String> mList;
     private List<PositionVo> mPositionVoList;
     private Subscription mRxbus;
@@ -91,7 +89,7 @@ public class ItemHoldPositionFragment extends JMEBaseFragment implements BaseQui
     protected void initData(Bundle savedInstanceState) {
         super.initData(savedInstanceState);
 
-        mAdapter = new HoldPositionAdapter(mContext, R.layout.item_hold_position, null, 2);
+        mAdapter = new DeclarationFormHoldPositionAdapter(mContext, R.layout.item_declaration_form_hold_position, null);
         mList = new ArrayList<>();
 
         mBinding.recyclerView.setHasFixedSize(false);
@@ -107,30 +105,13 @@ public class ItemHoldPositionFragment extends JMEBaseFragment implements BaseQui
 
         mAdapter.setOnLoadMoreListener(this, mBinding.recyclerView);
 
-        mAdapter.setOnPingCangListener(new HoldPositionAdapter.setOnPingCangListener() {
-            @Override
-            public void listener(PositionVo item, HangQingWindow mWindow) {
-                    if (null == mWindow)
-                        return;
-                long position = item.getPosition();
-                long frozen = item.getOffsetFrozen();
-                String contractId = item.getContractId();
-                String type = item.getType();
-                String tag = type.equals("多") ? "1" : "2";
-                mWindow.setData(mUser.getAccount(), contractId, MarketUtil.decimalFormatMoney(item.getPositionAverageStr()),
-                        String.valueOf(position - frozen), tag, "1", "", (view) -> {
-                            limitOrder(contractId, item.getPositionAverageStr(), String.valueOf(position - frozen), tag, "1");
+        mAdapter.setOnItemChildClickListener((adapter, view, position) -> {
+            PositionVo positionVo = (PositionVo) adapter.getItem(position);
 
-                            mWindow.dismiss();
-                        });
-//                mWindow.setData(mUser.getAccount(), item.getContractId(), MarketUtil.decimalFormatMoney(item.getPositionAverageStr()),
-//                            String.valueOf(position - frozen), tag, "1", (view) -> {
-//                                limitOrder(item.getContractId(), MarketUtil.decimalFormatMoney(item.getPositionAverageStr()),
-//                                        String.valueOf(position - frozen), tag, "1");
-//                                mWindow.dismiss();
-//                            });
-                    mWindow.showAtLocation(mBinding.recyclerView, Gravity.BOTTOM, 0, 0);
-            }
+            if (null == positionVo)
+                return;
+
+            RxBus.getInstance().post(Constants.RxBusConst.RXBUS_DECLARATIONFORM_HOLDPOSITION_SELECT, positionVo);
         });
 
         mAdapter.setOnItemClickListener((adapter, view, position) -> {
@@ -138,41 +119,9 @@ public class ItemHoldPositionFragment extends JMEBaseFragment implements BaseQui
 
             if (null == positionVo)
                 return;
-            if ("0".equals(positionVo.getExists()))
-                return;
 
-            if ("0".equals(positionVo.getExists()))
-                return;
 
-            int selectPosition = mAdapter.getSelectPosition();
-
-//            if (selectPosition == -1) {
-//                mAdapter.setSelectPosition(position);
-//            } else {
-//                if (selectPosition == position)
-//                    mAdapter.setSelectPosition(-1);
-//                else
-//                    mAdapter.setSelectPosition(position);
-//            }
-
-            mAdapter.notifyDataSetChanged();
-
-//            RxBus.getInstance().post(Constants.RxBusConst.RXBUS_DECLARATIONFORM_HOLDPOSITION_SELECT,
-//                    mAdapter.getSelectPosition() == -1 ? null : positionVo);
         });
-    }
-
-    private void limitOrder(String contractId, String price, String amount, String bsFlag, String ocFlag) {
-        HashMap<String, String> params = new HashMap<>();
-        params.put("contractId", contractId);
-        params.put("accountId", mUser.getAccountID());
-        params.put("entrustPrice", String.valueOf(new BigDecimal(price).multiply(new BigDecimal(100)).longValue()));
-        params.put("entrustNumber", amount);
-        params.put("bsFlag", bsFlag);
-        params.put("ocFlag", ocFlag);
-        params.put("tradingType", "0");
-
-        sendRequest(TradeService.getInstance().limitOrder, params, true);
     }
 
     @Override
@@ -222,14 +171,6 @@ public class ItemHoldPositionFragment extends JMEBaseFragment implements BaseQui
         mHandler.removeMessages(Constants.Msg.MSG_DECLARATIONFORM_POSITION_UPDATE_ACCOUNT_DATA);
     }
 
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-
-        if (!mRxbus.isUnsubscribed())
-            mRxbus.unsubscribe();
-    }
-
     private void initRxBus() {
         mRxbus = RxBus.getInstance().toObserverable(RxBus.Message.class).subscribe(message -> {
             String callType = message.getObject().toString();
@@ -238,15 +179,7 @@ public class ItemHoldPositionFragment extends JMEBaseFragment implements BaseQui
                 return;
 
             switch (callType) {
-                case Constants.RxBusConst.RXBUS_DECLARATIONFORM_HOLDPOSITION_UNSELECT:
-                    mAdapter.setSelectPosition(-1);
-                    mAdapter.notifyDataSetChanged();
-
-                    break;
                 case Constants.RxBusConst.RXBUS_DECLARATIONFORM_UPDATE:
-                    mAdapter.setSelectPosition(-1);
-                    mAdapter.notifyDataSetChanged();
-
                     initPosition();
 
                     break;
@@ -353,6 +286,19 @@ public class ItemHoldPositionFragment extends JMEBaseFragment implements BaseQui
         sendRequest(TradeService.getInstance().position, params, false, false, false);
     }
 
+    private void limitOrder(String contractId, String price, String amount, String bsFlag, String ocFlag) {
+        HashMap<String, String> params = new HashMap<>();
+        params.put("contractId", contractId);
+        params.put("accountId", mUser.getAccountID());
+        params.put("entrustPrice", String.valueOf(new BigDecimal(price).multiply(new BigDecimal(100)).longValue()));
+        params.put("entrustNumber", amount);
+        params.put("bsFlag", bsFlag);
+        params.put("ocFlag", ocFlag);
+        params.put("tradingType", "0");
+
+        sendRequest(TradeService.getInstance().limitOrder, params, true);
+    }
+
     @Override
     protected void DataReturn(DTRequest request, Head head, Object response) {
         super.DataReturn(request, head, response);
@@ -442,6 +388,7 @@ public class ItemHoldPositionFragment extends JMEBaseFragment implements BaseQui
                     showShortToast(R.string.trade_success);
                 else
                     showShortToast(head.getMsg());
+
                 break;
         }
     }
@@ -458,4 +405,13 @@ public class ItemHoldPositionFragment extends JMEBaseFragment implements BaseQui
             }
         }, 0);
     }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+
+        if (!mRxbus.isUnsubscribed())
+            mRxbus.unsubscribe();
+    }
+
 }

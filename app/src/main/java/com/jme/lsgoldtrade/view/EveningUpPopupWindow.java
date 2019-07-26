@@ -10,23 +10,33 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.jme.lsgoldtrade.R;
 import com.jme.lsgoldtrade.base.JMEBasePopupWindow;
 import com.jme.lsgoldtrade.config.AppConfig;
-import com.jme.lsgoldtrade.databinding.PopupwindowHangqingBinding;
+import com.jme.lsgoldtrade.databinding.PopupwindowEveningUpBinding;
 import com.jme.lsgoldtrade.util.MarketUtil;
 
 import java.math.BigDecimal;
 
-public class HangQingWindow extends JMEBasePopupWindow {
+public class EveningUpPopupWindow extends JMEBasePopupWindow {
 
-    private PopupwindowHangqingBinding mBinding;
+    private PopupwindowEveningUpBinding mBinding;
+
+    private Context mContext;
 
     private float mPriceMove = 0.00f;
+    private String mLowerLimitPrice;
+    private String mHighLimitPrice;
+    private long mMinOrderQty = 0;
+    private long mMaxOrderQty = 0;
+    private long mMaxHoldQty = 0;
 
-    public HangQingWindow(Context context) {
+    public EveningUpPopupWindow(Context context) {
         super(context);
+
+        mContext = context;
     }
 
     @Override
@@ -41,7 +51,7 @@ public class HangQingWindow extends JMEBasePopupWindow {
     public void iniWindow() {
         super.iniWindow();
 
-        mBinding = DataBindingUtil.inflate(LayoutInflater.from(getContext()), R.layout.popupwindow_hangqing, null, false);
+        mBinding = DataBindingUtil.inflate(LayoutInflater.from(getContext()), R.layout.popupwindow_evening_up, null, false);
 
         if (null == mBinding)
             return;
@@ -54,6 +64,8 @@ public class HangQingWindow extends JMEBasePopupWindow {
     }
 
     private void initListener() {
+        mBinding.btnCancel.setOnClickListener((view) -> dismiss());
+
         mBinding.etPrice.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -90,50 +102,38 @@ public class HangQingWindow extends JMEBasePopupWindow {
 
             @Override
             public void afterTextChanged(Editable s) {
+
             }
         });
     }
 
-    private String amount;
-
-    public void setData(String account, String code, String price, String amount, String type, String ocFlag, String value, View.OnClickListener confirmListener) {
-        this.amount = amount;
-        mBinding.backUsername.setText(account);
+    public void setData(String account, String contractID, String price, String type, String maxAmount,
+                        float priceMove, String lowerLimitPrice, String highLimitPrice, long minOrderQty, long maxOrderQty,
+                        long maxHoldQty, View.OnClickListener confirmListener) {
+        mBinding.tvGoldAccount.setText(account);
+        mBinding.tvBusinessType.setText(type.equals("多") ? mContext.getString(R.string.trade_sale_evening)
+                : mContext.getString(R.string.trade_buy_evening));
+        mBinding.tvBusinessVarieties.setText(contractID);
         mBinding.etPrice.setText(price);
-        mBinding.etAmount.setText(amount);
+        mBinding.etAmount.setText("1");
+        mBinding.tvMaxAmount.setText(maxAmount);
 
-        mBinding.maxAmout.setText("约可交易手数:\n" + value);
+        mPriceMove = priceMove;
+        mLowerLimitPrice = lowerLimitPrice;
+        mHighLimitPrice = highLimitPrice;
+        mMinOrderQty = minOrderQty;
+        mMaxOrderQty = maxOrderQty;
+        mMaxHoldQty = maxHoldQty;
 
         mBinding.btnConfirm.setOnClickListener(confirmListener);
+    }
 
-        if ("0".equals(ocFlag)) {
-            if ("1".equals(type)) {
-                mBinding.title.setText("买多报单确认");
-                mBinding.businessType.setText("买入开仓");
-            } else if ("2".equals(type)) {
-                mBinding.title.setText("卖空报单确认");
-                mBinding.businessType.setText("卖出开仓");
-            }
-            mBinding.maxAmout.setVisibility(View.VISIBLE);
-            mBinding.llVariety.setVisibility(View.GONE);
-        } else {
-            if ("1".equals(type)) {
-                mBinding.title.setText("平仓报单确认");
-                mBinding.businessType.setText("买多平仓");
-            } else if ("2".equals(type)) {
-                mBinding.title.setText("平仓报单确认");
-                mBinding.businessType.setText("卖空平仓");
-            }
-            mBinding.maxAmout.setVisibility(View.GONE);
-            mBinding.llVariety.setVisibility(View.VISIBLE);
-            mBinding.variety.setText(code);
-        }
+    public String getPrice() {
+        return mBinding.etPrice.getText().toString();
+    }
 
-        if ("Ag(T+D)".equals(code)) {
-            mPriceMove = new BigDecimal(100).divide(new BigDecimal(100)).floatValue();
-        } else {
-            mPriceMove = new BigDecimal(1).divide(new BigDecimal(100)).floatValue();
-        }
+    public String getAmount() {
+        return mBinding.etAmount.getText().toString();
     }
 
     public class ClickHandlers {
@@ -143,17 +143,18 @@ public class HangQingWindow extends JMEBasePopupWindow {
         }
 
         public void onClickPriceMinus() {
-            //委托开仓价格
             hiddenKeyBoard();
 
             String price = getPrice(mBinding.etPrice);
 
-            if (TextUtils.isEmpty(price))
+            if (TextUtils.isEmpty(price) || TextUtils.isEmpty(mLowerLimitPrice))
                 return;
 
             float value = new BigDecimal(price).subtract(new BigDecimal(mPriceMove)).floatValue();
 
-            if (new BigDecimal(String.valueOf(value)).compareTo(new BigDecimal(0)) == -1) {
+            if (new BigDecimal(String.valueOf(value)).compareTo(new BigDecimal(mLowerLimitPrice)) == -1) {
+                Toast.makeText(mContext, R.string.trade_limit_down_price_error, Toast.LENGTH_SHORT).show();
+
                 mBinding.etPrice.setText(price);
                 mBinding.etPrice.setSelection(price.length());
             } else {
@@ -165,51 +166,75 @@ public class HangQingWindow extends JMEBasePopupWindow {
         }
 
         public void onClickPriceAdd() {
-            //委托开仓价格
             hiddenKeyBoard();
 
-            String price = getPrice(mBinding.etPrice).replace(",", "");
+            String price = getPrice(mBinding.etPrice);
 
-            if (TextUtils.isEmpty(price))
+            if (TextUtils.isEmpty(price) || TextUtils.isEmpty(mHighLimitPrice))
                 return;
 
             float value = new BigDecimal(price).add(new BigDecimal(mPriceMove)).floatValue();
 
-            String valueStr = MarketUtil.formatValue(String.valueOf(value), 2);
+            if (new BigDecimal(String.valueOf(value)).compareTo(new BigDecimal(mHighLimitPrice)) == 1) {
+                Toast.makeText(mContext, R.string.trade_limit_up_price_error, Toast.LENGTH_SHORT).show();
 
-            mBinding.etPrice.setText(valueStr);
-            mBinding.etPrice.setSelection(valueStr.length());
+                mBinding.etPrice.setText(price);
+                mBinding.etPrice.setSelection(price.length());
+            } else {
+                String valueStr = MarketUtil.formatValue(String.valueOf(value), 2);
+
+                mBinding.etPrice.setText(valueStr);
+                mBinding.etPrice.setSelection(valueStr.length());
+            }
         }
 
         public void onClickAmountMinus() {
-            //委托开仓手数
             hiddenKeyBoard();
+
+            String amount = mBinding.etAmount.getText().toString();
 
             if (TextUtils.isEmpty(amount))
                 amount = "0";
 
             long value = new BigDecimal(amount).subtract(new BigDecimal(1)).longValue();
 
-            if (value < 1) {
-//                showShortToast(R.string.trade_number_error_zero);
+            if (mMinOrderQty == -1) {
+                if (new BigDecimal(value).compareTo(new BigDecimal(0)) == 1)
+                    mBinding.etAmount.setText(String.valueOf(value));
+                else
+                    Toast.makeText(mContext, R.string.trade_number_error_zero, Toast.LENGTH_SHORT).show();
             } else {
-                mBinding.etAmount.setText(String.valueOf(value));
+                if (new BigDecimal(value).compareTo(new BigDecimal(mMinOrderQty)) == -1)
+                    Toast.makeText(mContext, R.string.trade_limit_min_amount_error, Toast.LENGTH_SHORT).show();
+                else
+                    mBinding.etAmount.setText(String.valueOf(value));
             }
         }
 
         public void onClickAmountAdd() {
-            //委托开仓手数
             hiddenKeyBoard();
+
+            String amount = mBinding.etAmount.getText().toString();
 
             if (TextUtils.isEmpty(amount))
                 amount = "0";
 
             long value = new BigDecimal(amount).add(new BigDecimal(1)).longValue();
 
-            if (value < 1) {
-//                showShortToast(R.string.trade_number_error_zero);
+            if (mMaxOrderQty == -1) {
+                if (mMaxHoldQty == -1) {
+                    mBinding.etAmount.setText(String.valueOf(value));
+                } else {
+                    if (new BigDecimal(value).compareTo(new BigDecimal(mMaxHoldQty)) == 1)
+                        Toast.makeText(mContext, R.string.trade_limit_max_amount_error2, Toast.LENGTH_SHORT).show();
+                    else
+                        mBinding.etAmount.setText(String.valueOf(value));
+                }
             } else {
-                mBinding.etAmount.setText(String.valueOf(value));
+                if (new BigDecimal(value).compareTo(new BigDecimal(mMaxOrderQty)) == 1)
+                    Toast.makeText(mContext, R.string.trade_limit_max_amount_error, Toast.LENGTH_SHORT).show();
+                else
+                    mBinding.etAmount.setText(String.valueOf(value));
             }
         }
     }

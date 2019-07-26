@@ -23,7 +23,7 @@ import com.jme.lsgoldtrade.domain.TenSpeedVo;
 import com.jme.lsgoldtrade.service.ManagementService;
 import com.jme.lsgoldtrade.service.MarketService;
 import com.jme.lsgoldtrade.service.TradeService;
-import com.jme.lsgoldtrade.view.HangQingWindow;
+import com.jme.lsgoldtrade.view.EveningUpPopupWindow;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -53,7 +53,7 @@ public class MarketJudgmentActivity extends JMEBaseActivity {
 
     private List<FenXiShiVo> fenXiShiVoList;
 
-    private HangQingWindow mWindow;
+    private EveningUpPopupWindow mWindow;
 
     private String latestPrice;
     private String value;
@@ -73,7 +73,7 @@ public class MarketJudgmentActivity extends JMEBaseActivity {
     @Override
     protected void initData(Bundle savedInstanceState) {
         super.initData(savedInstanceState);
-        mWindow = new HangQingWindow(this);
+        mWindow = new EveningUpPopupWindow(this);
         mWindow.setOutsideTouchable(true);
         mWindow.setFocusable(true);
         getDateFromNet();
@@ -276,13 +276,13 @@ public class MarketJudgmentActivity extends JMEBaseActivity {
         if (null == mWindow)
             return;
 
-        mWindow.setData(mUser.getAccount(), "Au(T+D)", price, amount,
+       /* mWindow.setData(mUser.getAccount(), "Au(T+D)", price, amount,
                 bsFlag, ocFlag, value, (view) -> {
                     limitOrder("Au(T+D)", price, amount, bsFlag, "0");
 
                     mWindow.dismiss();
                 });
-        mWindow.showAtLocation(mBinding.lltitle, Gravity.BOTTOM, 0, 0);
+        mWindow.showAtLocation(mBinding.lltitle, Gravity.BOTTOM, 0, 0);*/
     }
 
     private void limitOrder(String contractId, String price, String amount, String bsFlag, String ocFlag) {

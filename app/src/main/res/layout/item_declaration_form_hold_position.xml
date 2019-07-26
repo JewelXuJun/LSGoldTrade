@@ -75,10 +75,19 @@
 
             <TextView
                 android:id="@+id/tv_average_price"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:gravity="center|right"
+                android:gravity="center"
                 android:paddingLeft="@dimen/common_page_padding"
+                android:text="@string/text_no_data_default"
+                android:textColor="@color/color_text_black"
+                android:textSize="@dimen/size_middle" />
+
+            <TextView
+                android:id="@+id/tv_profit_loss"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/common_area_margin_tiny"
                 android:text="@string/text_no_data_default"
                 android:textColor="@color/color_text_black"
                 android:textSize="@dimen/size_middle" />
@@ -93,22 +102,16 @@
             android:orientation="vertical"
             android:paddingRight="@dimen/common_area_margin">
 
-            <TextView
-                android:id="@+id/tv_float"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/text_no_data_default"
-                android:textColor="@color/color_text_black"
-                android:textSize="@dimen/size_middle" />
-
-            <TextView
-                android:id="@+id/tv_rate"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/common_area_margin_tiny"
-                android:text="@string/text_no_data_default"
-                android:textColor="@color/color_text_black"
-                android:textSize="@dimen/size_middle" />
+            <Button
+                android:id="@+id/btn_evening_up"
+                android:layout_width="@dimen/common_item_height_middle"
+                android:layout_height="@dimen/height_order_btn"
+                android:layout_centerHorizontal="true"
+                android:background="@drawable/bg_btn_blue_solid"
+                android:gravity="center"
+                android:text="@string/trade_evening_up"
+                android:textColor="@color/white"
+                android:textSize="@dimen/sp_12" />
 
         </LinearLayout>
 

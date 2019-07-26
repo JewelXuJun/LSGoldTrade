@@ -222,10 +222,14 @@
     <string name="trade_bind_success_time">%1$s秒后自动关闭</string>
     <string name="trade_buy_more_confirm">买多报单确认</string>
     <string name="trade_sale_empty_confirm">卖空报单确认</string>
+    <string name="trade_evening_up_confirm">平仓报单确认</string>
     <string name="trade_buy_open">买入开仓</string>
     <string name="trade_sale_open">卖出开仓</string>
+    <string name="trade_sale_evening">卖空平仓</string>
+    <string name="trade_buy_evening">买多平仓</string>
     <string name="trade_amount_unit">%1$s手</string>
     <string name="trade_see_order">查看订单</string>
+    <string name="trade_about_amount">约可交易手数</string>
 
     <!-- Personal -->
     <string name="personal_login">登录/注册</string>

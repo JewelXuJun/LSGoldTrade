@@ -28,6 +28,7 @@ import com.jme.lsgoldtrade.config.AppConfig;
 import com.jme.lsgoldtrade.config.Constants;
 import com.jme.lsgoldtrade.databinding.FragmentDeclarationFormBinding;
 import com.jme.lsgoldtrade.domain.ContractInfoVo;
+import com.jme.lsgoldtrade.domain.FiveSpeedVo;
 import com.jme.lsgoldtrade.domain.OrderPageVo;
 import com.jme.lsgoldtrade.domain.PositionVo;
 import com.jme.lsgoldtrade.domain.TenSpeedVo;
@@ -37,6 +38,7 @@ import com.jme.lsgoldtrade.service.TradeService;
 import com.jme.lsgoldtrade.util.EidtTextInputUtil;
 import com.jme.lsgoldtrade.util.MarketUtil;
 import com.jme.lsgoldtrade.view.ConfirmPopupwindow;
+import com.jme.lsgoldtrade.view.EveningUpPopupWindow;
 
 import java.math.BigDecimal;
 import java.util.HashMap;
@@ -57,15 +59,19 @@ public class DeclarationFormFragment extends JMEBaseFragment {
 
     private TabViewPagerAdapter mAdapter;
     private ContractInfoVo mContractInfoVo;
+    private ContractInfoVo mEveningUpContractInfoVo;
     private TenSpeedVo mTenSpeedVo;
+    private PositionVo mPositionVo;
     private AlertDialog mDialog;
     private DeclarationFormWindow mWindow;
     private CancelOrderPopUpWindow mCancelWindow;
+    private TradeMessagePopUpWindow mTradeMessagePopUpWindow;
+    private EveningUpPopupWindow mEveningUpPopupWindow;
+    private ConfirmPopupwindow mConfirmPopupwindow;
     private Subscription mRxbus;
 
     private boolean bVisibleToUser = false;
     private boolean bFlag = true;
-    private boolean bEveningUp = false;
     private int mSelectItem = 0;
     private float mPriceMove = 0.00f;
     private long mMinOrderQty = 0;
@@ -74,11 +80,9 @@ public class DeclarationFormFragment extends JMEBaseFragment {
     private String mLowerLimitPrice;
     private String mHighLimitPrice;
     private String mDeclarationFormPrice;
+    private String mEveningUpContractID;
     private int mBsFlag = 0;
     private int mOcFlag = 0;
-
-    private TradeMessagePopUpWindow mTradeMessagePopUpWindow;
-    private ConfirmPopupwindow mConfirmPopupwindow;
 
     private Handler mHandler = new Handler() {
         public void handleMessage(Message msg) {
@@ -115,6 +119,10 @@ public class DeclarationFormFragment extends JMEBaseFragment {
         mConfirmPopupwindow = new ConfirmPopupwindow(mContext);
         mConfirmPopupwindow.setOutsideTouchable(true);
         mConfirmPopupwindow.setFocusable(true);
+
+        mEveningUpPopupWindow = new EveningUpPopupWindow(mContext);
+        mEveningUpPopupWindow.setOutsideTouchable(true);
+        mEveningUpPopupWindow.setFocusable(true);
     }
 
     @Override
@@ -300,40 +308,15 @@ public class DeclarationFormFragment extends JMEBaseFragment {
                 case Constants.RxBusConst.RXBUS_DECLARATIONFORM_HOLDPOSITION_SELECT:
                     Object object = message.getObject2();
 
-                    if (null == object) {
-                        bEveningUp = false;
-                    } else {
-                        PositionVo positionVo = (PositionVo) object;
+                    mPositionVo = (PositionVo) object;
 
-                        if (null == positionVo) {
-                            bEveningUp = false;
-                        } else {
-                            bEveningUp = true;
+                    if (null == mPositionVo)
+                        return;
 
-                            String contractID = positionVo.getContractId();
+                    mEveningUpContractID = mPositionVo.getContractId();
+                    mEveningUpContractInfoVo = mContract.getContractInfoFromID(mEveningUpContractID);
 
-                            if (!contractID.equals(AppConfig.Select_ContractId)) {
-                                mSelectItem = mContract.getContractIDPosition(contractID);
-
-                                AppConfig.Select_ContractId = contractID;
-
-                                mBinding.tvContractId.setText(contractID);
-
-                                mTenSpeedVo = null;
-                                mContractInfoVo = mContract.getContractInfoFromID(contractID);
-                            }
-
-                            mBinding.etPrice.setText("");
-                            mBinding.etPrice.clearFocus();
-                            mBinding.etAmount.setText(String.valueOf(positionVo.getPosition() - positionVo.getOffsetFrozen()));
-
-                            setContractData();
-
-                            mHandler.removeMessages(Constants.Msg.MSG_TRADE_UPDATE_DATA);
-
-                            getTenSpeedQuotes();
-                        }
-                    }
+                    getFiveSpeedQuotes(mEveningUpContractID);
 
                     break;
                 case Constants.RxBusConst.RXBUS_DECLARATIONFORM_SHOW:
@@ -395,12 +378,6 @@ public class DeclarationFormFragment extends JMEBaseFragment {
             if (mSelectItem != position) {
                 mSelectItem = position;
 
-                if (bEveningUp) {
-                    bEveningUp = false;
-
-                    RxBus.getInstance().post(Constants.RxBusConst.RXBUS_DECLARATIONFORM_HOLDPOSITION_UNSELECT, null);
-                }
-
                 String contractID = mContracIDs[mSelectItem];
 
                 mBinding.tvContractId.setText(contractID);
@@ -437,8 +414,7 @@ public class DeclarationFormFragment extends JMEBaseFragment {
             mMaxOrderQty = mContractInfoVo.getMaxOrderQty();
             mMaxHoldQty = mContractInfoVo.getMaxHoldQty();
 
-            if (!bEveningUp)
-                mBinding.etAmount.setText(mMinOrderQty == -1 ? "1" : String.valueOf(mMinOrderQty));
+            mBinding.etAmount.setText(mMinOrderQty == -1 ? "1" : String.valueOf(mMinOrderQty));
         }
     }
 
@@ -462,10 +438,10 @@ public class DeclarationFormFragment extends JMEBaseFragment {
             return;
 
         mWindow.setData(mUser.getAccount(), contractID, price, amount, String.valueOf(bsFlag), (view) -> {
-                    getStatus();
+            getStatus();
 
-                    mWindow.dismiss();
-                });
+            mWindow.dismiss();
+        });
         mWindow.showAtLocation(mBinding.etAmount, Gravity.BOTTOM, 0, 0);
     }
 
@@ -514,6 +490,13 @@ public class DeclarationFormFragment extends JMEBaseFragment {
 
     private long getTimeInterval() {
         return NetWorkUtils.isWifiConnected(mContext) ? AppConfig.TimeInterval_WiFi : AppConfig.TimeInterval_NetWork;
+    }
+
+    private void getFiveSpeedQuotes(String contractID) {
+        HashMap<String, String> params = new HashMap<>();
+        params.put("list", contractID);
+
+        sendRequest(MarketService.getInstance().getFiveSpeedQuotes, params, false);
     }
 
     private void getTenSpeedQuotes() {
@@ -593,6 +576,73 @@ public class DeclarationFormFragment extends JMEBaseFragment {
                 }
 
                 break;
+            case "GetFiveSpeedQuotes":
+                if (head.isSuccess()) {
+                    List<FiveSpeedVo> fiveSpeedVoList;
+
+                    try {
+                        fiveSpeedVoList = (List<FiveSpeedVo>) response;
+                    } catch (Exception e) {
+                        fiveSpeedVoList = null;
+
+                        e.getMessage();
+                    }
+
+                    if (null == fiveSpeedVoList || 0 == fiveSpeedVoList.size())
+                        return;
+
+                    FiveSpeedVo fiveSpeedVo = fiveSpeedVoList.get(0);
+
+                    if (null == fiveSpeedVo)
+                        return;
+
+                    if (!mEveningUpContractID.equals(fiveSpeedVo.getContractId()))
+                        return;
+
+                    if (null != mEveningUpPopupWindow && !mEveningUpPopupWindow.isShowing() && null != mEveningUpContractInfoVo) {
+                        String lowerLimitPrice = fiveSpeedVo.getLowerLimitPrice();
+                        String highLimitPrice = fiveSpeedVo.getHighLimitPrice();
+                        long minOrderQty = mEveningUpContractInfoVo.getMinOrderQty();
+                        long maxOrderQty = mEveningUpContractInfoVo.getMaxOrderQty();
+                        long maxHoldQty = mEveningUpContractInfoVo.getMaxHoldQty();
+
+                        mEveningUpPopupWindow.setData(mUser.getAccount(), mEveningUpContractID, mPositionVo.getPositionAverageStr(),
+                                mPositionVo.getType(), String.valueOf(mPositionVo.getPosition() - mPositionVo.getOffsetFrozen()),
+                                new BigDecimal(mEveningUpContractInfoVo.getMinPriceMove()).divide(new BigDecimal(100)).floatValue(),
+                                lowerLimitPrice, highLimitPrice, minOrderQty, maxOrderQty, maxHoldQty,
+                                (view) -> {
+                                    String price = mEveningUpPopupWindow.getPrice();
+                                    String amount = mEveningUpPopupWindow.getAmount();
+                                    long holdAmount = Long.parseLong(amount) + ((ItemHoldPositionFragment) mFragmentArrays[0]).getPosition(mEveningUpContractID);
+
+                                    if (TextUtils.isEmpty(price) || price.equals(mContext.getResources().getString(R.string.text_no_data_default))) {
+                                        showShortToast(R.string.trade_price_error);
+                                    } else if (new BigDecimal(price).compareTo(new BigDecimal(lowerLimitPrice)) == -1) {
+                                        showShortToast(R.string.trade_limit_down_price_error);
+                                    } else if (new BigDecimal(price).compareTo(new BigDecimal(highLimitPrice)) == 1) {
+                                        showShortToast(R.string.trade_limit_up_price_error);
+                                    } else if (TextUtils.isEmpty(amount)) {
+                                        showShortToast(R.string.trade_number_error);
+                                    } else if (new BigDecimal(amount).compareTo(new BigDecimal(0)) == 0) {
+                                        showShortToast(R.string.trade_number_error_zero);
+                                    } else if (minOrderQty != -1 && new BigDecimal(amount).compareTo(new BigDecimal(minOrderQty)) == -1) {
+                                        showShortToast(R.string.trade_limit_min_amount_error);
+                                    } else if (maxOrderQty != -1 && new BigDecimal(amount).compareTo(new BigDecimal(maxOrderQty)) == 1) {
+                                        showShortToast(R.string.trade_limit_max_amount_error);
+                                    } else if (maxHoldQty != -1 && new BigDecimal(holdAmount).compareTo(new BigDecimal(maxHoldQty)) == 1) {
+                                        showShortToast(R.string.trade_limit_max_amount_error2);
+                                    } else {
+                                        limitOrder(mEveningUpContractID, mEveningUpPopupWindow.getPrice(),
+                                                mEveningUpPopupWindow.getAmount(), mPositionVo.getType().equals("多") ? 2 : 1, 1);
+
+                                        mEveningUpPopupWindow.dismiss();
+                                    }
+                                });
+                        mEveningUpPopupWindow.showAtLocation(mBinding.etAmount, Gravity.BOTTOM, 0, 0);
+                    }
+                }
+
+                break;
             case "GetStatus":
                 String status;
 
@@ -624,8 +674,6 @@ public class DeclarationFormFragment extends JMEBaseFragment {
                                 mContext.getResources().getString(R.string.trade_see_order),
                                 (view) -> ARouter.getInstance().build(Constants.ARouterUriConst.CURRENTENTRUST).navigation());
                     }
-
-                    bEveningUp = false;
 
                     RxBus.getInstance().post(Constants.RxBusConst.RXBUS_DECLARATIONFORM_UPDATE, null);
                 } else {

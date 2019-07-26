@@ -26,7 +26,6 @@
                 android:layout_centerInParent="true"
                 android:paddingTop="@dimen/common_area_margin"
                 android:paddingBottom="@dimen/common_area_margin"
-                android:text="盈亏设置"
                 android:textColor="@color/black_deep"
                 android:textSize="@dimen/sp_18" />
 

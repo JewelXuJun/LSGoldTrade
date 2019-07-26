@@ -9,7 +9,6 @@ import android.view.ViewGroup;
 import com.jme.lsgoldtrade.R;
 import com.jme.lsgoldtrade.base.JMEBasePopupWindow;
 import com.jme.lsgoldtrade.databinding.PopupwindowDeclarationFormBinding;
-import com.jme.lsgoldtrade.util.MarketUtil;
 
 public class DeclarationFormWindow extends JMEBasePopupWindow {
 
@@ -50,7 +49,7 @@ public class DeclarationFormWindow extends JMEBasePopupWindow {
         mBinding.tvBusinessType.setText(type.equals("1") ? mContext.getString(R.string.trade_buy_open)
                 : mContext.getString(R.string.trade_sale_open));
         mBinding.tvBusinessVarieties.setText(contractID);
-        mBinding.tvPrice.setText(MarketUtil.decimalFormatMoney(price));
+        mBinding.tvPrice.setText(price);
         mBinding.tvAmount.setText(String.format(mContext.getResources().getString(R.string.trade_amount_unit), amount));
 
         mBinding.btnConfirm.setOnClickListener(confirmListener);

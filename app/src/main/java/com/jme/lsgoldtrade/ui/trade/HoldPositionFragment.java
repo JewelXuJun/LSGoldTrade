@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.NonNull;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.text.TextUtils;
 import android.view.Gravity;
@@ -106,7 +105,7 @@ public class HoldPositionFragment extends JMEBaseFragment implements OnRefreshLi
     protected void initData(Bundle savedInstanceState) {
         super.initData(savedInstanceState);
 
-        mAdapter = new HoldPositionAdapter(mContext, R.layout.item_hold_position, null, 1);
+        mAdapter = new HoldPositionAdapter(mContext, R.layout.item_hold_position, null);
         mList = new ArrayList<>();
 
         mBinding.recyclerView.setHasFixedSize(false);
@@ -408,6 +407,7 @@ public class HoldPositionFragment extends JMEBaseFragment implements OnRefreshLi
                     mBinding.tvGuaranteeFund.setText(MarketUtil.decimalFormatMoney(mAccountVo.getMinReserveFundStr()));
                     mBinding.tvAvailableFunds.setText(MarketUtil.decimalFormatMoney(MarketUtil.getPriceValue(availableFunds)));
                     mBinding.tvMarketValue.setText(MarketUtil.decimalFormatMoney(MarketUtil.getPriceValue(mAccountVo.getPositionMargin())));
+
                     calculateValue();
                 }
 

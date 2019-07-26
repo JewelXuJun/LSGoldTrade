@@ -10,7 +10,6 @@ import com.jme.common.util.DensityUtil;
 import com.jme.lsgoldtrade.R;
 import com.jme.lsgoldtrade.base.JMEBasePopupWindow;
 import com.jme.lsgoldtrade.databinding.PopupwindowConfirmBinding;
-import com.jme.lsgoldtrade.databinding.PopupwindowOrderConfirmBinding;
 
 public class ConfirmPopupwindow extends JMEBasePopupWindow {
 

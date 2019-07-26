@@ -98,7 +98,7 @@ public class CurrentHoldPositionActivity extends JMEBaseActivity implements OnRe
     protected void initData(Bundle savedInstanceState) {
         super.initData(savedInstanceState);
 
-        mAdapter = new HoldPositionAdapter(this, R.layout.item_hold_position, null, 1);
+        mAdapter = new HoldPositionAdapter(this, R.layout.item_hold_position, null);
         mList = new ArrayList<>();
 
         mBinding.recyclerView.setHasFixedSize(false);
