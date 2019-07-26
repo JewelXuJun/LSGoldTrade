@@ -20,7 +20,7 @@ import com.jme.lsgoldtrade.R;
 import com.jme.lsgoldtrade.base.JMEBaseActivity;
 import com.jme.lsgoldtrade.config.AppConfig;
 import com.jme.lsgoldtrade.config.Constants;
-import com.jme.lsgoldtrade.databinding.ActivityYujingBinding;
+import com.jme.lsgoldtrade.databinding.ActivityWarningBinding;
 import com.jme.lsgoldtrade.domain.WarnVo;
 import com.jme.lsgoldtrade.service.TradeService;
 import com.jme.lsgoldtrade.util.MarketUtil;
@@ -30,10 +30,10 @@ import java.util.HashMap;
 /**
  * 预警
  */
-@Route(path = Constants.ARouterUriConst.YUJING)
-public class YujingActivity extends JMEBaseActivity {
+@Route(path = Constants.ARouterUriConst.WARNING)
+public class WarningActivity extends JMEBaseActivity {
 
-    private ActivityYujingBinding mBinding;
+    private ActivityWarningBinding mBinding;
 
     private float mPriceMove = 0.00f;
 
@@ -49,13 +49,13 @@ public class YujingActivity extends JMEBaseActivity {
 
     @Override
     protected int getContentViewId() {
-        return R.layout.activity_yujing;
+        return R.layout.activity_warning;
     }
 
     @Override
     protected void initView() {
         super.initView();
-        mBinding = (ActivityYujingBinding) mBindingUtil;
+        mBinding = (ActivityWarningBinding) mBindingUtil;
         type = getIntent().getStringExtra("type");
         price = getIntent().getStringExtra("price");
         range = getIntent().getStringExtra("range");

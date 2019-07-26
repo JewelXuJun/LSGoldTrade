@@ -134,17 +134,21 @@ public class MarketDetailActivity extends JMEBaseActivity implements FChart.OnPr
         setBackGroundColor(R.color.common_font_stable);
         setBackNavigation(true, R.mipmap.ic_back_white);
         setRightNavigation("预警", 0, R.style.ToolbarThemeWhite, () -> {
-            String price = mBinding.tvLastPrice.getText().toString().trim();
-            String range = mBinding.tvRange.getText().toString().trim();
-            String rate = mBinding.tvRate.getText().toString().trim();
+            if (null == mUser || !mUser.isLogin()) {
+                ARouter.getInstance().build(Constants.ARouterUriConst.ACCOUNTLOGIN).navigation();
+            } else {
+                String price = mBinding.tvLastPrice.getText().toString().trim();
+                String range = mBinding.tvRange.getText().toString().trim();
+                String rate = mBinding.tvRate.getText().toString().trim();
 
-            ARouter.getInstance()
-                    .build(Constants.ARouterUriConst.YUJING)
-                    .withString("type", MarketUtil.getContractCode(mContractId))
-                    .withString("price", price)
-                    .withString("range", range)
-                    .withString("rate", rate)
-                    .navigation();
+                ARouter.getInstance()
+                        .build(Constants.ARouterUriConst.WARNING)
+                        .withString("type", MarketUtil.getContractCode(mContractId))
+                        .withString("price", price)
+                        .withString("range", range)
+                        .withString("rate", rate)
+                        .navigation();
+            }
         });
 
         mChart = mBinding.chart;
@@ -851,6 +855,7 @@ public class MarketDetailActivity extends JMEBaseActivity implements FChart.OnPr
     }
 
     private String isMore = "0";
+
     public class ClickHandlers {
 
         public void onClickDeclarationForm() {

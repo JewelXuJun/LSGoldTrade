@@ -156,7 +156,7 @@
             android:name=".ui.login.ForgetPasswordActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.market.YujingActivity"
+            android:name=".ui.market.WarningActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.market.MarketJudgmentActivity"

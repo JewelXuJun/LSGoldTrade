@@ -166,7 +166,7 @@ public class Constants {
         public static final String DIYAN = "/Mainpager/DiYanActivity";
         public static final String VALUEADDEDSERVICE = "/Personal/ValueAddedServiceActivity";
         public static final String MARKETJUDGMENT = "/Mainpager/MarketJudgmentActivity";
-        public static final String YUJING = "/Market/YujingActivity";
+        public static final String WARNING = "/Market/WarningActivity";
         public static final String ECONOMICCALENDAR = "/Mainpager/EconomicCalendarActivity";
         public static final String FORGETPASSWORD = "/Login/ForgetPasswordActivity";
         public static final String REGISTER = "/Login/RegisterActivity";
