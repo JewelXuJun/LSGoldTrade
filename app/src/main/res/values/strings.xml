@@ -231,6 +231,7 @@
     <string name="trade_amount_unit">%1$s手</string>
     <string name="trade_see_order">查看订单</string>
     <string name="trade_about_amount">约可交易手数</string>
+    <string name="trade_money_error">您的可用资金不足</string>
 
     <!-- Personal -->
     <string name="personal_login">登录/注册</string>

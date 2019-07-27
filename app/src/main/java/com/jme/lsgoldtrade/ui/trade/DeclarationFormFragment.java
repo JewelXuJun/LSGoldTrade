@@ -675,11 +675,21 @@ public class DeclarationFormFragment extends JMEBaseFragment {
                         mConfirmPopupwindow.setData(mContext.getResources().getString(R.string.trade_success),
                                 mContext.getResources().getString(R.string.trade_see_order),
                                 (view) -> ARouter.getInstance().build(Constants.ARouterUriConst.CURRENTENTRUST).navigation());
+                        mConfirmPopupwindow.showAtLocation(mBinding.etAmount, Gravity.CENTER, 0, 0);
                     }
 
                     RxBus.getInstance().post(Constants.RxBusConst.RXBUS_DECLARATIONFORM_UPDATE, null);
                 } else {
-                    showShortToast(head.getMsg());
+                    if (head.getMsg().contains("可用资金不足")) {
+                        if (null != mConfirmPopupwindow && !mConfirmPopupwindow.isShowing()) {
+                            mConfirmPopupwindow.setData(mContext.getResources().getString(R.string.trade_money_error),
+                                    mContext.getResources().getString(R.string.trade_money_in),
+                                    (view) -> ARouter.getInstance().build(Constants.ARouterUriConst.CAPITALTRANSFER).navigation());
+                            mConfirmPopupwindow.showAtLocation(mBinding.etAmount, Gravity.CENTER, 0, 0);
+                        }
+                    } else {
+                        showShortToast(head.getMsg());
+                    }
                 }
 
                 break;
