@@ -10,11 +10,11 @@ import com.jme.lsgoldtrade.R;
 import com.jme.lsgoldtrade.base.JMEBasePopupWindow;
 import com.jme.lsgoldtrade.databinding.PopupwindowDeclarationFormBinding;
 
-public class DeclarationFormWindow extends JMEBasePopupWindow {
+public class DeclarationFormPopupWindow extends JMEBasePopupWindow {
 
     private PopupwindowDeclarationFormBinding mBinding;
 
-    public DeclarationFormWindow(Context context) {
+    public DeclarationFormPopupWindow(Context context) {
         super(context);
     }
 

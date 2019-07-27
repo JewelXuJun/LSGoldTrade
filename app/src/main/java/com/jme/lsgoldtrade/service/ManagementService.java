@@ -275,13 +275,6 @@ public class ManagementService extends IService<ManagementApi> {
         }
     };
 
-    public API getMaxTradeNum = new API<String>("GetMaxTradeNum") {
-        @Override
-        public Call<DTResponse> request(HashMap<String, String> params) {
-            return mApi.getMaxTradeNum(params);
-        }
-    };
-
     public API openValueAddedServices = new API<String>("OpenValueAddedServices") {
         @Override
         public Call<DTResponse> request(HashMap<String, String> params) {

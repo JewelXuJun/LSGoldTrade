@@ -145,8 +145,8 @@ public class PositionVo implements Serializable {
         this.positionAverage = positionAverage;
     }
 
-    public long getPositionMargin() {
-        return positionMargin;
+    public String getPositionMargin() {
+        return MarketUtil.getPriceValue(positionMargin);
     }
 
     public void setPositionMargin(long positionMargin) {

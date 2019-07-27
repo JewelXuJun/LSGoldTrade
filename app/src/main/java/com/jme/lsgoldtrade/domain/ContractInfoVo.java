@@ -175,7 +175,7 @@ public class ContractInfoVo implements Serializable {
         this.displayOrder = displayOrder;
     }
 
-    public int getBankLongMarginRate() {
+    public long getBankLongMarginRate() {
         return bankLongMarginRate;
     }
 

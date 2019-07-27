@@ -91,9 +91,6 @@ public interface ManagementApi {
     @GET("/tjsmanage/infoapi/v1/android/questionType/getQuestionListByType")
     Call<DTResponse> getQuestionListByType(@QueryMap Map<String, String> map);
 
-    @GET("/tjsmanage/infoapi/v1/android/getMaxTradeNum")
-    Call<DTResponse> getMaxTradeNum(@QueryMap Map<String, String> map);
-
     @GET("/tjsmanage/infoapi/v1/android/getUserAddedServicesStatus")
     Call<DTResponse> getUserAddedServicesStatus(@QueryMap Map<String, String> map);
 

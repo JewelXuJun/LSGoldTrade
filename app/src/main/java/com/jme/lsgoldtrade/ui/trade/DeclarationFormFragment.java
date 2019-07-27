@@ -63,7 +63,7 @@ public class DeclarationFormFragment extends JMEBaseFragment {
     private TenSpeedVo mTenSpeedVo;
     private PositionVo mPositionVo;
     private AlertDialog mDialog;
-    private DeclarationFormWindow mWindow;
+    private DeclarationFormPopupWindow mWindow;
     private CancelOrderPopUpWindow mCancelWindow;
     private TradeMessagePopUpWindow mTradeMessagePopUpWindow;
     private EveningUpPopupWindow mEveningUpPopupWindow;
@@ -130,7 +130,7 @@ public class DeclarationFormFragment extends JMEBaseFragment {
         super.initData(savedInstanceState);
 
         mAdapter = new TabViewPagerAdapter(getChildFragmentManager());
-        mWindow = new DeclarationFormWindow(mContext);
+        mWindow = new DeclarationFormPopupWindow(mContext);
         mWindow.setOutsideTouchable(true);
         mWindow.setFocusable(true);
         mCancelWindow = new CancelOrderPopUpWindow(mContext);
@@ -609,7 +609,7 @@ public class DeclarationFormFragment extends JMEBaseFragment {
 
                         mEveningUpPopupWindow.setData(mUser.getAccount(), mEveningUpContractID,
                                 type.equals("多") ? fiveSpeedVo.getFiveBidLists().get(0)[1] : fiveSpeedVo.getFiveAskLists().get(4)[1],
-                                type, "", new BigDecimal(mEveningUpContractInfoVo.getMinPriceMove()).divide(new BigDecimal(100)).floatValue(),
+                                type, new BigDecimal(mEveningUpContractInfoVo.getMinPriceMove()).divide(new BigDecimal(100)).floatValue(),
                                 lowerLimitPrice, highLimitPrice, minOrderQty, maxOrderQty, maxHoldQty,
                                 (view) -> {
                                     String price = mEveningUpPopupWindow.getPrice();
@@ -818,19 +818,27 @@ public class DeclarationFormFragment extends JMEBaseFragment {
         public void onClickBuyMore() {
             hiddenKeyBoard();
 
-            mBsFlag = 1;
-            mOcFlag = 0;
+            if (null == mUser || !mUser.isLogin()) {
+                ARouter.getInstance().build(Constants.ARouterUriConst.ACCOUNTLOGIN).navigation();
+            } else {
+                mBsFlag = 1;
+                mOcFlag = 0;
 
-            doTrade();
+                doTrade();
+            }
         }
 
         public void onClickSaleEmpty() {
             hiddenKeyBoard();
 
-            mBsFlag = 2;
-            mOcFlag = 0;
+            if (null == mUser || !mUser.isLogin()) {
+                ARouter.getInstance().build(Constants.ARouterUriConst.ACCOUNTLOGIN).navigation();
+            } else {
+                mBsFlag = 2;
+                mOcFlag = 0;
 
-            doTrade();
+                doTrade();
+            }
         }
 
     }

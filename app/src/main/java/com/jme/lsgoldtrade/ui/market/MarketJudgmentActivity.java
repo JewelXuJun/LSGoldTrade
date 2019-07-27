@@ -269,7 +269,7 @@ public class MarketJudgmentActivity extends JMEBaseActivity {
         params.put("variety", "Au(T+D)");
         params.put("direction", isMore);
 
-        sendRequest(ManagementService.getInstance().getMaxTradeNum, params, true);
+//        sendRequest(ManagementService.getInstance().getMaxTradeNum, params, true);
     }
 
     private void showPopupWindow(String price, String amount, String bsFlag, String ocFlag, String value) {

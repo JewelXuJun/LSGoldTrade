@@ -1,16 +1,10 @@
 package com.jme.lsgoldtrade.base;
 
-import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Intent;
-import android.content.res.Resources;
 import android.os.Bundle;
 import android.os.PersistableBundle;
-import android.support.design.widget.TabLayout;
 import android.text.TextUtils;
-import android.util.TypedValue;
-import android.view.View;
-import android.widget.LinearLayout;
 
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.jme.common.network.DTRequest;
@@ -26,8 +20,6 @@ import com.jme.lsgoldtrade.ui.main.MainActivity;
 import com.jme.lsgoldtrade.ui.market.MarketDetailActivity;
 import com.jme.lsgoldtrade.ui.market.MarketDetailLandscapeActivity;
 import com.umeng.socialize.UMShareAPI;
-
-import java.lang.reflect.Field;
 
 import rx.Subscription;
 
