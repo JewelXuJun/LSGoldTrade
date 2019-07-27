@@ -111,8 +111,8 @@ public class EveningUpPopupWindow extends JMEBasePopupWindow {
                         float priceMove, String lowerLimitPrice, String highLimitPrice, long minOrderQty, long maxOrderQty,
                         long maxHoldQty, View.OnClickListener confirmListener) {
         mBinding.tvGoldAccount.setText(account);
-        mBinding.tvBusinessType.setText(type.equals("多") ? mContext.getString(R.string.trade_sale_evening)
-                : mContext.getString(R.string.trade_buy_evening));
+        mBinding.tvBusinessType.setText(type.equals("多") ? mContext.getString(R.string.trade_buy_evening)
+                : mContext.getString(R.string.trade_sale_evening));
         mBinding.tvBusinessVarieties.setText(contractID);
         mBinding.etPrice.setText(price);
         mBinding.etAmount.setText("1");

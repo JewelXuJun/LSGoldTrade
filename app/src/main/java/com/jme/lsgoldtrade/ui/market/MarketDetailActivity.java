@@ -79,6 +79,7 @@ public class MarketDetailActivity extends JMEBaseActivity implements FChart.OnPr
     private static final String COUNT_KCHART = "200";
 
     private String mContractId;
+    private String isMore = "0";
     private boolean bFlag = true;
     private boolean bHighlight = false;
     private boolean bHasMoreKDataFlag = true;
@@ -854,9 +855,29 @@ public class MarketDetailActivity extends JMEBaseActivity implements FChart.OnPr
         updateMarketData(mTenSpeedVo);
     }
 
-    private String isMore = "0";
-
     public class ClickHandlers {
+
+        public void onClickBuyMore() {
+            isMore = "0";
+            if (null == mUser || !mUser.isLogin()) {
+                ARouter.getInstance()
+                        .build(Constants.ARouterUriConst.ACCOUNTLOGIN)
+                        .navigation();
+            } else {
+                getMaxNum(isMore);
+            }
+        }
+
+        public void onClickSaleEmpty() {
+            isMore = "1";
+            if (null == mUser || !mUser.isLogin()) {
+                ARouter.getInstance()
+                        .build(Constants.ARouterUriConst.ACCOUNTLOGIN)
+                        .navigation();
+            } else {
+                getMaxNum(isMore);
+            }
+        }
 
         public void onClickDeclarationForm() {
             if (null == mUser || !mUser.isLogin()) {
@@ -873,41 +894,6 @@ public class MarketDetailActivity extends JMEBaseActivity implements FChart.OnPr
             }
         }
 
-        public void onClickOneKeyOrder() {
-            if (null == mUser || !mUser.isLogin()) {
-                ARouter.getInstance()
-                        .build(Constants.ARouterUriConst.ACCOUNTLOGIN)
-                        .navigation();
-            } else {
-                mPopupWindow = new MarketOrderPopUpWindow(MarketDetailActivity.this, mContractId, 3);
-                mPopupWindow.setOutsideTouchable(true);
-                mPopupWindow.setFocusable(true);
-//                mPopupWindow.setData(mTenSpeedVo, value);
-                mPopupWindow.showAtLocation(mBinding.layoutFooterview, Gravity.BOTTOM, 0, 0);
-            }
-        }
-
-        public void onClickMore() {
-            isMore = "0";
-            if (null == mUser || !mUser.isLogin()) {
-                ARouter.getInstance()
-                        .build(Constants.ARouterUriConst.ACCOUNTLOGIN)
-                        .navigation();
-            } else {
-                getMaxNum(isMore);
-            }
-        }
-
-        public void onClickKong() {
-            isMore = "1";
-            if (null == mUser || !mUser.isLogin()) {
-                ARouter.getInstance()
-                        .build(Constants.ARouterUriConst.ACCOUNTLOGIN)
-                        .navigation();
-            } else {
-                getMaxNum(isMore);
-            }
-        }
     }
 
     @Override

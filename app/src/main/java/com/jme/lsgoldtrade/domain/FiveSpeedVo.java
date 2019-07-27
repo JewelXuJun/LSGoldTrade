@@ -3,6 +3,8 @@ package com.jme.lsgoldtrade.domain;
 import com.jme.lsgoldtrade.util.MarketUtil;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 public class FiveSpeedVo implements Serializable {
 
@@ -89,25 +91,25 @@ public class FiveSpeedVo implements Serializable {
 
     private long bidVolume5;
 
-    private long askingPrice1;
+    private long askPrice1;
 
-    private long askingVolume1;
+    private long askVolume1;
 
-    private long askingPrice2;
+    private long askPrice2;
 
-    private long askingVolume2;
+    private long askVolume2;
 
-    private long askingPrice3;
+    private long askPrice3;
 
-    private long askingVolume3;
+    private long askVolume3;
 
-    private long askingPrice4;
+    private long askPrice4;
 
-    private long askingVolume4;
+    private long askVolume4;
 
-    private long askingPrice5;
+    private long askPrice5;
 
-    private long askingVolume5;
+    private long askVolume5;
 
     private long turnVolume;
 
@@ -290,83 +292,87 @@ public class FiveSpeedVo implements Serializable {
     }
 
     public long getAskingPrice1() {
-        return askingPrice1;
+        return askPrice1;
     }
 
-    public void setAskingPrice1(long askingPrice1) {
-        this.askingPrice1 = askingPrice1;
+    public long getAskPrice1() {
+        return askPrice1;
     }
 
-    public long getAskingVolume1() {
-        return askingVolume1;
+    public void setAskPrice1(long askPrice1) {
+        this.askPrice1 = askPrice1;
     }
 
-    public void setAskingVolume1(long askingVolume1) {
-        this.askingVolume1 = askingVolume1;
+    public long getAskVolume1() {
+        return askVolume1;
     }
 
-    public long getAskingPrice2() {
-        return askingPrice2;
+    public void setAskVolume1(long askVolume1) {
+        this.askVolume1 = askVolume1;
     }
 
-    public void setAskingPrice2(long askingPrice2) {
-        this.askingPrice2 = askingPrice2;
+    public long getAskPrice2() {
+        return askPrice2;
     }
 
-    public long getAskingVolume2() {
-        return askingVolume2;
+    public void setAskPrice2(long askPrice2) {
+        this.askPrice2 = askPrice2;
     }
 
-    public void setAskingVolume2(long askingVolume2) {
-        this.askingVolume2 = askingVolume2;
+    public long getAskVolume2() {
+        return askVolume2;
     }
 
-    public long getAskingPrice3() {
-        return askingPrice3;
+    public void setAskVolume2(long askVolume2) {
+        this.askVolume2 = askVolume2;
     }
 
-    public void setAskingPrice3(long askingPrice3) {
-        this.askingPrice3 = askingPrice3;
+    public long getAskPrice3() {
+        return askPrice3;
     }
 
-    public long getAskingVolume3() {
-        return askingVolume3;
+    public void setAskPrice3(long askPrice3) {
+        this.askPrice3 = askPrice3;
     }
 
-    public void setAskingVolume3(long askingVolume3) {
-        this.askingVolume3 = askingVolume3;
+    public long getAskVolume3() {
+        return askVolume3;
     }
 
-    public long getAskingPrice4() {
-        return askingPrice4;
+    public void setAskVolume3(long askVolume3) {
+        this.askVolume3 = askVolume3;
     }
 
-    public void setAskingPrice4(long askingPrice4) {
-        this.askingPrice4 = askingPrice4;
+    public long getAskPrice4() {
+        return askPrice4;
     }
 
-    public long getAskingVolume4() {
-        return askingVolume4;
+    public void setAskPrice4(long askPrice4) {
+        this.askPrice4 = askPrice4;
     }
 
-    public void setAskingVolume4(long askingVolume4) {
-        this.askingVolume4 = askingVolume4;
+    public long getAskVolume4() {
+        return askVolume4;
     }
 
-    public long getAskingPrice5() {
-        return askingPrice5;
+    public void setAskVolume4(long askVolume4) {
+        this.askVolume4 = askVolume4;
     }
 
-    public void setAskingPrice5(long askingPrice5) {
-        this.askingPrice5 = askingPrice5;
+    public long getAskPrice5() {
+        return askPrice5;
     }
 
-    public long getAskingVolume5() {
-        return askingVolume5;
+    public void setAskPrice5(long askPrice5) {
+        this.askPrice5 = askPrice5;
     }
 
-    public void setAskingVolume5(long askingVolume5) {
-        this.askingVolume5 = askingVolume5;
+    public long getAskVolume5() {
+        return askVolume5;
+    }
+
+    public void setAskVolume5(long askVolume5) {
+        this.askVolume5 = askVolume5;
     }
 
     public long getTurnVolume() {
@@ -459,6 +465,78 @@ public class FiveSpeedVo implements Serializable {
 
     public String getUpDownRateValue() {
         return MarketUtil.getRateValue(upDownRate);
+    }
+
+    public List<String[]> getFiveAskLists() {
+        List<String[]> list = new ArrayList<>();
+
+        String[] askValue5 = new String[3];
+        askValue5[0] = "卖5";
+        askValue5[1] = MarketUtil.getPriceValue(askPrice5);
+        askValue5[2] = String.valueOf(askVolume5);
+        list.add(askValue5);
+
+        String[] askValue4 = new String[3];
+        askValue4[0] = "卖4";
+        askValue4[1] = MarketUtil.getPriceValue(askPrice4);
+        askValue4[2] = String.valueOf(askVolume4);
+        list.add(askValue4);
+
+        String[] askValue3 = new String[3];
+        askValue3[0] = "卖3";
+        askValue3[1] = MarketUtil.getPriceValue(askPrice3);
+        askValue3[2] = String.valueOf(askVolume3);
+        list.add(askValue3);
+
+        String[] askValue2 = new String[3];
+        askValue2[0] = "卖2";
+        askValue2[1] = MarketUtil.getPriceValue(askPrice2);
+        askValue2[2] = String.valueOf(askVolume2);
+        list.add(askValue2);
+
+        String[] askValue1 = new String[3];
+        askValue1[0] = "卖1";
+        askValue1[1] = MarketUtil.getPriceValue(askPrice1);
+        askValue1[2] = String.valueOf(askVolume1);
+        list.add(askValue1);
+
+        return list;
+    }
+
+    public List<String[]> getFiveBidLists() {
+        List<String[]> list = new ArrayList<>();
+
+        String[] bidValue1 = new String[3];
+        bidValue1[0] = "买1";
+        bidValue1[1] = MarketUtil.getPriceValue(bidPrice1);
+        bidValue1[2] = String.valueOf(bidVolume1);
+        list.add(bidValue1);
+
+        String[] bidValue2 = new String[3];
+        bidValue2[0] = "买2";
+        bidValue2[1] = MarketUtil.getPriceValue(bidPrice2);
+        bidValue2[2] = String.valueOf(bidVolume2);
+        list.add(bidValue2);
+
+        String[] bidValue3 = new String[3];
+        bidValue3[0] = "买3";
+        bidValue3[1] = MarketUtil.getPriceValue(bidPrice3);
+        bidValue3[2] = String.valueOf(bidVolume3);
+        list.add(bidValue3);
+
+        String[] bidValue4 = new String[3];
+        bidValue4[0] = "买4";
+        bidValue4[1] = MarketUtil.getPriceValue(bidPrice4);
+        bidValue4[2] = String.valueOf(bidVolume4);
+        list.add(bidValue4);
+
+        String[] bidValue5 = new String[3];
+        bidValue5[0] = "买5";
+        bidValue5[1] = MarketUtil.getPriceValue(bidPrice5);
+        bidValue5[2] = String.valueOf(bidVolume5);
+        list.add(bidValue5);
+
+        return list;
     }
 
 }

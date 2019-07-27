@@ -47,8 +47,8 @@
                 android:layout_marginLeft="@dimen/common_area_margin_middle"
                 android:layout_weight="1"
                 android:background="@drawable/bg_btn_buy_more_solid"
-                android:onClick="@{() -> handlers.onClickMore()}"
-                android:text="买多"
+                android:onClick="@{() -> handlers.onClickBuyMore()}"
+                android:text="@string/market_buy_more"
                 android:textColor="@color/white"
                 android:textSize="@dimen/sp_16" />
 
@@ -59,11 +59,10 @@
                 android:layout_marginRight="@dimen/common_area_margin_middle"
                 android:layout_weight="1"
                 android:background="@drawable/bg_btn_sale_empty_solid"
-                android:onClick="@{() -> handlers.onClickKong()}"
-                android:text="卖空"
+                android:onClick="@{() -> handlers.onClickSaleEmpty()}"
+                android:text="@string/market_sale_empty"
                 android:textColor="@color/white"
-                android:textSize="@dimen/sp_16"
-                />
+                android:textSize="@dimen/sp_16" />
 
             <Button
                 android:layout_width="0dp"
@@ -75,19 +74,6 @@
                 android:text="@string/market_declaration_form"
                 android:textColor="@color/white"
                 android:textSize="@dimen/sp_16" />
-
-            <Button
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginLeft="@dimen/common_area_margin_middle"
-                android:layout_weight="1"
-                android:background="@drawable/bg_btn_blue_solid"
-                android:onClick="@{() -> handlers.onClickOneKeyOrder()}"
-                android:text="@string/market_one_key_order"
-                android:textColor="@color/white"
-                android:textSize="@dimen/sp_16"
-                android:visibility="gone"
-                />
 
         </LinearLayout>
 

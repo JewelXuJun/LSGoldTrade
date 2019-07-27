@@ -602,12 +602,14 @@ public class DeclarationFormFragment extends JMEBaseFragment {
                     if (null != mEveningUpPopupWindow && !mEveningUpPopupWindow.isShowing() && null != mEveningUpContractInfoVo) {
                         String lowerLimitPrice = fiveSpeedVo.getLowerLimitPrice();
                         String highLimitPrice = fiveSpeedVo.getHighLimitPrice();
+                        String type = mPositionVo.getType();
                         long minOrderQty = mEveningUpContractInfoVo.getMinOrderQty();
                         long maxOrderQty = mEveningUpContractInfoVo.getMaxOrderQty();
                         long maxHoldQty = mEveningUpContractInfoVo.getMaxHoldQty();
 
-                        mEveningUpPopupWindow.setData(mUser.getAccount(), mEveningUpContractID, mPositionVo.getPositionAverageStr(),
-                                mPositionVo.getType(), String.valueOf(mPositionVo.getPosition() - mPositionVo.getOffsetFrozen()),
+                        mEveningUpPopupWindow.setData(mUser.getAccount(), mEveningUpContractID,
+                                type.equals("多") ? fiveSpeedVo.getFiveBidLists().get(0)[1] : fiveSpeedVo.getFiveAskLists().get(4)[1],
+                                type, String.valueOf(mPositionVo.getPosition() - mPositionVo.getOffsetFrozen()),
                                 new BigDecimal(mEveningUpContractInfoVo.getMinPriceMove()).divide(new BigDecimal(100)).floatValue(),
                                 lowerLimitPrice, highLimitPrice, minOrderQty, maxOrderQty, maxHoldQty,
                                 (view) -> {
@@ -820,18 +822,6 @@ public class DeclarationFormFragment extends JMEBaseFragment {
             mOcFlag = 0;
 
             doTrade();
-        }
-
-        //平仓方法
-        public void onClickEveningUp() {
-           /* hiddenKeyBoard();
-
-            if (bEveningUp) {
-                mBsFlag = mPositionType.equals("多") ? 2 : 1;
-                mOcFlag = 1;
-
-                doTrade();
-            }*/
         }
 
     }
