@@ -5,6 +5,7 @@ import android.os.CountDownTimer;
 import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 import android.view.View;
+import android.view.ViewTreeObserver;
 
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.google.gson.Gson;
@@ -30,6 +31,8 @@ public class TradingBoxHistoryFragment extends JMEBaseFragment {
     private String mDirection;
     private String mType;
     private long mTime = 0;
+    private boolean bFundamentalAnalysisFlag = false;
+    private boolean bAnalystFlag = false;
 
     private CountDownTimer mCountDownTimer;
 
@@ -114,6 +117,52 @@ public class TradingBoxHistoryFragment extends JMEBaseFragment {
             }
 
         }.start();
+    }
+
+    private void setFundamentalAnalysisValue(String value) {
+        mBinding.tvFundamentalAnalysis.setText(value);
+
+        mBinding.tvFundamentalAnalysis.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
+            @Override
+            public boolean onPreDraw() {
+                mBinding.tvFundamentalAnalysis.getViewTreeObserver().removeOnPreDrawListener(this);
+
+                int lineCount = mBinding.tvFundamentalAnalysis.getLineCount();
+
+                if (lineCount > 2) {
+                    mBinding.imgFundamentalAnalysis.setVisibility(View.VISIBLE);
+                    mBinding.imgFundamentalAnalysis.setBackground(ContextCompat.getDrawable(mContext, R.mipmap.ic_content_open));
+                    mBinding.tvFundamentalAnalysis.setMaxLines(3);
+                } else {
+                    mBinding.imgFundamentalAnalysis.setVisibility(View.GONE);
+                }
+
+                return true;
+            }
+        });
+    }
+
+    private void setAnalystValue(String value) {
+        mBinding.tvAnalyst.setText(value);
+
+        mBinding.tvAnalyst.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
+            @Override
+            public boolean onPreDraw() {
+                mBinding.tvAnalyst.getViewTreeObserver().removeOnPreDrawListener(this);
+
+                int lineCount = mBinding.tvAnalyst.getLineCount();
+
+                if (lineCount > 2) {
+                    mBinding.imgAnalyst.setVisibility(View.VISIBLE);
+                    mBinding.imgAnalyst.setBackground(ContextCompat.getDrawable(mContext, R.mipmap.ic_content_open));
+                    mBinding.tvAnalyst.setMaxLines(3);
+                } else {
+                    mBinding.imgAnalyst.setVisibility(View.GONE);
+                }
+
+                return true;
+            }
+        });
     }
 
     private void setProgressData(String directionUpRate, String directionDownRate) {
@@ -244,8 +293,6 @@ public class TradingBoxHistoryFragment extends JMEBaseFragment {
                     String[] closeTimeEnd = closePositionsTimeEnd.split(" ");
 
                     mBinding.tvAbstract.setText(tradingBoxDetailsVo.getChance());
-                    mBinding.tvFundamentalAnalysis.setText(tradingBoxDetailsVo.getFundamentalAnalysis());
-                    mBinding.tvAnalyst.setText(tradingBoxDetailsVo.getAnalystOpinion());
                     mBinding.tvContract.setText(mContract);
                     mBinding.tvDirection.setText(mDirection.equals("0") ? R.string.text_more : R.string.text_empty);
                     mBinding.layoutTime.setVisibility(mTime <= 0 ? View.GONE : View.VISIBLE);
@@ -271,6 +318,9 @@ public class TradingBoxHistoryFragment extends JMEBaseFragment {
                     mBinding.tvOpenTimeEqualStartHour.setText(closeTimeStart[1]);
                     mBinding.tvOpenTimeEqualEndDate.setText(closeTimeEnd[0].replace("-", "/"));
                     mBinding.tvOpenTimeEqualEndHour.setText(closeTimeEnd[1]);
+
+                    setFundamentalAnalysisValue(tradingBoxDetailsVo.getFundamentalAnalysis());
+                    setAnalystValue(tradingBoxDetailsVo.getAnalystOpinion());
                 }
 
                 break;
@@ -300,6 +350,35 @@ public class TradingBoxHistoryFragment extends JMEBaseFragment {
                     .withString("InfoList", new Gson().toJson(mRelevantInfoListVosBeanList))
                     .navigation();
         }
+
+        public void onClickFundamentalAnalysis() {
+            if (bFundamentalAnalysisFlag) {
+                 bFundamentalAnalysisFlag = false;
+
+                mBinding.tvFundamentalAnalysis.setMaxLines(3);
+                mBinding.imgFundamentalAnalysis.setBackground(ContextCompat.getDrawable(mContext, R.mipmap.ic_content_open));
+            } else {
+                bFundamentalAnalysisFlag = true;
+
+                mBinding.tvFundamentalAnalysis.setSingleLine(false);
+                mBinding.imgFundamentalAnalysis.setBackground(ContextCompat.getDrawable(mContext, R.mipmap.ic_content_close));
+            }
+        }
+
+        public void onClickAnalysis() {
+            if (bAnalystFlag) {
+                bAnalystFlag = false;
+
+                mBinding.tvAnalyst.setMaxLines(3);
+                mBinding.imgAnalyst.setBackground(ContextCompat.getDrawable(mContext, R.mipmap.ic_content_open));
+            } else {
+                bAnalystFlag = true;
+
+                mBinding.tvAnalyst.setSingleLine(false);
+                mBinding.imgAnalyst.setBackground(ContextCompat.getDrawable(mContext, R.mipmap.ic_content_close));
+            }
+        }
+
 
         public void onClickAgree() {
             if (null == mUser || !mUser.isLogin())

@@ -86,17 +86,34 @@
 
                 <include layout="@layout/item_line_vertical_list" />
 
-                <TextView
-                    android:id="@+id/tv_fundamental_analysis"
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@color/white"
-                    android:paddingLeft="@dimen/common_area_margin"
-                    android:paddingTop="@dimen/common_page_padding"
-                    android:paddingRight="@dimen/common_area_margin"
-                    android:paddingBottom="@dimen/common_page_padding"
-                    android:textColor="@color/color_text_normal"
-                    android:textSize="@dimen/sp_14" />
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tv_fundamental_analysis"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:maxLines="20"
+                        android:paddingLeft="@dimen/common_area_margin"
+                        android:paddingTop="@dimen/common_page_padding"
+                        android:paddingRight="@dimen/common_area_margin"
+                        android:paddingBottom="@dimen/common_page_padding"
+                        android:textColor="@color/color_text_normal"
+                        android:textSize="@dimen/sp_14" />
+
+                    <ImageView
+                        android:id="@+id/img_fundamental_analysis"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:onClick="@{() -> handlers.onClickFundamentalAnalysis()}"
+                        android:background="@mipmap/ic_content_open"
+                        android:visibility="gone" />
+
+                </LinearLayout>
 
                 <TextView
                     android:layout_width="match_parent"
@@ -113,17 +130,34 @@
 
                 <include layout="@layout/item_line_vertical_list" />
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:orientation="vertical">
+
                 <TextView
                     android:id="@+id/tv_analyst"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@color/white"
                     android:paddingLeft="@dimen/common_area_margin"
                     android:paddingTop="@dimen/common_page_padding"
                     android:paddingRight="@dimen/common_area_margin"
                     android:paddingBottom="@dimen/common_page_padding"
+                    android:maxLines="20"
                     android:textColor="@color/color_text_normal"
                     android:textSize="@dimen/sp_14" />
+
+                <ImageView
+                    android:id="@+id/img_analyst"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:onClick="@{() -> handlers.onClickAnalysis()}"
+                    android:background="@mipmap/ic_content_open"
+                    android:visibility="gone" />
+
+            </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
