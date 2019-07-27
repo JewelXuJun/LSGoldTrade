@@ -301,7 +301,7 @@
 
     <!-- Login -->
     <string name="login_title">登录</string>
-    <string name="login_account_hint">输入您的交易账号</string>
+    <string name="login_account_hint">输入您的交易账号/手机号</string>
     <string name="login_password_hint">输入您的交易密码</string>
     <string name="login_img_verify_code_hint">输入图形验证码</string>
     <string name="login_account_error">请输入正确的交易账号</string>
