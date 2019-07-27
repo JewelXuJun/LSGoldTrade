@@ -115,4 +115,7 @@ public interface ManagementApi {
     @GET("/tjsmanage/infoapi/v1/android/getStatus")
     Call<DTResponse> getStatus(@QueryMap Map<String, String> map);
 
+    @GET("/tjsmanage/infoapi/v1/ios/checkOrder")
+    Call<DTResponse> checkOrder(@QueryMap Map<String, String> map);
+
 }

@@ -26,6 +26,7 @@ import com.jme.lsgoldtrade.config.Constants;
 import com.jme.lsgoldtrade.config.User;
 import com.jme.lsgoldtrade.databinding.ActivityPlaceOrderBinding;
 import com.jme.lsgoldtrade.domain.AccountVo;
+import com.jme.lsgoldtrade.domain.OrderVo;
 import com.jme.lsgoldtrade.domain.TenSpeedVo;
 import com.jme.lsgoldtrade.domain.TradingBoxInfoVo;
 import com.jme.lsgoldtrade.service.ManagementService;
@@ -33,6 +34,7 @@ import com.jme.lsgoldtrade.service.MarketService;
 import com.jme.lsgoldtrade.service.TradeService;
 import com.jme.lsgoldtrade.ui.trade.TradeMessagePopUpWindow;
 import com.jme.lsgoldtrade.util.MarketUtil;
+import com.jme.lsgoldtrade.view.MessagePopupwindow;
 
 import java.math.BigDecimal;
 import java.util.HashMap;
@@ -48,6 +50,7 @@ public class PlaceOrderActivity extends JMEBaseActivity {
 
     private TradingBoxPopupwindow mWindow;
     private TradeMessagePopUpWindow mTradeMessagePopUpWindow;
+    private MessagePopupwindow mMessagePopupwindow;
 
     private String mType;
     private String mDirection;
@@ -83,6 +86,10 @@ public class PlaceOrderActivity extends JMEBaseActivity {
         mTradeMessagePopUpWindow = new TradeMessagePopUpWindow(mContext);
         mTradeMessagePopUpWindow.setOutsideTouchable(true);
         mTradeMessagePopUpWindow.setFocusable(true);
+
+        mMessagePopupwindow = new MessagePopupwindow(mContext);
+        mMessagePopupwindow.setOutsideTouchable(true);
+        mMessagePopupwindow.setFocusable(true);
     }
 
     @Override
@@ -194,11 +201,14 @@ public class PlaceOrderActivity extends JMEBaseActivity {
                     mBinding.tvBalanceMessage.setText(String.format(getString(R.string.trading_box_balance),
                             MarketUtil.decimalFormatMoney(MarketUtil.getPriceValue(mTransactionBalance))));
                 } else {
-                    if (amountValue.compareTo(new BigDecimal(mTransactionBalance)) == 1)
+                    if (amountValue.compareTo(new BigDecimal(mTransactionBalance)) == 1) {
                         setBalanceNotEnoughMessage();
-                    else
+                    } else {
+                        bEnoughFlag = true;
+
                         mBinding.tvBalanceMessage.setText(String.format(getString(R.string.trading_box_balance),
                                 MarketUtil.decimalFormatMoney(MarketUtil.getPriceValue(mTransactionBalance))));
+                    }
                 }
             }
         }
@@ -247,7 +257,11 @@ public class PlaceOrderActivity extends JMEBaseActivity {
     }
 
     private void getStatus() {
-        sendRequest(ManagementService.getInstance().getStatus, new HashMap<>(), true);
+        sendRequest(ManagementService.getInstance().getStatus, new HashMap<>(), false);
+    }
+
+    private void checkOrder() {
+        sendRequest(ManagementService.getInstance().checkOrder, new HashMap<>(), false);
     }
 
     private void placeOrder(String number) {
@@ -409,7 +423,47 @@ public class PlaceOrderActivity extends JMEBaseActivity {
                         mTradeMessagePopUpWindow.showAtLocation(mBinding.tvBalanceMessage, Gravity.CENTER, 0, 0);
                     }
                 } else {
-                    placeOrder(mBinding.etAmount.getText().toString());
+                    checkOrder();
+                }
+
+                break;
+            case "CheckOrder":
+                if (head.isSuccess()) {
+                    OrderVo orderVo;
+
+                    try {
+                        orderVo = (OrderVo) response;
+                    } catch (Exception e) {
+                        orderVo = null;
+
+                        e.printStackTrace();
+                    }
+
+                    if (null == orderVo) {
+                        placeOrder(mBinding.etAmount.getText().toString());
+                    } else {
+                        int orderNum = orderVo.getOrderNum();
+
+                        if (0 == orderNum) {
+                            placeOrder(mBinding.etAmount.getText().toString());
+                        } else {
+                            if (null != mMessagePopupwindow && !mMessagePopupwindow.isShowing()) {
+                                mMessagePopupwindow.setData(String.format(getString(R.string.trading_box_order_message), String.valueOf(orderNum)),
+                                        getString(R.string.trading_box_order_continue), getString(R.string.trading_box_order_read),
+                                        (view) -> {
+                                            placeOrder(mBinding.etAmount.getText().toString());
+
+                                            mMessagePopupwindow.dismiss();
+                                        }, (view) -> {
+                                            ARouter.getInstance().build(Constants.ARouterUriConst.TRADINGBOXORDER).navigation();
+
+                                            mMessagePopupwindow.dismiss();
+                                        });
+                                mMessagePopupwindow.showAtLocation(mBinding.tvBalanceMessage, Gravity.CENTER, 0, 0);
+                            }
+                        }
+                    }
+
                 }
 
                 break;
