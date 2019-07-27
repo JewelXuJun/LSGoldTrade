@@ -11,6 +11,7 @@ import com.alibaba.android.arouter.facade.annotation.Route;
 import com.jme.common.network.DTRequest;
 import com.jme.common.network.Head;
 import com.jme.common.ui.base.JMECountDownTimer;
+import com.jme.common.util.StringUtils;
 import com.jme.lsgoldtrade.R;
 import com.jme.lsgoldtrade.base.JMEBaseActivity;
 import com.jme.lsgoldtrade.config.Constants;
@@ -113,12 +114,12 @@ public class ForgetPasswordActivity extends JMEBaseActivity {
             showShortToast(R.string.login_verification_code_error);
         else if (TextUtils.isEmpty(newPassword))
             showShortToast(R.string.login_reset_password_rule);
-        else if (newPassword.length() < 6 || newPassword.length() > 18)
+        else if (!StringUtils.validatePassword(newPassword))
             showShortToast(R.string.login_reset_password_rule);
         else if (TextUtils.isEmpty(newPasswordConfirm))
             showShortToast(R.string.login_reset_password_new_confirm_input);
-        else if (newPasswordConfirm.length() < 6 || newPasswordConfirm.length() > 18)
-            showShortToast(R.string.login_reset_password_new_confirm_input);
+        else if (!StringUtils.validatePassword(newPasswordConfirm))
+            showShortToast(R.string.login_reset_password_rule);
         else if (!newPassword.equals(newPasswordConfirm))
             showShortToast(R.string.login_reset_password_not_equal);
         else

@@ -3,7 +3,6 @@ package com.jme.common.util;
 import android.text.TextUtils;
 
 import java.text.DecimalFormat;
-import java.util.regex.Pattern;
 
 /**
  * Created by XuJun on 2018/11/7.
@@ -11,6 +10,11 @@ import java.util.regex.Pattern;
 
 public class StringUtils {
 
+    public static boolean validatePassword(String pass) {
+        String passRegex = "^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,18}$";
+
+        return !TextUtils.isEmpty(pass) && pass.matches(passRegex);
+    }
     /**
      * 手机号中间四位替换为*
      *
