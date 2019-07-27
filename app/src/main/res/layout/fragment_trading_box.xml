@@ -88,17 +88,35 @@
 
                 <include layout="@layout/item_line_vertical_list" />
 
-                <TextView
-                    android:id="@+id/tv_analyst"
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@color/white"
-                    android:paddingLeft="@dimen/common_area_margin"
-                    android:paddingTop="@dimen/common_page_padding"
-                    android:paddingRight="@dimen/common_area_margin"
-                    android:paddingBottom="@dimen/common_page_padding"
-                    android:textColor="@color/color_text_normal"
-                    android:textSize="@dimen/sp_14" />
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tv_analyst"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/white"
+                        android:paddingLeft="@dimen/common_area_margin"
+                        android:maxLines="20"
+                        android:paddingTop="@dimen/common_page_padding"
+                        android:paddingRight="@dimen/common_area_margin"
+                        android:paddingBottom="@dimen/common_page_padding"
+                        android:textColor="@color/color_text_normal"
+                        android:textSize="@dimen/sp_14" />
+
+                    <ImageView
+                        android:id="@+id/img_analyst"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:background="@mipmap/ic_content_open"
+                        android:onClick="@{() -> handlers.onClickAnalyst()}"
+                        android:visibility="gone" />
+
+                </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"

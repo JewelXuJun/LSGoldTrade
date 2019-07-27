@@ -1,11 +1,14 @@
 package com.jme.lsgoldtrade.ui.tradingbox;
 
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.TextUtils;
 import android.text.style.StyleSpan;
 import android.view.Gravity;
+import android.view.View;
+import android.view.ViewTreeObserver;
 
 import com.jme.common.util.DateUtil;
 import com.jme.lsgoldtrade.R;
@@ -21,6 +24,8 @@ public class TradingBoxFragment extends JMEBaseFragment {
     private TradingBoxDataInfoVo.HistoryVoBean mHistoryVoBean;
 
     private TradingBoxPopupwindow mWindow;
+
+    private boolean bAnalystFlag = false;
 
     @Override
     protected int getContentViewId() {
@@ -60,6 +65,29 @@ public class TradingBoxFragment extends JMEBaseFragment {
         mHistoryVoBean = historyVoBean;
     }
 
+    private void setAnalystValue(String value) {
+        mBinding.tvAnalyst.setText(value);
+
+        mBinding.tvAnalyst.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
+            @Override
+            public boolean onPreDraw() {
+                mBinding.tvAnalyst.getViewTreeObserver().removeOnPreDrawListener(this);
+
+                int lineCount = mBinding.tvAnalyst.getLineCount();
+
+                if (lineCount > 2) {
+                    mBinding.imgAnalyst.setVisibility(View.VISIBLE);
+                    mBinding.imgAnalyst.setBackground(ContextCompat.getDrawable(mContext, R.mipmap.ic_content_open));
+                    mBinding.tvAnalyst.setMaxLines(3);
+                } else {
+                    mBinding.imgAnalyst.setVisibility(View.GONE);
+                }
+
+                return true;
+            }
+        });
+    }
+
     private void setValue() {
         if (null == mHistoryVoBean)
             return;
@@ -77,13 +105,28 @@ public class TradingBoxFragment extends JMEBaseFragment {
                 direction.equals("0") ? mContext.getResources().getString(R.string.text_more) : mContext.getResources().getString(R.string.text_empty)));
         mBinding.tvPublishTime.setText(TextUtils.isEmpty(pushTime) ? "" : String.format(mContext.getResources().getString(R.string.trading_box_publist_time),
                 DateUtil.dataToStringWithData2(DateUtil.dateToLong(pushTime))));
-        mBinding.tvAnalyst.setText(analystOpinion);
+
+        setAnalystValue(analystOpinion);
 
         PicassoUtils.getInstance().loadImg(mContext, moodUrl, mBinding.imgSpeculation);
         PicassoUtils.getInstance().loadImg(mContext, etfUrl, mBinding.imgEtf);
     }
 
     public class ClickHandlers {
+
+        public void onClickAnalyst() {
+            if (bAnalystFlag) {
+                bAnalystFlag = false;
+
+                mBinding.tvAnalyst.setMaxLines(3);
+                mBinding.imgAnalyst.setBackground(ContextCompat.getDrawable(mContext, R.mipmap.ic_content_open));
+            } else {
+                bAnalystFlag = true;
+
+                mBinding.tvAnalyst.setSingleLine(false);
+                mBinding.imgAnalyst.setBackground(ContextCompat.getDrawable(mContext, R.mipmap.ic_content_close));
+            }
+        }
 
         public void onClickSpeculation() {
             if (null != mWindow && !mWindow.isShowing()) {
