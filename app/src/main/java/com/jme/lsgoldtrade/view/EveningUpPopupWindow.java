@@ -117,6 +117,7 @@ public class EveningUpPopupWindow extends JMEBasePopupWindow {
         mBinding.etPrice.setText(price);
         mBinding.etAmount.setText("1");
         mBinding.tvMaxAmount.setText(maxAmount);
+        mBinding.layoutMaxAmount.setVisibility(TextUtils.isEmpty(maxAmount) ? View.GONE : View.VISIBLE);
 
         mPriceMove = priceMove;
         mLowerLimitPrice = lowerLimitPrice;

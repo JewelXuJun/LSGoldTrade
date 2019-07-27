@@ -609,8 +609,7 @@ public class DeclarationFormFragment extends JMEBaseFragment {
 
                         mEveningUpPopupWindow.setData(mUser.getAccount(), mEveningUpContractID,
                                 type.equals("多") ? fiveSpeedVo.getFiveBidLists().get(0)[1] : fiveSpeedVo.getFiveAskLists().get(4)[1],
-                                type, String.valueOf(mPositionVo.getPosition() - mPositionVo.getOffsetFrozen()),
-                                new BigDecimal(mEveningUpContractInfoVo.getMinPriceMove()).divide(new BigDecimal(100)).floatValue(),
+                                type, "", new BigDecimal(mEveningUpContractInfoVo.getMinPriceMove()).divide(new BigDecimal(100)).floatValue(),
                                 lowerLimitPrice, highLimitPrice, minOrderQty, maxOrderQty, maxHoldQty,
                                 (view) -> {
                                     String price = mEveningUpPopupWindow.getPrice();

@@ -273,11 +273,13 @@
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/layout_max_amount"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_marginLeft="@dimen/common_area_margin"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:visibility="gone">
 
                     <TextView
                         android:layout_width="wrap_content"
