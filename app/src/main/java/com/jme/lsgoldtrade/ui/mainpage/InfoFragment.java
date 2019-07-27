@@ -31,19 +31,17 @@ public class InfoFragment extends JMEBaseFragment implements BaseQuickAdapter.Re
 
     private InfoAdapter mAdapter;
     private Subscription mRxbus;
-    private String name;
 
-    private long mChannelId = -10000;
+    private long mChannelId;
     private int mCurrentPage = 1;
     private int mTotalPage = 1;
-    private List<InfoVo.InfoBean> infoBeanList = new ArrayList<>();
 
-    public static Fragment newInstance(long channelId, String name) {
+    public static Fragment newInstance(long channelId) {
         InfoFragment fragment = new InfoFragment();
 
         Bundle bundle = new Bundle();
         bundle.putLong("ChannelId", channelId);
-        bundle.putString("name", name);
+
         fragment.setArguments(bundle);
 
         return fragment;
@@ -66,8 +64,9 @@ public class InfoFragment extends JMEBaseFragment implements BaseQuickAdapter.Re
         super.initData(savedInstanceState);
 
         mChannelId = getArguments().getLong("ChannelId");
-        name = getArguments().getString("name");
+
         mAdapter = new InfoAdapter(R.layout.item_info, null);
+        mAdapter.setChannelID(mChannelId);
 
         mBinding.recyclerView.setHasFixedSize(true);
         mBinding.recyclerView.setLayoutManager(new LinearLayoutManager(mContext));
@@ -90,12 +89,11 @@ public class InfoFragment extends JMEBaseFragment implements BaseQuickAdapter.Re
             if (null == infoBean)
                 return;
 
-            if (!"策略".equals(name)) {
+            if (mChannelId != -10000)
                 ARouter.getInstance().build(Constants.ARouterUriConst.JMEWEBVIEW)
                         .withString("title", infoBean.getTitle())
                         .withString("url", Constants.HttpConst.URL_INFO + infoBean.getId())
                         .navigation();
-            }
         });
     }
 
@@ -125,20 +123,23 @@ public class InfoFragment extends JMEBaseFragment implements BaseQuickAdapter.Re
     private void getData() {
         mCurrentPage = 1;
 
-        getChannelList();
+        if (mChannelId == -10000)
+            getStrategy();
+        else
+            getChannelList();
+    }
+
+    private void getStrategy() {
+        sendRequest(ManagementService.getInstance().strategy, new HashMap<>(), false);
     }
 
     private void getChannelList() {
-        if ("策略".equals(name)) {
-            sendRequest(ManagementService.getInstance().strategy, new HashMap<>(), false);
-        } else {
-            HashMap<String, String> params = new HashMap<>();
-            params.put("pageSize", AppConfig.PageSize_10);
-            params.put("current", String.valueOf(mCurrentPage));
-            params.put("channelId", String.valueOf(mChannelId));
+        HashMap<String, String> params = new HashMap<>();
+        params.put("pageSize", AppConfig.PageSize_10);
+        params.put("current", String.valueOf(mCurrentPage));
+        params.put("channelId", String.valueOf(mChannelId));
 
-            sendRequest(ManagementService.getInstance().channelList, params, false);
-        }
+        sendRequest(ManagementService.getInstance().channelList, params, false);
     }
 
     @Override
@@ -161,7 +162,7 @@ public class InfoFragment extends JMEBaseFragment implements BaseQuickAdapter.Re
                     if (null != infoVo) {
                         mTotalPage = infoVo.getPages();
 
-                        infoBeanList = infoVo.getRecords();
+                        List<InfoVo.InfoBean> infoBeanList = infoVo.getRecords();
 
                         if (mCurrentPage == 1) {
                             mAdapter.setNewData(infoBeanList);
@@ -176,33 +177,35 @@ public class InfoFragment extends JMEBaseFragment implements BaseQuickAdapter.Re
                 break;
             case "Strategy":
                 if (head.isSuccess()) {
-                    List<StrategyVo> strategyVo;
+                    List<StrategyVo> strategyVoList;
 
                     try {
-                        strategyVo = (List<StrategyVo>) response;
+                        strategyVoList = (List<StrategyVo>) response;
                     } catch (Exception e) {
-                        strategyVo = null;
+                        strategyVoList = null;
 
                         e.printStackTrace();
                     }
 
-                   /* if (strategyVo == null)
+                    if (null == strategyVoList)
                         return;
 
-                    if (infoBeanList != null && !infoBeanList.isEmpty())
-                        infoBeanList.clear();
+                    List<InfoVo.InfoBean> infoBeanList = new ArrayList<>();
 
-                    for (int i = 0; i < strategyVo.size(); i++) {
-                        InfoVo.InfoBean infoVo = new InfoVo.InfoBean();
-                        infoVo.setTitle(strategyVo.get(i).getContent());
-                        infoVo.setTitleImg("");
-                        infoVo.setCreateTime(strategyVo.get(i).getCreateTime());
-                        infoBeanList.add(infoVo);
+                    for (StrategyVo strategyVo : strategyVoList) {
+                        if (null != strategyVo) {
+                            InfoVo.InfoBean infoBean = new InfoVo.InfoBean();
+                            infoBean.setTitle(strategyVo.getContent());
+                            infoBean.setCreateTime(strategyVo.getCreateTime());
+
+                            infoBeanList.add(infoBean);
+                        }
                     }
 
                     mAdapter.setNewData(infoBeanList);
-                    mAdapter.loadMoreComplete();*/
+                    mAdapter.loadMoreComplete();
                 }
+
                 break;
         }
     }

@@ -8,28 +8,28 @@ import java.util.List;
 
 public class InfoPagerAdapter extends FragmentStatePagerAdapter {
 
-    private List<String> mTabHeaders;
+    private List<String> mTabs;
     private List<Long> mChannelIds;
 
-    public InfoPagerAdapter(FragmentManager fragmentManager, List<String> tabHeaders, List<Long> channelIds) {
+    public InfoPagerAdapter(FragmentManager fragmentManager, List<String> tabs, List<Long> channelIds) {
         super(fragmentManager);
 
-        this.mTabHeaders = tabHeaders;
-        this.mChannelIds = channelIds;
+        mTabs = tabs;
+        mChannelIds = channelIds;
     }
 
     @Override
     public Fragment getItem(int position) {
-        return InfoFragment.newInstance(mChannelIds.get(position), mTabHeaders.get(position));
+        return InfoFragment.newInstance(mChannelIds.get(position));
     }
 
     @Override
     public int getCount() {
-        return mTabHeaders.size();
+        return mTabs.size();
     }
 
     @Override
     public CharSequence getPageTitle(int position) {
-        return mTabHeaders.get(position);
+        return mTabs.get(position);
     }
 }

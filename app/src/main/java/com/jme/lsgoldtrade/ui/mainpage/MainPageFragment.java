@@ -311,10 +311,6 @@ public class MainPageFragment extends JMEBaseFragment implements OnRefreshListen
         sendRequest(ManagementService.getInstance().navigatorList, params, false);
     }
 
-    private void getChannelAllList() {
-        sendRequest(ManagementService.getInstance().channelAllList, new HashMap<>(), true);
-    }
-
     private void getMarket() {
         HashMap<String, String> params = new HashMap<>();
         params.put("list", "");
@@ -322,28 +318,15 @@ public class MainPageFragment extends JMEBaseFragment implements OnRefreshListen
         sendRequest(MarketService.getInstance().getFiveSpeedQuotes, params, false);
     }
 
+    private void getChannelAllList() {
+        sendRequest(ManagementService.getInstance().channelAllList, new HashMap<>(), true);
+    }
+
     @Override
     protected void DataReturn(DTRequest request, Head head, Object response) {
         super.DataReturn(request, head, response);
 
         switch (request.getApi().getName()) {
-            case "GetFiveSpeedQuotes":
-                if (head.isSuccess()) {
-                    try {
-                        mList = (List<FiveSpeedVo>) response;
-                    } catch (Exception e) {
-                        mList = null;
-                        e.printStackTrace();
-                    }
-                    if (null != mList)
-                        mRateMarketAdapter.setDataList(mList);
-                }
-
-                if (bFlag) {
-                    bFlag = false;
-                    mHandler.sendEmptyMessageDelayed(Constants.Msg.MSG_MAINPAGE_UPDATE_MARKET, getTimeInterval());
-                }
-                break;
             case "BannerAllList":
                 if (head.isSuccess()) {
                     mBinding.swipeRefreshLayout.finishRefresh(true);
@@ -451,25 +434,48 @@ public class MainPageFragment extends JMEBaseFragment implements OnRefreshListen
                 }
 
                 break;
+            case "GetFiveSpeedQuotes":
+                if (head.isSuccess()) {
+                    try {
+                        mList = (List<FiveSpeedVo>) response;
+                    } catch (Exception e) {
+                        mList = null;
+                        e.printStackTrace();
+                    }
+                    if (null != mList)
+                        mRateMarketAdapter.setDataList(mList);
+                }
+
+                if (bFlag) {
+                    bFlag = false;
+
+                    mHandler.sendEmptyMessageDelayed(Constants.Msg.MSG_MAINPAGE_UPDATE_MARKET, getTimeInterval());
+                }
+
+                break;
             case "ChannelAllList":
                 if (head.isSuccess()) {
                     mTabs.clear();
                     mChannelIds.clear();
+
                     List<ChannelVo> channelVoList;
+
                     try {
                         channelVoList = (List<ChannelVo>) response;
                     } catch (Exception e) {
                         channelVoList = null;
+
                         e.printStackTrace();
                     }
 
-                    if (null == channelVoList || 0 == channelVoList.size())
-                        return;
+                    if (null == channelVoList)
+                        channelVoList = new ArrayList<>();
 
-                    ChannelVo vo = new ChannelVo();
-                    vo.setName("策略");
-                    vo.setId(1);
-                    channelVoList.add(0, vo);
+                    ChannelVo channelVos = new ChannelVo();
+                    channelVos.setName(mContext.getResources().getString(R.string.main_tab_strategy));
+                    channelVos.setId(-10000);
+
+                    channelVoList.add(0, channelVos);
 
                     if (channelVoList.size() <= 4) {
                         mBinding.tablayout.setTabMode(TabLayout.MODE_FIXED);
@@ -506,22 +512,6 @@ public class MainPageFragment extends JMEBaseFragment implements OnRefreshListen
                         .navigation();
         }
 
-        public void onClickOpenAccount() {
-            IntentUtils.intentSmallProcedures(mContext);
-        }
-
-        public void onClickQuickOrder() {
-            if (null == mUser || !mUser.isLogin())
-                ARouter.getInstance().build(Constants.ARouterUriConst.ACCOUNTLOGIN).navigation();
-            else
-                RxBus.getInstance().post(Constants.RxBusConst.RXBUS_TRADE, null);
-        }
-
-        public void onClickBeginners() {
-            ARouter.getInstance()
-                    .build(Constants.ARouterUriConst.BEGINNERSACTIVITY)
-                    .navigation();
-        }
     }
 
     @Override
@@ -561,12 +551,16 @@ public class MainPageFragment extends JMEBaseFragment implements OnRefreshListen
         @Override
         public void onBind(Context context, int position, BannerVo banner) {
             String imgUrl = banner.getResUrl();
+
             if (!TextUtils.isEmpty(imgUrl))
                 Picasso.with(context).load(imgUrl).into(mImgBanner);
+
             mImgBanner.setOnClickListener(view -> {
                 String actionUrl = banner.getActionUrl();
+
                 if (TextUtils.isEmpty(actionUrl))
                     return;
+
                 ARouter.getInstance().build(Constants.ARouterUriConst.JMEWEBVIEW)
                         .withString("title", banner.getItemTxt())
                         .withString("url", actionUrl)

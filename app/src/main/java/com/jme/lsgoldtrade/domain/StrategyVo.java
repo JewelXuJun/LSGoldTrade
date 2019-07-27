@@ -10,8 +10,11 @@ public class StrategyVo {
      */
 
     private String id;
+
     private String content;
+
     private String createTime;
+
     private String updateTime;
 
     public String getId() {

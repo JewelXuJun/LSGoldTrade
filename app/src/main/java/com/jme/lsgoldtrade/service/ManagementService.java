@@ -106,6 +106,13 @@ public class ManagementService extends IService<ManagementApi> {
         }
     };
 
+    public API listInPage = new API<InfoVo>("ListInPage") {
+        @Override
+        public Call<DTResponse> request(HashMap<String, String> params) {
+            return mApi.listInPage(params);
+        }
+    };
+
     public API channelList = new API<InfoVo>("ChannelList") {
         @Override
         public Call<DTResponse> request(HashMap<String, String> params) {
