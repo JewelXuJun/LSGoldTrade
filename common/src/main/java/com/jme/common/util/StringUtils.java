@@ -261,6 +261,9 @@ public class StringUtils {
         if (TextUtils.isEmpty(value))
             return null;
 
+        if (value.endsWith(","))
+            value = value.substring(0, value.length() - 1);
+
         return value.split(",");
     }
 

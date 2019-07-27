@@ -10,6 +10,7 @@ import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
+import android.view.View;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
@@ -28,6 +29,7 @@ import com.jme.common.util.KChartVo;
 import com.jme.common.util.NetWorkUtils;
 import com.jme.common.util.RxBus;
 import com.jme.common.util.StatusBarUtil;
+import com.jme.common.util.StringUtils;
 import com.jme.common.util.TChartVo;
 import com.jme.lsgoldtrade.R;
 import com.jme.lsgoldtrade.base.JMEBaseActivity;
@@ -75,7 +77,6 @@ public class MarketDetailActivity extends JMEBaseActivity implements FChart.OnPr
     private static final int MORE = 3;
     private static final String DIRECTION_AFTER = "1";
     private static final String DIRECTION_BEFORE = "2";
-    private static final String COUNT_TCHART = "660";
     private static final String COUNT_KCHART = "200";
 
     private String mContractId;
@@ -87,6 +88,7 @@ public class MarketDetailActivity extends JMEBaseActivity implements FChart.OnPr
     private boolean bGetTradeDateFlag = false;
     private int iRequestKDataFlag = NONE;
     private int mTChartCount;
+    private String[] mContractIdList;
 
     private List<String> mList;
 
@@ -130,27 +132,10 @@ public class MarketDetailActivity extends JMEBaseActivity implements FChart.OnPr
         mBinding = (ActivityMarketDetailBinding) mBindingUtil;
 
         mContractId = getIntent().getStringExtra("ContractId");
+        mContractIdList = StringUtils.getStringArray(getIntent().getStringExtra("ContractListValue"));
 
-        initToolbar(MarketUtil.getContractCode(mContractId), true, ContextCompat.getColor(this, R.color.white));
+        setChangeLayout(getPosition(mContractId));
         setBackGroundColor(R.color.common_font_stable);
-        setBackNavigation(true, R.mipmap.ic_back_white);
-        setRightNavigation(getString(R.string.market_warning), 0, R.style.ToolbarThemeWhite, () -> {
-            if (null == mUser || !mUser.isLogin()) {
-                ARouter.getInstance().build(Constants.ARouterUriConst.ACCOUNTLOGIN).navigation();
-            } else {
-                String price = mBinding.tvLastPrice.getText().toString().trim();
-                String range = mBinding.tvRange.getText().toString().trim();
-                String rate = mBinding.tvRate.getText().toString().trim();
-
-                ARouter.getInstance()
-                        .build(Constants.ARouterUriConst.WARNING)
-                        .withString("type", MarketUtil.getContractCode(mContractId))
-                        .withString("price", price)
-                        .withString("range", range)
-                        .withString("rate", rate)
-                        .navigation();
-            }
-        });
 
         mChart = mBinding.chart;
         mTChart = mChart.getTChart();
@@ -198,7 +183,6 @@ public class MarketDetailActivity extends JMEBaseActivity implements FChart.OnPr
 
             @Override
             public void onChartSingleTapped(MotionEvent me) {
-                //切换VOL等选项
 
             }
         });
@@ -238,7 +222,7 @@ public class MarketDetailActivity extends JMEBaseActivity implements FChart.OnPr
 
     private void setBackGroundColor(int color) {
         StatusBarUtil.setStatusBarMode(this, true, color);
-        mToolbarHelper.setBackgroundColor(ContextCompat.getColor(this, color));
+        mBinding.layoutTitle.setBackgroundColor(ContextCompat.getColor(this, color));
         mBinding.layoutMarketDetail.setBackgroundColor(ContextCompat.getColor(this, color));
     }
 
@@ -264,6 +248,8 @@ public class MarketDetailActivity extends JMEBaseActivity implements FChart.OnPr
 
         bFlag = true;
         bGetTradeDateFlag = false;
+
+        mChart.setChartUnit(KData.Unit.TIME);
 
         updateData(true);
     }
@@ -295,6 +281,31 @@ public class MarketDetailActivity extends JMEBaseActivity implements FChart.OnPr
                     break;
             }
         });
+    }
+
+    private int getPosition(String contractId) {
+        int position = -1;
+
+        if (!TextUtils.isEmpty(contractId) && null != mContractIdList) {
+            for (int i = 0; i < mContractIdList.length; i++) {
+                String value = mContractIdList[i];
+
+                if (!TextUtils.isEmpty(value) && value.equals(contractId))
+                    position = i;
+            }
+        }
+
+        return position;
+    }
+
+    private void setChangeLayout(int position) {
+        mBinding.tvContract.setText(mContractId);
+        mBinding.imgPrevious.setBackground(position == 0 ? ContextCompat.getDrawable(this, R.mipmap.ic_market_previous_prohibit)
+                : ContextCompat.getDrawable(this, R.mipmap.ic_market_previous));
+        mBinding.imgNext.setBackground(position == mContractIdList.length - 1 ? ContextCompat.getDrawable(this, R.mipmap.ic_market_next_prohibit)
+                : ContextCompat.getDrawable(this, R.mipmap.ic_market_next));
+        mBinding.layoutPrevious.setVisibility(position == -1 ? View.GONE : View.VISIBLE);
+        mBinding.layoutNext.setVisibility(position == -1 ? View.GONE : View.VISIBLE);
     }
 
     private void updateData(boolean enable) {
@@ -856,6 +867,67 @@ public class MarketDetailActivity extends JMEBaseActivity implements FChart.OnPr
     }
 
     public class ClickHandlers {
+
+        public void onClickBack() {
+            finish();
+        }
+
+        public void onClickPrevious() {
+            int position = getPosition(mContractId);
+
+            if (position == -1 || position == 0 || null == mContractIdList)
+                return;
+
+            position = position - 1;
+
+            if (position > mContractIdList.length)
+                return;
+
+            mContractId = mContractIdList[position];
+
+            setChangeLayout(position);
+            removeMessage();
+            initRawData();
+        }
+
+        public void onClickNext() {
+            int position = getPosition(mContractId);
+
+            if (null == mContractIdList)
+                return;
+
+            if (position == -1 || position == mContractIdList.length - 1)
+                return;
+
+            position = position + 1;
+
+            if (position > mContractIdList.length)
+                return;
+
+            mContractId = mContractIdList[position];
+
+            setChangeLayout(position);
+            removeMessage();
+            initRawData();
+        }
+
+        public void onClickWarning() {
+            if (null == mUser || !mUser.isLogin()) {
+                ARouter.getInstance().build(Constants.ARouterUriConst.ACCOUNTLOGIN).navigation();
+            } else {
+                String price = mBinding.tvLastPrice.getText().toString().trim();
+                String range = mBinding.tvRange.getText().toString().trim();
+                String rate = mBinding.tvRate.getText().toString().trim();
+
+                ARouter.getInstance()
+                        .build(Constants.ARouterUriConst.WARNING)
+                        .withString("type", MarketUtil.getContractCode(mContractId))
+                        .withString("price", price)
+                        .withString("range", range)
+                        .withString("rate", rate)
+                        .navigation();
+            }
+        }
 
         public void onClickBuyMore() {
             isMore = "0";

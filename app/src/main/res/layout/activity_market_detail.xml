@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
 
@@ -20,15 +21,94 @@
             android:id="@+id/layout_toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/common_font_stable"
             android:orientation="vertical">
 
-            <include layout="@layout/layout_toolbar" />
+            <RelativeLayout
+                android:id="@+id/layout_title"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/common_item_height_normal"
+                android:background="@color/common_font_stable"
+                android:elevation="0dp"
+                android:fitsSystemWindows="true"
+                android:theme="@style/mToolbarTheme"
+                app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/common_area_margin_tiny"
+                    android:onClick="@{() -> handlers.onClickBack()}"
+                    android:src="@mipmap/ic_back_white" />
+
+                <RelativeLayout
+                    android:layout_width="@dimen/width_market_title"
+                    android:layout_height="@dimen/height_tabhost"
+                    android:layout_centerInParent="true">
+
+                    <RelativeLayout
+                        android:id="@+id/layout_previous"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:onClick="@{() -> handlers.onClickPrevious()}"
+                        android:padding="@dimen/common_area_margin_tiny"
+                        android:visibility="gone">
+
+                        <ImageView
+                            android:id="@+id/img_previous"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerInParent="true"
+                            android:background="@mipmap/ic_market_previous" />
+
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:id="@+id/layout_next"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:onClick="@{() -> handlers.onClickNext()}"
+                        android:padding="@dimen/common_area_margin_tiny"
+                        android:visibility="gone">
+
+                        <ImageView
+                            android:id="@+id/img_next"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerInParent="true"
+                            android:background="@mipmap/ic_market_next" />
+
+                    </RelativeLayout>
+
+                    <TextView
+                        android:id="@+id/tv_contract"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/common_font_size" />
+
+                </RelativeLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="@dimen/common_area_margin"
+                    android:onClick="@{() -> handlers.onClickWarning()}"
+                    android:text="@string/market_warning"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/size_normal" />
+
+            </RelativeLayout>
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/main_tab_line"
-                android:layout_below="@+id/layout_toolbar"
                 android:background="@color/black" />
 
         </LinearLayout>

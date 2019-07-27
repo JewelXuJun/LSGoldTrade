@@ -156,6 +156,7 @@ public class MainPageFragment extends JMEBaseFragment implements OnRefreshListen
             ARouter.getInstance()
                     .build(Constants.ARouterUriConst.MARKETDETAIL)
                     .withString("ContractId", contractId)
+                    .withString("ContractListValue", getContractListValue())
                     .navigation();
         });
     }
@@ -275,6 +276,19 @@ public class MainPageFragment extends JMEBaseFragment implements OnRefreshListen
         mBinding.magicIndicator.setNavigator(commonNavigator);
 
         ViewPagerHelper.bind(mBinding.magicIndicator, mBinding.viewPagerFastManagement);
+    }
+
+    private String getContractListValue() {
+        String contractListValue = "";
+
+        if (null != mList && 0 != mList.size()) {
+            for (FiveSpeedVo fiveSpeedVo : mList) {
+                if (null != fiveSpeedVo)
+                    contractListValue = contractListValue + fiveSpeedVo.getContractId() + ",";
+            }
+        }
+
+        return contractListValue;
     }
 
     private long getTimeInterval() {

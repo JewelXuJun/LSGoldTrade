@@ -115,6 +115,7 @@ public class MarketFragment extends JMEBaseFragment implements OnRefreshListener
             ARouter.getInstance()
                     .build(Constants.ARouterUriConst.MARKETDETAIL)
                     .withString("ContractId", contractId)
+                    .withString("ContractListValue", getContractListValue())
                     .navigation();
         });
     }
@@ -301,6 +302,19 @@ public class MarketFragment extends JMEBaseFragment implements OnRefreshListener
 
             mActivity.runOnUiThread(() -> mAdapter.setNewData(list));
         }
+    }
+
+    private String getContractListValue() {
+        String contractListValue = "";
+
+        if (null != mList && 0 != mList.size()) {
+            for (FiveSpeedVo fiveSpeedVo : mList) {
+                if (null != fiveSpeedVo)
+                    contractListValue = contractListValue + fiveSpeedVo.getContractId() + ",";
+            }
+        }
+
+        return contractListValue;
     }
 
     private View getEmptyView() {
