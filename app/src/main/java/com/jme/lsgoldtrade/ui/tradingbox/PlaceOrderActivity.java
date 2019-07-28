@@ -67,6 +67,7 @@ public class PlaceOrderActivity extends JMEBaseActivity {
     private long mTransactionBalance;
     private long mHighLimitPrice;
     private boolean bEnoughFlag = true;
+    private boolean bCalculateFlag = false;
 
     @Override
     protected int getContentViewId() {
@@ -172,6 +173,9 @@ public class PlaceOrderActivity extends JMEBaseActivity {
     }
 
     private void calculateMoneyEnough(String number) {
+        if (!bCalculateFlag)
+            return;
+
         if (TextUtils.isEmpty(mVariety) || TextUtils.isEmpty(number)) {
             mBinding.tvBalanceMessage.setText(String.format(getString(R.string.trading_box_balance),
                     MarketUtil.decimalFormatMoney(MarketUtil.getPriceValue(mTransactionBalance))));
@@ -374,6 +378,8 @@ public class PlaceOrderActivity extends JMEBaseActivity {
                         return;
 
                     mHighLimitPrice = mTenSpeedVo.getHighLimitPriceValue();
+
+                    bCalculateFlag = true;
 
                     calculateMoneyEnough(mBinding.etAmount.getText().toString().trim());
                 }
