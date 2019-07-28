@@ -192,11 +192,19 @@
         <service
             android:name=".base.JMEAppService"
             android:exported="false" />
+
         <service
-            android:name=".push.CustIntentService"
+            android:name=".push.CustomIntentService"
+            android:permission="android.permission.BIND_JOB_SERVICE" />
+
+        <!-- 配置SDK核心服务 -->
+        <!-- process必须指定为":pushservice"，切勿随意更改 -->
+        <service
+            android:name=".push.CustomPushService"
             android:exported="true"
             android:label="PushService"
-            android:process=":pushservice" />
+            android:process=":pushservice">
+        </service>
 
         <activity
             android:name="com.umeng.socialize.editorpage.ShareActivity"
