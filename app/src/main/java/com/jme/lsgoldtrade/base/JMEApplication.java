@@ -10,7 +10,6 @@ import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.os.Build;
 import android.text.TextUtils;
-
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.google.gson.Gson;
 import com.igexin.sdk.PushManager;
@@ -22,23 +21,20 @@ import com.jme.common.util.SharedPreUtils;
 import com.jme.lsgoldtrade.R;
 import com.jme.lsgoldtrade.config.AppConfig;
 import com.jme.lsgoldtrade.domain.PushVo;
-import com.jme.lsgoldtrade.push.CustIntentService;
+import com.jme.lsgoldtrade.push.CustomIntentService;
+import com.jme.lsgoldtrade.push.CustomPushService;
 import com.jme.lsgoldtrade.ui.splash.SplashActivity;
 import com.orhanobut.logger.AndroidLogAdapter;
 import com.orhanobut.logger.Logger;
 import com.squareup.picasso.Picasso;
 import com.umeng.commonsdk.UMConfigure;
 import com.umeng.socialize.PlatformConfig;
-
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
-
 import javax.net.ssl.HostnameVerifier;
 import javax.net.ssl.SSLSession;
-
 import butterknife.ButterKnife;
 import okhttp3.OkHttpClient;
-
 import static com.jme.common.network.Connection.trustManagerForCertificates;
 
 /**
@@ -72,7 +68,8 @@ public class JMEApplication extends BaseApplication {
         PlatformConfig.setQQZone(AppConfig.QQAPPID, AppConfig.QQAPPKEY);//QQAPPID和AppSecret
         UMConfigure.setLogEnabled(true);
         // com.getui.demo.DemoPushService 为第三方自定义推送服务
-        PushManager.getInstance().initialize(getApplicationContext(), CustIntentService.class);
+        PushManager.getInstance().initialize(this.getApplicationContext(), CustomPushService.class);
+        PushManager.getInstance().registerPushIntentService(getApplicationContext(), CustomIntentService.class);
         initPicasso();
 
         Intent serviceIntent = new Intent(this, JMEAppService.class);
