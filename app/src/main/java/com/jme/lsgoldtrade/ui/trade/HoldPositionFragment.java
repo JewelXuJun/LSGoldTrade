@@ -249,9 +249,8 @@ public class HoldPositionFragment extends JMEBaseFragment implements OnRefreshLi
                                 else
                                     margin = new BigDecimal(average).subtract(new BigDecimal(latestprice)).longValue();
 
-                                floatProfit = (new BigDecimal(MarketUtil.getPriceValue(margin))
-                                        .multiply(new BigDecimal(contractValue)).multiply(new BigDecimal(position)))
-                                        .setScale(2, BigDecimal.ROUND_HALF_UP).toPlainString();
+                                floatProfit = MarketUtil.formatValueNum((new BigDecimal(MarketUtil.getPriceValue(margin))
+                                        .multiply(new BigDecimal(contractValue)).multiply(new BigDecimal(position))).toPlainString(), 2);
                             }
 
                             mList.add(floatProfit);
