@@ -123,7 +123,6 @@ public class MarketDetailActivity extends JMEBaseActivity implements FChart.OnPr
             super.handleMessage(msg);
         }
     };
-    private String value;
 
     @Override
     protected int getContentViewId() {
@@ -306,6 +305,10 @@ public class MarketDetailActivity extends JMEBaseActivity implements FChart.OnPr
 
     private void setChangeLayout(int position) {
         mBinding.tvContract.setText(mContractId);
+
+        if (position == -1)
+            return;
+
         mBinding.imgPrevious.setBackground(position == 0 ? ContextCompat.getDrawable(this, R.mipmap.ic_market_previous_prohibit)
                 : ContextCompat.getDrawable(this, R.mipmap.ic_market_previous));
         mBinding.imgNext.setBackground(position == mContractIdList.length - 1 ? ContextCompat.getDrawable(this, R.mipmap.ic_market_next_prohibit)
