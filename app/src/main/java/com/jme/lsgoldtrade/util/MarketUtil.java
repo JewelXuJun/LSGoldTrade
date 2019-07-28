@@ -446,7 +446,7 @@ public class MarketUtil {
     }
 
     public static String getRateValue(long rate) {
-        return formatValue(new BigDecimal(rate).divide(new BigDecimal(AppConfig.Rate_Divisor)).multiply(new BigDecimal(100)).toString(), 2);
+        return formatValue(new BigDecimal(rate).divide(new BigDecimal(AppConfig.Rate_Divisor), 4, BigDecimal.ROUND_HALF_UP).multiply(new BigDecimal(100)).toString(), 2);
     }
 
     public static long getHandWeight(long handWeight) {
