@@ -76,7 +76,6 @@ public class PersonalFragment extends JMEBaseFragment {
             mBinding.tvAccount.setVisibility(View.VISIBLE);
             mBinding.layoutLoginMessage.setVisibility(View.GONE);
             mBinding.layoutOpenAccount.setVisibility(TextUtils.isEmpty(mUser.getAccountID()) ? View.VISIBLE : View.GONE);
-            mBinding.layoutSubscribe.setVisibility(View.VISIBLE);
 
             getUserAddedServicesStatus();
             getListExt();
@@ -121,23 +120,31 @@ public class PersonalFragment extends JMEBaseFragment {
                     }
 
                     if (null == subscribeStateVo) {
-                        mBinding.tvTradingBox.setText(R.string.personal_trading_box_new);
-                        mBinding.tvTradingBox.setTextColor(ContextCompat.getColor(mContext, R.color.color_text_normal));
+                        mBinding.layoutSubscribe.setVisibility(View.GONE);
                     } else {
-                        String num = subscribeStateVo.getNum();
+                        List<SubscribeStateVo.SubscribeBean> subscribeBeanList = subscribeStateVo.getList();
 
-                        if (TextUtils.isEmpty(num)) {
-                            mBinding.tvTradingBox.setText(R.string.personal_trading_box_new);
-                            mBinding.tvTradingBox.setTextColor(ContextCompat.getColor(mContext, R.color.color_text_normal));
+                        if (null == subscribeBeanList || 0 == subscribeBeanList.size()) {
+                            mBinding.layoutSubscribe.setVisibility(View.GONE);
                         } else {
-                            if (num.equals("0")) {
+                            mBinding.layoutSubscribe.setVisibility(View.VISIBLE);
+
+                            String num = subscribeStateVo.getNum();
+
+                            if (TextUtils.isEmpty(num)) {
                                 mBinding.tvTradingBox.setText(R.string.personal_trading_box_new);
                                 mBinding.tvTradingBox.setTextColor(ContextCompat.getColor(mContext, R.color.color_text_normal));
                             } else {
-                                mBinding.tvTradingBox.setText(R.string.personal_trading_box_publish);
-                                mBinding.tvTradingBox.setTextColor(ContextCompat.getColor(mContext, R.color.color_red));
+                                if (num.equals("0")) {
+                                    mBinding.tvTradingBox.setText(R.string.personal_trading_box_new);
+                                    mBinding.tvTradingBox.setTextColor(ContextCompat.getColor(mContext, R.color.color_text_normal));
+                                } else {
+                                    mBinding.tvTradingBox.setText(R.string.personal_trading_box_publish);
+                                    mBinding.tvTradingBox.setTextColor(ContextCompat.getColor(mContext, R.color.color_red));
+                                }
                             }
                         }
+
                     }
 
 
