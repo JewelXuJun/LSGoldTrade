@@ -47,7 +47,8 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.market.MarketDetailActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".ui.market.MarketDetailLandscapeActivity"
             android:screenOrientation="landscape" />
@@ -114,8 +115,8 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.personal.CheckServiceActivity"
-            android:screenOrientation="portrait"
-            android:launchMode="singleTop"/>
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.personal.RechargeActivity"
             android:screenOrientation="portrait" />
@@ -160,7 +161,8 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.market.MarketJudgmentActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".ui.mainpage.DiYanActivity"
             android:screenOrientation="portrait" />
@@ -203,8 +205,7 @@
             android:name=".push.CustomPushService"
             android:exported="true"
             android:label="PushService"
-            android:process=":pushservice">
-        </service>
+            android:process=":pushservice"></service>
 
         <activity
             android:name="com.umeng.socialize.editorpage.ShareActivity"
@@ -219,7 +220,7 @@
             android:name=".wxapi.WXPayEntryActivity"
             android:exported="true"
             android:launchMode="singleTop"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name="com.tencent.tauth.AuthActivity"
             android:launchMode="singleTask"
