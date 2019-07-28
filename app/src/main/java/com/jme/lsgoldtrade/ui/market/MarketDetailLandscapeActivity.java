@@ -58,7 +58,6 @@ public class MarketDetailLandscapeActivity extends JMEBaseActivity implements FC
     private static final int MORE = 3;
     private static final String DIRECTION_AFTER = "1";
     private static final String DIRECTION_BEFORE = "2";
-    private static final String COUNT_TCHART = "660";
     private static final String COUNT_KCHART = "200";
 
     private String mContractId;
@@ -389,7 +388,6 @@ public class MarketDetailLandscapeActivity extends JMEBaseActivity implements FC
             mBinding.tvOpen.setTextColor(ContextCompat.getColor(this,
                     MarketUtil.getMarketStateColor(TextUtils.isEmpty(openPrice) ? -2 : new BigDecimal(openPrice).compareTo(new BigDecimal(lastSettlePrice)))));
             mBinding.tvPreclose.setText(MarketUtil.getValue(tenSpeedVo.getLastClosePrice()));
-//            mBinding.tvTurnVolume.setText(MarketUtil.getVolumeValue(String.valueOf(tenSpeedVo.getTurnover()), false));
             mBinding.tvTurnVolume.setText(MarketUtil.getVolumeValue(String.valueOf(new BigDecimal(tenSpeedVo.getTurnover()).divide(new BigDecimal(100))), false));
             mBinding.tvVolume.setText(MarketUtil.getVolumeValue(String.valueOf(tenSpeedVo.getTurnVolume()), false));
             mBinding.tvStateTime.setText(MarketUtil.getValue(DateUtil.stringToAllTime(tenSpeedVo.getQuoteTime())));
@@ -464,7 +462,6 @@ public class MarketDetailLandscapeActivity extends JMEBaseActivity implements FC
         mBinding.tvOpen.setTextColor(ContextCompat.getColor(this,
                 MarketUtil.getMarketStateColor(new BigDecimal(openPrice).compareTo(new BigDecimal(preClose)))));
         mBinding.tvPreclose.setText(MarketUtil.formatValue(String.valueOf(preClose), 2));
-//        mBinding.tvTurnVolume.setText(MarketUtil.getVolumeValue(String.valueOf(turnover), false));
         mBinding.tvTurnVolume.setText(MarketUtil.getVolumeValue(String.valueOf(new BigDecimal(turnover).divide(new BigDecimal(100))), false));
 
         mBinding.tvVolume.setText(MarketUtil.getVolumeValue(String.valueOf(turnVolume), false));
@@ -496,7 +493,7 @@ public class MarketDetailLandscapeActivity extends JMEBaseActivity implements FC
         params.put("contractId", mContractId);
         params.put("detailId", "");
         params.put("qryFlag", DIRECTION_BEFORE);
-        params.put("count", AppConfig.PageSize_10);
+        params.put("count", AppConfig.PageSize_20);
 
         sendRequest(MarketService.getInstance().getDetail, params, false, false, false);
     }
