@@ -110,6 +110,8 @@ public class MarketTradePopupWindow extends JMEBasePopupWindow {
                         return;
                     }
                 }
+
+                calculateMaxAmount();
             }
 
             @Override
@@ -158,27 +160,44 @@ public class MarketTradePopupWindow extends JMEBasePopupWindow {
     }
 
     private void calculateMaxAmount() {
-        String transactionBalance = mAccount.getTransactionBalanceStr();
-        String positionMargin = null == mPositionVo ? "0" : mPositionVo.getPositionMargin();
+        if (TextUtils.isEmpty(mContractID) || null == mAccount || null== mPositionVo || null == mContractInfoVo)
+            return;
+
         String price = mBinding.etPrice.getText().toString();
-        long bankLongMarginRate = mContractInfoVo.getBankLongMarginRate();
-        long bankShortMarginRate = mContractInfoVo.getBankShortMarginRate();
-        long bankFeeRate = mContractInfoVo.getBankFeeRate();
-        long exchangeFeeRate = mContractInfoVo.getExchangeFeeRate();
-        long handWeight = MarketUtil.getHandWeight(mContractInfoVo.getHandWeight());
-        long bankMarginRate = mBsFlag == 1 ? bankLongMarginRate : bankShortMarginRate;
 
-        BigDecimal money = new BigDecimal(transactionBalance).add(new BigDecimal(positionMargin));
-        BigDecimal contractMoney = new BigDecimal(price).multiply(new BigDecimal(mContractID.equals("Ag(T+D)") ?
-                new BigDecimal(handWeight).divide(new BigDecimal(1000), 0, BigDecimal.ROUND_HALF_UP).longValue() : handWeight));
-        BigDecimal bankMarginRateValue = new BigDecimal(bankMarginRate).divide(new BigDecimal(10000));
-        BigDecimal bankFeeRateValue = new BigDecimal(bankFeeRate).divide(new BigDecimal(10000)).divide(new BigDecimal(10000));
-        BigDecimal exchangeFeeRateValue = new BigDecimal(exchangeFeeRate).divide(new BigDecimal(10000)).divide(new BigDecimal(10000));
-        BigDecimal feeRate = bankMarginRateValue.add(bankFeeRateValue).add(exchangeFeeRateValue);
+        if (TextUtils.isEmpty(price)) {
 
-        mMaxAmount = Math.min(money.divide(contractMoney.multiply(feeRate), 0, BigDecimal.ROUND_HALF_DOWN).longValue(), mMaxOrderQty);
+        } else {
+            if (price.endsWith("."))
+                price = price.substring(0, price.length() -1);
+
+            if (new BigDecimal(price).compareTo(new BigDecimal(0)) == 0) {
+                mMaxAmount = mMaxOrderQty;
+            } else {
+                String transactionBalance = mAccount.getTransactionBalanceStr();
+                String positionMargin = null == mPositionVo ? "0" : mPositionVo.getPositionMargin();
+
+                long bankLongMarginRate = mContractInfoVo.getBankLongMarginRate();
+                long bankShortMarginRate = mContractInfoVo.getBankShortMarginRate();
+                long bankFeeRate = mContractInfoVo.getBankFeeRate();
+                long exchangeFeeRate = mContractInfoVo.getExchangeFeeRate();
+                long handWeight = MarketUtil.getHandWeight(mContractInfoVo.getHandWeight());
+                long bankMarginRate = mBsFlag == 1 ? bankLongMarginRate : bankShortMarginRate;
+
+                BigDecimal money = new BigDecimal(transactionBalance).add(new BigDecimal(positionMargin));
+                BigDecimal contractMoney = new BigDecimal(price).multiply(new BigDecimal(mContractID.equals("Ag(T+D)") ?
+                        new BigDecimal(handWeight).divide(new BigDecimal(1000), 0, BigDecimal.ROUND_HALF_UP).longValue() : handWeight));
+                BigDecimal bankMarginRateValue = new BigDecimal(bankMarginRate).divide(new BigDecimal(10000));
+                BigDecimal bankFeeRateValue = new BigDecimal(bankFeeRate).divide(new BigDecimal(10000)).divide(new BigDecimal(10000));
+                BigDecimal exchangeFeeRateValue = new BigDecimal(exchangeFeeRate).divide(new BigDecimal(10000)).divide(new BigDecimal(10000));
+                BigDecimal feeRate = bankMarginRateValue.add(bankFeeRateValue).add(exchangeFeeRateValue);
+
+                mMaxAmount = Math.min(money.divide(contractMoney.multiply(feeRate), 0, BigDecimal.ROUND_DOWN).longValue(), mMaxOrderQty);
+            }
+        }
 
         mBinding.tvMaxAmount.setText(String.valueOf(mMaxAmount));
+
     }
 
     private void sendData(String price, String amount) {
