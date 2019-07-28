@@ -50,7 +50,7 @@ import rx.Subscription;
 /**
  * 报单
  */
-public class DeclarationFormFragment extends JMEBaseFragment implements FChart.OnPriceClickListener{
+public class DeclarationFormFragment extends JMEBaseFragment implements FChart.OnPriceClickListener {
 
     private FragmentDeclarationFormBinding mBinding;
 
@@ -564,8 +564,8 @@ public class DeclarationFormFragment extends JMEBaseFragment implements FChart.O
                         return;
 
                     mBinding.tvPrice.setText(latestPrice);
-                    mBinding.tvPrice.setTextColor(ContextCompat.getColor(mContext,
-                            MarketUtil.getMarketStateColor(new BigDecimal(latestPrice).compareTo(new BigDecimal(lastSettlePrice)))));
+                    mBinding.tvPrice.setTextColor(ContextCompat.getColor(mContext, new BigDecimal(latestPrice).compareTo(new BigDecimal(0)) == 0
+                            ? R.color.color_text_black : MarketUtil.getMarketStateColor(new BigDecimal(latestPrice).compareTo(new BigDecimal(lastSettlePrice)))));
                     mBinding.tvLimitDownPrice.setText(mLowerLimitPrice);
                     mBinding.tvLimitUpPrice.setText(mHighLimitPrice);
                     mBinding.tvAmount.setText(MarketUtil.getVolumeValue(String.valueOf(mTenSpeedVo.getTurnover()), false));
