@@ -171,9 +171,10 @@ public class MarketTradePopupWindow extends JMEBasePopupWindow {
         BigDecimal money = new BigDecimal(transactionBalance).add(new BigDecimal(positionMargin));
         BigDecimal contractMoney = new BigDecimal(price).multiply(new BigDecimal(mContractID.equals("Ag(T+D)") ?
                 new BigDecimal(handWeight).divide(new BigDecimal(1000), 0, BigDecimal.ROUND_HALF_UP).longValue() : handWeight));
-        BigDecimal feeRate = new BigDecimal(bankMarginRate).divide(new BigDecimal(10000))
-                .add(new BigDecimal(bankFeeRate).divide(new BigDecimal(10000).divide(new BigDecimal(10000))))
-                .add(new BigDecimal(exchangeFeeRate).divide(new BigDecimal(10000)).divide(new BigDecimal(10000)));
+        BigDecimal bankMarginRateValue = new BigDecimal(bankMarginRate).divide(new BigDecimal(10000));
+        BigDecimal bankFeeRateValue = new BigDecimal(bankFeeRate).divide(new BigDecimal(10000)).divide(new BigDecimal(10000));
+        BigDecimal exchangeFeeRateValue = new BigDecimal(exchangeFeeRate).divide(new BigDecimal(10000)).divide(new BigDecimal(10000));
+        BigDecimal feeRate = bankMarginRateValue.add(bankFeeRateValue).add(exchangeFeeRateValue);
 
         mMaxAmount = Math.min(money.divide(contractMoney.multiply(feeRate), 0, BigDecimal.ROUND_HALF_DOWN).longValue(), mMaxOrderQty);
 
@@ -205,8 +206,14 @@ public class MarketTradePopupWindow extends JMEBasePopupWindow {
             Toast.makeText(mContext, R.string.trade_limit_up_price_error, Toast.LENGTH_SHORT).show();
         else if (TextUtils.isEmpty(amount))
             Toast.makeText(mContext, R.string.trade_number_error, Toast.LENGTH_SHORT).show();
-        else if (new BigDecimal(amount).compareTo(new BigDecimal(mMaxAmount)) == 1)
-            Toast.makeText(mContext, R.string.trade_limit_max_amount_error3, Toast.LENGTH_SHORT).show();
+        else if (new BigDecimal(amount).compareTo(new BigDecimal(0)) == 0)
+            Toast.makeText(mContext, R.string.trade_number_error_zero, Toast.LENGTH_SHORT).show();
+        else if (mMinOrderQty != -1 && new BigDecimal(amount).compareTo(new BigDecimal(mMinOrderQty)) == -1)
+            Toast.makeText(mContext, R.string.trade_limit_min_amount_error, Toast.LENGTH_SHORT).show();
+        else if (mMaxOrderQty == -1 && new BigDecimal(amount).compareTo(new BigDecimal(mMaxHoldQty == -1 ? mMaxAmount : Math.min(mMaxAmount, mMaxHoldQty))) == 1)
+            Toast.makeText(mContext, R.string.trade_limit_max_amount_error_canbuy, Toast.LENGTH_SHORT).show();
+        else if (mMaxOrderQty != -1 && new BigDecimal(amount).compareTo(new BigDecimal(Math.min(mMaxAmount, mMaxOrderQty))) == 1)
+            Toast.makeText(mContext, R.string.trade_limit_max_amount_error_canbuy, Toast.LENGTH_SHORT).show();
         else
             sendData(price, amount);
     }
@@ -297,17 +304,13 @@ public class MarketTradePopupWindow extends JMEBasePopupWindow {
             long value = new BigDecimal(amount).add(new BigDecimal(1)).longValue();
 
             if (mMaxOrderQty == -1) {
-                if (mMaxHoldQty == -1) {
+                if (new BigDecimal(value).compareTo(new BigDecimal(mMaxHoldQty == -1 ? mMaxAmount : Math.min(mMaxAmount, mMaxHoldQty))) == 1)
+                    Toast.makeText(mContext, R.string.trade_limit_max_amount_error_canbuy, Toast.LENGTH_SHORT).show();
+                else
                     mBinding.etAmount.setText(String.valueOf(value));
-                } else {
-                    if (new BigDecimal(value).compareTo(new BigDecimal(mMaxHoldQty)) == 1)
-                        Toast.makeText(mContext, R.string.trade_limit_max_amount_error2, Toast.LENGTH_SHORT).show();
-                    else
-                        mBinding.etAmount.setText(String.valueOf(value));
-                }
             } else {
-                if (new BigDecimal(value).compareTo(new BigDecimal(mMaxOrderQty)) == 1)
-                    Toast.makeText(mContext, R.string.trade_limit_max_amount_error, Toast.LENGTH_SHORT).show();
+                if (new BigDecimal(value).compareTo(new BigDecimal(Math.min(mMaxAmount, mMaxOrderQty))) == 1)
+                    Toast.makeText(mContext, R.string.trade_limit_max_amount_error_canbuy, Toast.LENGTH_SHORT).show();
                 else
                     mBinding.etAmount.setText(String.valueOf(value));
             }

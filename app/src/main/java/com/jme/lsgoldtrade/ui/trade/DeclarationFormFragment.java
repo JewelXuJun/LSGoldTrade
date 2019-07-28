@@ -15,6 +15,7 @@ import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.Gravity;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.Toast;
 
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.datai.common.charts.fchart.FChart;
@@ -28,9 +29,11 @@ import com.jme.lsgoldtrade.base.JMEBaseFragment;
 import com.jme.lsgoldtrade.config.AppConfig;
 import com.jme.lsgoldtrade.config.Constants;
 import com.jme.lsgoldtrade.databinding.FragmentDeclarationFormBinding;
+import com.jme.lsgoldtrade.domain.AccountVo;
 import com.jme.lsgoldtrade.domain.ContractInfoVo;
 import com.jme.lsgoldtrade.domain.FiveSpeedVo;
 import com.jme.lsgoldtrade.domain.OrderPageVo;
+import com.jme.lsgoldtrade.domain.PositionPageVo;
 import com.jme.lsgoldtrade.domain.PositionVo;
 import com.jme.lsgoldtrade.domain.TenSpeedVo;
 import com.jme.lsgoldtrade.service.ManagementService;
@@ -610,15 +613,15 @@ public class DeclarationFormFragment extends JMEBaseFragment implements FChart.O
                         long minOrderQty = mEveningUpContractInfoVo.getMinOrderQty();
                         long maxOrderQty = mEveningUpContractInfoVo.getMaxOrderQty();
                         long maxHoldQty = mEveningUpContractInfoVo.getMaxHoldQty();
+                        long maxAmount = mPositionVo.getPosition();
 
                         mEveningUpPopupWindow.setData(mUser.getAccount(), mEveningUpContractID,
                                 type.equals("多") ? fiveSpeedVo.getFiveBidLists().get(0)[1] : fiveSpeedVo.getFiveAskLists().get(4)[1],
                                 type, new BigDecimal(mEveningUpContractInfoVo.getMinPriceMove()).divide(new BigDecimal(100)).floatValue(),
-                                lowerLimitPrice, highLimitPrice, minOrderQty, maxOrderQty, maxHoldQty,
+                                lowerLimitPrice, highLimitPrice, minOrderQty, maxOrderQty, maxHoldQty, maxAmount,
                                 (view) -> {
                                     String price = mEveningUpPopupWindow.getPrice();
                                     String amount = mEveningUpPopupWindow.getAmount();
-                                    long holdAmount = Long.parseLong(amount) + ((ItemHoldPositionFragment) mFragmentArrays[0]).getPosition(mEveningUpContractID);
 
                                     if (TextUtils.isEmpty(price) || price.equals(mContext.getResources().getString(R.string.text_no_data_default))) {
                                         showShortToast(R.string.trade_price_error);
@@ -632,10 +635,10 @@ public class DeclarationFormFragment extends JMEBaseFragment implements FChart.O
                                         showShortToast(R.string.trade_number_error_zero);
                                     } else if (minOrderQty != -1 && new BigDecimal(amount).compareTo(new BigDecimal(minOrderQty)) == -1) {
                                         showShortToast(R.string.trade_limit_min_amount_error);
-                                    } else if (maxOrderQty != -1 && new BigDecimal(amount).compareTo(new BigDecimal(maxOrderQty)) == 1) {
-                                        showShortToast(R.string.trade_limit_max_amount_error);
-                                    } else if (maxHoldQty != -1 && new BigDecimal(holdAmount).compareTo(new BigDecimal(maxHoldQty)) == 1) {
-                                        showShortToast(R.string.trade_limit_max_amount_error2);
+                                    }  else if (mMaxOrderQty == -1 && new BigDecimal(amount).compareTo(new BigDecimal(mMaxHoldQty == -1 ? maxAmount : Math.min(maxAmount, mMaxHoldQty))) == 1) {
+                                        Toast.makeText(mContext, R.string.trade_limit_max_amount_error_canbuy, Toast.LENGTH_SHORT).show();
+                                    } else if (mMaxOrderQty != -1 && new BigDecimal(amount).compareTo(new BigDecimal(Math.min(maxAmount, mMaxOrderQty))) == 1) {
+                                        Toast.makeText(mContext, R.string.trade_limit_max_amount_error_canbuy, Toast.LENGTH_SHORT).show();
                                     } else {
                                         limitOrder(mEveningUpContractID, mEveningUpPopupWindow.getPrice(),
                                                 mEveningUpPopupWindow.getAmount(), mPositionVo.getType().equals("多") ? 2 : 1, 1);

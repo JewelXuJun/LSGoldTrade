@@ -32,6 +32,7 @@ public class EveningUpPopupWindow extends JMEBasePopupWindow {
     private long mMinOrderQty = 0;
     private long mMaxOrderQty = 0;
     private long mMaxHoldQty = 0;
+    private long mMaxAmount = 0;
 
     public EveningUpPopupWindow(Context context) {
         super(context);
@@ -108,13 +109,14 @@ public class EveningUpPopupWindow extends JMEBasePopupWindow {
     }
 
     public void setData(String account, String contractID, String price, String type, float priceMove, String lowerLimitPrice,
-                        String highLimitPrice, long minOrderQty, long maxOrderQty, long maxHoldQty, View.OnClickListener confirmListener) {
+                        String highLimitPrice, long minOrderQty, long maxOrderQty, long maxHoldQty, long maxAmount,
+                        View.OnClickListener confirmListener) {
         mBinding.tvGoldAccount.setText(account);
         mBinding.tvBusinessType.setText(type.equals("多") ? mContext.getString(R.string.trade_buy_evening)
                 : mContext.getString(R.string.trade_sale_evening));
         mBinding.tvBusinessVarieties.setText(contractID);
         mBinding.etPrice.setText(price);
-        mBinding.etAmount.setText("1");
+        mBinding.etAmount.setText(String.valueOf(maxAmount));
 
         mPriceMove = priceMove;
         mLowerLimitPrice = lowerLimitPrice;
@@ -122,6 +124,7 @@ public class EveningUpPopupWindow extends JMEBasePopupWindow {
         mMinOrderQty = minOrderQty;
         mMaxOrderQty = maxOrderQty;
         mMaxHoldQty = maxHoldQty;
+        mMaxAmount = maxAmount;
 
         mBinding.btnConfirm.setOnClickListener(confirmListener);
     }
@@ -220,17 +223,13 @@ public class EveningUpPopupWindow extends JMEBasePopupWindow {
             long value = new BigDecimal(amount).add(new BigDecimal(1)).longValue();
 
             if (mMaxOrderQty == -1) {
-                if (mMaxHoldQty == -1) {
+                if (new BigDecimal(value).compareTo(new BigDecimal(mMaxHoldQty == -1 ? mMaxAmount : Math.min(mMaxAmount, mMaxHoldQty))) == 1)
+                    Toast.makeText(mContext, R.string.trade_limit_max_amount_error_canbuy2, Toast.LENGTH_SHORT).show();
+                else
                     mBinding.etAmount.setText(String.valueOf(value));
-                } else {
-                    if (new BigDecimal(value).compareTo(new BigDecimal(mMaxHoldQty)) == 1)
-                        Toast.makeText(mContext, R.string.trade_limit_max_amount_error2, Toast.LENGTH_SHORT).show();
-                    else
-                        mBinding.etAmount.setText(String.valueOf(value));
-                }
             } else {
-                if (new BigDecimal(value).compareTo(new BigDecimal(mMaxOrderQty)) == 1)
-                    Toast.makeText(mContext, R.string.trade_limit_max_amount_error, Toast.LENGTH_SHORT).show();
+                if (new BigDecimal(value).compareTo(new BigDecimal(Math.min(mMaxAmount, mMaxOrderQty))) == 1)
+                    Toast.makeText(mContext, R.string.trade_limit_max_amount_error_canbuy2, Toast.LENGTH_SHORT).show();
                 else
                     mBinding.etAmount.setText(String.valueOf(value));
             }
