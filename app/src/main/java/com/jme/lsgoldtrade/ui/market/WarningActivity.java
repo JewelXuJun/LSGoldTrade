@@ -1,33 +1,35 @@
 package com.jme.lsgoldtrade.ui.market;
 
-import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
-import android.support.v7.app.AlertDialog;
+import android.os.Handler;
+import android.os.Message;
+import android.support.v4.content.ContextCompat;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
-import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
-import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.jme.common.network.DTRequest;
 import com.jme.common.network.Head;
-import com.jme.common.util.AppManager;
 import com.jme.common.util.BigDecimalUtil;
+import com.jme.common.util.NetWorkUtils;
 import com.jme.lsgoldtrade.R;
 import com.jme.lsgoldtrade.base.JMEBaseActivity;
 import com.jme.lsgoldtrade.config.AppConfig;
 import com.jme.lsgoldtrade.config.Constants;
 import com.jme.lsgoldtrade.databinding.ActivityWarningBinding;
+import com.jme.lsgoldtrade.domain.TenSpeedVo;
 import com.jme.lsgoldtrade.domain.WarnVo;
+import com.jme.lsgoldtrade.service.MarketService;
 import com.jme.lsgoldtrade.service.TradeService;
 import com.jme.lsgoldtrade.util.MarketUtil;
 
 import java.math.BigDecimal;
 import java.util.HashMap;
+import java.util.List;
 
 /**
  * 预警
@@ -38,15 +40,30 @@ public class WarningActivity extends JMEBaseActivity {
     private ActivityWarningBinding mBinding;
 
     private float mPriceMove = 0.00f;
-
-    private String type;
-    private String price;
-    private String range;
-    private String rate;
+    private String mContractID;
+    private String mLatestPrice;
     private String circle = "1";
     private String upPriceIsOpen = "0";
     private String lowPriceIsOpen = "0";
     private String id = "";
+    private boolean bFlag = false;
+
+    private Handler mHandler = new Handler() {
+        public void handleMessage(Message msg) {
+            switch (msg.what) {
+                case Constants.Msg.MSG_UARNING_PDATE_DATA:
+                    mHandler.removeMessages(Constants.Msg.MSG_UARNING_PDATE_DATA);
+
+                    getTenSpeedQuotes();
+
+                    mHandler.sendEmptyMessageDelayed(Constants.Msg.MSG_UARNING_PDATE_DATA, getTimeInterval());
+
+                    break;
+            }
+
+            super.handleMessage(msg);
+        }
+    };
 
     @Override
     protected int getContentViewId() {
@@ -57,31 +74,14 @@ public class WarningActivity extends JMEBaseActivity {
     protected void initView() {
         super.initView();
         mBinding = (ActivityWarningBinding) mBindingUtil;
-        type = getIntent().getStringExtra("type");
-        price = getIntent().getStringExtra("price");
-        range = getIntent().getStringExtra("range");
-        rate = getIntent().getStringExtra("rate");
+        mContractID = getIntent().getStringExtra("ContractID");
 
-        if ("Ag(T+D)".equals(type)) {
+        if ("Ag(T+D)".equals(mContractID))
             mPriceMove = new BigDecimal(100).divide(new BigDecimal(100)).floatValue();
-        } else {
+        else
             mPriceMove = new BigDecimal(1).divide(new BigDecimal(100)).floatValue();
-        }
 
-        mBinding.type.setText(type);
-        mBinding.price.setText(price);
-        mBinding.bili.setText(rate);
-        if (new BigDecimal(range).compareTo(new BigDecimal(0)) > 0) {
-            mBinding.price.setTextColor(getResources().getColor(R.color.common_font_increase));
-            mBinding.bili.setTextColor(getResources().getColor(R.color.common_font_increase));
-        } else if (new BigDecimal(range).compareTo(new BigDecimal(0)) == 0) {
-            mBinding.price.setTextColor(getResources().getColor(R.color.common_font_stable));
-            mBinding.bili.setTextColor(getResources().getColor(R.color.common_font_stable));
-        } else if (new BigDecimal(range).compareTo(new BigDecimal(0)) < 0) {
-            mBinding.price.setTextColor(getResources().getColor(R.color.common_font_decrease));
-            mBinding.bili.setTextColor(getResources().getColor(R.color.common_font_decrease));
-        }
-
+        mBinding.type.setText(mContractID);
     }
 
     @Override
@@ -95,10 +95,41 @@ public class WarningActivity extends JMEBaseActivity {
         getWarmFromNet();
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        bFlag = true;
+
+        getTenSpeedQuotes();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+
+        mHandler.removeMessages(Constants.Msg.MSG_UARNING_PDATE_DATA);
+    }
+
+    private long getTimeInterval() {
+        return NetWorkUtils.isWifiConnected(mContext) ? AppConfig.TimeInterval_WiFi : AppConfig.TimeInterval_NetWork;
+    }
+
+
     private void getWarmFromNet() {
         HashMap<String, String> params = new HashMap<>();
-        params.put("contractId", type);
+        params.put("contractId", mContractID);
         sendRequest(TradeService.getInstance().warnInfo, params, true);
+    }
+
+    private void getTenSpeedQuotes() {
+        if (TextUtils.isEmpty(mContractID))
+            return;
+
+        HashMap<String, String> params = new HashMap<>();
+        params.put("list", mContractID);
+
+        sendRequest(MarketService.getInstance().getTenSpeedQuotes, params, false, false, false);
     }
 
     @Override
@@ -314,12 +345,65 @@ public class WarningActivity extends JMEBaseActivity {
     @Override
     protected void DataReturn(DTRequest request, Head head, Object response) {
         super.DataReturn(request, head, response);
+
         switch (request.getApi().getName()) {
+            case "GetTenSpeedQuotes":
+                if (head.isSuccess()) {
+                    List<TenSpeedVo> list;
+
+                    try {
+                        list = (List<TenSpeedVo>) response;
+                    } catch (Exception e) {
+                        list = null;
+
+                        e.printStackTrace();
+                    }
+
+                    if (null == list || 0 == list.size())
+                        return;
+
+                    TenSpeedVo tenSpeedVo = list.get(0);
+
+                    if (null == tenSpeedVo)
+                        return;
+
+                    mLatestPrice = tenSpeedVo.getLatestPrice();
+                    String upDown = tenSpeedVo.getUpDown();
+                    int rateType;
+
+                    if (TextUtils.isEmpty(upDown))
+                        rateType = 0;
+                    else
+                        rateType = new BigDecimal(upDown).compareTo(new BigDecimal(0));
+
+                    mBinding.price.setText(mLatestPrice);
+                    mBinding.price.setTextColor(ContextCompat.getColor(mContext, MarketUtil.getMarketStateColor(rateType)));
+                    mBinding.bili.setText(MarketUtil.getMarketRateValue(rateType, tenSpeedVo.getUpDownRate()));
+                    mBinding.bili.setTextColor(ContextCompat.getColor(mContext, MarketUtil.getMarketStateColor(rateType)));
+
+                    String priceUp = mBinding.etCeilingPrice.getText().toString();
+                    String priceDown = mBinding.etFloorPrice.getText().toString();
+
+                    if (TextUtils.isEmpty(priceUp))
+                        mBinding.etCeilingPrice.setText(mLatestPrice);
+
+                    if (TextUtils.isEmpty(priceDown))
+                        mBinding.etFloorPrice.setText(mLatestPrice);
+                }
+
+                if (bFlag) {
+                    bFlag = false;
+
+                    mHandler.sendEmptyMessageDelayed(Constants.Msg.MSG_UARNING_PDATE_DATA, getTimeInterval());
+                }
+
+                break;
             case "SetWarn":
                 if (head.isSuccess()) {
                     showShortToast("设置成功");
                     finish();
                 }
+
                 break;
             case "WarnInfo":
                 if (head.isSuccess()) {
@@ -330,16 +414,17 @@ public class WarningActivity extends JMEBaseActivity {
                         warnVo = null;
                         e.printStackTrace();
                     }
+
                     if (warnVo == null) {
                         mBinding.cbCeiling.setChecked(false);
                         mBinding.cbFloor.setChecked(false);
-                        mBinding.etCeilingPrice.setText(price);
-                        mBinding.etFloorPrice.setText(price);
+
                         return;
                     }
 
                     setWarnData(warnVo);
                 }
+
                 break;
         }
     }
@@ -351,14 +436,14 @@ public class WarningActivity extends JMEBaseActivity {
             mBinding.etCeilingPrice.setText(BigDecimalUtil.formatMoney(new BigDecimal(warnVo.getPriceCeiling()).divide(new BigDecimal(100)).toPlainString()));
         } else {
             mBinding.cbCeiling.setChecked(false);
-            mBinding.etCeilingPrice.setText(price);
+            mBinding.etCeilingPrice.setText(mLatestPrice);
         }
         if (warnVo.getFloorFlag().equals("1")) {
             mBinding.cbFloor.setChecked(true);
             mBinding.etFloorPrice.setText(BigDecimalUtil.formatMoney(new BigDecimal(warnVo.getPriceFloor()).divide(new BigDecimal(100)).toPlainString()));
         } else {
             mBinding.cbFloor.setChecked(false);
-            mBinding.etFloorPrice.setText(price);
+            mBinding.etFloorPrice.setText(mLatestPrice);
         }
         switch (warnVo.getCycle()) {
             case "1":
@@ -392,39 +477,13 @@ public class WarningActivity extends JMEBaseActivity {
         }
         HashMap<String, String> params = new HashMap<>();
         params.put("id", id);
-        params.put("contractId", type);
+        params.put("contractId", mContractID);
         params.put("priceCeiling", BigDecimalUtil.formatStrNumber(new BigDecimal(upPrice).multiply(new BigDecimal(100)).toPlainString()));
         params.put("priceFloor", BigDecimalUtil.formatStrNumber(new BigDecimal(lowPrice).multiply(new BigDecimal(100)).toPlainString()));
         params.put("ceilingFlag", upPriceIsOpen);
         params.put("floorFlag", lowPriceIsOpen);
         params.put("cycle", circle);
         sendRequest(TradeService.getInstance().setWarn, params, true);
-    }
-
-    private void tipUser() {
-        View v = View.inflate(this, R.layout.yujing_dialog, null);
-        final Dialog dialog = new AlertDialog.Builder(this, R.style.dialog).create();
-        dialog.show();
-        dialog.getWindow().setContentView(v);
-        TextView name = (TextView) v.findViewById(R.id.name);
-        TextView price = (TextView) v.findViewById(R.id.price);
-        TextView upPrice = (TextView) v.findViewById(R.id.upPrice);
-        TextView details = (TextView) v.findViewById(R.id.details);
-        TextView ikown = (TextView) v.findViewById(R.id.ikown);
-        dialog.setCancelable(true);
-        details.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialog.dismiss();
-                AppManager.getAppManager().finishActivity();
-            }
-        });
-        ikown.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialog.dismiss();
-            }
-        });
     }
 
     private void hiddenKeyBoard() {

@@ -46,7 +46,7 @@
 
     <!-- CustomCheckBox theme -->
     <style name="CustomYuJingTheme" parent="@android:style/Widget.CompoundButton.CheckBox">
-        <item name="android:button">@drawable/yujing_choose</item>
+        <item name="android:button">@drawable/ic_warning_choose</item>
     </style>
 
 </resources>

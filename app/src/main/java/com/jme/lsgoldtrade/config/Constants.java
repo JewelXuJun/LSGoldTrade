@@ -131,6 +131,7 @@ public class Constants {
         public static final int MSG_BING_ACCOUNT_SUCCESS = 14;
         public static final int MSG_JUDGEMENT_UPDATE_DATA = 15;
         public static final int MSG_JUDGEMENT_RELOAD_DATA = 16;
+        public static final int MSG_UARNING_PDATE_DATA = 17;
 
     }
 

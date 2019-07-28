@@ -993,10 +993,7 @@ public class MarketDetailActivity extends JMEBaseActivity implements FChart.OnPr
 
                 ARouter.getInstance()
                         .build(Constants.ARouterUriConst.WARNING)
-                        .withString("type", MarketUtil.getContractCode(mContractId))
-                        .withString("price", price)
-                        .withString("range", range)
-                        .withString("rate", rate)
+                        .withString("ContractID", MarketUtil.getContractCode(mContractId))
                         .navigation();
             }
         }
