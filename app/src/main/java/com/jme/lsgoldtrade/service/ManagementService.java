@@ -11,8 +11,8 @@ import com.jme.lsgoldtrade.domain.QuestionVo;
 import com.jme.lsgoldtrade.domain.BannerVo;
 import com.jme.lsgoldtrade.domain.ChannelVo;
 import com.jme.lsgoldtrade.domain.CustomerServiceVo;
-import com.jme.lsgoldtrade.domain.FenXiShiListVo;
-import com.jme.lsgoldtrade.domain.FenXiShiVo;
+import com.jme.lsgoldtrade.domain.MarketJudgmentListVo;
+import com.jme.lsgoldtrade.domain.AnalystVo;
 import com.jme.lsgoldtrade.domain.TradingBoxHistoryItemVo;
 import com.jme.lsgoldtrade.domain.InfoVo;
 import com.jme.lsgoldtrade.domain.SubscribeStateVo;
@@ -184,17 +184,17 @@ public class ManagementService extends IService<ManagementApi> {
         }
     };
 
-    public API fenxishi = new API<List<FenXiShiVo>>("FenXiShiList") {
+    public API analystList = new API<List<AnalystVo>>("AnalystList") {
         @Override
         public Call<DTResponse> request(HashMap<String, String> params) {
-            return mApi.fenxishi(params);
+            return mApi.analystList(params);
         }
     };
 
-    public API fenxishiList = new API<FenXiShiListVo>("FenXiList") {
+    public API marketJudgeList = new API<MarketJudgmentListVo>("MarketJudgeList") {
         @Override
         public Call<DTResponse> request(HashMap<String, String> params) {
-            return mApi.fenxishiList(params);
+            return mApi.marketJudgeList(params);
         }
     };
 

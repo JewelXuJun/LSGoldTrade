@@ -53,6 +53,9 @@
     <string name="market_equal_more">平多</string>
     <string name="market_equal_empty">平空</string>
     <string name="market_warning">预警</string>
+    <string name="market_judgment">行情研判</string>
+    <string name="market_judgment_result">研判结果</string>
+    <string name="market_interpret">详细解读</string>
 
     <!-- Trade -->
     <string name="trade_hold_position">持仓</string>

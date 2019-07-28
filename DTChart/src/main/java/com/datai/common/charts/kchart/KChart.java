@@ -66,6 +66,7 @@ public class KChart extends LinearLayout {
     private OnKChartListener mKChartListener;
     private boolean bDefaultScale = true;
     private boolean isValueSelected = false;
+    private boolean isShowKChart = true;
 
     public KChart(Context context) {
         this(context, null);
@@ -199,7 +200,10 @@ public class KChart extends LinearLayout {
         float visibleCount = oriCount / oriScaleX;
 
         mKChartData.loadNewestData(list);
-        setCandleChartData();
+        if (isShowKChart)
+            setCandleChartData();
+        else
+            setFirstBOLLChartData();
         setSecondChartData();
 
         int newCount = mKChartData.getEntryCount();
@@ -395,8 +399,6 @@ public class KChart extends LinearLayout {
         });
     }
 
-    private boolean isInit = false;
-
     private void setChartGestureListener() {
         mFirstChart.setOnChartGestureListener(new OnChartGestureListener() {
             @Override
@@ -430,33 +432,41 @@ public class KChart extends LinearLayout {
                         mKChartListener.onChartSingleTapped(me);
                     }
 
-                    if (isInit == false) {
-                        isInit = true;
+                    if (isShowKChart) {
+                        isShowKChart = false;
+
                         HashMap<String, Object> entryData = mKChartData.getEntryData(mKChartData.getEntryCount() - 1);
-                        tv_first_chart.setText(mDescriptor.getDetail(mMAIndicator, entryData, false, true));
-                        setCandleChartData();
-                    } else {
-                        isInit = false;
-                        switchIndicator(mShowIndicators[6]);
+
+                        tv_first_chart.setText(mDescriptor.getDetail(mKChartData.getIndicator(Indicator.Type.BOLL), entryData, false, true));
+
                         setFirstBOLLChartData();
+                    } else {
+                        isShowKChart = true;
 
                         HashMap<String, Object> entryData = mKChartData.getEntryData(mKChartData.getEntryCount() - 1);
+
                         tv_first_chart.setText(mDescriptor.getDetail(mMAIndicator, entryData, false, true));
 
-                        setTextOnUnHighlight();
+                        setCandleChartData();
                     }
                 } else {
                     //点击chart2，切换到下一个item
                     Indicator.Type type = mSelIndicator.getType();
+
                     int index = -1;
+
                     for (int i = 0; i < mShowIndicators.length; i++) {
                         if (type == mShowIndicators[i]) {
                             index = i;
                             break;
                         }
                     }
-                    if (index == -1) return;
+
+                    if (index == -1)
+                        return;
+
                     index = (index + 1) % mShowIndicators.length;
+
                     switchIndicator(mShowIndicators[index]);
                     setSecondChartData();
                 }
@@ -484,7 +494,10 @@ public class KChart extends LinearLayout {
             return;
 
         HashMap<String, Object> entryData = mKChartData.getEntryData(mKChartData.getEntryCount() - 1);
-        tv_first_chart.setText(mDescriptor.getDetail(mMAIndicator, entryData, false, true));
+        if (isShowKChart)
+            tv_first_chart.setText(mDescriptor.getDetail(mMAIndicator, entryData, false, true));
+        else
+            tv_first_chart.setText(mDescriptor.getDetail(mKChartData.getIndicator(Indicator.Type.BOLL), entryData, false, true));
         tv_second_chart.setText(mDescriptor.getDetail(mSelIndicator, entryData, false, true));
     }
 
@@ -631,11 +644,13 @@ public class KChart extends LinearLayout {
 
     //BOLL Chart
     private void setFirstBOLLChartData() {
-        String lineKeys[] = mSelIndicator.getKeys();
-        List<ArrayList> lists = mKChartData.getEntryList(mSelIndicator);
+        Indicator indicator = mKChartData.getIndicator(Indicator.Type.BOLL);
+
+        String lineKeys[] = indicator.getKeys();
+        List<ArrayList> lists = mKChartData.getEntryList(indicator);
 
         //Lines
-        ArrayList<LineDataSet> lineDateSet = new ArrayList<LineDataSet>();
+        ArrayList<LineDataSet> lineDateSet = new ArrayList<>();
         for (int i = 0; i < lineKeys.length; i++) {
             LineDataSet set = new LineDataSet(lists.get(i), lineKeys[i]);
             mKConfig.setCommonLineDataSet(set);

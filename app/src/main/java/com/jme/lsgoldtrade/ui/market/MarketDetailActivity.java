@@ -46,7 +46,6 @@ import com.jme.lsgoldtrade.domain.TenSpeedVo;
 import com.jme.lsgoldtrade.service.ManagementService;
 import com.jme.lsgoldtrade.service.MarketService;
 import com.jme.lsgoldtrade.service.TradeService;
-import com.jme.lsgoldtrade.ui.trade.OrderPopUpWindow;
 import com.jme.lsgoldtrade.ui.trade.TradeMessagePopUpWindow;
 import com.jme.lsgoldtrade.util.MarketUtil;
 import com.jme.lsgoldtrade.view.ConfirmPopupwindow;
@@ -71,13 +70,12 @@ public class MarketDetailActivity extends JMEBaseActivity implements FChart.OnPr
     private TenSpeedVo mTenSpeedVo;
     private AccountVo mAccountVo;
     private ContractInfoVo mContractInfoVo;
-    private OrderPopUpWindow mWindow;
     private MarketTradePopupWindow mMarketTradePopupWindow;
+    private TradeMessagePopUpWindow mTradeMessagePopUpWindow;
     private ConfirmPopupwindow mConfirmPopupwindow;
     private Chart mChart;
     private TChart mTChart;
     private KChart mKChart;
-    private Subscription mRxbus;
 
     private static final int NONE = 0;
     private static final int INIT = 1;
@@ -99,7 +97,7 @@ public class MarketDetailActivity extends JMEBaseActivity implements FChart.OnPr
     private int mOcFlag = 0;
     private String[] mContractIdList;
 
-    private TradeMessagePopUpWindow mTradeMessagePopUpWindow;
+    private Subscription mRxbus;
 
     private Handler mHandler = new Handler() {
         public void handleMessage(Message msg) {
@@ -169,10 +167,6 @@ public class MarketDetailActivity extends JMEBaseActivity implements FChart.OnPr
     @Override
     protected void initData(Bundle savedInstanceState) {
         super.initData(savedInstanceState);
-
-        mWindow = new OrderPopUpWindow(this);
-        mWindow.setOutsideTouchable(true);
-        mWindow.setFocusable(true);
     }
 
     @Override
@@ -589,19 +583,6 @@ public class MarketDetailActivity extends JMEBaseActivity implements FChart.OnPr
         mBinding.tvLow.setTextColor(ContextCompat.getColor(this, MarketUtil.getMarketStateColor(new BigDecimal(lowestPrice).compareTo(new BigDecimal(preClose)))));
     }
 
-    private void showPopupWindow(String contractID, String price, String amount, String bsFlag, String ocFlag) {
-        if (null == mWindow)
-            return;
-
-        mWindow.setData(mUser.getAccount(), contractID, price, amount,
-                bsFlag, ocFlag, (view) -> {
-                    limitOrder(contractID, price, amount, bsFlag, ocFlag);
-
-                    mWindow.dismiss();
-                });
-        mWindow.showAtLocation(mBinding.tvHigh, Gravity.BOTTOM, 0, 0);
-    }
-
     private void getTenSpeedQuotes(boolean enable) {
         if (TextUtils.isEmpty(mContractId))
             return;
@@ -918,8 +899,6 @@ public class MarketDetailActivity extends JMEBaseActivity implements FChart.OnPr
                                 (view) -> ARouter.getInstance().build(Constants.ARouterUriConst.CURRENTENTRUST).navigation());
                         mConfirmPopupwindow.showAtLocation(mBinding.tvHigh, Gravity.CENTER, 0, 0);
                     }
-
-                    RxBus.getInstance().post(Constants.RxBusConst.RXBUS_DECLARATIONFORM_UPDATE, null);
                 } else {
                     if (head.getMsg().contains("可用资金不足")) {
                         if (null != mConfirmPopupwindow && !mConfirmPopupwindow.isShowing()) {

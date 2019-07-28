@@ -1,6 +1,6 @@
 package com.jme.lsgoldtrade.domain;
 
-public class FenXiShiVo {
+public class AnalystVo {
 
     /**
      * id : 1
@@ -12,10 +12,15 @@ public class FenXiShiVo {
      */
 
     private String id;
+
     private String name;
+
     private String pic;
+
     private String createTime;
+
     private String updateTime;
+
     private String sex;
 
     public String getId() {

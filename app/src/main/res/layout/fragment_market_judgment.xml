@@ -11,310 +11,377 @@
 
     <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:fillViewport="true"
+        android:scrollbars="none">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical"
-            >
+            android:background="@color/white"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/height_item_normal"
+                android:background="@color/color_tabhost"
+                android:gravity="center">
+
+                <RelativeLayout
+                    android:id="@+id/layout_previous"
+                    android:layout_width="@dimen/common_item_height_small"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentLeft="true">
+
+                    <ImageView
+                        android:id="@+id/img_previous"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:onClick="@{() -> handlers.onClickLeft()}"
+                        android:padding="@dimen/common_area_margin_tiny"
+                        android:src="@mipmap/ic_arrow_left"
+                        android:visibility="gone" />
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/layout_next"
+                    android:layout_width="@dimen/common_item_height_small"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentRight="true">
+
+                    <ImageView
+                        android:id="@+id/img_next"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_alignParentRight="true"
+                        android:onClick="@{() -> handlers.onClickRight()}"
+                        android:padding="@dimen/common_area_margin_tiny"
+                        android:src="@mipmap/ic_arrow_right"
+                        android:visibility="gone" />
+
+                </RelativeLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_toLeftOf="@+id/layout_next"
+                    android:layout_toRightOf="@+id/layout_previous"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:onClick="@{() -> handlers.onClickMonday()}"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/tv_monday_week"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/black_deep"
+                            android:textSize="@dimen/sp_15" />
+
+                        <TextView
+                            android:id="@+id/tv_monday_data"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/margin_tiny"
+                            android:textColor="@color/black_deep"
+                            android:textSize="@dimen/sp_12" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:onClick="@{() -> handlers.onClickTuesday()}"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/tv_tuesday_week"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/black_deep"
+                            android:textSize="@dimen/sp_15" />
+
+                        <TextView
+                            android:id="@+id/tv_tuesday_data"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/margin_tiny"
+                            android:textColor="@color/black_deep"
+                            android:textSize="@dimen/sp_12" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:onClick="@{() -> handlers.onClickWednesday()}"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/tv_wednesday_week"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/black_deep"
+                            android:textSize="@dimen/sp_15" />
+
+                        <TextView
+                            android:id="@+id/tv_wednesday_data"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/margin_tiny"
+                            android:textColor="@color/black_deep"
+                            android:textSize="@dimen/sp_12" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:onClick="@{() -> handlers.onClickThursday()}"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/tv_thursday_week"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/black_deep"
+                            android:textSize="@dimen/sp_15" />
+
+                        <TextView
+                            android:id="@+id/tv_thursday_data"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/margin_tiny"
+                            android:textColor="@color/black_deep"
+                            android:textSize="@dimen/sp_12" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:onClick="@{() -> handlers.onClickFriday()}"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/tv_friday_week"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/black_deep"
+                            android:textSize="@dimen/sp_15" />
+
+                        <TextView
+                            android:id="@+id/tv_friday_data"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/margin_tiny"
+                            android:textColor="@color/black_deep"
+                            android:textSize="@dimen/sp_12" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </RelativeLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:orientation="horizontal"
-                android:gravity="center"
-                android:background="@color/color_bg_img"
-                >
-
-                <ImageView
-                    android:id="@+id/left"
-                    android:layout_width="30dp"
-                    android:layout_height="match_parent"
-                    android:src="@mipmap/ic_arrow_left"
-                    android:onClick="@{() -> handlers.onClickLeft()}"
-                    />
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/monday"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:text="周一"
-                    android:textSize="@dimen/sp_15"
-                    android:textColor="@color/black_deep"
-                    android:gravity="center"
-                    android:onClick="@{() -> handlers.onClickMonday()}"
-                    />
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="@dimen/margin_tiny"
+                    android:layout_marginBottom="@dimen/margin_tiny"
+                    android:text="@string/market_judgment"
+                    android:textColor="@color/black_pale"
+                    android:textSize="@dimen/sp_14" />
 
-                <TextView
-                    android:id="@+id/tuesday"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:text="周二"
-                    android:textSize="@dimen/sp_15"
-                    android:textColor="@color/black_deep"
-                    android:gravity="center"
-                    android:onClick="@{() -> handlers.onClickTuesday()}"
-                    />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/common_item_height_normal"
+                    android:layout_marginLeft="@dimen/margin_normal"
+                    android:layout_marginRight="@dimen/margin_normal"
+                    android:background="@drawable/bg_white_no_corner"
+                    android:orientation="horizontal">
 
-                <TextView
-                    android:id="@+id/wednesday"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:text="周三"
-                    android:textSize="@dimen/sp_15"
-                    android:textColor="@color/black_deep"
-                    android:gravity="center"
-                    android:onClick="@{() -> handlers.onClickWednesday()}"
-                    />
+                    <ImageView
+                        android:id="@+id/img_monday_judgment"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_weight="1" />
 
-                <TextView
-                    android:id="@+id/thursday"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:text="周四"
-                    android:textSize="@dimen/sp_15"
-                    android:textColor="@color/black_deep"
-                    android:gravity="center"
-                    android:onClick="@{() -> handlers.onClickThursday()}"
-                    />
-                <TextView
-                    android:id="@+id/friday"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:text="周五"
-                    android:textSize="@dimen/sp_15"
-                    android:textColor="@color/black_deep"
-                    android:gravity="center"
-                    android:onClick="@{() -> handlers.onClickFriday()}"
-                    />
+                    <include layout="@layout/item_line_horizontal_list" />
 
-                <ImageView
-                    android:id="@+id/right"
-                    android:layout_width="30dp"
-                    android:layout_height="match_parent"
-                    android:src="@mipmap/ic_arrow_right"
-                    android:onClick="@{() -> handlers.onClickRight()}"
-                    />
+                    <ImageView
+                        android:id="@+id/img_tuesday_judgment"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_weight="1" />
+
+                    <include layout="@layout/item_line_horizontal_list" />
+
+                    <ImageView
+                        android:id="@+id/img_wednesday_judgment"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_weight="1" />
+
+                    <include layout="@layout/item_line_horizontal_list" />
+
+                    <ImageView
+                        android:id="@+id/img_thursday_judgment"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_weight="1" />
+
+                    <include layout="@layout/item_line_horizontal_list" />
+
+                    <ImageView
+                        android:id="@+id/img_friday_judgment"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_weight="1" />
+
+                </LinearLayout>
 
             </LinearLayout>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="行情研判"
-                android:textSize="@dimen/sp_12"
-                android:textColor="@color/black_pale"
-                android:layout_gravity="center"
-                android:layout_marginTop="2dp"
-                android:layout_marginBottom="2dp"
-                />
-
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:orientation="horizontal"
-                android:background="@drawable/hangqing_biankuang"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp"
-                >
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
 
-                <ImageView
-                    android:id="@+id/monday_yanpan"
-                    android:layout_width="0dp"
+                <TextView
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
                     android:layout_gravity="center"
-                    />
+                    android:layout_marginTop="@dimen/margin_tiny"
+                    android:layout_marginBottom="@dimen/margin_tiny"
+                    android:text="@string/market_judgment_result"
+                    android:textColor="@color/black_pale"
+                    android:textSize="@dimen/sp_14" />
 
-                <View
-                    android:layout_width="2dp"
-                    android:layout_height="match_parent"
-                    android:background="@color/color_bg_img"
-                    />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/common_item_height_normal"
+                    android:layout_marginLeft="@dimen/margin_normal"
+                    android:layout_marginRight="@dimen/margin_normal"
+                    android:background="@drawable/bg_white_no_corner"
+                    android:orientation="horizontal">
 
-                <ImageView
-                    android:id="@+id/tuesday_yanpan"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:layout_gravity="center"
-                    />
+                    <ImageView
+                        android:id="@+id/img_monday_judgment_result"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_weight="1" />
 
-                <View
-                    android:layout_width="2dp"
-                    android:layout_height="match_parent"
-                    android:background="@color/color_bg_img"
-                    />
+                    <include layout="@layout/item_line_horizontal_list" />
 
-                <ImageView
-                    android:id="@+id/wednesday_panyan"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:layout_gravity="center"
-                    />
+                    <ImageView
+                        android:id="@+id/img_tuesday__judgment_result"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_weight="1" />
 
-                <View
-                    android:layout_width="2dp"
-                    android:layout_height="match_parent"
-                    android:background="@color/color_bg_img"
-                    />
+                    <include layout="@layout/item_line_horizontal_list" />
 
-                <ImageView
-                    android:id="@+id/thursday_yanpan"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:layout_gravity="center"
-                    />
+                    <ImageView
+                        android:id="@+id/img_wednesday_judgment_result"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_weight="1" />
 
-                <View
-                    android:layout_width="2dp"
-                    android:layout_height="match_parent"
-                    android:background="@color/color_bg_img"
-                    />
+                    <include layout="@layout/item_line_horizontal_list" />
 
-                <ImageView
-                    android:id="@+id/friday_yanpan"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:layout_gravity="center"
-                    />
+                    <ImageView
+                        android:id="@+id/img_thursday_judgment_result"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_weight="1" />
+
+                    <include layout="@layout/item_line_horizontal_list" />
+
+                    <ImageView
+                        android:id="@+id/img_friday_judgment_result"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_weight="1" />
+
+                </LinearLayout>
 
             </LinearLayout>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="研判结果"
-                android:textSize="@dimen/sp_12"
-                android:textColor="@color/black_pale"
-                android:layout_gravity="center"
-                android:layout_marginTop="2dp"
-                android:layout_marginBottom="2dp"
-                />
-
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:orientation="horizontal"
-                android:background="@drawable/hangqing_biankuang"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp"
-                >
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingBottom="@dimen/common_page_padding">
 
-                <ImageView
-                    android:id="@+id/monday_jieguo"
-                    android:layout_width="0dp"
+                <TextView
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
                     android:layout_gravity="center"
-                    />
+                    android:layout_marginTop="@dimen/margin_tiny"
+                    android:layout_marginBottom="@dimen/margin_tiny"
+                    android:text="@string/market_interpret"
+                    android:textColor="@color/black_pale"
+                    android:textSize="@dimen/sp_14" />
 
-                <View
-                    android:layout_width="2dp"
-                    android:layout_height="match_parent"
-                    android:background="@color/color_bg_img"
-                    />
-
-                <ImageView
-                    android:id="@+id/tuesday_jieguo"
-                    android:layout_width="0dp"
+                <TextView
+                    android:id="@+id/tv_interpret"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:layout_gravity="center"
-                    />
-
-                <View
-                    android:layout_width="2dp"
-                    android:layout_height="match_parent"
-                    android:background="@color/color_bg_img"
-                    />
-
-                <ImageView
-                    android:id="@+id/wednesday_jieguo"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:layout_gravity="center"
-                    />
-
-                <View
-                    android:layout_width="2dp"
-                    android:layout_height="match_parent"
-                    android:background="@color/color_bg_img"
-                    />
-
-                <ImageView
-                    android:id="@+id/thursday_jieguo"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:layout_gravity="center"
-                    />
-
-                <View
-                    android:layout_width="2dp"
-                    android:layout_height="match_parent"
-                    android:background="@color/color_bg_img"
-                    />
-
-                <ImageView
-                    android:id="@+id/friday_jieguo"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:layout_gravity="center"
-                    />
+                    android:layout_marginLeft="@dimen/margin_normal"
+                    android:layout_marginRight="@dimen/margin_normal"
+                    android:background="@drawable/bg_white_no_corner"
+                    android:lineSpacingExtra="@dimen/lineSpacingExtra_normal"
+                    android:padding="@dimen/common_page_padding"
+                    android:textColor="@color/color_text_normal"
+                    android:textSize="@dimen/sp_15" />
 
             </LinearLayout>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="详细解读"
-                android:textSize="@dimen/sp_12"
-                android:textColor="@color/black_pale"
-                android:layout_gravity="center"
-                android:layout_marginTop="2dp"
-                android:layout_marginBottom="2dp"
-                />
-
-            <TextView
-                android:id="@+id/fenxi"
+            <View
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textSize="@dimen/sp_15"
-                android:textColor="@color/color_text_normal"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp"
-                android:lineSpacingExtra="3dp"
-                android:padding="5dp"
-                android:background="@drawable/hangqing_biankuang"
-                />
-
-            <!--<include layout="@layout/item_line_5" />-->
+                android:layout_height="@dimen/common_area_margin_tiny"
+                android:background="@color/color_bg_img" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/common_page_margin"
-                android:layout_marginBottom="@dimen/common_area_margin_big">
+                android:layout_marginBottom="@dimen/common_page_margin">
 
                 <com.datai.common.charts.kchart.KChart
-                    android:id="@+id/mKChart"
+                    android:id="@+id/kChart"
                     android:layout_width="match_parent"
-                    android:layout_height="400dp"
-                    android:layout_marginLeft="2dp"
-                    android:layout_marginRight="2dp"
-                    />
+                    android:layout_height="@dimen/height_market" />
 
             </LinearLayout>
 

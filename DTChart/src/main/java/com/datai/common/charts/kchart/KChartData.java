@@ -67,6 +67,19 @@ public class KChartData {
         return indicatorMA;
     }
 
+    public Indicator setBOLLRanks(MA.Rank[] ranks) {
+        if (ranks == null || ranks.length <= 0)
+            return null;
+
+        removeIndicator(Indicator.Type.MA);
+
+        this.mMARanks = ranks;
+        Indicator indicatorMA = new MA(mMARanks);
+        mIndicatorList.add(indicatorMA);
+
+        return indicatorMA;
+    }
+
     public void setUnit(KData.Unit unit) {
         mKData.setUnit(unit);
     }

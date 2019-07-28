@@ -35,6 +35,7 @@
     <dimen name="height_buy_item">56dp</dimen>
     <dimen name="height_order_item">72dp</dimen>
     <dimen name="height_order_btn">28dp</dimen>
+    <dimen name="height_market">300dp</dimen>
 
     <dimen name="width_main_page_info_img">100dp</dimen>
     <dimen name="width_market_limit">100dp</dimen>
