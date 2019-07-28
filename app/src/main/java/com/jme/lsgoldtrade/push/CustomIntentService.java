@@ -19,7 +19,7 @@ import com.igexin.sdk.message.GTCmdMessage;
 import com.igexin.sdk.message.GTNotificationMessage;
 import com.igexin.sdk.message.GTTransmitMessage;
 import com.jme.lsgoldtrade.R;
-import com.jme.lsgoldtrade.ui.main.MainActivity;
+import com.jme.lsgoldtrade.ui.market.MarketDetailActivity;
 import java.io.Serializable;
 
 /**
@@ -100,15 +100,9 @@ public class CustomIntentService extends GTIntentService {
         Intent intent = null;
         PendingIntent pendingIntent = null;
 
-//        if (!TextUtils.isEmpty(message.getUrl())) {
-//            intent = new Intent(mContext, RfinexWebView.class);
-//            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
-//            intent.putExtra("title", message.getTitle());
-//            intent.putExtra("url", message.getUrl());
-//        } else {
-            intent = new Intent(mContext, MainActivity.class);
-            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
-//        }
+        intent = new Intent(mContext, MarketDetailActivity.class);
+        intent.putExtra("ContractId", message.getContractId());
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
 
         pendingIntent = PendingIntent.getActivity(mContext, notificationId, intent, PendingIntent.FLAG_UPDATE_CURRENT);
 
