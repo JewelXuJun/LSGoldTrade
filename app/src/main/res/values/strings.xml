@@ -53,6 +53,9 @@
     <string name="market_equal_more">平多</string>
     <string name="market_equal_empty">平空</string>
     <string name="market_warning">预警</string>
+    <string name="market_judgment">行情研判</string>
+    <string name="market_judgment_result">研判结果</string>
+    <string name="market_interpret">详细解读</string>
 
     <!-- Trade -->
     <string name="trade_hold_position">持仓</string>
@@ -286,6 +289,7 @@
     <string name="personal_fast_management_complete">完成</string>
     <string name="personal_fast_management_added">已添加的快捷入口</string>
     <string name="personal_fast_management_not_added">未添加的快捷入口</string>
+    <string name="personal_fast_management_length_less">最少保留4个</string>
     <string name="personal_fast_management_length">最多可添加7个</string>
     <string name="personal_fast_management_edit_success">编辑成功</string>
     <string name="personal_fast_management_more">更多</string>

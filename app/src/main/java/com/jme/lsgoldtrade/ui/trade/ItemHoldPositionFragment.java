@@ -286,19 +286,6 @@ public class ItemHoldPositionFragment extends JMEBaseFragment implements BaseQui
         sendRequest(TradeService.getInstance().position, params, false, false, false);
     }
 
-    private void limitOrder(String contractId, String price, String amount, String bsFlag, String ocFlag) {
-        HashMap<String, String> params = new HashMap<>();
-        params.put("contractId", contractId);
-        params.put("accountId", mUser.getAccountID());
-        params.put("entrustPrice", String.valueOf(new BigDecimal(price).multiply(new BigDecimal(100)).longValue()));
-        params.put("entrustNumber", amount);
-        params.put("bsFlag", bsFlag);
-        params.put("ocFlag", ocFlag);
-        params.put("tradingType", "0");
-
-        sendRequest(TradeService.getInstance().limitOrder, params, true);
-    }
-
     @Override
     protected void DataReturn(DTRequest request, Head head, Object response) {
         super.DataReturn(request, head, response);

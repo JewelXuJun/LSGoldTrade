@@ -48,11 +48,12 @@ public class DealAdapter extends BaseQuickAdapter<DealPageVo.DealBean, BaseViewH
 
         helper.setText(R.id.tv_date, date)
                 .setText(R.id.tv_contract, item.getContractId())
-                .setText(R.id.tv_time,  TextUtils.isEmpty(time) ? "" : time.replace(".", ":"))
+                .setText(R.id.tv_time, TextUtils.isEmpty(time) ? "" : time.replace(".", ":"))
                 .setText(R.id.tv_type, MarketUtil.getTradeDirection(bsFlag) + MarketUtil.getOCState(item.getOcFlag()))
                 .setTextColor(R.id.tv_type, ContextCompat.getColor(mContext, MarketUtil.getTradeDirectionColor(bsFlag)))
                 .setText(R.id.tv_amount, String.valueOf(item.getMatchHand()))
                 .setText(R.id.tv_price, MarketUtil.decimalFormatMoney(item.getMatchPriceStr()))
+                .setTextColor(R.id.tv_price, ContextCompat.getColor(mContext, MarketUtil.getTradeDirectionColor(bsFlag)))
                 .setText(R.id.tv_turn_volume, MarketUtil.decimalFormatMoney(item.getAmountStr()));
     }
 }

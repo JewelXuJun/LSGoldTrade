@@ -129,6 +129,8 @@ public class Constants {
         public static final int MSG_TRADE_POSITION_UPDATE_ACCOUNT_DATA = 12;
         public static final int MSG_DECLARATIONFORM_POSITION_UPDATE_ACCOUNT_DATA = 13;
         public static final int MSG_BING_ACCOUNT_SUCCESS = 14;
+        public static final int MSG_JUDGEMENT_UPDATE_DATA = 15;
+        public static final int MSG_JUDGEMENT_RELOAD_DATA = 16;
 
     }
 

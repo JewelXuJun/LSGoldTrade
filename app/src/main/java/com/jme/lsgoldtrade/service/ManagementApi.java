@@ -59,10 +59,10 @@ public interface ManagementApi {
     Call<DTResponse> tradeBoxHistoryInfo(@QueryMap Map<String, String> map);
 
     @GET("/tjsmanage/infoapi/v1/android/marketJudge/analystList")
-    Call<DTResponse> fenxishi(@QueryMap Map<String, String> map);
+    Call<DTResponse> analystList(@QueryMap Map<String, String> map);
 
     @GET("/tjsmanage/infoapi/v1/android/marketJudge/list")
-    Call<DTResponse> fenxishiList(@QueryMap Map<String, String> map);
+    Call<DTResponse> marketJudgeList(@QueryMap Map<String, String> map);
 
     @GET("/tjsmanage/infoapi/v1/android/getListExt")
     Call<DTResponse> getListExt(@QueryMap Map<String, String> map);

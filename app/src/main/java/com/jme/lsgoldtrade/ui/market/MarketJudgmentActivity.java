@@ -18,11 +18,16 @@ import com.jme.lsgoldtrade.base.JMEBaseActivity;
 import com.jme.lsgoldtrade.config.AppConfig;
 import com.jme.lsgoldtrade.config.Constants;
 import com.jme.lsgoldtrade.databinding.ActivityMarketJudgmentBinding;
-import com.jme.lsgoldtrade.domain.FenXiShiVo;
+import com.jme.lsgoldtrade.domain.AccountVo;
+import com.jme.lsgoldtrade.domain.AnalystVo;
+import com.jme.lsgoldtrade.domain.ContractInfoVo;
+import com.jme.lsgoldtrade.domain.PositionPageVo;
+import com.jme.lsgoldtrade.domain.PositionVo;
 import com.jme.lsgoldtrade.domain.TenSpeedVo;
 import com.jme.lsgoldtrade.service.ManagementService;
-import com.jme.lsgoldtrade.service.MarketService;
 import com.jme.lsgoldtrade.service.TradeService;
+import com.jme.lsgoldtrade.ui.trade.TradeMessagePopUpWindow;
+import com.jme.lsgoldtrade.view.ConfirmPopupwindow;
 import com.jme.lsgoldtrade.view.EveningUpPopupWindow;
 
 import java.math.BigDecimal;
@@ -34,29 +39,31 @@ import rx.Subscription;
 
 /**
  * 行情研判
- * 展示30分钟Au(T+D)
  */
 @Route(path = Constants.ARouterUriConst.MARKETJUDGMENT)
 public class MarketJudgmentActivity extends JMEBaseActivity {
 
     private ActivityMarketJudgmentBinding mBinding;
 
-    private List<Fragment> fragmentList = new ArrayList<>();
-
+    private List<AnalystVo> mAnalystVoList;
     private List<String> mTabTitles = new ArrayList<>();
+    private List<MarketJudgmentFragment> mFragmentList = new ArrayList<>();
 
-    private MarketJudgmentFragment hangQingYanPanFragment;
+    private String mContractID;
+    private int mBsFlag = 0;
+    private int mOcFlag = 0;
+
+    private ContractInfoVo mContractInfoVo;
+    private TenSpeedVo mTenSpeedVo;
+    private AccountVo mAccountVo;
+
+    private MarketJudgmentPagerAdapter mAdapter;
+    private EveningUpPopupWindow mEveningUpPopupWindow;
+    private TradeMessagePopUpWindow mTradeMessagePopUpWindow;
+    private MarketTradePopupWindow mMarketTradePopupWindow;
+    private ConfirmPopupwindow mConfirmPopupwindow;
 
     private Subscription mRxbus;
-
-    private HangQingYanPanAdapter adapter;
-
-    private List<FenXiShiVo> fenXiShiVoList;
-
-    private EveningUpPopupWindow mWindow;
-
-    private String latestPrice;
-    private String value;
 
     @Override
     protected int getContentViewId() {
@@ -66,117 +73,46 @@ public class MarketJudgmentActivity extends JMEBaseActivity {
     @Override
     protected void initView() {
         super.initView();
-        mBinding = (ActivityMarketJudgmentBinding) mBindingUtil;
-        initToolbar("行情研判", true);
+
+        initToolbar(R.string.market_judgment, true);
+
+        mEveningUpPopupWindow = new EveningUpPopupWindow(this);
+        mEveningUpPopupWindow.setOutsideTouchable(true);
+        mEveningUpPopupWindow.setFocusable(true);
+
+        mTradeMessagePopUpWindow = new TradeMessagePopUpWindow(mContext);
+        mTradeMessagePopUpWindow.setOutsideTouchable(true);
+        mTradeMessagePopUpWindow.setFocusable(true);
+
+        mMarketTradePopupWindow = new MarketTradePopupWindow(mContext);
+        mMarketTradePopupWindow.setOutsideTouchable(true);
+        mMarketTradePopupWindow.setFocusable(true);
+
+        mConfirmPopupwindow = new ConfirmPopupwindow(mContext);
+        mConfirmPopupwindow.setOutsideTouchable(true);
+        mConfirmPopupwindow.setFocusable(true);
     }
 
     @Override
     protected void initData(Bundle savedInstanceState) {
         super.initData(savedInstanceState);
-        mWindow = new EveningUpPopupWindow(this);
-        mWindow.setOutsideTouchable(true);
-        mWindow.setFocusable(true);
-        getDateFromNet();
-        getPrice();
-    }
 
-    private void getPrice() {
-        HashMap<String, String> params = new HashMap<>();
-        params.put("list", "Au(T+D)");
-        sendRequest(MarketService.getInstance().getTenSpeedQuotes, params, false, false, false);
-    }
-
-    private void getDateFromNet() {
-        sendRequest(ManagementService.getInstance().fenxishi, new HashMap<>(), false);
+        getAnalystList();
     }
 
     @Override
     protected void initListener() {
         super.initListener();
+
         initRxBus();
     }
 
     @Override
     protected void initBinding() {
         super.initBinding();
+
+        mBinding = (ActivityMarketJudgmentBinding) mBindingUtil;
         mBinding.setHandlers(new ClickHandlers());
-    }
-
-    @Override
-    protected void DataReturn(DTRequest request, Head head, Object response) {
-        super.DataReturn(request, head, response);
-        switch (request.getApi().getName()) {
-            case "FenXiShiList":
-                if (head.isSuccess()) {
-                    try {
-                        fenXiShiVoList = (List<FenXiShiVo>) response;
-                    } catch (Exception e) {
-                        fenXiShiVoList = null;
-
-                        e.printStackTrace();
-                    }
-                    if (null == fenXiShiVoList || 0 == fenXiShiVoList.size())
-                        return;
-
-                    for (FenXiShiVo fenXiShiVo : fenXiShiVoList) {
-                        if (null != fenXiShiVo) {
-                            hangQingYanPanFragment = new MarketJudgmentFragment();
-                            fragmentList.add(hangQingYanPanFragment);
-                            mTabTitles.add(fenXiShiVo.getName());
-                        }
-                    }
-                    adapter = new HangQingYanPanAdapter(getSupportFragmentManager());
-                    initTabLayout();
-                }
-                break;
-            case "GetTenSpeedQuotes":
-                if (head.isSuccess()) {
-
-                    List<TenSpeedVo> list;
-
-                    try {
-                        list = (List<TenSpeedVo>) response;
-                    } catch (Exception e) {
-                        list = null;
-
-                        e.printStackTrace();
-                    }
-
-                    if (null == list || 0 == list.size())
-                        return;
-
-                    TenSpeedVo mTenSpeedVo = list.get(0);
-
-                    if (null == mTenSpeedVo)
-                        return;
-
-                    latestPrice = mTenSpeedVo.getLatestPrice();
-                }
-                break;
-            case "LimitOrder":
-                if (head.isSuccess())
-                    showShortToast(R.string.trade_success);
-                else
-                    showShortToast(head.getMsg());
-                break;
-            case "GetMaxTradeNum":
-                if (head.isSuccess()) {
-                    value = head.getValue();
-                    showPopupWindow(latestPrice, "1", "0".equals(isMore) ? "1" : "2", "0", value);//多
-                } else {
-                    showShortToast(head.getMsg());
-                }
-                break;
-        }
-    }
-
-    private void initTabLayout() {
-        mBinding.tabViewpager.removeAllViewsInLayout();
-        mBinding.tabViewpager.setAdapter(adapter);
-        mBinding.tabViewpager.setOffscreenPageLimit(1);
-        mBinding.tablayout.setTabMode(TabLayout.MODE_SCROLLABLE);
-        mBinding.tablayout.setSelectedTabIndicatorHeight(4);
-        mBinding.tablayout.setupWithViewPager(mBinding.tabViewpager);
     }
 
     private void initRxBus() {
@@ -187,102 +123,72 @@ public class MarketJudgmentActivity extends JMEBaseActivity {
                 return;
 
             switch (callType) {
-                case Constants.RxBusConst.RXBUS_TRADE:
-                    runOnUiThread(() -> mBinding.tabViewpager.setCurrentItem(1));
+                case Constants.RxBusConst.RXBUS_MARKETDETAIL_QUICK:
+                    Object object = message.getObject2();
+
+                    if (null == object)
+                        return;
+
+                    List<String> list = (List<String>) object;
+
+                    if (null == list || 5 != list.size())
+                        return;
+
+                    limitOrder(list.get(0), list.get(1), list.get(2), list.get(3), list.get(4));
 
                     break;
             }
         });
     }
 
-    final class HangQingYanPanAdapter extends FragmentPagerAdapter {
+    private void initTabLayout() {
+        mAdapter = new MarketJudgmentPagerAdapter(getSupportFragmentManager());
 
-        public HangQingYanPanAdapter(FragmentManager fm) {
-            super(fm);
-        }
-
-        @Override
-        public Fragment getItem(int position) {
-            MarketJudgmentFragment fragment = (MarketJudgmentFragment) fragmentList.get(position);
-            fragment.getanalystId(fenXiShiVoList.get(position).getId());
-            return fragmentList.get(position);
-        }
-
-        @Override
-        public int getCount() {
-            return fragmentList.size();
-        }
-
-        @Override
-        public CharSequence getPageTitle(int position) {
-            return mTabTitles.get(position);
-        }
+        mBinding.tabViewpager.removeAllViewsInLayout();
+        mBinding.tabViewpager.setAdapter(mAdapter);
+        mBinding.tabViewpager.setOffscreenPageLimit(1);
+        mBinding.tablayout.setTabMode(TabLayout.MODE_SCROLLABLE);
+        mBinding.tablayout.setSelectedTabIndicatorHeight(4);
+        mBinding.tablayout.setupWithViewPager(mBinding.tabViewpager);
     }
 
-    private String isMore = "0";
-
-    public class ClickHandlers {
-
-        public void onClickBuyMore() {
-            isMore = "0";
-            if (null == mUser || !mUser.isLogin())
-                ARouter.getInstance()
-                        .build(Constants.ARouterUriConst.ACCOUNTLOGIN)
-                        .navigation();
-            else
-                getMaxNum(isMore);
-//                showPopupWindow(latestPrice, "1", "1", "0");
-        }
-
-        public void onClickSaleEmpty() {
-            isMore = "1";
-            if (null == mUser || !mUser.isLogin())
-                ARouter.getInstance()
-                        .build(Constants.ARouterUriConst.ACCOUNTLOGIN)
-                        .navigation();
-            else
-                getMaxNum(isMore);
-//                showPopupWindow(latestPrice, "1", "2", "0");
-        }
-
-        public void onClickBaoDan() {
-            if (null == mUser || !mUser.isLogin()) {
-                ARouter.getInstance()
-                        .build(Constants.ARouterUriConst.ACCOUNTLOGIN)
-                        .navigation();
-            } else {
-                AppConfig.Select_ContractId = "Au(T+D)";
-
-                RxBus.getInstance().post(Constants.RxBusConst.RXBUS_TRADE, "Au(T+D)");
-
-                ARouter.getInstance()
-                        .build(Constants.ARouterUriConst.MAIN)
-                        .navigation();
-
-                finish();
-            }
-        }
+    private void getAnalystList() {
+        sendRequest(ManagementService.getInstance().analystList, new HashMap<>(), true);
     }
 
-    public void getMaxNum(String isMore) {
-        HashMap<String, String> params = new HashMap<>();
-        params.put("variety", "Au(T+D)");
-        params.put("direction", isMore);
-
-//        sendRequest(ManagementService.getInstance().getMaxTradeNum, params, true);
+    private void getStatus() {
+        sendRequest(ManagementService.getInstance().getStatus, new HashMap<>(), true);
     }
 
-    private void showPopupWindow(String price, String amount, String bsFlag, String ocFlag, String value) {
-        if (null == mWindow)
+    private void getAccount() {
+        if (null == mUser || !mUser.isLogin())
             return;
 
-       /* mWindow.setData(mUser.getAccount(), "Au(T+D)", price, amount,
-                bsFlag, ocFlag, value, (view) -> {
-                    limitOrder("Au(T+D)", price, amount, bsFlag, "0");
+        String accountID = mUser.getAccountID();
 
-                    mWindow.dismiss();
-                });
-        mWindow.showAtLocation(mBinding.lltitle, Gravity.BOTTOM, 0, 0);*/
+        if (TextUtils.isEmpty(accountID))
+            return;
+
+        HashMap<String, String> params = new HashMap<>();
+        params.put("accountId", accountID);
+
+        sendRequest(TradeService.getInstance().account, params, true);
+    }
+
+    private void position() {
+        if (null == mUser || !mUser.isLogin())
+            return;
+
+        String accountID = mUser.getAccountID();
+
+        if (TextUtils.isEmpty(accountID))
+            return;
+
+        HashMap<String, String> params = new HashMap<>();
+        params.put("accountId", accountID);
+        params.put("pagingKey", "");
+
+        sendRequest(TradeService.getInstance().position, params, false, false, false);
     }
 
     private void limitOrder(String contractId, String price, String amount, String bsFlag, String ocFlag) {
@@ -299,10 +205,240 @@ public class MarketJudgmentActivity extends JMEBaseActivity {
     }
 
     @Override
-    public void onDestroy() {
+    protected void DataReturn(DTRequest request, Head head, Object response) {
+        super.DataReturn(request, head, response);
+
+        switch (request.getApi().getName()) {
+            case "AnalystList":
+                if (head.isSuccess()) {
+                    try {
+                        mAnalystVoList = (List<AnalystVo>) response;
+                    } catch (Exception e) {
+                        mAnalystVoList = null;
+
+                        e.printStackTrace();
+                    }
+
+                    if (null == mAnalystVoList || 0 == mAnalystVoList.size())
+                        return;
+
+                    for (int i = 0; i < mAnalystVoList.size(); i++){
+                        AnalystVo analystVo = mAnalystVoList.get(i);
+
+                        if (null != analystVo) {
+                            mTabTitles.add(analystVo.getName());
+                            mFragmentList.add(MarketJudgmentFragment.newInstance(mAnalystVoList.get(i).getId(), "Au(T+D)"));
+                        }
+                    }
+
+                    initTabLayout();
+                }
+
+                break;
+            case "GetStatus":
+                String status;
+
+                if (null == response)
+                    status = "";
+                else
+                    status = response.toString();
+
+                if (status.equals("1")) {
+                    if (null != mTradeMessagePopUpWindow && !mTradeMessagePopUpWindow.isShowing()) {
+                        mTradeMessagePopUpWindow.setData(mContext.getResources().getString(R.string.trade_account_error),
+                                mContext.getResources().getString(R.string.trade_account_goto_recharge),
+                                (view) -> {
+                                    ARouter.getInstance().build(Constants.ARouterUriConst.RECHARGE).navigation();
+
+                                    mTradeMessagePopUpWindow.dismiss();
+                                });
+                        mTradeMessagePopUpWindow.showAtLocation(mBinding.tablayout, Gravity.CENTER, 0, 0);
+                    }
+                } else {
+                    getAccount();
+                }
+
+                break;
+            case "Account":
+                if (head.isSuccess()) {
+                    try {
+                        mAccountVo = (AccountVo) response;
+                    } catch (Exception e) {
+                        mAccountVo = null;
+
+                        e.printStackTrace();
+                    }
+
+                    if (null == mAccountVo)
+                        return;
+
+                    position();
+                }
+
+                break;
+            case "Position":
+                if (head.isSuccess()) {
+                    PositionPageVo positionPageVo;
+
+                    try {
+                        positionPageVo = (PositionPageVo) response;
+                    } catch (Exception e) {
+                        positionPageVo = null;
+
+                        e.printStackTrace();
+                    }
+
+                    if (null == positionPageVo)
+                        return;
+
+                    List<PositionVo> positionVoList = positionPageVo.getPositionList();
+
+                    if (null == positionVoList || 0 == positionVoList.size())
+                        return;
+
+                    PositionVo positionVoValue = null;
+
+                    for (PositionVo positionVo : positionVoList) {
+                        if (null != positionVo && positionVo.getContractId().equals(mContractID)) {
+                            if (mBsFlag == 1 && positionVo.getType().equals("空"))
+                                positionVoValue = positionVo;
+                            else if (mBsFlag == 2 && positionVo.getType().equals("多"))
+                                positionVoValue = positionVo;
+                        }
+                    }
+
+                    if (null != mMarketTradePopupWindow && !mMarketTradePopupWindow.isShowing()) {
+                        mMarketTradePopupWindow.setData(mTenSpeedVo, mAccountVo, positionVoValue, mContractInfoVo,
+                                mUser.getAccount(), mBsFlag, mOcFlag);
+                        mMarketTradePopupWindow.showAtLocation(mBinding.tablayout, Gravity.BOTTOM, 0, 0);
+                    }
+                }
+
+                break;
+            case "LimitOrder":
+                if (head.isSuccess()) {
+                    if (null != mConfirmPopupwindow && !mConfirmPopupwindow.isShowing()) {
+                        mConfirmPopupwindow.setData(mContext.getResources().getString(R.string.trade_success),
+                                mContext.getResources().getString(R.string.trade_see_order),
+                                (view) -> ARouter.getInstance().build(Constants.ARouterUriConst.CURRENTENTRUST).navigation());
+                        mConfirmPopupwindow.showAtLocation(mBinding.tablayout, Gravity.CENTER, 0, 0);
+                    }
+                } else {
+                    if (head.getMsg().contains("可用资金不足")) {
+                        if (null != mConfirmPopupwindow && !mConfirmPopupwindow.isShowing()) {
+                            mConfirmPopupwindow.setData(mContext.getResources().getString(R.string.trade_money_error),
+                                    mContext.getResources().getString(R.string.trade_money_in),
+                                    (view) -> ARouter.getInstance().build(Constants.ARouterUriConst.CAPITALTRANSFER).navigation());
+                            mConfirmPopupwindow.showAtLocation(mBinding.tablayout, Gravity.CENTER, 0, 0);
+                        }
+                    } else {
+                        showShortToast(head.getMsg());
+                    }
+                }
+
+                break;
+        }
+    }
+
+    public class ClickHandlers {
+
+        public void onClickBuyMore() {
+            if (null == mUser || !mUser.isLogin()) {
+                ARouter.getInstance().build(Constants.ARouterUriConst.ACCOUNTLOGIN).navigation();
+            } else {
+                if (null == mFragmentList || 0 == mFragmentList.size())
+                    return;
+
+                MarketJudgmentFragment marketJudgmentFragment = mFragmentList.get(mBinding.tabViewpager.getCurrentItem());
+
+                if (null == marketJudgmentFragment)
+                    return;
+
+                mContractID = marketJudgmentFragment.getContractID();
+                mContractInfoVo = marketJudgmentFragment.getContractInfo();
+                mTenSpeedVo = marketJudgmentFragment.getTenSpeedVo();
+
+                if (TextUtils.isEmpty(mContractID) || null == mTenSpeedVo || null == mContractInfoVo)
+                    return;
+
+                mBsFlag = 1;
+                mOcFlag = 0;
+
+                getStatus();
+            }
+        }
+
+        public void onClickSaleEmpty() {
+            if (null == mUser || !mUser.isLogin()) {
+                ARouter.getInstance().build(Constants.ARouterUriConst.ACCOUNTLOGIN).navigation();
+            } else {
+                if (null == mFragmentList || 0 == mFragmentList.size())
+                    return;
+
+                MarketJudgmentFragment marketJudgmentFragment = mFragmentList.get(mBinding.tabViewpager.getCurrentItem());
+
+                if (null == marketJudgmentFragment)
+                    return;
+
+                mContractID = marketJudgmentFragment.getContractID();
+                mContractInfoVo = marketJudgmentFragment.getContractInfo();
+                mTenSpeedVo = marketJudgmentFragment.getTenSpeedVo();
+
+                if (TextUtils.isEmpty(mContractID) || null == mTenSpeedVo || null == mContractInfoVo)
+                    return;
+
+                mBsFlag = 2;
+                mOcFlag = 0;
+
+                getStatus();
+            }
+        }
+
+        public void onClickDeclarationForm() {
+            if (null == mUser || !mUser.isLogin()) {
+                ARouter.getInstance().build(Constants.ARouterUriConst.ACCOUNTLOGIN).navigation();
+            } else {
+                AppConfig.Select_ContractId = "Au(T+D)";
+
+                RxBus.getInstance().post(Constants.RxBusConst.RXBUS_TRADE, "Au(T+D)");
+                ARouter.getInstance().build(Constants.ARouterUriConst.MAIN).navigation();
+
+                finish();
+            }
+        }
+    }
+
+    final class MarketJudgmentPagerAdapter extends FragmentPagerAdapter {
+
+        public MarketJudgmentPagerAdapter(FragmentManager fm) {
+            super(fm);
+        }
+
+        @Override
+        public Fragment getItem(int position) {
+            if (null == mFragmentList || 0 == mFragmentList.size())
+                return null;
+
+            return mFragmentList.get(position);
+        }
+
+        @Override
+        public int getCount() {
+            return mFragmentList.size();
+        }
+
+        @Override
+        public CharSequence getPageTitle(int position) {
+            return mTabTitles.get(position);
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
         super.onDestroy();
 
         if (!mRxbus.isUnsubscribed())
             mRxbus.unsubscribe();
     }
+
 }

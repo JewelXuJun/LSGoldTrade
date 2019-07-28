@@ -6,8 +6,8 @@ package com.datai.common.charts.indicator;
 public class BOLL extends Indicator {
     public static final String K_BOLL = "BOLL_";
     public static final String K_MID = K_BOLL + "MID";
-    public static final String K_UPPER = K_BOLL + "UP";
-    public static final String K_LOWER = K_BOLL + "LOW";
+    public static final String K_UPPER = K_BOLL + "BOLL_UP";
+    public static final String K_LOWER = K_BOLL + "BOLL_LOW";
 
     private int P_N = 20;//5--300
     private int P_P = 2;//1--10

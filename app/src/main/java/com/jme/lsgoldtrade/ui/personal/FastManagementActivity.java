@@ -77,11 +77,15 @@ public class FastManagementActivity extends JMEBaseActivity {
             if (null == navigatorVoBean)
                 return;
 
-            mUsedModulesBeanList.remove(navigatorVoBean);
-            mNotUsedModulesBeanList.add(navigatorVoBean);
+            if (mUsedModulesBeanList.size() > 4) {
+                mUsedModulesBeanList.remove(navigatorVoBean);
+                mNotUsedModulesBeanList.add(navigatorVoBean);
 
-            mAddedAdapter.notifyDataSetChanged();
-            mNotAddedAdapter.notifyDataSetChanged();
+                mAddedAdapter.notifyDataSetChanged();
+                mNotAddedAdapter.notifyDataSetChanged();
+            } else {
+                showShortToast(R.string.personal_fast_management_length_less);
+            }
         });
 
         mNotAddedAdapter.setOnItemChildClickListener((adapter, view, position) -> {

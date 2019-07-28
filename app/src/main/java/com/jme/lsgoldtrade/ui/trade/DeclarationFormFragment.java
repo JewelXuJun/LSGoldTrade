@@ -17,6 +17,7 @@ import android.view.Gravity;
 import android.view.inputmethod.InputMethodManager;
 
 import com.alibaba.android.arouter.launcher.ARouter;
+import com.datai.common.charts.fchart.FChart;
 import com.datai.common.charts.fchart.FData;
 import com.jme.common.network.DTRequest;
 import com.jme.common.network.Head;
@@ -49,7 +50,7 @@ import rx.Subscription;
 /**
  * 报单
  */
-public class DeclarationFormFragment extends JMEBaseFragment {
+public class DeclarationFormFragment extends JMEBaseFragment implements FChart.OnPriceClickListener {
 
     private FragmentDeclarationFormBinding mBinding;
 
@@ -192,6 +193,9 @@ public class DeclarationFormFragment extends JMEBaseFragment {
 
             }
         });
+
+        mBinding.fchartBuy.setOnPriceClickListener(this);
+        mBinding.fchartSale.setOnPriceClickListener(this);
 
         mCancelWindow.setOnDismissListener(() -> RxBus.getInstance().post(Constants.RxBusConst.RXBUS_DECLARATIONFORM_CANCEL, null));
     }
@@ -560,8 +564,8 @@ public class DeclarationFormFragment extends JMEBaseFragment {
                         return;
 
                     mBinding.tvPrice.setText(latestPrice);
-                    mBinding.tvPrice.setTextColor(ContextCompat.getColor(mContext,
-                            MarketUtil.getMarketStateColor(new BigDecimal(latestPrice).compareTo(new BigDecimal(lastSettlePrice)))));
+                    mBinding.tvPrice.setTextColor(ContextCompat.getColor(mContext, new BigDecimal(latestPrice).compareTo(new BigDecimal(0)) == 0
+                            ? R.color.color_text_black : MarketUtil.getMarketStateColor(new BigDecimal(latestPrice).compareTo(new BigDecimal(lastSettlePrice)))));
                     mBinding.tvLimitDownPrice.setText(mLowerLimitPrice);
                     mBinding.tvLimitUpPrice.setText(mHighLimitPrice);
                     mBinding.tvAmount.setText(MarketUtil.getVolumeValue(String.valueOf(mTenSpeedVo.getTurnover()), false));
@@ -695,6 +699,16 @@ public class DeclarationFormFragment extends JMEBaseFragment {
         }
     }
 
+    @Override
+    public void OnPriceClick(String price, String title) {
+        if (TextUtils.isEmpty(price) || price.equals(mContext.getResources().getString(R.string.text_no_data_default)))
+            return;
+
+        mBinding.etPrice.setText(price);
+
+        hiddenKeyBoard();
+    }
+
     public class ClickHandlers {
 
         public void onClickSelectContract() {
@@ -715,6 +729,17 @@ public class DeclarationFormFragment extends JMEBaseFragment {
 
         public void onClickLimitUpPrice() {
             mBinding.etPrice.setText(mHighLimitPrice);
+
+            hiddenKeyBoard();
+        }
+
+        public void onClickLatestPrice() {
+            String price = mBinding.tvPrice.getText().toString();
+
+            if (TextUtils.isEmpty(price) || price.equals(mContext.getResources().getString(R.string.text_no_data_default)))
+                return;
+
+            mBinding.etPrice.setText(price);
 
             hiddenKeyBoard();
         }

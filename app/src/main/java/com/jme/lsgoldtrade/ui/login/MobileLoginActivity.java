@@ -241,7 +241,7 @@ public class MobileLoginActivity extends JMEBaseActivity {
     }
 
     private void kaptcha() {
-        sendRequest(UserService.getInstance().kaptcha, new HashMap<>(), true, false, false);
+        sendRequest(UserService.getInstance().kaptcha, new HashMap<>(), true);
     }
 
     private void getContractInfo() {
@@ -328,7 +328,6 @@ public class MobileLoginActivity extends JMEBaseActivity {
                         kaptchaImg = kaptchaImg.split(",")[1];
 
                     mBinding.imgVerifyCode.setImageBitmap(getBitmap(kaptchaImg));
-                    mBinding.layoutImgVerifyCode.setVisibility(View.VISIBLE);
                     mBinding.etImgVerifyCode.setText("");
                     mBinding.btnLogin.setEnabled(false);
 
@@ -336,6 +335,8 @@ public class MobileLoginActivity extends JMEBaseActivity {
 
                     mKaptchaId = imageVerifyCodeVo.getKaptchaId();
                 }
+
+                mBinding.layoutImgVerifyCode.setVisibility(View.VISIBLE);
 
                 break;
             case "ContractInfo":
