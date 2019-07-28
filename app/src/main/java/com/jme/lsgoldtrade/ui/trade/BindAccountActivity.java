@@ -36,7 +36,7 @@ public class BindAccountActivity extends JMEBaseActivity {
     private String mName;
     private String mIDCard;
     private boolean bFlag = false;
-    private boolean bAgreeFlag = false;
+    private boolean bAgreeFlag = true;
     private int mTime = 3;
 
     public Handler mHandler = new Handler() {
@@ -82,6 +82,8 @@ public class BindAccountActivity extends JMEBaseActivity {
         initToolbar(R.string.trade_bind_account, true);
 
         mBinding = (ActivityBindAccountBinding) mBindingUtil;
+
+        mBinding.checkboxAgree.setChecked(true);
     }
 
     @Override
