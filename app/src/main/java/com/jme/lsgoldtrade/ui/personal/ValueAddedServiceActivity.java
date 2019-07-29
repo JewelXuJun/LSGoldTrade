@@ -102,10 +102,10 @@ public class ValueAddedServiceActivity extends JMEBaseActivity {
                             .navigation();
                     this.finish();
                 } else {
-                    if (head.getCode().equals("-1")) {
+                    if (head.getMsg().contains("需要在泰金所完成2笔以上的交易才能开通增值服务")) {
                         mToast.cancel();
                         if (null != mWindow) {
-                            mWindow.setData(head.getMsg());
+                            mWindow.setData("开通增值服务需要至少完成两笔交易，您尚不满足开通增值服务条件，请满足条件后申请。");
                             mWindow.showAtLocation(mBinding.lltitle, Gravity.CENTER, 0, 0);
                         }
                     } else {
