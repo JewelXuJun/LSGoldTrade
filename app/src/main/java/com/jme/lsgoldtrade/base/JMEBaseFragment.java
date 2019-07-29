@@ -95,12 +95,10 @@ public abstract class JMEBaseFragment<T> extends BaseFragment {
     protected void DataReturn(DTRequest request, Head head, Object response) {
         super.DataReturn(request, head, response);
 
-        if (head.getCode() != null) {
-            if (head.getCode().equals("-2000"))
-                RxBus.getInstance().post(Constants.RxBusConst.RXBUS_SYNTIME, null);
-            else
-                handleErrorInfo(request, head);
-        }
+        if (head.getCode().equals("-2000"))
+            RxBus.getInstance().post(Constants.RxBusConst.RXBUS_SYNTIME, null);
+        else
+            handleErrorInfo(request, head);
     }
 
 }
