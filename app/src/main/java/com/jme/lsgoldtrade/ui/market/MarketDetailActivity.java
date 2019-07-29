@@ -677,7 +677,7 @@ public class MarketDetailActivity extends JMEBaseActivity implements FChart.OnPr
         params.put("accountId", accountID);
         params.put("pagingKey", "");
 
-        sendRequest(TradeService.getInstance().position, params, false, false, false);
+        sendRequest(TradeService.getInstance().position, params, false, false, true);
     }
 
     private void limitOrder(String contractId, String price, String amount, String bsFlag, String ocFlag) {
@@ -905,8 +905,6 @@ public class MarketDetailActivity extends JMEBaseActivity implements FChart.OnPr
                                     (view) -> ARouter.getInstance().build(Constants.ARouterUriConst.CAPITALTRANSFER).navigation());
                             mConfirmPopupwindow.showAtLocation(mBinding.tvHigh, Gravity.CENTER, 0, 0);
                         }
-                    } else {
-                        showShortToast(head.getMsg());
                     }
                 }
 

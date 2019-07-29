@@ -689,8 +689,6 @@ public class DeclarationFormFragment extends JMEBaseFragment implements FChart.O
                                     (view) -> ARouter.getInstance().build(Constants.ARouterUriConst.CAPITALTRANSFER).navigation());
                             mConfirmPopupwindow.showAtLocation(mBinding.etAmount, Gravity.CENTER, 0, 0);
                         }
-                    } else {
-                        showShortToast(head.getMsg());
                     }
                 }
 

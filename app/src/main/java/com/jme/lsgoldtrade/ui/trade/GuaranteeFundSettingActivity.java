@@ -109,7 +109,7 @@ public class GuaranteeFundSettingActivity extends JMEBaseActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
-                updateUIWithValidation();
+
             }
 
         });
@@ -121,14 +121,6 @@ public class GuaranteeFundSettingActivity extends JMEBaseActivity {
 
         mBinding = (ActivityGuaranteefundSettingBinding) mBindingUtil;
         mBinding.setHandlers(new ClickHandlers());
-    }
-
-    private void updateUIWithValidation() {
-        mBinding.btnConfirm.setEnabled(populated(mBinding.etGuaranteeFund));
-    }
-
-    private boolean populated(final EditText editText) {
-        return editText.length() > 0;
     }
 
     private void setMessage(String value) {
@@ -171,25 +163,33 @@ public class GuaranteeFundSettingActivity extends JMEBaseActivity {
     public class ClickHandlers {
 
         public void onClickConfirm() {
+            if (null == mWindow || mWindow.isShowing())
+                return;
+
             if (TextUtils.isEmpty(mTotal)) {
                 showShortToast(R.string.trade_guarantee_total_error);
             } else {
                 String value = mBinding.etGuaranteeFund.getText().toString();
-                BigDecimal riskRate;
+                String message;
 
-                if (value.endsWith("."))
-                    value = value.substring(0, value.length() - 1);
+                if (TextUtils.isEmpty(value)) {
+                    message = getString(R.string.trade_guarantee_fund_message1);
 
-                if (new BigDecimal(value).compareTo(new BigDecimal(0)) == 0)
-                    riskRate = new BigDecimal(0);
-                else
-                    riskRate = new BigDecimal(mTotal).divide(new BigDecimal(value), 4, BigDecimal.ROUND_HALF_UP);
+                    mWindow.setData(message, (view) -> mWindow.dismiss());
+                    mWindow.showAtLocation(mBinding.etGuaranteeFund, Gravity.CENTER, 0, 0);
+                } else {
+                    BigDecimal riskRate;
 
-                if (null != mWindow) {
-                    String message;
+                    if (value.endsWith("."))
+                        value = value.substring(0, value.length() - 1);
+
+                    if (new BigDecimal(value).compareTo(new BigDecimal(0)) == 0)
+                        riskRate = new BigDecimal(0);
+                    else
+                        riskRate = new BigDecimal(mTotal).divide(new BigDecimal(value), 4, BigDecimal.ROUND_HALF_UP);
 
                     if (riskRate.compareTo(new BigDecimal(0)) == 0) {
-                        message = getString(R.string.trade_guarantee_fund_message1);
+                        message = getString(R.string.trade_guarantee_fund_message0);
                     } else {
                         if (new BigDecimal(value).compareTo(new BigDecimal(mTotal)) == 1) {
                             message = getString(R.string.trade_guarantee_fund_message5);
@@ -205,7 +205,11 @@ public class GuaranteeFundSettingActivity extends JMEBaseActivity {
                         }
                     }
 
-                    mWindow.setData(message, (view) -> getMinReserveFund());
+                    mWindow.setData(message, (view) -> {
+                        getMinReserveFund();
+
+                        mWindow.dismiss();
+                    });
                     mWindow.showAtLocation(mBinding.etGuaranteeFund, Gravity.CENTER, 0, 0);
                 }
             }

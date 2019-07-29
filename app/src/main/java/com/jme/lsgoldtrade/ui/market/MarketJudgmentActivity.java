@@ -188,7 +188,7 @@ public class MarketJudgmentActivity extends JMEBaseActivity {
         params.put("accountId", accountID);
         params.put("pagingKey", "");
 
-        sendRequest(TradeService.getInstance().position, params, false, false, false);
+        sendRequest(TradeService.getInstance().position, params, false, false, true);
     }
 
     private void limitOrder(String contractId, String price, String amount, String bsFlag, String ocFlag) {
@@ -222,7 +222,7 @@ public class MarketJudgmentActivity extends JMEBaseActivity {
                     if (null == mAnalystVoList || 0 == mAnalystVoList.size())
                         return;
 
-                    for (int i = 0; i < mAnalystVoList.size(); i++){
+                    for (int i = 0; i < mAnalystVoList.size(); i++) {
                         AnalystVo analystVo = mAnalystVoList.get(i);
 
                         if (null != analystVo) {
@@ -326,8 +326,6 @@ public class MarketJudgmentActivity extends JMEBaseActivity {
                                     (view) -> ARouter.getInstance().build(Constants.ARouterUriConst.CAPITALTRANSFER).navigation());
                             mConfirmPopupwindow.showAtLocation(mBinding.tablayout, Gravity.CENTER, 0, 0);
                         }
-                    } else {
-                        showShortToast(head.getMsg());
                     }
                 }
 
