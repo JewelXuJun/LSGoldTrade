@@ -2,11 +2,11 @@ package com.jme.lsgoldtrade.ui.personal;
 
 import android.os.Bundle;
 import android.view.Gravity;
-import android.view.View;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.jme.common.network.DTRequest;
 import com.jme.common.network.Head;
+import com.jme.common.util.RxBus;
 import com.jme.lsgoldtrade.R;
 import com.jme.lsgoldtrade.base.JMEBaseActivity;
 import com.jme.lsgoldtrade.config.Constants;
@@ -114,22 +114,18 @@ public class ValueAddedServiceActivity extends JMEBaseActivity {
                     if (head.getMsg().contains("需要在泰金所完成2笔以上的交易才能开通增值服务")) {
                         mToast.cancel();
                         if (null != mWindow && !mWindow.isShowing()) {
-                            mWindow.setData("开通增值服务需要至少完成两笔交易，您尚不满足开通增值服务条件，请满足条件后申请。", new View.OnClickListener() {
-                                @Override
-                                public void onClick(View v) {
-
-                                }
+                            mWindow.setData("开通增值服务需要至少完成两笔交易，您尚不满足开通增值服务条件，请满足条件后申请。", (view) -> {
+                                RxBus.getInstance().post(Constants.RxBusConst.RXBUS_TRADE, null);
+                                ARouter.getInstance().build(Constants.ARouterUriConst.MAIN).navigation();
                             });
                             mWindow.showAtLocation(mBinding.lltitle, Gravity.CENTER, 0, 0);
                         }
                     } else if (head.getMsg().contains("银行资金账户不存在")) {
                         mToast.cancel();
                         if (null != mConfirmPopupwindow && !mConfirmPopupwindow.isShowing()) {
-                            mConfirmPopupwindow.setData("您尚未绑定黄金账户，请先开户绑定后再使用该服务。", "确定", new View.OnClickListener() {
-                                @Override
-                                public void onClick(View v) {
-
-                                }
+                            mConfirmPopupwindow.setData("您尚未绑定黄金账户，请先开户绑定后再使用该服务。", "确定",(view) -> {
+                                RxBus.getInstance().post(Constants.RxBusConst.RXBUS_TRADE, null);
+                                ARouter.getInstance().build(Constants.ARouterUriConst.MAIN).navigation();
                             });
                             mConfirmPopupwindow.showAtLocation(mBinding.lltitle, Gravity.CENTER, 0, 0);
                         }
