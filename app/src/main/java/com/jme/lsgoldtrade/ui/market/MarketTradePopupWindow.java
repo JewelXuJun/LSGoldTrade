@@ -191,8 +191,13 @@ public class MarketTradePopupWindow extends JMEBasePopupWindow {
                     BigDecimal bankFeeRateValue = new BigDecimal(bankFeeRate).divide(new BigDecimal(10000)).divide(new BigDecimal(10000));
                     BigDecimal exchangeFeeRateValue = new BigDecimal(exchangeFeeRate).divide(new BigDecimal(10000)).divide(new BigDecimal(10000));
                     BigDecimal feeRate = bankMarginRateValue.add(bankFeeRateValue).add(exchangeFeeRateValue);
+                    BigDecimal totalAmount = money.divide(contractMoney.multiply(feeRate), 0, BigDecimal.ROUND_DOWN);
+                    BigDecimal holdPosition = totalAmount.subtract(new BigDecimal(mPositionVo.getPosition()));
 
-                    mMaxAmount = Math.min(money.divide(contractMoney.multiply(feeRate), 0, BigDecimal.ROUND_DOWN).longValue(), mMaxOrderQty);
+                    mMaxAmount = Math.min(holdPosition.longValue(), mMaxOrderQty);
+
+                    if (new BigDecimal(mMaxAmount).compareTo(new BigDecimal(0)) == -1)
+                        mMaxAmount = 0;
                 }
             }
         }
