@@ -148,7 +148,7 @@ public class TradingBoxActivity extends JMEBaseActivity {
     }
 
     private void getStatus() {
-        sendRequest(ManagementService.getInstance().getStatus, new HashMap<>(), true);
+        sendRequest(ManagementService.getInstance().getStatus, new HashMap<>(), false);
     }
 
     @Override
