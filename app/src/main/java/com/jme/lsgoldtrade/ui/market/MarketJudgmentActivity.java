@@ -236,26 +236,29 @@ public class MarketJudgmentActivity extends JMEBaseActivity {
 
                 break;
             case "GetStatus":
-                String status;
+                if (head.isSuccess()) {
 
-                if (null == response)
-                    status = "";
-                else
-                    status = response.toString();
+                    String status;
 
-                if (status.equals("1")) {
-                    if (null != mTradeMessagePopUpWindow && !mTradeMessagePopUpWindow.isShowing()) {
-                        mTradeMessagePopUpWindow.setData(mContext.getResources().getString(R.string.trade_account_error),
-                                mContext.getResources().getString(R.string.trade_account_goto_recharge),
-                                (view) -> {
-                                    ARouter.getInstance().build(Constants.ARouterUriConst.RECHARGE).navigation();
+                    if (null == response)
+                        status = "";
+                    else
+                        status = response.toString();
 
-                                    mTradeMessagePopUpWindow.dismiss();
-                                });
-                        mTradeMessagePopUpWindow.showAtLocation(mBinding.tablayout, Gravity.CENTER, 0, 0);
+                    if (status.equals("1")) {
+                        if (null != mTradeMessagePopUpWindow && !mTradeMessagePopUpWindow.isShowing()) {
+                            mTradeMessagePopUpWindow.setData(mContext.getResources().getString(R.string.trade_account_error),
+                                    mContext.getResources().getString(R.string.trade_account_goto_recharge),
+                                    (view) -> {
+                                        ARouter.getInstance().build(Constants.ARouterUriConst.RECHARGE).navigation();
+
+                                        mTradeMessagePopUpWindow.dismiss();
+                                    });
+                            mTradeMessagePopUpWindow.showAtLocation(mBinding.tablayout, Gravity.CENTER, 0, 0);
+                        }
+                    } else {
+                        getAccount();
                     }
-                } else {
-                    getAccount();
                 }
 
                 break;

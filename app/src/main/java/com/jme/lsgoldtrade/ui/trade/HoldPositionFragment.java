@@ -534,31 +534,33 @@ public class HoldPositionFragment extends JMEBaseFragment implements OnRefreshLi
 
                 break;
             case "GetStatus":
-                String status;
+                if (head.isSuccess()) {
+                    String status;
 
-                if (null == response)
-                    status = "";
-                else
-                    status = response.toString();
+                    if (null == response)
+                        status = "";
+                    else
+                        status = response.toString();
 
-                if (status.equals("1")) {
-                    if (null != mTradeMessagePopUpWindow && !mTradeMessagePopUpWindow.isShowing()) {
-                        mTradeMessagePopUpWindow.setData(mContext.getResources().getString(R.string.trade_account_error),
-                                mContext.getResources().getString(R.string.trade_account_goto_recharge),
-                                (view) -> {
-                                    ARouter.getInstance().build(Constants.ARouterUriConst.RECHARGE).navigation();
+                    if (status.equals("1")) {
+                        if (null != mTradeMessagePopUpWindow && !mTradeMessagePopUpWindow.isShowing()) {
+                            mTradeMessagePopUpWindow.setData(mContext.getResources().getString(R.string.trade_account_error),
+                                    mContext.getResources().getString(R.string.trade_account_goto_recharge),
+                                    (view) -> {
+                                        ARouter.getInstance().build(Constants.ARouterUriConst.RECHARGE).navigation();
 
-                                    mTradeMessagePopUpWindow.dismiss();
-                                });
-                        mTradeMessagePopUpWindow.showAtLocation(mBinding.tvRiskRate, Gravity.CENTER, 0, 0);
+                                        mTradeMessagePopUpWindow.dismiss();
+                                    });
+                            mTradeMessagePopUpWindow.showAtLocation(mBinding.tvRiskRate, Gravity.CENTER, 0, 0);
+                        }
+                    } else {
+                        ARouter.getInstance()
+                                .build(Constants.ARouterUriConst.GUARANTEEFUNDSETTINGACTIVITY)
+                                .withString("Total", mTotal)
+                                .withFloat("Warnth", mAccountVo.getWarnth())
+                                .withFloat("Forcecloseth", mAccountVo.getForcecloseth())
+                                .navigation();
                     }
-                } else {
-                    ARouter.getInstance()
-                            .build(Constants.ARouterUriConst.GUARANTEEFUNDSETTINGACTIVITY)
-                            .withString("Total", mTotal)
-                            .withFloat("Warnth", mAccountVo.getWarnth())
-                            .withFloat("Forcecloseth", mAccountVo.getForcecloseth())
-                            .navigation();
                 }
 
                 break;
