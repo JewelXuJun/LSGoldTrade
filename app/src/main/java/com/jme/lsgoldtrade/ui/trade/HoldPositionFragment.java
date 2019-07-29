@@ -424,7 +424,7 @@ public class HoldPositionFragment extends JMEBaseFragment implements OnRefreshLi
                     }
 
                     if (null == positionPageVo) {
-                        mBinding.swipeRefreshLayout.finishRefresh(false);
+                        mBinding.swipeRefreshLayout.finishRefresh(true);
                     } else {
                         bHasNext = positionPageVo.isHasNext();
                         mPagingKey = positionPageVo.getPagingKey();
