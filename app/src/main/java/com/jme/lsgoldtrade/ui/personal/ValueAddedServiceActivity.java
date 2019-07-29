@@ -2,6 +2,7 @@ package com.jme.lsgoldtrade.ui.personal;
 
 import android.os.Bundle;
 import android.view.Gravity;
+import android.view.View;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.jme.common.network.DTRequest;
@@ -11,6 +12,7 @@ import com.jme.lsgoldtrade.base.JMEBaseActivity;
 import com.jme.lsgoldtrade.config.Constants;
 import com.jme.lsgoldtrade.databinding.ActivityValueAddedServiceBinding;
 import com.jme.lsgoldtrade.service.ManagementService;
+import com.jme.lsgoldtrade.view.ConfirmPopupwindow;
 import com.jme.lsgoldtrade.view.OpenServicePopupWindow;
 import java.util.HashMap;
 
@@ -25,6 +27,7 @@ public class ValueAddedServiceActivity extends JMEBaseActivity {
     private int isAgree = 1;
 
     private OpenServicePopupWindow mWindow;
+    private ConfirmPopupwindow mConfirmPopupwindow;
 
     @Override
     protected int getContentViewId() {
@@ -41,9 +44,15 @@ public class ValueAddedServiceActivity extends JMEBaseActivity {
     @Override
     protected void initData(Bundle savedInstanceState) {
         super.initData(savedInstanceState);
+
         mWindow = new OpenServicePopupWindow(mContext);
         mWindow.setOutsideTouchable(true);
         mWindow.setFocusable(true);
+
+        mConfirmPopupwindow = new ConfirmPopupwindow(mContext);
+        mConfirmPopupwindow.setOutsideTouchable(true);
+        mConfirmPopupwindow.setFocusable(true);
+
         mBinding.cbAgree.setChecked(true);
     }
 
@@ -104,9 +113,25 @@ public class ValueAddedServiceActivity extends JMEBaseActivity {
                 } else {
                     if (head.getMsg().contains("需要在泰金所完成2笔以上的交易才能开通增值服务")) {
                         mToast.cancel();
-                        if (null != mWindow) {
-                            mWindow.setData("开通增值服务需要至少完成两笔交易，您尚不满足开通增值服务条件，请满足条件后申请。");
+                        if (null != mWindow && !mWindow.isShowing()) {
+                            mWindow.setData("开通增值服务需要至少完成两笔交易，您尚不满足开通增值服务条件，请满足条件后申请。", new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+
+                                }
+                            });
                             mWindow.showAtLocation(mBinding.lltitle, Gravity.CENTER, 0, 0);
+                        }
+                    } else if (head.getMsg().contains("银行资金账户不存在")) {
+                        mToast.cancel();
+                        if (null != mConfirmPopupwindow && !mConfirmPopupwindow.isShowing()) {
+                            mConfirmPopupwindow.setData("您尚未绑定黄金账户，请先开户绑定后再使用该服务。", "确定", new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+
+                                }
+                            });
+                            mConfirmPopupwindow.showAtLocation(mBinding.lltitle, Gravity.CENTER, 0, 0);
                         }
                     } else {
                         showShortToast(head.getMsg());
