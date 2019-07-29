@@ -478,13 +478,6 @@ public class MarketJudgmentFragment extends JMEBaseFragment {
                 iRequestKDataFlag = NONE;
 
                 break;
-            case "LimitOrder":
-                if (head.isSuccess())
-                    showShortToast(R.string.trade_success);
-                else
-                    showShortToast(head.getMsg());
-
-                break;
         }
     }
 

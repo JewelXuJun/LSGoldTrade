@@ -896,12 +896,7 @@ public class MarketDetailActivity extends JMEBaseActivity implements FChart.OnPr
                 break;
             case "LimitOrder":
                 if (head.isSuccess()) {
-                    if (null != mConfirmPopupwindow && !mConfirmPopupwindow.isShowing()) {
-                        mConfirmPopupwindow.setData(mContext.getResources().getString(R.string.trade_success),
-                                mContext.getResources().getString(R.string.trade_see_order),
-                                (view) -> ARouter.getInstance().build(Constants.ARouterUriConst.CURRENTENTRUST).navigation());
-                        mConfirmPopupwindow.showAtLocation(mBinding.tvHigh, Gravity.CENTER, 0, 0);
-                    }
+                    showShortToast(R.string.trade_success);
                 } else {
                     if (head.getMsg().contains("可用资金不足")) {
                         if (null != mConfirmPopupwindow && !mConfirmPopupwindow.isShowing()) {

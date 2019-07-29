@@ -635,7 +635,7 @@ public class DeclarationFormFragment extends JMEBaseFragment implements FChart.O
                                         showShortToast(R.string.trade_number_error_zero);
                                     } else if (minOrderQty != -1 && new BigDecimal(amount).compareTo(new BigDecimal(minOrderQty)) == -1) {
                                         showShortToast(R.string.trade_limit_min_amount_error);
-                                    }  else if (mMaxOrderQty == -1 && new BigDecimal(amount).compareTo(new BigDecimal(mMaxHoldQty == -1 ? maxAmount : Math.min(maxAmount, mMaxHoldQty))) == 1) {
+                                    } else if (mMaxOrderQty == -1 && new BigDecimal(amount).compareTo(new BigDecimal(mMaxHoldQty == -1 ? maxAmount : Math.min(maxAmount, mMaxHoldQty))) == 1) {
                                         Toast.makeText(mContext, R.string.trade_limit_max_amount_error_canbuy, Toast.LENGTH_SHORT).show();
                                     } else if (mMaxOrderQty != -1 && new BigDecimal(amount).compareTo(new BigDecimal(Math.min(maxAmount, mMaxOrderQty))) == 1) {
                                         Toast.makeText(mContext, R.string.trade_limit_max_amount_error_canbuy, Toast.LENGTH_SHORT).show();
@@ -677,12 +677,7 @@ public class DeclarationFormFragment extends JMEBaseFragment implements FChart.O
                 break;
             case "LimitOrder":
                 if (head.isSuccess()) {
-                    if (null != mConfirmPopupwindow && !mConfirmPopupwindow.isShowing()) {
-                        mConfirmPopupwindow.setData(mContext.getResources().getString(R.string.trade_success),
-                                mContext.getResources().getString(R.string.trade_see_order),
-                                (view) -> ARouter.getInstance().build(Constants.ARouterUriConst.CURRENTENTRUST).navigation());
-                        mConfirmPopupwindow.showAtLocation(mBinding.etAmount, Gravity.CENTER, 0, 0);
-                    }
+                    showShortToast(R.string.trade_success);
 
                     RxBus.getInstance().post(Constants.RxBusConst.RXBUS_DECLARATIONFORM_UPDATE, null);
                 } else {
