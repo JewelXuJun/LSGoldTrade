@@ -369,6 +369,7 @@ public class DeclarationFormFragment extends JMEBaseFragment implements FChart.O
 
         if (!mBinding.tvContractId.getText().toString().equals(AppConfig.Select_ContractId)) {
             mBinding.tvContractId.setText(AppConfig.Select_ContractId);
+            mBinding.etPrice.setText("");
 
             if (null != mContract) {
                 mSelectItem = mContract.getContractIDPosition(mBinding.tvContractId.getText().toString());
