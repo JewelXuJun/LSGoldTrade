@@ -20,13 +20,138 @@
         android:id="@+id/tv_answer"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/tv_question"
+        android:layout_below="@+id/tv_question"
         android:layout_marginTop="@dimen/common_page_margin"
         android:layout_marginRight="@dimen/margin_customer_service_item"
         android:background="@drawable/bg_white"
         android:lineSpacingExtra="@dimen/lineSpacingExtra_big"
         android:padding="@dimen/common_area_margin_middle"
         android:textColor="@color/black"
-        android:textSize="@dimen/sp_15" />
+        android:textSize="@dimen/sp_15"
+        android:visibility="visible" />
+
+    <LinearLayout
+        android:id="@+id/layout_answer_list"
+        android:layout_width="@dimen/width_customer_service_question"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv_question"
+        android:layout_marginTop="@dimen/common_page_margin"
+        android:background="@drawable/bg_white"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/common_page_padding">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:text="@string/personal_customer_service_guess"
+                android:textColor="@color/black"
+                android:textSize="@dimen/size_normal_middle"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tv_change_group"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:text="@string/personal_customer_service_change"
+                android:textColor="@color/color_blue_deep"
+                android:textSize="@dimen/sp_15" />
+
+        </RelativeLayout>
+
+        <include layout="@layout/item_line_vertical_list" />
+
+        <LinearLayout
+            android:id="@+id/layout_question_first"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/common_area_margin"
+            android:layout_marginRight="@dimen/common_area_margin"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_question_first"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="@dimen/common_area_margin_middle"
+                android:paddingBottom="@dimen/common_area_margin_middle"
+                android:textColor="@color/black"
+                android:textSize="@dimen/sp_15" />
+
+            <include layout="@layout/item_line_vertical_list" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/layout_question_second"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/common_area_margin"
+            android:layout_marginRight="@dimen/common_area_margin"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_question_second"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="@dimen/common_area_margin_middle"
+                android:paddingBottom="@dimen/common_area_margin_middle"
+                android:textColor="@color/black"
+                android:textSize="@dimen/sp_15" />
+
+            <include layout="@layout/item_line_vertical_list" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/layout_question_third"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/common_area_margin"
+            android:layout_marginRight="@dimen/common_area_margin"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_question_third"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="@dimen/common_area_margin_middle"
+                android:paddingBottom="@dimen/common_area_margin_middle"
+                android:textColor="@color/black"
+                android:textSize="@dimen/sp_15" />
+
+            <include layout="@layout/item_line_vertical_list" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/layout_question_fourth"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/common_area_margin"
+            android:layout_marginRight="@dimen/common_area_margin"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_question_fourth"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="@dimen/common_area_margin_middle"
+                android:paddingBottom="@dimen/common_area_margin_middle"
+                android:textColor="@color/black"
+                android:textSize="@dimen/sp_15" />
+
+            <include layout="@layout/item_line_vertical_list" />
+
+        </LinearLayout>
+
+    </LinearLayout>
 
 </RelativeLayout>

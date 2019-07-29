@@ -50,9 +50,11 @@ public class CustomerServiceActivity extends JMEBaseActivity {
     private QuestionTypeAdapter mQuestionTypeAdapter;
     private QuestionGuessAdapter mQuestionGuessAdapter;
     private QuestionAnswerAdapter mQuestionAnswerAdapter;
-    private List<QuestionAnswerVo> mList = new ArrayList<>();
+    private List<List<QuestionAnswerVo>> mQuestionAnswerVoList = new ArrayList<>();
 
-    private String mQuestion;
+    private boolean bGuessFlag = true;
+    private int mPosition = -1;
+    private String mGuessValue;
 
     private Subscription mRxbus;
 
@@ -86,7 +88,7 @@ public class CustomerServiceActivity extends JMEBaseActivity {
         mBinding.recyclerViewQuestion.setLayoutManager(new LinearLayoutManager(mContext));
         mBinding.recyclerViewQuestion.setAdapter(mQuestionGuessAdapter);
 
-        mQuestionAnswerAdapter = new QuestionAnswerAdapter(this, R.layout.item_question_answer, mList);
+        mQuestionAnswerAdapter = new QuestionAnswerAdapter(this, R.layout.item_question_answer, mQuestionAnswerVoList);
         mBinding.recyclerViewAnswer.setLayoutManager(new LinearLayoutManager(mContext));
         mBinding.recyclerViewAnswer.setAdapter(mQuestionAnswerAdapter);
 
@@ -118,10 +120,65 @@ public class CustomerServiceActivity extends JMEBaseActivity {
             if (null == questionBean)
                 return;
 
-            mQuestion = questionBean.getTitle();
-
-            getAnswerList();
+            getAnswerList(questionBean.getTitle());
         });
+
+        mQuestionAnswerAdapter.setOnItemChildClickListener((adapter, view, position) -> {
+            List<QuestionAnswerVo> questionAnswerVoList = (List<QuestionAnswerVo>)adapter.getItem(position);
+
+            if (null == questionAnswerVoList || questionAnswerVoList.size() == 0)
+                return;
+
+            hiddenKeyBoard();
+
+            switch (view.getId()) {
+                case R.id.tv_change_group:
+                    bGuessFlag = false;
+                    mPosition = position;
+                    mGuessValue = questionAnswerVoList.get(0).getInputQuestion();
+
+                    getGreeting();
+
+                    break;
+                case R.id.layout_question_first:
+                    QuestionAnswerVo questionAnswerVoFirst = questionAnswerVoList.get(0);
+
+                    if (null == questionAnswerVoFirst)
+                        return;
+
+                    getAnswerList(questionAnswerVoFirst.getQuestion());
+
+                    break;
+                case R.id.layout_question_second:
+                    QuestionAnswerVo questionAnswerVoSecond = questionAnswerVoList.get(1);
+
+                    if (null == questionAnswerVoSecond)
+                        return;
+
+                    getAnswerList(questionAnswerVoSecond.getQuestion());
+
+                    break;
+                case R.id.layout_question_third:
+                    QuestionAnswerVo questionAnswerVoThird = questionAnswerVoList.get(2);
+
+                    if (null == questionAnswerVoThird)
+                        return;
+
+                    getAnswerList(questionAnswerVoThird.getQuestion());
+
+                    break;
+                case R.id.layout_question_fourth:
+                    QuestionAnswerVo questionAnswerVoFourth = questionAnswerVoList.get(3);
+
+                    if (null == questionAnswerVoFourth)
+                        return;
+
+                    getAnswerList(questionAnswerVoFourth.getQuestion());
+
+                    break;
+            }
+        });
+
     }
 
     @Override
@@ -185,9 +242,12 @@ public class CustomerServiceActivity extends JMEBaseActivity {
         sendRequest(ManagementService.getInstance().getGreeting, new HashMap<>(), false);
     }
 
-    private void getAnswerList() {
+    private void getAnswerList(String question) {
+        if (TextUtils.isEmpty(question))
+            return;
+
         HashMap<String, String> hashMap = new HashMap<>();
-        hashMap.put("ask", mQuestion);
+        hashMap.put("ask", question);
 
         sendRequest(ManagementService.getInstance().answerList, hashMap, true);
     }
@@ -228,12 +288,42 @@ public class CustomerServiceActivity extends JMEBaseActivity {
                     if (null == questionGuessVo)
                         return;
 
-                    mQuestionGuessAdapter.setNewData(questionGuessVo.getQuestionList());
+                    if (bGuessFlag) {
+                        mQuestionGuessAdapter.setNewData(questionGuessVo.getQuestionList());
+                    } else {
+                        List<QuestionGuessVo.QuestionBean> questionBeanList = questionGuessVo.getQuestionList();
+                        List<QuestionAnswerVo> questListVoList = new ArrayList<>();
+
+                        if (null != questionBeanList && questionBeanList.size() > 0) {
+                            for (int i = 0; i < questionBeanList.size(); i++) {
+                                QuestionGuessVo.QuestionBean questionBean = questionBeanList.get(i);
+
+                                if (null != questionBean) {
+                                    QuestionAnswerVo questionAnswerVo = new QuestionAnswerVo();
+                                    questionAnswerVo.setInputQuestion(mGuessValue);
+                                    questionAnswerVo.setQuestion(questionBean.getTitle());
+                                    questionAnswerVo.setAsk(questionBean.getAnwser());
+                                    questionAnswerVo.setJumpTxt(questionBean.getJumpTxt());
+
+                                    questListVoList.add(questionAnswerVo);
+                                }
+                            }
+                        }
+
+                        if (null == mQuestionAnswerVoList || mQuestionAnswerVoList.size() <= mPosition)
+                            return;
+
+                        mQuestionAnswerVoList.set(mPosition, questListVoList);
+
+                        mQuestionAnswerAdapter.notifyDataSetChanged();
+                    }
                 }
 
                 break;
             case "AnswerList":
                 if (head.isSuccess()) {
+                    String question = mBinding.etQuestion.getText().toString();
+
                     mBinding.etQuestion.setText("");
 
                     List<CustomerServiceVo> customerServiceVoList;
@@ -247,22 +337,45 @@ public class CustomerServiceActivity extends JMEBaseActivity {
                     }
 
                     if (null == customerServiceVoList || 0 == customerServiceVoList.size()) {
+                        List<QuestionAnswerVo> questionAnswerVoNoneList = new ArrayList<>();
+
                         QuestionAnswerVo questionAnswerVo = new QuestionAnswerVo();
-                        questionAnswerVo.setQuestion(mQuestion);
+                        questionAnswerVo.setInputQuestion("");
+                        questionAnswerVo.setQuestion(question);
                         questionAnswerVo.setAsk(getString(R.string.personal_customer_service_cannot_answer));
                         questionAnswerVo.setJumpTxt(getString(R.string.personal_customer_service_personal));
 
-                        mList.add(questionAnswerVo);
+                        questionAnswerVoNoneList.add(questionAnswerVo);
+
+                        mQuestionAnswerVoList.add(questionAnswerVoNoneList);
                     } else {
-                        for (int i = 0; i < customerServiceVoList.size(); i++) {
-                            CustomerServiceVo customerServiceVo = customerServiceVoList.get(i);
+                        List<QuestionAnswerVo> questionAnswerVoList = new ArrayList<>();
+
+                        int size = customerServiceVoList.size();
+
+                        if (size == 1) {
+                            CustomerServiceVo customerServiceVo = customerServiceVoList.get(0);
                             QuestionAnswerVo questionAnswerVo = new QuestionAnswerVo();
+                            questionAnswerVo.setInputQuestion("");
                             questionAnswerVo.setQuestion(customerServiceVo.getTitle());
                             questionAnswerVo.setAsk(customerServiceVo.getAnwser());
                             questionAnswerVo.setJumpTxt(customerServiceVo.getJumpTxt());
 
-                            mList.add(questionAnswerVo);
+                            questionAnswerVoList.add(questionAnswerVo);
+                        } else {
+                            for (int i = 0; i < customerServiceVoList.size(); i++) {
+                                CustomerServiceVo customerServiceVo = customerServiceVoList.get(i);
+                                QuestionAnswerVo questionAnswerVo = new QuestionAnswerVo();
+                                questionAnswerVo.setInputQuestion(question);
+                                questionAnswerVo.setQuestion(customerServiceVo.getTitle());
+                                questionAnswerVo.setAsk(customerServiceVo.getAnwser());
+                                questionAnswerVo.setJumpTxt(customerServiceVo.getJumpTxt());
+
+                                questionAnswerVoList.add(questionAnswerVo);
+                            }
                         }
+
+                        mQuestionAnswerVoList.add(questionAnswerVoList);
                     }
 
                     mQuestionAnswerAdapter.notifyDataSetChanged();
@@ -285,6 +398,8 @@ public class CustomerServiceActivity extends JMEBaseActivity {
         }
 
         public void onClickChangeGroup() {
+            bGuessFlag = true;
+
             hiddenKeyBoard();
 
             getGreeting();
@@ -293,12 +408,12 @@ public class CustomerServiceActivity extends JMEBaseActivity {
         public void onClickSend() {
             hiddenKeyBoard();
 
-            mQuestion = mBinding.etQuestion.getText().toString().trim();
+            String question = mBinding.etQuestion.getText().toString().trim();
 
-            if (TextUtils.isEmpty(mQuestion))
+            if (TextUtils.isEmpty(question))
                 showShortToast(R.string.personal_customer_service_empty);
             else
-                getAnswerList();
+                getAnswerList(question);
         }
     }
 

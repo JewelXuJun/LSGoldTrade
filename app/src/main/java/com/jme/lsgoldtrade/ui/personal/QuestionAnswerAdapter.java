@@ -24,27 +24,68 @@ import com.jme.lsgoldtrade.domain.QuestionAnswerVo;
 
 import java.util.List;
 
-public class QuestionAnswerAdapter extends BaseQuickAdapter<QuestionAnswerVo, BaseViewHolder> {
+public class QuestionAnswerAdapter extends BaseQuickAdapter<List<QuestionAnswerVo>, BaseViewHolder> {
 
     private Activity mActivity;
 
-    public QuestionAnswerAdapter(Activity activity, int layoutResId, @Nullable List<QuestionAnswerVo> data) {
+    public QuestionAnswerAdapter(Activity activity, int layoutResId, @Nullable List<List<QuestionAnswerVo>> data) {
         super(layoutResId, data);
 
         mActivity = activity;
     }
 
     @Override
-    protected void convert(BaseViewHolder helper, QuestionAnswerVo item) {
-        if (null == item)
+    protected void convert(BaseViewHolder helper, List<QuestionAnswerVo> questionAnswerVoList) {
+        if (null == questionAnswerVoList)
             return;
 
-        String ask = item.getAsk();
-        String jumpTxt = item.getJumpTxt();
-        String answer = ask + jumpTxt;
+        int size = questionAnswerVoList.size();
 
-        helper.setText(R.id.tv_question, item.getQuestion())
-                .setText(R.id.tv_answer, TextUtils.isEmpty(jumpTxt) ? ask : doShortcutKeys(answer, jumpTxt, helper));
+        if (size == 0)
+            return;
+
+        if (size == 1) {
+            QuestionAnswerVo questionAnswerVo = questionAnswerVoList.get(0);
+
+            String ask = questionAnswerVo.getAsk();
+            String jumpTxt = questionAnswerVo.getJumpTxt();
+            String answer = ask + jumpTxt;
+
+            helper.setText(R.id.tv_question, questionAnswerVo.getQuestion())
+                    .setText(R.id.tv_answer, TextUtils.isEmpty(jumpTxt) ? ask : doShortcutKeys(answer, jumpTxt, helper))
+                    .setGone(R.id.tv_answer, true)
+                    .setGone(R.id.layout_answer_list, false);
+        } else {
+            helper.setText(R.id.tv_question, questionAnswerVoList.get(0).getInputQuestion())
+                    .setGone(R.id.tv_answer, false)
+                    .setGone(R.id.layout_answer_list, true)
+                    .addOnClickListener(R.id.tv_change_group)
+                    .addOnClickListener(R.id.layout_question_first)
+                    .addOnClickListener(R.id.layout_question_second)
+                    .addOnClickListener(R.id.layout_question_third)
+                    .addOnClickListener(R.id.layout_question_fourth);
+
+            for (int i = 0; i < questionAnswerVoList.size(); i++) {
+                QuestionAnswerVo questionAnswerVo = questionAnswerVoList.get(i);
+
+                if (null != questionAnswerVo) {
+                    if (i == 0) {
+                        helper.setText(R.id.tv_question_first, "1." + questionAnswerVo.getQuestion())
+                                .setGone(R.id.layout_question_first, true);
+                    } else if (i == 1) {
+                        helper.setText(R.id.tv_question_second, "2." + questionAnswerVo.getQuestion())
+                                .setGone(R.id.layout_question_second, true);
+                    } else if (i == 2) {
+                        helper.setText(R.id.tv_question_third, "3." + questionAnswerVo.getQuestion())
+                                .setGone(R.id.layout_question_third, true);
+                    } else if (i == 3) {
+                        helper.setText(R.id.tv_question_fourth, "4." + questionAnswerVo.getQuestion())
+                                .setGone(R.id.layout_question_fourth, true);
+                    }
+                }
+            }
+        }
+
     }
 
     private SpannableString doShortcutKeys(String value, String jumpTxt, BaseViewHolder helper) {

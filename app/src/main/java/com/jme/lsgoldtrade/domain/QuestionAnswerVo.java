@@ -2,11 +2,21 @@ package com.jme.lsgoldtrade.domain;
 
 public class QuestionAnswerVo {
 
+    private String inputQuestion;
+
     private String question;
 
     private String ask;
 
     private String jumpTxt;
+
+    public String getInputQuestion() {
+        return inputQuestion;
+    }
+
+    public void setInputQuestion(String inputQuestion) {
+        this.inputQuestion = inputQuestion;
+    }
 
     public String getQuestion() {
         return question;
