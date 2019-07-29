@@ -2,20 +2,45 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/common_background">
+    android:background="@color/color_bg_img"
+    android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/tv_content"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/common_area_margin_tiny"
         android:background="@color/white"
-        android:lineSpacingExtra="@dimen/lineSpacingExtra_normal"
-        android:paddingLeft="@dimen/common_page_padding"
-        android:paddingTop="@dimen/common_area_margin_tiny"
-        android:paddingRight="@dimen/common_page_padding"
-        android:paddingBottom="@dimen/common_area_margin_tiny"
-        android:textColor="@color/color_text_normal"
-        android:textSize="@dimen/sp_14" />
+        android:padding="@dimen/common_page_padding"
+        android:layout_marginBottom="@dimen/common_area_margin_tiny"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tv_content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/common_area_margin_tiny"
+            android:lineSpacingExtra="@dimen/lineSpacingExtra_normal"
+            android:maxLines="30"
+            android:textColor="@color/color_text_normal"
+            android:textSize="@dimen/sp_14" />
+
+        <ImageView
+            android:id="@+id/img_content_open"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="@dimen/margin_tiny"
+            android:background="@mipmap/ic_content_open"
+            android:visibility="gone" />
+
+        <ImageView
+            android:id="@+id/img_content_close"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="@dimen/margin_tiny"
+            android:background="@mipmap/ic_content_close"
+            android:visibility="gone" />
+
+    </LinearLayout>
 
 </LinearLayout>
