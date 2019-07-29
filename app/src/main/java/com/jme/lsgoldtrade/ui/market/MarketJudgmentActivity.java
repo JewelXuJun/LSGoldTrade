@@ -188,7 +188,7 @@ public class MarketJudgmentActivity extends JMEBaseActivity {
         params.put("accountId", accountID);
         params.put("pagingKey", "");
 
-        sendRequest(TradeService.getInstance().position, params, false, false, true);
+        sendRequest(TradeService.getInstance().position, params, false);
     }
 
     private void limitOrder(String contractId, String price, String amount, String bsFlag, String ocFlag) {

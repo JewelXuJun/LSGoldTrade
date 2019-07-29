@@ -677,7 +677,7 @@ public class MarketDetailActivity extends JMEBaseActivity implements FChart.OnPr
         params.put("accountId", accountID);
         params.put("pagingKey", "");
 
-        sendRequest(TradeService.getInstance().position, params, false, false, true);
+        sendRequest(TradeService.getInstance().position, params, false);
     }
 
     private void limitOrder(String contractId, String price, String amount, String bsFlag, String ocFlag) {
