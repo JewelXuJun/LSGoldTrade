@@ -5,7 +5,6 @@ import android.databinding.DataBindingUtil;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
 import com.jme.lsgoldtrade.R;
 import com.jme.lsgoldtrade.base.JMEBasePopupWindow;
 import com.jme.lsgoldtrade.databinding.PopupwindowOpenserviceBinding;
@@ -38,13 +37,8 @@ public class OpenServicePopupWindow extends JMEBasePopupWindow {
         setContentView(mBinding.getRoot());
     }
 
-    public void setData(String content) {
+    public void setData(String content, View.OnClickListener listener) {
         mBinding.content.setText(content);
-        mBinding.sure.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dismiss();
-            }
-        });
+        mBinding.sure.setOnClickListener(listener);
     }
 }
