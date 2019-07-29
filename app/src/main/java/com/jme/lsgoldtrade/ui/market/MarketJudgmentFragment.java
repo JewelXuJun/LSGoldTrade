@@ -269,13 +269,13 @@ public class MarketJudgmentFragment extends JMEBaseFragment {
 
     private void setJudgmentData(String judgment, ImageView imageView) {
         if (TextUtils.isEmpty(judgment))
-            imageView.setBackground(null);
+            imageView.setImageDrawable(null);
         else if (judgment.equals("S"))
-            imageView.setImageResource(R.mipmap.ic_judment_up);
+            imageView.setImageDrawable(ContextCompat.getDrawable(mContext, R.mipmap.ic_judment_up));
         else if (judgment.equals("X"))
-            imageView.setImageResource(R.mipmap.ic_judgment_down);
+            imageView.setImageDrawable(ContextCompat.getDrawable(mContext, R.mipmap.ic_judgment_down));
         else if (judgment.equals("H"))
-            imageView.setImageResource(R.mipmap.ic_judgment_transverse);
+            imageView.setImageDrawable(ContextCompat.getDrawable(mContext, R.mipmap.ic_judgment_transverse));
     }
 
     private void setJudgmentDataResult(String judgmentResult, ImageView imageView) {
