@@ -7,11 +7,11 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
+import android.os.Bundle;
 import android.support.annotation.RequiresApi;
 import android.support.v4.app.NotificationCompat;
 import android.text.TextUtils;
 import android.util.Log;
-import com.google.gson.Gson;
 import com.google.gson.annotations.SerializedName;
 import com.igexin.sdk.GTIntentService;
 import com.igexin.sdk.PushManager;
@@ -19,7 +19,9 @@ import com.igexin.sdk.message.GTCmdMessage;
 import com.igexin.sdk.message.GTNotificationMessage;
 import com.igexin.sdk.message.GTTransmitMessage;
 import com.jme.lsgoldtrade.R;
-import com.jme.lsgoldtrade.ui.market.MarketDetailActivity;
+import com.jme.lsgoldtrade.receiver.NotificationReceiver;
+import org.json.JSONException;
+import org.json.JSONObject;
 import java.io.Serializable;
 
 /**
@@ -75,36 +77,55 @@ public class CustomIntentService extends GTIntentService {
         } else {
             String data = new String(payload);
             Log.d(TAG, "receiver payload = " + data);
-            if (TextUtils.isEmpty(data))
-                return;
-
-            NotificationMessage message = null;
 
             try {
-                message = new Gson().fromJson(data, NotificationMessage.class);
-            } catch (Exception e) {
+                JSONObject jsonObject = new JSONObject(data);
+                showNotification(mContext, jsonObject);
+            } catch (JSONException e) {
                 e.printStackTrace();
-                message = null;
             }
-
-            if (message == null)
-                return;
-
-            showNotification(message);
+//            if (TextUtils.isEmpty(data))
+//                return;
+//
+//            NotificationMessage message = null;
+//
+//            try {
+//                message = new Gson().fromJson(data, NotificationMessage.class);
+//            } catch (Exception e) {
+//                e.printStackTrace();
+//                message = null;
+//            }
+//
+//            if (message == null)
+//                return;
+//
+//            showNotification(message);
         }
     }
 
-    private void showNotification(NotificationMessage message) {
+    /**
+     * 根据消息内容弹出通知框
+     *
+     * @param context
+     * @param jsonObject
+     */
+    private void showNotification(Context context, JSONObject jsonObject) {
         int notificationId = (int) System.currentTimeMillis();
 
-        Intent intent = null;
-        PendingIntent pendingIntent = null;
+        String contractId = jsonObject.optString("contractId");
+        String latestPrice = jsonObject.optString("latestPrice");
 
-        intent = new Intent(mContext, MarketDetailActivity.class);
-        intent.putExtra("ContractId", message.getContractId());
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        if (TextUtils.isEmpty(contractId) || TextUtils.isEmpty(latestPrice))
+            return;
 
-        pendingIntent = PendingIntent.getActivity(mContext, notificationId, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+        //设置点击通知后是发送广播，传递对应的数据
+        Intent broadcastIntent = new Intent(context, NotificationReceiver.class);
+        Bundle bundle = new Bundle();
+        bundle.putString("contractId", contractId);
+        broadcastIntent.putExtras(bundle);
+
+        PendingIntent pendingIntent = PendingIntent.
+                getBroadcast(context, notificationId, broadcastIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
         Notification notification = null;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
@@ -113,13 +134,13 @@ public class CustomIntentService extends GTIntentService {
                     .setChannelId(CHANNEL_ID)
                     .setSmallIcon(R.mipmap.ic_logo)
                     .setContentTitle("行情预警")
-                    .setContentText(message.getContractId() + "已达到您设置的预警价格，最新价为" + message.getLatestPrice())
+                    .setContentText(contractId + "已达到您设置的预警价格，最新价为" + latestPrice)
                     .setContentIntent(pendingIntent).build();
         } else {
             notification = new NotificationCompat.Builder(mContext)
                     .setSmallIcon(R.mipmap.ic_logo)
                     .setContentTitle("行情预警")
-                    .setContentText(message.getContractId() + "已达到您设置的预警价格，最新价为" + message.getLatestPrice())
+                    .setContentText(contractId + "已达到您设置的预警价格，最新价为" + latestPrice)
                     .setContentIntent(pendingIntent).build();
         }
 
@@ -129,6 +150,42 @@ public class CustomIntentService extends GTIntentService {
         notification.defaults |= Notification.DEFAULT_SOUND | Notification.DEFAULT_VIBRATE | Notification.DEFAULT_LIGHTS;
         mManager.notify(notificationId, notification);
     }
+
+//    private void showNotification(NotificationMessage message) {
+//        int notificationId = (int) System.currentTimeMillis();
+//
+//        Intent intent = null;
+//        PendingIntent pendingIntent = null;
+//
+//        intent = new Intent(mContext, MarketDetailActivity.class);
+//        intent.putExtra("ContractId", message.getContractId());
+//        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+//
+//        pendingIntent = PendingIntent.getActivity(mContext, notificationId, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+//
+//        Notification notification = null;
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+//            createNotificationChannel(mManager);
+//            notification = new Notification.Builder(mContext)
+//                    .setChannelId(CHANNEL_ID)
+//                    .setSmallIcon(R.mipmap.ic_logo)
+//                    .setContentTitle("行情预警")
+//                    .setContentText(message.getContractId() + "已达到您设置的预警价格，最新价为" + message.getLatestPrice())
+//                    .setContentIntent(pendingIntent).build();
+//        } else {
+//            notification = new NotificationCompat.Builder(mContext)
+//                    .setSmallIcon(R.mipmap.ic_logo)
+//                    .setContentTitle("行情预警")
+//                    .setContentText(message.getContractId() + "已达到您设置的预警价格，最新价为" + message.getLatestPrice())
+//                    .setContentIntent(pendingIntent).build();
+//        }
+//
+//        // 点击notification之后，该notification自动消失
+//        notification.flags |= Notification.FLAG_AUTO_CANCEL;
+//        // notification被notify的时候，触发默认声音和默认震动
+//        notification.defaults |= Notification.DEFAULT_SOUND | Notification.DEFAULT_VIBRATE | Notification.DEFAULT_LIGHTS;
+//        mManager.notify(notificationId, notification);
+//    }
 
     @Override
     public void onReceiveOnlineState(Context context, boolean online) {

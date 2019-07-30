@@ -15,21 +15,21 @@ android {
         versionName rootProject.ext.versionName
 
         // 个推生产环境配置
-//        manifestPlaceholders = [
-//                qqappid         : "1108077613",
-//
-//                GETUI_APP_ID    : "i7N8veS89N7ovmPvTj8F75",
-//                GETUI_APP_KEY   : "i0WItwgw1z6F2pkFHpmST9",
-//                GETUI_APP_SECRET: "bKNqkSgxlY9FLyudBjqCw1"
-//        ]
-        // 个推测试环境配置
         manifestPlaceholders = [
                 qqappid         : "1108077613",
 
-                GETUI_APP_ID    : "4j22U038ru7pJQ8ET32tHA",
-                GETUI_APP_KEY   : "AOOGAc6lnI8glN6bDeBiq4",
-                GETUI_APP_SECRET: "PAMOh2zGYH6OvxnlczHrW3"
+                GETUI_APP_ID    : "i7N8veS89N7ovmPvTj8F75",
+                GETUI_APP_KEY   : "i0WItwgw1z6F2pkFHpmST9",
+                GETUI_APP_SECRET: "bKNqkSgxlY9FLyudBjqCw1"
         ]
+        // 个推测试环境配置
+//        manifestPlaceholders = [
+//                qqappid         : "1108077613",
+//
+//                GETUI_APP_ID    : "4j22U038ru7pJQ8ET32tHA",
+//                GETUI_APP_KEY   : "AOOGAc6lnI8glN6bDeBiq4",
+//                GETUI_APP_SECRET: "PAMOh2zGYH6OvxnlczHrW3"
+//        ]
 
         // Arouter
         javaCompileOptions {
