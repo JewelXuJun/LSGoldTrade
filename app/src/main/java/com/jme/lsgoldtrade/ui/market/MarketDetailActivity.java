@@ -147,7 +147,7 @@ public class MarketDetailActivity extends JMEBaseActivity implements FChart.OnPr
         mTChart = mChart.getTChart();
         mKChart = mChart.getKChart();
 
-        mChart.initChartSort(null == mUser || !mUser.isLogin() ? "" : SharedPreUtils.getString(this, SharedPreUtils.Chart_Sort));
+        mChart.initChartSort(AppConfig.MARKET_SORT);
         mChart.setPriceFormatDigit(2);
 
         initTChart();

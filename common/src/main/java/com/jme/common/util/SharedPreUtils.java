@@ -24,7 +24,6 @@ public class SharedPreUtils {
     public static final String Login_Mobile = "Login_Mobile";
     public static final String MaxMatchNo = "maxmMatchno";
     public static final String UUID = "uuid";
-    public static final String Chart_Sort = "chartSort";
 
     /**
      * 序列化对象
