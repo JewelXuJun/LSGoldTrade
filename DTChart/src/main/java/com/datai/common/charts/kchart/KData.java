@@ -30,8 +30,8 @@ public class KData {
         MIN15("15min", "yyyyMMddHHmm", "15分钟", "15minK"),
         MIN30("30min", "yyyyMMddHHmm", "30分钟", "30minK"),
         MIN60("60min", "yyyyMMddHHmm", "1小时", "60minK"),
-        MIN240("240min", "yyyyMMddHHmm", "4小时", "4hourK");
-//        MINBH("360min", "yyyyMMddHHmm", "编辑排序", "sort");
+        MIN240("240min", "yyyyMMddHHmm", "4小时", "4hourK"),
+        EDITSORT("editsort", "", "编辑排序", "sort");
 
         private String describe;
         private String format;

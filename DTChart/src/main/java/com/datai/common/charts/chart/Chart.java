@@ -9,12 +9,10 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
-import android.widget.TextView;
 
 import com.datai.common.R;
 import com.datai.common.TimeSortActivity;
 import com.datai.common.charts.common.Config;
-import com.datai.common.charts.common.Descriptor;
 import com.datai.common.charts.kchart.KChart;
 import com.datai.common.charts.kchart.KData;
 import com.datai.common.charts.tchart.TChart;
@@ -25,7 +23,7 @@ import com.datai.common.view.popup.QuickAction;
  * Created by XuJun on 2016/1/28.
  */
 public class Chart extends LinearLayout {
-    public static final String TCHART_MINUTE = "分钟";
+    public static final String TCHART_MINUTE = "其他";
 
     private Context mContext;
     private TChart mTChart;
@@ -36,20 +34,12 @@ public class Chart extends LinearLayout {
     private RadioButton mRadioButton_week;
     private RadioButton mRadioButton_month;
     private RadioButton mRadioButton_minute;
-    private TextView mTime;
-    private TextView mDate;
-    private TextView mOpen;
-    private TextView mClose;
-    private TextView mHigh;
-    private TextView mLow;
-    private TextView mRise_value;
-    private TextView mRise_percent;
-
-    private Descriptor mDescriptor;
 
     private QuickAction mPopupIndicators;
 
     private OnChartListener mChartListener;
+
+    public KData.Unit[] mChartType;
 
     private boolean mShowTChart = true;
 
@@ -83,42 +73,49 @@ public class Chart extends LinearLayout {
         mRadioButton_week = findViewById(R.id.chart_week);
         mRadioButton_month = findViewById(R.id.chart_month);
         mRadioButton_minute = findViewById(R.id.chart_minute);
-        mTime = findViewById(R.id.chart_textitem_time);
-        mDate = findViewById(R.id.chart_textitem_date);
-        mOpen = findViewById(R.id.chart_textitem_open);
-        mClose = findViewById(R.id.chart_textitem_close);
-        mHigh = findViewById(R.id.chart_textitem_high);
-        mLow = findViewById(R.id.chart_textitem_low);
-        mRise_value = findViewById(R.id.chart_textitem_rise_value);
-        mRise_percent = findViewById(R.id.chart_textitem_rise_percent);
+    }
 
-        mDescriptor = new Descriptor();
+    public void initChartSort(String chartSortValue) {
+        if (TextUtils.isEmpty(chartSortValue)) {
+            mChartType = new KData.Unit[]{KData.Unit.DAY, KData.Unit.WEEK, KData.Unit.MONTH, KData.Unit.MIN1, KData.Unit.MIN5,
+                    KData.Unit.MIN15, KData.Unit.MIN30, KData.Unit.MIN60, KData.Unit.MIN240};
+        } else {
+            String[] chartSortValueArray = chartSortValue.split(",");
 
-//        mKChart.setOnKChartSelectedListener(new OnKChartSelectedListener() {
-//            @Override
-//            public void onValueSelected(HashMap<String, Object> entry, int index, float prev) {
-//                findViewById(R.id.chart_layout).setVisibility(View.GONE);
-//                findViewById(R.id.chart_text_layout).setVisibility(View.VISIBLE);
-//
-//                if (entry != null) {
-//                    mTime.setText(mDescriptor.setTime((long) entry.get(Indicator.K_TIME), mKChart.getUnit()));
-//                    mDate.setText(mDescriptor.setDate((long) entry.get(Indicator.K_TIME), mKChart.getUnit()));
-//                    mOpen.setText(mDescriptor.setOpen((float) entry.get(Indicator.K_OPEN), mKChart.getDataType(index, (float) entry.get(Indicator.K_OPEN), prev)));
-//                    mClose.setText(mDescriptor.setClose((float) entry.get(Indicator.K_CLOSE), mKChart.getDataType(index, (float) entry.get(Indicator.K_CLOSE), prev)));
-//                    mHigh.setText(mDescriptor.setHigh((float) entry.get(Indicator.K_HIGH), mKChart.getDataType(index, (float) entry.get(Indicator.K_HIGH), prev)));
-//                    mLow.setText(mDescriptor.setLow((float) entry.get(Indicator.K_LOW), mKChart.getDataType(index, (float) entry.get(Indicator.K_LOW), prev)));
-//
-//                    mRise_value.setText(mDescriptor.setRiseValue((float) entry.get(RISE.RISE_VALUE)));
-//                    mRise_percent.setText(mDescriptor.setRisePercent((float) entry.get(RISE.RISE_PERCENT)));
-//                }
-//            }
-//
-//            @Override
-//            public void onNothingSelected() {
-//                findViewById(R.id.chart_layout).setVisibility(View.VISIBLE);
-//                findViewById(R.id.chart_text_layout).setVisibility(View.GONE);
-//            }
-//        });
+            if (chartSortValueArray.length == 0) {
+                mChartType = new KData.Unit[]{KData.Unit.DAY, KData.Unit.WEEK, KData.Unit.MONTH, KData.Unit.MIN1, KData.Unit.MIN5,
+                        KData.Unit.MIN15, KData.Unit.MIN30, KData.Unit.MIN60, KData.Unit.MIN240};
+            } else {
+                mChartType = new KData.Unit[chartSortValueArray.length];
+
+                for (int i = 0; i < chartSortValueArray.length; i++) {
+                    String value = chartSortValueArray[i];
+
+                    if (value.equals("日线"))
+                        mChartType[i] = KData.Unit.DAY;
+                    else if (value.equals("周线"))
+                        mChartType[i] = KData.Unit.WEEK;
+                    else if (value.equals("月线"))
+                        mChartType[i] = KData.Unit.MONTH;
+                    else if (value.equals("1分钟"))
+                        mChartType[i] = KData.Unit.MIN1;
+                    else if (value.equals("5分钟"))
+                        mChartType[i] = KData.Unit.MIN5;
+                    else if (value.equals("15分钟"))
+                        mChartType[i] = KData.Unit.MIN15;
+                    else if (value.equals("30分钟"))
+                        mChartType[i] = KData.Unit.MIN30;
+                    else if (value.equals("1小时"))
+                        mChartType[i] = KData.Unit.MIN60;
+                    else if (value.equals("4小时"))
+                        mChartType[i] = KData.Unit.MIN240;
+                }
+            }
+        }
+
+        mRadioButton_day.setText(mChartType[0].getCHDescribe());
+        mRadioButton_week.setText(mChartType[1].getCHDescribe());
+        mRadioButton_month.setText(mChartType[2].getCHDescribe());
 
         initPopup();
     }
@@ -127,6 +124,7 @@ public class Chart extends LinearLayout {
         mRadioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
+
             }
         });
 
@@ -140,21 +138,21 @@ public class Chart extends LinearLayout {
         mRadioButton_day.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                setShowKChart(KData.Unit.DAY);
+                setShowKChart(mChartType[0]);
             }
         });
 
         mRadioButton_week.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                setShowKChart(KData.Unit.WEEK);
+                setShowKChart(mChartType[1]);
             }
         });
 
         mRadioButton_month.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                setShowKChart(KData.Unit.MONTH);
+                setShowKChart(mChartType[2]);
             }
         });
 
@@ -168,16 +166,13 @@ public class Chart extends LinearLayout {
     }
 
     private void initPopup() {
-        if (Config.MinuteType == null)
-            return;
-
         mPopupIndicators = new QuickAction(mContext, QuickAction.VERTICAL);
-
         mPopupIndicators.setActionItemTitleSize(12);
 
-        for (int i = 0; i < Config.MinuteType.length; i++) {
-            String title = Config.MinuteType[i].getCHDescribe();
+        for (int i = 3; i < mChartType.length; i++) {
+            String title = mChartType[i].getCHDescribe();
             ActionItem item = new ActionItem(i, title, null);
+
             mPopupIndicators.addActionItem(item);
         }
 
@@ -189,12 +184,14 @@ public class Chart extends LinearLayout {
         });
 
         mPopupIndicators.setOnActionItemClickListener(new QuickAction.OnActionItemClickListener() {
-                    @Override
-                    public void onItemClick(QuickAction source, int pos,
-                                            int actionId) {
-                        setShowKChart(Config.MinuteType[pos]);
-                    }
-                });
+            @Override
+            public void onItemClick(QuickAction source, int position, int actionId) {
+                int index = position + 3;
+
+                if (index < mChartType.length)
+                    setShowKChart(mChartType[index]);
+            }
+        });
     }
 
     public KChart getKChart() {
@@ -212,11 +209,6 @@ public class Chart extends LinearLayout {
     public void setOnLandscapeListener(OnClickListener listener) {
         mTChart.setOnLandscapeListener(listener);
         mKChart.setOnLandscapeListener(listener);
-    }
-
-    public void setLandscapeButtonVisible(boolean visible) {
-        mTChart.setLandscapeButtonVisible(visible);
-        mKChart.setLandscapeButtonVisible(visible);
     }
 
     public void setUnit(String unitCode) {
@@ -264,9 +256,6 @@ public class Chart extends LinearLayout {
                 setChartUnit(KData.Unit.MIN240);
 
                 break;
-            case "sort":
-                mContext.startActivity(new Intent(mContext, TimeSortActivity.class));
-                break;
             default:
                 setChartUnit(KData.Unit.TIME);
 
@@ -280,22 +269,27 @@ public class Chart extends LinearLayout {
             mRadioButton_minute.setText(TCHART_MINUTE);
         } else {
             KData.Unit unit = mKChart.getUnit();
+
             switch (unit) {
                 case DAY:
                     mRadioButton_day.setChecked(true);
                     mRadioButton_minute.setText(TCHART_MINUTE);
+
                     break;
                 case WEEK:
                     mRadioButton_week.setChecked(true);
                     mRadioButton_minute.setText(TCHART_MINUTE);
+
                     break;
                 case MONTH:
                     mRadioButton_month.setChecked(true);
                     mRadioButton_minute.setText(TCHART_MINUTE);
+
                     break;
                 default:
                     mRadioButton_minute.setChecked(true);
                     mRadioButton_minute.setText(unit.getCHDescribe());
+
                     break;
             }
         }
@@ -344,7 +338,7 @@ public class Chart extends LinearLayout {
     }
 
     public void setPriceFormatDigit(int digits) {
-        mTChart.setPriceFormatDigit(digits);//用于显示价格
-        mKChart.setPriceFormatDigit(digits);//用于显示价格
+        mTChart.setPriceFormatDigit(digits);
+        mKChart.setPriceFormatDigit(digits);
     }
 }

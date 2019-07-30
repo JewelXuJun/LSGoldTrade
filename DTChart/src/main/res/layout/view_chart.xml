@@ -7,8 +7,6 @@
 
     <include layout="@layout/chart_chooseitem" />
 
-    <include layout="@layout/chart_textitem" />
-
     <com.datai.common.charts.tchart.TChart
         android:id="@+id/view_chart_tchart"
         android:layout_width="match_parent"

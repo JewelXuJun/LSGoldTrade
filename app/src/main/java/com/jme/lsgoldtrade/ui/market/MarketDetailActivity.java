@@ -28,6 +28,7 @@ import com.jme.common.util.DateUtil;
 import com.jme.common.util.KChartVo;
 import com.jme.common.util.NetWorkUtils;
 import com.jme.common.util.RxBus;
+import com.jme.common.util.SharedPreUtils;
 import com.jme.common.util.StatusBarUtil;
 import com.jme.common.util.StringUtils;
 import com.jme.common.util.TChartVo;
@@ -145,6 +146,7 @@ public class MarketDetailActivity extends JMEBaseActivity implements FChart.OnPr
         mTChart = mChart.getTChart();
         mKChart = mChart.getKChart();
 
+        mChart.initChartSort(null == mUser || !mUser.isLogin() ? "" : SharedPreUtils.getString(this, SharedPreUtils.Chart_Sort));
         mChart.setPriceFormatDigit(2);
 
         initTChart();
