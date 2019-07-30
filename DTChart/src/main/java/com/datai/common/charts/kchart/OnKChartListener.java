@@ -7,8 +7,6 @@ import android.view.MotionEvent;
  */
 public interface OnKChartListener {
 
-//    void onSwitchUnit(KData.Unit unit);
-
     void onEnding(long oldestTime, KData.Unit unit);
 
     void onChartSingleTapped(MotionEvent me);

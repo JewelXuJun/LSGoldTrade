@@ -147,6 +147,7 @@ public class Constants {
         public static final String ABOUT = "/SettingActivity/AboutActivity";
         public static final String MARKETDETAIL = "/MarketFragment/MarketDetailActivity";
         public static final String MARKETDETAILLANDSCAPE = "/MarketDetailActivity/MarketDetailLandscapeActivity";
+        public static final String MARKETEDITSORT = "/MarketDetailActivity/MarketEditSortActivity";
         public static final String CAPITALTRANSFER = "/FragmentHoldPositionBinding/CapitalTransferActivity";
         public static final String DAILYSTATEMENT = "/QueryFragment/DailyStatementActivity";
         public static final String CURRENTHOLDPOSITION = "/QueryFragment/CurrentHoldPositionActivity";

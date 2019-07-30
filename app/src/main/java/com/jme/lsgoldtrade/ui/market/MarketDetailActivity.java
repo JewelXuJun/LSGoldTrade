@@ -15,6 +15,7 @@ import android.view.View;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.datai.common.charts.chart.Chart;
+import com.datai.common.charts.chart.OnChartListener;
 import com.datai.common.charts.fchart.FChart;
 import com.datai.common.charts.indicator.Indicator;
 import com.datai.common.charts.kchart.KChart;
@@ -178,10 +179,18 @@ public class MarketDetailActivity extends JMEBaseActivity implements FChart.OnPr
 
         mChart.setOnLandscapeListener((view) -> gotoMarketDetailLandscapeActivity());
 
-        mChart.setOnChartListener((showTChart, unit) -> {
-            iRequestKDataFlag = NONE;
+        mChart.setOnChartListener(new OnChartListener() {
+            @Override
+            public void onSwitchUnit(boolean showTChart, KData.Unit unit) {
+                iRequestKDataFlag = NONE;
 
-            sendChartRefreshMessage(showTChart);
+                sendChartRefreshMessage(showTChart);
+            }
+
+            @Override
+            public void onEditSort() {
+                ARouter.getInstance().build(Constants.ARouterUriConst.MARKETEDITSORT).navigation();
+            }
         });
 
         mKChart.setOnKChartListener(new OnKChartListener() {

@@ -7,4 +7,6 @@ import com.datai.common.charts.kchart.KData;
  */
 public interface OnChartListener {
     void onSwitchUnit(boolean showTChart, KData.Unit unit);
+
+    void onEditSort();
 }

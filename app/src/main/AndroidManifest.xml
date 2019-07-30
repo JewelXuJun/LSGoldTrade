@@ -53,6 +53,9 @@
             android:name=".ui.market.MarketDetailLandscapeActivity"
             android:screenOrientation="landscape" />
         <activity
+            android:name=".ui.market.MarketEditSortActivity"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".ui.trade.GuaranteeFundSettingActivity"
             android:screenOrientation="portrait" />
         <activity
@@ -238,7 +241,7 @@
             android:name="com.tencent.connect.common.AssistActivity"
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
         <!--接收推送通知点击处理的receiver-->
-        <receiver android:name=".receiver.NotificationReceiver"/>
+        <receiver android:name=".receiver.NotificationReceiver" />
     </application>
 
 </manifest>

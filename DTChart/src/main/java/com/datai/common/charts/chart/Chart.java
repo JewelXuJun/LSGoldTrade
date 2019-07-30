@@ -1,7 +1,6 @@
 package com.datai.common.charts.chart;
 
 import android.content.Context;
-import android.content.Intent;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
@@ -11,8 +10,6 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
 import com.datai.common.R;
-import com.datai.common.TimeSortActivity;
-import com.datai.common.charts.common.Config;
 import com.datai.common.charts.kchart.KChart;
 import com.datai.common.charts.kchart.KData;
 import com.datai.common.charts.tchart.TChart;
@@ -78,15 +75,15 @@ public class Chart extends LinearLayout {
     public void initChartSort(String chartSortValue) {
         if (TextUtils.isEmpty(chartSortValue)) {
             mChartType = new KData.Unit[]{KData.Unit.DAY, KData.Unit.WEEK, KData.Unit.MONTH, KData.Unit.MIN1, KData.Unit.MIN5,
-                    KData.Unit.MIN15, KData.Unit.MIN30, KData.Unit.MIN60, KData.Unit.MIN240};
+                    KData.Unit.MIN15, KData.Unit.MIN30, KData.Unit.MIN60, KData.Unit.MIN240, KData.Unit.EDITSORT};
         } else {
             String[] chartSortValueArray = chartSortValue.split(",");
 
-            if (chartSortValueArray.length == 0) {
+            if (chartSortValueArray == null || chartSortValueArray.length == 0) {
                 mChartType = new KData.Unit[]{KData.Unit.DAY, KData.Unit.WEEK, KData.Unit.MONTH, KData.Unit.MIN1, KData.Unit.MIN5,
-                        KData.Unit.MIN15, KData.Unit.MIN30, KData.Unit.MIN60, KData.Unit.MIN240};
+                        KData.Unit.MIN15, KData.Unit.MIN30, KData.Unit.MIN60, KData.Unit.MIN240, KData.Unit.EDITSORT};
             } else {
-                mChartType = new KData.Unit[chartSortValueArray.length];
+                mChartType = new KData.Unit[chartSortValueArray.length + 1];
 
                 for (int i = 0; i < chartSortValueArray.length; i++) {
                     String value = chartSortValueArray[i];
@@ -110,6 +107,8 @@ public class Chart extends LinearLayout {
                     else if (value.equals("4小时"))
                         mChartType[i] = KData.Unit.MIN240;
                 }
+
+                mChartType[chartSortValueArray.length] = KData.Unit.EDITSORT;
             }
         }
 
@@ -188,8 +187,15 @@ public class Chart extends LinearLayout {
             public void onItemClick(QuickAction source, int position, int actionId) {
                 int index = position + 3;
 
-                if (index < mChartType.length)
+                if (index >= mChartType.length)
+                    return;
+
+                if (index == mChartType.length - 1) {
+                    if (null != mChartListener)
+                        mChartListener.onEditSort();
+                } else {
                     setShowKChart(mChartType[index]);
+                }
             }
         });
     }
