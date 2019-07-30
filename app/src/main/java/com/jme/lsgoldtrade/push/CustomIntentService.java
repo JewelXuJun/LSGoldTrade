@@ -133,12 +133,14 @@ public class CustomIntentService extends GTIntentService {
             notification = new Notification.Builder(mContext)
                     .setChannelId(CHANNEL_ID)
                     .setSmallIcon(R.mipmap.ic_logo)
+                    .setStyle(new Notification.BigTextStyle().bigText(contractId + "已达到您设置的预警价格，最新价为" + latestPrice))
                     .setContentTitle("行情预警")
                     .setContentText(contractId + "已达到您设置的预警价格，最新价为" + latestPrice)
                     .setContentIntent(pendingIntent).build();
         } else {
             notification = new NotificationCompat.Builder(mContext)
                     .setSmallIcon(R.mipmap.ic_logo)
+                    .setStyle(new NotificationCompat.BigTextStyle().bigText(contractId + "已达到您设置的预警价格，最新价为" + latestPrice))
                     .setContentTitle("行情预警")
                     .setContentText(contractId + "已达到您设置的预警价格，最新价为" + latestPrice)
                     .setContentIntent(pendingIntent).build();
