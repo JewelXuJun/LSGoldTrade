@@ -83,8 +83,8 @@ public class InfoAdapter extends BaseQuickAdapter<InfoVo.InfoBean, BaseViewHolde
 
             helper.setText(R.id.tv_title, item.getTitle())
                     .setText(R.id.tv_time, item.getCreateTime())
-                    .setVisible(R.id.layout_info, true)
-                    .setVisible(R.id.layout_strategy, false);
+                    .setGone(R.id.layout_info, true)
+                    .setGone(R.id.layout_strategy, false);
         }
     }
 
