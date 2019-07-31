@@ -111,7 +111,7 @@
                 android:layout_height="35dp"
                 android:layout_weight="1"
                 android:background="@drawable/selector_btn"
-                android:onClick="@{() -> handlers.onClickCash()}"
+                android:onClick="@{() -> handlers.onClickWithdraw()}"
                 android:text="提现"
                 android:textColor="@color/white"
                 android:textSize="@dimen/sp_16"

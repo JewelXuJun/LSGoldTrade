@@ -52,6 +52,10 @@ public class CheckServiceActivity extends JMEBaseActivity {
         sendRequest(AccountService.getInstance().getUserInfo, new HashMap<>(), true);
     }
 
+    private void hasWeChatWithdrawAuth() {
+        sendRequest(AccountService.getInstance().hasWeChatWithdrawAuth, new HashMap<>(), true);
+    }
+
     @Override
     protected void initBinding() {
         super.initBinding();
@@ -80,6 +84,24 @@ public class CheckServiceActivity extends JMEBaseActivity {
                             BigDecimalUtil.formatMoney(new BigDecimal(value.getFrozenBalance()).divide(new BigDecimal(100)).toPlainString()));
                 }
                 break;
+            case "HasWeChatWithdrawAuth":
+                if (head.isSuccess()) {
+                    String authFlag;
+                    try {
+                        authFlag = (String) response;
+                    } catch (Exception e) {
+                        authFlag = null;
+                        e.printStackTrace();
+                    }
+                    if (TextUtils.isEmpty(authFlag))
+                        return;
+
+                    if (authFlag.equals("F"))   // 非首次
+                        ARouter.getInstance().build(Constants.ARouterUriConst.WITHDRAW).navigation();
+                    else
+                        ARouter.getInstance().build(Constants.ARouterUriConst.CHECKUSERINFO).navigation();
+                }
+                break;
             default:
                 break;
         }
@@ -93,11 +115,8 @@ public class CheckServiceActivity extends JMEBaseActivity {
                     .navigation();
         }
 
-        public void onClickCash() {
-            showShortToast(R.string.personal_expect);
-//            ARouter.getInstance()
-//                    .build(Constants.ARouterUriConst.CASH)
-//                    .navigation();
+        public void onClickWithdraw() {
+            hasWeChatWithdrawAuth();
         }
 
         public void onClickThaw() {

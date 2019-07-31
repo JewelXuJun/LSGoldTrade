@@ -59,4 +59,11 @@ public class AccountService extends IService<AccountApi> {
             return mApi.withdraw(params);
         }
     };
+
+    public API hasWeChatWithdrawAuth = new API<String>("HasWeChatWithdrawAuth") {
+        @Override
+        public Call<DTResponse> request(HashMap<String, String> params) {
+            return mApi.hasWeChatWithdrawAuth(params);
+        }
+    };
 }

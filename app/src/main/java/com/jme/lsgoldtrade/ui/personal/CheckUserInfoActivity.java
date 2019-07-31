@@ -5,6 +5,7 @@ import com.alibaba.android.arouter.facade.annotation.Route;
 import com.jme.lsgoldtrade.R;
 import com.jme.lsgoldtrade.base.JMEBaseActivity;
 import com.jme.lsgoldtrade.config.Constants;
+import com.jme.lsgoldtrade.config.User;
 import com.jme.lsgoldtrade.databinding.ActivityCheckUserInfoBinding;
 
 /**
@@ -34,6 +35,8 @@ public class CheckUserInfoActivity extends JMEBaseActivity {
     @Override
     protected void initData(Bundle savedInstanceState) {
         super.initData(savedInstanceState);
+        if (User.getInstance().isLogin())
+            mBinding.tvMobile.setText(User.getInstance().getCurrentUser().getMobile());
     }
 
     @Override
