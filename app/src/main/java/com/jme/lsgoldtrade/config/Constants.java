@@ -106,6 +106,7 @@ public class Constants {
         public static final String RXBUS_BIND_SUCCESS = "bindSuccess";
         public static final String RXBUS_LOGIN_SUCCESS = "loginSuccess";
         public static final String RXBUS_FAST_MANAGEMENT_EDIT = "fastManagementEdit";
+        public static final String RXBUS_MARKET_UNIT_SORT_SUCCESS = "marketUnitSortSuccess";
     }
 
     public static final class Msg {

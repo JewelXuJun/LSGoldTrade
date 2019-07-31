@@ -11,6 +11,22 @@
 
         <include layout="@layout/item_line_vertical" />
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/common_page_margin"
+            android:text="@string/market_edit_sort_message"
+            android:layout_gravity="center"
+            android:textSize="@dimen/size_middle"
+            android:textColor="@color/color_text_gray_hint"/>
+
+        <com.heaven7.android.dragflowlayout.DragFlowLayout
+            android:id="@+id/drag_flow_layout"
+            android:layout_width="match_parent"
+            android:layout_marginLeft="@dimen/common_area_margin_tiny"
+            android:layout_marginRight="@dimen/common_area_margin_tiny"
+            android:layout_height="wrap_content"/>
+
     </LinearLayout>
 
 </layout>

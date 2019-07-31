@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/tv_market_unit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:background="@drawable/bg_btn_market_unit_solid"
+        android:paddingTop="@dimen/common_area_margin_tiny"
+        android:gravity="center"
+        android:paddingBottom="@dimen/common_area_margin_tiny"
+        android:textColor="@color/black"
+        android:textSize="@dimen/sp_14" />
+
+</LinearLayout>

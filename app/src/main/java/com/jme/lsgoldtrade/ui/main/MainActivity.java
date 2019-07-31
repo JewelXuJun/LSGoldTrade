@@ -12,32 +12,30 @@ import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TabHost;
 import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
-import com.alibaba.android.arouter.launcher.ARouter;
 import com.jme.common.network.DTRequest;
 import com.jme.common.network.Head;
 import com.jme.common.util.AppInfoUtil;
 import com.jme.common.util.AppManager;
 import com.jme.common.util.RxBus;
+import com.jme.common.util.SharedPreUtils;
 import com.jme.common.util.ToastUtils;
 import com.jme.lsgoldtrade.R;
 import com.jme.lsgoldtrade.base.JMEBaseActivity;
+import com.jme.lsgoldtrade.config.AppConfig;
 import com.jme.lsgoldtrade.config.Constants;
 import com.jme.lsgoldtrade.databinding.ActivityMainBinding;
 import com.jme.lsgoldtrade.domain.UpdateInfoVo;
 import com.jme.lsgoldtrade.service.ManagementService;
 import com.jme.lsgoldtrade.tabhost.MainTab;
-import com.jme.lsgoldtrade.util.AESUtil;
 import com.orhanobut.logger.Logger;
 import com.jme.lsgoldtrade.util.DialogUtils;
 import com.maning.updatelibrary.InstallUtils;
-import com.orhanobut.logger.Logger;
 import com.yanzhenjie.permission.Action;
 import com.yanzhenjie.permission.AndPermission;
 import com.yanzhenjie.permission.Permission;
@@ -52,7 +50,7 @@ import rx.Subscription;
  */
 
 @Route(path = Constants.ARouterUriConst.MAIN)
-public class MainActivity extends JMEBaseActivity implements TabHost.OnTabChangeListener, View.OnTouchListener {
+public class MainActivity extends JMEBaseActivity implements TabHost.OnTabChangeListener {
 
     private ActivityMainBinding mBinding;
 
@@ -77,21 +75,8 @@ public class MainActivity extends JMEBaseActivity implements TabHost.OnTabChange
     @Override
     protected void initData(Bundle savedInstanceState) {
         super.initData(savedInstanceState);
-//        1bd7c3a9fd8f920f396f86ab42cfbce4
-//        http://192.168.10.171:18080/tjsmanage/infoapi/v1/ios/getVersionInfo?code=1
+
         getUpDateInfo();
-//        String s = "1B:D7:C3:A9:FD:8F:92:0F:39:6F:86:AB:42:CF:BC:E4";
-//        1bd7c3a9fd8f920f396f86ab42cfbce4
-//        String s1 = s.replaceAll(":", "").toLowerCase();
-//        Logger.e("字符串--->" + s1);
-    }
-
-    private void getUpDateInfo() {
-        int versionCode = AppInfoUtil.getVersionCode(mContext);
-        HashMap<String, String> params = new HashMap<>();
-        params.put("code", versionCode + "");
-
-        sendRequest(ManagementService.getInstance().getVersionInfo, params, false);
     }
 
     @Override
@@ -143,6 +128,13 @@ public class MainActivity extends JMEBaseActivity implements TabHost.OnTabChange
         });
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        getTimeLineList();
+    }
+
     private void setTabHost() {
         mBinding.tabhost.setup(this, getSupportFragmentManager(), R.id.fragmentlayout);
         mBinding.tabhost.getTabWidget().setShowDividers(0);
@@ -171,7 +163,6 @@ public class MainActivity extends JMEBaseActivity implements TabHost.OnTabChange
 
             mBinding.tabhost.addTab(tab, mainTab.getClassRes(), null);
             mBinding.tabhost.setTag(i);
-            mBinding.tabhost.getTabWidget().getChildAt(i).setOnTouchListener(this);
         }
 
         mBinding.tabhost.iniIndexFragment(2);
@@ -190,26 +181,27 @@ public class MainActivity extends JMEBaseActivity implements TabHost.OnTabChange
         supportInvalidateOptionsMenu();
     }
 
-    @Override
-    public boolean onTouch(View view, MotionEvent event) {
-//        if (event.getAction() == MotionEvent.ACTION_DOWN) {
-//            if (view.equals(mBinding.tabhost.getTabWidget().getChildAt(MainTab.TRADE.getId()))) {
-//                if (!mUser.isLogin()) {
-//                    ARouter.getInstance()
-//                            .build(Constants.ARouterUriConst.ACCOUNTLOGIN)
-//                            .navigation();
-//
-//                    return true;
-//                }
-//            }
-//        }
+    private void getUpDateInfo() {
+        int versionCode = AppInfoUtil.getVersionCode(mContext);
 
-        return false;
+        HashMap<String, String> params = new HashMap<>();
+        params.put("code", versionCode + "");
+
+        sendRequest(ManagementService.getInstance().getVersionInfo, params, false);
+    }
+
+    private void getTimeLineList() {
+        HashMap<String, String> params = new HashMap<>();
+        params.put("uuid", AppConfig.UUID);
+        params.put("token", mUser.getToken());
+
+        sendRequest(ManagementService.getInstance().timeLineList, params, false, false, false);
     }
 
     @Override
     protected void DataReturn(DTRequest request, Head head, Object response) {
         super.DataReturn(request, head, response);
+
         switch (request.getApi().getName()) {
             case "GetVersionInfo":
                 if (head.isSuccess()) {
@@ -232,6 +224,18 @@ public class MainActivity extends JMEBaseActivity implements TabHost.OnTabChange
                         isUpData(value);
                     }
                 }
+
+                break;
+            case "TimeLineList":
+                if (head.isSuccess()) {
+                    String value = "";
+
+                    if (null != response)
+                        value = response.toString();
+
+                    SharedPreUtils.setString(this, mUser.isLogin() ? SharedPreUtils.MARKET_SORT_LOGIN : SharedPreUtils.MARKET_SORT_UNLOGIN, value);
+                }
+
                 break;
         }
     }
@@ -292,7 +296,7 @@ public class MainActivity extends JMEBaseActivity implements TabHost.OnTabChange
             dialog.setCancelable(false);
             //还有另一种方法   待试
             //dialog.setCanceledOnTouchOutside(false);// 设置点击屏幕Dialog不消失
-        } else if ("2".equals(value.getForce())){
+        } else if ("2".equals(value.getForce())) {
             //点击dialog外部消失
             dialog.setCancelable(true);
         }
@@ -345,7 +349,7 @@ public class MainActivity extends JMEBaseActivity implements TabHost.OnTabChange
     /**
      * 下载app
      *
-     * @param url      下载地址
+     * @param url 下载地址
      */
     private void loadApp(String url) {
 

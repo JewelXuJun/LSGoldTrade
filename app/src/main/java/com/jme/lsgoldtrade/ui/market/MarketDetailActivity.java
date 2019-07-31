@@ -147,12 +147,6 @@ public class MarketDetailActivity extends JMEBaseActivity implements FChart.OnPr
         mTChart = mChart.getTChart();
         mKChart = mChart.getKChart();
 
-        mChart.initChartSort(AppConfig.MARKET_SORT);
-        mChart.setPriceFormatDigit(2);
-
-        initTChart();
-        initKChart();
-
         mTradeMessagePopUpWindow = new TradeMessagePopUpWindow(mContext);
         mTradeMessagePopUpWindow.setOutsideTouchable(true);
         mTradeMessagePopUpWindow.setFocusable(true);
@@ -169,6 +163,13 @@ public class MarketDetailActivity extends JMEBaseActivity implements FChart.OnPr
     @Override
     protected void initData(Bundle savedInstanceState) {
         super.initData(savedInstanceState);
+
+        mChart.initChartSort(mUser.isLogin() ? SharedPreUtils.getString(this, SharedPreUtils.MARKET_SORT_LOGIN)
+                : SharedPreUtils.getString(this, SharedPreUtils.MARKET_SORT_UNLOGIN));
+        mChart.setPriceFormatDigit(2);
+
+        initTChart();
+        initKChart();
     }
 
     @Override
@@ -293,6 +294,11 @@ public class MarketDetailActivity extends JMEBaseActivity implements FChart.OnPr
                         return;
 
                     limitOrder(list.get(0), list.get(1), list.get(2), list.get(3), list.get(4));
+
+                    break;
+                case Constants.RxBusConst.RXBUS_LOGIN_SUCCESS:
+                case Constants.RxBusConst.RXBUS_MARKET_UNIT_SORT_SUCCESS:
+                    getTimeLineList();
 
                     break;
             }
@@ -691,6 +697,14 @@ public class MarketDetailActivity extends JMEBaseActivity implements FChart.OnPr
         sendRequest(TradeService.getInstance().position, params, false);
     }
 
+    private void getTimeLineList() {
+        HashMap<String, String> params = new HashMap<>();
+        params.put("uuid", AppConfig.UUID);
+        params.put("token", mUser.getToken());
+
+        sendRequest(ManagementService.getInstance().timeLineList, params, false, false, false);
+    }
+
     private void limitOrder(String contractId, String price, String amount, String bsFlag, String ocFlag) {
         HashMap<String, String> params = new HashMap<>();
         params.put("contractId", contractId);
@@ -904,6 +918,23 @@ public class MarketDetailActivity extends JMEBaseActivity implements FChart.OnPr
                                 mUser.getAccount(), mBsFlag, mOcFlag);
                         mMarketTradePopupWindow.showAtLocation(mBinding.tvHigh, Gravity.BOTTOM, 0, 0);
                     }
+                }
+
+                break;
+            case "TimeLineList":
+                if (head.isSuccess()) {
+                    String value = "";
+
+                    if (null != response)
+                        value = response.toString();
+
+                    SharedPreUtils.setString(this, mUser.isLogin() ? SharedPreUtils.MARKET_SORT_LOGIN : SharedPreUtils.MARKET_SORT_UNLOGIN, value);
+
+                    mChart.initChartSort(mUser.isLogin() ? SharedPreUtils.getString(this, SharedPreUtils.MARKET_SORT_LOGIN)
+                            : SharedPreUtils.getString(this, SharedPreUtils.MARKET_SORT_UNLOGIN));
+
+                    removeMessage();
+                    initRawData();
                 }
 
                 break;

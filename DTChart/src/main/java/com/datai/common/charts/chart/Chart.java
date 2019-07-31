@@ -77,6 +77,9 @@ public class Chart extends LinearLayout {
             mChartType = new KData.Unit[]{KData.Unit.DAY, KData.Unit.WEEK, KData.Unit.MONTH, KData.Unit.MIN1, KData.Unit.MIN5,
                     KData.Unit.MIN15, KData.Unit.MIN30, KData.Unit.MIN60, KData.Unit.MIN240, KData.Unit.EDITSORT};
         } else {
+            if (chartSortValue.contains("分时"))
+                chartSortValue = chartSortValue.replace("分时,", "");
+
             String[] chartSortValueArray = chartSortValue.split(",");
 
             if (chartSortValueArray == null || chartSortValueArray.length == 0) {

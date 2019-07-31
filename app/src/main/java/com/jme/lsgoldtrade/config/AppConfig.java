@@ -36,6 +36,5 @@ public class AppConfig {
     public static final String WEIXIN_ICBC_SMALLROUTINE_ID = "gh_e708a3acc47a";
 
     public static String UUID = "";
-    public static String MARKET_SORT = "";
 
 }

@@ -118,4 +118,10 @@ public interface ManagementApi {
     @GET("/tjsmanage/infoapi/v1/ios/checkOrder")
     Call<DTResponse> checkOrder(@QueryMap Map<String, String> map);
 
+    @GET("/tjsmanage/infoapi/v1/ios/timeLine/list")
+    Call<DTResponse> timeLineList(@QueryMap Map<String, String> map);
+
+    @POST("/tjsmanage/infoapi/v1/ios/timeLine/save")
+    Call<DTResponse> timeLineSave(@QueryMap Map<String, String> map);
+
 }

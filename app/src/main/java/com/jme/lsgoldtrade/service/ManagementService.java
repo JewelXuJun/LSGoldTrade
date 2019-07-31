@@ -303,4 +303,18 @@ public class ManagementService extends IService<ManagementApi> {
         }
     };
 
+    public API timeLineList = new API<String>("TimeLineList") {
+        @Override
+        public Call<DTResponse> request(HashMap<String, String> params) {
+            return mApi.timeLineList(params);
+        }
+    };
+
+    public API timeLineSave = new API<String>("TimeLineSave") {
+        @Override
+        public Call<DTResponse> request(HashMap<String, String> params) {
+            return mApi.timeLineSave(params);
+        }
+    };
+
 }

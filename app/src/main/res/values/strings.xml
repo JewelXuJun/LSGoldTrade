@@ -58,6 +58,8 @@
     <string name="market_judgment_result">研判结果</string>
     <string name="market_interpret">详细解读</string>
     <string name="market_edit_sort">编辑排序</string>
+    <string name="market_edit_sort_message">长按拖动排序</string>
+    <string name="market_edit_sort_success">排序成功</string>
 
     <!-- Trade -->
     <string name="trade_hold_position">持仓</string>
