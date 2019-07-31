@@ -190,6 +190,8 @@ public class Constants {
         public static final String APPLICATIONFORCASH = "/Personal/ApplicationForCashActivity";
         public static final String DETAILS = "/Personal/DetailsActivity";
         public static final String CHECKUSERINFO = "/Personal/CheckUserInfoActivity";
+        public static final String WITHDRAW = "/Personal/WithdrawActivity";
+        public static final String WITHDRAWRESULT = "/Personal/WithdrawResultActivity";
     }
 
     public static final long SPLASH_DELAY_MILLIS = 2000;
