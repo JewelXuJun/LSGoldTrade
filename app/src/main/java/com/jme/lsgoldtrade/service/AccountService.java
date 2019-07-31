@@ -66,4 +66,18 @@ public class AccountService extends IService<AccountApi> {
             return mApi.hasWeChatWithdrawAuth(params);
         }
     };
+
+    public API sendVerifyCode = new API<String>("SendVerifyCode") {
+        @Override
+        public Call<DTResponse> request(HashMap<String, String> params) {
+            return mApi.sendVerifyCode(params);
+        }
+    };
+
+    public API checkVerifyCode = new API<String>("CheckVerifyCode") {
+        @Override
+        public Call<DTResponse> request(HashMap<String, String> params) {
+            return mApi.checkVerifyCode(params);
+        }
+    };
 }

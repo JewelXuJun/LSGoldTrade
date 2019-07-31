@@ -21,4 +21,10 @@ public interface AccountApi {
 
     @GET("/fundAccount/api/v1/android/userInfo/hasWeChatWithdrawAuth")
     Call<DTResponse> hasWeChatWithdrawAuth(@QueryMap Map<String, String> map);
+
+    @GET("/fundAccount/api/v1/android/userInfo/sendVerifyCode")
+    Call<DTResponse> sendVerifyCode(@QueryMap Map<String, String> map);
+
+    @GET("/fundAccount/api/v1/android/userInfo/checkVerifyCode")
+    Call<DTResponse> checkVerifyCode(@QueryMap Map<String, String> map);
 }

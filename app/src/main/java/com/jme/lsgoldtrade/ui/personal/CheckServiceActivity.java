@@ -96,7 +96,7 @@ public class CheckServiceActivity extends JMEBaseActivity {
                     if (TextUtils.isEmpty(authFlag))
                         return;
 
-                    if (authFlag.equals("F"))   // 非首次
+                    if (authFlag.equals("T"))   // 非首次
                         ARouter.getInstance().build(Constants.ARouterUriConst.WITHDRAW).navigation();
                     else
                         ARouter.getInstance().build(Constants.ARouterUriConst.CHECKUSERINFO).navigation();
