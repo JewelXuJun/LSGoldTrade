@@ -51,12 +51,18 @@ public class CheckUserInfoActivity extends JMEBaseActivity {
 
         mCountDownTimer = new JMECountDownTimer(60000, 1000,
                 mBinding.btnSendSms, getString(R.string.trade_get_verification_code));
+
+        getWithdrawFeeRate();
     }
 
     @Override
     protected void initBinding() {
         super.initBinding();
         mBinding.setHandlers(new ClickHandlers());
+    }
+
+    private void getWithdrawFeeRate() {
+        sendRequest(AccountService.getInstance().getWithdrawFeeRate, new HashMap<>(), true);
     }
 
     private void sendVerifyCode() {
@@ -74,6 +80,20 @@ public class CheckUserInfoActivity extends JMEBaseActivity {
     protected void DataReturn(DTRequest request, Head head, Object response) {
         super.DataReturn(request, head, response);
         switch (request.getApi().getName()) {
+            case "GetWithdrawFeeRate":
+                if (head.isSuccess()) {
+                    String rate;
+                    try {
+                        rate = (String) response;
+                    } catch (Exception e) {
+                        rate = null;
+                        e.printStackTrace();
+                    }
+                    if (TextUtils.isEmpty(rate))
+                        return;
+                    mBinding.tvWithdrawRule.setText(String.format(getString(R.string.text_withdraw_rule), rate + "%"));
+                }
+                break;
             case "SendVerifyCode":
                 if (head.isSuccess()) {
                     showShortToast(R.string.login_verification_code_success);

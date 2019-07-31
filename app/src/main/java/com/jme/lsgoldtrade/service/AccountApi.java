@@ -27,4 +27,7 @@ public interface AccountApi {
 
     @GET("/fundAccount/api/v1/android/userInfo/checkVerifyCode")
     Call<DTResponse> checkVerifyCode(@QueryMap Map<String, String> map);
+
+    @GET("/fundAccount/api/v1/android/userFund/getWithdrawFeeRate")
+    Call<DTResponse> getWithdrawFeeRate(@QueryMap Map<String, String> map);
 }

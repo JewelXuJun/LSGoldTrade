@@ -80,4 +80,11 @@ public class AccountService extends IService<AccountApi> {
             return mApi.checkVerifyCode(params);
         }
     };
+
+    public API getWithdrawFeeRate = new API<String>("GetWithdrawFeeRate") {
+        @Override
+        public Call<DTResponse> request(HashMap<String, String> params) {
+            return mApi.getWithdrawFeeRate(params);
+        }
+    };
 }
