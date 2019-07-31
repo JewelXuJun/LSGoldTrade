@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+        <variable
+            name="handlers"
+            type="com.jme.lsgoldtrade.ui.personal.CheckUserInfoActivity.ClickHandlers"/>
+
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:background="@color/common_background">
+
+        <include layout="@layout/layout_toolbar"/>
+
+        <include layout="@layout/item_line_vertical"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/common_item_height_big"
+            android:paddingLeft="@dimen/dp_10"
+            android:paddingRight="@dimen/dp_10"
+            android:gravity="center_vertical"
+            android:background="@color/white"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="@dimen/width_reset_item"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:text="预留手机号"
+                android:textColor="@color/black_deep"
+                android:textSize="@dimen/sp_14"/>
+
+            <TextView
+                android:id="@+id/tv_mobile"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="5dp"
+                android:singleLine="true"
+                android:textColor="@color/black_deep"
+                android:textSize="@dimen/sp_16" />
+
+        </LinearLayout>
+
+        <include layout="@layout/item_line_vertical" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/common_item_height_big"
+            android:paddingLeft="@dimen/dp_10"
+            android:paddingRight="@dimen/dp_10"
+            android:gravity="center_vertical"
+            android:background="@color/white"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="@dimen/width_reset_item"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:text="短信验证码"
+                android:textColor="@color/black_deep"
+                android:textSize="@dimen/sp_14" />
+
+            <EditText
+                android:id="@+id/et_verify_code"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/common_page_margin"
+                android:layout_weight="1"
+                android:background="@null"
+                android:hint="请输入验证码"
+                android:inputType="number"
+                android:maxLength="6"
+                android:maxLines="1"
+                android:textColor="@color/black_deep"
+                android:textColorHint="@color/color_text_gray_hint"
+                android:textSize="@dimen/sp_14" />
+
+            <Button
+                android:layout_width="@dimen/width_login_verification_code"
+                android:layout_height="@dimen/common_item_height_middle"
+                android:layout_marginRight="5dp"
+                android:background="@drawable/selector_blue"
+                android:onClick="@{() -> handlers.onClickSendSmsCode()}"
+                android:text="@string/trade_get_verification_code"
+                android:textColor="@drawable/selector_text"
+                android:textSize="@dimen/sp_14" />
+
+        </LinearLayout>
+
+        <include layout="@layout/item_line_vertical" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="15dp"
+            android:background="@color/white"
+            android:text="@string/text_withdraw_rule"
+            android:textSize="@dimen/sp_12"
+            android:textColor="@color/gray"/>
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/height_login_btn"
+            android:layout_marginLeft="@dimen/common_area_margin"
+            android:layout_marginTop="@dimen/common_area_margin"
+            android:layout_marginRight="@dimen/common_area_margin"
+            android:background="@drawable/selector_btn"
+            android:onClick="@{() -> handlers.onClickVerifyCode()}"
+            android:text="下一步"
+            android:textColor="@color/white"
+            android:textSize="@dimen/common_font_size" />
+
+    </LinearLayout>
+
+</layout>

@@ -193,6 +193,9 @@
         <activity
             android:name=".ui.tradingbox.TradingBoxActivity"
             android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.personal.CheckUserInfoActivity"
+            android:screenOrientation="portrait" />
 
         <service
             android:name=".base.JMEAppService"
