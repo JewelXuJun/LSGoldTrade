@@ -20,7 +20,7 @@ import com.datai.common.view.popup.QuickAction;
  * Created by XuJun on 2016/1/28.
  */
 public class Chart extends LinearLayout {
-    public static final String TCHART_MINUTE = "其他";
+    public static final String TCHART_ELSE = "其他";
 
     private Context mContext;
     private TChart mTChart;
@@ -111,6 +111,8 @@ public class Chart extends LinearLayout {
                 mChartType[chartSortValueArray.length] = KData.Unit.EDITSORT;
             }
         }
+
+        setChartUnit(KData.Unit.TIME);
 
         mRadioButton_day.setText(mChartType[0].getCHDescribe());
         mRadioButton_week.setText(mChartType[1].getCHDescribe());
@@ -272,24 +274,24 @@ public class Chart extends LinearLayout {
     private void setRadioButtonEnable() {
         if (mShowTChart) {
             mRadioButton_time.setChecked(true);
-            mRadioButton_minute.setText(TCHART_MINUTE);
+            mRadioButton_minute.setText(TCHART_ELSE);
         } else {
             KData.Unit unit = mKChart.getUnit();
 
             switch (unit) {
                 case DAY:
                     mRadioButton_day.setChecked(true);
-                    mRadioButton_minute.setText(TCHART_MINUTE);
+                    mRadioButton_minute.setText(TCHART_ELSE);
 
                     break;
                 case WEEK:
                     mRadioButton_week.setChecked(true);
-                    mRadioButton_minute.setText(TCHART_MINUTE);
+                    mRadioButton_minute.setText(TCHART_ELSE);
 
                     break;
                 case MONTH:
                     mRadioButton_month.setChecked(true);
-                    mRadioButton_minute.setText(TCHART_MINUTE);
+                    mRadioButton_minute.setText(TCHART_ELSE);
 
                     break;
                 default:

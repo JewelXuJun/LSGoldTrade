@@ -65,6 +65,10 @@ public class User {
         return mTraderId;
     }
 
+    public void setAccountID(String accountID) {
+        mAccountID = accountID;
+    }
+
     public void setTraderId(String traderId) {
         mTraderId = traderId;
     }

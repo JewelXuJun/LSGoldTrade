@@ -15,7 +15,9 @@ import com.jme.common.util.RxBus;
 import com.jme.lsgoldtrade.R;
 import com.jme.lsgoldtrade.base.JMEBaseActivity;
 import com.jme.lsgoldtrade.config.Constants;
+import com.jme.lsgoldtrade.config.User;
 import com.jme.lsgoldtrade.databinding.ActivityBindAccountBinding;
+import com.jme.lsgoldtrade.domain.BindAccountVo;
 import com.jme.lsgoldtrade.service.TradeService;
 import com.jme.lsgoldtrade.view.BindSuccessPopupWindow;
 
@@ -155,6 +157,19 @@ public class BindAccountActivity extends JMEBaseActivity {
                 break;
             case "BindAccount":
                 if (head.isSuccess()) {
+                    BindAccountVo bindAccountVo;
+
+                    try {
+                        bindAccountVo = (BindAccountVo) response;
+                    } catch (Exception e) {
+                        bindAccountVo = null;
+
+                        e.printStackTrace();
+                    }
+
+                    if (null != bindAccountVo)
+                        User.getInstance().setAccountID(bindAccountVo.getAccountId());
+
                     if (null != mWindow && !mWindow.isShowing()) {
                         mWindow.setData(String.valueOf(mTime));
                         mWindow.showAtLocation(mBinding.btnBind, Gravity.CENTER, 0, 0);

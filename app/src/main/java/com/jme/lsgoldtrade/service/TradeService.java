@@ -16,6 +16,7 @@ import com.jme.lsgoldtrade.domain.OrderHisPageVo;
 import com.jme.lsgoldtrade.domain.OrderPageVo;
 import com.jme.lsgoldtrade.domain.PositionPageVo;
 import com.jme.lsgoldtrade.domain.IdentityInfoVo;
+import com.jme.lsgoldtrade.domain.UserInfoVo;
 import com.jme.lsgoldtrade.domain.WarnVo;
 import java.util.HashMap;
 import java.util.List;
@@ -205,7 +206,7 @@ public class TradeService extends IService<TradeApi> {
         }
     };
 
-    public API registerLogin = new API<String>("RegisterLogin") {
+    public API registerLogin = new API<UserInfoVo>("RegisterLogin") {
         @Override
         public Call<DTResponse> request(HashMap<String, String> params) {
 

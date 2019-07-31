@@ -11,7 +11,9 @@ import com.jme.common.ui.base.JMECountDownTimer;
 import com.jme.lsgoldtrade.R;
 import com.jme.lsgoldtrade.base.JMEBaseActivity;
 import com.jme.lsgoldtrade.config.Constants;
+import com.jme.lsgoldtrade.config.User;
 import com.jme.lsgoldtrade.databinding.ActivityRegisterBinding;
+import com.jme.lsgoldtrade.domain.UserInfoVo;
 import com.jme.lsgoldtrade.service.TradeService;
 import com.jme.lsgoldtrade.util.ValueUtils;
 
@@ -121,7 +123,19 @@ public class RegisterActivity extends JMEBaseActivity {
                 break;
             case "RegisterLogin":
                 if (head.isSuccess()) {
+                    UserInfoVo userInfoVo;
+
+                    try {
+                        userInfoVo = (UserInfoVo) response;
+                    } catch (Exception e) {
+                        userInfoVo = null;
+
+                        e.printStackTrace();
+                    }
+
                     showShortToast(R.string.register_success);
+
+                    User.getInstance().login(userInfoVo);
 
                     ARouter.getInstance().build(Constants.ARouterUriConst.REGISTERSUCCESS).navigation();
 
