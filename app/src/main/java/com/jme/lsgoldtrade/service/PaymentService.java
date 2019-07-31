@@ -50,4 +50,11 @@ public class PaymentService extends IService<PaymentApi> {
         }
     };
 
+    public API withdrawApply = new API<String>("WithdrawApply") {
+        @Override
+        public Call<DTResponse> request(HashMap<String, String> params) {
+            return mApi.withdrawApply(params);
+        }
+    };
+
 }
