@@ -101,6 +101,7 @@ public class Constants {
         public static final String RXBUS_CANCEL = "cancel";
         public static final String RXBUS_CANCEL_MAIN = "cancelMain";
         public static final String RXBUS_ORDER_SUCCESS = "orderSuccess";
+        public static final String RXBUS_CAPITALTRANSFER_SUCCESS = "capitalTransferSuccess";
         public static final String RXBUS_CANCELORDERFRAGMENT = "cancelorderfragment";
         public static final String RXBUS_CUSTOMER_SERVICE = "customerservice";
         public static final String RXBUS_BIND_SUCCESS = "bindSuccess";

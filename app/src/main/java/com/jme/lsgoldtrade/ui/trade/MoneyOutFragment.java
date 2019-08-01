@@ -16,6 +16,7 @@ import com.alibaba.android.arouter.launcher.ARouter;
 import com.jme.common.network.DTRequest;
 import com.jme.common.network.Head;
 import com.jme.common.ui.base.JMECountDownTimer;
+import com.jme.common.util.RxBus;
 import com.jme.lsgoldtrade.R;
 import com.jme.lsgoldtrade.base.JMEBaseFragment;
 import com.jme.lsgoldtrade.config.AppConfig;
@@ -345,10 +346,17 @@ public class MoneyOutFragment extends JMEBaseFragment implements OnRefreshListen
 
                 break;
             case "InoutMoney":
-                if (head.isSuccess())
+                if (head.isSuccess()) {
                     showShortToast(R.string.trade_money_out_success);
-                else
+
+                    mBinding.etTransferAmount.setText("");
+                    mBinding.etVerificationCode.setText("");
+                    mBinding.etImgVerifyCode.setText("");
+
+                    RxBus.getInstance().post(Constants.RxBusConst.RXBUS_CAPITALTRANSFER_SUCCESS, null);
+                } else {
                     kaptcha();
+                }
 
                 getAccount(true);
 

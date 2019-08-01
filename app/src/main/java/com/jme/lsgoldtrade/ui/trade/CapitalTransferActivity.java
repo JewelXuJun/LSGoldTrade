@@ -8,6 +8,7 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.PagerAdapter;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
+import com.jme.common.util.RxBus;
 import com.jme.lsgoldtrade.R;
 import com.jme.lsgoldtrade.base.JMEBaseActivity;
 import com.jme.lsgoldtrade.config.Constants;
@@ -57,6 +58,13 @@ public class CapitalTransferActivity extends JMEBaseActivity {
     @Override
     protected void initBinding() {
         super.initBinding();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+
+        RxBus.getInstance().post(Constants.RxBusConst.RXBUS_CAPITALTRANSFER_SUCCESS, null);
     }
 
     private void initInfoTabs() {

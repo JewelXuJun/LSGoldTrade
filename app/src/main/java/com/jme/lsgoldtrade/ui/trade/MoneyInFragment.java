@@ -14,9 +14,11 @@ import android.widget.EditText;
 import com.jme.common.network.DTRequest;
 import com.jme.common.network.Head;
 import com.jme.common.ui.base.JMECountDownTimer;
+import com.jme.common.util.RxBus;
 import com.jme.lsgoldtrade.R;
 import com.jme.lsgoldtrade.base.JMEBaseFragment;
 import com.jme.lsgoldtrade.config.AppConfig;
+import com.jme.lsgoldtrade.config.Constants;
 import com.jme.lsgoldtrade.databinding.FragmentMoneyInBinding;
 import com.jme.lsgoldtrade.domain.AccountVo;
 import com.jme.lsgoldtrade.domain.ImageVerifyCodeVo;
@@ -312,6 +314,8 @@ public class MoneyInFragment extends JMEBaseFragment implements OnRefreshListene
                     mBinding.etTransferAmount.setText("");
                     mBinding.etVerificationCode.setText("");
                     mBinding.etImgVerifyCode.setText("");
+
+                    RxBus.getInstance().post(Constants.RxBusConst.RXBUS_CAPITALTRANSFER_SUCCESS, null);
                 } else {
                     kaptcha();
                 }

@@ -209,6 +209,10 @@ public class HoldPositionFragment extends JMEBaseFragment implements OnRefreshLi
                     getMarket();
 
                     break;
+                case Constants.RxBusConst.RXBUS_CAPITALTRANSFER_SUCCESS:
+                    initValue(false);
+
+                    break;
             }
         });
     }
