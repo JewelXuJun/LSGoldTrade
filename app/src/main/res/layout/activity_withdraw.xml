@@ -112,6 +112,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="30dp"
+                android:drawableRight="@mipmap/ic_next_gray"
                 android:gravity="right"
                 android:text="提现至微信账户"
                 android:textColor="@color/black_deep"
