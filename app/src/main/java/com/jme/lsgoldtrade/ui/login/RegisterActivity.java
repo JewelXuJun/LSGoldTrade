@@ -5,6 +5,7 @@ import android.text.TextUtils;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
+import com.igexin.sdk.PushManager;
 import com.jme.common.network.DTRequest;
 import com.jme.common.network.Head;
 import com.jme.common.ui.base.JMECountDownTimer;
@@ -136,6 +137,9 @@ public class RegisterActivity extends JMEBaseActivity {
                     showShortToast(R.string.register_success);
 
                     User.getInstance().login(userInfoVo);
+
+                    if (!TextUtils.isEmpty(userInfoVo.getTraderId()))
+                        PushManager.getInstance().bindAlias(this, userInfoVo.getTraderId());
 
                     ARouter.getInstance().build(Constants.ARouterUriConst.REGISTERSUCCESS).navigation();
 

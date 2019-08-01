@@ -14,8 +14,12 @@ import com.jme.lsgoldtrade.databinding.ActivityWithdrawBinding;
 import com.jme.lsgoldtrade.domain.UsernameVo;
 import com.jme.lsgoldtrade.service.AccountService;
 import com.jme.lsgoldtrade.service.PaymentService;
+import com.umeng.socialize.UMAuthListener;
+import com.umeng.socialize.UMShareAPI;
+import com.umeng.socialize.bean.SHARE_MEDIA;
 import java.math.BigDecimal;
 import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by Android Studio.
@@ -79,8 +83,32 @@ public class WithdrawActivity extends JMEBaseActivity {
     }
 
     private void gotoWeChatAuth() {
-
+        UMShareAPI.get(this).getPlatformInfo(WithdrawActivity.this, SHARE_MEDIA.WEIXIN, umAuthListener);
     }
+
+    UMAuthListener umAuthListener = new UMAuthListener() {
+        @Override
+        public void onStart(SHARE_MEDIA media) {
+
+        }
+
+        @Override
+        public void onComplete(SHARE_MEDIA media, int i, Map<String, String> map) {
+            showShortToast("授权成功");
+            openid = map.get("uid");
+            nickName = map.get("name");
+        }
+
+        @Override
+        public void onError(SHARE_MEDIA media, int i, Throwable throwable) {
+            showShortToast("授权失败：" + throwable.getMessage());
+        }
+
+        @Override
+        public void onCancel(SHARE_MEDIA media, int i) {
+            showShortToast("授权取消");
+        }
+    };
 
     @Override
     protected void DataReturn(DTRequest request, Head head, Object response) {

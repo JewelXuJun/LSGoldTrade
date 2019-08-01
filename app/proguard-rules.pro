@@ -128,7 +128,7 @@
 
 # Umeng
 #-dontwarn com.umeng.**
-#-keep class com.umeng.**{*;}
+-keep class com.umeng.**{*;}
 -dontwarn u.aly.**
 -keep class u.aly.**{*;}
 -dontwarn com.google.android.maps.**
