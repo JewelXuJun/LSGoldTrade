@@ -11,6 +11,7 @@ import android.widget.RelativeLayout;
 
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.jme.common.util.RxBus;
+import com.jme.common.util.SharedPreUtils;
 import com.jme.lsgoldtrade.R;
 import com.jme.lsgoldtrade.config.Constants;
 import com.jme.lsgoldtrade.config.User;
@@ -49,7 +50,16 @@ public class TradingBox extends RelativeLayout {
                 show();
             } else {
                 if (!User.getInstance().isLogin()) {
-                    ARouter.getInstance().build(Constants.ARouterUriConst.ACCOUNTLOGIN).navigation();
+                    String loginType = SharedPreUtils.getString(context, SharedPreUtils.Login_Type);
+
+                    if (TextUtils.isEmpty(loginType)) {
+                        ARouter.getInstance().build(Constants.ARouterUriConst.ACCOUNTLOGIN).navigation();
+                    } else {
+                        if (loginType.equals("Account"))
+                            ARouter.getInstance().build(Constants.ARouterUriConst.ACCOUNTLOGIN).navigation();
+                        else if (loginType.equals("Mobile"))
+                            ARouter.getInstance().build(Constants.ARouterUriConst.MOBILELOGIN).navigation();
+                    }
                 } else {
                     if (TextUtils.isEmpty(User.getInstance().getAccountID()))
                         RxBus.getInstance().post(Constants.RxBusConst.RXBUS_TRADE, null);

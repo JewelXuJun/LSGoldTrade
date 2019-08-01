@@ -106,21 +106,21 @@ public class FastManagementActivity extends JMEBaseActivity {
         });
 
         mAddedAdapter.setOnItemClickListener((adapter, view, position) -> {
-            NavigatorVo.NavigatorVoBean navigatorVoBean = (NavigatorVo.NavigatorVoBean)adapter.getItem(position);
+            NavigatorVo.NavigatorVoBean navigatorVoBean = (NavigatorVo.NavigatorVoBean) adapter.getItem(position);
 
             if (null == navigatorVoBean)
                 return;
 
-            IntentUtils.IntentFastTab(navigatorVoBean.getCode());
+            IntentUtils.IntentFastTab(this, navigatorVoBean.getCode());
         });
 
         mNotAddedAdapter.setOnItemClickListener((adapter, view, position) -> {
-            NavigatorVo.NavigatorVoBean navigatorVoBean = (NavigatorVo.NavigatorVoBean)adapter.getItem(position);
+            NavigatorVo.NavigatorVoBean navigatorVoBean = (NavigatorVo.NavigatorVoBean) adapter.getItem(position);
 
             if (null == navigatorVoBean)
                 return;
 
-            IntentUtils.IntentFastTab(navigatorVoBean.getCode());
+            IntentUtils.IntentFastTab(this, navigatorVoBean.getCode());
         });
 
     }

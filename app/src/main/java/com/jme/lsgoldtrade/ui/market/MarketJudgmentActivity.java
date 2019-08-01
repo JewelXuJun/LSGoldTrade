@@ -340,7 +340,7 @@ public class MarketJudgmentActivity extends JMEBaseActivity {
 
         public void onClickBuyMore() {
             if (null == mUser || !mUser.isLogin()) {
-                ARouter.getInstance().build(Constants.ARouterUriConst.ACCOUNTLOGIN).navigation();
+                gotoLogin();
             } else {
                 if (null == mFragmentList || 0 == mFragmentList.size())
                     return;
@@ -366,7 +366,7 @@ public class MarketJudgmentActivity extends JMEBaseActivity {
 
         public void onClickSaleEmpty() {
             if (null == mUser || !mUser.isLogin()) {
-                ARouter.getInstance().build(Constants.ARouterUriConst.ACCOUNTLOGIN).navigation();
+                gotoLogin();
             } else {
                 if (null == mFragmentList || 0 == mFragmentList.size())
                     return;
@@ -392,7 +392,7 @@ public class MarketJudgmentActivity extends JMEBaseActivity {
 
         public void onClickDeclarationForm() {
             if (null == mUser || !mUser.isLogin()) {
-                ARouter.getInstance().build(Constants.ARouterUriConst.ACCOUNTLOGIN).navigation();
+                gotoLogin();
             } else {
                 AppConfig.Select_ContractId = "Au(T+D)";
 

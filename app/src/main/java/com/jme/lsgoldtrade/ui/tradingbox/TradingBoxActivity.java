@@ -339,7 +339,7 @@ public class TradingBoxActivity extends JMEBaseActivity {
 
         public void onClickBuy() {
             if (null == mUser || !mUser.isLogin())
-                ARouter.getInstance().build(Constants.ARouterUriConst.ACCOUNTLOGIN).navigation();
+                gotoLogin();
             else
                 getUserAddedServicesStatus();
         }

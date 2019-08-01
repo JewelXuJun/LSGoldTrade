@@ -595,14 +595,12 @@ public class HoldPositionFragment extends JMEBaseFragment implements OnRefreshLi
     public class ClickHandlers {
 
         public void onClickCapitalTransfer() {
-            ARouter.getInstance()
-                    .build(Constants.ARouterUriConst.CAPITALTRANSFER)
-                    .navigation();
+            ARouter.getInstance().build(Constants.ARouterUriConst.CAPITALTRANSFER).navigation();
         }
 
         public void onClickGuaranteeFundSetting() {
             if (null == mUser || !mUser.isLogin())
-                ARouter.getInstance().build(Constants.ARouterUriConst.ACCOUNTLOGIN).navigation();
+                gotoLogin();
             else
                 getUserAddedServicesStatus();
         }

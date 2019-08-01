@@ -260,6 +260,7 @@ public class AccountLoginActivity extends JMEBaseActivity {
 
                     showShortToast(R.string.login_success);
 
+                    SharedPreUtils.setString(this, SharedPreUtils.Login_Type, "Account");
                     SharedPreUtils.setString(this, SharedPreUtils.Login_Account, mBinding.etAccount.getText().toString());
                 } else {
                     showShortToast(head.getMsg());

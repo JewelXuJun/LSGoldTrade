@@ -170,7 +170,7 @@ public class RegisterActivity extends JMEBaseActivity {
         }
 
         public void onClickLogin() {
-            ARouter.getInstance().build(Constants.ARouterUriConst.ACCOUNTLOGIN).navigation();
+            gotoLogin();
 
             finish();
         }

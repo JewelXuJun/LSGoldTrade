@@ -17,6 +17,7 @@ import com.alibaba.android.arouter.launcher.ARouter;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.jme.common.util.RxBus;
+import com.jme.common.util.SharedPreUtils;
 import com.jme.lsgoldtrade.R;
 import com.jme.lsgoldtrade.config.Constants;
 import com.jme.lsgoldtrade.config.User;
@@ -99,6 +100,19 @@ public class QuestionAnswerAdapter extends BaseQuickAdapter<List<QuestionAnswerV
         return spannableString;
     }
 
+    private void gotoLogin() {
+        String loginType = SharedPreUtils.getString(mContext, SharedPreUtils.Login_Type);
+
+        if (TextUtils.isEmpty(loginType)) {
+            ARouter.getInstance().build(Constants.ARouterUriConst.ACCOUNTLOGIN).navigation();
+        } else {
+            if (loginType.equals("Account"))
+                ARouter.getInstance().build(Constants.ARouterUriConst.ACCOUNTLOGIN).navigation();
+            else if (loginType.equals("Mobile"))
+                ARouter.getInstance().build(Constants.ARouterUriConst.MOBILELOGIN).navigation();
+        }
+    }
+
     private class TextClick extends ClickableSpan {
 
         @Override
@@ -108,7 +122,7 @@ public class QuestionAnswerAdapter extends BaseQuickAdapter<List<QuestionAnswerV
 
             if (value.endsWith("立即开户")) {
                 if (null == user || !user.isLogin()) {
-                    ARouter.getInstance().build(Constants.ARouterUriConst.ACCOUNTLOGIN).navigation();
+                    gotoLogin();
                 } else {
                     RxBus.getInstance().post(Constants.RxBusConst.RXBUS_CANCEL, null);
                     ARouter.getInstance().build(Constants.ARouterUriConst.MAIN).navigation();
@@ -117,7 +131,7 @@ public class QuestionAnswerAdapter extends BaseQuickAdapter<List<QuestionAnswerV
                 }
             } else if (value.endsWith("去绑定")) {
                 if (null == user || !user.isLogin()) {
-                    ARouter.getInstance().build(Constants.ARouterUriConst.ACCOUNTLOGIN).navigation();
+                    gotoLogin();
                 } else {
                     ARouter.getInstance()
                             .build(Constants.ARouterUriConst.AUTHENTICATION)
@@ -128,7 +142,7 @@ public class QuestionAnswerAdapter extends BaseQuickAdapter<List<QuestionAnswerV
                 }
             } else if (value.endsWith("去下单")) {
                 if (null == user || !user.isLogin()) {
-                    ARouter.getInstance().build(Constants.ARouterUriConst.ACCOUNTLOGIN).navigation();
+                    gotoLogin();
                 } else {
                     RxBus.getInstance().post(Constants.RxBusConst.RXBUS_TRADE, null);
                     ARouter.getInstance().build(Constants.ARouterUriConst.MAIN).navigation();
@@ -137,7 +151,7 @@ public class QuestionAnswerAdapter extends BaseQuickAdapter<List<QuestionAnswerV
                 }
             } else if (value.endsWith("去撤单")) {
                 if (null == user || !user.isLogin()) {
-                    ARouter.getInstance().build(Constants.ARouterUriConst.ACCOUNTLOGIN).navigation();
+                    gotoLogin();
                 } else {
                     RxBus.getInstance().post(Constants.RxBusConst.RXBUS_CANCELORDERFRAGMENT, null);
                     ARouter.getInstance().build(Constants.ARouterUriConst.MAIN).navigation();
@@ -146,7 +160,7 @@ public class QuestionAnswerAdapter extends BaseQuickAdapter<List<QuestionAnswerV
                 }
             } else if (value.endsWith("查看当前持仓")) {
                 if (null == user || !user.isLogin()) {
-                    ARouter.getInstance().build(Constants.ARouterUriConst.ACCOUNTLOGIN).navigation();
+                    gotoLogin();
                 } else {
                     RxBus.getInstance().post(Constants.RxBusConst.RXBUS_TRADEFRAGMENT_HOLD, null);
                     ARouter.getInstance().build(Constants.ARouterUriConst.MAIN).navigation();
@@ -155,7 +169,7 @@ public class QuestionAnswerAdapter extends BaseQuickAdapter<List<QuestionAnswerV
                 }
             } else if (value.endsWith("立即入金")) {
                 if (null == user || !user.isLogin()) {
-                    ARouter.getInstance().build(Constants.ARouterUriConst.ACCOUNTLOGIN).navigation();
+                    gotoLogin();
                 } else {
                     ARouter.getInstance().build(Constants.ARouterUriConst.CAPITALTRANSFER).navigation();
 

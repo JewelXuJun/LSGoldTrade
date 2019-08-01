@@ -1022,7 +1022,7 @@ public class MarketDetailActivity extends JMEBaseActivity implements FChart.OnPr
 
         public void onClickWarning() {
             if (null == mUser || !mUser.isLogin()) {
-                ARouter.getInstance().build(Constants.ARouterUriConst.ACCOUNTLOGIN).navigation();
+                gotoLogin();
             } else {
                 String price = mBinding.tvLastPrice.getText().toString().trim();
                 String range = mBinding.tvRange.getText().toString().trim();
@@ -1037,7 +1037,7 @@ public class MarketDetailActivity extends JMEBaseActivity implements FChart.OnPr
 
         public void onClickBuyMore() {
             if (null == mUser || !mUser.isLogin()) {
-                ARouter.getInstance().build(Constants.ARouterUriConst.ACCOUNTLOGIN).navigation();
+                gotoLogin();
             } else {
                 if (TextUtils.isEmpty(mContractId) || null == mTenSpeedVo || null == mContract)
                     return;
@@ -1056,7 +1056,7 @@ public class MarketDetailActivity extends JMEBaseActivity implements FChart.OnPr
 
         public void onClickSaleEmpty() {
             if (null == mUser || !mUser.isLogin()) {
-                ARouter.getInstance().build(Constants.ARouterUriConst.ACCOUNTLOGIN).navigation();
+                gotoLogin();
             } else {
                 if (TextUtils.isEmpty(mContractId) || null == mTenSpeedVo || null == mContract)
                     return;
@@ -1075,7 +1075,7 @@ public class MarketDetailActivity extends JMEBaseActivity implements FChart.OnPr
 
         public void onClickDeclarationForm() {
             if (null == mUser || !mUser.isLogin()) {
-                ARouter.getInstance().build(Constants.ARouterUriConst.ACCOUNTLOGIN).navigation();
+                gotoLogin();
             } else {
                 AppConfig.Select_ContractId = mContractId;
 

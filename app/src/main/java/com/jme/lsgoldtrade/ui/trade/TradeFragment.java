@@ -250,7 +250,7 @@ public class TradeFragment extends JMEBaseFragment implements TabLayout.OnTabSel
 
         public void onClickNews() {
             if (null == mUser || !mUser.isLogin())
-                ARouter.getInstance().build(Constants.ARouterUriConst.ACCOUNTLOGIN).navigation();
+                gotoLogin();
             else
                 ARouter.getInstance().build(Constants.ARouterUriConst.NEWSCENTERACTIVITY).navigation();
         }
@@ -265,7 +265,7 @@ public class TradeFragment extends JMEBaseFragment implements TabLayout.OnTabSel
 
         public void onClickOpenAccountFree() {
             if (null == mUser || !mUser.isLogin())
-                ARouter.getInstance().build(Constants.ARouterUriConst.ACCOUNTLOGIN).navigation();
+                gotoLogin();
             else
                 ARouter.getInstance()
                         .build(Constants.ARouterUriConst.AUTHENTICATION)
@@ -275,7 +275,7 @@ public class TradeFragment extends JMEBaseFragment implements TabLayout.OnTabSel
 
         public void onClickBind() {
             if (null == mUser || !mUser.isLogin())
-                ARouter.getInstance().build(Constants.ARouterUriConst.ACCOUNTLOGIN).navigation();
+                gotoLogin();
             else
                 getWhetherIdCard();
         }

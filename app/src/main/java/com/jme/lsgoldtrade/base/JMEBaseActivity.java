@@ -12,6 +12,7 @@ import com.jme.common.network.Head;
 import com.jme.common.ui.base.BaseActivity;
 import com.jme.common.util.DialogHelp;
 import com.jme.common.util.RxBus;
+import com.jme.common.util.SharedPreUtils;
 import com.jme.lsgoldtrade.R;
 import com.jme.lsgoldtrade.config.Constants;
 import com.jme.lsgoldtrade.config.Contract;
@@ -162,14 +163,25 @@ public abstract class JMEBaseActivity<T> extends BaseActivity {
     }
 
     private void returntoLogin() {
-        ARouter.getInstance()
-                .build(Constants.ARouterUriConst.ACCOUNTLOGIN)
-                .navigation();
+        gotoLogin();
     }
 
     private void returnToHomePage() {
         RxBus.getInstance().post(Constants.RxBusConst.RXBUS_CANCEL, null);
         ARouter.getInstance().build(Constants.ARouterUriConst.MAIN).navigation();
+    }
+
+    protected void gotoLogin() {
+        String loginType = SharedPreUtils.getString(this, SharedPreUtils.Login_Type);
+
+        if (TextUtils.isEmpty(loginType)) {
+            ARouter.getInstance().build(Constants.ARouterUriConst.ACCOUNTLOGIN).navigation();
+        } else {
+            if (loginType.equals("Account"))
+                ARouter.getInstance().build(Constants.ARouterUriConst.ACCOUNTLOGIN).navigation();
+            else if (loginType.equals("Mobile"))
+                ARouter.getInstance().build(Constants.ARouterUriConst.MOBILELOGIN).navigation();
+        }
     }
 
     @Override

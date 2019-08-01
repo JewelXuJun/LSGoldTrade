@@ -3,10 +3,12 @@ package com.jme.lsgoldtrade.util;
 import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.text.TextUtils;
 
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.jme.common.util.DateUtil;
 import com.jme.common.util.RxBus;
+import com.jme.common.util.SharedPreUtils;
 import com.jme.lsgoldtrade.config.AppConfig;
 import com.jme.lsgoldtrade.config.Constants;
 import com.jme.lsgoldtrade.config.User;
@@ -40,13 +42,13 @@ public class IntentUtils {
         api.sendReq(req);
     }
 
-    public static void IntentFastTab(String code) {
+    public static void IntentFastTab(Context context, String code) {
         User user = User.getInstance();
 
         switch (code) {
             case "MFKH":  //免费开户
                 if (null == user || !user.isLogin()) {
-                    ARouter.getInstance().build(Constants.ARouterUriConst.ACCOUNTLOGIN).navigation();
+                    gotoLogin(context);
                 } else {
                     RxBus.getInstance().post(Constants.RxBusConst.RXBUS_TRADE, null);
                     ARouter.getInstance().build(Constants.ARouterUriConst.MAIN).navigation();
@@ -55,7 +57,7 @@ public class IntentUtils {
                 break;
             case "KSXD":  //快速下单
                 if (null == user || !user.isLogin()) {
-                    ARouter.getInstance().build(Constants.ARouterUriConst.ACCOUNTLOGIN).navigation();
+                    gotoLogin(context);
                 } else {
                     RxBus.getInstance().post(Constants.RxBusConst.RXBUS_TRADE, null);
                     ARouter.getInstance().build(Constants.ARouterUriConst.MAIN).navigation();
@@ -76,14 +78,14 @@ public class IntentUtils {
                 break;
             case "ZJHZ":  //资金划转
                 if (null == user || !user.isLogin())
-                    ARouter.getInstance().build(Constants.ARouterUriConst.ACCOUNTLOGIN).navigation();
+                    gotoLogin(context);
                 else
                     ARouter.getInstance().build(Constants.ARouterUriConst.CAPITALTRANSFER).navigation();
 
                 break;
             case "DQCC":  //当前持仓
                 if (null == user || !user.isLogin()) {
-                    ARouter.getInstance().build(Constants.ARouterUriConst.ACCOUNTLOGIN).navigation();
+                    gotoLogin(context);
                 } else {
                     RxBus.getInstance().post(Constants.RxBusConst.RXBUS_TRADEFRAGMENT_HOLD, null);
                     ARouter.getInstance().build(Constants.ARouterUriConst.MAIN).navigation();
@@ -92,42 +94,42 @@ public class IntentUtils {
                 break;
             case "DRWT":  //当日委托
                 if (null == user || !user.isLogin())
-                    ARouter.getInstance().build(Constants.ARouterUriConst.ACCOUNTLOGIN).navigation();
+                    gotoLogin(context);
                 else
                     ARouter.getInstance().build(Constants.ARouterUriConst.CURRENTENTRUST).navigation();
 
                 break;
             case "DRCC":  //当日持仓
                 if (null == user || !user.isLogin())
-                    ARouter.getInstance().build(Constants.ARouterUriConst.ACCOUNTLOGIN).navigation();
+                    gotoLogin(context);
                 else
                     ARouter.getInstance().build(Constants.ARouterUriConst.CURRENTHOLDPOSITION).navigation();
 
                 break;
             case "DRCJ":  //当日成交
                 if (null == user || !user.isLogin())
-                    ARouter.getInstance().build(Constants.ARouterUriConst.ACCOUNTLOGIN).navigation();
+                    gotoLogin(context);
                 else
                     ARouter.getInstance().build(Constants.ARouterUriConst.CURRENTDEAL).navigation();
 
                 break;
             case "LSWT":  //历史委托
                 if (null == user || !user.isLogin())
-                    ARouter.getInstance().build(Constants.ARouterUriConst.ACCOUNTLOGIN).navigation();
+                    gotoLogin(context);
                 else
                     ARouter.getInstance().build(Constants.ARouterUriConst.HISTORYENTRUST).navigation();
 
                 break;
             case "LSCJ":  //历史成交
                 if (null == user || !user.isLogin())
-                    ARouter.getInstance().build(Constants.ARouterUriConst.ACCOUNTLOGIN).navigation();
+                    gotoLogin(context);
                 else
                     ARouter.getInstance().build(Constants.ARouterUriConst.HISTORYDEAL).navigation();
 
                 break;
             case "RJD":   //日结单
                 if (null == user || !user.isLogin())
-                    ARouter.getInstance().build(Constants.ARouterUriConst.ACCOUNTLOGIN).navigation();
+                    gotoLogin(context);
                 else
                     ARouter.getInstance()
                             .build(Constants.ARouterUriConst.DAILYSTATEMENT)
@@ -136,7 +138,7 @@ public class IntentUtils {
                 break;
             case "WDDY":  //我的订阅
                 if (null == user || !user.isLogin())
-                    ARouter.getInstance().build(Constants.ARouterUriConst.ACCOUNTLOGIN).navigation();
+                    gotoLogin(context);
                 else
                     ARouter.getInstance().build(Constants.ARouterUriConst.TRADINGBOX).navigation();
 
@@ -147,7 +149,7 @@ public class IntentUtils {
                 break;
             case "CD":  //撤单
                 if (null == user || !user.isLogin()) {
-                    ARouter.getInstance().build(Constants.ARouterUriConst.ACCOUNTLOGIN).navigation();
+                    gotoLogin(context);
                 } else {
                     RxBus.getInstance().post(Constants.RxBusConst.RXBUS_CANCELORDERFRAGMENT, null);
                     ARouter.getInstance().build(Constants.ARouterUriConst.MAIN).navigation();
@@ -175,6 +177,19 @@ public class IntentUtils {
         }
 
         return false;
+    }
+
+    private static void gotoLogin(Context context) {
+        String loginType = SharedPreUtils.getString(context, SharedPreUtils.Login_Type);
+
+        if (TextUtils.isEmpty(loginType)) {
+            ARouter.getInstance().build(Constants.ARouterUriConst.ACCOUNTLOGIN).navigation();
+        } else {
+            if (loginType.equals("Account"))
+                ARouter.getInstance().build(Constants.ARouterUriConst.ACCOUNTLOGIN).navigation();
+            else if (loginType.equals("Mobile"))
+                ARouter.getInstance().build(Constants.ARouterUriConst.MOBILELOGIN).navigation();
+        }
     }
 
 }

@@ -843,7 +843,7 @@ public class DeclarationFormFragment extends JMEBaseFragment implements FChart.O
             hiddenKeyBoard();
 
             if (null == mUser || !mUser.isLogin()) {
-                ARouter.getInstance().build(Constants.ARouterUriConst.ACCOUNTLOGIN).navigation();
+                gotoLogin();
             } else {
                 mBsFlag = 1;
                 mOcFlag = 0;
@@ -856,7 +856,7 @@ public class DeclarationFormFragment extends JMEBaseFragment implements FChart.O
             hiddenKeyBoard();
 
             if (null == mUser || !mUser.isLogin()) {
-                ARouter.getInstance().build(Constants.ARouterUriConst.ACCOUNTLOGIN).navigation();
+                gotoLogin();
             } else {
                 mBsFlag = 2;
                 mOcFlag = 0;

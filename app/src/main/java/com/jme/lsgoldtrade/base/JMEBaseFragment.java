@@ -2,11 +2,14 @@ package com.jme.lsgoldtrade.base;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.text.TextUtils;
 
+import com.alibaba.android.arouter.launcher.ARouter;
 import com.jme.common.network.DTRequest;
 import com.jme.common.network.Head;
 import com.jme.common.ui.base.BaseFragment;
 import com.jme.common.util.RxBus;
+import com.jme.common.util.SharedPreUtils;
 import com.jme.lsgoldtrade.config.Constants;
 import com.jme.lsgoldtrade.config.Contract;
 import com.jme.lsgoldtrade.config.User;
@@ -82,6 +85,19 @@ public abstract class JMEBaseFragment<T> extends BaseFragment {
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
+    }
+
+    protected void gotoLogin() {
+        String loginType = SharedPreUtils.getString(mContext, SharedPreUtils.Login_Type);
+
+        if (TextUtils.isEmpty(loginType)) {
+            ARouter.getInstance().build(Constants.ARouterUriConst.ACCOUNTLOGIN).navigation();
+        } else {
+            if (loginType.equals("Account"))
+                ARouter.getInstance().build(Constants.ARouterUriConst.ACCOUNTLOGIN).navigation();
+            else if (loginType.equals("Mobile"))
+                ARouter.getInstance().build(Constants.ARouterUriConst.MOBILELOGIN).navigation();
+        }
     }
 
     @Override

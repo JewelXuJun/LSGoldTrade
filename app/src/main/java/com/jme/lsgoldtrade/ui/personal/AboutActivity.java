@@ -68,11 +68,9 @@ public class AboutActivity extends JMEBaseActivity {
 
         public void onClickFeedBack() {
             if (null == mUser || !mUser.isLogin())
-                ARouter.getInstance().build(Constants.ARouterUriConst.ACCOUNTLOGIN).navigation();
+                gotoLogin();
             else
-                ARouter.getInstance()
-                        .build(Constants.ARouterUriConst.FEEDBACK)
-                        .navigation();
+                ARouter.getInstance().build(Constants.ARouterUriConst.FEEDBACK).navigation();
         }
 
         public void onClickDisclaimer() {

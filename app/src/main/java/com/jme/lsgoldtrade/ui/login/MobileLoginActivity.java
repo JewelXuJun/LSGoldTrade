@@ -288,6 +288,7 @@ public class MobileLoginActivity extends JMEBaseActivity {
 
                     showShortToast(R.string.login_success);
 
+                    SharedPreUtils.setString(this, SharedPreUtils.Login_Type, "Mobile");
                     SharedPreUtils.setString(this, SharedPreUtils.Login_Mobile, mBinding.etMobile.getText().toString());
                 } else {
                     showShortToast(head.getMsg());

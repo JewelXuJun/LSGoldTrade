@@ -382,14 +382,14 @@ public class TradingBoxHistoryFragment extends JMEBaseFragment {
 
         public void onClickAgree() {
             if (null == mUser || !mUser.isLogin())
-                ARouter.getInstance().build(Constants.ARouterUriConst.ACCOUNTLOGIN).navigation();
+                gotoLogin();
             else
                 add("0");
         }
 
         public void onClickOpposition() {
             if (null == mUser || !mUser.isLogin())
-                ARouter.getInstance().build(Constants.ARouterUriConst.ACCOUNTLOGIN).navigation();
+                gotoLogin();
             else
                 add("1");
         }

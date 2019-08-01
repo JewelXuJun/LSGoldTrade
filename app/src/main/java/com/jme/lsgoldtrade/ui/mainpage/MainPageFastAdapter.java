@@ -52,12 +52,13 @@ public class MainPageFastAdapter extends PagerAdapter {
         container.addView(view);
 
         mAdapter.setOnItemClickListener((adapter, v, index) -> {
-            NavigatorVo.NavigatorVoBean navigatorVoBean = (NavigatorVo.NavigatorVoBean)adapter.getItem(index);
+            NavigatorVo.NavigatorVoBean navigatorVoBean = (NavigatorVo.NavigatorVoBean) adapter.getItem(index);
 
             if (null == navigatorVoBean)
                 return;
 
-            IntentUtils.IntentFastTab(navigatorVoBean.getCode());});
+            IntentUtils.IntentFastTab(mContext, navigatorVoBean.getCode());
+        });
 
         return view;
     }

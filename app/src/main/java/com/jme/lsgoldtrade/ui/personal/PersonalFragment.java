@@ -158,19 +158,19 @@ public class PersonalFragment extends JMEBaseFragment {
 
         public void onClickLogin() {
             if (null == mUser || !mUser.isLogin())
-                ARouter.getInstance().build(Constants.ARouterUriConst.ACCOUNTLOGIN).navigation();
+                gotoLogin();
         }
 
         public void onClickOpenAccount() {
             if (null == mUser || !mUser.isLogin())
-                ARouter.getInstance().build(Constants.ARouterUriConst.ACCOUNTLOGIN).navigation();
+                gotoLogin();
             else if (TextUtils.isEmpty(mUser.getAccountID()))
                 RxBus.getInstance().post(Constants.RxBusConst.RXBUS_TRADE, null);
         }
 
         public void onClickIncrement() {
             if (null == mUser || !mUser.isLogin()) {
-                ARouter.getInstance().build(Constants.ARouterUriConst.ACCOUNTLOGIN).navigation();
+                gotoLogin();
             } else {
                 if (mIncrementState.equals("T"))
                     ARouter.getInstance().build(Constants.ARouterUriConst.CHECKSERVICE).navigation();
@@ -185,7 +185,7 @@ public class PersonalFragment extends JMEBaseFragment {
 
         public void onClickMessageCenter() {
             if (null == mUser || !mUser.isLogin())
-                ARouter.getInstance().build(Constants.ARouterUriConst.ACCOUNTLOGIN).navigation();
+                gotoLogin();
             else
                 ARouter.getInstance().build(Constants.ARouterUriConst.NEWSCENTERACTIVITY).navigation();
         }

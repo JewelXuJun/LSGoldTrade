@@ -1,13 +1,16 @@
 package com.jme.lsgoldtrade.util;
 
 import android.app.Activity;
+import android.content.Context;
 import android.support.v7.app.AlertDialog;
+import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.TextView;
 
 import com.alibaba.android.arouter.launcher.ARouter;
+import com.jme.common.util.SharedPreUtils;
 import com.jme.lsgoldtrade.R;
 import com.jme.lsgoldtrade.config.Constants;
 import com.jme.lsgoldtrade.config.User;
@@ -39,7 +42,7 @@ public class TradeBoxFunctionUtils {
             if (User.getInstance().isLogin())
                 ARouter.getInstance().build(Constants.ARouterUriConst.TRADINGBOXHISTROY).navigation();
             else
-                ARouter.getInstance().build(Constants.ARouterUriConst.ACCOUNTLOGIN).navigation();
+                gotoLogin(activity);
 
             alertDialog.dismiss();
         });
@@ -48,7 +51,7 @@ public class TradeBoxFunctionUtils {
             if (User.getInstance().isLogin())
                 ARouter.getInstance().build(Constants.ARouterUriConst.TRADINGBOXORDER).navigation();
             else
-                ARouter.getInstance().build(Constants.ARouterUriConst.ACCOUNTLOGIN).navigation();
+                gotoLogin(activity);
 
             alertDialog.dismiss();
         });
@@ -72,6 +75,19 @@ public class TradeBoxFunctionUtils {
 
             alertDialog.dismiss();
         });
+    }
+
+    public static void gotoLogin(Context context) {
+        String loginType = SharedPreUtils.getString(context, SharedPreUtils.Login_Type);
+
+        if (TextUtils.isEmpty(loginType)) {
+            ARouter.getInstance().build(Constants.ARouterUriConst.ACCOUNTLOGIN).navigation();
+        } else {
+            if (loginType.equals("Account"))
+                ARouter.getInstance().build(Constants.ARouterUriConst.ACCOUNTLOGIN).navigation();
+            else if (loginType.equals("Mobile"))
+                ARouter.getInstance().build(Constants.ARouterUriConst.MOBILELOGIN).navigation();
+        }
     }
 
 }
