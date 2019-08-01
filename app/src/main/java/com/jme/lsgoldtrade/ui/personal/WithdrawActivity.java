@@ -2,6 +2,7 @@ package com.jme.lsgoldtrade.ui.personal;
 
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.jme.common.network.DTRequest;
@@ -12,6 +13,7 @@ import com.jme.lsgoldtrade.base.JMEBaseActivity;
 import com.jme.lsgoldtrade.config.Constants;
 import com.jme.lsgoldtrade.databinding.ActivityWithdrawBinding;
 import com.jme.lsgoldtrade.domain.UsernameVo;
+import com.jme.lsgoldtrade.domain.WithdrawApplyVo;
 import com.jme.lsgoldtrade.service.AccountService;
 import com.jme.lsgoldtrade.service.PaymentService;
 import com.umeng.socialize.UMAuthListener;
@@ -95,8 +97,10 @@ public class WithdrawActivity extends JMEBaseActivity {
         @Override
         public void onComplete(SHARE_MEDIA media, int i, Map<String, String> map) {
             showShortToast("授权成功");
-            openid = map.get("uid");
+            Log.e("------", map.toString());
+            openid = map.get("openid");
             nickName = map.get("name");
+            applyWithdrawByWeChat();
         }
 
         @Override
@@ -164,7 +168,18 @@ public class WithdrawActivity extends JMEBaseActivity {
                 break;
             case "WithdrawApply":
                 if (head.isSuccess()) {
-                    ARouter.getInstance().build(Constants.ARouterUriConst.WITHDRAWRESULT).navigation();
+                    WithdrawApplyVo withdrawApplyVo;
+                    try {
+                        withdrawApplyVo = (WithdrawApplyVo) response;
+                    } catch (Exception e) {
+                        withdrawApplyVo = null;
+                        e.printStackTrace();
+                    }
+                    if (withdrawApplyVo == null)
+                        return;
+                    ARouter.getInstance().build(Constants.ARouterUriConst.WITHDRAWRESULT)
+                            .withSerializable("WithdrawApplyVo", withdrawApplyVo)
+                            .navigation();
                     this.finish();
                 }
                 break;
