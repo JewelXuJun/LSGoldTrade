@@ -18,6 +18,7 @@ import com.jme.lsgoldtrade.service.AccountService;
 import com.jme.lsgoldtrade.service.PaymentService;
 import com.umeng.socialize.UMAuthListener;
 import com.umeng.socialize.UMShareAPI;
+import com.umeng.socialize.UMShareConfig;
 import com.umeng.socialize.bean.SHARE_MEDIA;
 import java.math.BigDecimal;
 import java.util.HashMap;
@@ -85,6 +86,13 @@ public class WithdrawActivity extends JMEBaseActivity {
     }
 
     private void gotoWeChatAuth() {
+//        boolean isAuth = UMShareAPI.get(this).isAuthorize(WithdrawActivity.this, SHARE_MEDIA.WEIXIN);
+//        Log.e("-----", "" + isAuth);
+//        if (isAuth)
+//            UMShareAPI.get(this).deleteOauth(WithdrawActivity.this, SHARE_MEDIA.WEIXIN, umAuthListener);
+        UMShareConfig config = new UMShareConfig();
+        config.isNeedAuthOnGetUserInfo(true);
+        UMShareAPI.get(this).setShareConfig(config);
         UMShareAPI.get(this).getPlatformInfo(WithdrawActivity.this, SHARE_MEDIA.WEIXIN, umAuthListener);
     }
 
@@ -96,7 +104,7 @@ public class WithdrawActivity extends JMEBaseActivity {
 
         @Override
         public void onComplete(SHARE_MEDIA media, int i, Map<String, String> map) {
-            showShortToast("授权成功");
+//            showShortToast("授权成功");
             Log.e("------", map.toString());
             openid = map.get("openid");
             nickName = map.get("name");
