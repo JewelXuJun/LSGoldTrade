@@ -122,6 +122,6 @@ public interface ManagementApi {
     Call<DTResponse> timeLineList(@QueryMap Map<String, String> map);
 
     @POST("/tjsmanage/infoapi/v1/ios/timeLine/save")
-    Call<DTResponse> timeLineSave(@QueryMap Map<String, String> map);
+    Call<DTResponse> timeLineSave(@Body Map<String, String> map);
 
 }

@@ -280,19 +280,25 @@ public class Chart extends LinearLayout {
             mRadioButton_minute.setText(TCHART_ELSE);
         } else {
             KData.Unit unit = mKChart.getUnit();
+            int position = -1;
 
-            switch (unit) {
-                case DAY:
+            for (int i = 0; i < mChartType.length; i++) {
+                if (mChartType[i].getCHDescribe().equals(unit.getCHDescribe()))
+                    position = i;
+            }
+
+            switch (position) {
+                case 0:
                     mRadioButton_day.setChecked(true);
                     mRadioButton_minute.setText(TCHART_ELSE);
 
                     break;
-                case WEEK:
+                case 1:
                     mRadioButton_week.setChecked(true);
                     mRadioButton_minute.setText(TCHART_ELSE);
 
                     break;
-                case MONTH:
+                case 2:
                     mRadioButton_month.setChecked(true);
                     mRadioButton_minute.setText(TCHART_ELSE);
 
