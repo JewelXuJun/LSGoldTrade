@@ -34,7 +34,6 @@ public class RegisterSuccessActivity extends JMEBaseActivity {
     @Override
     protected void initData(Bundle savedInstanceState) {
         super.initData(savedInstanceState);
-
     }
 
     @Override

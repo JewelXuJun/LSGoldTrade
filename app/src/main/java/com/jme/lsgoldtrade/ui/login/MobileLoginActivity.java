@@ -392,6 +392,8 @@ public class MobileLoginActivity extends JMEBaseActivity {
 
         public void onClickRegister() {
             ARouter.getInstance().build(Constants.ARouterUriConst.REGISTER).navigation();
+
+            finish();
         }
 
         public void onClickForgetPwd() {

@@ -136,7 +136,7 @@ public class RegisterActivity extends JMEBaseActivity {
 
                     showShortToast(R.string.register_success);
 
-                    User.getInstance().login(userInfoVo);
+                    mUser.login(userInfoVo);
 
                     if (!TextUtils.isEmpty(userInfoVo.getTraderId()))
                         PushManager.getInstance().bindAlias(this, userInfoVo.getTraderId());

@@ -167,8 +167,10 @@ public class BindAccountActivity extends JMEBaseActivity {
                         e.printStackTrace();
                     }
 
-                    if (null != bindAccountVo)
-                        User.getInstance().setAccountID(bindAccountVo.getAccountId());
+                    if (null != bindAccountVo && mUser.isLogin()) {
+                        mUser.setAccountID(bindAccountVo.getAccountId());
+                        mUser.setAccount(bindAccountVo.getAccount());
+                    }
 
                     if (null != mWindow && !mWindow.isShowing()) {
                         mWindow.setData(String.valueOf(mTime));

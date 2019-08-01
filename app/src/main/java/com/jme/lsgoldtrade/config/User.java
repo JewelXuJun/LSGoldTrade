@@ -69,6 +69,10 @@ public class User {
         mAccountID = accountID;
     }
 
+    public void setAccount(String account) {
+        mAccount = account;
+    }
+
     public void setTraderId(String traderId) {
         mTraderId = traderId;
     }

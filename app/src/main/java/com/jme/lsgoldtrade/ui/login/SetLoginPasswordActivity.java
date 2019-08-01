@@ -94,11 +94,7 @@ public class SetLoginPasswordActivity extends JMEBaseActivity {
         switch (request.getApi().getName()) {
             case "SetLoginPassword":
                 if (head.isSuccess()) {
-                    mUser.logout();
-
-                    ARouter.getInstance()
-                            .build(Constants.ARouterUriConst.SETLOGINPASSWORDSUCCESS)
-                            .navigation();
+                    ARouter.getInstance().build(Constants.ARouterUriConst.SETLOGINPASSWORDSUCCESS).navigation();
 
                     finish();
                 }
