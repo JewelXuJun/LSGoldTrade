@@ -175,7 +175,7 @@ public class MarketTradePopupWindow extends JMEBasePopupWindow {
                     mMaxAmount = mMaxOrderQty;
                 } else {
                     String transactionBalance = mAccount.getTransactionBalanceStr();
-                    String positionMargin = null == mPositionVo ? "0" : mPositionVo.getPositionMargin();
+                    String positionMargin = null == mAccount ? "0" : mAccount.getPositionMarginStr();
 
                     long bankLongMarginRate = mContractInfoVo.getBankLongMarginRate();
                     long bankShortMarginRate = mContractInfoVo.getBankShortMarginRate();

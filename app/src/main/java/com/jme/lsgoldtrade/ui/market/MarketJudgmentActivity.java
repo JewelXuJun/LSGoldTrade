@@ -303,9 +303,9 @@ public class MarketJudgmentActivity extends JMEBaseActivity {
 
                     for (PositionVo positionVo : positionVoList) {
                         if (null != positionVo && positionVo.getContractId().equals(mContractID)) {
-                            if (mBsFlag == 1 && positionVo.getType().equals("空"))
+                            if (mBsFlag == 1 && positionVo.getType().equals("多"))
                                 positionVoValue = positionVo;
-                            else if (mBsFlag == 2 && positionVo.getType().equals("多"))
+                            else if (mBsFlag == 2 && positionVo.getType().equals("空"))
                                 positionVoValue = positionVo;
                         }
                     }
