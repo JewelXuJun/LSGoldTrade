@@ -191,9 +191,7 @@ public class PersonalFragment extends JMEBaseFragment {
         }
 
         public void onClickFastManagement() {
-            ARouter.getInstance()
-                    .build(Constants.ARouterUriConst.FASTMANAGEMENT)
-                    .navigation();
+            ARouter.getInstance().build(Constants.ARouterUriConst.FASTMANAGEMENT).navigation();
         }
 
         public void onClickSubscribe() {

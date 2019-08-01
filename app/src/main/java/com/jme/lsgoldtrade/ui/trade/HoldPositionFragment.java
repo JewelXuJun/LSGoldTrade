@@ -460,7 +460,6 @@ public class HoldPositionFragment extends JMEBaseFragment implements OnRefreshLi
 
                         calculateValue();
 
-//                        mBinding.tvMarketValue.setText(MarketUtil.decimalFormatMoney(MarketUtil.getPriceValue(marketValueTotal.longValue())));
                         if (bHasNext) {
                             if (mCurrentPage == 1)
                                 mAdapter.setNewData(positionVoList);
