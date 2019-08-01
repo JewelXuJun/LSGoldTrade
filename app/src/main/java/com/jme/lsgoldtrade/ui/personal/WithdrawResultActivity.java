@@ -38,8 +38,8 @@ public class WithdrawResultActivity extends JMEBaseActivity {
 
     public class ClickHandlers {
 
-        public void onClickWithdraw() {
-
+        public void onClickKnown() {
+            finish();
         }
 
     }

@@ -20,7 +20,6 @@
         <include layout="@layout/item_line_vertical"/>
 
         <LinearLayout
-            android:id="@+id/layout_img_verify_code"
             android:layout_width="match_parent"
             android:layout_height="60dp"
             android:orientation="horizontal"
