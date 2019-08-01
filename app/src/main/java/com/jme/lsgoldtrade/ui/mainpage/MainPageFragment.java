@@ -217,6 +217,7 @@ public class MainPageFragment extends JMEBaseFragment implements OnRefreshListen
 
             switch (callType) {
                 case Constants.RxBusConst.RXBUS_FAST_MANAGEMENT_EDIT:
+                case Constants.RxBusConst.RXBUS_LOGOUT_SUCCESS:
                     getNavigatorList();
 
                     break;

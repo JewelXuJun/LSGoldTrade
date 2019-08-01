@@ -166,7 +166,7 @@ public class JMEAppService extends Service implements OnResultListener {
                     },
                     (dialog, which) -> {
                         dialog.dismiss();
-                        RxBus.getInstance().post(Constants.RxBusConst.RXBUS_CANCEL, null);
+                        RxBus.getInstance().post(Constants.RxBusConst.RXBUS_LOGOUT_SUCCESS, null);
                         ARouter.getInstance().build(Constants.ARouterUriConst.MAIN).navigation();
                     })
                     .setCancelable(false)

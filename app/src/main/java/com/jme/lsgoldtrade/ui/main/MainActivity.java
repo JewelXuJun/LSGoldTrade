@@ -105,7 +105,7 @@ public class MainActivity extends JMEBaseActivity implements TabHost.OnTabChange
                     runOnUiThread(() -> mBinding.tabhost.setCurrentTab(2));
 
                     break;
-                case Constants.RxBusConst.RXBUS_CANCEL:
+                case Constants.RxBusConst.RXBUS_LOGOUT_SUCCESS:
                     runOnUiThread(() -> mBinding.tabhost.setCurrentTab(0));
 
                     break;

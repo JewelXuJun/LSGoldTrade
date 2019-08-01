@@ -167,7 +167,7 @@ public abstract class JMEBaseActivity<T> extends BaseActivity {
     }
 
     private void returnToHomePage() {
-        RxBus.getInstance().post(Constants.RxBusConst.RXBUS_CANCEL, null);
+        RxBus.getInstance().post(Constants.RxBusConst.RXBUS_LOGOUT_SUCCESS, null);
         ARouter.getInstance().build(Constants.ARouterUriConst.MAIN).navigation();
     }
 

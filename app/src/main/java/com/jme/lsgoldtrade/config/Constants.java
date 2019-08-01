@@ -98,7 +98,6 @@ public class Constants {
         public static final String RXBUS_DECLARATIONFORM_CONFIRM = "DeclarationFormConfirm";
         public static final String RXBUS_MARKETDETAIL_QUICK = "MarketDetailQuick";
         public static final String RXBUS_SYNTIME = "SynTimeMessage";
-        public static final String RXBUS_CANCEL = "cancel";
         public static final String RXBUS_CANCEL_MAIN = "cancelMain";
         public static final String RXBUS_ORDER_SUCCESS = "orderSuccess";
         public static final String RXBUS_CAPITALTRANSFER_SUCCESS = "capitalTransferSuccess";
@@ -106,6 +105,7 @@ public class Constants {
         public static final String RXBUS_CUSTOMER_SERVICE = "customerservice";
         public static final String RXBUS_BIND_SUCCESS = "bindSuccess";
         public static final String RXBUS_LOGIN_SUCCESS = "loginSuccess";
+        public static final String RXBUS_LOGOUT_SUCCESS = "logoutSuccess";
         public static final String RXBUS_FAST_MANAGEMENT_EDIT = "fastManagementEdit";
         public static final String RXBUS_MARKET_UNIT_SORT_SUCCESS = "marketUnitSortSuccess";
     }

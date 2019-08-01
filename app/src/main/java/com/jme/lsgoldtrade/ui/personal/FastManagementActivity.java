@@ -1,11 +1,22 @@
 package com.jme.lsgoldtrade.ui.personal;
 
 import android.os.Bundle;
-import android.support.v7.widget.GridLayoutManager;
+import android.support.annotation.NonNull;
+import android.util.DisplayMetrics;
+import android.view.View;
+import android.view.ViewGroup;
+import android.view.WindowManager;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
+import com.heaven7.android.dragflowlayout.DragAdapter;
+import com.heaven7.android.dragflowlayout.IDraggable;
 import com.jme.common.network.DTRequest;
 import com.jme.common.network.Head;
+import com.jme.common.util.DensityUtil;
 import com.jme.common.util.RxBus;
 import com.jme.lsgoldtrade.R;
 import com.jme.lsgoldtrade.base.JMEBaseActivity;
@@ -15,8 +26,8 @@ import com.jme.lsgoldtrade.databinding.ActivityFastManagementBinding;
 import com.jme.lsgoldtrade.domain.NavigatorVo;
 import com.jme.lsgoldtrade.service.ManagementService;
 import com.jme.lsgoldtrade.util.IntentUtils;
+import com.squareup.picasso.Picasso;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -28,13 +39,8 @@ public class FastManagementActivity extends JMEBaseActivity {
 
     private ActivityFastManagementBinding mBinding;
 
-    private AddedAdapter mAddedAdapter;
-    private NotAddedAdapter mNotAddedAdapter;
-
-    private List<NavigatorVo.NavigatorVoBean> mUsedModulesBeanList = new ArrayList<>();
-    private List<NavigatorVo.NavigatorVoBean> mNotUsedModulesBeanList = new ArrayList<>();
-
     private boolean bEditFlag = false;
+    private int mScreenWidth;
 
     @Override
     protected int getContentViewId() {
@@ -54,75 +60,141 @@ public class FastManagementActivity extends JMEBaseActivity {
     protected void initData(Bundle savedInstanceState) {
         super.initData(savedInstanceState);
 
-        mAddedAdapter = new AddedAdapter(R.layout.item_added, null);
-        mBinding.recyclerViewAdded.setLayoutManager(new GridLayoutManager(mContext, 4));
-        mBinding.recyclerViewAdded.setAdapter(mAddedAdapter);
-        mAddedAdapter.showEditorialStatus(false);
-
-        mNotAddedAdapter = new NotAddedAdapter(R.layout.item_not_added, null);
-        mBinding.recyclerViewNotAdded.setLayoutManager(new GridLayoutManager(mContext, 4));
-        mBinding.recyclerViewNotAdded.setAdapter(mNotAddedAdapter);
-        mNotAddedAdapter.showEditorialStatus(false);
-
-        getNavigatorList();
+        getScreenWidth();
     }
 
     @Override
     protected void initListener() {
         super.initListener();
 
-        mAddedAdapter.setOnItemChildClickListener((adapter, view, position) -> {
-            NavigatorVo.NavigatorVoBean navigatorVoBean = (NavigatorVo.NavigatorVoBean) adapter.getItem(position);
+        mBinding.dragFlowLayoutAdded.setOnItemClickListener((dragFlowLayout, child, event, dragState) -> {
+            FastTabBean fastTabBean = (FastTabBean) child.getTag();
 
-            if (null == navigatorVoBean)
-                return;
+            if (null != fastTabBean)
+                IntentUtils.IntentFastTab(this, fastTabBean.mCode);
 
-            if (mUsedModulesBeanList.size() > 4) {
-                mUsedModulesBeanList.remove(navigatorVoBean);
-                mNotUsedModulesBeanList.add(navigatorVoBean);
+            return true;
+        });
 
-                mAddedAdapter.notifyDataSetChanged();
-                mNotAddedAdapter.notifyDataSetChanged();
-            } else {
-                showShortToast(R.string.personal_fast_management_length_less);
+        mBinding.dragFlowLayoutNotAdded.setOnItemClickListener((dragFlowLayout, child, event, dragState) -> {
+            FastTabBean fastTabBean = (FastTabBean) child.getTag();
+
+            if (null != fastTabBean)
+                IntentUtils.IntentFastTab(this, fastTabBean.mCode);
+
+            return true;
+        });
+
+        mBinding.dragFlowLayoutAdded.setDragAdapter(new DragAdapter<FastTabBean>() {
+            @Override
+            public int getItemLayoutId() {
+                return R.layout.item_added;
+            }
+
+            @Override
+            public void onBindData(View itemView, int dragState, FastTabBean fastTabBean) {
+                itemView.setTag(fastTabBean);
+
+                RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                layoutParams.setMargins(DensityUtil.dpTopx(FastManagementActivity.this, 5), DensityUtil.dpTopx(FastManagementActivity.this, 5),
+                        DensityUtil.dpTopx(FastManagementActivity.this, 5), DensityUtil.dpTopx(FastManagementActivity.this, 5));
+                layoutParams.width = (mScreenWidth - DensityUtil.dpTopx(FastManagementActivity.this, 20)) / 4 - DensityUtil.dpTopx(FastManagementActivity.this, 10);
+                layoutParams.height = DensityUtil.dpTopx(FastManagementActivity.this, 80);
+
+                RelativeLayout layout = itemView.findViewById(R.id.layout);
+                ImageView img = itemView.findViewById(R.id.img);
+                TextView tv_tab_name = itemView.findViewById(R.id.tv_tab_name);
+                LinearLayout layout_delete = itemView.findViewById(R.id.layout_delete);
+
+                layout.setLayoutParams(layoutParams);
+                Picasso.with(mContext)
+                        .load(fastTabBean.mImgUrl)
+                        .placeholder(R.mipmap.ic_img_default)
+                        .error(R.mipmap.ic_img_default)
+                        .into(img);
+                tv_tab_name.setText(fastTabBean.mTab);
+                layout_delete.setVisibility(fastTabBean.bShowOperation ? View.VISIBLE : View.GONE);
+
+                layout_delete.setOnClickListener((view) -> {
+                    List<FastTabBean> addedFastTabBeanList = mBinding.dragFlowLayoutAdded.getDragItemManager().getItems();
+
+                    if (null != addedFastTabBeanList) {
+                        int size = addedFastTabBeanList.size();
+
+                        if (size > 4) {
+                            mBinding.dragFlowLayoutAdded.getDragItemManager().removeItem(fastTabBean);
+                            mBinding.dragFlowLayoutNotAdded.getDragItemManager().addItem(fastTabBean);
+                        } else {
+                            showShortToast(R.string.personal_fast_management_length_less);
+                        }
+                    }
+                });
+            }
+
+            @NonNull
+            @Override
+            public FastTabBean getData(View itemView) {
+                return (FastTabBean) itemView.getTag();
             }
         });
 
-        mNotAddedAdapter.setOnItemChildClickListener((adapter, view, position) -> {
-            NavigatorVo.NavigatorVoBean navigatorVoBean = (NavigatorVo.NavigatorVoBean) adapter.getItem(position);
+        mBinding.dragFlowLayoutNotAdded.setDragAdapter(new DragAdapter<FastTabBean>() {
+            @Override
+            public int getItemLayoutId() {
+                return R.layout.item_not_added;
+            }
 
-            if (null == navigatorVoBean)
-                return;
+            @Override
+            public void onBindData(View itemView, int dragState, FastTabBean fastTabBean) {
+                itemView.setTag(fastTabBean);
 
-            if (mUsedModulesBeanList.size() < 7) {
-                mUsedModulesBeanList.add(navigatorVoBean);
-                mNotUsedModulesBeanList.remove(navigatorVoBean);
+                RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                layoutParams.setMargins(DensityUtil.dpTopx(FastManagementActivity.this, 5), DensityUtil.dpTopx(FastManagementActivity.this, 5),
+                        DensityUtil.dpTopx(FastManagementActivity.this, 5), DensityUtil.dpTopx(FastManagementActivity.this, 5));
+                layoutParams.width = (mScreenWidth - DensityUtil.dpTopx(FastManagementActivity.this, 20)) / 4 - DensityUtil.dpTopx(FastManagementActivity.this, 10);
+                layoutParams.height = DensityUtil.dpTopx(FastManagementActivity.this, 80);
 
-                mAddedAdapter.notifyDataSetChanged();
-                mNotAddedAdapter.notifyDataSetChanged();
-            } else {
-                showShortToast(R.string.personal_fast_management_length);
+                RelativeLayout layout = itemView.findViewById(R.id.layout);
+                ImageView img = itemView.findViewById(R.id.img);
+                TextView tv_tab_name = itemView.findViewById(R.id.tv_tab_name);
+                LinearLayout layout_add = itemView.findViewById(R.id.layout_add);
+
+                layout.setLayoutParams(layoutParams);
+                Picasso.with(mContext)
+                        .load(fastTabBean.mImgUrl)
+                        .placeholder(R.mipmap.ic_img_default)
+                        .error(R.mipmap.ic_img_default)
+                        .into(img);
+                tv_tab_name.setText(fastTabBean.mTab);
+                layout_add.setVisibility(fastTabBean.bShowOperation ? View.VISIBLE : View.GONE);
+
+                layout_add.setOnClickListener((view) -> {
+                    List<FastTabBean> addedFastTabBeanList = mBinding.dragFlowLayoutAdded.getDragItemManager().getItems();
+
+                    if (null != addedFastTabBeanList) {
+                        int size = addedFastTabBeanList.size();
+
+                        if (size < 7) {
+                            mBinding.dragFlowLayoutAdded.getDragItemManager().addItem(fastTabBean);
+                            mBinding.dragFlowLayoutNotAdded.getDragItemManager().removeItem(fastTabBean);
+                        } else {
+                            showShortToast(R.string.personal_fast_management_length);
+                        }
+                    }
+                });
+            }
+
+            @NonNull
+            @Override
+            public FastTabBean getData(View itemView) {
+                return (FastTabBean) itemView.getTag();
             }
         });
 
-        mAddedAdapter.setOnItemClickListener((adapter, view, position) -> {
-            NavigatorVo.NavigatorVoBean navigatorVoBean = (NavigatorVo.NavigatorVoBean) adapter.getItem(position);
+        mBinding.dragFlowLayoutAdded.prepareItemsByCount(4);
+        mBinding.dragFlowLayoutNotAdded.prepareItemsByCount(9);
 
-            if (null == navigatorVoBean)
-                return;
-
-            IntentUtils.IntentFastTab(this, navigatorVoBean.getCode());
-        });
-
-        mNotAddedAdapter.setOnItemClickListener((adapter, view, position) -> {
-            NavigatorVo.NavigatorVoBean navigatorVoBean = (NavigatorVo.NavigatorVoBean) adapter.getItem(position);
-
-            if (null == navigatorVoBean)
-                return;
-
-            IntentUtils.IntentFastTab(this, navigatorVoBean.getCode());
-        });
-
+        getNavigatorList();
     }
 
     @Override
@@ -138,45 +210,112 @@ public class FastManagementActivity extends JMEBaseActivity {
 
             bEditFlag = false;
 
-            String addValues = "";
-            String notAddValues = "";
+            List<FastTabBean> addedFastTabBeanList = mBinding.dragFlowLayoutAdded.getDragItemManager().getItems();
+            List<FastTabBean> notAddedFastTabBeanList = mBinding.dragFlowLayoutNotAdded.getDragItemManager().getItems();
 
-            if (null == mUsedModulesBeanList || 0 == mUsedModulesBeanList.size()) {
-                addValues = "";
-            } else {
-                for (NavigatorVo.NavigatorVoBean navigatorVoBean : mUsedModulesBeanList) {
-                    if (null != navigatorVoBean)
-                        addValues = addValues + navigatorVoBean.getCode() + ",";
+            if (null != addedFastTabBeanList) {
+                for (int i = 0; i < addedFastTabBeanList.size(); i++) {
+                    FastTabBean fastTabBean = addedFastTabBeanList.get(i);
+
+                    if (null != fastTabBean) {
+                        fastTabBean.bShowOperation = false;
+
+                        mBinding.dragFlowLayoutAdded.getDragItemManager().updateItem(i, fastTabBean);
+                    }
                 }
             }
 
-            if (null == mNotUsedModulesBeanList || 0 == mNotUsedModulesBeanList.size()) {
-                notAddValues = "";
-            } else {
-                for (NavigatorVo.NavigatorVoBean navigatorVoBean : mNotUsedModulesBeanList) {
-                    if (null != navigatorVoBean)
-                        notAddValues = notAddValues + navigatorVoBean.getCode() + ",";
+            if (null != notAddedFastTabBeanList) {
+                for (int i = 0; i < notAddedFastTabBeanList.size(); i++) {
+                    FastTabBean fastTabBean = notAddedFastTabBeanList.get(i);
+
+                    if (null != fastTabBean) {
+                        fastTabBean.bShowOperation = false;
+
+                        mBinding.dragFlowLayoutNotAdded.getDragItemManager().updateItem(i, fastTabBean);
+                    }
                 }
             }
 
-            if (addValues.endsWith(","))
-                addValues = addValues.substring(0, addValues.length() - 1);
-
-            if (notAddValues.endsWith(","))
-                notAddValues = notAddValues.substring(0, notAddValues.length() - 1);
-
-            saveNavigatorList(addValues, notAddValues);
+            saveNavigatorList(getAddValues(), getNotAddValues());
         } else {
             setRightNavigation(getString(R.string.personal_fast_management_complete), 0, R.style.ToolbarThemeBlue, () -> doEdit());
 
             bEditFlag = true;
+
+            List<FastTabBean> addedFastTabBeanList = mBinding.dragFlowLayoutAdded.getDragItemManager().getItems();
+            List<FastTabBean> notAddedFastTabBeanList = mBinding.dragFlowLayoutNotAdded.getDragItemManager().getItems();
+
+            if (null != addedFastTabBeanList) {
+                for (int i = 0; i < addedFastTabBeanList.size(); i++) {
+                    FastTabBean fastTabBean = addedFastTabBeanList.get(i);
+
+                    if (null != fastTabBean) {
+                        fastTabBean.bShowOperation = true;
+
+                        mBinding.dragFlowLayoutAdded.getDragItemManager().updateItem(i, fastTabBean);
+                    }
+                }
+            }
+
+            if (null != notAddedFastTabBeanList) {
+                for (int i = 0; i < notAddedFastTabBeanList.size(); i++) {
+                    FastTabBean fastTabBean = notAddedFastTabBeanList.get(i);
+
+                    if (null != fastTabBean) {
+                        fastTabBean.bShowOperation = true;
+
+                        mBinding.dragFlowLayoutNotAdded.getDragItemManager().updateItem(i, fastTabBean);
+                    }
+                }
+            }
+
         }
 
-        mAddedAdapter.showEditorialStatus(bEditFlag);
-        mNotAddedAdapter.showEditorialStatus(bEditFlag);
+    }
 
-        mAddedAdapter.notifyDataSetChanged();
-        mNotAddedAdapter.notifyDataSetChanged();
+    private String getAddValues() {
+        String addValues = "";
+
+        List<FastTabBean> addedFastTabBeanList = mBinding.dragFlowLayoutAdded.getDragItemManager().getItems();
+
+        if (null != addedFastTabBeanList) {
+            for (FastTabBean fastTabBean : addedFastTabBeanList) {
+                if (null != fastTabBean)
+                    addValues = addValues + fastTabBean.mCode + ",";
+            }
+        }
+
+        if (addValues.endsWith(","))
+            addValues = addValues.substring(0, addValues.length() - 1);
+
+        return addValues;
+    }
+
+    private String getNotAddValues() {
+        String notAddValues = "";
+
+        List<FastTabBean> notAddedFastTabBeanList = mBinding.dragFlowLayoutNotAdded.getDragItemManager().getItems();
+
+        if (null != notAddedFastTabBeanList) {
+            for (FastTabBean fastTabBean : notAddedFastTabBeanList) {
+                if (null != fastTabBean)
+                    notAddValues = notAddValues + fastTabBean.mCode + ",";
+            }
+        }
+
+        if (notAddValues.endsWith(","))
+            notAddValues = notAddValues.substring(0, notAddValues.length() - 1);
+
+        return notAddValues;
+    }
+
+    private void getScreenWidth() {
+        WindowManager windowManager = getWindowManager();
+        DisplayMetrics displayMetrics = new DisplayMetrics();
+        windowManager.getDefaultDisplay().getMetrics(displayMetrics);
+
+        mScreenWidth = displayMetrics.widthPixels;
     }
 
     private void getNavigatorList() {
@@ -217,11 +356,29 @@ public class FastManagementActivity extends JMEBaseActivity {
                     if (null == navigatorVo)
                         return;
 
-                    mUsedModulesBeanList = navigatorVo.getUsedModules();
-                    mNotUsedModulesBeanList = navigatorVo.getNotUsedModules();
+                    List<NavigatorVo.NavigatorVoBean> usedModulesBeanList = navigatorVo.getUsedModules();
+                    List<NavigatorVo.NavigatorVoBean> notUsedModulesBeanList = navigatorVo.getNotUsedModules();
 
-                    mAddedAdapter.setNewData(mUsedModulesBeanList);
-                    mNotAddedAdapter.setNewData(mNotUsedModulesBeanList);
+                    if (null != usedModulesBeanList && usedModulesBeanList.size() > 0) {
+                        for (int i = 0; i < usedModulesBeanList.size(); i++) {
+                            NavigatorVo.NavigatorVoBean navigatorVoBean = usedModulesBeanList.get(i);
+
+                            if (null != navigatorVoBean)
+                                mBinding.dragFlowLayoutAdded.getDragItemManager().addItem(
+                                        new FastTabBean(navigatorVoBean.getName(), navigatorVoBean.getImageName(), navigatorVoBean.getCode(), false));
+                        }
+                    }
+
+                    if (null != notUsedModulesBeanList && notUsedModulesBeanList.size() > 0) {
+                        for (int i = 0; i < notUsedModulesBeanList.size(); i++) {
+                            NavigatorVo.NavigatorVoBean navigatorVoBean = notUsedModulesBeanList.get(i);
+
+                            if (null != navigatorVoBean)
+                                mBinding.dragFlowLayoutNotAdded.getDragItemManager().addItem(
+                                        new FastTabBean(navigatorVoBean.getName(), navigatorVoBean.getImageName(), navigatorVoBean.getCode(), false));
+                        }
+                    }
+
                 }
 
                 break;
@@ -234,6 +391,26 @@ public class FastManagementActivity extends JMEBaseActivity {
 
                 break;
         }
+    }
+
+    private static class FastTabBean implements IDraggable {
+        private String mTab;
+        private String mImgUrl;
+        private String mCode;
+        private boolean bShowOperation;
+
+        public FastTabBean(String tab, String imgUrl, String code, boolean showOperation) {
+            mTab = tab;
+            mImgUrl = imgUrl;
+            mCode = code;
+            bShowOperation = showOperation;
+        }
+
+        @Override
+        public boolean isDraggable() {
+            return true;
+        }
+
     }
 
 }

@@ -77,7 +77,7 @@ public class SettingActivity extends JMEBaseActivity {
     private void setLogoutLayout() {
         mUser.logout();
 
-        RxBus.getInstance().post(Constants.RxBusConst.RXBUS_CANCEL, null);
+        RxBus.getInstance().post(Constants.RxBusConst.RXBUS_LOGOUT_SUCCESS, null);
 
         finish();
     }

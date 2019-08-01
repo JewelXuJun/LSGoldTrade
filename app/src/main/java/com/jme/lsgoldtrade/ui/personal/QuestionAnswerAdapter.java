@@ -124,7 +124,7 @@ public class QuestionAnswerAdapter extends BaseQuickAdapter<List<QuestionAnswerV
                 if (null == user || !user.isLogin()) {
                     gotoLogin();
                 } else {
-                    RxBus.getInstance().post(Constants.RxBusConst.RXBUS_CANCEL, null);
+                    RxBus.getInstance().post(Constants.RxBusConst.RXBUS_LOGOUT_SUCCESS, null);
                     ARouter.getInstance().build(Constants.ARouterUriConst.MAIN).navigation();
 
                     mActivity.finish();
