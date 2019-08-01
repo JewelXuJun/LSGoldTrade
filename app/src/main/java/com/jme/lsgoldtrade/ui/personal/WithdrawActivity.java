@@ -2,6 +2,7 @@ package com.jme.lsgoldtrade.ui.personal;
 
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.jme.common.network.DTRequest;
@@ -12,10 +13,12 @@ import com.jme.lsgoldtrade.base.JMEBaseActivity;
 import com.jme.lsgoldtrade.config.Constants;
 import com.jme.lsgoldtrade.databinding.ActivityWithdrawBinding;
 import com.jme.lsgoldtrade.domain.UsernameVo;
+import com.jme.lsgoldtrade.domain.WithdrawApplyVo;
 import com.jme.lsgoldtrade.service.AccountService;
 import com.jme.lsgoldtrade.service.PaymentService;
 import com.umeng.socialize.UMAuthListener;
 import com.umeng.socialize.UMShareAPI;
+import com.umeng.socialize.UMShareConfig;
 import com.umeng.socialize.bean.SHARE_MEDIA;
 import java.math.BigDecimal;
 import java.util.HashMap;
@@ -32,6 +35,8 @@ import java.util.Map;
 public class WithdrawActivity extends JMEBaseActivity {
 
     private ActivityWithdrawBinding mBinding;
+
+    private BigDecimal balance;
 
     private String openid = "";
     private String nickName = "";
@@ -70,7 +75,7 @@ public class WithdrawActivity extends JMEBaseActivity {
     }
 
     private void hasWeChatWithdrawAuth() {
-        sendRequest(AccountService.getInstance().hasWeChatWithdrawAuth, new HashMap<>(), true);
+        sendRequest(AccountService.getInstance().hasWeChatWithdrawAuth, new HashMap<>(), false);
     }
 
     private void applyWithdrawByWeChat() {
@@ -83,6 +88,13 @@ public class WithdrawActivity extends JMEBaseActivity {
     }
 
     private void gotoWeChatAuth() {
+//        boolean isAuth = UMShareAPI.get(this).isAuthorize(WithdrawActivity.this, SHARE_MEDIA.WEIXIN);
+//        Log.e("-----", "" + isAuth);
+//        if (isAuth)
+//            UMShareAPI.get(this).deleteOauth(WithdrawActivity.this, SHARE_MEDIA.WEIXIN, umAuthListener);
+        UMShareConfig config = new UMShareConfig();
+        config.isNeedAuthOnGetUserInfo(true);
+        UMShareAPI.get(this).setShareConfig(config);
         UMShareAPI.get(this).getPlatformInfo(WithdrawActivity.this, SHARE_MEDIA.WEIXIN, umAuthListener);
     }
 
@@ -94,9 +106,11 @@ public class WithdrawActivity extends JMEBaseActivity {
 
         @Override
         public void onComplete(SHARE_MEDIA media, int i, Map<String, String> map) {
-            showShortToast("授权成功");
-            openid = map.get("uid");
+//            showShortToast("授权成功");
+            Log.e("------", map.toString());
+            openid = map.get("openid");
             nickName = map.get("name");
+            applyWithdrawByWeChat();
         }
 
         @Override
@@ -128,6 +142,8 @@ public class WithdrawActivity extends JMEBaseActivity {
 
                     mBinding.tvBanlace.setText(TextUtils.isEmpty(value.getBalance()) ? getString(R.string.text_no_data_default) :
                             BigDecimalUtil.formatMoney(new BigDecimal(value.getBalance()).divide(new BigDecimal(100)).toPlainString()) + "元");
+
+                    balance = new BigDecimal(value.getBalance()).divide(new BigDecimal(100));
                 }
                 break;
             case "GetWithdrawFeeRate":
@@ -164,7 +180,18 @@ public class WithdrawActivity extends JMEBaseActivity {
                 break;
             case "WithdrawApply":
                 if (head.isSuccess()) {
-                    ARouter.getInstance().build(Constants.ARouterUriConst.WITHDRAWRESULT).navigation();
+                    WithdrawApplyVo withdrawApplyVo;
+                    try {
+                        withdrawApplyVo = (WithdrawApplyVo) response;
+                    } catch (Exception e) {
+                        withdrawApplyVo = null;
+                        e.printStackTrace();
+                    }
+                    if (withdrawApplyVo == null)
+                        return;
+                    ARouter.getInstance().build(Constants.ARouterUriConst.WITHDRAWRESULT)
+                            .withSerializable("WithdrawApplyVo", withdrawApplyVo)
+                            .navigation();
                     this.finish();
                 }
                 break;
@@ -179,6 +206,9 @@ public class WithdrawActivity extends JMEBaseActivity {
             String funds = mBinding.etFunds.getText().toString().trim();
             if (TextUtils.isEmpty(funds)) {
                 showShortToast("请输入提现金额");
+                return;
+            } else if (new BigDecimal(funds).compareTo(balance) > 0) {
+                showShortToast("输入的提现金额大于可提金额");
                 return;
             }
             hasWeChatWithdrawAuth();

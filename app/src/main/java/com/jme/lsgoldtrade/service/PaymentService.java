@@ -6,6 +6,7 @@ import com.jme.common.network.IService;
 import com.jme.lsgoldtrade.config.Constants;
 import com.jme.lsgoldtrade.config.User;
 import com.jme.lsgoldtrade.domain.WechatPayVo;
+import com.jme.lsgoldtrade.domain.WithdrawApplyVo;
 import java.util.HashMap;
 import okhttp3.Interceptor;
 import okhttp3.Request;
@@ -50,7 +51,7 @@ public class PaymentService extends IService<PaymentApi> {
         }
     };
 
-    public API withdrawApply = new API<String>("WithdrawApply") {
+    public API withdrawApply = new API<WithdrawApplyVo>("WithdrawApply") {
         @Override
         public Call<DTResponse> request(HashMap<String, String> params) {
             return mApi.withdrawApply(params);
