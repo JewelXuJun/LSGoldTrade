@@ -412,6 +412,8 @@ public class HoldPositionFragment extends JMEBaseFragment implements OnRefreshLi
                     mBinding.tvMarketValue.setText(MarketUtil.decimalFormatMoney(MarketUtil.getPriceValue(mAccountVo.getPositionMargin())));
 
                     calculateValue();
+                } else {
+                    getAccount(false);
                 }
 
                 break;
@@ -484,15 +486,17 @@ public class HoldPositionFragment extends JMEBaseFragment implements OnRefreshLi
                             mBinding.swipeRefreshLayout.finishRefresh(true);
                         }
                     }
+
+                    if (bFlag) {
+                        bFlag = false;
+
+                        mHandler.sendEmptyMessageDelayed(Constants.Msg.MSG_TRADE_POSITION_UPDATE_DATA, 0);
+                        mHandler.sendEmptyMessageDelayed(Constants.Msg.MSG_TRADE_POSITION_UPDATE_ACCOUNT_DATA, AppConfig.Minute);
+                    }
                 } else {
+                    position();
+
                     mBinding.swipeRefreshLayout.finishRefresh(false);
-                }
-
-                if (bFlag) {
-                    bFlag = false;
-
-                    mHandler.sendEmptyMessageDelayed(Constants.Msg.MSG_TRADE_POSITION_UPDATE_DATA, 0);
-                    mHandler.sendEmptyMessageDelayed(Constants.Msg.MSG_TRADE_POSITION_UPDATE_ACCOUNT_DATA, AppConfig.Minute);
                 }
 
                 break;
