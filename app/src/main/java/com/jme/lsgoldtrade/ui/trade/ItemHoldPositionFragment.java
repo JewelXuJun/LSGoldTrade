@@ -54,9 +54,17 @@ public class ItemHoldPositionFragment extends JMEBaseFragment implements BaseQui
                 case Constants.Msg.MSG_DECLARATIONFORM_POSITION_UPDATE_DATA:
                     mHandler.removeMessages(Constants.Msg.MSG_DECLARATIONFORM_POSITION_UPDATE_DATA);
 
-                    position();
+                    getMarket();
 
                     mHandler.sendEmptyMessageDelayed(Constants.Msg.MSG_DECLARATIONFORM_POSITION_UPDATE_DATA, getTimeInterval());
+
+                    break;
+                case Constants.Msg.MSG_DECLARATIONFORM_POSITION_UPDATE_ACCOUNT_DATA:
+                    mHandler.removeMessages(Constants.Msg.MSG_DECLARATIONFORM_POSITION_UPDATE_ACCOUNT_DATA);
+
+                    initPosition();
+
+                    mHandler.sendEmptyMessageDelayed(Constants.Msg.MSG_DECLARATIONFORM_POSITION_UPDATE_ACCOUNT_DATA, AppConfig.Minute);
 
                     break;
             }
@@ -121,8 +129,8 @@ public class ItemHoldPositionFragment extends JMEBaseFragment implements BaseQui
 
         if (null != mBinding && bVisibleToUser)
             initPosition();
-         else
-            mHandler.removeMessages(Constants.Msg.MSG_DECLARATIONFORM_POSITION_UPDATE_DATA);
+        else
+            removeMessage();
     }
 
     @Override
@@ -132,7 +140,7 @@ public class ItemHoldPositionFragment extends JMEBaseFragment implements BaseQui
         super.onHiddenChanged(hidden);
 
         if (hidden)
-            mHandler.removeMessages(Constants.Msg.MSG_DECLARATIONFORM_POSITION_UPDATE_DATA);
+            removeMessage();
     }
 
     @Override
@@ -147,7 +155,7 @@ public class ItemHoldPositionFragment extends JMEBaseFragment implements BaseQui
     public void onPause() {
         super.onPause();
 
-        mHandler.removeMessages(Constants.Msg.MSG_DECLARATIONFORM_POSITION_UPDATE_DATA);
+        removeMessage();
     }
 
     private void initRxBus() {
@@ -175,9 +183,14 @@ public class ItemHoldPositionFragment extends JMEBaseFragment implements BaseQui
         mCurrentPage = 1;
         mPagingKey = "";
 
-        mHandler.removeMessages(Constants.Msg.MSG_DECLARATIONFORM_POSITION_UPDATE_DATA);
+        removeMessage();
 
         position();
+    }
+
+    private void removeMessage() {
+        mHandler.removeMessages(Constants.Msg.MSG_DECLARATIONFORM_POSITION_UPDATE_DATA);
+        mHandler.removeMessages(Constants.Msg.MSG_DECLARATIONFORM_POSITION_UPDATE_ACCOUNT_DATA);
     }
 
     private void calculateFloat(List<FiveSpeedVo> fiveSpeedVoList) {
@@ -337,14 +350,15 @@ public class ItemHoldPositionFragment extends JMEBaseFragment implements BaseQui
                             mAdapter.loadMoreComplete();
                         }
                     }
-                }
 
-                getMarket();
+                    if (bFlag) {
+                        bFlag = false;
 
-                if (bFlag) {
-                    bFlag = false;
-
-                    mHandler.sendEmptyMessageDelayed(Constants.Msg.MSG_DECLARATIONFORM_POSITION_UPDATE_DATA, getTimeInterval());
+                        mHandler.sendEmptyMessageDelayed(Constants.Msg.MSG_DECLARATIONFORM_POSITION_UPDATE_DATA, 0);
+                        mHandler.sendEmptyMessageDelayed(Constants.Msg.MSG_DECLARATIONFORM_POSITION_UPDATE_ACCOUNT_DATA, AppConfig.Minute);
+                    }
+                } else {
+                    position();
                 }
 
                 break;
