@@ -36,6 +36,8 @@ public class WithdrawActivity extends JMEBaseActivity {
 
     private ActivityWithdrawBinding mBinding;
 
+    private BigDecimal balance;
+
     private String openid = "";
     private String nickName = "";
 
@@ -73,7 +75,7 @@ public class WithdrawActivity extends JMEBaseActivity {
     }
 
     private void hasWeChatWithdrawAuth() {
-        sendRequest(AccountService.getInstance().hasWeChatWithdrawAuth, new HashMap<>(), true);
+        sendRequest(AccountService.getInstance().hasWeChatWithdrawAuth, new HashMap<>(), false);
     }
 
     private void applyWithdrawByWeChat() {
@@ -140,6 +142,8 @@ public class WithdrawActivity extends JMEBaseActivity {
 
                     mBinding.tvBanlace.setText(TextUtils.isEmpty(value.getBalance()) ? getString(R.string.text_no_data_default) :
                             BigDecimalUtil.formatMoney(new BigDecimal(value.getBalance()).divide(new BigDecimal(100)).toPlainString()) + "元");
+
+                    balance = new BigDecimal(value.getBalance()).divide(new BigDecimal(100));
                 }
                 break;
             case "GetWithdrawFeeRate":
@@ -202,6 +206,9 @@ public class WithdrawActivity extends JMEBaseActivity {
             String funds = mBinding.etFunds.getText().toString().trim();
             if (TextUtils.isEmpty(funds)) {
                 showShortToast("请输入提现金额");
+                return;
+            } else if (new BigDecimal(funds).compareTo(balance) > 0) {
+                showShortToast("输入的提现金额大于可提金额");
                 return;
             }
             hasWeChatWithdrawAuth();
