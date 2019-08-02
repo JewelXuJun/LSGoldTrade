@@ -139,7 +139,7 @@ public class TChartData {
                 mRiseRangeVals.add(new Entry((current - preclose) / preclose * 100, index));
                 mAverageVals.add(new Entry(average, index));
                 mRiseVals.add(isRise(current - last_current));
-                mVolVals.add(new BarEntry(bIsSingleVol ? vol : vol - last_vol, index));//服务器传过来的成交量是增量，所以需要减去前一个周期值
+                mVolVals.add(new BarEntry(vol, index));//服务器传过来的成交量是增量，所以需要减去前一个周期值
             }
             last_vol = vol;
             last_current = current;
@@ -211,7 +211,7 @@ public class TChartData {
                             divide(new BigDecimal(preclose), 4, BigDecimal.ROUND_UP).multiply(new BigDecimal(100)).floatValue(), i));
                     mAverageVals.add(new Entry(average, i));
                     mRiseVals.add(isRise(new BigDecimal(current).subtract(new BigDecimal(last_current)).floatValue()));
-                    mVolVals.add(new BarEntry(bIsSingleVol ? vol : new BigDecimal(vol).subtract(new BigDecimal(last_vol)).floatValue(), i));//服务器传过来的成交量是增量，所以需要减去前一个周期值
+                    mVolVals.add(new BarEntry(vol, i));//服务器传过来的成交量是增量，所以需要减去前一个周期值
                 }
 
                 last_vol = vol;
@@ -272,8 +272,8 @@ public class TChartData {
             list.add(averageData.getVal());
             list.add(currentData.getVal());
             list.add(currentData.getVal() - preclose);
-            list.add(bIsSingleVol ? currentData.getVal() :(new BigDecimal(currentData.getVal()).subtract(new BigDecimal(preclose)))
-                    .divide(new BigDecimal(preclose), 4, BigDecimal.ROUND_DOWN).multiply(new BigDecimal(100)).floatValue());
+            list.add((new BigDecimal(currentData.getVal()).subtract(new BigDecimal(preclose)))
+                    .divide(new BigDecimal(preclose), 4, BigDecimal.ROUND_HALF_UP).multiply(new BigDecimal(100)).floatValue());
 
             return list;
         } else {

@@ -131,14 +131,14 @@ public class TChart extends LinearLayout {
     }
 
     public void loadTChartData(List<TChartVo> list) {
-        loadTChartData(list, true, false);
+        loadTChartData(list, false, false);
     }
 
     public void loadTChartData(JsonArray jsonArray, boolean isSingleVol) {
 //        mTData.setData(jsonArray);
         boolean animate = !mTChartData.hasData();
         mTChartData.loadData(jsonArray);
-        mTChartData.setIsSingleVol(isSingleVol);
+//        mTChartData.setIsSingleVol(isSingleVol);
 
         setFirstChartData();
         setSecondChartData();
@@ -160,7 +160,7 @@ public class TChart extends LinearLayout {
 //        mTData.setData(jsonArray);
         bAverageFlag = isAverage;
         boolean animate = !mTChartData.hasData();
-        mTChartData.setIsSingleVol(isSingleVol);
+//        mTChartData.setIsSingleVol(isSingleVol);
         mTChartData.loadData(list);
 
         setFirstChartData();

@@ -132,7 +132,7 @@
     <string name="trade_current_daily_profit_and_loss">当日盈亏</string>
     <string name="trade_bond">保证金(元)</string>
     <string name="trade_current_hold_position_bond">本期持仓保证金</string>
-    <string name="trade_break_even_fund">保本资金</string>
+    <string name="trade_break_even_fund">保底资金</string>
     <string name="trade_inoutmoney">出入金(元)</string>
     <string name="trade_current_outmoney">当期出金</string>
     <string name="trade_current_inmoney">当期入金</string>
