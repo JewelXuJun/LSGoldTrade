@@ -25,6 +25,8 @@ import com.jme.common.network.Head;
 import com.jme.common.util.DateUtil;
 import com.jme.common.util.KChartVo;
 import com.jme.common.util.NetWorkUtils;
+import com.jme.common.util.RxBus;
+import com.jme.common.util.SharedPreUtils;
 import com.jme.common.util.TChartVo;
 import com.jme.lsgoldtrade.R;
 import com.jme.lsgoldtrade.base.JMEBaseActivity;
@@ -34,6 +36,7 @@ import com.jme.lsgoldtrade.databinding.ActivityMarketDetailLandscapeBinding;
 import com.jme.lsgoldtrade.domain.DetailVo;
 import com.jme.lsgoldtrade.domain.SectionVo;
 import com.jme.lsgoldtrade.domain.TenSpeedVo;
+import com.jme.lsgoldtrade.service.ManagementService;
 import com.jme.lsgoldtrade.service.MarketService;
 import com.jme.lsgoldtrade.util.MarketUtil;
 
@@ -43,6 +46,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+
+import rx.Subscription;
 
 @Route(path = Constants.ARouterUriConst.MARKETDETAILLANDSCAPE)
 public class MarketDetailLandscapeActivity extends JMEBaseActivity implements FChart.OnPriceClickListener, OnKChartSelectedListener {
@@ -71,6 +76,8 @@ public class MarketDetailLandscapeActivity extends JMEBaseActivity implements FC
     private boolean bGetTradeDateFlag = false;
     private int iRequestKDataFlag = NONE;
     private int mTChartCount;
+
+    private Subscription mRxbus;
 
     private Handler mHandler = new Handler() {
         public void handleMessage(Message msg) {
@@ -111,11 +118,6 @@ public class MarketDetailLandscapeActivity extends JMEBaseActivity implements FC
         mChart = mBinding.chart;
         mTChart = mChart.getTChart();
         mKChart = mChart.getKChart();
-
-        mChart.setPriceFormatDigit(2);
-
-        initTChart();
-        initKChart();
     }
 
     @Override
@@ -125,6 +127,13 @@ public class MarketDetailLandscapeActivity extends JMEBaseActivity implements FC
         mContractId = getIntent().getStringExtra("ContractId");
         mUnitCode = getIntent().getStringExtra("ChartUnit");
 
+        mChart.initChartSort(mUser.isLogin() ? SharedPreUtils.getString(this, SharedPreUtils.MARKET_SORT_LOGIN)
+                : SharedPreUtils.getString(this, SharedPreUtils.MARKET_SORT_UNLOGIN));
+        mChart.setPriceFormatDigit(2);
+
+        initTChart();
+        initKChart();
+
         mBinding.tvName.setText(mContractId);
 
         mChart.setUnit(mUnitCode);
@@ -133,6 +142,8 @@ public class MarketDetailLandscapeActivity extends JMEBaseActivity implements FC
     @Override
     protected void initListener() {
         super.initListener();
+
+        initRxBus();
 
         mChart.setOnChartListener(new OnChartListener() {
             @Override
@@ -200,6 +211,22 @@ public class MarketDetailLandscapeActivity extends JMEBaseActivity implements FC
         mKChart.setHasTradeVolume(true);
         mKChart.setLandscapeButtonVisible(false);
         mKChart.setOnKChartSelectedListener(this);
+    }
+
+    private void initRxBus() {
+        mRxbus = RxBus.getInstance().toObserverable(RxBus.Message.class).subscribe(message -> {
+            String callType = message.getObject().toString();
+
+            if (TextUtils.isEmpty(callType))
+                return;
+
+            switch (callType) {
+                case Constants.RxBusConst.RXBUS_MARKET_UNIT_SORT_SUCCESS:
+                    getTimeLineList();
+
+                    break;
+            }
+        });
     }
 
     public void initRawData() {
@@ -544,6 +571,14 @@ public class MarketDetailLandscapeActivity extends JMEBaseActivity implements FC
         sendRequest(MarketService.getInstance().getKChartQuotes, params, false, false, false);
     }
 
+    private void getTimeLineList() {
+        HashMap<String, String> params = new HashMap<>();
+        params.put("uuid", AppConfig.UUID);
+        params.put("token", mUser.getToken());
+
+        sendRequest(ManagementService.getInstance().timeLineList, params, false, false, false);
+    }
+
     @Override
     protected void DataReturn(DTRequest request, Head head, Object response) {
         super.DataReturn(request, head, response);
@@ -665,6 +700,23 @@ public class MarketDetailLandscapeActivity extends JMEBaseActivity implements FC
                 iRequestKDataFlag = NONE;
 
                 break;
+            case "TimeLineList":
+                if (head.isSuccess()) {
+                    String value = "";
+
+                    if (null != response)
+                        value = response.toString();
+
+                    SharedPreUtils.setString(this, mUser.isLogin() ? SharedPreUtils.MARKET_SORT_LOGIN : SharedPreUtils.MARKET_SORT_UNLOGIN, value);
+
+                    mChart.initChartSort(mUser.isLogin() ? SharedPreUtils.getString(this, SharedPreUtils.MARKET_SORT_LOGIN)
+                            : SharedPreUtils.getString(this, SharedPreUtils.MARKET_SORT_UNLOGIN));
+
+                    removeMessage();
+                    initRawData();
+                }
+
+                break;
         }
     }
 
@@ -701,4 +753,13 @@ public class MarketDetailLandscapeActivity extends JMEBaseActivity implements FC
 
         super.onBackPressed();
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+        if (!mRxbus.isUnsubscribed())
+            mRxbus.unsubscribe();
+    }
+
 }

@@ -269,7 +269,7 @@ public class MarketDetailActivity extends JMEBaseActivity implements FChart.OnPr
         bFlag = true;
         bGetTradeDateFlag = false;
 
-        mChart.setChartUnit(KData.Unit.TIME);
+        mChart.setChartUnit(mChart.getChartUnit());
 
         updateData(true);
     }
