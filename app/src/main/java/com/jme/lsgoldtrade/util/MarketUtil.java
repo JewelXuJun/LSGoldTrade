@@ -429,6 +429,8 @@ public class MarketUtil {
             value = "已撤销";
         else if (status.equals("8"))
             value = "建仓完成";
+        else if (status.equals("9"))
+            value = "委托失败";
 
         return value;
     }
