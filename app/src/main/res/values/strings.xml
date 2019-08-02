@@ -194,7 +194,7 @@
     <string name="trade_guarantee_fund_success">保底资金设置成功</string>
     <string name="trade_guarantee_total_error">总权益金额异常</string>
     <string name="trade_guarantee_fund_message0">保底金额设置为0后，系统将不再进行风控监测，请确认是否继续？</string>
-    <string name="trade_guarantee_fund_message1">尊敬的客户，您暂未设置保底资金，请注意交易风险。</string>
+    <string name="trade_guarantee_fund_message1">尊敬的客户，您暂未设置保底金额，请注意交易风险。</string>
     <string name="trade_guarantee_fund_message2">尊敬的客户，该保底资金设置的当前风险率为%1$s，小于保底平仓指标，将会触发系统保底平仓，是否继续设置?</string>
     <string name="trade_guarantee_fund_message3">尊敬的客户，该保底资金设置的当前风险率为%1$s，小于保底预警指标，系统将限制开仓，是否继续设置?</string>
     <string name="trade_guarantee_fund_message4">尊敬的客户，该保底资金设置的当前风险率为%1$s，祝您投资愉快。</string>

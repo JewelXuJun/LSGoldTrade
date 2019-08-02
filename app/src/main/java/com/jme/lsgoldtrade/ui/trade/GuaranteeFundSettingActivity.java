@@ -173,10 +173,7 @@ public class GuaranteeFundSettingActivity extends JMEBaseActivity {
                 String message;
 
                 if (TextUtils.isEmpty(value)) {
-                    message = getString(R.string.trade_guarantee_fund_message1);
-
-                    mWindow.setData(message, (view) -> mWindow.dismiss());
-                    mWindow.showAtLocation(mBinding.etGuaranteeFund, Gravity.CENTER, 0, 0);
+                    showShortToast(R.string.trade_guarantee_fund_message1);
                 } else {
                     BigDecimal riskRate;
 
