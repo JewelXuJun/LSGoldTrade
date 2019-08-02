@@ -35,7 +35,7 @@ public class InfoAdapter extends BaseQuickAdapter<InfoVo.InfoBean, BaseViewHolde
             return;
 
         if (mChannelID == -10000) {
-            helper.setText(R.id.tv_strategy_time, DateUtil.dateToStringWithTime(DateUtil.dateToLong(item.getCreateTime())))
+            helper.setText(R.id.tv_strategy_time, DateUtil.dateToStringWithAll(DateUtil.dateToLong(item.getCreateTime())))
                     .setText(R.id.tv_strategy, item.getTitle());
 
             TextView tv_strategy = helper.getView(R.id.tv_strategy);
