@@ -27,6 +27,7 @@ public class SharedPreUtils {
     public static final String UUID = "uuid";
     public static final String MARKET_SORT_UNLOGIN = "marketSortUnlogin";
     public static final String MARKET_SORT_LOGIN = "marketSortUnlogin";
+    public static final String Token = "token";
 
     /**
      * 序列化对象

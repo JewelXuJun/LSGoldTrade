@@ -278,6 +278,8 @@ public class MobileLoginActivity extends JMEBaseActivity {
 
                     mUser.login(userInfoVo);
 
+                    SharedPreUtils.setString(this, SharedPreUtils.Token, userInfoVo.getToken());
+
                     if (!TextUtils.isEmpty(userInfoVo.getTraderId()))
                         PushManager.getInstance().bindAlias(this, userInfoVo.getTraderId());
 

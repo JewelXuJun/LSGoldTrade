@@ -10,6 +10,7 @@ import android.text.TextWatcher;
 import android.util.Base64;
 import android.view.View;
 import android.widget.EditText;
+
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.google.gson.Gson;
@@ -31,9 +32,11 @@ import com.jme.lsgoldtrade.service.TradeService;
 import com.jme.lsgoldtrade.service.UserService;
 import com.jme.lsgoldtrade.util.AESUtil;
 import com.jme.lsgoldtrade.util.ValueUtils;
+
 import java.net.ConnectException;
 import java.util.HashMap;
 import java.util.List;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -249,6 +252,8 @@ public class AccountLoginActivity extends JMEBaseActivity {
                         return;
 
                     mUser.login(userInfoVo);
+
+                    SharedPreUtils.setString(this, SharedPreUtils.Token, userInfoVo.getToken());
 
                     if (!TextUtils.isEmpty(userInfoVo.getTraderId()))
                         PushManager.getInstance().bindAlias(this, userInfoVo.getTraderId());

@@ -1,8 +1,12 @@
 package com.jme.lsgoldtrade.service;
 
+import android.text.TextUtils;
+
+import com.jme.common.app.BaseApplication;
 import com.jme.common.network.API;
 import com.jme.common.network.DTResponse;
 import com.jme.common.network.IService;
+import com.jme.common.util.SharedPreUtils;
 import com.jme.lsgoldtrade.config.Constants;
 import com.jme.lsgoldtrade.domain.ImageVerifyCodeVo;
 import com.jme.lsgoldtrade.domain.LoginResponse;
@@ -33,11 +37,16 @@ public class UserService extends IService<UserApi> {
             Request request = chain.request();
 
             User user = User.getInstance();
+            String token = SharedPreUtils.getString(BaseApplication.getContext(), SharedPreUtils.Token);
 
-            if (user.isLogin())
+            if (user.isLogin()) {
                 request = request.newBuilder().addHeader("token", user.getToken()).build();
-            else
-                request = request.newBuilder().build();
+            } else {
+                if (TextUtils.isEmpty(token))
+                    request = request.newBuilder().build();
+                else
+                    request = request.newBuilder().addHeader("token", token).build();
+            }
 
             Response response = chain.proceed(request);
 
@@ -76,6 +85,14 @@ public class UserService extends IService<UserApi> {
         public Call<DTResponse> request(HashMap<String, String> params) {
 
             return mApi.logout(params);
+        }
+    };
+
+    public API queryLoginResult = new API<UserInfoVo>("QueryLoginResult") {
+        @Override
+        public Call<DTResponse> request(HashMap<String, String> params) {
+
+            return mApi.queryLoginResult(params);
         }
     };
 

@@ -1024,10 +1024,6 @@ public class MarketDetailActivity extends JMEBaseActivity implements FChart.OnPr
             if (null == mUser || !mUser.isLogin()) {
                 gotoLogin();
             } else {
-                String price = mBinding.tvLastPrice.getText().toString().trim();
-                String range = mBinding.tvRange.getText().toString().trim();
-                String rate = mBinding.tvRate.getText().toString().trim();
-
                 ARouter.getInstance()
                         .build(Constants.ARouterUriConst.WARNING)
                         .withString("ContractID", MarketUtil.getContractCode(mContractId))

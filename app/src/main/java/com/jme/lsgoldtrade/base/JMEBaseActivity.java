@@ -20,6 +20,7 @@ import com.jme.lsgoldtrade.config.User;
 import com.jme.lsgoldtrade.ui.main.MainActivity;
 import com.jme.lsgoldtrade.ui.market.MarketDetailActivity;
 import com.jme.lsgoldtrade.ui.market.MarketDetailLandscapeActivity;
+import com.jme.lsgoldtrade.ui.splash.SplashActivity;
 import com.umeng.socialize.UMShareAPI;
 
 import rx.Subscription;
@@ -133,7 +134,7 @@ public abstract class JMEBaseActivity<T> extends BaseActivity {
     protected void DataReturn(DTRequest request, Head head, Object response) {
         super.DataReturn(request, head, response);
 
-        if (head.getCode().equals("-2000"))
+        if (head.getCode().equals("-2000") && !currentClass().equals(SplashActivity.class.getName()))
             showLoginDialog();
         else
             handleErrorInfo(request, head);

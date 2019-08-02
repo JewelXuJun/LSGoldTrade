@@ -168,7 +168,7 @@ public class BindAccountActivity extends JMEBaseActivity {
                     }
 
                     if (null != bindAccountVo && mUser.isLogin()) {
-                        mUser.setAccountID(bindAccountVo.getAccountId());
+                        mUser.setAccountID(bindAccountVo.getAccountId() == null ? "" : String.valueOf(bindAccountVo.getAccountId().longValue()));
                         mUser.setAccount(bindAccountVo.getAccount());
                     }
 

@@ -7,15 +7,15 @@ public class BindAccountVo {
      * account : 1311015122103
      */
 
-    private String accountId;
+    private Long accountId;
 
     private String account;
 
-    public String getAccountId() {
+    public Long getAccountId() {
         return accountId;
     }
 
-    public void setAccountId(String accountId) {
+    public void setAccountId(Long accountId) {
         this.accountId = accountId;
     }
 

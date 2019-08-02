@@ -9,6 +9,7 @@ import com.igexin.sdk.PushManager;
 import com.jme.common.network.DTRequest;
 import com.jme.common.network.Head;
 import com.jme.common.ui.base.JMECountDownTimer;
+import com.jme.common.util.SharedPreUtils;
 import com.jme.lsgoldtrade.R;
 import com.jme.lsgoldtrade.base.JMEBaseActivity;
 import com.jme.lsgoldtrade.config.Constants;
@@ -137,6 +138,8 @@ public class RegisterActivity extends JMEBaseActivity {
                     showShortToast(R.string.register_success);
 
                     mUser.login(userInfoVo);
+
+                    SharedPreUtils.setString(this, SharedPreUtils.Token, userInfoVo.getToken());
 
                     if (!TextUtils.isEmpty(userInfoVo.getTraderId()))
                         PushManager.getInstance().bindAlias(this, userInfoVo.getTraderId());
