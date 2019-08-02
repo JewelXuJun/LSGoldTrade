@@ -207,6 +207,9 @@ public class WithdrawActivity extends JMEBaseActivity {
             if (TextUtils.isEmpty(funds)) {
                 showShortToast("请输入提现金额");
                 return;
+            } else if (new BigDecimal(funds).compareTo(new BigDecimal(0)) == 0) {
+                showShortToast("请输入正确的提现金额");
+                return;
             } else if (new BigDecimal(funds).compareTo(balance) > 0) {
                 showShortToast("输入的提现金额大于可提金额");
                 return;
