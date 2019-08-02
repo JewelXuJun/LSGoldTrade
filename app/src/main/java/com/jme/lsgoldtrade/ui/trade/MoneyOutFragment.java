@@ -43,7 +43,7 @@ public class MoneyOutFragment extends JMEBaseFragment implements OnRefreshListen
     private boolean bVisibleToUser = false;
     private boolean bFlag = false;
     private boolean bShowImgVerifyCode = false;
-    private String mExtractableBalance;
+    private String mMaxBalance;
     private String mKaptchaId;
 
     private JMECountDownTimer mCountDownTimer;
@@ -226,13 +226,13 @@ public class MoneyOutFragment extends JMEBaseFragment implements OnRefreshListen
         if (amount.endsWith("."))
             amount = amount.substring(0, amount.length() - 1);
 
-        if (TextUtils.isEmpty(mExtractableBalance))
+        if (TextUtils.isEmpty(mMaxBalance))
             showShortToast(R.string.trade_amount_error);
         else if (TextUtils.isEmpty(mobile))
             showShortToast(R.string.trade_mobile_error);
         else if (new BigDecimal(amount).compareTo(new BigDecimal(0)) != 1)
             showShortToast(R.string.trade_money_min_error);
-        else if (new BigDecimal(amount).compareTo(new BigDecimal(mExtractableBalance)) == 1)
+        else if (new BigDecimal(amount).compareTo(new BigDecimal(mMaxBalance)) == 1)
             showShortToast(R.string.trade_money_out_max_error);
         else if (!bFlag)
             showShortToast(R.string.login_verification_code_unget);
@@ -301,9 +301,17 @@ public class MoneyOutFragment extends JMEBaseFragment implements OnRefreshListen
                     if (null == accountVo)
                         return;
 
-                    mExtractableBalance = accountVo.getExtractableBalanceStr();
+                    BigDecimal total = new BigDecimal(accountVo.getTransactionBalanceStr())
+                            .add(new BigDecimal(accountVo.getFreezeBalanceStr()))
+                            .add(new BigDecimal(accountVo.getPositionMarginStr()))
+                            .add(new BigDecimal(accountVo.getFloatProfitStr()))
+                            .subtract(new BigDecimal(accountVo.getRuntimeFeeStr()));
+                    BigDecimal totalProfit = total.subtract(new BigDecimal(accountVo.getMinReserveFundStr()));
+                    BigDecimal extractableBalance = new BigDecimal(accountVo.getExtractableBalanceStr()).subtract(new BigDecimal(accountVo.getRuntimeFeeStr()));
 
-                    mBinding.tvMoneyOutMax.setText(MarketUtil.decimalFormatMoney(mExtractableBalance));
+                    mMaxBalance = String.valueOf(Math.min(totalProfit.doubleValue(), extractableBalance.doubleValue()));
+
+                    mBinding.tvMoneyOutMax.setText(MarketUtil.decimalFormatMoney(mMaxBalance));
                 } else {
                     mBinding.swipeRefreshLayout.finishRefresh(false);
                 }
@@ -406,8 +414,8 @@ public class MoneyOutFragment extends JMEBaseFragment implements OnRefreshListen
     public class ClickHandlers {
 
         public void onClickOutAll() {
-            mBinding.etTransferAmount.setText(mExtractableBalance);
-            mBinding.etTransferAmount.setSelection(TextUtils.isEmpty(mExtractableBalance) ? 0 : mExtractableBalance.length());
+            mBinding.etTransferAmount.setText(mMaxBalance);
+            mBinding.etTransferAmount.setSelection(TextUtils.isEmpty(mMaxBalance) ? 0 : mMaxBalance.length());
         }
 
         public void onClickGetVerificationCode() {
