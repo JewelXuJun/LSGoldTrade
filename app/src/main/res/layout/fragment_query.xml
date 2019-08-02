@@ -41,25 +41,22 @@
                         android:layout_height="wrap_content"
                         android:background="@color/white"
                         android:paddingTop="20dp"
-                        android:paddingBottom="20dp"
-                        >
+                        android:paddingBottom="20dp">
 
                         <LinearLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:onClick="@{() -> handlers.onClickTimeChoose()}"
-                            android:orientation="vertical"
                             android:layout_centerInParent="true"
-                            >
+                            android:onClick="@{() -> handlers.onClickTimeChoose()}"
+                            android:orientation="vertical">
 
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:layout_gravity="center"
                                 android:text="@string/trade_daily_statement"
                                 android:textColor="@color/black_pale"
-                                android:textSize="@dimen/sp_12"
-                                android:layout_gravity="center"
-                                />
+                                android:textSize="@dimen/sp_12" />
 
                             <TextView
                                 android:id="@+id/tv_time"
@@ -74,12 +71,11 @@
                         <ImageView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:src="@mipmap/ic_next"
                             android:layout_alignParentRight="true"
                             android:layout_centerVertical="true"
-                            android:padding="8dp"
                             android:onClick="@{() -> handlers.onClickQueryDailyStatement()}"
-                            />
+                            android:padding="8dp"
+                            android:src="@mipmap/ic_next" />
 
                     </RelativeLayout>
 

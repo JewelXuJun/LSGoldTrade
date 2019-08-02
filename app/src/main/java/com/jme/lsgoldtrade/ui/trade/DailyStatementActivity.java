@@ -100,7 +100,7 @@ public class DailyStatementActivity extends JMEBaseActivity {
     private void setDailyStatementData(DailyStatementVo dailyStatementVo) {
         mBinding.tvCurrentClientInterest.setText(MarketUtil.decimalFormatMoney(dailyStatementVo.getLastTradingBalanceStr()));
         mBinding.tvPreviousCustomerInterest.setText(MarketUtil.decimalFormatMoney(dailyStatementVo.getCurrentBalanceStr()));
-        mBinding.tvCurrentAvailableFunds.setText(MarketUtil.decimalFormatMoney(dailyStatementVo.getCurrentDrawAmonutStr()));
+        mBinding.tvCurrentAvailableFunds.setText(MarketUtil.decimalFormatMoney(dailyStatementVo.getCurrentBalanceStr()));
         mBinding.tvTodayFloat.setText(MarketUtil.decimalFormatMoney(dailyStatementVo.getTodayProfitStr()));
         mBinding.tvCurrentHoldPositionBond.setText(MarketUtil.decimalFormatMoney(dailyStatementVo.getCurrentPositionMarginStr()));
         mBinding.tvBreakEvenFund.setText(MarketUtil.decimalFormatMoney(dailyStatementVo.getMinReserveFundStr()));
