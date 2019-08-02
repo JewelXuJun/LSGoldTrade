@@ -263,7 +263,7 @@ public class Chart extends LinearLayout {
                 setChartUnit(KData.Unit.MIN60);
 
                 break;
-            case "240minK":
+            case "4hourK":
                 setChartUnit(KData.Unit.MIN240);
 
                 break;
