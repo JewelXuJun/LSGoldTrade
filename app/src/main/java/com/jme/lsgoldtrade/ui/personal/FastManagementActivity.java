@@ -219,6 +219,7 @@ public class FastManagementActivity extends JMEBaseActivity {
 
                     if (null != fastTabBean) {
                         fastTabBean.bShowOperation = false;
+                        fastTabBean.bDraggable = false;
 
                         mBinding.dragFlowLayoutAdded.getDragItemManager().updateItem(i, fastTabBean);
                     }
@@ -231,6 +232,7 @@ public class FastManagementActivity extends JMEBaseActivity {
 
                     if (null != fastTabBean) {
                         fastTabBean.bShowOperation = false;
+                        fastTabBean.bDraggable = false;
 
                         mBinding.dragFlowLayoutNotAdded.getDragItemManager().updateItem(i, fastTabBean);
                     }
@@ -252,6 +254,7 @@ public class FastManagementActivity extends JMEBaseActivity {
 
                     if (null != fastTabBean) {
                         fastTabBean.bShowOperation = true;
+                        fastTabBean.bDraggable = true;
 
                         mBinding.dragFlowLayoutAdded.getDragItemManager().updateItem(i, fastTabBean);
                     }
@@ -264,6 +267,7 @@ public class FastManagementActivity extends JMEBaseActivity {
 
                     if (null != fastTabBean) {
                         fastTabBean.bShowOperation = true;
+                        fastTabBean.bDraggable = true;
 
                         mBinding.dragFlowLayoutNotAdded.getDragItemManager().updateItem(i, fastTabBean);
                     }
@@ -365,7 +369,7 @@ public class FastManagementActivity extends JMEBaseActivity {
 
                             if (null != navigatorVoBean)
                                 mBinding.dragFlowLayoutAdded.getDragItemManager().addItem(
-                                        new FastTabBean(navigatorVoBean.getName(), navigatorVoBean.getImageName(), navigatorVoBean.getCode(), false));
+                                        new FastTabBean(navigatorVoBean.getName(), navigatorVoBean.getImageName(), navigatorVoBean.getCode(), false, false));
                         }
                     }
 
@@ -375,7 +379,7 @@ public class FastManagementActivity extends JMEBaseActivity {
 
                             if (null != navigatorVoBean)
                                 mBinding.dragFlowLayoutNotAdded.getDragItemManager().addItem(
-                                        new FastTabBean(navigatorVoBean.getName(), navigatorVoBean.getImageName(), navigatorVoBean.getCode(), false));
+                                        new FastTabBean(navigatorVoBean.getName(), navigatorVoBean.getImageName(), navigatorVoBean.getCode(), false, false));
                         }
                     }
 
@@ -398,17 +402,19 @@ public class FastManagementActivity extends JMEBaseActivity {
         private String mImgUrl;
         private String mCode;
         private boolean bShowOperation;
+        private boolean bDraggable;
 
-        public FastTabBean(String tab, String imgUrl, String code, boolean showOperation) {
+        public FastTabBean(String tab, String imgUrl, String code, boolean showOperation, boolean draggable) {
             mTab = tab;
             mImgUrl = imgUrl;
             mCode = code;
             bShowOperation = showOperation;
+            bDraggable = draggable;
         }
 
         @Override
         public boolean isDraggable() {
-            return true;
+            return bDraggable;
         }
 
     }
