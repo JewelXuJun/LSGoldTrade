@@ -28,7 +28,7 @@ public class UserInfoVo {
 
     private String mobile;
 
-    private Long accountId;
+    private String accountId;
 
     private String account;
 
@@ -88,11 +88,11 @@ public class UserInfoVo {
         this.mobile = mobile;
     }
 
-    public Long getAccountId() {
+    public String getAccountId() {
         return accountId;
     }
 
-    public void setAccountId(Long accountId) {
+    public void setAccountId(String accountId) {
         this.accountId = accountId;
     }
 

@@ -90,7 +90,7 @@ public class UserService extends IService<UserApi> {
 
     public API queryLoginResult = new API<UserInfoVo>("QueryLoginResult") {
         @Override
-        public Call<DTResponse> request(HashMap<String, String> params) {
+        public Call<LoginResponse> request(HashMap<String, String> params) {
 
             return mApi.queryLoginResult(params);
         }

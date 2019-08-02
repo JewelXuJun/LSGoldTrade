@@ -32,7 +32,7 @@ public class User {
 
         mToken = userInfoVo.getToken();
         mAccount = userInfoVo.getAccount();
-        mAccountID = userInfoVo.getAccountId() == null ? "" : String.valueOf(userInfoVo.getAccountId().longValue());
+        mAccountID = userInfoVo.getAccountId();
         mTraderId = userInfoVo.getTraderId();
     }
 

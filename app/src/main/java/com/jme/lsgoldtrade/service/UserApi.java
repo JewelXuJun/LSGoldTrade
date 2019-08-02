@@ -26,7 +26,7 @@ public interface UserApi {
     Call<DTResponse> logout(@QueryMap Map<String, String> map);
 
     @GET("/gold-trade/v1.0.0/android/queryLoginResult")
-    Call<DTResponse> queryLoginResult(@QueryMap Map<String, String> map);
+    Call<LoginResponse> queryLoginResult(@QueryMap Map<String, String> map);
 
     @POST("/gold-trade/v1.0.0/android/changeloginpassword")
     Call<DTResponse> changeloginpassword(@Body Map<String, String> map);
