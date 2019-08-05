@@ -271,6 +271,8 @@ public class MarketDetailActivity extends JMEBaseActivity implements FChart.OnPr
 
         mChart.setChartUnit(mChart.getChartUnit());
 
+        mKChart.clearData();
+
         updateData(true);
     }
 

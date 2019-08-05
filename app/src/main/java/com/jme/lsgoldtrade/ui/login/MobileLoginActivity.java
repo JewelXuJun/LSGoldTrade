@@ -168,7 +168,7 @@ public class MobileLoginActivity extends JMEBaseActivity {
 
         showLoadingDialog("");
 
-        DTRequest request = new DTRequest(UserService.getInstance().login, params, true, true);
+        DTRequest request = new DTRequest(UserService.getInstance().login, params, false, true);
 
         Call restResponse = request.getApi().request(request.getParams());
 
