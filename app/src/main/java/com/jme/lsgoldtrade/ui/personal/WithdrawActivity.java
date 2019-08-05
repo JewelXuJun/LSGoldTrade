@@ -1,7 +1,9 @@
 package com.jme.lsgoldtrade.ui.personal;
 
 import android.os.Bundle;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.util.Log;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
@@ -200,6 +202,52 @@ public class WithdrawActivity extends JMEBaseActivity {
         }
     }
 
+    @Override
+    protected void initListener() {
+        super.initListener();
+        mBinding.etFunds.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                // 删除.后面超过两位的数字
+                if (s.toString().contains(".")) {
+                    if (s.length() - 1 - s.toString().indexOf(".") > 2) {
+                        s = s.toString().subSequence(0,
+                                s.toString().indexOf(".") + 3);
+                        mBinding.etFunds.setText(s);
+                        mBinding.etFunds.setSelection(s.length());
+                    }
+                }
+
+                // 如果.在起始位置,则起始位置自动补0
+                if (s.toString().trim().substring(0).equals(".")) {
+                    s = "0" + s;
+                    mBinding.etFunds.setText(s);
+                    mBinding.etFunds.setSelection(2);
+                }
+
+                // 如果起始位置为0并且第二位跟的不是".",则无法后续输入
+                if (s.toString().startsWith("0")
+                        && s.toString().trim().length() > 1) {
+                    if (!s.toString().substring(1, 2).equals(".")) {
+                        mBinding.etFunds.setText(s.subSequence(0, 1));
+                        mBinding.etFunds.setSelection(1);
+                        return;
+                    }
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+    }
+
     public class ClickHandlers {
 
         public void onClickWithdraw() {
@@ -209,6 +257,9 @@ public class WithdrawActivity extends JMEBaseActivity {
                 return;
             } else if (new BigDecimal(funds).compareTo(new BigDecimal(0)) == 0) {
                 showShortToast("请输入正确的提现金额");
+                return;
+            } else if (new BigDecimal(funds).compareTo(new BigDecimal(1)) < 0) {
+                showShortToast("提现金额至少1元");
                 return;
             } else if (new BigDecimal(funds).compareTo(balance) > 0) {
                 showShortToast("输入的提现金额大于可提金额");
