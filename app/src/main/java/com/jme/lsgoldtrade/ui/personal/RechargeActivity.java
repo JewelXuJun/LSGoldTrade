@@ -208,6 +208,16 @@ public class RechargeActivity extends JMEBaseActivity {
             if (TextUtils.isEmpty(funds)) {
                 showShortToast("请输入充值金额");
                 return;
+            } else {
+                int fundsInt = Integer.parseInt(funds);
+                if (fundsInt == 0) {
+                    showShortToast("请输入充值金额");
+                    return;
+                }
+                if (fundsInt % 100 != 0) {
+                    showShortToast("请输入>=100元的整数倍");
+                    return;
+                }
             }
             showPaymentBottomDialog();
         }
