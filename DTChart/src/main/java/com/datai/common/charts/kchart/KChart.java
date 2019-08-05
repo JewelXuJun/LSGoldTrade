@@ -268,6 +268,10 @@ public class KChart extends LinearLayout {
         return mKChartData.getEntryCount();
     }
 
+    public void clearData() {
+        mKChartData.clearData();
+    }
+
     public void setOnKChartSelectedListener(OnKChartSelectedListener listener) {
         mSelectedListener = listener;
     }

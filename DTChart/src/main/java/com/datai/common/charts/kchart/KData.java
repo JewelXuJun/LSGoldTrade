@@ -120,7 +120,7 @@ public class KData {
         int size = list.size();
 
         for (int i = 0; i < size; i++) {
-            KChartVo kChartVo = list.get(size -1 -i);
+            KChartVo kChartVo = list.get(size - 1 - i);
 
             if (null != kChartVo) {
                 entry = new HashMap<>();
@@ -262,6 +262,11 @@ public class KData {
 
     public int getDataCount() {
         return mDataList.size();
+    }
+
+    public void clearData() {
+        if (null != mDataList)
+            mDataList.clear();
     }
 
     public long getNewestTimeTick(int offset) {

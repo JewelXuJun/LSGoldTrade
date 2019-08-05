@@ -255,6 +255,10 @@ public class KChartData {
         return mKData.getDataUnit();
     }
 
+    public void clearData() {
+        mKData.clearData();
+    }
+
     private ArrayList<Integer> mColorList = new ArrayList<Integer>();
 
     public List<CandleEntry> getCandleEntry() {
