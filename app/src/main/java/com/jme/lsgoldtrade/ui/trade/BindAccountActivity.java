@@ -149,7 +149,7 @@ public class BindAccountActivity extends JMEBaseActivity {
 
         showLoadingDialog("");
 
-        DTRequest request = new DTRequest(TradeService.getInstance().bindAccount, params, true, true);
+        DTRequest request = new DTRequest(TradeService.getInstance().bindAccount, params, false, true);
 
         Call restResponse = request.getApi().request(request.getParams());
 
