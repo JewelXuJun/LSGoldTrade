@@ -17,7 +17,7 @@ public class Constants {
         public static final int PRODUCE = 2;
         public static final int UAT = 3;
 
-        public static int Envi = PRODUCE;
+        public static int Envi = UAT;
 
         private HttpConst() {
 

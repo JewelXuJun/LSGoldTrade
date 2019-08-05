@@ -1,6 +1,8 @@
 package com.jme.lsgoldtrade.service;
 
 import com.jme.common.network.DTResponse;
+import com.jme.lsgoldtrade.domain.BindAccountResponse;
+import com.jme.lsgoldtrade.domain.LoginResponse;
 
 import java.util.Map;
 
@@ -79,7 +81,7 @@ public interface TradeApi {
     Call<DTResponse> resetLoginPassword(@Body Map<String, String> map);
 
     @POST("/gold-trade/v1.0.0/android/bindAccount")
-    Call<DTResponse> bindAccount(@Body Map<String, String> map);
+    Call<BindAccountResponse> bindAccount(@Body Map<String, String> map);
 
     @POST("/gold-trade/v1.0.0/android/setLoginPassword")
     Call<DTResponse> setLoginPassword(@Body Map<String, String> map);

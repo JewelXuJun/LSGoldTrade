@@ -6,12 +6,14 @@ import com.jme.common.network.IService;
 import com.jme.lsgoldtrade.config.Constants;
 import com.jme.lsgoldtrade.config.User;
 import com.jme.lsgoldtrade.domain.AccountVo;
+import com.jme.lsgoldtrade.domain.BindAccountResponse;
 import com.jme.lsgoldtrade.domain.BindAccountVo;
 import com.jme.lsgoldtrade.domain.ContractInfoVo;
 import com.jme.lsgoldtrade.domain.DailyStatementVo;
 import com.jme.lsgoldtrade.domain.DealHistoryPageVo;
 import com.jme.lsgoldtrade.domain.DealPageVo;
 import com.jme.lsgoldtrade.domain.InOutTurnOverVo;
+import com.jme.lsgoldtrade.domain.LoginResponse;
 import com.jme.lsgoldtrade.domain.OrderHisPageVo;
 import com.jme.lsgoldtrade.domain.OrderPageVo;
 import com.jme.lsgoldtrade.domain.PositionPageVo;
@@ -232,7 +234,7 @@ public class TradeService extends IService<TradeApi> {
 
     public API bindAccount = new API<BindAccountVo>("BindAccount") {
         @Override
-        public Call<DTResponse> request(HashMap<String, String> params) {
+        public Call<BindAccountResponse> request(HashMap<String, String> params) {
 
             return mApi.bindAccount(params);
         }
