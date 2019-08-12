@@ -21,13 +21,17 @@ import com.jme.lsgoldtrade.config.AppConfig;
 import com.jme.lsgoldtrade.config.Constants;
 import com.jme.lsgoldtrade.databinding.FragmentHoldPositionBinding;
 import com.jme.lsgoldtrade.domain.AccountVo;
+import com.jme.lsgoldtrade.domain.ContractInfoVo;
 import com.jme.lsgoldtrade.domain.FiveSpeedVo;
 import com.jme.lsgoldtrade.domain.PositionPageVo;
 import com.jme.lsgoldtrade.domain.PositionVo;
+import com.jme.lsgoldtrade.domain.TenSpeedVo;
 import com.jme.lsgoldtrade.service.ManagementService;
 import com.jme.lsgoldtrade.service.MarketService;
 import com.jme.lsgoldtrade.service.TradeService;
 import com.jme.lsgoldtrade.util.MarketUtil;
+import com.jme.lsgoldtrade.view.ConfirmPopupwindow;
+import com.jme.lsgoldtrade.view.EveningUpPopupWindow;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 
@@ -45,8 +49,10 @@ public class HoldPositionFragment extends JMEBaseFragment implements OnRefreshLi
 
     private FragmentHoldPositionBinding mBinding;
 
-    private HoldPositionAdapter mAdapter;
+    private DeclarationFormHoldPositionAdapter mAdapter;
     private AccountVo mAccountVo;
+    private PositionVo mPositionVo;
+    private ContractInfoVo mEveningUpContractInfoVo;
     private List<String> mList;
     private Subscription mRxbus;
 
@@ -56,9 +62,12 @@ public class HoldPositionFragment extends JMEBaseFragment implements OnRefreshLi
     private boolean bVisibleToUser = false;
     private String mPagingKey = "";
     private String mTotal;
+    private String mEveningUpContractID;
     private BigDecimal mUnliquidatedProfitTotal = new BigDecimal(0);
 
     private TradeMessagePopUpWindow mTradeMessagePopUpWindow;
+    private EveningUpPopupWindow mEveningUpPopupWindow;
+    private ConfirmPopupwindow mConfirmPopupwindow;
 
     private Handler mHandler = new Handler() {
         public void handleMessage(Message msg) {
@@ -99,13 +108,21 @@ public class HoldPositionFragment extends JMEBaseFragment implements OnRefreshLi
         mTradeMessagePopUpWindow = new TradeMessagePopUpWindow(mContext);
         mTradeMessagePopUpWindow.setOutsideTouchable(true);
         mTradeMessagePopUpWindow.setFocusable(true);
+
+        mEveningUpPopupWindow = new EveningUpPopupWindow(mContext);
+        mEveningUpPopupWindow.setOutsideTouchable(true);
+        mEveningUpPopupWindow.setFocusable(true);
+
+        mConfirmPopupwindow = new ConfirmPopupwindow(mContext);
+        mConfirmPopupwindow.setOutsideTouchable(true);
+        mConfirmPopupwindow.setFocusable(true);
     }
 
     @Override
     protected void initData(Bundle savedInstanceState) {
         super.initData(savedInstanceState);
 
-        mAdapter = new HoldPositionAdapter(mContext, R.layout.item_hold_position, null);
+        mAdapter = new DeclarationFormHoldPositionAdapter(mContext, R.layout.item_declaration_form_hold_position, null);
         mList = new ArrayList<>();
 
         mBinding.recyclerView.setHasFixedSize(false);
@@ -122,6 +139,18 @@ public class HoldPositionFragment extends JMEBaseFragment implements OnRefreshLi
 
         mBinding.swipeRefreshLayout.setOnRefreshListener(this);
         mAdapter.setOnLoadMoreListener(this, mBinding.recyclerView);
+
+        mAdapter.setOnItemChildClickListener((adapter, view, position) -> {
+            mPositionVo = (PositionVo) adapter.getItem(position);
+
+            if (null == mPositionVo)
+                return;
+
+            mEveningUpContractID = mPositionVo.getContractId();
+            mEveningUpContractInfoVo = mContract.getContractInfoFromID(mEveningUpContractID);
+
+            getTenSpeedQuotes(mEveningUpContractID);
+        });
     }
 
     @Override
@@ -379,12 +408,32 @@ public class HoldPositionFragment extends JMEBaseFragment implements OnRefreshLi
         sendRequest(MarketService.getInstance().getFiveSpeedQuotes, params, false);
     }
 
+    private void getTenSpeedQuotes(String contractID) {
+        HashMap<String, String> params = new HashMap<>();
+        params.put("list", contractID);
+
+        sendRequest(MarketService.getInstance().getTenSpeedQuotes, params, true);
+    }
+
     private void getUserAddedServicesStatus() {
         sendRequest(ManagementService.getInstance().getUserAddedServicesStatus, new HashMap<>(), true);
     }
 
     private void getStatus() {
         sendRequest(ManagementService.getInstance().getStatus, new HashMap<>(), true);
+    }
+
+    private void limitOrder(String contractId, String price, String amount, int bsFlag, int ocFlag) {
+        HashMap<String, String> params = new HashMap<>();
+        params.put("contractId", contractId);
+        params.put("accountId", mUser.getAccountID());
+        params.put("entrustPrice", String.valueOf(new BigDecimal(price).multiply(new BigDecimal(100)).longValue()));
+        params.put("entrustNumber", amount);
+        params.put("bsFlag", String.valueOf(bsFlag));
+        params.put("ocFlag", String.valueOf(ocFlag));
+        params.put("tradingType", "0");
+
+        sendRequest(TradeService.getInstance().limitOrder, params, true);
     }
 
     @Override
@@ -516,6 +565,74 @@ public class HoldPositionFragment extends JMEBaseFragment implements OnRefreshLi
                 }
 
                 break;
+            case "GetTenSpeedQuotes":
+                if (head.isSuccess()) {
+                    List<TenSpeedVo> tenSpeedVoList;
+
+                    try {
+                        tenSpeedVoList = (List<TenSpeedVo>) response;
+                    } catch (Exception e) {
+                        tenSpeedVoList = null;
+
+                        e.getMessage();
+                    }
+
+                    if (null == tenSpeedVoList || 0 == tenSpeedVoList.size())
+                        return;
+
+                    TenSpeedVo tenSpeedVo = tenSpeedVoList.get(0);
+
+                    if (null == tenSpeedVo)
+                        return;
+
+                    if (!mEveningUpContractID.equals(tenSpeedVo.getContractId()))
+                        return;
+
+                    if (null != mEveningUpPopupWindow && !mEveningUpPopupWindow.isShowing() && null != mEveningUpContractInfoVo) {
+                        String lowerLimitPrice = tenSpeedVo.getLowerLimitPrice();
+                        String highLimitPrice = tenSpeedVo.getHighLimitPrice();
+                        String type = mPositionVo.getType();
+                        long minOrderQty = mEveningUpContractInfoVo.getMinOrderQty();
+                        long maxOrderQty = mEveningUpContractInfoVo.getMaxOrderQty();
+                        long maxHoldQty = mEveningUpContractInfoVo.getMaxHoldQty();
+                        long maxAmount = mPositionVo.getPosition();
+
+                        mEveningUpPopupWindow.setData(mUser.getAccount(), mEveningUpContractID,
+                                type.equals("多") ? tenSpeedVo.getFiveBidLists().get(0)[1] : tenSpeedVo.getFiveAskLists().get(4)[1],
+                                type, new BigDecimal(mEveningUpContractInfoVo.getMinPriceMove()).divide(new BigDecimal(100)).floatValue(),
+                                lowerLimitPrice, highLimitPrice, minOrderQty, maxOrderQty, maxHoldQty, maxAmount,
+                                (view) -> {
+                                    String price = mEveningUpPopupWindow.getPrice();
+                                    String amount = mEveningUpPopupWindow.getAmount();
+
+                                    if (TextUtils.isEmpty(price) || price.equals(mContext.getResources().getString(R.string.text_no_data_default))) {
+                                        showShortToast(R.string.trade_price_error);
+                                    } else if (new BigDecimal(price).compareTo(new BigDecimal(lowerLimitPrice)) == -1) {
+                                        showShortToast(R.string.trade_limit_down_price_error);
+                                    } else if (new BigDecimal(price).compareTo(new BigDecimal(highLimitPrice)) == 1) {
+                                        showShortToast(R.string.trade_limit_up_price_error);
+                                    } else if (TextUtils.isEmpty(amount)) {
+                                        showShortToast(R.string.trade_number_error);
+                                    } else if (new BigDecimal(amount).compareTo(new BigDecimal(0)) == 0) {
+                                        showShortToast(R.string.trade_number_error_zero);
+                                    } else if (minOrderQty != -1 && new BigDecimal(amount).compareTo(new BigDecimal(minOrderQty)) == -1) {
+                                        showShortToast(R.string.trade_limit_min_amount_error);
+                                    } else if (maxOrderQty == -1 && new BigDecimal(amount).compareTo(new BigDecimal(maxHoldQty == -1 ? maxAmount : Math.min(maxAmount, maxHoldQty))) == 1) {
+                                        showShortToast(R.string.trade_limit_max_amount_error_canbuy);
+                                    } else if (maxOrderQty != -1 && new BigDecimal(amount).compareTo(new BigDecimal(Math.min(maxAmount, maxOrderQty))) == 1) {
+                                        showShortToast(R.string.trade_limit_max_amount_error_canbuy);
+                                    } else {
+                                        limitOrder(mEveningUpContractID, mEveningUpPopupWindow.getPrice(),
+                                                mEveningUpPopupWindow.getAmount(), mPositionVo.getType().equals("多") ? 2 : 1, 1);
+
+                                        mEveningUpPopupWindow.dismiss();
+                                    }
+                                });
+                        mEveningUpPopupWindow.showAtLocation(mBinding.tvRiskRate, Gravity.BOTTOM, 0, 0);
+                    }
+                }
+
+                break;
             case "GetUserAddedServicesStatus":
                 String incrementState;
 
@@ -567,6 +684,26 @@ public class HoldPositionFragment extends JMEBaseFragment implements OnRefreshLi
                                 .withFloat("Warnth", mAccountVo.getWarnth())
                                 .withFloat("Forcecloseth", mAccountVo.getForcecloseth())
                                 .navigation();
+                    }
+                }
+
+                break;
+            case "LimitOrder":
+                if (head.isSuccess()) {
+                    showShortToast(R.string.trade_success);
+
+                    mHandler.removeMessages(Constants.Msg.MSG_TRADE_POSITION_UPDATE_DATA);
+                    mHandler.removeMessages(Constants.Msg.MSG_TRADE_POSITION_UPDATE_ACCOUNT_DATA);
+
+                    initValue(true);
+                } else {
+                    if (head.getMsg().contains("可用资金不足")) {
+                        if (null != mConfirmPopupwindow && !mConfirmPopupwindow.isShowing()) {
+                            mConfirmPopupwindow.setData(mContext.getResources().getString(R.string.trade_money_error),
+                                    mContext.getResources().getString(R.string.trade_money_in),
+                                    (view) -> ARouter.getInstance().build(Constants.ARouterUriConst.CAPITALTRANSFER).navigation());
+                            mConfirmPopupwindow.showAtLocation(mBinding.tvRiskRate, Gravity.CENTER, 0, 0);
+                        }
                     }
                 }
 
