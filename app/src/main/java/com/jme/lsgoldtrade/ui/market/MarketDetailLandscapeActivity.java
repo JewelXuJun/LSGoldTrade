@@ -491,7 +491,7 @@ public class MarketDetailLandscapeActivity extends JMEBaseActivity implements FC
 
         KData.Unit unit = mKChart.getUnit();
 
-        mBinding.layoutLastPrice.setBackground(ContextCompat.getDrawable(this, MarketUtil.getMarketStateBackgroundColor(rateType)));
+//        mBinding.layoutLastPrice.setBackground(ContextCompat.getDrawable(this, MarketUtil.getMarketStateBackgroundColor(rateType)));
         mBinding.tvLastPrice.setText(MarketUtil.formatValue(String.valueOf(laststPirce), 2));
         mBinding.tvRange.setText(MarketUtil.getMarketRangeValue(rateType, MarketUtil.formatValue(String.valueOf(updown), 2)));
         mBinding.tvRate.setText(MarketUtil.getMarketRateValue(rateType, MarketUtil.formatValue(String.valueOf(upDownRate), 2)));
