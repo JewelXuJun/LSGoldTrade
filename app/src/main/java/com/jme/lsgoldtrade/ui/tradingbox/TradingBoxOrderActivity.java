@@ -7,21 +7,30 @@ import android.view.Gravity;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
+import com.google.gson.Gson;
 import com.jme.common.network.DTRequest;
 import com.jme.common.network.Head;
 import com.jme.lsgoldtrade.R;
 import com.jme.lsgoldtrade.base.JMEBaseActivity;
 import com.jme.lsgoldtrade.config.Constants;
 import com.jme.lsgoldtrade.databinding.ActivityTradingBoxOrderBinding;
+import com.jme.lsgoldtrade.domain.LoginResponse;
 import com.jme.lsgoldtrade.domain.TradingBoxOrderVo;
+import com.jme.lsgoldtrade.domain.TradingBoxResponse;
 import com.jme.lsgoldtrade.service.ManagementService;
+import com.jme.lsgoldtrade.service.UserService;
 import com.jme.lsgoldtrade.view.EmptyView;
 import com.jme.lsgoldtrade.view.ConfirmPopupwindow;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 
+import java.net.ConnectException;
 import java.util.HashMap;
 import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * 我的订单
@@ -108,7 +117,68 @@ public class TradingBoxOrderActivity extends JMEBaseActivity implements OnRefres
     }
 
     private void getOrderList(boolean enable) {
-        sendRequest(ManagementService.getInstance().getOrderList, new HashMap<>(), enable);
+        if (enable)
+            showLoadingDialog("");
+
+        DTRequest request = new DTRequest(ManagementService.getInstance().getOrderList, new HashMap<>(), false, true);
+
+        Call restResponse = request.getApi().request(request.getParams());
+
+        restResponse.enqueue(new Callback() {
+            @Override
+            public void onResponse(Call call, Response response) {
+                Head head = new Head();
+                Object body = "";
+
+                if (response.raw().code() != 200) {
+                    head.setSuccess(false);
+                    head.setCode("" + response.raw().code());
+                    head.setMsg("服务器异常");
+                } else {
+                    if (!request.getApi().isResponseJson()) {
+                        body = response.body();
+                        head.setSuccess(true);
+                        head.setCode("0");
+                        head.setMsg("成功");
+                    } else {
+                        TradingBoxResponse dtResponse = (TradingBoxResponse) response.body();
+
+                        head = new Head();
+                        head.setCode(dtResponse.getCode());
+                        head.setMsg(dtResponse.getMsg());
+
+                        try {
+                            body = new Gson().fromJson(dtResponse.getBodyToString(),
+                                    request.getApi().getEntryType());
+                        } catch (Exception e) {
+                            body = dtResponse.getBodyToString();
+                        }
+                    }
+                }
+
+                OnResult(request, head, body);
+            }
+
+            @Override
+            public void onFailure(Call call, Throwable t) {
+                Head head = new Head();
+                final Throwable cause = t.getCause() != null ? t.getCause() : t;
+
+                if (cause != null) {
+                    if (cause instanceof ConnectException) {
+                        head.setSuccess(false);
+                        head.setCode("500");
+                        head.setMsg(getResources().getString(com.jme.common.R.string.text_error_server));
+                    } else {
+                        head.setSuccess(false);
+                        head.setCode("408");
+                        head.setMsg(getResources().getString(com.jme.common.R.string.text_error_timeout));
+                    }
+                }
+
+                OnResult(request, head, null);
+            }
+        });
     }
 
     private void revocateorder(String id) {

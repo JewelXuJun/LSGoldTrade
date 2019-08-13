@@ -25,9 +25,12 @@ import com.jme.lsgoldtrade.domain.SubscribeVo;
 import com.jme.lsgoldtrade.domain.TradingBoxDetailsVo;
 import com.jme.lsgoldtrade.domain.TradingBoxInfoVo;
 import com.jme.lsgoldtrade.domain.TradingBoxDataInfoVo;
+import com.jme.lsgoldtrade.domain.TradingBoxResponse;
 import com.jme.lsgoldtrade.domain.UpdateInfoVo;
+
 import java.util.HashMap;
 import java.util.List;
+
 import okhttp3.Interceptor;
 import okhttp3.Request;
 import okhttp3.Response;
@@ -207,7 +210,7 @@ public class ManagementService extends IService<ManagementApi> {
 
     public API getOrderList = new API<List<TradingBoxOrderVo>>("GetOrderList") {
         @Override
-        public Call<DTResponse> request(HashMap<String, String> params) {
+        public Call<TradingBoxResponse> request(HashMap<String, String> params) {
             return mApi.getOrderList(params);
         }
     };

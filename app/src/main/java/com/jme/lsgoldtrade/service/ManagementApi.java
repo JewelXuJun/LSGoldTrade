@@ -1,6 +1,8 @@
 package com.jme.lsgoldtrade.service;
 
 import com.jme.common.network.DTResponse;
+import com.jme.lsgoldtrade.domain.TradingBoxResponse;
+
 import java.util.Map;
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -68,7 +70,7 @@ public interface ManagementApi {
     Call<DTResponse> getListExt(@QueryMap Map<String, String> map);
 
     @GET("/tjsmanage/infoapi/v1/android/embeddedSingle/list")
-    Call<DTResponse> getOrderList(@QueryMap Map<String, String> map);
+    Call<TradingBoxResponse> getOrderList(@QueryMap Map<String, String> map);
 
     @GET("/tjsmanage/infoapi/v1/android/embeddedSingle/getDetailInfo")
     Call<DTResponse> getDetailInfo(@QueryMap Map<String, String> map);
