@@ -116,10 +116,7 @@ public abstract class JMEBaseActivity<T> extends BaseActivity {
 
             switch (callType) {
                 case Constants.RxBusConst.RXBUS_SYNTIME:
-                    if (currentClass().equals(MainActivity.class.getName()))
-                        RxBus.getInstance().post(Constants.RxBusConst.RXBUS_CANCEL_MAIN, null);
-                    else if (!currentClass().equals(MarketDetailActivity.class.getName()) && !currentClass().equals(MarketDetailLandscapeActivity.class.getName()))
-                        showLoginDialog();
+                    showLoginDialog();
 
                     break;
             }
@@ -149,10 +146,12 @@ public abstract class JMEBaseActivity<T> extends BaseActivity {
                     getString(R.string.text_login),
                     (dialog, which) -> {
                         dialog.dismiss();
+
                         returntoLogin();
                     },
                     (dialog, which) -> {
                         dialog.dismiss();
+
                         returnToHomePage();
                     })
                     .setCancelable(false)
@@ -169,6 +168,7 @@ public abstract class JMEBaseActivity<T> extends BaseActivity {
 
     private void returnToHomePage() {
         RxBus.getInstance().post(Constants.RxBusConst.RXBUS_LOGOUT_SUCCESS, null);
+
         ARouter.getInstance().build(Constants.ARouterUriConst.MAIN).navigation();
     }
 

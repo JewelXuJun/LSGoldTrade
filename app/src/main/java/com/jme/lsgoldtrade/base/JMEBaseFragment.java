@@ -85,6 +85,7 @@ public abstract class JMEBaseFragment<T> extends BaseFragment {
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
+
     }
 
     protected void gotoLogin() {

@@ -138,18 +138,14 @@ public class JMEAppService extends Service implements OnResultListener {
                 } else {
                     if (head.getCode().equals("-2000")) {
                         User.getInstance().logout();
-//                        AsynCommon.SendRequest(UserService.getInstance().logout, new HashMap<>(), true, false, this, this);
+
+                        SharedPreUtils.setString(this, SharedPreUtils.Token, "");
+
                         RxBus.getInstance().post(Constants.RxBusConst.RXBUS_SYNTIME, null);
                     }
                 }
 
                 break;
-//            case "Logout":
-//                if (head.isSuccess()) {
-//                    User.getInstance().logout();
-//                    showLoginDialog();
-//                }
-//                break;
         }
     }
 

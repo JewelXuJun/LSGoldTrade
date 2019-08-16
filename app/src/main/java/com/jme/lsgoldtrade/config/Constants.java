@@ -17,7 +17,7 @@ public class Constants {
         public static final int PRODUCE = 2;
         public static final int UAT = 3;
 
-        public static int Envi = UAT;
+        public static int Envi = PRODUCE;
 
         private HttpConst() {
 
@@ -98,7 +98,6 @@ public class Constants {
         public static final String RXBUS_DECLARATIONFORM_CONFIRM = "DeclarationFormConfirm";
         public static final String RXBUS_MARKETDETAIL_QUICK = "MarketDetailQuick";
         public static final String RXBUS_SYNTIME = "SynTimeMessage";
-        public static final String RXBUS_CANCEL_MAIN = "cancelMain";
         public static final String RXBUS_ORDER_SUCCESS = "orderSuccess";
         public static final String RXBUS_CAPITALTRANSFER_SUCCESS = "capitalTransferSuccess";
         public static final String RXBUS_CANCELORDERFRAGMENT = "cancelorderfragment";
