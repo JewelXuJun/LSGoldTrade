@@ -391,9 +391,9 @@ public class MarketUtil {
         else if (state == 7)
             value = "撤单失败";
         else if (state == 8)
-            value = "用户删除";
+            value = "已撤单";
         else if (state == 9)
-            value = "系统删除";
+            value = "已撤单";
         else if (state == 10)
             value = "委托应答";
         else if (state == 11)

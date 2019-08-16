@@ -149,30 +149,6 @@ public class JMEAppService extends Service implements OnResultListener {
         }
     }
 
-    private void showLoginDialog() {
-        Dialog mDialog = null;
-        if (null == mDialog) {
-            mDialog = DialogHelp.getConfirmDialog(this, getString(R.string.text_tips), getString(R.string.text_message_notlogin),
-                    getString(R.string.text_login),
-                    (dialog, which) -> {
-                        dialog.dismiss();
-                        ARouter.getInstance()
-                                .build(Constants.ARouterUriConst.ACCOUNTLOGIN)
-                                .navigation();
-                    },
-                    (dialog, which) -> {
-                        dialog.dismiss();
-                        RxBus.getInstance().post(Constants.RxBusConst.RXBUS_LOGOUT_SUCCESS, null);
-                        ARouter.getInstance().build(Constants.ARouterUriConst.MAIN).navigation();
-                    })
-                    .setCancelable(false)
-                    .show();
-        } else {
-            if (!mDialog.isShowing())
-                mDialog.show();
-        }
-    }
-
     public boolean isApplicationBroughtToBackground(final Context context) {
         ActivityManager am = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
         List<ActivityManager.RunningTaskInfo> tasks = am.getRunningTasks(1);
