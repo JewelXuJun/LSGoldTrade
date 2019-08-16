@@ -75,8 +75,6 @@ public class MainActivity extends JMEBaseActivity implements TabHost.OnTabChange
     @Override
     protected void initData(Bundle savedInstanceState) {
         super.initData(savedInstanceState);
-
-        getUpDateInfo();
     }
 
     @Override
@@ -132,6 +130,7 @@ public class MainActivity extends JMEBaseActivity implements TabHost.OnTabChange
     protected void onResume() {
         super.onResume();
 
+        getUpDateInfo();
         getTimeLineList();
     }
 
@@ -182,12 +181,10 @@ public class MainActivity extends JMEBaseActivity implements TabHost.OnTabChange
     }
 
     private void getUpDateInfo() {
-        int versionCode = AppInfoUtil.getVersionCode(mContext);
-
         HashMap<String, String> params = new HashMap<>();
-        params.put("code", versionCode + "");
+        params.put("code", String.valueOf(AppInfoUtil.getVersionCode(this)));
 
-        sendRequest(ManagementService.getInstance().getVersionInfo, params, false);
+        sendRequest(ManagementService.getInstance().getVersionInfo, params, false, false, false);
     }
 
     private void getTimeLineList() {
