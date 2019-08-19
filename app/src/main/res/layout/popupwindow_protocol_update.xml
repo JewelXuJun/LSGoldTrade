@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+        <variable
+            name="handlers"
+            type="com.jme.lsgoldtrade.ui.main.ProtocolUpdatePopUpWindow.ClickHandlers" />
+
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/bg_white"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="@dimen/margin_popupwindow"
+            android:layout_marginBottom="@dimen/margin_popupwindow"
+            android:text="@string/main_protocol_update_title"
+            android:textColor="@color/black_deep"
+            android:textSize="@dimen/common_font_size" />
+
+        <include layout="@layout/item_line_vertical" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/common_area_margin"
+            android:lineSpacingExtra="@dimen/lineSpacingExtra_big"
+            android:text="@string/main_protocol_update_message"
+            android:textColor="@color/color_text_normal"
+            android:textSize="@dimen/sp_14" />
+
+        <android.support.v7.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/common_area_margin"
+            android:layout_marginTop="@dimen/common_page_margin"
+            android:layout_marginRight="@dimen/common_area_margin"
+            android:layout_marginBottom="@dimen/common_page_margin" />
+
+        <Button
+            android:id="@+id/btn_agree"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/height_login_btn"
+            android:layout_marginLeft="@dimen/common_area_margin"
+            android:layout_marginTop="@dimen/common_page_margin"
+            android:layout_marginRight="@dimen/common_area_margin"
+            android:background="@drawable/bg_btn_blue_solid"
+            android:onClick="@{() -> handlers.onClickAgree()}"
+            android:text="@string/main_protocol_update_agree"
+            android:textColor="@color/white"
+            android:textSize="@dimen/sp_16" />
+
+    </LinearLayout>
+
+</layout>
