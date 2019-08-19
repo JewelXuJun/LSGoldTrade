@@ -3,11 +3,16 @@ package com.jme.lsgoldtrade.service;
 import com.jme.common.network.DTResponse;
 import com.jme.lsgoldtrade.domain.TradingBoxResponse;
 
+import java.util.List;
 import java.util.Map;
+
 import retrofit2.Call;
 import retrofit2.http.Body;
+import retrofit2.http.Field;
+import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
+import retrofit2.http.Query;
 import retrofit2.http.QueryMap;
 
 public interface ManagementApi {
@@ -117,13 +122,19 @@ public interface ManagementApi {
     @GET("/tjsmanage/infoapi/v1/android/getStatus")
     Call<DTResponse> getStatus(@QueryMap Map<String, String> map);
 
-    @GET("/tjsmanage/infoapi/v1/ios/checkOrder")
+    @GET("/tjsmanage/infoapi/v1/android/checkOrder")
     Call<DTResponse> checkOrder(@QueryMap Map<String, String> map);
 
-    @GET("/tjsmanage/infoapi/v1/ios/timeLine/list")
+    @GET("/tjsmanage/infoapi/v1/android/timeLine/list")
     Call<DTResponse> timeLineList(@QueryMap Map<String, String> map);
 
-    @POST("/tjsmanage/infoapi/v1/ios/timeLine/save")
+    @POST("/tjsmanage/infoapi/v1/android/timeLine/save")
     Call<DTResponse> timeLineSave(@Body Map<String, String> map);
+
+    @GET("/tjsmanage/infoapi/v1/android/getProtocolVersion")
+    Call<DTResponse> getProtocolVersion(@QueryMap Map<String, String> map);
+
+    @POST("/tjsmanage/infoapi/v1/android/insertRatifyAccord")
+    Call<DTResponse> insertRatifyAccord(@Body Map<String, Object> map);
 
 }

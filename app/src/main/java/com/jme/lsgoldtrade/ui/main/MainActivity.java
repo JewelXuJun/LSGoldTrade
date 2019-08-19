@@ -22,8 +22,10 @@ import android.support.v4.content.ContextCompat;
 import android.support.v4.content.FileProvider;
 import android.support.v4.content.LocalBroadcastManager;
 import android.text.TextUtils;
+import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.TabHost;
 import android.widget.TextView;
@@ -44,12 +46,17 @@ import com.jme.lsgoldtrade.base.JMEBaseActivity;
 import com.jme.lsgoldtrade.config.AppConfig;
 import com.jme.lsgoldtrade.config.Constants;
 import com.jme.lsgoldtrade.databinding.ActivityMainBinding;
+import com.jme.lsgoldtrade.domain.IdentityInfoVo;
+import com.jme.lsgoldtrade.domain.ProtocolVo;
 import com.jme.lsgoldtrade.domain.UpdateInfoVo;
 import com.jme.lsgoldtrade.service.ManagementService;
+import com.jme.lsgoldtrade.service.TradeService;
+import com.jme.lsgoldtrade.service.UserService;
 import com.jme.lsgoldtrade.tabhost.MainTab;
 
 import java.io.File;
 import java.util.HashMap;
+import java.util.List;
 
 import rx.Subscription;
 
@@ -66,15 +73,19 @@ public class MainActivity extends JMEBaseActivity implements TabHost.OnTabChange
     private String mVersion;
     private String mDesc;
     private String mUrl;
+    private String mValues;
 
     private ProgressDialog mProgressDialog;
     private LocalBroadcastManager mLocalBroadcastManager;
     private BroadcastReceiver mReceiver;
     private UpdateDialog mDialog;
     private UpdateDialog mForceDialog;
+    private ProtocolUpdatePopUpWindow mProtocolUpdatePopUpWindow;
     private IntentFilter mIntentFilter;
     private NetStateReceiver mStateReceiver;
     private Subscription mRxbus;
+
+    private List<ProtocolVo> mProtocolVoList;
 
     private static final int MSG_DOWNLOAD_ERROR = 1;
     private final static int REQUEST_CODE_ASK_WRITE_EXTERNAL_STORAGE = 121;
@@ -141,6 +152,9 @@ public class MainActivity extends JMEBaseActivity implements TabHost.OnTabChange
         mBinding = (ActivityMainBinding) mBindingUtil;
 
         setTabHost();
+
+        if (!TextUtils.isEmpty(SharedPreUtils.getString(mContext, SharedPreUtils.Token)))
+            getProtocolVersion();
     }
 
     @Override
@@ -155,6 +169,10 @@ public class MainActivity extends JMEBaseActivity implements TabHost.OnTabChange
         mIntentFilter.addAction(ConnectivityManager.CONNECTIVITY_ACTION);
 
         mStateReceiver = new NetStateReceiver();
+
+        mProtocolUpdatePopUpWindow = new ProtocolUpdatePopUpWindow(this);
+        mProtocolUpdatePopUpWindow.setOutsideTouchable(false);
+        mProtocolUpdatePopUpWindow.setFocusable(false);
 
         registerReceiver(mStateReceiver, mIntentFilter);
         initDownLoadData();
@@ -196,6 +214,10 @@ public class MainActivity extends JMEBaseActivity implements TabHost.OnTabChange
                     break;
                 case Constants.RxBusConst.RXBUS_TRADEFRAGMENT_HOLD:
                     runOnUiThread(() -> mBinding.tabhost.setCurrentTab(2));
+
+                    break;
+                case Constants.RxBusConst.RXBUS_LOGIN_SUCCESS:
+                    getProtocolVersion();
 
                     break;
             }
@@ -528,6 +550,22 @@ public class MainActivity extends JMEBaseActivity implements TabHost.OnTabChange
         sendRequest(ManagementService.getInstance().timeLineList, params, false, false, false);
     }
 
+    private void getProtocolVersion() {
+        sendRequest(ManagementService.getInstance().getProtocolVersion, new HashMap<>(), false, false, false);
+    }
+
+    private void getWhetherIdCard() {
+        sendRequest(TradeService.getInstance().whetherIdCard, new HashMap<>(), false, false, false);
+    }
+
+    private void insertRatifyAccord() {
+        HashMap<String, String> params = new HashMap<>();
+        params.put("token", mUser.getToken());
+        params.put("value", mValues);
+
+        sendRequest(ManagementService.getInstance().insertRatifyAccord, params, true);
+    }
+
     @Override
     protected void DataReturn(DTRequest request, Head head, Object response) {
         super.DataReturn(request, head, response);
@@ -589,6 +627,73 @@ public class MainActivity extends JMEBaseActivity implements TabHost.OnTabChange
                         value = response.toString();
 
                     SharedPreUtils.setString(this, mUser.isLogin() ? SharedPreUtils.MARKET_SORT_LOGIN : SharedPreUtils.MARKET_SORT_UNLOGIN, value);
+                }
+
+                break;
+            case "GetProtocolVersion":
+                if (head.isSuccess()) {
+                    try {
+                        mProtocolVoList = (List<ProtocolVo>) response;
+                    } catch (Exception e) {
+                        mProtocolVoList = null;
+
+                        e.printStackTrace();
+                    }
+
+                    if (null == mProtocolVoList || 0 == mProtocolVoList.size())
+                        return;
+
+                    mValues = "";
+
+                    for (ProtocolVo protocolVo : mProtocolVoList) {
+                        if (null != protocolVo) {
+                            ProtocolVo.ZprotocolTypeBean zprotocolTypeBean = protocolVo.getZprotocolTypeList();
+
+                            if (null != zprotocolTypeBean) {
+                                mValues = mValues + zprotocolTypeBean.getProtocolVersion() + ",";
+                            }
+                        }
+                    }
+
+                    if (mValues.endsWith(","))
+                        mValues = mValues.substring(0, mValues.length() - 1);
+
+                    getWhetherIdCard();
+                }
+
+                break;
+            case "WhetherIdCard":
+                if (head.isSuccess()) {
+                    IdentityInfoVo identityInfoVo;
+
+                    try {
+                        identityInfoVo = (IdentityInfoVo) response;
+                    } catch (Exception e) {
+                        identityInfoVo = null;
+
+                        e.printStackTrace();
+                    }
+
+                    if (null == identityInfoVo)
+                        return;
+
+                    String flag = identityInfoVo.getFlag();
+
+                    if (flag.equals("Y")) {
+                        if (null != mProtocolUpdatePopUpWindow && !mProtocolUpdatePopUpWindow.isShowing()) {
+                            mProtocolUpdatePopUpWindow.setData(mProtocolVoList, identityInfoVo.getName(), identityInfoVo.getIdCard(), (view) -> insertRatifyAccord());
+                            mProtocolUpdatePopUpWindow.showAtLocation(mBinding.tabhost, Gravity.CENTER, 0, 0);
+                        }
+                    }
+                }
+
+                break;
+            case "InsertRatifyAccord":
+                if (head.isSuccess()) {
+                    if (null != mProtocolUpdatePopUpWindow && mProtocolUpdatePopUpWindow.isShowing())
+                        mProtocolUpdatePopUpWindow.dismiss();
+
+                    showShortToast(R.string.main_protocol_update_success);
                 }
 
                 break;
@@ -655,6 +760,14 @@ public class MainActivity extends JMEBaseActivity implements TabHost.OnTabChange
 
                 break;
         }
+    }
+
+    @Override
+    public boolean dispatchTouchEvent(MotionEvent ev) {
+        if (null != mProtocolUpdatePopUpWindow && mProtocolUpdatePopUpWindow.isShowing())
+            return false;
+
+        return super.dispatchTouchEvent(ev);
     }
 
 }

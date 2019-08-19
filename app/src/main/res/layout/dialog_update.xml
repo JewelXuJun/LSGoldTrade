@@ -44,7 +44,7 @@
                 android:paddingLeft="@dimen/common_area_margin_large"
                 android:paddingRight="@dimen/common_area_margin_large"
                 android:textColor="@color/white"
-                android:textSize="@dimen/sp_16" />
+                android:textSize="@dimen/sp_14" />
 
         </LinearLayout>
 

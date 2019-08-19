@@ -7,6 +7,7 @@ import com.jme.lsgoldtrade.config.Constants;
 import com.jme.lsgoldtrade.config.User;
 import com.jme.lsgoldtrade.domain.AdvertisementVo;
 import com.jme.lsgoldtrade.domain.OrderVo;
+import com.jme.lsgoldtrade.domain.ProtocolVo;
 import com.jme.lsgoldtrade.domain.QuestionVo;
 import com.jme.lsgoldtrade.domain.BannerVo;
 import com.jme.lsgoldtrade.domain.ChannelVo;
@@ -28,6 +29,7 @@ import com.jme.lsgoldtrade.domain.TradingBoxDataInfoVo;
 import com.jme.lsgoldtrade.domain.TradingBoxResponse;
 import com.jme.lsgoldtrade.domain.UpdateInfoVo;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -49,12 +51,16 @@ public class ManagementService extends IService<ManagementApi> {
     protected Interceptor addHeader() {
         Interceptor interceptor = chain -> {
             Request request = chain.request();
+
             User user = User.getInstance();
+
             if (user.isLogin())
                 request = request.newBuilder().addHeader("token", user.getToken()).build();
             else
                 request = request.newBuilder().build();
+
             Response response = chain.proceed(request);
+
             return response;
         };
         return interceptor;
@@ -317,6 +323,33 @@ public class ManagementService extends IService<ManagementApi> {
         @Override
         public Call<DTResponse> request(HashMap<String, String> params) {
             return mApi.timeLineSave(params);
+        }
+    };
+
+    public API getProtocolVersion = new API<List<ProtocolVo>>("GetProtocolVersion") {
+        @Override
+        public Call<DTResponse> request(HashMap<String, String> params) {
+            return mApi.getProtocolVersion(params);
+        }
+    };
+
+    public API insertRatifyAccord = new API<String>("InsertRatifyAccord") {
+        @Override
+        public Call<DTResponse> request(HashMap<String, String> params) {
+            String token = params.get("token");
+            String[] values = params.get("value").split(",");
+
+            List<String> protocolVersionList = new ArrayList<>();
+
+            for (int i = 0; i < values.length; i++) {
+                protocolVersionList.add(values[i]);
+            }
+
+            HashMap<String, Object> paramsValue = new HashMap<>();
+            paramsValue.put("token", token);
+            paramsValue.put("protocolVersionList",protocolVersionList);
+
+            return mApi.insertRatifyAccord(paramsValue);
         }
     };
 

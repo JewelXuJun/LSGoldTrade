@@ -42,8 +42,8 @@ ext {
     applicationId = "com.jme.lsgoldtrade"
     minSdkVersion = 19
     targetSdkVersion = 28
-    versionCode = 3
-    versionName = "2.0.1"
+    versionCode = 4
+    versionName = "2.0.2"
     supportVersion = '28.0.0'
 }
 

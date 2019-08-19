@@ -32,6 +32,8 @@
     <string name="main_protocol_update_message">尊敬的用户：\n
      &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;即日起， 关于本平台的相关协议中部分条款进行了更新，具体的更新内容详见以下相关协议，本平台对此次协议更新内容保留最终解释权。</string>
     <string name="main_protocol_update_agree">我已阅读并同意以上协议</string>
+    <string name="main_protocol">《%1$s》</string>
+    <string name="main_protocol_update_success">更新成功</string>
 
     <!-- 版本 -->
     <string name="version_need_install">您使用的版本过低，请安装新版本后使用</string>
