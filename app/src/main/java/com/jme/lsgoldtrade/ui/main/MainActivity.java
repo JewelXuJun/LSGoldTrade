@@ -1,19 +1,30 @@
 package com.jme.lsgoldtrade.ui.main;
 
-import android.app.Dialog;
-import android.content.DialogInterface;
+import android.Manifest;
+import android.app.ProgressDialog;
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
+import android.content.pm.PackageManager;
+import android.content.pm.ProviderInfo;
 import android.graphics.drawable.Drawable;
+import android.net.ConnectivityManager;
+import android.net.Uri;
+import android.net.wifi.WifiManager;
+import android.os.Build;
 import android.os.Bundle;
-import android.os.Environment;
-import android.support.annotation.NonNull;
+import android.os.Handler;
+import android.os.Message;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AlertDialog;
+import android.support.v4.content.FileProvider;
+import android.support.v4.content.LocalBroadcastManager;
 import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.TabHost;
 import android.widget.TextView;
 
@@ -21,11 +32,14 @@ import com.alibaba.android.arouter.facade.annotation.Route;
 import com.jme.common.network.DTRequest;
 import com.jme.common.network.Head;
 import com.jme.common.util.AppInfoUtil;
-import com.jme.common.util.AppManager;
+import com.jme.common.util.DialogHelp;
+import com.jme.common.util.FileUtil;
+import com.jme.common.util.NetStateReceiver;
+import com.jme.common.util.NetWorkUtils;
 import com.jme.common.util.RxBus;
 import com.jme.common.util.SharedPreUtils;
-import com.jme.common.util.ToastUtils;
 import com.jme.lsgoldtrade.R;
+import com.jme.lsgoldtrade.base.JMEApplication;
 import com.jme.lsgoldtrade.base.JMEBaseActivity;
 import com.jme.lsgoldtrade.config.AppConfig;
 import com.jme.lsgoldtrade.config.Constants;
@@ -33,30 +47,87 @@ import com.jme.lsgoldtrade.databinding.ActivityMainBinding;
 import com.jme.lsgoldtrade.domain.UpdateInfoVo;
 import com.jme.lsgoldtrade.service.ManagementService;
 import com.jme.lsgoldtrade.tabhost.MainTab;
-import com.orhanobut.logger.Logger;
-import com.jme.lsgoldtrade.util.DialogUtils;
-import com.maning.updatelibrary.InstallUtils;
-import com.yanzhenjie.permission.Action;
-import com.yanzhenjie.permission.AndPermission;
-import com.yanzhenjie.permission.Permission;
 
+import java.io.File;
 import java.util.HashMap;
-import java.util.List;
 
 import rx.Subscription;
 
 /**
  * Created by XuJun on 2018/11/7.
  */
-
 @Route(path = Constants.ARouterUriConst.MAIN)
 public class MainActivity extends JMEBaseActivity implements TabHost.OnTabChangeListener {
 
     private ActivityMainBinding mBinding;
 
     private long exitTime = 0;
+    private boolean mUpdateFlag = false;
+    private String mVersion;
+    private String mDesc;
+    private String mUrl;
 
+    private ProgressDialog mProgressDialog;
+    private LocalBroadcastManager mLocalBroadcastManager;
+    private BroadcastReceiver mReceiver;
+    private UpdateDialog mDialog;
+    private UpdateDialog mForceDialog;
+    private IntentFilter mIntentFilter;
+    private NetStateReceiver mStateReceiver;
     private Subscription mRxbus;
+
+    private static final int MSG_DOWNLOAD_ERROR = 1;
+    private final static int REQUEST_CODE_ASK_WRITE_EXTERNAL_STORAGE = 121;
+
+    private Handler handler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+
+            switch (msg.what) {
+                case MSG_DOWNLOAD_ERROR:
+                    showShortToast(R.string.version_download_error);
+
+                    if (mUpdateFlag == false) {
+                        if (!isFinishing && Constants.DownLoadValues.IsDownLoadDialogShow) {
+                            mDialog = new UpdateDialog(MainActivity.this, mDesc, getString(R.string.version_update),
+                                    mUpdateFlag, (view) -> {
+                                mDialog.dismiss();
+
+                                if (NetWorkUtils.isNetWorkConnected(MainActivity.this)) {
+                                    deleteFile();
+                                    checkPermission();
+                                } else {
+                                    showShortToast(R.string.version_network_error);
+                                }
+                            });
+
+                            if (null != mDialog && !mDialog.isShowing())
+                                mDialog.show();
+                        }
+                    } else {
+                        if (!isFinishing) {
+                            if (null == mForceDialog)
+                                mForceDialog = new UpdateDialog(MainActivity.this, mDesc, getString(R.string.version_update),
+                                        mUpdateFlag, (view) -> {
+                                    mForceDialog.dismiss();
+
+                                    if (NetWorkUtils.isNetWorkConnected(MainActivity.this)) {
+                                        deleteFile();
+                                        checkPermission();
+                                    } else {
+                                        showShortToast(R.string.version_network_error);
+                                    }
+                                });
+
+                            if (null != mForceDialog && !mForceDialog.isShowing())
+                                mForceDialog.show();
+                        }
+                    }
+                    break;
+            }
+        }
+    };
 
     @Override
     protected int getContentViewId() {
@@ -75,6 +146,18 @@ public class MainActivity extends JMEBaseActivity implements TabHost.OnTabChange
     @Override
     protected void initData(Bundle savedInstanceState) {
         super.initData(savedInstanceState);
+
+        mProgressDialog = new ProgressDialog(this);
+
+        mIntentFilter = new IntentFilter();
+        mIntentFilter.addAction(WifiManager.WIFI_STATE_CHANGED_ACTION);
+        mIntentFilter.addAction(WifiManager.NETWORK_STATE_CHANGED_ACTION);
+        mIntentFilter.addAction(ConnectivityManager.CONNECTIVITY_ACTION);
+
+        mStateReceiver = new NetStateReceiver();
+
+        registerReceiver(mStateReceiver, mIntentFilter);
+        initDownLoadData();
     }
 
     @Override
@@ -123,7 +206,9 @@ public class MainActivity extends JMEBaseActivity implements TabHost.OnTabChange
     protected void onResume() {
         super.onResume();
 
-        getUpDateInfo();
+        if (null != mProgressDialog && !mProgressDialog.isShowing())
+            getUpDateInfo();
+
         getTimeLineList();
     }
 
@@ -173,6 +258,261 @@ public class MainActivity extends JMEBaseActivity implements TabHost.OnTabChange
         supportInvalidateOptionsMenu();
     }
 
+    private void initDownLoadData() {
+        mLocalBroadcastManager = LocalBroadcastManager.getInstance(this);
+
+        IntentFilter filter = new IntentFilter();
+        filter.addAction(Constants.DownLoadValues.DownLoading);
+        filter.addAction(Constants.DownLoadValues.DownLoadError);
+        filter.addAction(Constants.DownLoadValues.DownLoadSuccess);
+
+        mReceiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                if (null == mProgressDialog)
+                    return;
+
+                if (!mProgressDialog.isShowing())
+                    return;
+
+                if (intent.getAction().equals(Constants.DownLoadValues.DownLoadSuccess)) {
+                    mProgressDialog.dismiss();
+
+                    installApk();
+                } else if (intent.getAction().equals(Constants.DownLoadValues.DownLoadError)) {
+                    mProgressDialog.dismiss();
+
+                    handler.sendEmptyMessage(MSG_DOWNLOAD_ERROR);
+                } else {
+                    final int max = intent.getIntExtra("All", 0);
+                    final int total = intent.getIntExtra("Total", 0);
+
+                    mProgressDialog.setMax(max);
+                    mProgressDialog.setProgress(total);
+                    mProgressDialog.setProgressNumberFormat(String.format("%.2fM/%.2fM", (float) (total / (1024.00 * 1024.00)), (float) (max / (1024.00 * 1024.00))));
+                }
+            }
+        };
+
+        mLocalBroadcastManager.registerReceiver(mReceiver, filter);
+    }
+
+    private void checkStatus() {
+        if (FileUtil.IsAppFileExists("TjsApp" + mVersion, getApplicationContext())) {
+            long size = FileUtil.getAppFileSize("TjsApp" + mVersion, getApplicationContext());
+            long saveSize = SharedPreUtils.getInteger(this, SharedPreUtils.Key_DownLoad_Size, 0);
+
+            if (size != 0 && saveSize != 0 && size == saveSize) {
+                if (mUpdateFlag == true) {
+                    if (!isFinishing) {
+                        if (null == mForceDialog)
+                            mForceDialog = new UpdateDialog(MainActivity.this, mDesc, getString(R.string.version_install),
+                                    mUpdateFlag, (view) -> {
+                                mForceDialog.dismiss();
+
+                                installApk();
+                            });
+
+                        mForceDialog.setUpdateButton(getString(R.string.version_install), (view) -> {
+                            mForceDialog.dismiss();
+
+                            installApk();
+                        });
+
+                        if (null != mForceDialog && !mForceDialog.isShowing())
+                            mForceDialog.show();
+                    }
+                } else {
+                    if (!isFinishing && Constants.DownLoadValues.IsDownLoadDialogShow) {
+                        mDialog = new UpdateDialog(MainActivity.this, mDesc, getString(R.string.version_install),
+                                mUpdateFlag, (view) -> {
+                            mDialog.dismiss();
+
+                            installApk();
+                        });
+
+                        if (null != mDialog && !mDialog.isShowing())
+                            mDialog.show();
+                    }
+                }
+            } else {
+                deleteFile();
+
+                if (mUpdateFlag == true) {
+                    if (!isFinishing) {
+                        if (null == mForceDialog)
+                            mForceDialog = new UpdateDialog(MainActivity.this, mDesc, getString(R.string.version_update),
+                                    mUpdateFlag, (view) -> {
+                                mForceDialog.dismiss();
+
+                                if (NetWorkUtils.isNetWorkConnected(this))
+                                    checkPermission();
+                                else
+                                    showShortToast(R.string.version_network_error);
+                            });
+
+                        if (null != mForceDialog && !mForceDialog.isShowing())
+                            mForceDialog.show();
+                    }
+                } else {
+                    if (!isFinishing && Constants.DownLoadValues.IsDownLoadDialogShow) {
+                        mDialog = new UpdateDialog(MainActivity.this, mDesc, getString(R.string.version_update),
+                                mUpdateFlag, (view) -> {
+                            mDialog.dismiss();
+
+                            if (NetWorkUtils.isNetWorkConnected(this))
+                                checkPermission();
+                            else
+                                showShortToast(R.string.version_network_error);
+                        });
+
+                        if (null != mDialog && !mDialog.isShowing())
+                            mDialog.show();
+                    }
+                }
+            }
+        } else {
+            if (mUpdateFlag == true) {
+                if (!isFinishing) {
+                    if (null == mForceDialog)
+                        mForceDialog = new UpdateDialog(MainActivity.this, mDesc, getString(R.string.version_update),
+                                mUpdateFlag, (view) -> {
+                            mForceDialog.dismiss();
+
+                            if (NetWorkUtils.isNetWorkConnected(this))
+                                checkPermission();
+                            else
+                                showShortToast(R.string.version_network_error);
+                        });
+
+                    if (null != mForceDialog && !mForceDialog.isShowing())
+                        mForceDialog.show();
+                }
+            } else {
+                if (!isFinishing && Constants.DownLoadValues.IsDownLoadDialogShow) {
+                    mDialog = new UpdateDialog(MainActivity.this, mDesc, getString(R.string.version_update),
+                            mUpdateFlag, (view) -> {
+                        mDialog.dismiss();
+
+                        if (NetWorkUtils.isNetWorkConnected(this))
+                            checkPermission();
+                        else
+                            showShortToast(R.string.version_network_error);
+                    });
+
+                    if (null != mDialog && !mDialog.isShowing())
+                        mDialog.show();
+                }
+            }
+        }
+
+        if (!mUpdateFlag)
+            Constants.DownLoadValues.IsDownLoadDialogShow = false;
+    }
+
+    private void installApk() {
+        File file;
+
+        try {
+            file = new File(getApplicationContext().getExternalCacheDir(), "TjsApp" + Constants.DownLoadValues.DownLoadVersion);
+        } catch (Exception e) {
+            file = null;
+
+            e.printStackTrace();
+        }
+
+        long size = FileUtil.getAppFileSize("TjsApp" + mVersion, getApplicationContext());
+        long saveSize = SharedPreUtils.getInteger(this, SharedPreUtils.Key_DownLoad_Size, 0);
+
+        if (file != null && size != 0 && saveSize != 0 && size == saveSize) {
+            Intent intent = new Intent();
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            intent.addCategory(Intent.CATEGORY_DEFAULT);
+            intent.setAction(Intent.ACTION_VIEW);
+
+            if (Build.VERSION.SDK_INT > Build.VERSION_CODES.M) {
+                intent.setDataAndType(FileProvider.getUriForFile(JMEApplication.getInstance(), getFileProviderAuthority(), file), "application/vnd.android.package-archive");
+                intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+            } else {
+                intent.setDataAndType(Uri.fromFile(file), "application/vnd.android.package-archive");
+            }
+
+            if (getPackageManager().queryIntentActivities(intent, 0).size() > 0)
+                startActivity(intent);
+        } else {
+            deleteFile();
+
+            if (!isFinishing)
+                DialogHelp.getConfirmDialog(this, getString(R.string.dialog_title), getString(R.string.version_error),
+                        getString(R.string.text_confirm), (dialog, which) -> {
+                            if (NetWorkUtils.isNetWorkConnected(this))
+                                checkPermission();
+                            else
+                                showShortToast(R.string.version_network_error);
+                        }, (dialog, which) -> {
+                            if (mUpdateFlag == true)
+                                finish();
+                            else
+                                dialog.dismiss();
+                        }).show();
+        }
+    }
+
+    private void deleteFile() {
+        try {
+            FileUtil.cleanCustomCache(new File(getApplicationContext().getExternalCacheDir(), "TjsApp" + Constants.DownLoadValues.DownLoadVersion));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void checkPermission() {
+        if (NetWorkUtils.isNetWorkConnected(this)) {
+            if (Build.VERSION.SDK_INT >= 23) {
+                int checkCallPhonePermission = ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE);
+
+                if (checkCallPhonePermission != PackageManager.PERMISSION_GRANTED) {
+                    ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, REQUEST_CODE_ASK_WRITE_EXTERNAL_STORAGE);
+
+                    return;
+                } else {
+                    downLoadApk();
+                }
+            } else {
+                downLoadApk();
+            }
+        }
+    }
+
+    private String getFileProviderAuthority() {
+        try {
+            for (ProviderInfo provider : getPackageManager().getPackageInfo(getPackageName(), PackageManager.GET_PROVIDERS).providers) {
+                if (FileProvider.class.getName().equals(provider.name) && provider.authority.endsWith("com.jme.lsgoldtrade.file_provider")) {
+                    return provider.authority;
+                }
+            }
+        } catch (PackageManager.NameNotFoundException ignore) {
+
+        }
+        return null;
+    }
+
+    private void downLoadApk() {
+        if (null != mProgressDialog && mProgressDialog.isShowing())
+            return;
+
+        mProgressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+        mProgressDialog.setMessage(getString(R.string.version_download_progress));
+        mProgressDialog.setCancelable(false);
+        mProgressDialog.show();
+
+        Intent intent = new Intent(this, DownLoadService.class);
+        intent.putExtra("Path", mUrl);
+        intent.putExtra("VerTxt", mVersion);
+
+        startService(intent);
+    }
+
     private void getUpDateInfo() {
         HashMap<String, String> params = new HashMap<>();
         params.put("code", String.valueOf(AppInfoUtil.getVersionCode(this)));
@@ -195,23 +535,48 @@ public class MainActivity extends JMEBaseActivity implements TabHost.OnTabChange
         switch (request.getApi().getName()) {
             case "GetVersionInfo":
                 if (head.isSuccess()) {
-                    UpdateInfoVo value;
+                    UpdateInfoVo updateInfoVo;
+
                     try {
-                        value = (UpdateInfoVo) response;
+                        updateInfoVo = (UpdateInfoVo) response;
                     } catch (Exception e) {
-                        value = null;
+                        updateInfoVo = null;
 
                         e.printStackTrace();
                     }
 
-                    if (null == value)
-                        return;
+                    if (null == updateInfoVo) {
+                        Constants.DownLoadValues.IsNeedDownLoad = false;
 
-                    String force = value.getForce();
-                    if ("2".equals(force)) { //普通更新
-                        isUpData(value);
-                    } else if ("3".equals(force)) { //强制更新
-                        isUpData(value);
+                        return;
+                    } else {
+                        String force = updateInfoVo.getForce();
+
+                        if (force.equals("1")) {
+                            Constants.DownLoadValues.IsNeedDownLoad = false;
+                        } else {
+                            mUpdateFlag = force.equals("3");
+                            mVersion = updateInfoVo.getId();
+                            mDesc = updateInfoVo.getUpdateContent();
+
+                            String url = updateInfoVo.getDownloadUrl();
+
+                            if (TextUtils.isEmpty(url)) {
+                                Constants.DownLoadValues.IsNeedDownLoad = false;
+
+                                return;
+                            } else {
+                                mUrl = url;
+
+                                Constants.DownLoadValues.IsNeedDownLoad = true;
+                                Constants.DownLoadValues.DownLoadUrl = mUrl;
+                                Constants.DownLoadValues.DownLoadVersion = mVersion;
+
+                                checkStatus();
+
+                                SharedPreUtils.setLong(this, SharedPreUtils.Key_Close_Time, System.currentTimeMillis());
+                            }
+                        }
                     }
                 }
 
@@ -271,181 +636,25 @@ public class MainActivity extends JMEBaseActivity implements TabHost.OnTabChange
 
         if (!mRxbus.isUnsubscribed())
             mRxbus.unsubscribe();
+
+        mLocalBroadcastManager.unregisterReceiver(mReceiver);
+        unregisterReceiver(mStateReceiver);
     }
 
-    private void isUpData(UpdateInfoVo value) {
-        View v = View.inflate(this, R.layout.apk_updata_info, null);
-        final Dialog dialog = new AlertDialog.Builder(this, R.style.dialog).create();
-        dialog.show();
-        dialog.getWindow().setContentView(v);
-        ImageView install_apk_cancel = (ImageView) v.findViewById(R.id.install_apk_cancel);
-        TextView install_apk_sure = (TextView) v.findViewById(R.id.install_apk_sure);
-        TextView tv_updata_app = (TextView) v.findViewById(R.id.tv_updata_app);
-        if ("3".equals(value.getForce())) {
-            //点击dialog外部不消失
-            dialog.setCancelable(false);
-            //还有另一种方法   待试
-            //dialog.setCanceledOnTouchOutside(false);// 设置点击屏幕Dialog不消失
-        } else if ("2".equals(value.getForce())) {
-            //点击dialog外部消失
-            dialog.setCancelable(true);
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        switch (requestCode) {
+            case REQUEST_CODE_ASK_WRITE_EXTERNAL_STORAGE:
+                if (0 != grantResults.length)
+                    if (grantResults[0] == PackageManager.PERMISSION_GRANTED)
+                        downLoadApk();
+
+                break;
+            default:
+                super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
+                break;
         }
-        tv_updata_app.setText(value.getUpdateContent());
-        install_apk_cancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if ("2".equals(value.getForce())) {
-                    dialog.dismiss();
-                } else {
-                    DialogUtils.alertTitleDialog(MainActivity.this, "确定", "取消",
-                            "取消更新将无法使用", new DialogUtils.SetAlertDialogListener() {
-                                @Override
-                                public void onPositive() {
-                                    AppManager.getAppManager().AppExit(mContext);
-                                }
-
-                                @Override
-                                public void onNegative() {
-
-                                }
-                            });
-                }
-            }
-        });
-        install_apk_sure.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String[] args = new String[]{Permission.READ_EXTERNAL_STORAGE};
-                AndPermission.with(MainActivity.this)
-                        .permission(args)
-                        .onGranted(new Action() {
-                            @Override
-                            public void onAction(List<String> permissions) {
-                                loadApp(value.getDownloadUrl());
-                                dialog.dismiss();
-                            }
-                        })
-                        .onDenied(new Action() {
-                            @Override
-                            public void onAction(@NonNull List<String> permissions) {
-
-                            }
-                        })
-                        .start();
-            }
-        });
     }
 
-    /**
-     * 下载app
-     *
-     * @param url 下载地址
-     */
-    private void loadApp(String url) {
-
-        String APK_SAVE_PATH = Environment.getExternalStorageDirectory().getAbsolutePath() + "/MNUpdateAPK/sheyiapp.apk";
-
-        //下载APK
-        InstallUtils.with(this)
-                //必须-下载地址
-                .setApkUrl(url)
-                //非必须-下载保存的路径
-                .setApkPath(APK_SAVE_PATH)
-                //非必须-下载回调
-                .setCallBack(new InstallUtils.DownloadCallBack() {
-                    @Override
-                    public void onStart() {
-                        //下载开始
-                        ToastUtils.setToast(MainActivity.this, "正在后台下载");
-                    }
-
-                    @Override
-                    public void onComplete(final String path) {
-                        Logger.e("下载完成");
-                        InstallUtils.checkInstallPermission(MainActivity.this, new InstallUtils.InstallPermissionCallBack() {
-                            @Override
-                            public void onGranted() {
-                                /**
-                                 * 安装APK工具类
-                                 * @param context       上下文
-                                 * @param filePath      文件路径
-                                 * @param callBack      安装界面成功调起的回调
-                                 */
-                                InstallUtils.installAPK(MainActivity.this, path, new InstallUtils.InstallCallBack() {
-                                    @Override
-                                    public void onSuccess() {
-                                    }
-
-                                    @Override
-                                    public void onFail(Exception e) {
-                                    }
-                                });
-                            }
-
-                            @Override
-                            public void onDenied() {
-                                //弹出弹框提醒用户
-                                AlertDialog alertDialog = new AlertDialog.Builder(MainActivity.this)
-                                        .setTitle("温馨提示")
-                                        .setMessage("必须授权才能安装APK，请设置允许安装")
-                                        .setNegativeButton("取消", null)
-                                        .setPositiveButton("设置", new DialogInterface.OnClickListener() {
-                                            @Override
-                                            public void onClick(DialogInterface dialog, int which) {
-                                                //打开设置页面
-                                                InstallUtils.openInstallPermissionSetting(MainActivity.this, new InstallUtils.InstallPermissionCallBack() {
-                                                    @Override
-                                                    public void onGranted() {
-                                                        /**
-                                                         * 安装APK工具类
-                                                         * @param context       上下文
-                                                         * @param filePath      文件路径
-                                                         * @param callBack      安装界面成功调起的回调
-                                                         */
-                                                        InstallUtils.installAPK(MainActivity.this, path, new InstallUtils.InstallCallBack() {
-                                                            @Override
-                                                            public void onSuccess() {
-                                                            }
-
-                                                            @Override
-                                                            public void onFail(Exception e) {
-                                                            }
-                                                        });
-                                                    }
-
-                                                    @Override
-                                                    public void onDenied() {
-                                                        //还是不允许咋搞？
-//                                                        Toast.makeText(context, "不允许安装咋搞？强制更新就退出应用程序吧！", Toast.LENGTH_SHORT).show();
-                                                    }
-                                                });
-                                            }
-                                        })
-                                        .create();
-                                alertDialog.show();
-                            }
-                        });
-                    }
-
-                    @Override
-                    public void onLoading(long total, long current) {
-                        //下载中
-                        Logger.e("下载中");
-                    }
-
-                    @Override
-                    public void onFail(Exception e) {
-                        //下载失败
-                        Logger.e("下载失败");
-                    }
-
-                    @Override
-                    public void cancle() {
-                        //下载取消
-                        Logger.e("取消下载");
-                    }
-                })
-                //开始下载
-                .startDownload();
-    }
 }

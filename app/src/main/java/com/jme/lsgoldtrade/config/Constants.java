@@ -17,7 +17,7 @@ public class Constants {
         public static final int PRODUCE = 2;
         public static final int UAT = 3;
 
-        public static int Envi = PRODUCE;
+        public static int Envi = UAT;
 
         private HttpConst() {
 
@@ -204,6 +204,23 @@ public class Constants {
         }
 
         public static final int CODE_REQUEST_LANDSCAPE = 10000;
+    }
+
+    public static final class DownLoadValues {
+
+        private DownLoadValues() {
+
+        }
+
+        public static boolean IsNeedDownLoad = false;
+        public static boolean IsDownLoadFinish = true;
+        public static boolean IsDownLoadDialogShow = true;
+
+        public static String DownLoadVersion = "";
+        public static String DownLoadUrl = "";
+        public static String DownLoading = "com.tjs.downloading";
+        public static String DownLoadSuccess = "com.tjs.downloadsuccess";
+        public static String DownLoadError = "com.tjs.downloaderror";
     }
 
 }

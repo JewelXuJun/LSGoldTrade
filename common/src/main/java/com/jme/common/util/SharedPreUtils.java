@@ -28,6 +28,8 @@ public class SharedPreUtils {
     public static final String MARKET_SORT_UNLOGIN = "marketSortUnlogin";
     public static final String MARKET_SORT_LOGIN = "marketSortUnlogin";
     public static final String Token = "token";
+    public static final String Key_Close_Time = "CloseTime";
+    public static final String Key_DownLoad_Size = "DownLoadSize";
 
     /**
      * 序列化对象
