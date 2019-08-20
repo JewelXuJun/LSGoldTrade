@@ -1,6 +1,9 @@
 package com.jme.lsgoldtrade.base;
 
+import android.app.ActivityManager;
 import android.app.Dialog;
+import android.content.ComponentName;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.PersistableBundle;
@@ -21,6 +24,8 @@ import com.jme.lsgoldtrade.ui.login.AccountLoginActivity;
 import com.jme.lsgoldtrade.ui.login.MobileLoginActivity;
 import com.jme.lsgoldtrade.ui.splash.SplashActivity;
 import com.umeng.socialize.UMShareAPI;
+
+import java.util.List;
 
 import rx.Subscription;
 
@@ -131,7 +136,7 @@ public abstract class JMEBaseActivity<T> extends BaseActivity {
         super.DataReturn(request, head, response);
 
         if (head.getCode().equals("-2000") && !currentClass().equals(SplashActivity.class.getName())
-                        && !currentClass().equals(AccountLoginActivity.class.getName()) && !currentClass().equals(MobileLoginActivity.class.getName()))
+                && !currentClass().equals(AccountLoginActivity.class.getName()) && !currentClass().equals(MobileLoginActivity.class.getName()))
             showLoginDialog(head.getMsg());
         else
             handleErrorInfo(request, head);
@@ -141,6 +146,9 @@ public abstract class JMEBaseActivity<T> extends BaseActivity {
         if (isFinishing)
             return;
 
+        if (!isForeground())
+            return;
+
         if (null == mDialog) {
             mDialog = DialogHelp.getConfirmDialog(this, getString(R.string.text_tips), msg,
                     getString(R.string.text_login),
@@ -148,23 +156,30 @@ public abstract class JMEBaseActivity<T> extends BaseActivity {
                         dialog.dismiss();
 
                         returntoLogin();
+
+                        mDialog = null;
                     },
                     (dialog, which) -> {
                         dialog.dismiss();
 
                         returnToHomePage();
+
+                        mDialog = null;
                     })
                     .setCancelable(false)
                     .show();
         } else {
-            if (!mDialog.isShowing())
+            if (!mDialog.isShowing() && !isFinishing)
                 mDialog.show();
         }
     }
 
     protected void dismissLoginDialog() {
-        if (null != mDialog && mDialog.isShowing())
+        if (null != mDialog && mDialog.isShowing()) {
             mDialog.dismiss();
+
+            mDialog = null;
+        }
     }
 
     private void returntoLogin() {
@@ -188,6 +203,21 @@ public abstract class JMEBaseActivity<T> extends BaseActivity {
             else if (loginType.equals("Mobile"))
                 ARouter.getInstance().build(Constants.ARouterUriConst.MOBILELOGIN).navigation();
         }
+    }
+
+    public boolean isForeground() {
+        ActivityManager am = (ActivityManager) mContext.getSystemService(Context.ACTIVITY_SERVICE);
+        List<ActivityManager.RunningTaskInfo> list = am.getRunningTasks(1);
+
+        if (list != null && list.size() > 0) {
+            ComponentName componentName = list.get(0).topActivity;
+
+            if (currentClass().equals(componentName.getClassName()))
+                return true;
+        }
+
+        return false;
+
     }
 
     @Override
