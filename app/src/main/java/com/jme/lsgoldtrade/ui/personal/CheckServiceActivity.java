@@ -2,6 +2,8 @@ package com.jme.lsgoldtrade.ui.personal;
 
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.view.Gravity;
+
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.jme.common.network.DTRequest;
@@ -14,6 +16,9 @@ import com.jme.lsgoldtrade.config.Constants;
 import com.jme.lsgoldtrade.databinding.ActivityCheckServiceBinding;
 import com.jme.lsgoldtrade.domain.UsernameVo;
 import com.jme.lsgoldtrade.service.AccountService;
+import com.jme.lsgoldtrade.service.ManagementService;
+import com.jme.lsgoldtrade.ui.trade.TradeMessagePopUpWindow;
+
 import java.math.BigDecimal;
 import java.util.HashMap;
 
@@ -25,6 +30,8 @@ public class CheckServiceActivity extends JMEBaseActivity {
 
     private ActivityCheckServiceBinding mBinding;
 
+    private TradeMessagePopUpWindow mTradeMessagePopUpWindow;
+
     @Override
     protected int getContentViewId() {
         return R.layout.activity_check_service;
@@ -33,19 +40,36 @@ public class CheckServiceActivity extends JMEBaseActivity {
     @Override
     protected void initView() {
         super.initView();
+
         initToolbar("我的增值服务", true);
+
         mBinding = (ActivityCheckServiceBinding) mBindingUtil;
     }
 
     @Override
     protected void initData(Bundle savedInstanceState) {
         super.initData(savedInstanceState);
+
+        mTradeMessagePopUpWindow = new TradeMessagePopUpWindow(this);
+        mTradeMessagePopUpWindow.setOutsideTouchable(true);
+        mTradeMessagePopUpWindow.setFocusable(true);
+    }
+
+    @Override
+    protected void initBinding() {
+        super.initBinding();
+        mBinding.setHandlers(new ClickHandlers());
     }
 
     @Override
     protected void onResume() {
         super.onResume();
+
         getUserInfo();
+    }
+
+    private void getStatus() {
+        sendRequest(ManagementService.getInstance().getStatus, new HashMap<>(), true);
     }
 
     private void getUserInfo() {
@@ -54,12 +78,6 @@ public class CheckServiceActivity extends JMEBaseActivity {
 
     private void hasWeChatWithdrawAuth() {
         sendRequest(AccountService.getInstance().hasWeChatWithdrawAuth, new HashMap<>(), true);
-    }
-
-    @Override
-    protected void initBinding() {
-        super.initBinding();
-        mBinding.setHandlers(new ClickHandlers());
     }
 
     @Override
@@ -83,6 +101,33 @@ public class CheckServiceActivity extends JMEBaseActivity {
                     mBinding.tvFrozenFunds.setText(TextUtils.isEmpty(value.getFrozenBalance()) ? getString(R.string.text_no_data_default) :
                             BigDecimalUtil.formatMoney(new BigDecimal(value.getFrozenBalance()).divide(new BigDecimal(100)).toPlainString()));
                 }
+
+                break;
+            case "GetStatus":
+                if (head.isSuccess()) {
+                    String status;
+
+                    if (null == response)
+                        status = "";
+                    else
+                        status = response.toString();
+
+                    if (status.equals("1")) {
+                        if (null != mTradeMessagePopUpWindow && !mTradeMessagePopUpWindow.isShowing()) {
+                            mTradeMessagePopUpWindow.setData(mContext.getResources().getString(R.string.trade_account_error),
+                                    mContext.getResources().getString(R.string.trade_account_goto_recharge),
+                                    (view) -> {
+                                        ARouter.getInstance().build(Constants.ARouterUriConst.RECHARGE).navigation();
+
+                                        mTradeMessagePopUpWindow.dismiss();
+                                    });
+                            mTradeMessagePopUpWindow.showAtLocation(mBinding.tvAvailableFunds, Gravity.CENTER, 0, 0);
+                        }
+                    } else {
+                        hasWeChatWithdrawAuth();
+                    }
+                }
+
                 break;
             case "HasWeChatWithdrawAuth":
                 if (head.isSuccess()) {
@@ -101,8 +146,7 @@ public class CheckServiceActivity extends JMEBaseActivity {
                     else
                         ARouter.getInstance().build(Constants.ARouterUriConst.CHECKUSERINFO).navigation();
                 }
-                break;
-            default:
+
                 break;
         }
     }
@@ -116,7 +160,7 @@ public class CheckServiceActivity extends JMEBaseActivity {
         }
 
         public void onClickWithdraw() {
-            hasWeChatWithdrawAuth();
+            getStatus();
         }
 
         public void onClickThaw() {
