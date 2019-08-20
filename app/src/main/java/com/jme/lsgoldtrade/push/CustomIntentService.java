@@ -12,7 +12,7 @@ import android.support.annotation.RequiresApi;
 import android.support.v4.app.NotificationCompat;
 import android.text.TextUtils;
 import android.util.Log;
-import com.google.gson.annotations.SerializedName;
+
 import com.igexin.sdk.GTIntentService;
 import com.igexin.sdk.PushManager;
 import com.igexin.sdk.message.GTCmdMessage;
@@ -20,9 +20,9 @@ import com.igexin.sdk.message.GTNotificationMessage;
 import com.igexin.sdk.message.GTTransmitMessage;
 import com.jme.lsgoldtrade.R;
 import com.jme.lsgoldtrade.receiver.NotificationReceiver;
+
 import org.json.JSONException;
 import org.json.JSONObject;
-import java.io.Serializable;
 
 /**
  * 继承 GTIntentService 接收来自个推的消息, 所有消息在线程中回调, 如果注册了该服务, 则务必要在 AndroidManifest中声明, 否则无法接受消息<br>
@@ -213,51 +213,6 @@ public class CustomIntentService extends GTIntentService {
     public void createNotificationChannel(NotificationManager notificationManager) {
         NotificationChannel channel = new NotificationChannel(CHANNEL_ID, CHANNEL_NAME, NotificationManager.IMPORTANCE_HIGH);
         notificationManager.createNotificationChannel(channel);
-    }
-
-
-    private class NotificationMessage implements Serializable {
-
-        @SerializedName("contractId")
-        String contractId;
-        @SerializedName("latestPrice")
-        String latestPrice;
-        @SerializedName("priceCeiling")
-        String priceCeiling;
-        @SerializedName("contentType")
-        String contentType;
-
-        public String getContractId() {
-            return contractId;
-        }
-
-        public void setContractId(String contractId) {
-            this.contractId = contractId;
-        }
-
-        public String getLatestPrice() {
-            return latestPrice;
-        }
-
-        public void setLatestPrice(String latestPrice) {
-            this.latestPrice = latestPrice;
-        }
-
-        public String getPriceCeiling() {
-            return priceCeiling;
-        }
-
-        public void setPriceCeiling(String priceCeiling) {
-            this.priceCeiling = priceCeiling;
-        }
-
-        public String getContentType() {
-            return contentType;
-        }
-
-        public void setContentType(String contentType) {
-            this.contentType = contentType;
-        }
     }
 
 }

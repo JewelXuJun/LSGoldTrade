@@ -22,7 +22,6 @@ public abstract class JMEBaseFragment<T> extends BaseFragment {
     protected boolean isFinishing = false;
 
     protected T mBinding;
-
     protected User mUser;
     protected Contract mContract;
 
@@ -113,7 +112,7 @@ public abstract class JMEBaseFragment<T> extends BaseFragment {
         super.DataReturn(request, head, response);
 
         if (head.getCode().equals("-2000"))
-            RxBus.getInstance().post(Constants.RxBusConst.RXBUS_SYNTIME, null);
+            RxBus.getInstance().post(Constants.RxBusConst.RXBUS_SYNTIME, head.getMsg());
         else
             handleErrorInfo(request, head);
     }

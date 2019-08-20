@@ -322,6 +322,8 @@ public class AccountLoginActivity extends JMEBaseActivity {
                     mContract.setContractList(list);
                 }
 
+                dismissLoginDialog();
+
                 finish();
 
                 break;

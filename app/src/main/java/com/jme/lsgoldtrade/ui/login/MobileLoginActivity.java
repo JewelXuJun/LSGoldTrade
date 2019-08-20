@@ -356,6 +356,8 @@ public class MobileLoginActivity extends JMEBaseActivity {
                     mContract.setContractList(list);
                 }
 
+                dismissLoginDialog();
+
                 finish();
 
                 break;

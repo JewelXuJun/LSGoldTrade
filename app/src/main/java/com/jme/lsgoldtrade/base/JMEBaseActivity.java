@@ -17,9 +17,8 @@ import com.jme.lsgoldtrade.R;
 import com.jme.lsgoldtrade.config.Constants;
 import com.jme.lsgoldtrade.config.Contract;
 import com.jme.lsgoldtrade.config.User;
-import com.jme.lsgoldtrade.ui.main.MainActivity;
-import com.jme.lsgoldtrade.ui.market.MarketDetailActivity;
-import com.jme.lsgoldtrade.ui.market.MarketDetailLandscapeActivity;
+import com.jme.lsgoldtrade.ui.login.AccountLoginActivity;
+import com.jme.lsgoldtrade.ui.login.MobileLoginActivity;
 import com.jme.lsgoldtrade.ui.splash.SplashActivity;
 import com.umeng.socialize.UMShareAPI;
 
@@ -33,9 +32,9 @@ public abstract class JMEBaseActivity<T> extends BaseActivity {
     protected boolean isFinishing = false;
 
     protected T mBinding;
-
     protected User mUser;
     protected Contract mContract;
+
     private Subscription mRxbus;
 
     protected static Dialog mDialog;
@@ -116,7 +115,7 @@ public abstract class JMEBaseActivity<T> extends BaseActivity {
 
             switch (callType) {
                 case Constants.RxBusConst.RXBUS_SYNTIME:
-                    showLoginDialog();
+                    showLoginDialog(message.getObject2().toString());
 
                     break;
             }
@@ -131,18 +130,19 @@ public abstract class JMEBaseActivity<T> extends BaseActivity {
     protected void DataReturn(DTRequest request, Head head, Object response) {
         super.DataReturn(request, head, response);
 
-        if (head.getCode().equals("-2000") && !currentClass().equals(SplashActivity.class.getName()))
-            showLoginDialog();
+        if (head.getCode().equals("-2000") && !currentClass().equals(SplashActivity.class.getName())
+                        && !currentClass().equals(AccountLoginActivity.class.getName()) && !currentClass().equals(MobileLoginActivity.class.getName()))
+            showLoginDialog(head.getMsg());
         else
             handleErrorInfo(request, head);
     }
 
-    protected void showLoginDialog() {
+    protected void showLoginDialog(String msg) {
         if (isFinishing)
             return;
 
         if (null == mDialog) {
-            mDialog = DialogHelp.getConfirmDialog(this, getString(R.string.text_tips), getString(R.string.text_message_notlogin),
+            mDialog = DialogHelp.getConfirmDialog(this, getString(R.string.text_tips), msg,
                     getString(R.string.text_login),
                     (dialog, which) -> {
                         dialog.dismiss();
@@ -160,6 +160,11 @@ public abstract class JMEBaseActivity<T> extends BaseActivity {
             if (!mDialog.isShowing())
                 mDialog.show();
         }
+    }
+
+    protected void dismissLoginDialog() {
+        if (null != mDialog && mDialog.isShowing())
+            mDialog.dismiss();
     }
 
     private void returntoLogin() {
@@ -188,6 +193,7 @@ public abstract class JMEBaseActivity<T> extends BaseActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+
         UMShareAPI.get(this).onActivityResult(requestCode, resultCode, data);
     }
 }
