@@ -5,6 +5,7 @@ import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.Log;
+
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.jme.common.network.DTRequest;
@@ -22,6 +23,7 @@ import com.umeng.socialize.UMAuthListener;
 import com.umeng.socialize.UMShareAPI;
 import com.umeng.socialize.UMShareConfig;
 import com.umeng.socialize.bean.SHARE_MEDIA;
+
 import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Map;
@@ -139,14 +141,24 @@ public class WithdrawActivity extends JMEBaseActivity {
                         value = null;
                         e.printStackTrace();
                     }
+
                     if (value == null)
                         return;
 
-                    mBinding.tvBanlace.setText(TextUtils.isEmpty(value.getBalance()) ? getString(R.string.text_no_data_default) :
-                            BigDecimalUtil.formatMoney(new BigDecimal(value.getBalance()).divide(new BigDecimal(100)).toPlainString()) + "元");
+                    String balanceValue = value.getBalance();
 
-                    balance = new BigDecimal(value.getBalance()).divide(new BigDecimal(100));
+                    if (TextUtils.isEmpty(balanceValue)) {
+                        balance = new BigDecimal(0);
+                    } else {
+                        balance = new BigDecimal(balanceValue).divide(new BigDecimal(100));
+
+                        if (balance.compareTo(new BigDecimal(0)) == -1)
+                            balance = new BigDecimal(0);
+                    }
+
+                    mBinding.tvBanlace.setText(BigDecimalUtil.formatMoney(balance.toPlainString()) + "元");
                 }
+
                 break;
             case "GetWithdrawFeeRate":
                 if (head.isSuccess()) {
