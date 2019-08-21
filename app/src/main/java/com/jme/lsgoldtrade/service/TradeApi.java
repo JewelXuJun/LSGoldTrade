@@ -72,7 +72,7 @@ public interface TradeApi {
     Call<DTResponse> verifyIdCard(@Body Map<String, String> map);
 
     @POST("/gold-trade/v1.0.0/android/registerLogin")
-    Call<DTResponse> registerLogin(@Body Map<String, String> map);
+    Call<LoginResponse> registerLogin(@Body Map<String, String> map);
 
     @GET("/gold-trade/v1.0.0/android/resetLoginPasswordMsg")
     Call<DTResponse> resetLoginPasswordMsg(@QueryMap Map<String, String> map);

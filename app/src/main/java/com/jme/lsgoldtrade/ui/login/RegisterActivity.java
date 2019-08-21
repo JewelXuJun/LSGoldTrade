@@ -5,6 +5,7 @@ import android.text.TextUtils;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
+import com.google.gson.Gson;
 import com.igexin.sdk.PushManager;
 import com.jme.common.network.DTRequest;
 import com.jme.common.network.Head;
@@ -15,11 +16,18 @@ import com.jme.lsgoldtrade.base.JMEBaseActivity;
 import com.jme.lsgoldtrade.config.Constants;
 import com.jme.lsgoldtrade.config.User;
 import com.jme.lsgoldtrade.databinding.ActivityRegisterBinding;
+import com.jme.lsgoldtrade.domain.LoginResponse;
 import com.jme.lsgoldtrade.domain.UserInfoVo;
 import com.jme.lsgoldtrade.service.TradeService;
+import com.jme.lsgoldtrade.service.UserService;
 import com.jme.lsgoldtrade.util.ValueUtils;
 
+import java.net.ConnectException;
 import java.util.HashMap;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * 注册
@@ -106,7 +114,67 @@ public class RegisterActivity extends JMEBaseActivity {
         if (!TextUtils.isEmpty(referralCode))
             params.put("brokerageNo", referralCode);
 
-        sendRequest(TradeService.getInstance().registerLogin, params, true);
+        showLoadingDialog("");
+
+        DTRequest request = new DTRequest(TradeService.getInstance().registerLogin, params, false, true);
+
+        Call restResponse = request.getApi().request(request.getParams());
+
+        restResponse.enqueue(new Callback() {
+            @Override
+            public void onResponse(Call call, Response response) {
+                Head head = new Head();
+                Object body = "";
+
+                if (response.raw().code() != 200) {
+                    head.setSuccess(false);
+                    head.setCode("" + response.raw().code());
+                    head.setMsg("服务器异常");
+                } else {
+                    if (!request.getApi().isResponseJson()) {
+                        body = response.body();
+                        head.setSuccess(true);
+                        head.setCode("0");
+                        head.setMsg("成功");
+                    } else {
+                        LoginResponse dtResponse = (LoginResponse) response.body();
+
+                        head = new Head();
+                        head.setCode(dtResponse.getCode());
+                        head.setMsg(dtResponse.getMsg());
+
+                        try {
+                            body = new Gson().fromJson(dtResponse.getBodyToString(),
+                                    request.getApi().getEntryType());
+                        } catch (Exception e) {
+                            body = dtResponse.getBodyToString();
+                        }
+                    }
+                }
+
+                OnResult(request, head, body);
+            }
+
+            @Override
+            public void onFailure(Call call, Throwable t) {
+                Head head = new Head();
+                final Throwable cause = t.getCause() != null ? t.getCause() : t;
+
+                if (cause != null) {
+                    if (cause instanceof ConnectException) {
+                        head.setSuccess(false);
+                        head.setCode("500");
+                        head.setMsg(getResources().getString(com.jme.common.R.string.text_error_server));
+                    } else {
+                        head.setSuccess(false);
+                        head.setCode("408");
+                        head.setMsg(getResources().getString(com.jme.common.R.string.text_error_timeout));
+                    }
+                }
+
+                OnResult(request, head, null);
+            }
+        });
     }
 
     @Override

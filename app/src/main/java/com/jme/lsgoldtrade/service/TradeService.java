@@ -210,7 +210,7 @@ public class TradeService extends IService<TradeApi> {
 
     public API registerLogin = new API<UserInfoVo>("RegisterLogin") {
         @Override
-        public Call<DTResponse> request(HashMap<String, String> params) {
+        public Call<LoginResponse> request(HashMap<String, String> params) {
 
             return mApi.registerLogin(params);
         }
