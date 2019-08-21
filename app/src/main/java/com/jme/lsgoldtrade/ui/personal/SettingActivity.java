@@ -82,6 +82,8 @@ public class SettingActivity extends JMEBaseActivity {
 
         RxBus.getInstance().post(Constants.RxBusConst.RXBUS_LOGOUT_SUCCESS, null);
 
+        dismissLoginDialog();
+
         finish();
     }
 

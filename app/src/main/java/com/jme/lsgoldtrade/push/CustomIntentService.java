@@ -84,22 +84,6 @@ public class CustomIntentService extends GTIntentService {
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-//            if (TextUtils.isEmpty(data))
-//                return;
-//
-//            NotificationMessage message = null;
-//
-//            try {
-//                message = new Gson().fromJson(data, NotificationMessage.class);
-//            } catch (Exception e) {
-//                e.printStackTrace();
-//                message = null;
-//            }
-//
-//            if (message == null)
-//                return;
-//
-//            showNotification(message);
         }
     }
 
@@ -111,83 +95,84 @@ public class CustomIntentService extends GTIntentService {
      */
     private void showNotification(Context context, JSONObject jsonObject) {
         int notificationId = (int) System.currentTimeMillis();
+        Notification notification;
 
-        String contractId = jsonObject.optString("contractId");
-        String latestPrice = jsonObject.optString("latestPrice");
+        String contentType = jsonObject.optString("contentType");
 
-        if (TextUtils.isEmpty(contractId) || TextUtils.isEmpty(latestPrice))
-            return;
+        if (!TextUtils.isEmpty(contentType) && contentType.equals("4")) {
+            String id = jsonObject.optString("id");
 
-        //设置点击通知后是发送广播，传递对应的数据
-        Intent broadcastIntent = new Intent(context, NotificationReceiver.class);
-        Bundle bundle = new Bundle();
-        bundle.putString("contractId", contractId);
-        broadcastIntent.putExtras(bundle);
+            if (TextUtils.isEmpty(id))
+                return;
 
-        PendingIntent pendingIntent = PendingIntent.
-                getBroadcast(context, notificationId, broadcastIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+            //设置点击通知后是发送广播，传递对应的数据
+            Intent messageIntent = new Intent(context, NotificationReceiver.class);
+            Bundle bundle = new Bundle();
+            bundle.putString("id", id);
+            messageIntent.putExtras(bundle);
 
-        Notification notification = null;
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            createNotificationChannel(mManager);
-            notification = new Notification.Builder(mContext)
-                    .setChannelId(CHANNEL_ID)
-                    .setSmallIcon(R.mipmap.ic_logo)
-                    .setStyle(new Notification.BigTextStyle().bigText(contractId + "已达到您设置的预警价格，最新价为" + latestPrice))
-                    .setContentTitle("行情预警")
-                    .setContentText(contractId + "已达到您设置的预警价格，最新价为" + latestPrice)
-                    .setContentIntent(pendingIntent).build();
+            PendingIntent pendingIntent = PendingIntent.getBroadcast(context, notificationId, messageIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                createNotificationChannel(mManager);
+
+                notification = new Notification.Builder(mContext)
+                        .setChannelId(CHANNEL_ID)
+                        .setSmallIcon(R.mipmap.ic_logo)
+                        .setStyle(new Notification.BigTextStyle().bigText("您提交的意见反馈有一条新回复，点击查看详情"))
+                        .setContentTitle("意见回复")
+                        .setContentText("您提交的意见反馈有一条新回复，点击查看详情")
+                        .setContentIntent(pendingIntent).build();
+            } else {
+                notification = new NotificationCompat.Builder(mContext)
+                        .setSmallIcon(R.mipmap.ic_logo)
+                        .setStyle(new NotificationCompat.BigTextStyle().bigText("您提交的意见反馈有一条新回复，点击查看详情"))
+                        .setContentTitle("意见回复")
+                        .setContentText("您提交的意见反馈有一条新回复，点击查看详情")
+                        .setContentIntent(pendingIntent).build();
+            }
         } else {
-            notification = new NotificationCompat.Builder(mContext)
-                    .setSmallIcon(R.mipmap.ic_logo)
-                    .setStyle(new NotificationCompat.BigTextStyle().bigText(contractId + "已达到您设置的预警价格，最新价为" + latestPrice))
-                    .setContentTitle("行情预警")
-                    .setContentText(contractId + "已达到您设置的预警价格，最新价为" + latestPrice)
-                    .setContentIntent(pendingIntent).build();
+            String contractId = jsonObject.optString("contractId");
+            String latestPrice = jsonObject.optString("latestPrice");
+
+            if (TextUtils.isEmpty(contractId) || TextUtils.isEmpty(latestPrice))
+                return;
+
+            //设置点击通知后是发送广播，传递对应的数据
+            Intent warningIntent = new Intent(context, NotificationReceiver.class);
+            Bundle bundle = new Bundle();
+            bundle.putString("contractId", contractId);
+            warningIntent.putExtras(bundle);
+
+            PendingIntent warningPendingIntent = PendingIntent.getBroadcast(context, notificationId, warningIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                createNotificationChannel(mManager);
+
+                notification = new Notification.Builder(mContext)
+                        .setChannelId(CHANNEL_ID)
+                        .setSmallIcon(R.mipmap.ic_logo)
+                        .setStyle(new Notification.BigTextStyle().bigText(contractId + "已达到您设置的预警价格，最新价为" + latestPrice))
+                        .setContentTitle("行情预警")
+                        .setContentText(contractId + "已达到您设置的预警价格，最新价为" + latestPrice)
+                        .setContentIntent(warningPendingIntent).build();
+            } else {
+                notification = new NotificationCompat.Builder(mContext)
+                        .setSmallIcon(R.mipmap.ic_logo)
+                        .setStyle(new NotificationCompat.BigTextStyle().bigText(contractId + "已达到您设置的预警价格，最新价为" + latestPrice))
+                        .setContentTitle("行情预警")
+                        .setContentText(contractId + "已达到您设置的预警价格，最新价为" + latestPrice)
+                        .setContentIntent(warningPendingIntent).build();
+            }
         }
 
         // 点击notification之后，该notification自动消失
         notification.flags |= Notification.FLAG_AUTO_CANCEL;
         // notification被notify的时候，触发默认声音和默认震动
         notification.defaults |= Notification.DEFAULT_SOUND | Notification.DEFAULT_VIBRATE | Notification.DEFAULT_LIGHTS;
+
         mManager.notify(notificationId, notification);
     }
-
-//    private void showNotification(NotificationMessage message) {
-//        int notificationId = (int) System.currentTimeMillis();
-//
-//        Intent intent = null;
-//        PendingIntent pendingIntent = null;
-//
-//        intent = new Intent(mContext, MarketDetailActivity.class);
-//        intent.putExtra("ContractId", message.getContractId());
-//        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
-//
-//        pendingIntent = PendingIntent.getActivity(mContext, notificationId, intent, PendingIntent.FLAG_UPDATE_CURRENT);
-//
-//        Notification notification = null;
-//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-//            createNotificationChannel(mManager);
-//            notification = new Notification.Builder(mContext)
-//                    .setChannelId(CHANNEL_ID)
-//                    .setSmallIcon(R.mipmap.ic_logo)
-//                    .setContentTitle("行情预警")
-//                    .setContentText(message.getContractId() + "已达到您设置的预警价格，最新价为" + message.getLatestPrice())
-//                    .setContentIntent(pendingIntent).build();
-//        } else {
-//            notification = new NotificationCompat.Builder(mContext)
-//                    .setSmallIcon(R.mipmap.ic_logo)
-//                    .setContentTitle("行情预警")
-//                    .setContentText(message.getContractId() + "已达到您设置的预警价格，最新价为" + message.getLatestPrice())
-//                    .setContentIntent(pendingIntent).build();
-//        }
-//
-//        // 点击notification之后，该notification自动消失
-//        notification.flags |= Notification.FLAG_AUTO_CANCEL;
-//        // notification被notify的时候，触发默认声音和默认震动
-//        notification.defaults |= Notification.DEFAULT_SOUND | Notification.DEFAULT_VIBRATE | Notification.DEFAULT_LIGHTS;
-//        mManager.notify(notificationId, notification);
-//    }
 
     @Override
     public void onReceiveOnlineState(Context context, boolean online) {
