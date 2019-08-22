@@ -572,7 +572,7 @@ public class DeclarationFormFragment extends JMEBaseFragment implements FChart.O
                             ? R.color.color_text_black : MarketUtil.getMarketStateColor(new BigDecimal(latestPrice).compareTo(new BigDecimal(lastSettlePrice)))));
                     mBinding.tvLimitDownPrice.setText(mLowerLimitPrice);
                     mBinding.tvLimitUpPrice.setText(mHighLimitPrice);
-                    mBinding.tvAmount.setText(MarketUtil.getVolumeValue(String.valueOf(mTenSpeedVo.getTurnover()), false));
+                    mBinding.tvAmount.setText(MarketUtil.getVolumeValue(String.valueOf(new BigDecimal(mTenSpeedVo.getTurnover()).divide(new BigDecimal(100))), false));
                     mBinding.fchartSale.setData(mTenSpeedVo.getFiveAskLists(), FData.TYPE_SELL, lastSettlePrice);
                     mBinding.fchartBuy.setData(mTenSpeedVo.getFiveBidLists(), FData.TYPE_BUY, lastSettlePrice);
                 }
