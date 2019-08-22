@@ -54,6 +54,8 @@ public class AccountVo implements Serializable {
 
     private float riskrate;
 
+    private long fee;
+
     public long getCurAccountBalance() {
         return curAccountBalance;
     }
@@ -232,6 +234,10 @@ public class AccountVo implements Serializable {
 
     public String getRuntimeFeeStr() {
         return MarketUtil.getPriceValue(runtimeFee);
+    }
+
+    public String getFee() {
+        return MarketUtil.getPriceValue(fee);
     }
 
 }

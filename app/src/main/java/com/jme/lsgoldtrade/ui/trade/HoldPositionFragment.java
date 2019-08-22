@@ -309,6 +309,7 @@ public class HoldPositionFragment extends JMEBaseFragment implements OnRefreshLi
                         .add(floatTotal)
                         .add(new BigDecimal(mAccountVo.getPositionMarginStr()))
                         .add(mUnliquidatedProfitTotal.compareTo(new BigDecimal(0)) == -1 ? new BigDecimal(0) : mUnliquidatedProfitTotal)
+                        .subtract(new BigDecimal(mAccountVo.getFee()))
                         .toPlainString();
                 mBinding.tvTotal.setText(MarketUtil.decimalFormatMoney(mTotal));
 
@@ -333,6 +334,7 @@ public class HoldPositionFragment extends JMEBaseFragment implements OnRefreshLi
                         .add(floatTotal)
                         .add(new BigDecimal(mAccountVo.getPositionMarginStr()))
                         .subtract(new BigDecimal(mAccountVo.getRuntimeFeeStr()))
+                        .subtract(new BigDecimal(mAccountVo.getFee()))
                         .toPlainString();
                 String minReserveFund = mAccountVo.getMinReserveFundStr();
                 String runtimeFee = mAccountVo.getRuntimeFeeStr();
