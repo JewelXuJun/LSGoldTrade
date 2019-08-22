@@ -16,8 +16,9 @@ public class Constants {
         public static final int TEST_LAN = 1;
         public static final int PRODUCE = 2;
         public static final int UAT = 3;
+        public static final int PREPRODUCE = 4;
 
-        public static int Envi = PRODUCE;
+        public static int Envi = UAT;
 
         private HttpConst() {
 
@@ -76,6 +77,14 @@ public class Constants {
                 URL_INFO = "http://tjsuat.developer.jsdttec.com/tjsmanage/infoapi/v1/android/cmsComtentTxt/get?contentId=";
                 URL_TRADINGBOX = "http://tjsuat.developer.jsdttec.com/tjsmanage/openacct/wap/tradingBox.html";
                 URL_TRADINGBOXINFO = "http://tjsuat.developer.jsdttec.com/tjsmanage/openacct/wap/tradingBoxDetail.html?tradeId=";
+            } else if (Envi == PREPRODUCE) {
+                URL_BASE_MARKET = "http://180.97.47.179:18080";
+                URL_BASE_TRADE = "http://180.97.47.179:18080";
+                URL_BASE_ACCOUNT = "http://180.97.47.179:18080";
+                URL_BASE_MANAGEMENT = "http://180.97.47.179:18080";
+                URL_INFO = "http://180.97.47.179:18080/tjsmanage/infoapi/v1/ios/cmsComtentTxt/get?contentId=";
+                URL_TRADINGBOX = "http://180.97.47.179:18080/tjsmanage/openacct/wap/tradingBox.html";
+                URL_TRADINGBOXINFO = "http://180.97.47.179:18080/tjsmanage/openacct/wap/tradingBoxDetail.html?tradeId=";
             }
         }
 
