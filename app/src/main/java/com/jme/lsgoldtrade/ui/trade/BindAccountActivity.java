@@ -294,7 +294,7 @@ public class BindAccountActivity extends JMEBaseActivity {
                 showShortToast(R.string.trade_gold_account_hint);
             else if (!goldAccount.startsWith("000131"))
                 showShortToast(R.string.trade_gold_account_hint);
-            else if (goldAccount.length() < 16)
+            else if (goldAccount.length() != 16)
                 showShortToast(R.string.trade_gold_account_hint);
             else if (!bFlag)
                 showShortToast(R.string.login_verification_code_unget);
