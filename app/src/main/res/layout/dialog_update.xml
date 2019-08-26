@@ -9,9 +9,7 @@
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
         android:background="@color/white"
-        android:orientation="vertical"
-        android:paddingLeft="@dimen/margin_normal"
-        android:paddingRight="@dimen/margin_normal">
+        android:orientation="vertical">
 
         <ImageView
             android:layout_width="wrap_content"
