@@ -36,8 +36,6 @@ public class CapitalTransferActivity extends JMEBaseActivity {
     protected void initView() {
         super.initView();
 
-        mBinding = (ActivityCapitalTransferBinding) mBindingUtil;
-
         initToolbar(R.string.trade_capital_transfer, true);
     }
 
@@ -58,6 +56,9 @@ public class CapitalTransferActivity extends JMEBaseActivity {
     @Override
     protected void initBinding() {
         super.initBinding();
+
+        mBinding = (ActivityCapitalTransferBinding) mBindingUtil;
+        mBinding.setHandlers(new ClickHandlers());
     }
 
     @Override
@@ -109,6 +110,26 @@ public class CapitalTransferActivity extends JMEBaseActivity {
         public CharSequence getPageTitle(int position) {
             return mTabTitles[position];
         }
+    }
+
+    public class ClickHandlers {
+
+        public void onClickTips() {
+
+        }
+
+        public void onClickUpdate() {
+
+        }
+
+        public void onClickTransferIn() {
+
+        }
+
+        public void onClickTransferOut() {
+
+        }
+
     }
 
 }

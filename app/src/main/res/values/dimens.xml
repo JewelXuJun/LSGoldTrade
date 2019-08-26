@@ -36,6 +36,7 @@
     <dimen name="height_order_item">72dp</dimen>
     <dimen name="height_order_btn">28dp</dimen>
     <dimen name="height_market">300dp</dimen>
+    <dimen name="height_transfer_btn">30dp</dimen>
 
     <dimen name="width_main_page_info_img">100dp</dimen>
     <dimen name="width_market_limit">100dp</dimen>
@@ -61,6 +62,7 @@
     <dimen name="width_blue">5dp</dimen>
     <dimen name="width_economic_calendar">130dp</dimen>
     <dimen name="width_market_title">160dp</dimen>
+    <dimen name="width_transfer_btn">50dp</dimen>
 
     <dimen name="margin_main_page_info">30dp</dimen>
     <dimen name="margin_main_page_market">2.5dp</dimen>

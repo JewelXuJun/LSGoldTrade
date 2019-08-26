@@ -118,6 +118,11 @@
     <string name="trade_transfer_icbc_electronic_card_input">请输入工行电子账号</string>
     <string name="trade_transfer_icbc_electronic_card_file">工行电子账号查看路径：</string>
     <string name="trade_transfer_icbc_electronic_card_file_message">打开工银金行家小程序——我的——工行账户，长按卡号即可复制。前往小程序</string>
+    <string name="trade_transfer_icbc_electronic_card_title">工商银行电子账户</string>
+    <string name="trade_transfer_icbc_electronic_card_money">当前余额(元)</string>
+    <string name="trade_transfer_icbc_electronic_card_in">转入</string>
+    <string name="trade_transfer_icbc_electronic_card_out">转出</string>
+    <string name="trade_transfer_icbc_electronic_card_inout_message">当前余额可用于入金，若余额不足请先从您绑定的储蓄卡转账。出金后的金额将会进入该电子账户，您需要操作转出，才能将资金从该电子账户转出到您绑定的储蓄卡。</string>
     <string name="trade_mobile_number">手机号码</string>
     <string name="trade_verification_code">验&#160;&#160;证&#160;&#160;码</string>
     <string name="trade_verification_code_hint">请输入验证码</string>

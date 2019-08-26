@@ -2,35 +2,205 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
+    <data>
+
+        <variable
+            name="handlers"
+            type="com.jme.lsgoldtrade.ui.trade.CapitalTransferActivity.ClickHandlers" />
+
+    </data>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/common_background"
         android:orientation="vertical">
 
         <include layout="@layout/layout_toolbar" />
 
         <include layout="@layout/item_line_vertical" />
 
-        <android.support.design.widget.TabLayout
-            android:id="@+id/tablayout"
+        <android.support.design.widget.CoordinatorLayout
             android:layout_width="match_parent"
-            android:layout_height="@dimen/common_item_height_middle"
-            android:background="@color/white"
-            app:tabIndicatorColor="@color/color_blue"
-            app:tabIndicatorFullWidth="true"
-            app:tabIndicatorHeight="2dp"
-            app:tabRippleColor="@null"
-            app:tabSelectedTextColor="@color/color_blue_deep"
-            app:tabTextColor="@color/color_text_normal" />
+            android:layout_height="match_parent"
+            android:background="@color/common_background"
+            android:orientation="vertical">
 
-        <include layout="@layout/item_line_vertical" />
+            <android.support.design.widget.AppBarLayout
+                android:id="@+id/app_bar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/common_background"
+                android:fitsSystemWindows="true"
+                android:gravity="center_horizontal"
+                android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
 
-        <android.support.v4.view.ViewPager
-            android:id="@+id/tab_viewpager"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1" />
+                <android.support.design.widget.CollapsingToolbarLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white"
+                    app:layout_scrollFlags="scroll|enterAlwaysCollapsed">
+
+                    <LinearLayout
+                        android:id="@+id/layout_icbc"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/common_area_margin"
+                        android:layout_marginRight="@dimen/common_area_margin"
+                        android:orientation="vertical"
+                        android:visibility="gone">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/common_item_height_big"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal">
+
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:background="@mipmap/ic_icbc" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="@dimen/common_area_margin_tiny"
+                                android:text="@string/trade_transfer_icbc_electronic_card_title"
+                                android:textColor="@color/black_deep"
+                                android:textSize="@dimen/size_normal" />
+
+                            <TextView
+                                android:id="@+id/tv_icbc_electronic_card"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="@dimen/common_page_margin"
+                                android:textColor="@color/black_deep"
+                                android:textSize="@dimen/sp_16" />
+
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="@dimen/common_page_margin"
+                                android:background="@mipmap/ic_icbc_tips"
+                                android:onClick="@{() -> handlers.onClickTips()}" />
+
+                        </LinearLayout>
+
+                        <include layout="@layout/item_line_vertical" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="center_vertical"
+                                android:orientation="horizontal">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="@dimen/common_page_margin"
+                                    android:layout_marginBottom="@dimen/common_page_margin"
+                                    android:text="@string/trade_transfer_icbc_electronic_card_money"
+                                    android:textColor="@color/color_text_normal"
+                                    android:textSize="@dimen/sp_12" />
+
+                                <ImageView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="@dimen/common_area_margin"
+                                    android:background="@mipmap/ic_icbc_update"
+                                    android:onClick="@{() -> handlers.onClickUpdate()}" />
+
+                            </LinearLayout>
+
+                            <RelativeLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginBottom="@dimen/common_area_margin_middle">
+
+                                <TextView
+                                    android:id="@+id/tv_money"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="3,928.88"
+                                    android:textColor="@color/color_blue"
+                                    android:textSize="@dimen/size_large" />
+
+                                <LinearLayout
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_alignParentRight="true"
+                                    android:layout_centerVertical="true"
+                                    android:orientation="horizontal">
+
+                                    <Button
+                                        android:layout_width="@dimen/width_transfer_btn"
+                                        android:layout_height="@dimen/height_transfer_btn"
+                                        android:background="@drawable/bg_btn_blue_hollow"
+                                        android:onClick="@{() -> handlers.onClickTransferIn()}"
+                                        android:text="@string/trade_transfer_icbc_electronic_card_in"
+                                        android:textColor="@color/color_blue"
+                                        android:textSize="@dimen/sp_14" />
+
+                                    <Button
+                                        android:layout_width="@dimen/width_transfer_btn"
+                                        android:layout_height="@dimen/height_transfer_btn"
+                                        android:layout_marginLeft="@dimen/common_page_margin"
+                                        android:background="@drawable/bg_btn_blue_hollow"
+                                        android:onClick="@{() -> handlers.onClickTransferOut()}"
+                                        android:text="@string/trade_transfer_icbc_electronic_card_out"
+                                        android:textColor="@color/color_blue"
+                                        android:textSize="@dimen/sp_14" />
+
+                                </LinearLayout>
+
+                            </RelativeLayout>
+
+                            <include layout="@layout/item_line_vertical" />
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/margin_middle"
+                                android:layout_marginBottom="@dimen/common_area_margin"
+                                android:lineSpacingExtra="@dimen/lineSpacingExtra_normal"
+                                android:text="@string/trade_transfer_icbc_electronic_card_inout_message"
+                                android:textColor="@color/color_red"
+                                android:textSize="@dimen/sp_12" />
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                </android.support.design.widget.CollapsingToolbarLayout>
+
+                <android.support.design.widget.TabLayout
+                    android:id="@+id/tablayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/common_item_height_middle"
+                    android:layout_marginTop="@dimen/common_page_margin"
+                    android:background="@color/white"
+                    app:tabIndicatorColor="@color/color_blue"
+                    app:tabIndicatorFullWidth="true"
+                    app:tabIndicatorHeight="2dp"
+                    app:tabRippleColor="@null"
+                    app:tabSelectedTextColor="@color/color_blue_deep"
+                    app:tabTextColor="@color/color_text_normal" />
+
+                <include layout="@layout/item_line_vertical" />
+
+            </android.support.design.widget.AppBarLayout>
+
+            <android.support.v4.view.ViewPager
+                android:id="@+id/tab_viewpager"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+
+        </android.support.design.widget.CoordinatorLayout>
 
     </LinearLayout>
 
