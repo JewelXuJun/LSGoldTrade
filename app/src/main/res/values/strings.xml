@@ -113,6 +113,11 @@
     <string name="trade_transfer_amount">转账金额</string>
     <string name="trade_transfer_amount_hint">请输入金额</string>
     <string name="trade_transfer_reserve">非工行储蓄卡开户信息预留</string>
+    <string name="trade_transfer_bank_reserve">他行卡开户信息预留</string>
+    <string name="trade_transfer_icbc_electronic_card">工行电子账号</string>
+    <string name="trade_transfer_icbc_electronic_card_input">请输入工行电子账号</string>
+    <string name="trade_transfer_icbc_electronic_card_file">工行电子账号查看路径：</string>
+    <string name="trade_transfer_icbc_electronic_card_file_message">打开工银金行家小程序——我的——工行账户，长按卡号即可复制。前往小程序</string>
     <string name="trade_mobile_number">手机号码</string>
     <string name="trade_verification_code">验&#160;&#160;证&#160;&#160;码</string>
     <string name="trade_verification_code_hint">请输入验证码</string>

@@ -11,6 +11,7 @@ import android.util.Base64;
 import android.view.View;
 import android.widget.EditText;
 
+import com.alibaba.android.arouter.launcher.ARouter;
 import com.jme.common.network.DTRequest;
 import com.jme.common.network.Head;
 import com.jme.common.ui.base.JMECountDownTimer;
@@ -380,6 +381,10 @@ public class MoneyInFragment extends JMEBaseFragment implements OnRefreshListene
 
         public void onClickSubmit() {
             doSubmit();
+        }
+
+        public void onClickReserve() {
+            ARouter.getInstance().build(Constants.ARouterUriConst.BANKRESERVE).navigation();
         }
     }
 }

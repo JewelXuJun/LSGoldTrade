@@ -75,6 +75,11 @@
             android:windowSoftInputMode="adjustUnspecified|stateHidden" />
 
         <activity
+            android:name=".ui.trade.BankReserveActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden" />
+
+        <activity
             android:name=".ui.trade.DailyStatementActivity"
             android:screenOrientation="portrait" />
 
