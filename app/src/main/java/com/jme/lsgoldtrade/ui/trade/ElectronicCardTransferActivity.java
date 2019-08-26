@@ -8,20 +8,16 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.PagerAdapter;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
-import com.alibaba.android.arouter.launcher.ARouter;
 import com.jme.common.util.RxBus;
 import com.jme.lsgoldtrade.R;
 import com.jme.lsgoldtrade.base.JMEBaseActivity;
 import com.jme.lsgoldtrade.config.Constants;
-import com.jme.lsgoldtrade.databinding.ActivityCapitalTransferBinding;
+import com.jme.lsgoldtrade.databinding.ActivityElectronicCardTransferBinding;
 
-/**
- * 资金划转
- */
-@Route(path = Constants.ARouterUriConst.CAPITALTRANSFER)
-public class CapitalTransferActivity extends JMEBaseActivity {
+@Route(path = Constants.ARouterUriConst.ELECTRONICCARDTRANSFER)
+public class ElectronicCardTransferActivity extends JMEBaseActivity {
 
-    private ActivityCapitalTransferBinding mBinding;
+    private ActivityElectronicCardTransferBinding mBinding;
 
     private Fragment[] mFragmentArrays;
     private String[] mTabTitles;
@@ -30,14 +26,14 @@ public class CapitalTransferActivity extends JMEBaseActivity {
 
     @Override
     protected int getContentViewId() {
-        return R.layout.activity_capital_transfer;
+        return R.layout.activity_electronic_card_transfer;
     }
 
     @Override
     protected void initView() {
         super.initView();
 
-        initToolbar(R.string.trade_capital_transfer, true);
+        initToolbar(R.string.trade_transfer_icbc_electronic, true);
     }
 
     @Override
@@ -58,11 +54,9 @@ public class CapitalTransferActivity extends JMEBaseActivity {
     protected void initBinding() {
         super.initBinding();
 
-        mBinding = (ActivityCapitalTransferBinding) mBindingUtil;
-        mBinding.setHandlers(new ClickHandlers());
+        mBinding = (ActivityElectronicCardTransferBinding) mBindingUtil;
     }
 
-    @Override
     protected void onPause() {
         super.onPause();
 
@@ -71,14 +65,14 @@ public class CapitalTransferActivity extends JMEBaseActivity {
 
     private void initInfoTabs() {
         mTabTitles = new String[3];
-        mTabTitles[0] = getString(R.string.trade_money_in);
-        mTabTitles[1] = getString(R.string.trade_money_out);
-        mTabTitles[2] = getString(R.string.trade_turnover);
+        mTabTitles[0] = getString(R.string.trade_transfer_icbc_electronic_card_in);
+        mTabTitles[1] = getString(R.string.trade_transfer_icbc_electronic_card_out);
+        mTabTitles[2] = getString(R.string.trade_transfer_icbc_electronic_card_detail);
 
         mFragmentArrays = new Fragment[3];
-        mFragmentArrays[0] = new MoneyInFragment();
-        mFragmentArrays[1] = new MoneyOutFragment();
-        mFragmentArrays[2] = new TurnOverFragment();
+        mFragmentArrays[0] = new ElectronicCardMoneyInFragment();
+        mFragmentArrays[1] = new ElectronicCardMoneyOutFragment();
+        mFragmentArrays[2] = new ElectronicCardDetailFragment();
 
         initTabLayout();
     }
@@ -112,25 +106,4 @@ public class CapitalTransferActivity extends JMEBaseActivity {
             return mTabTitles[position];
         }
     }
-
-    public class ClickHandlers {
-
-        public void onClickTips() {
-
-        }
-
-        public void onClickUpdate() {
-
-        }
-
-        public void onClickTransferIn() {
-            ARouter.getInstance().build(Constants.ARouterUriConst.ELECTRONICCARDTRANSFER).navigation();
-        }
-
-        public void onClickTransferOut() {
-            ARouter.getInstance().build(Constants.ARouterUriConst.ELECTRONICCARDTRANSFER).navigation();
-        }
-
-    }
-
 }

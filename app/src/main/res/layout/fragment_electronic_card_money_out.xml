@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+        <variable
+            name="handlers"
+            type="com.jme.lsgoldtrade.ui.trade.ElectronicCardMoneyOutFragment.ClickHanlders" />
+
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.scwang.smartrefresh.layout.SmartRefreshLayout
+            android:id="@+id/swipeRefreshLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <com.scwang.smartrefresh.layout.header.ClassicsHeader
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <android.support.v4.widget.NestedScrollView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/common_background"
+                android:fillViewport="true"
+                android:scrollbars="none">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/common_item_height_big"
+                        android:background="@color/white"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:paddingLeft="@dimen/common_area_margin"
+                        android:paddingRight="@dimen/common_area_margin">
+
+                        <TextView
+                            android:layout_width="@dimen/width_item_title"
+                            android:layout_height="wrap_content"
+                            android:text="@string/trade_transfer_icbc_electronic_card_money_out_avalible"
+                            android:textColor="@color/color_text_normal"
+                            android:textSize="@dimen/sp_14" />
+
+                        <TextView
+                            android:id="@+id/tv_icbc_electronic_card_money_out_avalible"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/common_page_margin"
+                            android:textColor="@color/color_text_black"
+                            android:textSize="@dimen/sp_16" />
+
+                    </LinearLayout>
+
+                    <include layout="@layout/item_line_vertical_margin" />
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/common_item_height_big"
+                        android:background="@color/white"
+                        android:paddingLeft="@dimen/common_area_margin"
+                        android:paddingRight="@dimen/common_area_margin">
+
+                        <TextView
+                            android:id="@+id/tv_transfer_icbc_electronic_card_money_in"
+                            android:layout_width="@dimen/width_item_title"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:text="@string/trade_transfer_icbc_electronic_card_money_out"
+                            android:textColor="@color/color_text_normal"
+                            android:textSize="@dimen/sp_14" />
+
+                        <EditText
+                            android:id="@+id/et_transfer_icbc_electronic_card_money_out"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_marginLeft="@dimen/common_page_margin"
+                            android:layout_marginRight="@dimen/common_page_padding"
+                            android:layout_toLeftOf="@+id/tv_transfer_amount_unit"
+                            android:layout_toRightOf="@+id/tv_transfer_icbc_electronic_card_money_in"
+                            android:background="@null"
+                            android:hint="@string/trade_transfer_icbc_electronic_card_money_out_input"
+                            android:inputType="numberDecimal"
+                            android:maxLines="1"
+                            android:textColor="@color/color_text_normal"
+                            android:textColorHint="@color/color_text_gray_hint"
+                            android:textSize="@dimen/sp_14" />
+
+                        <TextView
+                            android:id="@+id/tv_transfer_amount_unit"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentRight="true"
+                            android:layout_centerVertical="true"
+                            android:text="@string/text_money_unit"
+                            android:textColor="@color/color_text_normal"
+                            android:textSize="@dimen/sp_14" />
+
+                    </RelativeLayout>
+
+                    <include layout="@layout/item_line_vertical_margin" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/white"
+                        android:lineSpacingExtra="@dimen/lineSpacingExtra_normal"
+                        android:paddingLeft="@dimen/common_area_margin"
+                        android:paddingTop="@dimen/common_area_margin"
+                        android:paddingRight="@dimen/common_area_margin"
+                        android:paddingBottom="@dimen/common_area_margin_large"
+                        android:text="@string/trade_transfer_icbc_electronic_card_money_out_message"
+                        android:textColor="@color/color_red"
+                        android:textSize="@dimen/sp_12" />
+
+                    <Button
+                        android:id="@+id/btn_transfer_in"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/height_btn"
+                        android:layout_marginLeft="@dimen/common_area_margin"
+                        android:layout_marginTop="@dimen/common_area_margin_large"
+                        android:layout_marginRight="@dimen/common_area_margin"
+                        android:background="@drawable/selector_btn"
+                        android:enabled="false"
+                        android:onClick="@{() -> handlers.onClickTransferOut()}"
+                        android:text="@string/trade_transfer_icbc_electronic_card_out"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/common_font_size" />
+
+                </LinearLayout>
+
+            </android.support.v4.widget.NestedScrollView>
+
+        </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+
+    </LinearLayout>
+
+</layout>

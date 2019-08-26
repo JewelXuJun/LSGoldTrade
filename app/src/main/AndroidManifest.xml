@@ -80,6 +80,10 @@
             android:windowSoftInputMode="adjustUnspecified|stateHidden" />
 
         <activity
+            android:name=".ui.trade.ElectronicCardTransferActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
             android:name=".ui.trade.DailyStatementActivity"
             android:screenOrientation="portrait" />
 

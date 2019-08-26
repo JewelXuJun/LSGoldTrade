@@ -47,7 +47,7 @@
                         android:layout_marginLeft="@dimen/common_area_margin"
                         android:layout_marginRight="@dimen/common_area_margin"
                         android:orientation="vertical"
-                        android:visibility="gone">
+                        android:visibility="visible">
 
                         <LinearLayout
                             android:layout_width="match_parent"
@@ -148,7 +148,7 @@
                                     <Button
                                         android:layout_width="@dimen/width_transfer_btn"
                                         android:layout_height="@dimen/height_transfer_btn"
-                                        android:layout_marginLeft="@dimen/common_page_margin"
+                                        android:layout_marginLeft="@dimen/common_area_margin"
                                         android:background="@drawable/bg_btn_blue_hollow"
                                         android:onClick="@{() -> handlers.onClickTransferOut()}"
                                         android:text="@string/trade_transfer_icbc_electronic_card_out"
