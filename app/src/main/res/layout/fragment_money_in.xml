@@ -288,6 +288,19 @@
                     android:textColor="@color/white"
                     android:textSize="@dimen/common_font_size" />
 
+                <Button
+                    android:id="@+id/btn_reserve"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/height_btn"
+                    android:layout_marginLeft="@dimen/margin_large"
+                    android:layout_marginTop="@dimen/margin_large"
+                    android:layout_marginRight="@dimen/margin_large"
+                    android:background="@drawable/bg_btn_red"
+                    android:onClick="@{() -> handlers.onClickSubmit()}"
+                    android:text="@string/trade_transfer_reserve"
+                    android:textColor="@color/color_red"
+                    android:textSize="@dimen/common_font_size" />
+
             </LinearLayout>
 
         </android.support.v4.widget.NestedScrollView>

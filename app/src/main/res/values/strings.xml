@@ -112,6 +112,7 @@
     <string name="trade_money_out_time">可出金时段，交易日9:00~15:30。</string>
     <string name="trade_transfer_amount">转账金额</string>
     <string name="trade_transfer_amount_hint">请输入金额</string>
+    <string name="trade_transfer_reserve">非工行储蓄卡开户信息预留</string>
     <string name="trade_mobile_number">手机号码</string>
     <string name="trade_verification_code">验&#160;&#160;证&#160;&#160;码</string>
     <string name="trade_verification_code_hint">请输入验证码</string>
