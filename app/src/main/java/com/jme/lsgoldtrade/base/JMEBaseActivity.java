@@ -146,7 +146,7 @@ public abstract class JMEBaseActivity<T> extends BaseActivity {
         if (isFinishing)
             return;
 
-        if (!isForeground() || !mUser.isLogin())
+        if (!isForeground())
             return;
 
         if (null == mDialog) {
