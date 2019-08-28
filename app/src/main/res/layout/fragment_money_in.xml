@@ -299,7 +299,8 @@
                     android:onClick="@{() -> handlers.onClickReserve()}"
                     android:text="@string/trade_transfer_reserve"
                     android:textColor="@color/color_red"
-                    android:textSize="@dimen/common_font_size" />
+                    android:textSize="@dimen/common_font_size"
+                    android:visibility="gone" />
 
             </LinearLayout>
 
