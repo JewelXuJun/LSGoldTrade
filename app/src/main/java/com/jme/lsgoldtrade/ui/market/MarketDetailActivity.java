@@ -521,7 +521,7 @@ public class MarketDetailActivity extends JMEBaseActivity implements FChart.OnPr
             mBinding.tvRate.setText(MarketUtil.getMarketRateValue(rateType, tenSpeedVo.getUpDownRate()));
             mBinding.tvOpen.setText(MarketUtil.getValue(tenSpeedVo.getOpenPrice()));
             mBinding.tvPreclose.setText(MarketUtil.getValue(tenSpeedVo.getLastClosePrice()));
-            mBinding.tvTurnVolume.setText(MarketUtil.getVolumeValue(String.valueOf(new BigDecimal(tenSpeedVo.getTurnover()).divide(new BigDecimal(100), 2, BigDecimal.ROUND_HALF_UP)), false));
+            mBinding.tvTurnVolume.setText(MarketUtil.getVolumeValue2(String.valueOf(new BigDecimal(tenSpeedVo.getTurnover()).divide(new BigDecimal(100))), false));
             mBinding.tvVolume.setText(MarketUtil.getVolumeValue(String.valueOf(tenSpeedVo.getTurnVolume()), false) + "手");
             mBinding.tvStateTime.setText(MarketUtil.getValue(DateUtil.stringToAllTime(tenSpeedVo.getQuoteTime())));
             mBinding.tvHigh.setText(MarketUtil.getValue(highestPrice));

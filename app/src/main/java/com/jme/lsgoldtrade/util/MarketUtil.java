@@ -265,6 +265,41 @@ public class MarketUtil {
             return result;
     }
 
+    public static String getVolumeValue2(String value, boolean currency) {
+        if (TextUtils.isEmpty(value))
+            return DEFAULT;
+
+        String result;
+        String valueStr;
+        BigDecimal valueDecimal;
+
+        if (value.contains("E")) {
+            if (value.contains("-"))
+                valueStr = new BigDecimal(value).negate().toPlainString();
+            else
+                valueStr = new BigDecimal(value).toPlainString();
+        } else {
+            valueStr = new BigDecimal(value).toString();
+        }
+
+        valueDecimal = new BigDecimal(valueStr);
+
+        if (valueDecimal.abs().compareTo(new BigDecimal(0)) == 0)
+            result = "0";
+        else if (valueDecimal.abs().compareTo(new BigDecimal(10000.0)) == -1)
+            result = formatValueNum(valueStr, 2);
+        else if (valueDecimal.abs().compareTo(new BigDecimal(10000.0)) != -1
+                && valueDecimal.abs().compareTo(new BigDecimal(100000000.0)) == -1)
+            result = formatValueNum(valueDivisor2(valueDecimal, new BigDecimal(10000.0)).toString(), 2) + "万";
+        else
+            result = formatValueNum(valueDivisor2(valueDecimal, new BigDecimal(100000000.0)).toString(), 2) + "亿";
+
+        if (currency)
+            return "￥" + result;
+        else
+            return result;
+    }
+
     public static String formatValueNum(String value, int num) {
         if (TextUtils.isEmpty(value))
             return "";
@@ -440,6 +475,13 @@ public class MarketUtil {
             return new BigDecimal("0");
         else
             return new BigDecimal(original.toString()).divide(divisor);
+    }
+
+    public static BigDecimal valueDivisor2(BigDecimal original, BigDecimal divisor) {
+        if (divisor.compareTo(new BigDecimal("0")) == 0)
+            return new BigDecimal("0");
+        else
+            return new BigDecimal(original.toString()).divide(divisor,2, BigDecimal.ROUND_HALF_UP);
 
     }
 
