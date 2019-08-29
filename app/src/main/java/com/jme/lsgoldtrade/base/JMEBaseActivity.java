@@ -120,6 +120,10 @@ public abstract class JMEBaseActivity<T> extends BaseActivity {
 
             switch (callType) {
                 case Constants.RxBusConst.RXBUS_SYNTIME:
+                    mUser.logout();
+
+                    SharedPreUtils.setString(this, SharedPreUtils.Token, "");
+
                     showLoginDialog(message.getObject2().toString());
 
                     break;
@@ -135,11 +139,17 @@ public abstract class JMEBaseActivity<T> extends BaseActivity {
     protected void DataReturn(DTRequest request, Head head, Object response) {
         super.DataReturn(request, head, response);
 
-        if (head.getCode().equals("-2000") && !currentClass().equals(SplashActivity.class.getName())
-                && !currentClass().equals(AccountLoginActivity.class.getName()) && !currentClass().equals(MobileLoginActivity.class.getName()))
-            showLoginDialog(head.getMsg());
-        else
+        if (head.getCode().equals("-2000")) {
+            mUser.logout();
+
+            SharedPreUtils.setString(this, SharedPreUtils.Token, "");
+
+            if (!currentClass().equals(SplashActivity.class.getName()) && !currentClass().equals(AccountLoginActivity.class.getName())
+                    && !currentClass().equals(MobileLoginActivity.class.getName()))
+                showLoginDialog(head.getMsg());
+        } else {
             handleErrorInfo(request, head);
+        }
     }
 
     protected void showLoginDialog(String msg) {

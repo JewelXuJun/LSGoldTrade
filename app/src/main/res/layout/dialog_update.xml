@@ -8,7 +8,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:background="@color/white"
+        android:background="@color/transparent"
         android:orientation="vertical">
 
         <ImageView
@@ -19,6 +19,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@color/white"
             android:orientation="vertical">
 
             <TextView
@@ -34,9 +35,9 @@
             <Button
                 android:id="@+id/btn_install"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="@dimen/common_item_height_small"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginTop="@dimen/common_area_margin_big"
+                android:layout_marginTop="@dimen/margin_normal"
                 android:layout_marginBottom="@dimen/common_area_margin_big"
                 android:background="@drawable/button_shape_30"
                 android:paddingLeft="@dimen/common_area_margin_large"
@@ -52,8 +53,8 @@
         android:id="@+id/img_cancel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="-5dp"
-        android:layout_marginTop="5dp"
+        android:layout_marginLeft="-3dp"
+        android:layout_marginTop="@dimen/common_area_margin_middle"
         android:layout_toRightOf="@+id/layout"
         android:src="@mipmap/ic_cancel_update" />
 
