@@ -12,6 +12,8 @@ public class UserInfoVo {
      * "mobile": "138****5915"
      * "accountId": 2,
      * "account": "131****930"
+     * "cardType": “2”,
+     * "reserveFlag": “Y”
      */
 
     private String traderId;
@@ -31,6 +33,10 @@ public class UserInfoVo {
     private String accountId;
 
     private String account;
+
+    private String cardType;
+
+    private String reserveFlag;
 
     public String getTraderId() {
         return traderId;
@@ -102,5 +108,21 @@ public class UserInfoVo {
 
     public void setAccount(String account) {
         this.account = account;
+    }
+
+    public String getCardType() {
+        return cardType;
+    }
+
+    public void setCardType(String cardType) {
+        this.cardType = cardType;
+    }
+
+    public String getReserveFlag() {
+        return reserveFlag;
+    }
+
+    public void setReserveFlag(String reserveFlag) {
+        this.reserveFlag = reserveFlag;
     }
 }

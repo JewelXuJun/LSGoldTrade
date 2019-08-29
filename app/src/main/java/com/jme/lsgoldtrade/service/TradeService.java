@@ -6,18 +6,22 @@ import com.jme.common.network.IService;
 import com.jme.lsgoldtrade.config.Constants;
 import com.jme.lsgoldtrade.config.User;
 import com.jme.lsgoldtrade.domain.AccountVo;
+import com.jme.lsgoldtrade.domain.BalanceEnquiryVo;
 import com.jme.lsgoldtrade.domain.BindAccountResponse;
 import com.jme.lsgoldtrade.domain.BindAccountVo;
+import com.jme.lsgoldtrade.domain.CardInfoVo;
 import com.jme.lsgoldtrade.domain.ContractInfoVo;
 import com.jme.lsgoldtrade.domain.DailyStatementVo;
 import com.jme.lsgoldtrade.domain.DealHistoryPageVo;
 import com.jme.lsgoldtrade.domain.DealPageVo;
+import com.jme.lsgoldtrade.domain.ErUserInfoResponse;
 import com.jme.lsgoldtrade.domain.InOutTurnOverVo;
 import com.jme.lsgoldtrade.domain.LoginResponse;
 import com.jme.lsgoldtrade.domain.OrderHisPageVo;
 import com.jme.lsgoldtrade.domain.OrderPageVo;
 import com.jme.lsgoldtrade.domain.PositionPageVo;
 import com.jme.lsgoldtrade.domain.IdentityInfoVo;
+import com.jme.lsgoldtrade.domain.TransactionDetailVo;
 import com.jme.lsgoldtrade.domain.UserInfoVo;
 import com.jme.lsgoldtrade.domain.WarnVo;
 import java.util.HashMap;
@@ -253,6 +257,62 @@ public class TradeService extends IService<TradeApi> {
         public Call<DTResponse> request(HashMap<String, String> params) {
 
             return mApi.whetherIdCard(params);
+        }
+    };
+
+    public API keepInfoIntoList = new API<CardInfoVo>("KeepInfoIntoList") {
+        @Override
+        public Call<DTResponse> request(HashMap<String, String> params) {
+
+            return mApi.keepInfoIntoList(params);
+        }
+    };
+
+    public API sendPassCode = new API<CardInfoVo>("SendPassCode") {
+        @Override
+        public Call<DTResponse> request(HashMap<String, String> params) {
+
+            return mApi.sendPassCode(params);
+        }
+    };
+
+    public API recharge = new API<CardInfoVo>("Recharge") {
+        @Override
+        public Call<DTResponse> request(HashMap<String, String> params) {
+
+            return mApi.recharge(params);
+        }
+    };
+
+    public API withdraw = new API<CardInfoVo>("Withdraw") {
+        @Override
+        public Call<DTResponse> request(HashMap<String, String> params) {
+
+            return mApi.withdraw(params);
+        }
+    };
+
+    public API balanceEnquiry = new API<BalanceEnquiryVo>("BalanceEnquiry") {
+        @Override
+        public Call<DTResponse> request(HashMap<String, String> params) {
+
+            return mApi.balanceEnquiry(params);
+        }
+    };
+
+    public API queryTransactionDetail = new API<TransactionDetailVo>("QueryTransactionDetail") {
+        @Override
+        public Call<DTResponse> request(HashMap<String, String> params) {
+
+            return mApi.queryTransactionDetail(params);
+        }
+    };
+
+    public API queryLoginSecondUserInfo = new API<TransactionDetailVo>("QueryLoginSecondUserInfo") {
+        @Override
+        public Call<ErUserInfoResponse> request(HashMap<String, String> params) {
+
+            return mApi.queryLoginSecondUserInfo(params);
         }
     };
 

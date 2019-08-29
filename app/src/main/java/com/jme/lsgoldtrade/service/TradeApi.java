@@ -2,6 +2,7 @@ package com.jme.lsgoldtrade.service;
 
 import com.jme.common.network.DTResponse;
 import com.jme.lsgoldtrade.domain.BindAccountResponse;
+import com.jme.lsgoldtrade.domain.ErUserInfoResponse;
 import com.jme.lsgoldtrade.domain.LoginResponse;
 
 import java.util.Map;
@@ -88,4 +89,25 @@ public interface TradeApi {
 
     @GET("/gold-trade/v1.0.0/android/whetherIdCard")
     Call<DTResponse> whetherIdCard(@QueryMap Map<String, String> map);
+
+    @GET("/gold-trade/v1.0.0/android/keepInfoIntoList")
+    Call<DTResponse> keepInfoIntoList(@QueryMap Map<String, String> map);
+
+    @GET("/gold-trade/v1.0.0/android/sendPassCode")
+    Call<DTResponse> sendPassCode(@QueryMap Map<String, String> map);
+
+    @GET("/gold-trade/v1.0.0/android/recharge")
+    Call<DTResponse> recharge(@QueryMap Map<String, String> map);
+
+    @GET("/gold-trade/v1.0.0/android/withdraw")
+    Call<DTResponse> withdraw(@QueryMap Map<String, String> map);
+
+    @GET("/gold-trade/v1.0.0/android/balanceEnquiry")
+    Call<DTResponse> balanceEnquiry(@QueryMap Map<String, String> map);
+
+    @GET("/gold-trade/v1.0.0/android/queryTransactionDetail")
+    Call<DTResponse> queryTransactionDetail(@QueryMap Map<String, String> map);
+
+    @GET("/gold-trade/v1.0.0/android/queryLoginSecondUserInfo")
+    Call<ErUserInfoResponse> queryLoginSecondUserInfo(@QueryMap Map<String, String> map);
 }
