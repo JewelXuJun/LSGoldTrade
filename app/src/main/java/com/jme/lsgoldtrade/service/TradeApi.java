@@ -90,7 +90,7 @@ public interface TradeApi {
     @GET("/gold-trade/v1.0.0/android/whetherIdCard")
     Call<DTResponse> whetherIdCard(@QueryMap Map<String, String> map);
 
-    @GET("/gold-trade/v1.0.0/android/keepInfoIntoList")
+    @POST("/gold-trade/v1.0.0/android/keepInfoIntoList")
     Call<DTResponse> keepInfoIntoList(@QueryMap Map<String, String> map);
 
     @GET("/gold-trade/v1.0.0/android/sendPassCode")

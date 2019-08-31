@@ -114,6 +114,7 @@
     <string name="trade_transfer_amount_hint">请输入金额</string>
     <string name="trade_transfer_reserve">非工行储蓄卡开户信息预留</string>
     <string name="trade_transfer_bank_reserve">他行卡开户信息预留</string>
+    <string name="trade_transfer_bank_save_success">保存成功</string>
     <string name="trade_transfer_icbc_electronic_card">工行电子账号</string>
     <string name="trade_transfer_icbc_electronic_card_input">请输入工行电子账号</string>
     <string name="trade_transfer_icbc_electronic_card_file">工行电子账号查看路径：</string>
