@@ -175,6 +175,8 @@ public class MoneyInFragment extends JMEBaseFragment implements OnRefreshListene
 
         if (bVisibleToUser)
             getAccount(true);
+
+        setReserveLayout();
     }
 
     @Override
@@ -193,6 +195,18 @@ public class MoneyInFragment extends JMEBaseFragment implements OnRefreshListene
 
     private boolean populated(final EditText editText) {
         return editText.length() > 0;
+    }
+
+    private void setReserveLayout() {
+        if (null == mUser || null == mUser.getCurrentUser()) {
+            mBinding.btnReserve.setVisibility(View.GONE);
+        } else {
+            String cardType = mUser.getCurrentUser().getCardType();
+            String reserveFlag = mUser.getCurrentUser().getReserveFlag();
+
+            mBinding.btnReserve.setVisibility(!TextUtils.isEmpty(cardType) && cardType.equals("3") && !TextUtils.isEmpty(reserveFlag) && reserveFlag.equals("N")
+                    ? View.VISIBLE : View.GONE);
+        }
     }
 
     private Bitmap getBitmap(String kaptchaImg) {

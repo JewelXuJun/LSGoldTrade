@@ -6,6 +6,8 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.PagerAdapter;
+import android.text.TextUtils;
+import android.view.View;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
@@ -63,6 +65,13 @@ public class CapitalTransferActivity extends JMEBaseActivity {
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+
+        setElectronicCardLayout();
+    }
+
+    @Override
     protected void onPause() {
         super.onPause();
 
@@ -90,6 +99,17 @@ public class CapitalTransferActivity extends JMEBaseActivity {
         mBinding.tablayout.setTabMode(TabLayout.MODE_FIXED);
         mBinding.tablayout.setSelectedTabIndicatorHeight(4);
         mBinding.tablayout.setupWithViewPager(mBinding.tabViewpager);
+    }
+
+    private void setElectronicCardLayout() {
+        if (null == mUser || null == mUser.getCurrentUser()) {
+            mBinding.layoutElectronicCard.setVisibility(View.GONE);
+        } else {
+            String cardType = mUser.getCurrentUser().getCardType();
+
+            mBinding.layoutElectronicCard.setVisibility(!TextUtils.isEmpty(cardType) && cardType.equals("2")
+                    ? View.VISIBLE : View.GONE);
+        }
     }
 
     final class TabViewPagerAdapter extends FragmentPagerAdapter {

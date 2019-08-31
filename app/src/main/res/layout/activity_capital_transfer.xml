@@ -41,7 +41,7 @@
                     app:layout_scrollFlags="scroll|enterAlwaysCollapsed">
 
                     <LinearLayout
-                        android:id="@+id/layout_icbc"
+                        android:id="@+id/layout_electronic_card"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="@dimen/common_area_margin"
