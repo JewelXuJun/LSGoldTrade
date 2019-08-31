@@ -70,7 +70,7 @@
 
                             <TextView
                                 android:id="@+id/tv_icbc_electronic_card"
-                                android:layout_width="wrap_content"
+                                android:layout_width="@dimen/width_transfer_card"
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="@dimen/common_page_margin"
                                 android:textColor="@color/black_deep"
@@ -125,7 +125,6 @@
                                     android:id="@+id/tv_money"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="3,928.88"
                                     android:textColor="@color/color_blue"
                                     android:textSize="@dimen/size_large" />
 

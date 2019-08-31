@@ -160,6 +160,7 @@ public class Constants {
         public static final String MARKETEDITSORT = "/MarketDetailActivity/MarketEditSortActivity";
         public static final String CAPITALTRANSFER = "/FragmentHoldPositionBinding/CapitalTransferActivity";
         public static final String ELECTRONICCARDTRANSFER = "/CapitalTransferActivity/ElectronicCardTransferActivity";
+        public static final String ELECTRONICCARDINOUTMONEY = "/CapitalTransferActivity/ElectronicCardInOutMoneyActivity";
         public static final String BANKRESERVE = "/CapitalTransferActivity/BankReserveActivity";
         public static final String DAILYSTATEMENT = "/QueryFragment/DailyStatementActivity";
         public static final String CURRENTHOLDPOSITION = "/QueryFragment/CurrentHoldPositionActivity";

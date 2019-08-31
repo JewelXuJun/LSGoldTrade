@@ -136,7 +136,7 @@ public class CapitalTransferActivity extends JMEBaseActivity {
     public class ClickHandlers {
 
         public void onClickTips() {
-
+            ARouter.getInstance().build(Constants.ARouterUriConst.ELECTRONICCARDINOUTMONEY).navigation();
         }
 
         public void onClickUpdate() {

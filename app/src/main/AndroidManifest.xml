@@ -84,6 +84,10 @@
             android:screenOrientation="portrait" />
 
         <activity
+            android:name=".ui.trade.ElectronicCardInOutMoneyActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
             android:name=".ui.trade.DailyStatementActivity"
             android:screenOrientation="portrait" />
 
