@@ -118,12 +118,11 @@
                         android:paddingTop="@dimen/common_area_margin"
                         android:paddingRight="@dimen/common_area_margin"
                         android:paddingBottom="@dimen/common_area_margin_large"
-                        android:text="@string/trade_transfer_icbc_electronic_card_money_out_message"
                         android:textColor="@color/color_red"
                         android:textSize="@dimen/sp_12" />
 
                     <Button
-                        android:id="@+id/btn_transfer_in"
+                        android:id="@+id/btn_transfer_out"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/height_btn"
                         android:layout_marginLeft="@dimen/common_area_margin"

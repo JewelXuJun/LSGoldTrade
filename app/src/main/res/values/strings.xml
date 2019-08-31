@@ -129,11 +129,11 @@
     <string name="trade_transfer_icbc_electronic_bank_card">银行卡号</string>
     <string name="trade_transfer_icbc_electronic_card_money_in">转入金额</string>
     <string name="trade_transfer_icbc_electronic_card_money_in_input">请输入转入金额</string>
-    <string name="trade_transfer_icbc_electronic_card_money_in_message">转入将会从您尾号为5555的银行卡转入该电子账户，请确保银行卡资金充足。</string>
+    <string name="trade_transfer_icbc_electronic_card_money_in_message">转入将会从您尾号为%1$s的银行卡转入该电子账户，请确保银行卡资金充足。</string>
     <string name="trade_transfer_icbc_electronic_card_money_out_avalible">可提金额</string>
     <string name="trade_transfer_icbc_electronic_card_money_out">转出金额</string>
     <string name="trade_transfer_icbc_electronic_card_money_out_input">请输入转出金额</string>
-    <string name="trade_transfer_icbc_electronic_card_money_out_message">转出后资金将会从您该电子账户划转至您尾号为5555的银行卡中。</string>
+    <string name="trade_transfer_icbc_electronic_card_money_out_message">转出后资金将会从您该电子账户划转至您尾号为%1$s的银行卡中。</string>
     <string name="trade_transfer_icbc_electronic_card_time">操作日期</string>
     <string name="trade_mobile_number">手机号码</string>
     <string name="trade_verification_code">验&#160;&#160;证&#160;&#160;码</string>
@@ -196,6 +196,7 @@
     <string name="trade_amount_error">您的账户余额不足</string>
     <string name="trade_money_min_error">您的转账金额必须大于0元</string>
     <string name="trade_money_in_max_error">您的转账金额大于当前最大可入金金额</string>
+    <string name="trade_money_in_max_error_detail">您的转账金额大于最大可入金金额200000元</string>
     <string name="trade_money_out_max_error">您的转账金额大于当前最大可出金金额</string>
     <string name="trade_money_in_success">入金成功</string>
     <string name="trade_money_out_success">出金成功</string>
