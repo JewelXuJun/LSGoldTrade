@@ -174,6 +174,9 @@ public class CancelOrderFragment extends JMEBaseFragment implements OnRefreshLis
     }
 
     private void orderpage(boolean enable) {
+        if (null == mUser || !mUser.isLogin())
+            return;
+
         HashMap<String, String> params = new HashMap<>();
         params.put("accountId", mUser.getAccountID());
         params.put("onlyRevocable", "true");
@@ -183,6 +186,9 @@ public class CancelOrderFragment extends JMEBaseFragment implements OnRefreshLis
     }
 
     private void revocateorder(String contractId, String orderNo) {
+        if (null == mUser || !mUser.isLogin())
+            return;
+
         HashMap<String, String> params = new HashMap<>();
         params.put("contractId", contractId);
         params.put("accountId", mUser.getAccountID());

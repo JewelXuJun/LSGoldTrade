@@ -217,6 +217,9 @@ public class HistoryDealActivity extends JMEBaseActivity implements OnRefreshLis
     }
 
     private void dealhispage(boolean enable) {
+        if (null == mUser || !mUser.isLogin())
+            return;
+
         HashMap<String, String> params = new HashMap<>();
         params.put("accountId", mUser.getAccountID());
         params.put("beginDate", mBinding.tvStartTime.getText().toString());

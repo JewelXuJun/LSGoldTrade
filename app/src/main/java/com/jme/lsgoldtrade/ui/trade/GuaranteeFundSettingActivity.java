@@ -132,6 +132,9 @@ public class GuaranteeFundSettingActivity extends JMEBaseActivity {
     }
 
     private void getMinReserveFund() {
+        if (null == mUser || !mUser.isLogin())
+            return;
+
         String guaranteeFund = mBinding.etGuaranteeFund.getText().toString();
 
         if (guaranteeFund.endsWith("."))

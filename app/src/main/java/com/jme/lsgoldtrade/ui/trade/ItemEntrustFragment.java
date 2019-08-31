@@ -129,6 +129,9 @@ public class ItemEntrustFragment extends JMEBaseFragment implements BaseQuickAda
     }
 
     private void orderpage() {
+        if (null == mUser || !mUser.isLogin())
+            return;
+
         HashMap<String, String> params = new HashMap<>();
         params.put("accountId", mUser.getAccountID());
         params.put("onlyRevocable", "false");

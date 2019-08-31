@@ -195,6 +195,9 @@ public class TurnOverFragment extends JMEBaseFragment implements OnRefreshListen
     }
 
     private void transpage(boolean enable) {
+        if (null == mUser || !mUser.isLogin())
+            return;
+
         HashMap<String, String> params = new HashMap<>();
         params.put("accountId", mUser.getAccountID());
         params.put("beginDate", DateUtil.dateToString(mStartTime));

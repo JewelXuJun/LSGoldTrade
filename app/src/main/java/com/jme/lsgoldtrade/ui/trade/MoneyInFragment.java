@@ -253,6 +253,9 @@ public class MoneyInFragment extends JMEBaseFragment implements OnRefreshListene
     }
 
     private void getAccount(boolean enable) {
+        if (null == mUser || !mUser.isLogin())
+            return;
+
         HashMap<String, String> params = new HashMap<>();
         params.put("accountId", mUser.getAccountID());
 

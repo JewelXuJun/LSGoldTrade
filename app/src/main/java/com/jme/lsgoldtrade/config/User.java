@@ -39,6 +39,9 @@ public class User {
     public void logout() {
         mUserInfoVo = null;
         mToken = "";
+        mAccount = "";
+        mAccountID = "";
+        mTraderId = "";
     }
 
     public boolean isLogin() {

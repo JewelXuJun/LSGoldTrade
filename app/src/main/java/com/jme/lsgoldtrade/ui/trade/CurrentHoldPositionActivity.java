@@ -196,6 +196,9 @@ public class CurrentHoldPositionActivity extends JMEBaseActivity implements OnRe
     }
 
     private void position(boolean enable) {
+        if (null == mUser || !mUser.isLogin())
+            return;
+
         HashMap<String, String> params = new HashMap<>();
         params.put("accountId", mUser.getAccountID());
         params.put("pagingKey", mPagingKey);

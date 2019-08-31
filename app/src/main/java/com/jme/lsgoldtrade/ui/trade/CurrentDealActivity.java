@@ -102,6 +102,9 @@ public class CurrentDealActivity extends JMEBaseActivity implements OnRefreshLis
     }
 
     private void dealpage(boolean enable) {
+        if (null == mUser || !mUser.isLogin())
+            return;
+
         HashMap<String, String> params = new HashMap<>();
         params.put("accountId", mUser.getAccountID());
         params.put("pagingKey", mPagingKey);

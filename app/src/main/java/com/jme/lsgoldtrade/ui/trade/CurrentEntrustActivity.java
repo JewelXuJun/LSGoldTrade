@@ -102,6 +102,9 @@ public class CurrentEntrustActivity extends JMEBaseActivity implements OnRefresh
     }
 
     private void orderpage(boolean enable) {
+        if (null == mUser || !mUser.isLogin())
+            return;
+
         HashMap<String, String> params = new HashMap<>();
         params.put("accountId", mUser.getAccountID());
         params.put("onlyRevocable", "false");

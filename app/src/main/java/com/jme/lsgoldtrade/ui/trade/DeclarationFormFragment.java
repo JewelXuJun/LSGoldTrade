@@ -519,6 +519,9 @@ public class DeclarationFormFragment extends JMEBaseFragment implements FChart.O
     }
 
     private void limitOrder(String contractId, String price, String amount, int bsFlag, int ocFlag) {
+        if (null == mUser || !mUser.isLogin())
+            return;
+
         HashMap<String, String> params = new HashMap<>();
         params.put("contractId", contractId);
         params.put("accountId", mUser.getAccountID());

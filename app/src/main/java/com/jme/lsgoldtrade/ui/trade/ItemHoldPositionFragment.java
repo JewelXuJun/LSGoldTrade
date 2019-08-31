@@ -269,6 +269,9 @@ public class ItemHoldPositionFragment extends JMEBaseFragment implements BaseQui
     }
 
     private void position() {
+        if (null == mUser || !mUser.isLogin())
+            return;
+
         HashMap<String, String> params = new HashMap<>();
         params.put("accountId", mUser.getAccountID());
         params.put("pagingKey", mPagingKey);

@@ -129,6 +129,9 @@ public class ItemDealFragment extends JMEBaseFragment implements BaseQuickAdapte
     }
 
     private void dealpage() {
+        if (null == mUser || !mUser.isLogin())
+            return;
+
         HashMap<String, String> params = new HashMap<>();
         params.put("accountId", mUser.getAccountID());
         params.put("pagingKey", mPagingKey);

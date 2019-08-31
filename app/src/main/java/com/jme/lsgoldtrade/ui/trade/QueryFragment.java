@@ -105,6 +105,9 @@ public class QueryFragment extends JMEBaseFragment implements OnRefreshListener 
     }
 
     private void dailystatement(boolean enable) {
+        if (null == mUser || !mUser.isLogin())
+            return;
+
         HashMap<String, String> params = new HashMap<>();
         params.put("accountId", mUser.getAccountID());
         params.put("tradeDate", mBinding.tvTime.getText().toString());

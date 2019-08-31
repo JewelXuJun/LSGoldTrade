@@ -9,199 +9,179 @@
 
     </data>
 
-    <com.scwang.smartrefresh.layout.SmartRefreshLayout
-        android:id="@+id/swipeRefreshLayout"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@color/common_background"
+        android:orientation="vertical">
 
-        <com.scwang.smartrefresh.layout.header.ClassicsHeader
+        <include layout="@layout/layout_toolbar" />
+
+        <include layout="@layout/item_line_vertical" />
+
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="@dimen/common_item_height_big"
+            android:background="@color/white"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingLeft="@dimen/common_area_margin"
+            android:paddingRight="@dimen/common_area_margin">
 
-        <android.support.v4.widget.NestedScrollView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/common_background"
-            android:fillViewport="true"
-            android:scrollbars="none">
-
-            <LinearLayout
+            <TextView
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical">
+                android:layout_height="wrap_content"
+                android:layout_weight="2.5"
+                android:text="@string/trade_transfer_icbc_electronic_card"
+                android:textColor="@color/color_text_normal"
+                android:textSize="@dimen/sp_14" />
 
-                <include layout="@layout/layout_toolbar" />
+            <EditText
+                android:id="@+id/et_icbc_electronic_card"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@null"
+                android:hint="@string/trade_transfer_icbc_electronic_card_input"
+                android:inputType="number"
+                android:maxLines="1"
+                android:textColor="@color/color_text_black"
+                android:textColorHint="@color/color_text_gray_hint"
+                android:textSize="@dimen/sp_14" />
 
-                <include layout="@layout/item_line_vertical" />
+        </LinearLayout>
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/common_item_height_big"
-                    android:background="@color/white"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal"
-                    android:paddingLeft="@dimen/common_area_margin"
-                    android:paddingRight="@dimen/common_area_margin">
+        <include layout="@layout/item_line_vertical_margin" />
 
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="2.5"
-                        android:text="@string/trade_transfer_icbc_electronic_card"
-                        android:textColor="@color/color_text_normal"
-                        android:textSize="@dimen/sp_14" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/common_item_height_big"
+            android:background="@color/white"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingLeft="@dimen/common_area_margin"
+            android:paddingRight="@dimen/common_area_margin">
 
-                    <EditText
-                        android:id="@+id/et_icbc_electronic_card"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:background="@null"
-                        android:hint="@string/trade_transfer_icbc_electronic_card_input"
-                        android:inputType="number"
-                        android:maxLines="1"
-                        android:textColor="@color/color_text_black"
-                        android:textColorHint="@color/color_text_gray_hint"
-                        android:textSize="@dimen/sp_14" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="2.5"
+                android:text="@string/trade_mobile_number"
+                android:textColor="@color/color_text_normal"
+                android:textSize="@dimen/sp_14" />
 
-                </LinearLayout>
+            <TextView
+                android:id="@+id/tv_mobile_number"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@null"
+                android:textColor="@color/color_text_black"
+                android:textSize="@dimen/sp_16" />
 
-                <include layout="@layout/item_line_vertical_margin" />
+        </LinearLayout>
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/common_item_height_big"
-                    android:background="@color/white"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal"
-                    android:paddingLeft="@dimen/common_area_margin"
-                    android:paddingRight="@dimen/common_area_margin">
+        <include layout="@layout/item_line_vertical_margin" />
 
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="2.5"
-                        android:text="@string/trade_mobile_number"
-                        android:textColor="@color/color_text_normal"
-                        android:textSize="@dimen/sp_14" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/common_item_height_big"
+            android:background="@color/white"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingLeft="@dimen/common_area_margin"
+            android:paddingRight="@dimen/common_area_margin">
 
-                    <TextView
-                        android:id="@+id/tv_mobile_number"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:background="@null"
-                        android:textColor="@color/color_text_black"
-                        android:textSize="@dimen/sp_16" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_weight="2.5"
+                android:text="@string/login_reset_password_verification_code"
+                android:textColor="@color/color_text_normal"
+                android:textSize="@dimen/sp_14" />
 
-                </LinearLayout>
-
-                <include layout="@layout/item_line_vertical_margin" />
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/common_item_height_big"
-                    android:background="@color/white"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal"
-                    android:paddingLeft="@dimen/common_area_margin"
-                    android:paddingRight="@dimen/common_area_margin">
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:layout_weight="2.5"
-                        android:text="@string/login_reset_password_verification_code"
-                        android:textColor="@color/color_text_normal"
-                        android:textSize="@dimen/sp_14" />
-
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1">
-
-                        <Button
-                            android:id="@+id/btn_verification_code"
-                            android:layout_width="@dimen/width_btn_normal"
-                            android:layout_height="@dimen/common_item_height_middle"
-                            android:layout_alignParentRight="true"
-                            android:layout_centerVertical="true"
-                            android:background="@drawable/selector_blue"
-                            android:onClick="@{() -> handlers.onClickGetVerificationCode()}"
-                            android:text="@string/trade_get_verification_code"
-                            android:textColor="@drawable/selector_text"
-                            android:textSize="@dimen/sp_14" />
-
-                        <EditText
-                            android:id="@+id/et_verification_code"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_centerVertical="true"
-                            android:layout_marginRight="@dimen/common_page_margin"
-                            android:layout_toLeftOf="@+id/btn_verification_code"
-                            android:background="@null"
-                            android:hint="@string/trade_verification_code_hint"
-                            android:inputType="number"
-                            android:maxLength="6"
-                            android:maxLines="1"
-                            android:textColor="@color/color_text_normal"
-                            android:textColorHint="@color/color_text_gray_hint"
-                            android:textSize="@dimen/sp_14" />
-
-                    </RelativeLayout>
-
-                </LinearLayout>
-
-                <include layout="@layout/item_line_vertical_margin" />
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@color/white"
-                    android:orientation="vertical"
-                    android:paddingLeft="@dimen/common_area_margin"
-                    android:paddingRight="@dimen/common_area_margin"
-                    android:paddingBottom="@dimen/margin_big">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/margin_trade_rule"
-                        android:text="@string/trade_transfer_icbc_electronic_card_file"
-                        android:textColor="@color/color_text_normal"
-                        android:textSize="@dimen/sp_14" />
-
-                    <TextView
-                        android:id="@+id/tv__icbc_electronic_card_file"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/common_area_margin_middle"
-                        android:lineSpacingExtra="@dimen/lineSpacingExtra_normal"
-                        android:text="@string/trade_transfer_icbc_electronic_card_file_message"
-                        android:textColor="@color/color_text_normal"
-                        android:textSize="@dimen/sp_14" />
-
-                </LinearLayout>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1">
 
                 <Button
-                    android:id="@+id/btn_save"
+                    android:id="@+id/btn_verification_code"
+                    android:layout_width="@dimen/width_btn_normal"
+                    android:layout_height="@dimen/common_item_height_middle"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:background="@drawable/selector_blue"
+                    android:onClick="@{() -> handlers.onClickGetVerificationCode()}"
+                    android:text="@string/trade_get_verification_code"
+                    android:textColor="@drawable/selector_text"
+                    android:textSize="@dimen/sp_14" />
+
+                <EditText
+                    android:id="@+id/et_verification_code"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/height_btn"
-                    android:layout_marginLeft="@dimen/common_area_margin"
-                    android:layout_marginTop="@dimen/common_area_margin"
-                    android:layout_marginRight="@dimen/common_area_margin"
-                    android:background="@drawable/selector_btn"
-                    android:enabled="false"
-                    android:onClick="@{() -> handlers.onClickSave()}"
-                    android:text="@string/text_save"
-                    android:textColor="@color/white"
-                    android:textSize="@dimen/common_font_size" />
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="@dimen/common_page_margin"
+                    android:layout_toLeftOf="@+id/btn_verification_code"
+                    android:background="@null"
+                    android:hint="@string/trade_verification_code_hint"
+                    android:inputType="number"
+                    android:maxLength="6"
+                    android:maxLines="1"
+                    android:textColor="@color/color_text_normal"
+                    android:textColorHint="@color/color_text_gray_hint"
+                    android:textSize="@dimen/sp_14" />
 
-            </LinearLayout>
+            </RelativeLayout>
 
-        </android.support.v4.widget.NestedScrollView>
+        </LinearLayout>
 
-    </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+        <include layout="@layout/item_line_vertical_margin" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:orientation="vertical"
+            android:paddingLeft="@dimen/common_area_margin"
+            android:paddingRight="@dimen/common_area_margin"
+            android:paddingBottom="@dimen/margin_big">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_trade_rule"
+                android:text="@string/trade_transfer_icbc_electronic_card_file"
+                android:textColor="@color/color_text_normal"
+                android:textSize="@dimen/sp_14" />
+
+            <TextView
+                android:id="@+id/tv_icbc_electronic_card_file"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/common_area_margin_middle"
+                android:lineSpacingExtra="@dimen/lineSpacingExtra_normal"
+                android:textColor="@color/color_text_normal"
+                android:textSize="@dimen/sp_14" />
+
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/btn_save"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/height_btn"
+            android:layout_marginLeft="@dimen/common_area_margin"
+            android:layout_marginTop="@dimen/common_area_margin"
+            android:layout_marginRight="@dimen/common_area_margin"
+            android:background="@drawable/selector_btn"
+            android:enabled="false"
+            android:onClick="@{() -> handlers.onClickSave()}"
+            android:text="@string/text_save"
+            android:textColor="@color/white"
+            android:textSize="@dimen/common_font_size" />
+
+    </LinearLayout>
 
 </layout>
