@@ -47,7 +47,7 @@
                         android:layout_marginLeft="@dimen/common_area_margin"
                         android:layout_marginRight="@dimen/common_area_margin"
                         android:orientation="vertical"
-                        android:visibility="gone">
+                        android:visibility="visible">
 
                         <LinearLayout
                             android:layout_width="match_parent"
@@ -107,12 +107,19 @@
                                     android:textColor="@color/color_text_normal"
                                     android:textSize="@dimen/sp_12" />
 
-                                <ImageView
+                                <LinearLayout
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:layout_marginLeft="@dimen/common_area_margin"
-                                    android:background="@mipmap/ic_icbc_update"
-                                    android:onClick="@{() -> handlers.onClickUpdate()}" />
+                                    android:layout_marginLeft="@dimen/common_page_margin"
+                                    android:onClick="@{() -> handlers.onClickUpdate()}"
+                                    android:padding="@dimen/common_area_margin_tiny">
+
+                                    <ImageView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:background="@mipmap/ic_icbc_update" />
+
+                                </LinearLayout>
 
                             </LinearLayout>
 

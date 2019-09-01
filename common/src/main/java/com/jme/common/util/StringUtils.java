@@ -49,7 +49,7 @@ public class StringUtils {
      * @param bankCard
      * @return **** **** **** 2021
      */
-    public static String bankCardInvisible(String bankCard) {
+    public static String formatBankCard(String bankCard) {
         if (TextUtils.isEmpty(bankCard))
             return "";
 
@@ -58,7 +58,7 @@ public class StringUtils {
         if (length < 4)
             return "";
 
-        return "****  ****  ****  " + bankCard.substring(length - 4, length);
+        return "****" + bankCard.substring(length - 4, length);
     }
 
     /**

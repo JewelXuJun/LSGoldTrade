@@ -1,5 +1,7 @@
 package com.jme.lsgoldtrade.domain;
 
+import com.jme.lsgoldtrade.util.MarketUtil;
+
 import java.io.Serializable;
 
 public class BalanceEnquiryVo implements Serializable {
@@ -57,7 +59,7 @@ public class BalanceEnquiryVo implements Serializable {
     }
 
     public String getAccountBalance() {
-        return accountBalance;
+        return MarketUtil.getPriceValue(accountBalance);
     }
 
     public void setAccountBalance(String accountBalance) {

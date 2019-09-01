@@ -489,6 +489,13 @@ public class MarketUtil {
         return formatValue(new BigDecimal(price).divide(new BigDecimal(AppConfig.Price_Divisor)).toString(), 2);
     }
 
+    public static String getPriceValue(String price) {
+        if (TextUtils.isEmpty(price))
+            return "";
+
+        return formatValue(new BigDecimal(price).divide(new BigDecimal(AppConfig.Price_Divisor)).toString(), 2);
+    }
+
     public static String getRateValue(long rate) {
         return formatValue(new BigDecimal(rate).divide(new BigDecimal(AppConfig.Rate_Divisor), 4, BigDecimal.ROUND_HALF_UP).multiply(new BigDecimal(100)).toString(), 2);
     }
