@@ -15,7 +15,7 @@ import com.jme.common.util.DateUtil;
 import com.jme.lsgoldtrade.R;
 import com.jme.lsgoldtrade.base.JMEBaseFragment;
 import com.jme.lsgoldtrade.databinding.FragmentElectronicCardMoneyDetailBinding;
-import com.jme.lsgoldtrade.domain.InOutTurnOverVo;
+import com.jme.lsgoldtrade.domain.TransactionDetailVo;
 import com.jme.lsgoldtrade.service.TradeService;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
@@ -32,15 +32,14 @@ public class ElectronicCardDetailFragment extends JMEBaseFragment implements OnR
     private DatePickerDialog mDatePickerDialog;
     private View mEmptyView;
 
+    private String bHasNext = "";
     private boolean bVisibleToUser = false;
-    private boolean bHasNext = false;
     private long mStartTime = 0;
     private long mEndTime = 0;
     private int mYear;
     private int mMonth;
     private int mDayOfMonth;
     private int mCurrentPage = 1;
-    private String mPagingKey = "";
 
     private static final int TIME_START = 0;
     private static final int TIME_END = 1;
@@ -91,7 +90,7 @@ public class ElectronicCardDetailFragment extends JMEBaseFragment implements OnR
         bVisibleToUser = isVisibleToUser;
 
         if (bVisibleToUser && null != mBinding)
-            initTranspage(true);
+            initQueryTransactionDetail(true);
     }
 
     @Override
@@ -99,7 +98,7 @@ public class ElectronicCardDetailFragment extends JMEBaseFragment implements OnR
         super.onResume();
 
         if (bVisibleToUser)
-            initTranspage(true);
+            initQueryTransactionDetail(true);
     }
 
     private void initDate() {
@@ -152,7 +151,7 @@ public class ElectronicCardDetailFragment extends JMEBaseFragment implements OnR
             mStartTime = startTime;
             mBinding.tvStartTime.setText(DateUtil.dateToString(mStartTime));
 
-            initTranspage(true);
+            initQueryTransactionDetail(true);
         } else {
             showShortToast(R.string.trade_start_time_error);
         }
@@ -165,17 +164,16 @@ public class ElectronicCardDetailFragment extends JMEBaseFragment implements OnR
             mEndTime = endTime;
             mBinding.tvEndTime.setText(DateUtil.dateToString(mEndTime));
 
-            initTranspage(true);
+            initQueryTransactionDetail(true);
         } else {
             showShortToast(R.string.trade_end_time_error);
         }
     }
 
-    private void initTranspage(boolean enablle) {
+    private void initQueryTransactionDetail(boolean enablle) {
         mCurrentPage = 1;
-        mPagingKey = "";
 
-        transpage(enablle);
+        queryTransactionDetail(enablle, "1");
     }
 
     private View getEmptyView() {
@@ -190,17 +188,14 @@ public class ElectronicCardDetailFragment extends JMEBaseFragment implements OnR
         mAdapter.loadMoreFail();
     }
 
-    private void transpage(boolean enable) {
-        if (null == mUser || !mUser.isLogin())
-            return;
-
+    private void queryTransactionDetail(boolean enable, String queryMode) {
         HashMap<String, String> params = new HashMap<>();
-        params.put("accountId", mUser.getAccountID());
-        params.put("beginDate", DateUtil.dateToString(mStartTime));
-        params.put("endDate", DateUtil.dateToString(mEndTime));
-        params.put("pagingKey", mPagingKey);
+        params.put("queryMode", queryMode);
+        params.put("Page", String.valueOf(mCurrentPage));
+        params.put("beginDate", DateUtil.dateToAllString(mStartTime));
+        params.put("endDate", DateUtil.dateToAllString(mEndTime));
 
-        sendRequest(TradeService.getInstance().transpage, params, enable);
+        sendRequest(TradeService.getInstance().queryTransactionDetail, params, enable);
     }
 
     @Override
@@ -208,44 +203,43 @@ public class ElectronicCardDetailFragment extends JMEBaseFragment implements OnR
         super.DataReturn(request, head, response);
 
         switch (request.getApi().getName()) {
-            case "Transpage":
+            case "QueryTransactionDetail":
                 if (head.isSuccess()) {
-                    InOutTurnOverVo inOutTurnOverVo;
+                    TransactionDetailVo transactionDetailVo;
 
                     try {
-                        inOutTurnOverVo = (InOutTurnOverVo) response;
+                        transactionDetailVo = (TransactionDetailVo) response;
                     } catch (Exception e) {
-                        inOutTurnOverVo = null;
+                        transactionDetailVo = null;
 
                         e.printStackTrace();
                     }
 
-                    if (null == inOutTurnOverVo) {
+                    if (null == transactionDetailVo) {
                         setEmptyData();
                     } else {
-                        bHasNext = inOutTurnOverVo.isHasNext();
-                        mPagingKey = inOutTurnOverVo.getPagingKey();
-                        List<InOutTurnOverVo.TurnOverBean> turnOverBeanList = inOutTurnOverVo.getList();
+                        bHasNext = transactionDetailVo.getHasNext();
+                        List<TransactionDetailVo.RecordsBean> recordsBeanList = transactionDetailVo.getRecords();
 
-                        if (bHasNext) {
+                        if (bHasNext.equals("1")) {
                             if (mCurrentPage == 1)
-                                mAdapter.setNewData(turnOverBeanList);
+                                mAdapter.setNewData(recordsBeanList);
                             else
-                                mAdapter.addData(turnOverBeanList);
+                                mAdapter.addData(recordsBeanList);
 
                             mAdapter.loadMoreComplete();
                             mBinding.swipeRefreshLayout.finishRefresh(true);
                         } else {
                             if (mCurrentPage == 1) {
-                                if (null == turnOverBeanList || 0 == turnOverBeanList.size()) {
+                                if (null == recordsBeanList || 0 == recordsBeanList.size()) {
                                     mAdapter.setNewData(null);
                                     mAdapter.setEmptyView(getEmptyView());
                                 } else {
-                                    mAdapter.setNewData(turnOverBeanList);
+                                    mAdapter.setNewData(recordsBeanList);
                                     mAdapter.loadMoreComplete();
                                 }
                             } else {
-                                mAdapter.addData(turnOverBeanList);
+                                mAdapter.addData(recordsBeanList);
                                 mAdapter.loadMoreComplete();
                             }
 
@@ -263,10 +257,10 @@ public class ElectronicCardDetailFragment extends JMEBaseFragment implements OnR
     @Override
     public void onLoadMoreRequested() {
         mBinding.recyclerView.postDelayed(() -> {
-            if (bHasNext) {
+            if (bHasNext.equals("1")) {
                 mCurrentPage++;
 
-                transpage(true);
+                queryTransactionDetail(true, "3");
             } else {
                 mAdapter.loadMoreEnd();
             }
@@ -275,7 +269,7 @@ public class ElectronicCardDetailFragment extends JMEBaseFragment implements OnR
 
     @Override
     public void onRefresh(@NonNull RefreshLayout refreshLayout) {
-        initTranspage(false);
+        initQueryTransactionDetail(false);
     }
 
     public class ClickHanlders {
@@ -293,9 +287,6 @@ public class ElectronicCardDetailFragment extends JMEBaseFragment implements OnR
                 else if (timeType == TIME_END)
                     setEndTime(year, month, dayOfMonth);
             }, mYear, mMonth, mDayOfMonth);
-
-          /*  if (android.os.Build.VERSION.SDK_INT >= 11)
-                mDatePickerDialog.getDatePicker().setMaxDate(new Date().getTime());*/
 
             mDatePickerDialog.show();
         }

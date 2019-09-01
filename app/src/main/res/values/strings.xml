@@ -110,6 +110,10 @@
     <string name="trade_money_out_max">当前最大可出金金额</string>
     <string name="trade_money_in_time">可入金时间段：全天，17:00~19:00为银行清算时间除外。</string>
     <string name="trade_money_out_time">可出金时段，交易日9:00~15:30。</string>
+    <string name="trade_transfer_recharge">充值</string>
+    <string name="trade_transfer_withdraw">提现</string>
+    <string name="trade_transfer_success">成功</string>
+    <string name="trade_transfer_fail">失败</string>
     <string name="trade_transfer_amount">转账金额</string>
     <string name="trade_transfer_amount_hint">请输入金额</string>
     <string name="trade_transfer_reserve">非工行储蓄卡开户信息预留</string>

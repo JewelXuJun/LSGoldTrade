@@ -15,10 +15,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:orientation="vertical"
             android:gravity="center_vertical"
-            android:paddingLeft="10dp"
-            >
+            android:orientation="vertical"
+            android:paddingLeft="@dimen/common_page_padding">
 
             <TextView
                 android:id="@+id/tv_time"
@@ -31,10 +30,9 @@
                 android:id="@+id/trade_time"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/common_area_margin_tiny"
                 android:textColor="@color/color_text_black"
-                android:textSize="@dimen/size_middle"
-                android:layout_marginTop="5dp"
-                />
+                android:textSize="@dimen/size_middle" />
 
         </LinearLayout>
 
@@ -44,7 +42,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="right"
-            android:paddingRight="@dimen/common_page_padding"
+            android:paddingRight="@dimen/common_area_margin_big"
             android:textColor="@color/color_text_black"
             android:textSize="@dimen/size_middle" />
 

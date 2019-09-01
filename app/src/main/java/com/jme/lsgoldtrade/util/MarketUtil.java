@@ -174,6 +174,19 @@ public class MarketUtil {
         return color;
     }
 
+    public static int getInOutMoneyStatusColor(String businessStatus) {
+        int color;
+
+        if (businessStatus.equals("recharge"))
+            color = R.color.common_font_increase;
+        else if (businessStatus.equals("withdraw"))
+            color = R.color.common_font_decrease;
+        else
+            color = R.color.color_text_black;
+
+        return color;
+    }
+
     public static String getInOutMoneyState(int depositFlag) {
         String value;
 

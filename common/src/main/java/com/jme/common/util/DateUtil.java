@@ -28,6 +28,11 @@ public class DateUtil {
         return format.format(date);
     }
 
+    public static String dateToAllString(Long date) {
+        format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        return format.format(date);
+    }
+
     public static String dateToString(String date, String style) {
         StringBuilder builder = new StringBuilder();
         Integer[] a = new Integer[]{3, 5};
