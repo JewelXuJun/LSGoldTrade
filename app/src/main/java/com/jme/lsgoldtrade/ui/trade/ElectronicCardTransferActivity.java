@@ -6,11 +6,13 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.PagerAdapter;
+import android.text.TextUtils;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.jme.common.util.RxBus;
 import com.jme.lsgoldtrade.R;
 import com.jme.lsgoldtrade.base.JMEBaseActivity;
+import com.jme.lsgoldtrade.config.AppConfig;
 import com.jme.lsgoldtrade.config.Constants;
 import com.jme.lsgoldtrade.databinding.ActivityElectronicCardTransferBinding;
 
@@ -84,6 +86,8 @@ public class ElectronicCardTransferActivity extends JMEBaseActivity {
         mBinding.tablayout.setTabMode(TabLayout.MODE_FIXED);
         mBinding.tablayout.setSelectedTabIndicatorHeight(4);
         mBinding.tablayout.setupWithViewPager(mBinding.tabViewpager);
+
+        mBinding.tabViewpager.setCurrentItem(!TextUtils.isEmpty(AppConfig.TransferType) && AppConfig.TransferType.equals("TransferOut") ? 1 : 0);
     }
 
     final class TabViewPagerAdapter extends FragmentPagerAdapter {

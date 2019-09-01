@@ -11,12 +11,14 @@ import android.view.View;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
+import com.datai.common.charts.common.Config;
 import com.jme.common.network.DTRequest;
 import com.jme.common.network.Head;
 import com.jme.common.util.RxBus;
 import com.jme.common.util.StringUtils;
 import com.jme.lsgoldtrade.R;
 import com.jme.lsgoldtrade.base.JMEBaseActivity;
+import com.jme.lsgoldtrade.config.AppConfig;
 import com.jme.lsgoldtrade.config.Constants;
 import com.jme.lsgoldtrade.databinding.ActivityCapitalTransferBinding;
 import com.jme.lsgoldtrade.domain.BalanceEnquiryVo;
@@ -189,10 +191,14 @@ public class CapitalTransferActivity extends JMEBaseActivity {
         }
 
         public void onClickTransferIn() {
+            AppConfig.TransferType = "TransferIn";
+
             ARouter.getInstance().build(Constants.ARouterUriConst.ELECTRONICCARDTRANSFER).navigation();
         }
 
         public void onClickTransferOut() {
+            AppConfig.TransferType = "TransferOut";
+
             ARouter.getInstance().build(Constants.ARouterUriConst.ELECTRONICCARDTRANSFER).navigation();
         }
 

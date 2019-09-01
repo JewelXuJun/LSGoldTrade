@@ -37,4 +37,6 @@ public class AppConfig {
 
     public static String UUID = "";
 
+    public static String TransferType = "";
+
 }
