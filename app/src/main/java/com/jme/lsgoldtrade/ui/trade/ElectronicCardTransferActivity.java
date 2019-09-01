@@ -24,6 +24,9 @@ public class ElectronicCardTransferActivity extends JMEBaseActivity {
     private Fragment[] mFragmentArrays;
     private String[] mTabTitles;
 
+    private String mElectronicAccounts;
+    private String mRelevanceId;
+
     private PagerAdapter mAdapter;
 
     @Override
@@ -41,6 +44,9 @@ public class ElectronicCardTransferActivity extends JMEBaseActivity {
     @Override
     protected void initData(Bundle savedInstanceState) {
         super.initData(savedInstanceState);
+
+        mElectronicAccounts = getIntent().getStringExtra("ElectronicAccounts");
+        mRelevanceId = getIntent().getStringExtra("RelevanceId");
 
         mAdapter = new TabViewPagerAdapter(getSupportFragmentManager());
 
@@ -72,8 +78,8 @@ public class ElectronicCardTransferActivity extends JMEBaseActivity {
         mTabTitles[2] = getString(R.string.trade_transfer_icbc_electronic_card_detail);
 
         mFragmentArrays = new Fragment[3];
-        mFragmentArrays[0] = new ElectronicCardMoneyInFragment();
-        mFragmentArrays[1] = new ElectronicCardMoneyOutFragment();
+        mFragmentArrays[0] = ElectronicCardMoneyInFragment.newInstance(mElectronicAccounts, mRelevanceId);
+        mFragmentArrays[1] = ElectronicCardMoneyOutFragment.newInstance(mElectronicAccounts, mRelevanceId);
         mFragmentArrays[2] = new ElectronicCardDetailFragment();
 
         initTabLayout();

@@ -38,6 +38,8 @@ public class CapitalTransferActivity extends JMEBaseActivity {
     private Fragment[] mFragmentArrays;
     private String[] mTabTitles;
 
+    private BalanceEnquiryVo mBalanceEnquiryVo;
+
     private PagerAdapter mAdapter;
 
     @Override
@@ -136,22 +138,20 @@ public class CapitalTransferActivity extends JMEBaseActivity {
         switch (request.getApi().getName()) {
             case "BalanceEnquiry":
                 if (head.isSuccess()) {
-                    BalanceEnquiryVo balanceEnquiryVo;
-
                     try {
-                        balanceEnquiryVo = (BalanceEnquiryVo) response;
+                        mBalanceEnquiryVo = (BalanceEnquiryVo) response;
                     } catch (Exception e) {
-                        balanceEnquiryVo = null;
+                        mBalanceEnquiryVo = null;
 
                         e.printStackTrace();
                     }
 
-                    if (null == balanceEnquiryVo)
+                    if (null == mBalanceEnquiryVo)
                         return;
 
-                    String money = MarketUtil.decimalFormatMoney(balanceEnquiryVo.getAccountBalance());
+                    String money = MarketUtil.decimalFormatMoney(mBalanceEnquiryVo.getAccountBalance());
 
-                    mBinding.tvIcbcElectronicCard.setText(StringUtils.formatBankCard(balanceEnquiryVo.getElectronicAccounts()));
+                    mBinding.tvIcbcElectronicCard.setText(StringUtils.formatBankCard(mBalanceEnquiryVo.getElectronicAccounts()));
                     mBinding.tvMoney.setText(TextUtils.isEmpty(money) ? getResources().getString(R.string.text_no_data_default) : money);
                 }
 
@@ -191,15 +191,29 @@ public class CapitalTransferActivity extends JMEBaseActivity {
         }
 
         public void onClickTransferIn() {
+            if (null == mBalanceEnquiryVo)
+                return;
+
             AppConfig.TransferType = "TransferIn";
 
-            ARouter.getInstance().build(Constants.ARouterUriConst.ELECTRONICCARDTRANSFER).navigation();
+            ARouter.getInstance()
+                    .build(Constants.ARouterUriConst.ELECTRONICCARDTRANSFER)
+                    .withString("ElectronicAccounts", mBalanceEnquiryVo.getElectronicAccounts())
+                    .withString("RelevanceId", mBalanceEnquiryVo.getRelevanceId())
+                    .navigation();
         }
 
         public void onClickTransferOut() {
+            if (null == mBalanceEnquiryVo)
+                return;
+
             AppConfig.TransferType = "TransferOut";
 
-            ARouter.getInstance().build(Constants.ARouterUriConst.ELECTRONICCARDTRANSFER).navigation();
+            ARouter.getInstance()
+                    .build(Constants.ARouterUriConst.ELECTRONICCARDTRANSFER)
+                    .withString("ElectronicAccounts", mBalanceEnquiryVo.getElectronicAccounts())
+                    .withString("RelevanceId", mBalanceEnquiryVo.getRelevanceId())
+                    .navigation();
         }
 
     }

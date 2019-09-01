@@ -2,6 +2,7 @@ package com.jme.lsgoldtrade.ui.trade;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v4.app.Fragment;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
@@ -22,6 +23,17 @@ public class ElectronicCardMoneyOutFragment extends JMEBaseFragment implements O
     private FragmentElectronicCardMoneyOutBinding mBinding;
 
     private boolean bVisibleToUser = false;
+
+    public static Fragment newInstance(String electronicAccounts, String relevanceId) {
+        ElectronicCardMoneyInFragment fragment = new ElectronicCardMoneyInFragment();
+
+        Bundle bundle = new Bundle();
+        bundle.putString("ElectronicAccounts", electronicAccounts);
+        bundle.putString("RelevanceId", relevanceId);
+        fragment.setArguments(bundle);
+
+        return fragment;
+    }
 
     @Override
     protected int getContentViewId() {
