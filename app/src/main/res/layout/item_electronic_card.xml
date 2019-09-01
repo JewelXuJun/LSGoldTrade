@@ -51,7 +51,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:gravity="center"
+            android:gravity="right"
+            android:paddingRight="@dimen/common_area_margin_big"
             android:textColor="@color/color_text_black"
             android:textSize="@dimen/size_middle" />
 

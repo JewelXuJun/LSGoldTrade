@@ -31,6 +31,7 @@ import com.jme.lsgoldtrade.service.MarketService;
 import com.jme.lsgoldtrade.service.TradeService;
 import com.jme.lsgoldtrade.util.MarketUtil;
 import com.jme.lsgoldtrade.view.ConfirmPopupwindow;
+import com.jme.lsgoldtrade.view.ConfirmSimplePopupwindow;
 import com.jme.lsgoldtrade.view.EveningUpPopupWindow;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
@@ -68,6 +69,7 @@ public class HoldPositionFragment extends JMEBaseFragment implements OnRefreshLi
     private TradeMessagePopUpWindow mTradeMessagePopUpWindow;
     private EveningUpPopupWindow mEveningUpPopupWindow;
     private ConfirmPopupwindow mConfirmPopupwindow;
+    private ConfirmSimplePopupwindow mConfirmSimplePopupwindow;
 
     private Handler mHandler = new Handler() {
         public void handleMessage(Message msg) {
@@ -116,6 +118,10 @@ public class HoldPositionFragment extends JMEBaseFragment implements OnRefreshLi
         mConfirmPopupwindow = new ConfirmPopupwindow(mContext);
         mConfirmPopupwindow.setOutsideTouchable(true);
         mConfirmPopupwindow.setFocusable(true);
+
+        mConfirmSimplePopupwindow = new ConfirmSimplePopupwindow(mContext);
+        mConfirmSimplePopupwindow.setOutsideTouchable(true);
+        mConfirmSimplePopupwindow.setFocusable(true);
     }
 
     @Override
@@ -734,7 +740,20 @@ public class HoldPositionFragment extends JMEBaseFragment implements OnRefreshLi
     public class ClickHandlers {
 
         public void onClickCapitalTransfer() {
-            ARouter.getInstance().build(Constants.ARouterUriConst.CAPITALTRANSFER).navigation();
+            if (null != mUser && null != mUser.getCurrentUser()
+                    && mUser.getCurrentUser().getCardType().equals("2") && mUser.getCurrentUser().getReserveFlag().equals("N")) {
+                if (null != mConfirmSimplePopupwindow && !mConfirmSimplePopupwindow.isShowing()) {
+                    mConfirmSimplePopupwindow.setData(getResources().getString(R.string.trade_transfer_icbc_electronic_card_message),
+                            (view) -> {
+                                mConfirmSimplePopupwindow.dismiss();
+
+                                ARouter.getInstance().build(Constants.ARouterUriConst.BANKRESERVE).navigation();
+                            });
+                    mConfirmSimplePopupwindow.showAtLocation(mBinding.tvAvailableFunds, Gravity.CENTER, 0, 0);
+                }
+            } else {
+                ARouter.getInstance().build(Constants.ARouterUriConst.CAPITALTRANSFER).navigation();
+            }
         }
 
         public void onClickGuaranteeFundSetting() {

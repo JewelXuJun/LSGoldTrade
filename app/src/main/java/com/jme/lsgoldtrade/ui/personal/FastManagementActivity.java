@@ -2,7 +2,9 @@ package com.jme.lsgoldtrade.ui.personal;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.text.TextUtils;
 import android.util.DisplayMetrics;
+import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
@@ -12,6 +14,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
+import com.alibaba.android.arouter.launcher.ARouter;
 import com.heaven7.android.dragflowlayout.DragAdapter;
 import com.heaven7.android.dragflowlayout.IDraggable;
 import com.jme.common.network.DTRequest;
@@ -26,10 +29,13 @@ import com.jme.lsgoldtrade.databinding.ActivityFastManagementBinding;
 import com.jme.lsgoldtrade.domain.NavigatorVo;
 import com.jme.lsgoldtrade.service.ManagementService;
 import com.jme.lsgoldtrade.util.IntentUtils;
+import com.jme.lsgoldtrade.view.ConfirmSimplePopupwindow;
 import com.squareup.picasso.Picasso;
 
 import java.util.HashMap;
 import java.util.List;
+
+import rx.Subscription;
 
 /**
  * 快捷入口管理
@@ -41,6 +47,9 @@ public class FastManagementActivity extends JMEBaseActivity {
 
     private boolean bEditFlag = false;
     private int mScreenWidth;
+
+    private ConfirmSimplePopupwindow mConfirmSimplePopupwindow;
+    private Subscription mRxbus;
 
     @Override
     protected int getContentViewId() {
@@ -60,12 +69,18 @@ public class FastManagementActivity extends JMEBaseActivity {
     protected void initData(Bundle savedInstanceState) {
         super.initData(savedInstanceState);
 
+        mConfirmSimplePopupwindow = new ConfirmSimplePopupwindow(this);
+        mConfirmSimplePopupwindow.setOutsideTouchable(true);
+        mConfirmSimplePopupwindow.setFocusable(true);
+
         getScreenWidth();
     }
 
     @Override
     protected void initListener() {
         super.initListener();
+
+        initRxBus();
 
         mBinding.dragFlowLayoutAdded.setOnItemClickListener((dragFlowLayout, child, event, dragState) -> {
             FastTabBean fastTabBean = (FastTabBean) child.getTag();
@@ -202,6 +217,35 @@ public class FastManagementActivity extends JMEBaseActivity {
         super.initBinding();
 
         mBinding = (ActivityFastManagementBinding) mBindingUtil;
+    }
+
+    private void initRxBus() {
+        mRxbus = RxBus.getInstance().toObserverable(RxBus.Message.class).subscribe(message -> {
+            String callType = message.getObject().toString();
+
+            if (TextUtils.isEmpty(callType))
+                return;
+
+            switch (callType) {
+                case Constants.RxBusConst.RXBUS_ELECTRONICCARD_UNPERFECT:
+                    if (isForeground())
+                        showElectronicCardPopupWindow();
+
+                    break;
+            }
+        });
+    }
+
+    private void showElectronicCardPopupWindow() {
+        if (null != mConfirmSimplePopupwindow && !mConfirmSimplePopupwindow.isShowing()) {
+            mConfirmSimplePopupwindow.setData(getResources().getString(R.string.trade_transfer_icbc_electronic_card_message),
+                    (view) -> {
+                        mConfirmSimplePopupwindow.dismiss();
+
+                        ARouter.getInstance().build(Constants.ARouterUriConst.BANKRESERVE).navigation();
+                    });
+            mConfirmSimplePopupwindow.showAtLocation(mBinding.dragFlowLayoutAdded, Gravity.CENTER, 0, 0);
+        }
     }
 
     private void doEdit() {
@@ -395,6 +439,14 @@ public class FastManagementActivity extends JMEBaseActivity {
 
                 break;
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+        if (!mRxbus.isUnsubscribed())
+            mRxbus.unsubscribe();
     }
 
     private static class FastTabBean implements IDraggable {

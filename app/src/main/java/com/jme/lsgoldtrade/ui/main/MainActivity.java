@@ -2,6 +2,7 @@ package com.jme.lsgoldtrade.ui.main;
 
 import android.Manifest;
 import android.app.ProgressDialog;
+import android.app.Service;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -27,10 +28,12 @@ import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.TabHost;
 import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
+import com.alibaba.android.arouter.launcher.ARouter;
 import com.jme.common.network.DTRequest;
 import com.jme.common.network.Head;
 import com.jme.common.util.AppInfoUtil;
@@ -53,6 +56,7 @@ import com.jme.lsgoldtrade.service.ManagementService;
 import com.jme.lsgoldtrade.service.TradeService;
 import com.jme.lsgoldtrade.service.UserService;
 import com.jme.lsgoldtrade.tabhost.MainTab;
+import com.jme.lsgoldtrade.view.ConfirmSimplePopupwindow;
 
 import java.io.File;
 import java.util.HashMap;
@@ -81,6 +85,7 @@ public class MainActivity extends JMEBaseActivity implements TabHost.OnTabChange
     private UpdateDialog mDialog;
     private UpdateDialog mForceDialog;
     private ProtocolUpdatePopUpWindow mProtocolUpdatePopUpWindow;
+    private ConfirmSimplePopupwindow mConfirmSimplePopupwindow;
     private IntentFilter mIntentFilter;
     private NetStateReceiver mStateReceiver;
     private Subscription mRxbus;
@@ -174,6 +179,12 @@ public class MainActivity extends JMEBaseActivity implements TabHost.OnTabChange
         mProtocolUpdatePopUpWindow.setOutsideTouchable(false);
         mProtocolUpdatePopUpWindow.setFocusable(false);
 
+        mConfirmSimplePopupwindow = new ConfirmSimplePopupwindow(this);
+        mConfirmSimplePopupwindow.setOutsideTouchable(true);
+        mConfirmSimplePopupwindow.setFocusable(true);
+
+        new Handler().postDelayed(() -> showElectronicCardPopupWindow(), 500);
+
         registerReceiver(mStateReceiver, mIntentFilter);
         initDownLoadData();
     }
@@ -201,6 +212,8 @@ public class MainActivity extends JMEBaseActivity implements TabHost.OnTabChange
 
             switch (callType) {
                 case Constants.RxBusConst.RXBUS_TRADE:
+                case Constants.RxBusConst.RXBUS_CANCELORDERFRAGMENT:
+                case Constants.RxBusConst.RXBUS_TRADEFRAGMENT_HOLD:
                     runOnUiThread(() -> mBinding.tabhost.setCurrentTab(2));
 
                     break;
@@ -208,16 +221,15 @@ public class MainActivity extends JMEBaseActivity implements TabHost.OnTabChange
                     runOnUiThread(() -> mBinding.tabhost.setCurrentTab(0));
 
                     break;
-                case Constants.RxBusConst.RXBUS_CANCELORDERFRAGMENT:
-                    runOnUiThread(() -> mBinding.tabhost.setCurrentTab(2));
-
-                    break;
-                case Constants.RxBusConst.RXBUS_TRADEFRAGMENT_HOLD:
-                    runOnUiThread(() -> mBinding.tabhost.setCurrentTab(2));
-
-                    break;
                 case Constants.RxBusConst.RXBUS_LOGIN_SUCCESS:
                     getProtocolVersion();
+
+                    showElectronicCardPopupWindow();
+
+                    break;
+                case Constants.RxBusConst.RXBUS_ELECTRONICCARD_UNPERFECT:
+                    if (isForeground())
+                        showElectronicCardPopupWindow();
 
                     break;
             }
@@ -278,6 +290,21 @@ public class MainActivity extends JMEBaseActivity implements TabHost.OnTabChange
         }
 
         supportInvalidateOptionsMenu();
+    }
+
+    private void showElectronicCardPopupWindow() {
+        if (null != mUser && null != mUser.getCurrentUser()
+                && mUser.getCurrentUser().getCardType().equals("2") && mUser.getCurrentUser().getReserveFlag().equals("N")) {
+            if (null != mConfirmSimplePopupwindow && !mConfirmSimplePopupwindow.isShowing()) {
+                mConfirmSimplePopupwindow.setData(getResources().getString(R.string.trade_transfer_icbc_electronic_card_message),
+                        (view) -> {
+                            mConfirmSimplePopupwindow.dismiss();
+
+                            ARouter.getInstance().build(Constants.ARouterUriConst.BANKRESERVE).navigation();
+                        });
+                mConfirmSimplePopupwindow.showAtLocation(mBinding.tabhost, Gravity.CENTER, 0, 0);
+            }
+        }
     }
 
     private void initDownLoadData() {

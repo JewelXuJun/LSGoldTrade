@@ -77,10 +77,14 @@ public class IntentUtils {
 
                 break;
             case "ZJHZ":  //资金划转
-                if (null == user || !user.isLogin())
+                if (null == user || !user.isLogin()) {
                     gotoLogin(context);
-                else
-                    ARouter.getInstance().build(Constants.ARouterUriConst.CAPITALTRANSFER).navigation();
+                } else {
+                    if (user.getCurrentUser().getCardType().equals("2") && user.getCurrentUser().getReserveFlag().equals("N"))
+                        RxBus.getInstance().post(Constants.RxBusConst.RXBUS_ELECTRONICCARD_UNPERFECT, null);
+                    else
+                        ARouter.getInstance().build(Constants.ARouterUriConst.CAPITALTRANSFER).navigation();
+                }
 
                 break;
             case "DQCC":  //当前持仓
