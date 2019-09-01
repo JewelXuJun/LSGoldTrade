@@ -109,7 +109,7 @@ public class BankReserveActivity extends JMEBaseActivity {
 
     private void keepInfoIntoList(String icbcElectronicCard, String verificationCode) {
         HashMap<String, String> params = new HashMap<>();
-        params.put("electronicCardId", icbcElectronicCard);
+        params.put("electronicAccounts", icbcElectronicCard);
         params.put("smsCode", verificationCode);
 
         sendRequest(TradeService.getInstance().keepInfoIntoList, params, true);
