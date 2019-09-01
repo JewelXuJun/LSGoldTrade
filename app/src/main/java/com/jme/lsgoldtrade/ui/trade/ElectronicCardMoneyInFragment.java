@@ -140,6 +140,9 @@ public class ElectronicCardMoneyInFragment extends JMEBaseFragment {
         public void onClickTransferIn() {
             String amount = mBinding.etTransferIcbcElectronicCardMoneyIn.getText().toString();
 
+            if (amount.endsWith("."))
+                amount = amount.substring(0, amount.length() - 1);
+
             if (TextUtils.isEmpty(mElectronicAccounts) || TextUtils.isEmpty(mRelevanceId))
                 showShortToast(R.string.trade_bankcard_error);
             else if (new BigDecimal(amount).compareTo(new BigDecimal(0)) != 1)

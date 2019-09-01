@@ -199,6 +199,7 @@
     <string name="trade_money_in_max_error">您的转账金额大于当前最大可入金金额</string>
     <string name="trade_money_in_max_error_detail">您的转账金额大于最大可入金金额200000元</string>
     <string name="trade_money_out_max_error">您的转账金额大于当前最大可出金金额</string>
+    <string name="trade_money_out_max_error_detail">您的转账金额大于当前最大可出金金额%1$s元</string>
     <string name="trade_money_in_success">入金成功</string>
     <string name="trade_money_out_success">出金成功</string>
     <string name="trade_transfer_in_success">转入成功</string>

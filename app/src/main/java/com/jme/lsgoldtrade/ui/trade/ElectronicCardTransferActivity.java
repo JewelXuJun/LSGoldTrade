@@ -79,7 +79,7 @@ public class ElectronicCardTransferActivity extends JMEBaseActivity {
 
         mFragmentArrays = new Fragment[3];
         mFragmentArrays[0] = ElectronicCardMoneyInFragment.newInstance(mElectronicAccounts, mRelevanceId);
-        mFragmentArrays[1] = ElectronicCardMoneyOutFragment.newInstance(mElectronicAccounts, mRelevanceId);
+        mFragmentArrays[1] = new ElectronicCardMoneyOutFragment();
         mFragmentArrays[2] = new ElectronicCardDetailFragment();
 
         initTabLayout();
