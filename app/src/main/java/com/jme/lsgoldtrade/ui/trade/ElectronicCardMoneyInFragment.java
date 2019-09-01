@@ -5,6 +5,7 @@ import android.support.v4.app.Fragment;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.view.Gravity;
 
 import com.jme.common.network.DTRequest;
 import com.jme.common.network.Head;
@@ -14,6 +15,7 @@ import com.jme.lsgoldtrade.base.JMEBaseFragment;
 import com.jme.lsgoldtrade.config.AppConfig;
 import com.jme.lsgoldtrade.databinding.FragmentElectronicCardMoneyInBinding;
 import com.jme.lsgoldtrade.service.TradeService;
+import com.jme.lsgoldtrade.view.ConfirmSimplePopupwindow;
 
 import java.math.BigDecimal;
 import java.util.HashMap;
@@ -24,6 +26,8 @@ public class ElectronicCardMoneyInFragment extends JMEBaseFragment {
 
     private String mElectronicAccounts;
     private String mRelevanceId;
+
+    private ConfirmSimplePopupwindow mConfirmSimplePopupwindow;
 
     public static Fragment newInstance(String electronicAccounts, String relevanceId) {
         ElectronicCardMoneyInFragment fragment = new ElectronicCardMoneyInFragment();
@@ -52,6 +56,10 @@ public class ElectronicCardMoneyInFragment extends JMEBaseFragment {
 
         mElectronicAccounts = getArguments().getString("ElectronicAccounts");
         mRelevanceId = getArguments().getString("RelevanceId");
+
+        mConfirmSimplePopupwindow = new ConfirmSimplePopupwindow(mContext);
+        mConfirmSimplePopupwindow.setOutsideTouchable(true);
+        mConfirmSimplePopupwindow.setFocusable(true);
 
         mBinding.tvIcbcElectronicBankCard.setText(StringUtils.formatBankCard(mElectronicAccounts));
         mBinding.tvMessage.setText(TextUtils.isEmpty(mRelevanceId) ? ""
@@ -126,9 +134,13 @@ public class ElectronicCardMoneyInFragment extends JMEBaseFragment {
         switch (request.getApi().getName()) {
             case "Recharge":
                 if (head.isSuccess()) {
-                    showShortToast(R.string.trade_transfer_in_success);
-
                     mBinding.etTransferIcbcElectronicCardMoneyIn.setText("");
+
+                    if (null != mConfirmSimplePopupwindow && !mConfirmSimplePopupwindow.isShowing()) {
+                        mConfirmSimplePopupwindow.setData(getResources().getString(R.string.trade_transfer_icbc_electronic_card_recharge_message),
+                                (view) -> mConfirmSimplePopupwindow.dismiss());
+                        mConfirmSimplePopupwindow.showAtLocation(mBinding.tvIcbcElectronicBankCard, Gravity.CENTER, 0, 0);
+                    }
                 }
 
                 break;

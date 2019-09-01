@@ -140,6 +140,8 @@
     <string name="trade_transfer_icbc_electronic_card_money_out_message">转出后资金将会从您该电子账户划转至您尾号为%1$s的银行卡中。</string>
     <string name="trade_transfer_icbc_electronic_card_time">操作日期</string>
     <string name="trade_transfer_icbc_electronic_card_message">您是通过工行电子账户开户，请先预留开户信息。</string>
+    <string name="trade_transfer_icbc_electronic_card_recharge_message">充值已提交至银行处理，实际到账时间以银行为准。</string>
+    <string name="trade_transfer_icbc_electronic_card_withdraw_message">提现已提交至银行处理，实际到账时间以银行为准。</string>
     <string name="trade_mobile_number">手机号码</string>
     <string name="trade_verification_code">验&#160;&#160;证&#160;&#160;码</string>
     <string name="trade_verification_code_hint">请输入验证码</string>
@@ -207,8 +209,6 @@
     <string name="trade_money_out_max_error_detail">您的转账金额大于当前最大可出金金额%1$s元</string>
     <string name="trade_money_in_success">入金成功</string>
     <string name="trade_money_out_success">出金成功</string>
-    <string name="trade_transfer_in_success">转入成功</string>
-    <string name="trade_transfer_out_success">转出成功</string>
     <string name="trade_start_time_error">起始时间必须早于截止时间</string>
     <string name="trade_end_time_error">截止时间必须晚于起始时间</string>
     <string name="trade_img_verify_code">图形验证码</string>

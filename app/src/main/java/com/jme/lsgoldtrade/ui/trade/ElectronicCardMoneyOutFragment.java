@@ -5,16 +5,20 @@ import android.support.annotation.NonNull;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.view.Gravity;
 
+import com.alibaba.android.arouter.launcher.ARouter;
 import com.jme.common.network.DTRequest;
 import com.jme.common.network.Head;
 import com.jme.lsgoldtrade.R;
 import com.jme.lsgoldtrade.base.JMEBaseFragment;
 import com.jme.lsgoldtrade.config.AppConfig;
+import com.jme.lsgoldtrade.config.Constants;
 import com.jme.lsgoldtrade.databinding.FragmentElectronicCardMoneyOutBinding;
 import com.jme.lsgoldtrade.domain.BalanceEnquiryVo;
 import com.jme.lsgoldtrade.service.TradeService;
 import com.jme.lsgoldtrade.util.MarketUtil;
+import com.jme.lsgoldtrade.view.ConfirmSimplePopupwindow;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 
@@ -30,6 +34,8 @@ public class ElectronicCardMoneyOutFragment extends JMEBaseFragment implements O
 
     private BalanceEnquiryVo mBalanceEnquiryVo;
 
+    private ConfirmSimplePopupwindow mConfirmSimplePopupwindow;
+
     @Override
     protected int getContentViewId() {
         return R.layout.fragment_electronic_card_money_out;
@@ -43,6 +49,10 @@ public class ElectronicCardMoneyOutFragment extends JMEBaseFragment implements O
     @Override
     protected void initData(Bundle savedInstanceState) {
         super.initData(savedInstanceState);
+
+        mConfirmSimplePopupwindow = new ConfirmSimplePopupwindow(mContext);
+        mConfirmSimplePopupwindow.setOutsideTouchable(true);
+        mConfirmSimplePopupwindow.setFocusable(true);
     }
 
     @Override
@@ -165,12 +175,17 @@ public class ElectronicCardMoneyOutFragment extends JMEBaseFragment implements O
                 break;
             case "Withdraw":
                 if (head.isSuccess()) {
-                    showShortToast(R.string.trade_transfer_out_success);
-
                     mBinding.etTransferIcbcElectronicCardMoneyOut.setText("");
+
+                    if (null != mConfirmSimplePopupwindow && !mConfirmSimplePopupwindow.isShowing()) {
+                        mConfirmSimplePopupwindow.setData(getResources().getString(R.string.trade_transfer_icbc_electronic_card_withdraw_message),
+                                (view) -> mConfirmSimplePopupwindow.dismiss());
+                        mConfirmSimplePopupwindow.showAtLocation(mBinding.tvIcbcElectronicCardMoneyOutAvalible, Gravity.CENTER, 0, 0);
+                    }
+
                 }
 
-                balanceEnquiry(true);
+                balanceEnquiry(false);
 
                 break;
         }
