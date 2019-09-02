@@ -123,12 +123,12 @@ public class CapitalTransferActivity extends JMEBaseActivity {
                     ? View.VISIBLE : View.GONE);
 
             if (mBinding.layoutElectronicCard.getVisibility() == View.VISIBLE)
-                balanceEnquiry(false);
+                balanceEnquiry();
         }
     }
 
-    private void balanceEnquiry(boolean enable) {
-        sendRequest(TradeService.getInstance().balanceEnquiry, new HashMap<>(), enable);
+    private void balanceEnquiry() {
+        sendRequest(TradeService.getInstance().balanceEnquiry, new HashMap<>(), true);
     }
 
     @Override
@@ -187,7 +187,7 @@ public class CapitalTransferActivity extends JMEBaseActivity {
         }
 
         public void onClickUpdate() {
-            balanceEnquiry(true);
+            balanceEnquiry();
         }
 
         public void onClickTransferIn() {
