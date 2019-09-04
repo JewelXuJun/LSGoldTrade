@@ -55,6 +55,7 @@ public class HoldPositionFragment extends JMEBaseFragment implements OnRefreshLi
     private PositionVo mPositionVo;
     private ContractInfoVo mEveningUpContractInfoVo;
     private List<String> mList;
+    private List<FiveSpeedVo> mFiveSpeedVoList;
     private Subscription mRxbus;
 
     private int mCurrentPage = 1;
@@ -173,7 +174,9 @@ public class HoldPositionFragment extends JMEBaseFragment implements OnRefreshLi
         bVisibleToUser = isVisibleToUser;
 
         if (null != mBinding && bVisibleToUser) {
-            initValue(true);
+            bFlag = true;
+
+            getMarket();
         } else {
             mHandler.removeMessages(Constants.Msg.MSG_TRADE_POSITION_UPDATE_DATA);
             mHandler.removeMessages(Constants.Msg.MSG_TRADE_POSITION_UPDATE_ACCOUNT_DATA);
@@ -196,8 +199,11 @@ public class HoldPositionFragment extends JMEBaseFragment implements OnRefreshLi
     public void onResume() {
         super.onResume();
 
-        if (null != mBinding && bVisibleToUser)
-            initValue(true);
+        if (null != mBinding && bVisibleToUser) {
+            bFlag = true;
+
+            getMarket();
+        }
     }
 
     @Override
@@ -241,11 +247,10 @@ public class HoldPositionFragment extends JMEBaseFragment implements OnRefreshLi
 
             switch (callType) {
                 case Constants.RxBusConst.RXBUS_ORDER_SUCCESS:
-                    getMarket();
-
-                    break;
                 case Constants.RxBusConst.RXBUS_CAPITALTRANSFER_SUCCESS:
-                    initValue(false);
+                    bFlag = true;
+
+                    getMarket();
 
                     break;
             }
@@ -339,7 +344,7 @@ public class HoldPositionFragment extends JMEBaseFragment implements OnRefreshLi
                         .add(new BigDecimal(mAccountVo.getFreezeBalanceStr()))
                         .add(floatTotal)
                         .add(new BigDecimal(mAccountVo.getPositionMarginStr()))
-                        .subtract(new BigDecimal(mAccountVo.getRuntimeFeeStr()))
+                        .add(mUnliquidatedProfitTotal.compareTo(new BigDecimal(0)) == -1 ? new BigDecimal(0) : mUnliquidatedProfitTotal)
                         .subtract(new BigDecimal(mAccountVo.getFee()))
                         .toPlainString();
                 String minReserveFund = mAccountVo.getMinReserveFundStr();
@@ -468,7 +473,7 @@ public class HoldPositionFragment extends JMEBaseFragment implements OnRefreshLi
                     mBinding.tvAvailableFunds.setText(MarketUtil.decimalFormatMoney(MarketUtil.getPriceValue(availableFunds)));
                     mBinding.tvMarketValue.setText(MarketUtil.decimalFormatMoney(MarketUtil.getPriceValue(mAccountVo.getPositionMargin())));
 
-                    calculateValue();
+                    calculateFloat(mFiveSpeedVoList, mAdapter.getData());
                 } else {
                     getAccount(false);
                 }
@@ -514,10 +519,13 @@ public class HoldPositionFragment extends JMEBaseFragment implements OnRefreshLi
                             }
                         }
 
-                        if (!bFlag)
+                        if (bFlag) {
+                            calculateFloat(mFiveSpeedVoList, mAdapter.getData());
+                        } else {
                             mAdapter.setList(mList);
 
-                        calculateValue();
+                            calculateValue();
+                        }
 
                         if (bHasNext) {
                             if (mCurrentPage == 1)
@@ -559,17 +567,18 @@ public class HoldPositionFragment extends JMEBaseFragment implements OnRefreshLi
                 break;
             case "GetFiveSpeedQuotes":
                 if (head.isSuccess()) {
-                    List<FiveSpeedVo> fiveSpeedVoList;
-
                     try {
-                        fiveSpeedVoList = (List<FiveSpeedVo>) response;
+                        mFiveSpeedVoList = (List<FiveSpeedVo>) response;
                     } catch (Exception e) {
-                        fiveSpeedVoList = null;
+                        mFiveSpeedVoList = null;
 
                         e.getMessage();
                     }
 
-                    calculateFloat(fiveSpeedVoList, mAdapter.getData());
+                    if (bFlag)
+                        initValue(true);
+                    else
+                        calculateFloat(mFiveSpeedVoList, mAdapter.getData());
                 }
 
                 break;
@@ -703,7 +712,9 @@ public class HoldPositionFragment extends JMEBaseFragment implements OnRefreshLi
                     mHandler.removeMessages(Constants.Msg.MSG_TRADE_POSITION_UPDATE_DATA);
                     mHandler.removeMessages(Constants.Msg.MSG_TRADE_POSITION_UPDATE_ACCOUNT_DATA);
 
-                    initValue(true);
+                    bFlag = true;
+
+                    getMarket();
                 } else {
                     if (head.getMsg().contains("可用资金不足")) {
                         if (null != mConfirmPopupwindow && !mConfirmPopupwindow.isShowing()) {
@@ -734,7 +745,9 @@ public class HoldPositionFragment extends JMEBaseFragment implements OnRefreshLi
 
     @Override
     public void onRefresh(@NonNull RefreshLayout refreshLayout) {
-        initValue(false);
+        bFlag = true;
+
+        getMarket();
     }
 
     public class ClickHandlers {
