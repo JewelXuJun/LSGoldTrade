@@ -121,6 +121,7 @@
     <string name="trade_transfer_bank_save_success">保存成功</string>
     <string name="trade_transfer_icbc_electronic_card">工行电子账号</string>
     <string name="trade_transfer_icbc_electronic_card_input">请输入工行电子账号</string>
+    <string name="trade_transfer_icbc_electronic_card_mobile_input">请填写银行预留手机号码</string>
     <string name="trade_transfer_icbc_electronic_card_file">工行电子账号查看路径：</string>
     <string name="trade_transfer_icbc_electronic_card_file_message">打开工银金行家小程序——我的——工行账户，长按卡号即可复制。前往小程序</string>
     <string name="trade_transfer_icbc_electronic_card_title">工商银行电子账户</string>

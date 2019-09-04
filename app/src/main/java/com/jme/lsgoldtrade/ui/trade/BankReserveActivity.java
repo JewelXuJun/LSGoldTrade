@@ -6,6 +6,7 @@ import android.text.Editable;
 import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.TextPaint;
+import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.text.method.LinkMovementMethod;
 import android.text.style.ClickableSpan;
@@ -21,7 +22,6 @@ import com.jme.lsgoldtrade.R;
 import com.jme.lsgoldtrade.base.JMEBaseActivity;
 import com.jme.lsgoldtrade.config.Constants;
 import com.jme.lsgoldtrade.databinding.ActivityBankReserveBinding;
-import com.jme.lsgoldtrade.domain.UserInfoVo;
 import com.jme.lsgoldtrade.service.TradeService;
 import com.jme.lsgoldtrade.util.IntentUtils;
 
@@ -53,12 +53,6 @@ public class BankReserveActivity extends JMEBaseActivity {
     protected void initData(Bundle savedInstanceState) {
         super.initData(savedInstanceState);
 
-        if (null != mUser) {
-            UserInfoVo userInfoVo = mUser.getCurrentUser();
-
-            mBinding.tvMobileNumber.setText(null == userInfoVo ? "" : userInfoVo.getMobile());
-        }
-
         setFileValue();
 
         mCountDownTimer = new JMECountDownTimer(60000, 1000,
@@ -72,6 +66,7 @@ public class BankReserveActivity extends JMEBaseActivity {
         mWatcher = validationTextWatcher();
 
         mBinding.etIcbcElectronicCard.addTextChangedListener(mWatcher);
+        mBinding.etMobile.addTextChangedListener(mWatcher);
         mBinding.etVerificationCode.addTextChangedListener(mWatcher);
     }
 
@@ -98,13 +93,17 @@ public class BankReserveActivity extends JMEBaseActivity {
         return new TextWatcherAdapter() {
             @Override
             public void afterTextChanged(final Editable s) {
-                mBinding.btnSave.setEnabled(mBinding.etIcbcElectronicCard.length() > 0 && mBinding.etVerificationCode.length() > 0);
+                mBinding.btnSave.setEnabled(mBinding.etIcbcElectronicCard.length() > 0 && mBinding.etMobile.length() > 0
+                        && mBinding.etVerificationCode.length() > 0);
             }
         };
     }
 
-    private void sendPassCode() {
-        sendRequest(TradeService.getInstance().sendPassCode, new HashMap<>(), true);
+    private void sendPassCode(String mobile) {
+        HashMap<String, String> params = new HashMap<>();
+        params.put("mobile", mobile);
+
+        sendRequest(TradeService.getInstance().sendPassCode, params, true);
     }
 
     private void keepInfoIntoList(String icbcElectronicCard, String verificationCode) {
@@ -150,13 +149,21 @@ public class BankReserveActivity extends JMEBaseActivity {
     public class ClickHandlers {
 
         public void onClickGetVerificationCode() {
-            sendPassCode();
+            String mobile = mBinding.etMobile.getText().toString();
+
+            if (TextUtils.isEmpty(mobile) || mobile.length() < 11)
+                showShortToast(R.string.trade_transfer_icbc_electronic_card_mobile_input);
+            else
+                sendPassCode(mobile);
         }
 
         public void onClickSave() {
+            String mobile = mBinding.etMobile.getText().toString();
             String verificationCode = mBinding.etVerificationCode.getText().toString();
 
-            if (!bFlag)
+            if (mobile.length() < 11)
+                showShortToast(R.string.trade_transfer_icbc_electronic_card_mobile_input);
+            else if (!bFlag)
                 showShortToast(R.string.login_verification_code_unget);
             else if (verificationCode.length() < 6)
                 showShortToast(R.string.login_verification_code_error);
