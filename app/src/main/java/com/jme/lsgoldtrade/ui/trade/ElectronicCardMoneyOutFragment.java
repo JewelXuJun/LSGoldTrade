@@ -219,7 +219,7 @@ public class ElectronicCardMoneyOutFragment extends JMEBaseFragment implements O
             else if (new BigDecimal(amount).compareTo(new BigDecimal(mMoney)) == 1)
                 showShortToast(String.format(mContext.getResources().getString(R.string.trade_money_out_max_error_detail), mMoney));
             else
-                withdraw(mMoney);
+                withdraw(amount);
         }
 
     }
