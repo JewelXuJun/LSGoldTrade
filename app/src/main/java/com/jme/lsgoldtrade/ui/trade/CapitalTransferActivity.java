@@ -81,6 +81,8 @@ public class CapitalTransferActivity extends JMEBaseActivity {
         super.onResume();
 
         setElectronicCardLayout();
+
+        RxBus.getInstance().post(Constants.RxBusConst.RXBUS_ELECTRONICCARD_UPDATE, null);
     }
 
     @Override

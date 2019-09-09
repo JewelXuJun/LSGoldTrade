@@ -5,6 +5,7 @@ import android.app.DatePickerDialog;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.LinearLayoutManager;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 
@@ -12,8 +13,10 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.jme.common.network.DTRequest;
 import com.jme.common.network.Head;
 import com.jme.common.util.DateUtil;
+import com.jme.common.util.RxBus;
 import com.jme.lsgoldtrade.R;
 import com.jme.lsgoldtrade.base.JMEBaseFragment;
+import com.jme.lsgoldtrade.config.Constants;
 import com.jme.lsgoldtrade.databinding.FragmentTurnoverBinding;
 import com.jme.lsgoldtrade.domain.InOutTurnOverVo;
 import com.jme.lsgoldtrade.service.TradeService;
@@ -23,6 +26,8 @@ import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
+
+import rx.Subscription;
 
 /**
  * 流水
@@ -47,6 +52,8 @@ public class TurnOverFragment extends JMEBaseFragment implements OnRefreshListen
 
     private static final int TIME_START = 0;
     private static final int TIME_END = 1;
+
+    private Subscription mRxbus;
 
     @Override
     protected int getContentViewId() {
@@ -77,6 +84,8 @@ public class TurnOverFragment extends JMEBaseFragment implements OnRefreshListen
     protected void initListener() {
         super.initListener();
 
+        initRxBus();
+
         mBinding.swipeRefreshLayout.setOnRefreshListener(this);
         mAdapter.setOnLoadMoreListener(this, mBinding.recyclerView);
     }
@@ -106,6 +115,14 @@ public class TurnOverFragment extends JMEBaseFragment implements OnRefreshListen
             initTranspage(true);
     }
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+
+        if (!mRxbus.isUnsubscribed())
+            mRxbus.unsubscribe();
+    }
+
     private void initDate() {
         getTodayCalendar();
 
@@ -114,6 +131,22 @@ public class TurnOverFragment extends JMEBaseFragment implements OnRefreshListen
 
         mBinding.tvStartTime.setText(DateUtil.dateToString(mStartTime));
         mBinding.tvEndTime.setText(DateUtil.dateToString(mEndTime));
+    }
+
+    private void initRxBus() {
+        mRxbus = RxBus.getInstance().toObserverable(RxBus.Message.class).subscribe(message -> {
+            String callType = message.getObject().toString();
+
+            if (TextUtils.isEmpty(callType))
+                return;
+
+            switch (callType) {
+                case Constants.RxBusConst.RXBUS_ELECTRONICCARD_UPDATE:
+                    initTranspage(false);
+
+                    break;
+            }
+        });
     }
 
     private void getTodayCalendar() {

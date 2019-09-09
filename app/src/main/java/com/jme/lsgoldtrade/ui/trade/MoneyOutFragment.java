@@ -36,6 +36,8 @@ import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import java.math.BigDecimal;
 import java.util.HashMap;
 
+import rx.Subscription;
+
 public class MoneyOutFragment extends JMEBaseFragment implements OnRefreshListener {
 
     private FragmentMoneyOutBinding mBinding;
@@ -47,6 +49,7 @@ public class MoneyOutFragment extends JMEBaseFragment implements OnRefreshListen
     private String mKaptchaId;
 
     private JMECountDownTimer mCountDownTimer;
+    private Subscription mRxbus;
     private TradeMessagePopUpWindow mTradeMessagePopUpWindow;
 
     @Override
@@ -82,6 +85,8 @@ public class MoneyOutFragment extends JMEBaseFragment implements OnRefreshListen
     @Override
     protected void initListener() {
         super.initListener();
+
+        initRxBus();
 
         mBinding.swipeRefreshLayout.setOnRefreshListener(this);
 
@@ -191,6 +196,25 @@ public class MoneyOutFragment extends JMEBaseFragment implements OnRefreshListen
 
         if (null != mCountDownTimer)
             mCountDownTimer.cancel();
+
+        if (!mRxbus.isUnsubscribed())
+            mRxbus.unsubscribe();
+    }
+
+    private void initRxBus() {
+        mRxbus = RxBus.getInstance().toObserverable(RxBus.Message.class).subscribe(message -> {
+            String callType = message.getObject().toString();
+
+            if (TextUtils.isEmpty(callType))
+                return;
+
+            switch (callType) {
+                case Constants.RxBusConst.RXBUS_ELECTRONICCARD_UPDATE:
+                    getAccount(false);
+
+                    break;
+            }
+        });
     }
 
     private void updateUIWithValidation() {
