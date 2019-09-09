@@ -149,9 +149,12 @@ public class BankReserveActivity extends JMEBaseActivity {
     public class ClickHandlers {
 
         public void onClickGetVerificationCode() {
+            String etIcbcElectronicCard = mBinding.etIcbcElectronicCard.getText().toString();
             String mobile = mBinding.etMobile.getText().toString();
 
-            if (TextUtils.isEmpty(mobile) || mobile.length() < 11)
+            if (TextUtils.isEmpty(etIcbcElectronicCard))
+                showShortToast(R.string.trade_transfer_icbc_electronic_card_input);
+            else if (TextUtils.isEmpty(mobile) || mobile.length() < 11)
                 showShortToast(R.string.trade_transfer_icbc_electronic_card_mobile_input);
             else
                 sendPassCode(mobile);
