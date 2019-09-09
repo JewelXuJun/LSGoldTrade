@@ -242,6 +242,7 @@ public class HoldPositionFragment extends JMEBaseFragment implements OnRefreshLi
             switch (callType) {
                 case Constants.RxBusConst.RXBUS_ORDER_SUCCESS:
                 case Constants.RxBusConst.RXBUS_CAPITALTRANSFER_SUCCESS:
+                case Constants.RxBusConst.RXBUS_LOGIN_SUCCESS:
                     bFlag = true;
 
                     getMarket();
