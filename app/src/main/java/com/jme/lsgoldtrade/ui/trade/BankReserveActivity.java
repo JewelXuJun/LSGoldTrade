@@ -106,9 +106,10 @@ public class BankReserveActivity extends JMEBaseActivity {
         sendRequest(TradeService.getInstance().sendPassCode, params, true);
     }
 
-    private void keepInfoIntoList(String icbcElectronicCard, String verificationCode) {
+    private void keepInfoIntoList(String icbcElectronicCard, String mobile, String verificationCode) {
         HashMap<String, String> params = new HashMap<>();
         params.put("electronicAccounts", icbcElectronicCard);
+        params.put("mobile", mobile);
         params.put("smsCode", verificationCode);
 
         sendRequest(TradeService.getInstance().keepInfoIntoList, params, true);
@@ -171,7 +172,7 @@ public class BankReserveActivity extends JMEBaseActivity {
             else if (verificationCode.length() < 6)
                 showShortToast(R.string.login_verification_code_error);
             else
-                keepInfoIntoList(mBinding.etIcbcElectronicCard.getText().toString(), verificationCode);
+                keepInfoIntoList(mBinding.etIcbcElectronicCard.getText().toString(), mobile, verificationCode);
         }
 
     }
