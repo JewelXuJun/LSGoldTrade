@@ -82,7 +82,7 @@ public class RegisterActivity extends JMEBaseActivity {
         String mobile = mBinding.etMobile.getText().toString().trim();
         String smsCode = mBinding.etVerifyCode.getText().toString().trim();
 
-        if (!ValueUtils.isPhoneNumber(mobile))
+        if (TextUtils.isEmpty(mobile) || mobile.length() < 11)
             showShortToast(R.string.login_mobile_error);
         else if (!bFlag)
             showShortToast(R.string.login_verification_code_unget);
@@ -226,7 +226,7 @@ public class RegisterActivity extends JMEBaseActivity {
         public void onClickSms() {
             String mobile = mBinding.etMobile.getText().toString().trim();
 
-            if (!ValueUtils.isPhoneNumber(mobile))
+            if (TextUtils.isEmpty(mobile) || mobile.length() < 11)
                 showShortToast(R.string.login_mobile_error);
             else
                 registerMsg(mobile);
