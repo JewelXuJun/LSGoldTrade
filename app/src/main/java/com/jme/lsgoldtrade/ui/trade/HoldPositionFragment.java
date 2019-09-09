@@ -606,7 +606,7 @@ public class HoldPositionFragment extends JMEBaseFragment implements OnRefreshLi
                         long minOrderQty = mEveningUpContractInfoVo.getMinOrderQty();
                         long maxOrderQty = mEveningUpContractInfoVo.getMaxOrderQty();
                         long maxHoldQty = mEveningUpContractInfoVo.getMaxHoldQty();
-                        long maxAmount = mPositionVo.getPosition();
+                        long maxAmount = mPositionVo.getPosition() - mPositionVo.getOffsetFrozen();
 
                         mEveningUpPopupWindow.setData(mUser.getAccount(), mEveningUpContractID,
                                 type.equals("多") ? tenSpeedVo.getFiveBidLists().get(0)[1] : tenSpeedVo.getFiveAskLists().get(4)[1],
