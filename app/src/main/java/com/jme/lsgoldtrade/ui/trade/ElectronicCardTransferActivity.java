@@ -16,6 +16,8 @@ import com.jme.lsgoldtrade.config.AppConfig;
 import com.jme.lsgoldtrade.config.Constants;
 import com.jme.lsgoldtrade.databinding.ActivityElectronicCardTransferBinding;
 
+import rx.Subscription;
+
 @Route(path = Constants.ARouterUriConst.ELECTRONICCARDTRANSFER)
 public class ElectronicCardTransferActivity extends JMEBaseActivity {
 
@@ -28,6 +30,8 @@ public class ElectronicCardTransferActivity extends JMEBaseActivity {
     private String mRelevanceId;
 
     private PagerAdapter mAdapter;
+
+    private Subscription mRxbus;
 
     @Override
     protected int getContentViewId() {
@@ -56,6 +60,8 @@ public class ElectronicCardTransferActivity extends JMEBaseActivity {
     @Override
     protected void initListener() {
         super.initListener();
+
+        initRxBus();
     }
 
     @Override
@@ -94,6 +100,30 @@ public class ElectronicCardTransferActivity extends JMEBaseActivity {
         mBinding.tablayout.setupWithViewPager(mBinding.tabViewpager);
 
         mBinding.tabViewpager.setCurrentItem(!TextUtils.isEmpty(AppConfig.TransferType) && AppConfig.TransferType.equals("TransferOut") ? 1 : 0);
+    }
+
+    private void initRxBus() {
+        mRxbus = RxBus.getInstance().toObserverable(RxBus.Message.class).subscribe(message -> {
+            String callType = message.getObject().toString();
+
+            if (TextUtils.isEmpty(callType))
+                return;
+
+            switch (callType) {
+                case Constants.RxBusConst.RXBUS_ELECTRONICCARD_INOUT_SUCCESS:
+                    finish();
+
+                    break;
+            }
+        });
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+        if (!mRxbus.isUnsubscribed())
+            mRxbus.unsubscribe();
     }
 
     final class TabViewPagerAdapter extends FragmentPagerAdapter {

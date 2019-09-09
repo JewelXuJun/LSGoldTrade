@@ -7,9 +7,9 @@ import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.Gravity;
 
-import com.alibaba.android.arouter.launcher.ARouter;
 import com.jme.common.network.DTRequest;
 import com.jme.common.network.Head;
+import com.jme.common.util.RxBus;
 import com.jme.lsgoldtrade.R;
 import com.jme.lsgoldtrade.base.JMEBaseFragment;
 import com.jme.lsgoldtrade.config.AppConfig;
@@ -179,7 +179,12 @@ public class ElectronicCardMoneyOutFragment extends JMEBaseFragment implements O
 
                     if (null != mConfirmSimplePopupwindow && !mConfirmSimplePopupwindow.isShowing()) {
                         mConfirmSimplePopupwindow.setData(getResources().getString(R.string.trade_transfer_icbc_electronic_card_withdraw_message),
-                                (view) -> mConfirmSimplePopupwindow.dismiss());
+                                (view) -> {
+                                    mConfirmSimplePopupwindow.dismiss();
+
+                                    RxBus.getInstance().post(Constants.RxBusConst.RXBUS_ELECTRONICCARD_INOUT_SUCCESS, null);
+                                }
+                        );
                         mConfirmSimplePopupwindow.showAtLocation(mBinding.tvIcbcElectronicCardMoneyOutAvalible, Gravity.CENTER, 0, 0);
                     }
 

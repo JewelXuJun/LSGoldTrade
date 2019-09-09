@@ -9,10 +9,12 @@ import android.view.Gravity;
 
 import com.jme.common.network.DTRequest;
 import com.jme.common.network.Head;
+import com.jme.common.util.RxBus;
 import com.jme.common.util.StringUtils;
 import com.jme.lsgoldtrade.R;
 import com.jme.lsgoldtrade.base.JMEBaseFragment;
 import com.jme.lsgoldtrade.config.AppConfig;
+import com.jme.lsgoldtrade.config.Constants;
 import com.jme.lsgoldtrade.databinding.FragmentElectronicCardMoneyInBinding;
 import com.jme.lsgoldtrade.service.TradeService;
 import com.jme.lsgoldtrade.view.ConfirmSimplePopupwindow;
@@ -138,7 +140,12 @@ public class ElectronicCardMoneyInFragment extends JMEBaseFragment {
 
                     if (null != mConfirmSimplePopupwindow && !mConfirmSimplePopupwindow.isShowing()) {
                         mConfirmSimplePopupwindow.setData(getResources().getString(R.string.trade_transfer_icbc_electronic_card_recharge_message),
-                                (view) -> mConfirmSimplePopupwindow.dismiss());
+                                (view) -> {
+                                    mConfirmSimplePopupwindow.dismiss();
+
+                                    RxBus.getInstance().post(Constants.RxBusConst.RXBUS_ELECTRONICCARD_INOUT_SUCCESS, null);
+                                }
+                        );
                         mConfirmSimplePopupwindow.showAtLocation(mBinding.tvIcbcElectronicBankCard, Gravity.CENTER, 0, 0);
                     }
                 }
