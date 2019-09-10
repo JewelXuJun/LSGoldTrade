@@ -183,10 +183,11 @@ public class MainActivity extends JMEBaseActivity implements TabHost.OnTabChange
         mConfirmSimplePopupwindow.setOutsideTouchable(true);
         mConfirmSimplePopupwindow.setFocusable(true);
 
-        new Handler().postDelayed(() -> showElectronicCardPopupWindow(), 500);
-
         registerReceiver(mStateReceiver, mIntentFilter);
         initDownLoadData();
+
+        if (null != mUser && mUser.isLogin())
+            checkUserIsTJS();
     }
 
     @Override
@@ -224,11 +225,7 @@ public class MainActivity extends JMEBaseActivity implements TabHost.OnTabChange
                 case Constants.RxBusConst.RXBUS_LOGIN_SUCCESS:
                     getProtocolVersion();
 
-                    showElectronicCardPopupWindow();
-
-                    break;
-                case Constants.RxBusConst.RXBUS_ELECTRONICCARD_UNPERFECT:
-                    if (isForeground())
+                    if (null != mUser && mUser.isLogin() && !TextUtils.isEmpty(mUser.getIsFromTjs()) && mUser.getIsFromTjs().equals("true"))
                         showElectronicCardPopupWindow();
 
                     break;
@@ -593,6 +590,10 @@ public class MainActivity extends JMEBaseActivity implements TabHost.OnTabChange
         sendRequest(ManagementService.getInstance().insertRatifyAccord, params, true);
     }
 
+    private void checkUserIsTJS() {
+        sendRequest(TradeService.getInstance().checkUserIsTJS, new HashMap<>(), false, false, false);
+    }
+
     @Override
     protected void DataReturn(DTRequest request, Head head, Object response) {
         super.DataReturn(request, head, response);
@@ -721,6 +722,20 @@ public class MainActivity extends JMEBaseActivity implements TabHost.OnTabChange
                         mProtocolUpdatePopUpWindow.dismiss();
 
                     showShortToast(R.string.main_protocol_update_success);
+                }
+
+                break;
+            case "CheckUserIsTJS":
+                if (head.isSuccess()) {
+                    String value = "";
+
+                    if (null != response)
+                        value = response.toString();
+
+                    mUser.setIsFromTjs(value);
+
+                    if (!TextUtils.isEmpty(value) && value.equals("true"))
+                        showElectronicCardPopupWindow();
                 }
 
                 break;

@@ -748,11 +748,20 @@ public class HoldPositionFragment extends JMEBaseFragment implements OnRefreshLi
     public class ClickHandlers {
 
         public void onClickCapitalTransfer() {
-            if (null != mUser && null != mUser.getCurrentUser()
-                    && mUser.getCurrentUser().getCardType().equals("2") && mUser.getCurrentUser().getReserveFlag().equals("N"))
-                ARouter.getInstance().build(Constants.ARouterUriConst.BANKRESERVE).navigation();
-            else
+            if (null == mUser)
+                return;
+
+            if (null == mUser.getCurrentUser())
+                return;
+
+            if (!TextUtils.isEmpty(mUser.getIsFromTjs()) && mUser.getIsFromTjs().equals("true")) {
+                if (mUser.getCurrentUser().getCardType().equals("2") && mUser.getCurrentUser().getReserveFlag().equals("N"))
+                    ARouter.getInstance().build(Constants.ARouterUriConst.BANKRESERVE).navigation();
+                else
+                    ARouter.getInstance().build(Constants.ARouterUriConst.CAPITALTRANSFER).navigation();
+            } else {
                 ARouter.getInstance().build(Constants.ARouterUriConst.CAPITALTRANSFER).navigation();
+            }
         }
 
         public void onClickGuaranteeFundSetting() {

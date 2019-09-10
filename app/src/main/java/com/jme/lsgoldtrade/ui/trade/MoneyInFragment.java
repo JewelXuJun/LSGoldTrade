@@ -225,11 +225,15 @@ public class MoneyInFragment extends JMEBaseFragment implements OnRefreshListene
         if (null == mUser || null == mUser.getCurrentUser()) {
             mBinding.btnReserve.setVisibility(View.GONE);
         } else {
-            String cardType = mUser.getCurrentUser().getCardType();
-            String reserveFlag = mUser.getCurrentUser().getReserveFlag();
+            if (!TextUtils.isEmpty(mUser.getIsFromTjs()) && mUser.getIsFromTjs().equals("true")) {
+                String cardType = mUser.getCurrentUser().getCardType();
+                String reserveFlag = mUser.getCurrentUser().getReserveFlag();
 
-            mBinding.btnReserve.setVisibility(!TextUtils.isEmpty(cardType) && cardType.equals("3") && !TextUtils.isEmpty(reserveFlag) && reserveFlag.equals("N")
-                    ? View.VISIBLE : View.GONE);
+                mBinding.btnReserve.setVisibility(!TextUtils.isEmpty(cardType) && cardType.equals("3") && !TextUtils.isEmpty(reserveFlag) && reserveFlag.equals("N")
+                        ? View.VISIBLE : View.GONE);
+            } else {
+                mBinding.btnReserve.setVisibility(View.GONE);
+            }
         }
     }
 

@@ -308,11 +308,11 @@ public class TradeService extends IService<TradeApi> {
         }
     };
 
-    public API queryLoginSecondUserInfo = new API<TransactionDetailVo>("QueryLoginSecondUserInfo") {
+    public API checkUserIsTJS = new API<String>("CheckUserIsTJS") {
         @Override
-        public Call<ErUserInfoResponse> request(HashMap<String, String> params) {
+        public Call<DTResponse> request(HashMap<String, String> params) {
 
-            return mApi.queryLoginSecondUserInfo(params);
+            return mApi.checkUserIsTJS(params);
         }
     };
 

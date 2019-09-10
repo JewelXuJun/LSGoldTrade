@@ -217,6 +217,10 @@ public class AccountLoginActivity extends JMEBaseActivity {
         sendRequest(UserService.getInstance().kaptcha, new HashMap<>(), true);
     }
 
+    private void checkUserIsTJS() {
+        sendRequest(TradeService.getInstance().checkUserIsTJS, new HashMap<>(), false, false, false);
+    }
+
     private void getContractInfo() {
         String accountID = mUser.getAccountID();
 
@@ -258,7 +262,6 @@ public class AccountLoginActivity extends JMEBaseActivity {
                     if (!TextUtils.isEmpty(userInfoVo.getTraderId()))
                         PushManager.getInstance().bindAlias(this, userInfoVo.getTraderId());
 
-                    RxBus.getInstance().post(Constants.RxBusConst.RXBUS_LOGIN_SUCCESS, null);
                     RxBus.getInstance().post(Constants.RxBusConst.RXBUS_FAST_MANAGEMENT_EDIT, null);
 
                     getContractInfo();
@@ -320,6 +323,21 @@ public class AccountLoginActivity extends JMEBaseActivity {
                     }
 
                     mContract.setContractList(list);
+                }
+
+                checkUserIsTJS();
+
+                break;
+            case "CheckUserIsTJS":
+                if (head.isSuccess()) {
+                    String value = "";
+
+                    if (null != response)
+                        value = response.toString();
+
+                    mUser.setIsFromTjs(value);
+
+                    RxBus.getInstance().post(Constants.RxBusConst.RXBUS_LOGIN_SUCCESS, null);
                 }
 
                 dismissLoginDialog();

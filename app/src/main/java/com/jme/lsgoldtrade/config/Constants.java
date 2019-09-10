@@ -116,7 +116,6 @@ public class Constants {
         public static final String RXBUS_LOGOUT_SUCCESS = "logoutSuccess";
         public static final String RXBUS_FAST_MANAGEMENT_EDIT = "fastManagementEdit";
         public static final String RXBUS_MARKET_UNIT_SORT_SUCCESS = "marketUnitSortSuccess";
-        public static final String RXBUS_ELECTRONICCARD_UNPERFECT = "electronicCardUnperfect";
         public static final String RXBUS_ELECTRONICCARD_UPDATE = "electronicCardUpdate";
         public static final String RXBUS_ELECTRONICCARD_INOUT_SUCCESS = "electronicCardInoutSuccess";
     }

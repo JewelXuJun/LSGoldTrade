@@ -108,6 +108,7 @@ public interface TradeApi {
     @GET("/gold-trade/v1.0.0/android/queryTransactionDetail")
     Call<DTResponse> queryTransactionDetail(@QueryMap Map<String, String> map);
 
-    @GET("/gold-trade/v1.0.0/android/queryLoginSecondUserInfo")
-    Call<ErUserInfoResponse> queryLoginSecondUserInfo(@QueryMap Map<String, String> map);
+    @GET("/gold-trade/v1.0.0/android/checkUserIsTJS")
+    Call<DTResponse> checkUserIsTJS(@QueryMap Map<String, String> map);
+
 }

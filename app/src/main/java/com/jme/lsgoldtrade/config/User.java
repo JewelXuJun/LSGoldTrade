@@ -16,6 +16,7 @@ public class User {
     private String mAccount = "";
     private String mAccountID = "";
     private String mTraderId = "";
+    private String mIsFromTjs = "";
 
     public static User getInstance() {
         if (null == mUser)
@@ -42,6 +43,7 @@ public class User {
         mAccount = "";
         mAccountID = "";
         mTraderId = "";
+        mIsFromTjs = "";
     }
 
     public boolean isLogin() {
@@ -78,5 +80,13 @@ public class User {
 
     public void setTraderId(String traderId) {
         mTraderId = traderId;
+    }
+
+    public String getIsFromTjs() {
+        return mIsFromTjs;
+    }
+
+    public void setIsFromTjs(String isFromTjs) {
+        mIsFromTjs = isFromTjs;
     }
 }

@@ -80,10 +80,14 @@ public class IntentUtils {
                 if (null == user || !user.isLogin()) {
                     gotoLogin(context);
                 } else {
-                    if (user.getCurrentUser().getCardType().equals("2") && user.getCurrentUser().getReserveFlag().equals("N"))
-                        RxBus.getInstance().post(Constants.RxBusConst.RXBUS_ELECTRONICCARD_UNPERFECT, null);
-                    else
+                    if (!TextUtils.isEmpty(user.getIsFromTjs()) && user.getIsFromTjs().equals("true")) {
+                        if (user.getCurrentUser().getCardType().equals("2") && user.getCurrentUser().getReserveFlag().equals("N"))
+                            ARouter.getInstance().build(Constants.ARouterUriConst.BANKRESERVE).navigation();
+                        else
+                            ARouter.getInstance().build(Constants.ARouterUriConst.CAPITALTRANSFER).navigation();
+                    } else {
                         ARouter.getInstance().build(Constants.ARouterUriConst.CAPITALTRANSFER).navigation();
+                    }
                 }
 
                 break;
