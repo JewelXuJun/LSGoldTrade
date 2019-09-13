@@ -142,6 +142,7 @@ public class JMEAppService extends Service implements OnResultListener {
                         SharedPreUtils.setString(this, SharedPreUtils.Token, "");
 
                         RxBus.getInstance().post(Constants.RxBusConst.RXBUS_SYNTIME, head.getMsg());
+                        RxBus.getInstance().post(Constants.RxBusConst.RXBUS_LOGOUT_SUCCESS, null);
                     }
                 }
 

@@ -122,7 +122,14 @@
 
         </LinearLayout>
 
-        <include layout="@layout/item_line_vertical" />
+        <LinearLayout
+            android:id="@+id/layout_item_line"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <include layout="@layout/item_line_vertical" />
+
+        </LinearLayout>
 
     </LinearLayout>
 

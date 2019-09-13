@@ -51,6 +51,7 @@ public class DeclarationFormHoldPositionAdapter extends BaseQuickAdapter<Positio
             typeValue = new BigDecimal(floatValue).compareTo(new BigDecimal(0));
 
         helper.setGone(R.id.layout_item, position == 0 ? false : true)
+                .setGone(R.id.layout_item_line, position == 0 ? false : true)
                 .setText(R.id.tv_contract, contractID)
                 .setText(R.id.tv_pupil, type)
                 .setTextColor(R.id.tv_pupil, type.equals("多") ? ContextCompat.getColor(mContext, R.color.common_font_increase)

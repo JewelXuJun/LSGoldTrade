@@ -232,6 +232,17 @@ public class HoldPositionFragment extends JMEBaseFragment implements OnRefreshLi
         position();
     }
 
+    private void setInitData() {
+        mBinding.tvGuaranteeFund.setText(R.string.text_no_data_default);
+        mBinding.tvAvailableFunds.setText(R.string.text_no_data_default);
+        mBinding.tvMarketValue.setText(R.string.text_no_data_default);
+        mBinding.tvTotal.setText(R.string.text_no_data_default);
+        mBinding.tvFloating.setText(R.string.text_no_data_default);
+        mBinding.tvDesirableCapital.setText(R.string.text_no_data_default);
+        mBinding.tvRiskRate.setText(R.string.text_no_data_default);
+        mAdapter.setNewData(null);
+    }
+
     private void initRxBus() {
         mRxbus = RxBus.getInstance().toObserverable(RxBus.Message.class).subscribe(message -> {
             String callType = message.getObject().toString();
@@ -248,59 +259,62 @@ public class HoldPositionFragment extends JMEBaseFragment implements OnRefreshLi
                     getMarket();
 
                     break;
+                case Constants.RxBusConst.RXBUS_LOGOUT_SUCCESS:
+                    setInitData();
+
+                    break;
             }
         });
     }
 
     private void calculateFloat(List<FiveSpeedVo> fiveSpeedVoList, List<PositionVo> positionVoList) {
-        if (null == fiveSpeedVoList || 0 == fiveSpeedVoList.size() || null == positionVoList || 0 == positionVoList.size())
-            return;
+        if (null != fiveSpeedVoList && 0 != fiveSpeedVoList.size() && null != positionVoList && 0 != positionVoList.size()) {
+            mList.clear();
 
-        mList.clear();
+            mUnliquidatedProfitTotal = new BigDecimal(0);
 
-        mUnliquidatedProfitTotal = new BigDecimal(0);
+            for (PositionVo positionVo : positionVoList) {
+                if (null != positionVo) {
+                    String contractID = positionVo.getContractId();
 
-        for (PositionVo positionVo : positionVoList) {
-            if (null != positionVo) {
-                String contractID = positionVo.getContractId();
+                    for (FiveSpeedVo fiveSpeedVo : fiveSpeedVoList) {
+                        if (null != fiveSpeedVo) {
+                            if (contractID.equals(fiveSpeedVo.getContractId())) {
+                                long latestprice = fiveSpeedVo.getLatestPrice();
+                                long average = positionVo.getPositionAverage();
+                                long handWeight = mContract.getHandWeightFromID(contractID);
+                                long position = positionVo.getPosition();
+                                long contractValue = contractID.equals("Ag(T+D)") ?
+                                        new BigDecimal(handWeight).divide(new BigDecimal(1000), 0, BigDecimal.ROUND_HALF_UP).longValue() : handWeight;
 
-                for (FiveSpeedVo fiveSpeedVo : fiveSpeedVoList) {
-                    if (null != fiveSpeedVo) {
-                        if (contractID.equals(fiveSpeedVo.getContractId())) {
-                            long latestprice = fiveSpeedVo.getLatestPrice();
-                            long average = positionVo.getPositionAverage();
-                            long handWeight = mContract.getHandWeightFromID(contractID);
-                            long position = positionVo.getPosition();
-                            long contractValue = contractID.equals("Ag(T+D)") ?
-                                    new BigDecimal(handWeight).divide(new BigDecimal(1000), 0, BigDecimal.ROUND_HALF_UP).longValue() : handWeight;
+                                long margin;
+                                String floatProfit;
 
-                            long margin;
-                            String floatProfit;
+                                mUnliquidatedProfitTotal = mUnliquidatedProfitTotal.add(new BigDecimal(positionVo.getUnliquidatedProfitStr()));
 
-                            mUnliquidatedProfitTotal = mUnliquidatedProfitTotal.add(new BigDecimal(positionVo.getUnliquidatedProfitStr()));
+                                if (new BigDecimal(latestprice).compareTo(new BigDecimal(0)) == 0
+                                        || new BigDecimal(position).compareTo(new BigDecimal(0)) == 0) {
+                                    floatProfit = "0";
+                                } else {
+                                    if (positionVo.getType().equals("多"))
+                                        margin = new BigDecimal(latestprice).subtract(new BigDecimal(average)).longValue();
+                                    else
+                                        margin = new BigDecimal(average).subtract(new BigDecimal(latestprice)).longValue();
 
-                            if (new BigDecimal(latestprice).compareTo(new BigDecimal(0)) == 0
-                                    || new BigDecimal(position).compareTo(new BigDecimal(0)) == 0) {
-                                floatProfit = "0";
-                            } else {
-                                if (positionVo.getType().equals("多"))
-                                    margin = new BigDecimal(latestprice).subtract(new BigDecimal(average)).longValue();
-                                else
-                                    margin = new BigDecimal(average).subtract(new BigDecimal(latestprice)).longValue();
+                                    floatProfit = MarketUtil.formatValueNum((new BigDecimal(MarketUtil.getPriceValue(margin))
+                                            .multiply(new BigDecimal(contractValue)).multiply(new BigDecimal(position))).toPlainString(), 2);
+                                }
 
-                                floatProfit = MarketUtil.formatValueNum((new BigDecimal(MarketUtil.getPriceValue(margin))
-                                        .multiply(new BigDecimal(contractValue)).multiply(new BigDecimal(position))).toPlainString(), 2);
+                                mList.add(floatProfit);
                             }
-
-                            mList.add(floatProfit);
                         }
                     }
                 }
             }
-        }
 
-        mAdapter.setList(mList);
-        mAdapter.notifyDataSetChanged();
+            mAdapter.setList(mList);
+            mAdapter.notifyDataSetChanged();
+        }
 
         calculateValue();
     }
@@ -488,6 +502,8 @@ public class HoldPositionFragment extends JMEBaseFragment implements OnRefreshLi
 
                     if (null == positionPageVo) {
                         mBinding.swipeRefreshLayout.finishRefresh(true);
+
+                        calculateValue();
                     } else {
                         bHasNext = positionPageVo.isHasNext();
                         mPagingKey = positionPageVo.getPagingKey();

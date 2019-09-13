@@ -124,6 +124,8 @@ public abstract class JMEBaseActivity<T> extends BaseActivity {
 
                     SharedPreUtils.setString(this, SharedPreUtils.Token, "");
 
+                    RxBus.getInstance().post(Constants.RxBusConst.RXBUS_LOGOUT_SUCCESS, null);
+
                     showLoginDialog(message.getObject2().toString());
 
                     break;
@@ -143,6 +145,8 @@ public abstract class JMEBaseActivity<T> extends BaseActivity {
             mUser.logout();
 
             SharedPreUtils.setString(this, SharedPreUtils.Token, "");
+
+            RxBus.getInstance().post(Constants.RxBusConst.RXBUS_LOGOUT_SUCCESS, null);
 
             if (!currentClass().equals(SplashActivity.class.getName()) && !currentClass().equals(AccountLoginActivity.class.getName())
                     && !currentClass().equals(MobileLoginActivity.class.getName()))
