@@ -129,25 +129,14 @@ public class PersonalFragment extends JMEBaseFragment {
                         } else {
                             mBinding.layoutSubscribe.setVisibility(View.VISIBLE);
 
-                            String num = subscribeStateVo.getNum();
+                            int num = subscribeStateVo.getNum();
 
-                            if (TextUtils.isEmpty(num)) {
-                                mBinding.tvTradingBox.setText(R.string.personal_trading_box_new);
-                                mBinding.tvTradingBox.setTextColor(ContextCompat.getColor(mContext, R.color.color_text_normal));
-                            } else {
-                                if (num.equals("0")) {
-                                    mBinding.tvTradingBox.setText(R.string.personal_trading_box_new);
-                                    mBinding.tvTradingBox.setTextColor(ContextCompat.getColor(mContext, R.color.color_text_normal));
-                                } else {
-                                    mBinding.tvTradingBox.setText(R.string.personal_trading_box_publish);
-                                    mBinding.tvTradingBox.setTextColor(ContextCompat.getColor(mContext, R.color.color_red));
-                                }
-                            }
+                            mBinding.tvTradingBox.setText(0 == num ? R.string.personal_trading_box_new : R.string.personal_trading_box_publish);
+                            mBinding.tvTradingBox.setTextColor(0 == num ? ContextCompat.getColor(mContext, R.color.color_text_normal)
+                                    : ContextCompat.getColor(mContext, R.color.color_red));
                         }
 
                     }
-
-
                 }
 
                 break;
