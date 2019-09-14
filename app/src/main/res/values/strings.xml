@@ -430,12 +430,13 @@
     <string name="trading_box_detail">查看详情</string>
     <string name="trading_box_buy">去下单</string>
     <string name="trading_box_function_share">分享</string>
+    <string name="trading_box_title">交易匣子</string>
     <string name="trading_box_function_history">历史匣子</string>
     <string name="trading_box_function_order">我的订单</string>
     <string name="trading_box_function_introduction">使用攻略</string>
     <string name="trading_box_function_question">常见问题</string>
     <string name="trading_box_number">%1$s期交易匣子</string>
-    <string name="trading_box_subscribe_number">已有%1$s位用户使用</string>
+    <string name="trading_box_subscribe_number">已有%1$d位用户使用</string>
     <string name="trading_box_subscribed">已订阅</string>
     <string name="trading_box_subscribe">订阅</string>
     <string name="trading_box_chance">交易机会</string>
@@ -448,7 +449,7 @@
     <string name="trading_box_number_title">%1$s期</string>
     <string name="trading_box_fundamental_analysis">基本面分析</string>
     <string name="trading_box_info">相关资讯</string>
-    <string name="trading_box_forecast">预测交易品种</string>
+    <string name="trading_box_trade_forecast">预测交易品种</string>
     <string name="trading_box_forecast_direction">预测方向</string>
     <string name="trading_box_result">投票</string>
     <string name="trading_box_time_end">距结束还有</string>
@@ -502,7 +503,12 @@
         \n统计方法：统计黄金ETF的持仓份额，单位以盎司表示，可换算成吨。一般统计规模最大的黄金ETF，即SPDR的黄金持仓份额。\n
         \n数据释义：ETF基金（Exchange Traded Fund，交易型开放式指数基金，又被称为交易所交易基金）。黄金ETF（Exchange Traded Fund），是指一种以黄金为基础资产，可以自由投资或赎回，追踪现货黄金价格波动的金融衍生产品。\n
         \n数据解读：黄金ETF是美国民间最普及的黄金投资方式，其持仓变化可以反映市场情绪变化；黄金ETF持仓增加，表明买盘增加，市场看涨黄金的情绪升温，利多黄金；\n黄金ETF持仓减少，表明卖盘增加，市场看跌黄金的情绪升温，利空黄金。</string>
+    <string name="trading_box_no_data_release">当前无交易匣子发布</string>
+    <string name="trading_box_check_history">查看历史匣子</string>
+    <string name="trading_box_forecast">预测交易品种</string>
+    <string name="trading_box_no_data_history">当前无历史交易匣子</string>
 
     <string name="text_withdraw_rule">提现规则：\n\n1. 提现申请时间：交易日9:00&#8211;15:30，将于提现申请的次日到账；\n2. 到账金额：到账金额=提现金额-提现手续费\n提现手续费=提现金额*%1$s；\n3. 提现到账查询：请到微信—我的—支付—钱包—零钱—零钱明细查询；\n4. 单日提现次数5次，单笔提现限额5000元，单日和累计限额20000元。</string>
+
 
 </resources>

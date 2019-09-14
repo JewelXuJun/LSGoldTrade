@@ -64,6 +64,8 @@ public abstract class JMEBaseActivity<T> extends BaseActivity {
     @Override
     protected void initView() {
         super.initView();
+
+        initBinding();
     }
 
     @Override
@@ -72,8 +74,6 @@ public abstract class JMEBaseActivity<T> extends BaseActivity {
 
         mUser = User.getInstance();
         mContract = Contract.getInstance();
-
-        initBinding();
     }
 
     @Override

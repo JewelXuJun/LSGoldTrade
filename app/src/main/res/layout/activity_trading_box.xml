@@ -9,22 +9,15 @@
 
     </data>
 
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/common_background">
+        android:background="@color/common_background"
+        android:orientation="vertical">
 
-        <LinearLayout
-            android:id="@+id/layout_toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
+        <include layout="@layout/layout_toolbar" />
 
-            <include layout="@layout/layout_toolbar" />
-
-            <include layout="@layout/item_line_vertical" />
-
-        </LinearLayout>
+        <include layout="@layout/item_line_vertical" />
 
         <RelativeLayout
             android:id="@+id/layout_subcribe_number"
@@ -45,85 +38,101 @@
                 android:textSize="@dimen/sp_14" />
 
             <TextView
+                android:id="@+id/tv_unSubscribe"
+                android:layout_width="@dimen/width_subscribe"
+                android:layout_height="@dimen/height_subscribe"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:background="@drawable/bg_btn_blue_solid"
+                android:gravity="center"
+                android:onClick="@{() -> handlers.onClickSubcribe()}"
+                android:text="@string/trading_box_subscribe"
+                android:textColor="@color/white"
+                android:textSize="@dimen/sp_14"
+                android:visibility="gone" />
+
+            <TextView
                 android:id="@+id/tv_subscribe"
                 android:layout_width="@dimen/width_subscribe"
                 android:layout_height="@dimen/height_subscribe"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:gravity="center"
-                android:onClick="@{() -> handlers.onClickSubcribe()}"
-                android:textSize="@dimen/sp_14" />
+                android:text="@string/trading_box_subscribed"
+                android:textColor="@color/black"
+                android:textSize="@dimen/sp_14"
+                android:visibility="gone" />
 
         </RelativeLayout>
 
         <LinearLayout
-            android:id="@+id/layout_bottom"
+            android:id="@+id/layout_no_data"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:orientation="vertical">
+            android:layout_marginTop="@dimen/margin_big"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:visibility="visible">
 
-            <include layout="@layout/item_line_vertical_list" />
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@mipmap/ic_trading_box_no_data" />
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/height_btn"
-                android:orientation="horizontal">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/trading_box_no_data_release"
+                android:layout_marginTop="@dimen/common_area_margin_big"
+                android:textSize="@dimen/sp_14"
+                android:textColor="@color/black"/>
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:onClick="@{() -> handlers.onClickDetails()}"
-                    android:text="@string/trading_box_detail"
-                    android:textColor="@color/color_blue_deep"
-                    android:textSize="@dimen/sp_18" />
-
-                <TextView
-                    android:id="@+id/tv_buy"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="2"
-                    android:background="@color/color_text_gray_hint"
-                    android:gravity="center"
-                    android:onClick="@{() -> handlers.onClickBuy()}"
-                    android:text="@string/trading_box_buy"
-                    android:textColor="@color/white"
-                    android:textSize="@dimen/sp_18" />
-
-            </LinearLayout>
+            <Button
+                android:layout_width="@dimen/width_trading_box_btn"
+                android:layout_height="@dimen/common_item_height_middle"
+                android:layout_marginTop="@dimen/margin_big"
+                android:background="@drawable/bg_btn_blue_hollow"
+                android:onClick="@{() -> handlers.onClickCheckHistory()}"
+                android:text="@string/trading_box_check_history"
+                android:textColor="@color/color_blue"
+                android:textSize="@dimen/size_normal" />
 
         </LinearLayout>
 
-        <android.support.v4.view.ViewPager
-            android:id="@+id/viewpager"
+        <android.support.v4.widget.NestedScrollView
+            android:id="@+id/nestedScrollView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_above="@id/layout_bottom"
-            android:layout_below="@id/layout_subcribe_number" />
+            android:fillViewport="true"
+            android:scrollbars="none"
+            android:visibility="gone">
 
-        <ImageView
-            android:id="@+id/btn_previous"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/layout_subcribe_number"
-            android:layout_marginTop="@dimen/margin_trading_box_next"
-            android:background="@mipmap/ic_trading_box_previous"
-            android:onClick="@{() -> handlers.onClickPrevious()}"
-            android:visibility="gone" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
 
-        <ImageView
-            android:id="@+id/btn_next"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/layout_subcribe_number"
-            android:layout_alignParentRight="true"
-            android:layout_marginTop="@dimen/margin_trading_box_next"
-            android:background="@mipmap/ic_trading_box_next"
-            android:onClick="@{() -> handlers.onClickNext()}"
-            android:visibility="gone" />
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/recyclerView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:scrollbars="none" />
 
-    </RelativeLayout>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="@dimen/common_area_margin"
+                    android:layout_marginBottom="@dimen/margin_normal"
+                    android:gravity="center_vertical"
+                    android:text="@string/trading_box_suggest"
+                    android:textColor="@color/gray"
+                    android:textSize="@dimen/sp_12" />
+
+            </LinearLayout>
+
+        </android.support.v4.widget.NestedScrollView>
+
+    </LinearLayout>
 
 </layout>

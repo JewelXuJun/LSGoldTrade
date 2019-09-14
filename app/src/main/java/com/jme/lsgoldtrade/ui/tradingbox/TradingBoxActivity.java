@@ -1,8 +1,6 @@
 package com.jme.lsgoldtrade.ui.tradingbox;
 
 import android.os.Bundle;
-import android.support.v4.content.ContextCompat;
-import android.support.v4.view.ViewPager;
 import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.View;
@@ -16,6 +14,7 @@ import com.jme.lsgoldtrade.base.JMEBaseActivity;
 import com.jme.lsgoldtrade.config.Constants;
 import com.jme.lsgoldtrade.databinding.ActivityTradingBoxBinding;
 import com.jme.lsgoldtrade.domain.SubscribeStateVo;
+import com.jme.lsgoldtrade.domain.TradeBoxVo;
 import com.jme.lsgoldtrade.domain.TradingBoxDataInfoVo;
 import com.jme.lsgoldtrade.service.ManagementService;
 import com.jme.lsgoldtrade.ui.trade.TradeMessagePopUpWindow;
@@ -39,7 +38,6 @@ public class TradingBoxActivity extends JMEBaseActivity {
     private TradingBoxAdapter mAdapter;
     private TradeMessagePopUpWindow mTradeMessagePopUpWindow;
 
-    private boolean bSubscribeFlag = false;
     private String mPeriodName;
 
     @Override
@@ -51,11 +49,11 @@ public class TradingBoxActivity extends JMEBaseActivity {
     protected void initView() {
         super.initView();
 
-        initToolbar("", true);
+        initToolbar(R.string.trading_box_title, true);
 
         setRightNavigation("", R.mipmap.ic_more, 0, () ->
                 TradeBoxFunctionUtils.show(this, Constants.HttpConst.URL_TRADINGBOX, String.format(getString(R.string.trading_box_number), mPeriodName),
-                        getString(R.string.trading_box_share_content), mBinding.tvBuy.getId()));
+                        getString(R.string.trading_box_share_content), mBinding.recyclerView.getId(), false));
 
         mTradeMessagePopUpWindow = new TradeMessagePopUpWindow(mContext);
         mTradeMessagePopUpWindow.setOutsideTouchable(true);
@@ -66,8 +64,10 @@ public class TradingBoxActivity extends JMEBaseActivity {
     protected void initData(Bundle savedInstanceState) {
         super.initData(savedInstanceState);
 
-        getTradeBoxHomedataInfo();
+//        getTradeBoxHomedataInfo();
+        querySubscriberCount();
         getListExt();
+        queryTradeBoxList();
     }
 
     @Override
@@ -84,7 +84,7 @@ public class TradingBoxActivity extends JMEBaseActivity {
     }
 
     private void initViewPager() {
-        for (int i = 0; i < mHistoryVoBeanList.size(); i++) {
+       /* for (int i = 0; i < mHistoryVoBeanList.size(); i++) {
             mListFragment.add(new TradingBoxFragment());
         }
 
@@ -114,11 +114,11 @@ public class TradingBoxActivity extends JMEBaseActivity {
             public void onPageScrollStateChanged(int i) {
 
             }
-        });
+        });*/
     }
 
     private void isCanBuy(int position) {
-        if (mHistoryVoBeanList.size() > 1) {
+        /*if (mHistoryVoBeanList.size() > 1) {
             int currentPage = mBinding.viewpager.getCurrentItem();
 
             mBinding.btnPrevious.setAlpha(currentPage == 0 ? 0.5f : 1.0f);
@@ -128,19 +128,27 @@ public class TradingBoxActivity extends JMEBaseActivity {
         long closeTime = mHistoryVoBeanList.get(position).getCloseTime();
 
         mBinding.tvBuy.setEnabled(closeTime <= 0 ? false : true);
-        mBinding.tvBuy.setBackgroundResource(closeTime <= 0 ? R.color.color_text_gray_hint : R.color.color_blue_deep);
+        mBinding.tvBuy.setBackgroundResource(closeTime <= 0 ? R.color.color_text_gray_hint : R.color.color_blue_deep);*/
+    }
+
+    private void querySubscriberCount() {
+        sendRequest(ManagementService.getInstance().querySubscriberCount, new HashMap<>(), false, false, false);
     }
 
     private void getListExt() {
         sendRequest(ManagementService.getInstance().getListExt, new HashMap<>(), false);
     }
 
-    private void getTradeBoxHomedataInfo() {
-        sendRequest(ManagementService.getInstance().tradeBoxHomedataInfo, new HashMap<>(), true);
-    }
-
     private void setAppSubscribe() {
         sendRequest(ManagementService.getInstance().setAppSubscribe, new HashMap<>(), true);
+    }
+
+    private void queryTradeBoxList() {
+        sendRequest(ManagementService.getInstance().queryTradeBoxList, new HashMap<>(), true);
+    }
+
+    private void getTradeBoxHomedataInfo() {
+        sendRequest(ManagementService.getInstance().tradeBoxHomedataInfo, new HashMap<>(), true);
     }
 
     private void getUserAddedServicesStatus() {
@@ -156,6 +164,11 @@ public class TradingBoxActivity extends JMEBaseActivity {
         super.DataReturn(request, head, response);
 
         switch (request.getApi().getName()) {
+            case "QuerySubscriberCount":
+                if (head.isSuccess())
+                    mBinding.tvSubscribeNumber.setText(String.format(getString(R.string.trading_box_subscribe_number), null == response ? 0 : (int) response));
+
+                break;
             case "GetListExt":
                 if (head.isSuccess()) {
                     SubscribeStateVo subscribeStateVo;
@@ -168,21 +181,44 @@ public class TradingBoxActivity extends JMEBaseActivity {
                         e.printStackTrace();
                     }
 
-                    if (null == subscribeStateVo)
-                        return;
+                    if (null == subscribeStateVo) {
+                        mBinding.tvUnSubscribe.setVisibility(View.GONE);
+                        mBinding.tvSubscribe.setVisibility(View.GONE);
+                    } else {
+                        List<SubscribeStateVo.SubscribeBean> subscribeBeanList = subscribeStateVo.getList();
 
-                    List<SubscribeStateVo.SubscribeBean> subscribeBeanList = subscribeStateVo.getList();
+                        boolean subscribeFlag = null == subscribeBeanList || 0 == subscribeBeanList.size() ? false : true;
 
-                    if (null == subscribeBeanList || 0 == subscribeBeanList.size())
-                        bSubscribeFlag = false;
-                    else
-                        bSubscribeFlag = true;
+                        mBinding.tvUnSubscribe.setVisibility(subscribeFlag ? View.GONE : View.VISIBLE);
+                        mBinding.tvSubscribe.setVisibility(subscribeFlag ? View.VISIBLE : View.GONE);
+                    }
+                }
 
-                    mBinding.tvSubscribe.setText(bSubscribeFlag ? R.string.trading_box_subscribed : R.string.trading_box_subscribe);
-                    mBinding.tvSubscribe.setTextColor(bSubscribeFlag ? ContextCompat.getColor(this, R.color.color_blue_deep)
-                            : ContextCompat.getColor(this, R.color.white));
-                    mBinding.tvSubscribe.setBackground(bSubscribeFlag ? ContextCompat.getDrawable(this, R.drawable.bg_btn_blue_stroke)
-                            : ContextCompat.getDrawable(this, R.drawable.bg_btn_blue_solid));
+                break;
+            case "SetAppSubscribe":
+                if (head.isSuccess())
+                    getListExt();
+
+                break;
+            case "QueryTradeBoxList":
+                if (head.isSuccess()) {
+                    List<TradeBoxVo> tradeBoxVoList;
+
+                    try {
+                        tradeBoxVoList = (List<TradeBoxVo>) response;
+                    } catch (Exception e) {
+                        tradeBoxVoList = null;
+
+                        e.printStackTrace();
+                    }
+
+                    if (null == tradeBoxVoList || 0 == tradeBoxVoList.size()) {
+                        mBinding.layoutNoData.setVisibility(View.VISIBLE);
+                        mBinding.nestedScrollView.setVisibility(View.GONE);
+                    } else {
+                        mBinding.layoutNoData.setVisibility(View.GONE);
+                        mBinding.nestedScrollView.setVisibility(View.VISIBLE);
+                    }
                 }
 
                 break;
@@ -203,11 +239,6 @@ public class TradingBoxActivity extends JMEBaseActivity {
 
                     mPeriodName = tradingBoxDataInfoVo.getPeriodName();
 
-                    initToolbar(String.format(getString(R.string.trading_box_number), mPeriodName), true);
-
-                    mBinding.tvSubscribeNumber.setText(String.format(getString(R.string.trading_box_subscribe_number),
-                            String.valueOf(tradingBoxDataInfoVo.getSubscriberCount())));
-
                     mHistoryVoBeanList = tradingBoxDataInfoVo.getHistoryListVoList();
 
                     if (null == mHistoryVoBeanList || 0 == mHistoryVoBeanList.size())
@@ -215,11 +246,6 @@ public class TradingBoxActivity extends JMEBaseActivity {
 
                     initViewPager();
                 }
-
-                break;
-            case "SetAppSubscribe":
-                if (head.isSuccess())
-                    getListExt();
 
                 break;
             case "GetUserAddedServicesStatus":
@@ -241,13 +267,13 @@ public class TradingBoxActivity extends JMEBaseActivity {
 
                                     mTradeMessagePopUpWindow.dismiss();
                                 });
-                        mTradeMessagePopUpWindow.showAtLocation(mBinding.tvBuy, Gravity.CENTER, 0, 0);
+                        mTradeMessagePopUpWindow.showAtLocation(mBinding.recyclerView, Gravity.CENTER, 0, 0);
                     }
                 }
 
                 break;
             case "GetStatus":
-                if (head.isSuccess()) {
+                /*if (head.isSuccess()) {
                     String status;
 
                     if (null == response)
@@ -264,7 +290,7 @@ public class TradingBoxActivity extends JMEBaseActivity {
 
                                         mTradeMessagePopUpWindow.dismiss();
                                     });
-                            mTradeMessagePopUpWindow.showAtLocation(mBinding.tvBuy, Gravity.CENTER, 0, 0);
+                            mTradeMessagePopUpWindow.showAtLocation(mBinding.recyclerView, Gravity.CENTER, 0, 0);
                         }
                     } else {
                         if (null == mHistoryVoBeanList || 0 == mHistoryVoBeanList.size())
@@ -288,7 +314,7 @@ public class TradingBoxActivity extends JMEBaseActivity {
                                 .withString("TradeId", tradeId)
                                 .navigation();
                     }
-                }
+                }*/
 
                 break;
         }
@@ -297,26 +323,29 @@ public class TradingBoxActivity extends JMEBaseActivity {
     public class ClickHandlers {
 
         public void onClickSubcribe() {
-            if (!bSubscribeFlag)
-                setAppSubscribe();
+            setAppSubscribe();
+        }
+
+        public void onClickCheckHistory() {
+            ARouter.getInstance().build(Constants.ARouterUriConst.TRADINGBOXHISTROY).navigation();
         }
 
         public void onClickPrevious() {
-            int currentItem = mBinding.viewpager.getCurrentItem();
+          /*  int currentItem = mBinding.viewpager.getCurrentItem();
 
             if (currentItem != 0)
-                mBinding.viewpager.setCurrentItem(currentItem - 1, true);
+                mBinding.viewpager.setCurrentItem(currentItem - 1, true);*/
         }
 
         public void onClickNext() {
-            int currentItem = mBinding.viewpager.getCurrentItem();
+           /* int currentItem = mBinding.viewpager.getCurrentItem();
 
             if (currentItem < mHistoryVoBeanList.size() - 1)
-                mBinding.viewpager.setCurrentItem(currentItem + 1, true);
+                mBinding.viewpager.setCurrentItem(currentItem + 1, true);*/
         }
 
         public void onClickDetails() {
-            if (null == mHistoryVoBeanList || 0 == mHistoryVoBeanList.size())
+           /* if (null == mHistoryVoBeanList || 0 == mHistoryVoBeanList.size())
                 return;
 
             TradingBoxDataInfoVo.HistoryVoBean historyVoBean = mHistoryVoBeanList.get(mBinding.viewpager.getCurrentItem());
@@ -334,7 +363,7 @@ public class TradingBoxActivity extends JMEBaseActivity {
                     .withString("Value", tradeId)
                     .withString("PeriodName", mPeriodName)
                     .withString("Type", "1")
-                    .navigation();
+                    .navigation();*/
         }
 
         public void onClickBuy() {

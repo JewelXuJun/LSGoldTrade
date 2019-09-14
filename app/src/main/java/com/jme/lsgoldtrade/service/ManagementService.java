@@ -14,7 +14,8 @@ import com.jme.lsgoldtrade.domain.ChannelVo;
 import com.jme.lsgoldtrade.domain.CustomerServiceVo;
 import com.jme.lsgoldtrade.domain.MarketJudgmentListVo;
 import com.jme.lsgoldtrade.domain.AnalystVo;
-import com.jme.lsgoldtrade.domain.TradingBoxHistoryItemVo;
+import com.jme.lsgoldtrade.domain.TradeBoxVo;
+import com.jme.lsgoldtrade.domain.TradingBoxItemVo;
 import com.jme.lsgoldtrade.domain.InfoVo;
 import com.jme.lsgoldtrade.domain.SubscribeStateVo;
 import com.jme.lsgoldtrade.domain.TradingBoxOrderVo;
@@ -144,34 +145,6 @@ public class ManagementService extends IService<ManagementApi> {
         }
     };
 
-    public API tradeBoxHomedataInfo = new API<TradingBoxDataInfoVo>("TradeBoxHomedataInfo") {
-        @Override
-        public Call<DTResponse> request(HashMap<String, String> params) {
-            return mApi.tradeBoxHomedataInfo(params);
-        }
-    };
-
-    public API tradeBoxHistoryInfo = new API<List<TradingBoxHistoryItemVo>>("TradeBoxHistoryInfo") {
-        @Override
-        public Call<DTResponse> request(HashMap<String, String> params) {
-            return mApi.tradeBoxHistoryInfo(params);
-        }
-    };
-
-    public API tradeBoxByTradeId = new API<TradingBoxDetailsVo>("TradeBoxByTradeId") {
-        @Override
-        public Call<DTResponse> request(HashMap<String, String> params) {
-            return mApi.tradeBoxByTradeId(params);
-        }
-    };
-
-    public API getBoxInfo = new API<TradingBoxInfoVo>("GetBoxInfo") {
-        @Override
-        public Call<DTResponse> request(HashMap<String, String> params) {
-            return mApi.getBoxInfo(params);
-        }
-    };
-
     public API placeOrder = new API<String>("PlaceOrder") {
         @Override
         public Call<DTResponse> request(HashMap<String, String> params) {
@@ -186,13 +159,6 @@ public class ManagementService extends IService<ManagementApi> {
         }
     };
 
-    public API setAppSubscribe = new API<SubscribeVo>("SetAppSubscribe") {
-        @Override
-        public Call<DTResponse> request(HashMap<String, String> params) {
-            return mApi.setAppSubscribe(params);
-        }
-    };
-
     public API analystList = new API<List<AnalystVo>>("AnalystList") {
         @Override
         public Call<DTResponse> request(HashMap<String, String> params) {
@@ -204,13 +170,6 @@ public class ManagementService extends IService<ManagementApi> {
         @Override
         public Call<DTResponse> request(HashMap<String, String> params) {
             return mApi.marketJudgeList(params);
-        }
-    };
-
-    public API getListExt = new API<SubscribeStateVo>("GetListExt") {
-        @Override
-        public Call<DTResponse> request(HashMap<String, String> params) {
-            return mApi.getListExt(params);
         }
     };
 
@@ -350,6 +309,76 @@ public class ManagementService extends IService<ManagementApi> {
             paramsValue.put("protocolVersionList",protocolVersionList);
 
             return mApi.insertRatifyAccord(paramsValue);
+        }
+    };
+
+    public API getListExt = new API<SubscribeStateVo>("GetListExt") {
+        @Override
+        public Call<DTResponse> request(HashMap<String, String> params) {
+            return mApi.getListExt(params);
+        }
+    };
+
+    public API setAppSubscribe = new API<SubscribeVo>("SetAppSubscribe") {
+        @Override
+        public Call<DTResponse> request(HashMap<String, String> params) {
+            return mApi.setAppSubscribe(params);
+        }
+    };
+
+    public API tradeBoxHomedataInfo = new API<TradingBoxDataInfoVo>("TradeBoxHomedataInfo") {
+        @Override
+        public Call<DTResponse> request(HashMap<String, String> params) {
+            return mApi.tradeBoxHomedataInfo(params);
+        }
+    };
+
+    public API tradeBoxHistoryInfo = new API<List<TradingBoxItemVo>>("TradeBoxHistoryInfo") {
+        @Override
+        public Call<DTResponse> request(HashMap<String, String> params) {
+            return mApi.tradeBoxHistoryInfo(params);
+        }
+    };
+
+    public API tradeBoxByTradeId = new API<TradingBoxDetailsVo>("TradeBoxByTradeId") {
+        @Override
+        public Call<DTResponse> request(HashMap<String, String> params) {
+            return mApi.tradeBoxByTradeId(params);
+        }
+    };
+
+    public API getBoxInfo = new API<TradingBoxInfoVo>("GetBoxInfo") {
+        @Override
+        public Call<DTResponse> request(HashMap<String, String> params) {
+            return mApi.getBoxInfo(params);
+        }
+    };
+
+    public API queryTradeBoxList = new API<List<TradeBoxVo>>("QueryTradeBoxList") {
+        @Override
+        public Call<DTResponse> request(HashMap<String, String> params) {
+            return mApi.queryTradeBoxList(params);
+        }
+    };
+
+    public API queryTradeBoxLossHistoryInfo = new API<String>("QueryTradeBoxLossHistoryInfo") {
+        @Override
+        public Call<DTResponse> request(HashMap<String, String> params) {
+            return mApi.queryTradeBoxLossHistoryInfo(params);
+        }
+    };
+
+    public API getTradeBoxByTradeId = new API<String>("TradeBoxByTradeId") {
+        @Override
+        public Call<DTResponse> request(HashMap<String, String> params) {
+            return mApi.getTradeBoxByTradeId(params);
+        }
+    };
+
+    public API querySubscriberCount = new API<Integer>("QuerySubscriberCount") {
+        @Override
+        public Call<DTResponse> request(HashMap<String, String> params) {
+            return mApi.querySubscriberCount(params);
         }
     };
 

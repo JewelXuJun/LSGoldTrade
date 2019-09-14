@@ -5,8 +5,10 @@ import android.content.Context;
 import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
 import android.view.Gravity;
+import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.alibaba.android.arouter.launcher.ARouter;
@@ -17,12 +19,13 @@ import com.jme.lsgoldtrade.config.User;
 
 public class TradeBoxFunctionUtils {
 
-    public static void show(Activity activity, String url, String title, String content, int resId) {
+    public static void show(Activity activity, String url, String title, String content, int resId, boolean showShare) {
         final AlertDialog alertDialog = new AlertDialog.Builder(activity, R.style.function_dialog).create();
         alertDialog.show();
         alertDialog.setContentView(R.layout.pupupwindow_function);
 
         Window window = alertDialog.getWindow();
+        LinearLayout layout_share = window.findViewById(R.id.layout_share);
         TextView tv_share = window.findViewById(R.id.tv_share);
         TextView tv_history = window.findViewById(R.id.tv_history);
         TextView tv_order = window.findViewById(R.id.tv_order);
@@ -31,6 +34,8 @@ public class TradeBoxFunctionUtils {
 
         window.setLayout(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         window.setGravity(Gravity.RIGHT | Gravity.TOP);
+
+        layout_share.setVisibility(showShare ? View.VISIBLE : View.GONE);
 
         tv_share.setOnClickListener((view) -> {
             ShareUtils.popupwidnow(activity, url, title, content, resId);

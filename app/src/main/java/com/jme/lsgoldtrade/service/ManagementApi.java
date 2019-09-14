@@ -46,29 +46,11 @@ public interface ManagementApi {
     @POST("/tjsmanage/infoapi/v1/android/userNavigationModule/save")
     Call<DTResponse> saveNavigatorList(@Body Map<String, String> map);
 
-    @GET("/tjsmanage/infoapi/v1/android/tradingBox/tradeBoxHomedataInfo")
-    Call<DTResponse> tradeBoxHomedataInfo(@QueryMap Map<String, String> map);
-
-    @POST("/tjsmanage/infoapi/v1/android/setSubscribe")
-    Call<DTResponse> subscribe(@Body Map<String, String> map);
-
-    @GET("/tjsmanage/infoapi/v1/android/tradingBox/tradeBoxByTradeId")
-    Call<DTResponse> tradeBoxByTradeId(@QueryMap Map<String, String> map);
-
-    @GET("/tjsmanage/infoapi/v1/android/tradingBox/getBoxInfo")
-    Call<DTResponse> getBoxInfo(@QueryMap Map<String, String> map);
-
-    @GET("/tjsmanage/infoapi/v1/android/tradingBox/tradeBoxHistoryInfo")
-    Call<DTResponse> tradeBoxHistoryInfo(@QueryMap Map<String, String> map);
-
     @GET("/tjsmanage/infoapi/v1/android/marketJudge/analystList")
     Call<DTResponse> analystList(@QueryMap Map<String, String> map);
 
     @GET("/tjsmanage/infoapi/v1/android/marketJudge/list")
     Call<DTResponse> marketJudgeList(@QueryMap Map<String, String> map);
-
-    @GET("/tjsmanage/infoapi/v1/android/getListExt")
-    Call<DTResponse> getListExt(@QueryMap Map<String, String> map);
 
     @GET("/tjsmanage/infoapi/v1/android/embeddedSingle/list")
     Call<TradingBoxResponse> getOrderList(@QueryMap Map<String, String> map);
@@ -103,9 +85,6 @@ public interface ManagementApi {
     @POST("/tjsmanage/infoapi/v1/android/protocol/agreeProfitLossRisk")
     Call<DTResponse> agree(@Body Map<String, String> map);
 
-    @POST("/tjsmanage/infoapi/v1/android/setAppSubscribe")
-    Call<DTResponse> setAppSubscribe(@Body Map<String, String> map);
-
     @POST("/tjsmanage/infoapi/v1/android/vote/add")
     Call<DTResponse> add(@Body Map<String, String> map);
 
@@ -132,5 +111,35 @@ public interface ManagementApi {
 
     @POST("/tjsmanage/infoapi/v1/android/insertRatifyAccord")
     Call<DTResponse> insertRatifyAccord(@Body Map<String, Object> map);
+
+    @GET("/tjsmanage/infoapi/v1/android/getListExt")
+    Call<DTResponse> getListExt(@QueryMap Map<String, String> map);
+
+    @GET("/tjsmanage/infoapi/v1/android/tradingBox/tradeBoxHomedataInfo")
+    Call<DTResponse> tradeBoxHomedataInfo(@QueryMap Map<String, String> map);
+
+    @POST("/tjsmanage/infoapi/v1/android/setAppSubscribe")
+    Call<DTResponse> setAppSubscribe(@Body Map<String, String> map);
+
+    @GET("/tjsmanage/infoapi/v1/android/tradingBox/tradeBoxByTradeId")
+    Call<DTResponse> tradeBoxByTradeId(@QueryMap Map<String, String> map);
+
+    @GET("/tjsmanage/infoapi/v1/android/tradingBox/getBoxInfo")
+    Call<DTResponse> getBoxInfo(@QueryMap Map<String, String> map);
+
+    @GET("/tjsmanage/infoapi/v1/android/tradingBox/tradeBoxHistoryInfo")
+    Call<DTResponse> tradeBoxHistoryInfo(@QueryMap Map<String, String> map);
+
+    @GET("/tjsmanage/infoapi/v1/android/tradingBox/queryTradeBoxList")
+    Call<DTResponse> queryTradeBoxList(@QueryMap Map<String, String> map);
+
+    @GET("/tjsmanage/infoapi/v1/android/tradingBox/queryTradeBoxLossHistoryInfo")
+    Call<DTResponse> queryTradeBoxLossHistoryInfo(@QueryMap Map<String, String> map);
+
+    @GET("/tjsmanage/infoapi/v1/android/tradingBox/tradeBoxByTradeId")
+    Call<DTResponse> getTradeBoxByTradeId(@QueryMap Map<String, String> map);
+
+    @GET("/tjsmanage/infoapi/v1/android/tradingBox/querySubscriberCount")
+    Call<DTResponse> querySubscriberCount(@QueryMap Map<String, String> map);
 
 }
