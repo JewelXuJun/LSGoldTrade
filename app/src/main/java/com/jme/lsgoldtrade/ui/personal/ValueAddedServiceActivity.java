@@ -37,7 +37,7 @@ public class ValueAddedServiceActivity extends JMEBaseActivity {
     @Override
     protected void initView() {
         super.initView();
-        mBinding = (ActivityValueAddedServiceBinding) mBindingUtil;
+
         initToolbar("开通增值服务", true);
     }
 
@@ -71,6 +71,8 @@ public class ValueAddedServiceActivity extends JMEBaseActivity {
     @Override
     protected void initBinding() {
         super.initBinding();
+
+        mBinding = (ActivityValueAddedServiceBinding) mBindingUtil;
         mBinding.setHandlers(new ClickHandlers());
     }
 

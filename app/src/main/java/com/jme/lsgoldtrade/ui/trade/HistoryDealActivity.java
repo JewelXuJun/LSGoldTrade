@@ -65,8 +65,6 @@ public class HistoryDealActivity extends JMEBaseActivity implements OnRefreshLis
     protected void initView() {
         super.initView();
 
-        mBinding = (ActivityHistoryDealBinding) mBindingUtil;
-
         initToolbar(R.string.trade_history_deal, true);
     }
 
@@ -96,6 +94,7 @@ public class HistoryDealActivity extends JMEBaseActivity implements OnRefreshLis
     protected void initBinding() {
         super.initBinding();
 
+        mBinding = (ActivityHistoryDealBinding) mBindingUtil;
         mBinding.setHandlers(new ClickHandlers());
     }
 

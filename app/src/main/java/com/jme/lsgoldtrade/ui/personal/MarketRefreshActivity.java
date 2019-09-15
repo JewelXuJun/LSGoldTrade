@@ -25,8 +25,6 @@ public class MarketRefreshActivity extends JMEBaseActivity {
     protected void initView() {
         super.initView();
 
-        mBinding = (ActivityMarketRefreshBinding) mBindingUtil;
-
         initToolbar(R.string.personal_refresh_rate, true);
     }
 
@@ -47,6 +45,7 @@ public class MarketRefreshActivity extends JMEBaseActivity {
     protected void initBinding() {
         super.initBinding();
 
+        mBinding = (ActivityMarketRefreshBinding) mBindingUtil;
         mBinding.setHandlers(new ClickHandlers());
     }
 

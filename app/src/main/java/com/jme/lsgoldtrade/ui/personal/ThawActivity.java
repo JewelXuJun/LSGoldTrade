@@ -26,7 +26,6 @@ public class ThawActivity extends JMEBaseActivity {
     protected void initView() {
         super.initView();
         initToolbar("申请解冻", true);
-        mBinding = (ActivityThawBinding) mBindingUtil;
     }
 
     @Override
@@ -44,6 +43,8 @@ public class ThawActivity extends JMEBaseActivity {
     @Override
     protected void initBinding() {
         super.initBinding();
+
+        mBinding = (ActivityThawBinding) mBindingUtil;
         mBinding.setHandlers(new ClickHandlers());
     }
 

@@ -46,7 +46,6 @@ public class DetailsActivity extends JMEBaseActivity {
     protected void initView() {
         super.initView();
         initToolbar("账户明细", true);
-        mBinding = (ActivityDetailsBinding) mBindingUtil;
 
         adapter = new DetailsAdapter(null);
 
@@ -72,6 +71,8 @@ public class DetailsActivity extends JMEBaseActivity {
     @Override
     protected void initBinding() {
         super.initBinding();
+
+        mBinding = (ActivityDetailsBinding) mBindingUtil;
         mBinding.setHandlers(new ClickHandlers());
     }
 

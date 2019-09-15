@@ -31,7 +31,6 @@ public class MySubscribeActivity extends JMEBaseActivity {
     @Override
     protected void initView() {
         super.initView();
-        mBinding = (ActivityMySubscribeBinding) mBindingUtil;
     }
 
     @Override
@@ -49,6 +48,8 @@ public class MySubscribeActivity extends JMEBaseActivity {
     @Override
     protected void initBinding() {
         super.initBinding();
+
+        mBinding = (ActivityMySubscribeBinding) mBindingUtil;
         mBinding.setHandlers(new ClickHandlers());
     }
 

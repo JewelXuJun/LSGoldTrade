@@ -92,8 +92,6 @@ public class BindAccountActivity extends JMEBaseActivity {
 
         initToolbar(R.string.trade_bind_account, true);
 
-        mBinding = (ActivityBindAccountBinding) mBindingUtil;
-
         mBinding.checkboxAgree.setChecked(true);
     }
 
@@ -126,6 +124,7 @@ public class BindAccountActivity extends JMEBaseActivity {
     protected void initBinding() {
         super.initBinding();
 
+        mBinding = (ActivityBindAccountBinding) mBindingUtil;
         mBinding.setHandlers(new ClickHandlers());
     }
 

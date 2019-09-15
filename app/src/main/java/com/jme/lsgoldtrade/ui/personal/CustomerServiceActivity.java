@@ -69,8 +69,6 @@ public class CustomerServiceActivity extends JMEBaseActivity {
     protected void initView() {
         super.initView();
 
-        mBinding = (ActivityCustomerServiceBinding) mBindingUtil;
-
         initToolbar(R.string.personal_customer_service, true);
 
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
@@ -185,6 +183,7 @@ public class CustomerServiceActivity extends JMEBaseActivity {
     protected void initBinding() {
         super.initBinding();
 
+        mBinding = (ActivityCustomerServiceBinding) mBindingUtil;
         mBinding.setHandlers(new ClickHandlers());
     }
 

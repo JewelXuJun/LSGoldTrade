@@ -34,7 +34,7 @@ public class DiYanActivity extends JMEBaseActivity {
     @Override
     protected void initView() {
         super.initView();
-        mBinding = (ActivityDiYanBinding) mBindingUtil;
+
         initToolbar("递延方向", false);
     }
 
@@ -66,6 +66,8 @@ public class DiYanActivity extends JMEBaseActivity {
     @Override
     protected void initBinding() {
         super.initBinding();
+
+        mBinding = (ActivityDiYanBinding) mBindingUtil;
         mBinding.setHandlers(new ClickHandlers());
     }
 

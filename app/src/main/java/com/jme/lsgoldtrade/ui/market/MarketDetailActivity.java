@@ -135,8 +135,6 @@ public class MarketDetailActivity extends JMEBaseActivity implements FChart.OnPr
     protected void initView() {
         super.initView();
 
-        mBinding = (ActivityMarketDetailBinding) mBindingUtil;
-
         mContractId = getIntent().getStringExtra("ContractId");
         mContractIdList = StringUtils.getStringArray(getIntent().getStringExtra("ContractListValue"));
 
@@ -215,6 +213,7 @@ public class MarketDetailActivity extends JMEBaseActivity implements FChart.OnPr
     protected void initBinding() {
         super.initBinding();
 
+        mBinding = (ActivityMarketDetailBinding) mBindingUtil;
         mBinding.setHandlers(new ClickHandlers());
     }
 

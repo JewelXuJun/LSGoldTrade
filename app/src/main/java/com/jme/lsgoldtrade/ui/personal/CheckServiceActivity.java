@@ -42,8 +42,6 @@ public class CheckServiceActivity extends JMEBaseActivity {
         super.initView();
 
         initToolbar("我的增值服务", true);
-
-        mBinding = (ActivityCheckServiceBinding) mBindingUtil;
     }
 
     @Override
@@ -58,6 +56,8 @@ public class CheckServiceActivity extends JMEBaseActivity {
     @Override
     protected void initBinding() {
         super.initBinding();
+
+        mBinding = (ActivityCheckServiceBinding) mBindingUtil;
         mBinding.setHandlers(new ClickHandlers());
     }
 

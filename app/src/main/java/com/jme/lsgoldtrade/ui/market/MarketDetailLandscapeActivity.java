@@ -113,8 +113,6 @@ public class MarketDetailLandscapeActivity extends JMEBaseActivity implements FC
     protected void initView() {
         super.initView();
 
-        mBinding = (ActivityMarketDetailLandscapeBinding) mBindingUtil;
-
         mChart = mBinding.chart;
         mTChart = mChart.getTChart();
         mKChart = mChart.getKChart();
@@ -180,6 +178,7 @@ public class MarketDetailLandscapeActivity extends JMEBaseActivity implements FC
     protected void initBinding() {
         super.initBinding();
 
+        mBinding = (ActivityMarketDetailLandscapeBinding) mBindingUtil;
         mBinding.setHandlers(new ClickHandlers());
     }
 

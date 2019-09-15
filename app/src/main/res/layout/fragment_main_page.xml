@@ -93,6 +93,7 @@
                                 app:open_mz_mode="false" />
 
                             <LinearLayout
+                                android:id="@+id/layout_notice"
                                 android:layout_width="match_parent"
                                 android:layout_height="@dimen/common_item_height_middle"
                                 android:gravity="center_vertical"
@@ -104,6 +105,16 @@
                                     android:layout_marginLeft="@dimen/common_area_margin_big"
                                     android:src="@mipmap/ic_notice" />
 
+                                <TextView
+                                    android:id="@+id/tv_notice"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:layout_marginLeft="@dimen/common_area_margin_tiny"
+                                    android:textColor="@color/color_text_normal"
+                                    android:textSize="@dimen/sp_14"
+                                    android:visibility="gone" />
+
                                 <ViewFlipper
                                     android:id="@+id/view_flipper"
                                     android:layout_width="match_parent"
@@ -111,7 +122,8 @@
                                     android:layout_gravity="center"
                                     android:layout_marginLeft="@dimen/common_area_margin_tiny"
                                     android:inAnimation="@anim/anim_in"
-                                    android:outAnimation="@anim/anim_out" />
+                                    android:outAnimation="@anim/anim_out"
+                                    android:visibility="gone"/>
 
                             </LinearLayout>
 

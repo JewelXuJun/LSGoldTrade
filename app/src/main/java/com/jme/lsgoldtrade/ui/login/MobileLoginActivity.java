@@ -65,8 +65,6 @@ public class MobileLoginActivity extends JMEBaseActivity {
     protected void initView() {
         super.initView();
 
-        mBinding = (ActivityMobileLoginBinding) mBindingUtil;
-
         String mobile = SharedPreUtils.getString(this, SharedPreUtils.Login_Mobile);
 
         mBinding.etMobile.setText(mobile);
@@ -97,6 +95,7 @@ public class MobileLoginActivity extends JMEBaseActivity {
     protected void initBinding() {
         super.initBinding();
 
+        mBinding = (ActivityMobileLoginBinding) mBindingUtil;
         mBinding.setHandlers(new ClickHandlers());
     }
 

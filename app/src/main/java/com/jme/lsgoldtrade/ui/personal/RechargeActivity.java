@@ -82,7 +82,6 @@ public class RechargeActivity extends JMEBaseActivity {
     protected void initView() {
         super.initView();
         initToolbar("在线充值", true);
-        mBinding = (ActivityRechargeBinding) mBindingUtil;
     }
 
     @Override
@@ -175,6 +174,8 @@ public class RechargeActivity extends JMEBaseActivity {
     @Override
     protected void initBinding() {
         super.initBinding();
+
+        mBinding = (ActivityRechargeBinding) mBindingUtil;
         mBinding.setHandlers(new ClickHandlers());
     }
 

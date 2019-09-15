@@ -40,7 +40,6 @@ public class CheckUserInfoActivity extends JMEBaseActivity {
     protected void initView() {
         super.initView();
         initToolbar("信息验证", true);
-        mBinding = (ActivityCheckUserInfoBinding) mBindingUtil;
     }
 
     @Override
@@ -58,6 +57,8 @@ public class CheckUserInfoActivity extends JMEBaseActivity {
     @Override
     protected void initBinding() {
         super.initBinding();
+
+        mBinding = (ActivityCheckUserInfoBinding) mBindingUtil;
         mBinding.setHandlers(new ClickHandlers());
     }
 

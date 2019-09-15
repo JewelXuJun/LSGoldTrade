@@ -73,7 +73,7 @@ public class WarningActivity extends JMEBaseActivity {
     @Override
     protected void initView() {
         super.initView();
-        mBinding = (ActivityWarningBinding) mBindingUtil;
+
         mContractID = getIntent().getStringExtra("ContractID");
 
         if ("Ag(T+D)".equals(mContractID))
@@ -257,6 +257,8 @@ public class WarningActivity extends JMEBaseActivity {
     @Override
     protected void initBinding() {
         super.initBinding();
+
+        mBinding = (ActivityWarningBinding) mBindingUtil;
         mBinding.setHandlers(new ClickHandlers());
     }
 

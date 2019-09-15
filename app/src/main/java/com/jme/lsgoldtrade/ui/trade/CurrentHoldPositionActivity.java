@@ -89,8 +89,6 @@ public class CurrentHoldPositionActivity extends JMEBaseActivity implements OnRe
     protected void initView() {
         super.initView();
 
-        mBinding = (ActivityCurrentHoldPositionBinding) mBindingUtil;
-
         initToolbar(R.string.trade_curren_hold_position, true);
     }
 
@@ -119,6 +117,8 @@ public class CurrentHoldPositionActivity extends JMEBaseActivity implements OnRe
     @Override
     protected void initBinding() {
         super.initBinding();
+
+        mBinding = (ActivityCurrentHoldPositionBinding) mBindingUtil;
     }
 
     @Override

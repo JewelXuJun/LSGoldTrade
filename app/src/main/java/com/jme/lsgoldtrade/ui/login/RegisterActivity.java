@@ -52,8 +52,6 @@ public class RegisterActivity extends JMEBaseActivity {
         super.initView();
 
         initToolbar(R.string.register, true);
-
-        mBinding = (ActivityRegisterBinding) mBindingUtil;
     }
 
     @Override
@@ -75,6 +73,7 @@ public class RegisterActivity extends JMEBaseActivity {
     protected void initBinding() {
         super.initBinding();
 
+        mBinding = (ActivityRegisterBinding) mBindingUtil;
         mBinding.setHandlers(new ClickHandlers());
     }
 

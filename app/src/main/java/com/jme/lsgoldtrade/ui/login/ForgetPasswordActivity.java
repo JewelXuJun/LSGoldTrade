@@ -48,8 +48,6 @@ public class ForgetPasswordActivity extends JMEBaseActivity {
         super.initView();
 
         initToolbar(R.string.login_reset_password, true);
-
-        mBinding = (ActivityForgetPasswordBinding) mBindingUtil;
     }
 
     @Override
@@ -78,6 +76,7 @@ public class ForgetPasswordActivity extends JMEBaseActivity {
     protected void initBinding() {
         super.initBinding();
 
+        mBinding = (ActivityForgetPasswordBinding) mBindingUtil;
         mBinding.setHandlers(new ClickHandlers());
     }
 

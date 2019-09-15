@@ -35,8 +35,6 @@ public class SettingActivity extends JMEBaseActivity {
     protected void initView() {
         super.initView();
 
-        mBinding = (ActivitySettingBinding) mBindingUtil;
-
         initToolbar(R.string.personal_setting, true);
     }
 
@@ -58,6 +56,7 @@ public class SettingActivity extends JMEBaseActivity {
     protected void initBinding() {
         super.initBinding();
 
+        mBinding = (ActivitySettingBinding) mBindingUtil;
         mBinding.setHandlers(new ClickHandlers());
     }
 

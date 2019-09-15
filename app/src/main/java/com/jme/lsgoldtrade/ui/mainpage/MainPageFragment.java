@@ -357,38 +357,63 @@ public class MainPageFragment extends JMEBaseFragment implements OnRefreshListen
                         e.printStackTrace();
                     }
 
-                    if (null == mAdvertisementVoList || 0 == mAdvertisementVoList.size())
-                        return;
+                    if (null == mAdvertisementVoList || 0 == mAdvertisementVoList.size()) {
+                        mBinding.layoutNotice.setVisibility(View.GONE);
+                    } else {
+                        mBinding.layoutNotice.setVisibility(View.VISIBLE);
 
-                    for (int i = 0; i < mAdvertisementVoList.size(); i++) {
-                        AdvertisementVo advertisementVo = mAdvertisementVoList.get(i);
+                        if (mAdvertisementVoList.size() == 1) {
+                            mBinding.tvNotice.setVisibility(View.VISIBLE);
+                            mBinding.viewFlipper.setVisibility(View.GONE);
 
-                        if (null != advertisementVo) {
-                            View view = getLayoutInflater().inflate(R.layout.item_flipper, null);
-                            TextView tv_notice = view.findViewById(R.id.tv_notice);
-                            tv_notice.setText(advertisementVo.getTitle());
-                            view.setId(i);
+                            mBinding.tvNotice.setText(mAdvertisementVoList.get(0).getTitle());
 
-                            mBinding.viewFlipper.addView(view);
+                            mBinding.tvNotice.setOnClickListener((view) -> {
+                                AdvertisementVo advertisementVo = mAdvertisementVoList.get(0);
+
+                                if (null == advertisementVo)
+                                    return;
+
+                                ARouter.getInstance().build(Constants.ARouterUriConst.JMEWEBVIEW)
+                                        .withString("title", advertisementVo.getTitle())
+                                        .withString("url", Constants.HttpConst.URL_INFO + advertisementVo.getId())
+                                        .navigation();
+                            });
+                        } else {
+                            mBinding.tvNotice.setVisibility(View.GONE);
+                            mBinding.viewFlipper.setVisibility(View.VISIBLE);
+
+                            for (int i = 0; i < mAdvertisementVoList.size(); i++) {
+                                AdvertisementVo advertisementVo = mAdvertisementVoList.get(i);
+
+                                if (null != advertisementVo) {
+                                    View view = getLayoutInflater().inflate(R.layout.item_flipper, null);
+                                    TextView tv_notice = view.findViewById(R.id.tv_notice);
+                                    tv_notice.setText(advertisementVo.getTitle());
+                                    view.setId(i);
+
+                                    mBinding.viewFlipper.addView(view);
+                                }
+                            }
+
+                            mBinding.viewFlipper.setOnClickListener((v) -> {
+                                int id = mBinding.viewFlipper.getCurrentView().getId();
+
+                                AdvertisementVo advertisementVo = mAdvertisementVoList.get(id);
+
+                                if (null == advertisementVo)
+                                    return;
+
+                                ARouter.getInstance().build(Constants.ARouterUriConst.JMEWEBVIEW)
+                                        .withString("title", advertisementVo.getTitle())
+                                        .withString("url", Constants.HttpConst.URL_INFO + advertisementVo.getId())
+                                        .navigation();
+                            });
+
+                            mBinding.viewFlipper.setFlipInterval(2000);
+                            mBinding.viewFlipper.startFlipping();
                         }
                     }
-
-                    mBinding.viewFlipper.setOnClickListener((v) -> {
-                        int id = mBinding.viewFlipper.getCurrentView().getId();
-
-                        AdvertisementVo advertisementVo = mAdvertisementVoList.get(id);
-
-                        if (null == advertisementVo)
-                            return;
-
-                        ARouter.getInstance().build(Constants.ARouterUriConst.JMEWEBVIEW)
-                                .withString("title", advertisementVo.getTitle())
-                                .withString("url", Constants.HttpConst.URL_INFO + advertisementVo.getId())
-                                .navigation();
-                    });
-
-                    mBinding.viewFlipper.setFlipInterval(2000);
-                    mBinding.viewFlipper.startFlipping();
                 }
 
                 break;

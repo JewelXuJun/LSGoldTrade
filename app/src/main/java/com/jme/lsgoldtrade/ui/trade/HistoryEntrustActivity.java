@@ -65,8 +65,6 @@ public class HistoryEntrustActivity extends JMEBaseActivity implements OnRefresh
     protected void initView() {
         super.initView();
 
-        mBinding = (ActivityHistoryEntrustBinding) mBindingUtil;
-
         initToolbar(R.string.trade_history_entrust, true);
     }
 
@@ -96,6 +94,7 @@ public class HistoryEntrustActivity extends JMEBaseActivity implements OnRefresh
     protected void initBinding() {
         super.initBinding();
 
+        mBinding = (ActivityHistoryEntrustBinding) mBindingUtil;
         mBinding.setHandlers(new ClickHandlers());
     }
 

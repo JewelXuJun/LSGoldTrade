@@ -46,8 +46,6 @@ public class CurrentEntrustActivity extends JMEBaseActivity implements OnRefresh
     protected void initView() {
         super.initView();
 
-        mBinding = (ActivityCurrentEntrustBinding) mBindingUtil;
-
         initToolbar(R.string.trade_current_entrust, true);
     }
 
@@ -73,6 +71,8 @@ public class CurrentEntrustActivity extends JMEBaseActivity implements OnRefresh
     @Override
     protected void initBinding() {
         super.initBinding();
+
+        mBinding = (ActivityCurrentEntrustBinding) mBindingUtil;
     }
 
     @Override

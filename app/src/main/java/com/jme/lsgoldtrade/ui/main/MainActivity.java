@@ -154,8 +154,6 @@ public class MainActivity extends JMEBaseActivity implements TabHost.OnTabChange
     protected void initView() {
         super.initView();
 
-        mBinding = (ActivityMainBinding) mBindingUtil;
-
         setTabHost();
 
         if (!TextUtils.isEmpty(SharedPreUtils.getString(mContext, SharedPreUtils.Token)))
@@ -202,6 +200,8 @@ public class MainActivity extends JMEBaseActivity implements TabHost.OnTabChange
     @Override
     protected void initBinding() {
         super.initBinding();
+
+        mBinding = (ActivityMainBinding) mBindingUtil;
     }
 
     private void initRxBus() {

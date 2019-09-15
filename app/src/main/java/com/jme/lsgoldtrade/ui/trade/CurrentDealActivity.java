@@ -46,8 +46,6 @@ public class CurrentDealActivity extends JMEBaseActivity implements OnRefreshLis
     protected void initView() {
         super.initView();
 
-        mBinding = (ActivityCurrentDealBinding) mBindingUtil;
-
         initToolbar(R.string.trade_current_deal, true);
     }
 
@@ -73,6 +71,8 @@ public class CurrentDealActivity extends JMEBaseActivity implements OnRefreshLis
     @Override
     protected void initBinding() {
         super.initBinding();
+
+        mBinding = (ActivityCurrentDealBinding) mBindingUtil;
     }
 
     @Override

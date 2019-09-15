@@ -49,8 +49,6 @@ public class EconomicCalendarActivity extends JMEBaseActivity {
     protected void initView() {
         super.initView();
 
-        mBinding = (ActivityEconomicCalendarBinding) mBindingUtil;
-
         setWebViewSettings();
     }
 
@@ -103,6 +101,7 @@ public class EconomicCalendarActivity extends JMEBaseActivity {
     protected void initBinding() {
         super.initBinding();
 
+        mBinding = (ActivityEconomicCalendarBinding) mBindingUtil;
         mBinding.setHandlers(new ClickHandlers());
     }
 

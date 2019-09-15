@@ -63,7 +63,6 @@ public class AccountLoginActivity extends JMEBaseActivity {
     protected void initView() {
         super.initView();
 
-        mBinding = (ActivityAccountLoginBinding) mBindingUtil;
 
         String account = SharedPreUtils.getString(this, SharedPreUtils.Login_Account);
 
@@ -92,6 +91,7 @@ public class AccountLoginActivity extends JMEBaseActivity {
     protected void initBinding() {
         super.initBinding();
 
+        mBinding = (ActivityAccountLoginBinding) mBindingUtil;
         mBinding.setHandlers(new ClickHandlers());
     }
 

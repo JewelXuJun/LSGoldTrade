@@ -53,8 +53,9 @@ public class WithdrawActivity extends JMEBaseActivity {
     @Override
     protected void initView() {
         super.initView();
+
         initToolbar("提现", true);
-        mBinding = (ActivityWithdrawBinding) mBindingUtil;
+
     }
 
     @Override
@@ -67,6 +68,8 @@ public class WithdrawActivity extends JMEBaseActivity {
     @Override
     protected void initBinding() {
         super.initBinding();
+
+        mBinding = (ActivityWithdrawBinding) mBindingUtil;
         mBinding.setHandlers(new ClickHandlers());
     }
 

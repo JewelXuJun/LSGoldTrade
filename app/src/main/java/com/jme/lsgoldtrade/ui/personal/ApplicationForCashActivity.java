@@ -26,7 +26,6 @@ public class ApplicationForCashActivity extends JMEBaseActivity {
     protected void initView() {
         super.initView();
         initToolbar("提现申请", true);
-        mBinding = (ActivityApplicationForCashBinding) mBindingUtil;
     }
 
     @Override
@@ -44,6 +43,8 @@ public class ApplicationForCashActivity extends JMEBaseActivity {
     @Override
     protected void initBinding() {
         super.initBinding();
+
+        mBinding = (ActivityApplicationForCashBinding) mBindingUtil;
         mBinding.setHandlers(new ClickHandlers());
     }
 

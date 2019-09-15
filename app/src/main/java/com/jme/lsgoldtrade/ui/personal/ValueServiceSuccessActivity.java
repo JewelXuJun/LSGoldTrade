@@ -24,7 +24,7 @@ public class ValueServiceSuccessActivity extends JMEBaseActivity {
     @Override
     protected void initView() {
         super.initView();
-        mBinding = (ActivityValueServiceSuccessBinding) mBindingUtil;
+
         initToolbar("开通增值服务", true);
     }
 
@@ -36,6 +36,8 @@ public class ValueServiceSuccessActivity extends JMEBaseActivity {
     @Override
     protected void initBinding() {
         super.initBinding();
+
+        mBinding = (ActivityValueServiceSuccessBinding) mBindingUtil;
         mBinding.setHandlers(new ClickHandlers());
     }
 

@@ -34,7 +34,6 @@ public class CashActivity extends JMEBaseActivity {
     protected void initView() {
         super.initView();
         initToolbar("提现申请", true);
-        mBinding = (ActivityCashBinding) mBindingUtil;
     }
 
     @Override
@@ -50,12 +49,13 @@ public class CashActivity extends JMEBaseActivity {
     @Override
     protected void initListener() {
         super.initListener();
-
     }
 
     @Override
     protected void initBinding() {
         super.initBinding();
+
+        mBinding = (ActivityCashBinding) mBindingUtil;
         mBinding.setHandlers(new ClickHandlers());
     }
 

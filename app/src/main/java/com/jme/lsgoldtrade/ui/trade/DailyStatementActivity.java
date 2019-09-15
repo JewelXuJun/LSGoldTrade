@@ -43,8 +43,6 @@ public class DailyStatementActivity extends JMEBaseActivity {
     protected void initView() {
         super.initView();
 
-        mBinding = (ActivityDailyStatementBinding) mBindingUtil;
-
         initToolbar(R.string.trade_daily_statement_query, true);
     }
 
@@ -65,6 +63,7 @@ public class DailyStatementActivity extends JMEBaseActivity {
     protected void initBinding() {
         super.initBinding();
 
+        mBinding = (ActivityDailyStatementBinding) mBindingUtil;
         mBinding.setHandlers(new ClickHandlers());
     }
 
