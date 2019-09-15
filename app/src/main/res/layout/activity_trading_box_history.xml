@@ -1,6 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android">
 
+    <data>
+
+        <variable
+            name="handlers"
+            type="com.jme.lsgoldtrade.ui.tradingbox.TradingBoxHistroyActivity.ClickHandlers" />
+
+    </data>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -11,11 +19,84 @@
 
         <include layout="@layout/item_line_vertical" />
 
+        <RelativeLayout
+            android:id="@+id/layout_subcribe_number"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/common_item_height_normal"
+            android:layout_below="@id/layout_toolbar"
+            android:background="@color/white"
+            android:orientation="horizontal"
+            android:paddingLeft="@dimen/common_area_margin"
+            android:paddingRight="@dimen/common_area_margin">
+
+            <TextView
+                android:id="@+id/tv_subscribe_number"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:textColor="@color/black"
+                android:textSize="@dimen/sp_14" />
+
+            <TextView
+                android:id="@+id/tv_unSubscribe"
+                android:layout_width="@dimen/width_subscribe"
+                android:layout_height="@dimen/height_subscribe"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:background="@drawable/bg_btn_blue_solid"
+                android:gravity="center"
+                android:onClick="@{() -> handlers.onClickSubcribe()}"
+                android:text="@string/trading_box_subscribe"
+                android:textColor="@color/white"
+                android:textSize="@dimen/sp_14"
+                android:visibility="gone" />
+
+            <TextView
+                android:id="@+id/tv_subscribe"
+                android:layout_width="@dimen/width_subscribe"
+                android:layout_height="@dimen/height_subscribe"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:gravity="center"
+                android:text="@string/trading_box_subscribed"
+                android:textColor="@color/black"
+                android:textSize="@dimen/sp_14"
+                android:visibility="gone" />
+
+        </RelativeLayout>
+
+        <LinearLayout
+            android:id="@+id/layout_no_data"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="@dimen/margin_big"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@mipmap/ic_trading_box_no_data" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/trading_box_no_data_history"
+                android:layout_marginTop="@dimen/common_area_margin"
+                android:textSize="@dimen/sp_14"
+                android:textColor="@color/color_text_normal"/>
+
+        </LinearLayout>
+
         <android.support.v4.widget.NestedScrollView
+            android:id="@+id/nestedScrollView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_marginTop="@dimen/common_area_margin_tiny"
             android:fillViewport="true"
-            android:scrollbars="none">
+            android:scrollbars="none"
+            android:visibility="gone">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -25,15 +106,15 @@
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/recyclerView"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:scrollbars="none" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:layout_marginTop="@dimen/common_page_margin"
-                    android:layout_marginBottom="@dimen/common_page_margin"
+                    android:layout_marginTop="@dimen/common_area_margin"
+                    android:layout_marginBottom="@dimen/margin_normal"
                     android:gravity="center_vertical"
                     android:text="@string/trading_box_suggest"
                     android:textColor="@color/gray"

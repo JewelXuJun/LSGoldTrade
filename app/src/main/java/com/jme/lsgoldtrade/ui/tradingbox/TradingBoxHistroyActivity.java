@@ -2,35 +2,33 @@ package com.jme.lsgoldtrade.ui.tradingbox;
 
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
+import android.view.View;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
-import com.alibaba.android.arouter.launcher.ARouter;
-import com.google.gson.Gson;
+import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.jme.common.network.DTRequest;
 import com.jme.common.network.Head;
 import com.jme.lsgoldtrade.R;
 import com.jme.lsgoldtrade.base.JMEBaseActivity;
 import com.jme.lsgoldtrade.config.Constants;
 import com.jme.lsgoldtrade.databinding.ActivityTradingBoxHistoryBinding;
-import com.jme.lsgoldtrade.domain.TradingBoxHistoryItemVo;
-import com.jme.lsgoldtrade.domain.TradingBoxHistoryItemSimpleVo;
+import com.jme.lsgoldtrade.domain.SubscribeStateVo;
+import com.jme.lsgoldtrade.domain.TradingBoxHistoryVo;
+import com.jme.lsgoldtrade.domain.TradingBoxVo;
 import com.jme.lsgoldtrade.service.ManagementService;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-/**
- * 历史匣子
- */
 @Route(path = Constants.ARouterUriConst.TRADINGBOXHISTROY)
-public class TradingBoxHistroyActivity extends JMEBaseActivity {
+public class TradingBoxHistroyActivity extends JMEBaseActivity implements BaseQuickAdapter.RequestLoadMoreListener{
 
     private ActivityTradingBoxHistoryBinding mBinding;
 
-    private TradingBoxHistroyAdapter mAdapter;
+    private TradingBoxAdapter mAdapter;
 
-    private List<TradingBoxHistoryItemVo> mTradingBoxHistoryItemVoList;
+    private int mCurrentPage = 1;
+    private int mTotal = 0;
 
     @Override
     protected int getContentViewId() {
@@ -43,9 +41,7 @@ public class TradingBoxHistroyActivity extends JMEBaseActivity {
 
         initToolbar(R.string.trading_box_function_history, true);
 
-        mBinding = (ActivityTradingBoxHistoryBinding) mBindingUtil;
-
-        mAdapter = new TradingBoxHistroyAdapter(R.layout.item_trading_box_history, null);
+        mAdapter = new TradingBoxAdapter(this, null, "TradingBoxHistory");
 
         mBinding.recyclerView.setHasFixedSize(false);
         mBinding.recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -56,37 +52,44 @@ public class TradingBoxHistroyActivity extends JMEBaseActivity {
     protected void initData(Bundle savedInstanceState) {
         super.initData(savedInstanceState);
 
-        getTradeBoxHistoryInfo();
+        querySubscriberCount();
+        getListExt();
+        queryTradeBoxLossHistoryInfo();
     }
 
     @Override
     protected void initListener() {
         super.initListener();
 
-        mAdapter.setOnItemClickListener((adapter, view, position) -> {
-            if (null == mTradingBoxHistoryItemVoList || 0 == mTradingBoxHistoryItemVoList.size())
-                return;
-
-            TradingBoxHistoryItemVo tradingBoxHistoryItemVo = mTradingBoxHistoryItemVoList.get(position);
-
-            if (null == tradingBoxHistoryItemVo)
-                return;
-
-            ARouter.getInstance()
-                    .build(Constants.ARouterUriConst.TRADINGBOXDETAIL)
-                    .withString("Value", new Gson().toJson(tradingBoxHistoryItemVo))
-                    .withString("Type", "2")
-                    .navigation();
-        });
+        mAdapter.setOnLoadMoreListener(this, mBinding.recyclerView);
     }
 
     @Override
     protected void initBinding() {
         super.initBinding();
+
+        mBinding = (ActivityTradingBoxHistoryBinding) mBindingUtil;
+        mBinding.setHandlers(new ClickHandlers());
     }
 
-    private void getTradeBoxHistoryInfo() {
-        sendRequest(ManagementService.getInstance().tradeBoxHistoryInfo, new HashMap<>(), true);
+    private void querySubscriberCount() {
+        sendRequest(ManagementService.getInstance().querySubscriberCount, new HashMap<>(), false);
+    }
+
+    private void getListExt() {
+        sendRequest(ManagementService.getInstance().getListExt, new HashMap<>(), false);
+    }
+
+    private void setAppSubscribe() {
+        sendRequest(ManagementService.getInstance().setAppSubscribe, new HashMap<>(), true);
+    }
+
+    private void queryTradeBoxLossHistoryInfo() {
+        HashMap<String, String> params = new HashMap<>();
+        params.put("current", String.valueOf(mCurrentPage));
+        params.put("pageSize", "10");
+
+        sendRequest(ManagementService.getInstance().queryTradeBoxLossHistoryInfo, params, true);
     }
 
     @Override
@@ -94,42 +97,102 @@ public class TradingBoxHistroyActivity extends JMEBaseActivity {
         super.DataReturn(request, head, response);
 
         switch (request.getApi().getName()) {
-            case "TradeBoxHistoryInfo":
+            case "QuerySubscriberCount":
+                if (head.isSuccess())
+                    mBinding.tvSubscribeNumber.setText(String.format(getString(R.string.trading_box_subscribe_number), null == response ? 0 : (int) response));
+
+                break;
+            case "GetListExt":
                 if (head.isSuccess()) {
+                    SubscribeStateVo subscribeStateVo;
+
                     try {
-                        mTradingBoxHistoryItemVoList = (List<TradingBoxHistoryItemVo>) response;
+                        subscribeStateVo = (SubscribeStateVo) response;
                     } catch (Exception e) {
-                        mTradingBoxHistoryItemVoList = null;
+                        subscribeStateVo = null;
 
                         e.printStackTrace();
                     }
 
-                    if (null == mTradingBoxHistoryItemVoList || 0 == mTradingBoxHistoryItemVoList.size())
-                        return;
+                    if (null == subscribeStateVo) {
+                        mBinding.tvUnSubscribe.setVisibility(View.GONE);
+                        mBinding.tvSubscribe.setVisibility(View.GONE);
+                    } else {
+                        List<SubscribeStateVo.SubscribeBean> subscribeBeanList = subscribeStateVo.getList();
 
-                    List<TradingBoxHistoryItemSimpleVo> list = new ArrayList<>();
+                        boolean subscribeFlag = null == subscribeBeanList || 0 == subscribeBeanList.size() ? false : true;
 
-                    for (int i = 0; i < mTradingBoxHistoryItemVoList.size(); i++) {
-                        List<TradingBoxHistoryItemVo.HistoryListVoListBean> historyListVoListBeanList = mTradingBoxHistoryItemVoList.get(i).getHistoryListVoList();
+                        mBinding.tvUnSubscribe.setVisibility(subscribeFlag ? View.GONE : View.VISIBLE);
+                        mBinding.tvSubscribe.setVisibility(subscribeFlag ? View.VISIBLE : View.GONE);
+                    }
+                }
 
-                        if (null != historyListVoListBeanList && historyListVoListBeanList.size() > 0) {
-                            TradingBoxHistoryItemVo.HistoryListVoListBean historyListVoListBean = historyListVoListBeanList.get(0);
-                            TradingBoxHistoryItemSimpleVo tradingBoxHistoryItemSimpleVo = new TradingBoxHistoryItemSimpleVo();
-                            tradingBoxHistoryItemSimpleVo.setChance(historyListVoListBean.getChance());
-                            tradingBoxHistoryItemSimpleVo.setDirection(historyListVoListBean.getDirection());
-                            tradingBoxHistoryItemSimpleVo.setPushTime(historyListVoListBean.getPushTime());
-                            tradingBoxHistoryItemSimpleVo.setTradeId(historyListVoListBean.getTradeId());
-                            tradingBoxHistoryItemSimpleVo.setVariety(historyListVoListBean.getVariety());
-                            tradingBoxHistoryItemSimpleVo.setPeriodName(mTradingBoxHistoryItemVoList.get(i).getPeriodName());
+                break;
+            case "SetAppSubscribe":
+                if (head.isSuccess())
+                    getListExt();
 
-                            list.add(tradingBoxHistoryItemSimpleVo);
-                        }
+                break;
+            case "QueryTradeBoxLossHistoryInfo":
+                if (head.isSuccess()) {
+                    TradingBoxHistoryVo tradingBoxHistoryVo;
+
+                    try {
+                        tradingBoxHistoryVo = (TradingBoxHistoryVo) response;
+                    } catch (Exception e) {
+                        tradingBoxHistoryVo = null;
+
+                        e.printStackTrace();
                     }
 
-                    mAdapter.setNewData(list);
+                    if (null == tradingBoxHistoryVo) {
+                        mBinding.layoutNoData.setVisibility(View.VISIBLE);
+                        mBinding.nestedScrollView.setVisibility(View.GONE);
+                    } else {
+                        mTotal = tradingBoxHistoryVo.getTotal();
+
+                        List<TradingBoxVo> tradingBoxVoList = tradingBoxHistoryVo.getRecords();
+
+                        if (null == tradingBoxVoList || 0 == tradingBoxVoList.size()) {
+                            mBinding.layoutNoData.setVisibility(View.VISIBLE);
+                            mBinding.nestedScrollView.setVisibility(View.GONE);
+                        } else {
+                            mBinding.layoutNoData.setVisibility(View.GONE);
+                            mBinding.nestedScrollView.setVisibility(View.VISIBLE);
+
+                            if (mCurrentPage == 1) {
+                                mAdapter.setNewData(tradingBoxVoList);
+                            } else {
+                                mAdapter.addData(tradingBoxVoList);
+                                mAdapter.loadMoreComplete();
+                            }
+                        }
+                    }
                 }
 
                 break;
         }
     }
+
+    @Override
+    public void onLoadMoreRequested() {
+        mBinding.recyclerView.postDelayed(() -> {
+            if (mCurrentPage < mTotal) {
+                mCurrentPage++;
+
+                queryTradeBoxLossHistoryInfo();
+            } else {
+                mAdapter.loadMoreEnd();
+            }
+        }, 0);
+    }
+
+    public class ClickHandlers {
+
+        public void onClickSubcribe() {
+            setAppSubscribe();
+        }
+
+    }
+
 }

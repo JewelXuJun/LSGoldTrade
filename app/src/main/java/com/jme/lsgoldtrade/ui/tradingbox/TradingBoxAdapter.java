@@ -18,10 +18,13 @@ public class TradingBoxAdapter extends BaseQuickAdapter<TradingBoxVo, BaseViewHo
 
     private AppCompatActivity mActivity;
 
-    public TradingBoxAdapter(AppCompatActivity activity, List<TradingBoxVo> tradingBoxVoList) {
+    private String mType;
+
+    public TradingBoxAdapter(AppCompatActivity activity, List<TradingBoxVo> tradingBoxVoList, String type) {
         super(R.layout.item_trading_box, tradingBoxVoList);
 
         mActivity = activity;
+        mType = type;
     }
 
     @Override
@@ -47,7 +50,7 @@ public class TradingBoxAdapter extends BaseQuickAdapter<TradingBoxVo, BaseViewHo
         }
 
         TradingBoxFragmentPagerAdapter adapter = new TradingBoxFragmentPagerAdapter(mActivity.getSupportFragmentManager(),
-                tradingBoxListVoBeanList, fragmentList, periodName, "TradingBox");
+                tradingBoxListVoBeanList, fragmentList, periodName, mType);
 
         ViewPager viewPager = helper.getView(R.id.viewpager);
         LinearLayout layoutPrevious = helper.getView(R.id.layout_previous);

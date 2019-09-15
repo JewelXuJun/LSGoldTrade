@@ -14,8 +14,8 @@ import com.jme.lsgoldtrade.domain.ChannelVo;
 import com.jme.lsgoldtrade.domain.CustomerServiceVo;
 import com.jme.lsgoldtrade.domain.MarketJudgmentListVo;
 import com.jme.lsgoldtrade.domain.AnalystVo;
+import com.jme.lsgoldtrade.domain.TradingBoxHistoryVo;
 import com.jme.lsgoldtrade.domain.TradingBoxVo;
-import com.jme.lsgoldtrade.domain.TradingBoxItemVo;
 import com.jme.lsgoldtrade.domain.InfoVo;
 import com.jme.lsgoldtrade.domain.SubscribeStateVo;
 import com.jme.lsgoldtrade.domain.TradingBoxOrderVo;
@@ -325,13 +325,6 @@ public class ManagementService extends IService<ManagementApi> {
         }
     };
 
-    public API tradeBoxHistoryInfo = new API<List<TradingBoxItemVo>>("TradeBoxHistoryInfo") {
-        @Override
-        public Call<DTResponse> request(HashMap<String, String> params) {
-            return mApi.tradeBoxHistoryInfo(params);
-        }
-    };
-
     public API getBoxInfo = new API<TradingBoxInfoVo>("GetBoxInfo") {
         @Override
         public Call<DTResponse> request(HashMap<String, String> params) {
@@ -346,7 +339,7 @@ public class ManagementService extends IService<ManagementApi> {
         }
     };
 
-    public API queryTradeBoxLossHistoryInfo = new API<String>("QueryTradeBoxLossHistoryInfo") {
+    public API queryTradeBoxLossHistoryInfo = new API<TradingBoxHistoryVo>("QueryTradeBoxLossHistoryInfo") {
         @Override
         public Call<DTResponse> request(HashMap<String, String> params) {
             return mApi.queryTradeBoxLossHistoryInfo(params);

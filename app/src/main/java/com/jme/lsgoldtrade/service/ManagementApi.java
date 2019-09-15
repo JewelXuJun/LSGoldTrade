@@ -121,9 +121,6 @@ public interface ManagementApi {
     @GET("/tjsmanage/infoapi/v1/android/tradingBox/getBoxInfo")
     Call<DTResponse> getBoxInfo(@QueryMap Map<String, String> map);
 
-    @GET("/tjsmanage/infoapi/v1/android/tradingBox/tradeBoxHistoryInfo")
-    Call<DTResponse> tradeBoxHistoryInfo(@QueryMap Map<String, String> map);
-
     @GET("/tjsmanage/infoapi/v1/android/tradingBox/queryTradeBoxList")
     Call<DTResponse> queryTradeBoxList(@QueryMap Map<String, String> map);
 
