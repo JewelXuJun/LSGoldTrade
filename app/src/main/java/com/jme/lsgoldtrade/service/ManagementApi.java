@@ -118,9 +118,6 @@ public interface ManagementApi {
     @POST("/tjsmanage/infoapi/v1/android/setAppSubscribe")
     Call<DTResponse> setAppSubscribe(@Body Map<String, String> map);
 
-    @GET("/tjsmanage/infoapi/v1/android/tradingBox/tradeBoxByTradeId")
-    Call<DTResponse> tradeBoxByTradeId(@QueryMap Map<String, String> map);
-
     @GET("/tjsmanage/infoapi/v1/android/tradingBox/getBoxInfo")
     Call<DTResponse> getBoxInfo(@QueryMap Map<String, String> map);
 

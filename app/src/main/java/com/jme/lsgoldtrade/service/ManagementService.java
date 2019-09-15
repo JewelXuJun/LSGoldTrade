@@ -332,13 +332,6 @@ public class ManagementService extends IService<ManagementApi> {
         }
     };
 
-    public API tradeBoxByTradeId = new API<TradingBoxDetailsVo>("TradeBoxByTradeId") {
-        @Override
-        public Call<DTResponse> request(HashMap<String, String> params) {
-            return mApi.tradeBoxByTradeId(params);
-        }
-    };
-
     public API getBoxInfo = new API<TradingBoxInfoVo>("GetBoxInfo") {
         @Override
         public Call<DTResponse> request(HashMap<String, String> params) {
@@ -360,7 +353,7 @@ public class ManagementService extends IService<ManagementApi> {
         }
     };
 
-    public API getTradeBoxByTradeId = new API<String>("TradeBoxByTradeId") {
+    public API getTradeBoxByTradeId = new API<TradingBoxDetailsVo>("TradeBoxByTradeId") {
         @Override
         public Call<DTResponse> request(HashMap<String, String> params) {
             return mApi.getTradeBoxByTradeId(params);

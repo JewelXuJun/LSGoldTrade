@@ -10,31 +10,34 @@ import android.view.View;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.jme.common.network.DTRequest;
+import com.jme.common.network.Head;
 import com.jme.lsgoldtrade.R;
 import com.jme.lsgoldtrade.base.JMEBaseActivity;
 import com.jme.lsgoldtrade.config.Constants;
 import com.jme.lsgoldtrade.databinding.ActivityTradingBoxDetailBinding;
-import com.jme.lsgoldtrade.domain.TradingBoxHistoryItemVo;
+import com.jme.lsgoldtrade.domain.SubscribeStateVo;
+import com.jme.lsgoldtrade.domain.TradingBoxVo;
+import com.jme.lsgoldtrade.service.ManagementService;
 import com.jme.lsgoldtrade.util.TradeBoxFunctionUtils;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
-/**
- * 交易匣子详情
- */
 @Route(path = Constants.ARouterUriConst.TRADINGBOXDETAIL)
 public class TradingBoxDetailActivity extends JMEBaseActivity {
 
     private ActivityTradingBoxDetailBinding mBinding;
 
+    private int mPosition;
+    private String mPeriodName;
     private String mType;
-    private String mTradeId;
 
-    private List<TradingBoxHistoryItemVo.HistoryListVoListBean> mHistoryListVoListBeanList;
-    private ArrayList<TradingBoxHistoryFragment> mFragmentList = new ArrayList<>();
+    private List<TradingBoxVo.TradingBoxListVoBean> mTradingBoxListVoBeanList;
+    private List<TradingBoxDetailFragment> mFragmentList = new ArrayList<>();
 
-    private TradingBoxHistoryAdapter mAdapter;
+    private TradingBoxDetailAdapter mAdapter;
 
     @Override
     protected int getContentViewId() {
@@ -52,35 +55,39 @@ public class TradingBoxDetailActivity extends JMEBaseActivity {
     protected void initData(Bundle savedInstanceState) {
         super.initData(savedInstanceState);
 
+        mPosition = getIntent().getIntExtra("Position", -10000);
+        mPeriodName = getIntent().getStringExtra("PeriodName");
         mType = getIntent().getStringExtra("Type");
+        mTradingBoxListVoBeanList = new Gson().fromJson(getIntent().getStringExtra("Value"), new TypeToken<List<TradingBoxVo.TradingBoxListVoBean>>() {
+        }.getType());
 
-        if (mType.equals("1")) {
-            mTradeId = getIntent().getStringExtra("Value");
+        initToolbar(String.format(getString(R.string.trading_box_number), mPeriodName), true);
 
-            initToolbar(String.format(getString(R.string.trading_box_number), getIntent().getStringExtra("PeriodName")), true);
+        if (null == mTradingBoxListVoBeanList || 0 == mTradingBoxListVoBeanList.size())
+            return;
 
+        if (mType.equals("TradingBox")) {
             setRightNavigation("", R.mipmap.ic_more, 0, () ->
-                    TradeBoxFunctionUtils.show(this, Constants.HttpConst.URL_TRADINGBOXINFO + mTradeId,
-                    String.format(getString(R.string.trading_box_number), getIntent().getStringExtra("PeriodName")),
-                    getString(R.string.trading_box_share_content), mBinding.layout.getId()));
-
-            initViewPagerSimple();
+                    TradeBoxFunctionUtils.show(this, Constants.HttpConst.URL_TRADINGBOXINFO
+                                    + mTradingBoxListVoBeanList.get(mBinding.viewpager.getCurrentItem()).getTradeId(),
+                    String.format(getString(R.string.trading_box_number), mPeriodName),
+                    getString(R.string.trading_box_share_content), mBinding.layout.getId(),true));
         } else if (mType.equals("2")) {
-            TradingBoxHistoryItemVo tradingBoxHistoryItemVo = new Gson().fromJson(getIntent().getStringExtra("Value"), new TypeToken<TradingBoxHistoryItemVo>() {
+           /* TradingBoxHistoryItemVo tradingBoxHistoryItemVo = new Gson().fromJson(getIntent().getStringExtra("Value"), new TypeToken<TradingBoxHistoryItemVo>() {
             }.getType());
 
             if (null == tradingBoxHistoryItemVo)
                 return;
 
-            initToolbar(String.format(getString(R.string.trading_box_number), tradingBoxHistoryItemVo.getPeriodName()), true);
-
             mHistoryListVoListBeanList = tradingBoxHistoryItemVo.getHistoryListVoList();
 
-            if (null == mHistoryListVoListBeanList || 0 == mHistoryListVoListBeanList.size())
-                return;
-
-            initViewPager();
+            */
         }
+
+        initViewPager();
+
+        querySubscriberCount();
+        getListExt();
     }
 
     @Override
@@ -96,32 +103,20 @@ public class TradingBoxDetailActivity extends JMEBaseActivity {
         mBinding.setHandlers(new ClickHandlers());
     }
 
-    private void initViewPagerSimple() {
-        mFragmentList.add(new TradingBoxHistoryFragment());
-
-        mAdapter = new TradingBoxHistoryAdapter(getSupportFragmentManager());
-
-        mBinding.viewpager.removeAllViewsInLayout();
-        mBinding.viewpager.setAdapter(mAdapter);
-        mBinding.viewpager.setOffscreenPageLimit(1);
-
-        mBinding.btnPrevious.setVisibility(View.GONE);
-        mBinding.btnNext.setVisibility(View.GONE);
-    }
-
     private void initViewPager() {
-        for (int i = 0; i < mHistoryListVoListBeanList.size(); i++) {
-            mFragmentList.add(new TradingBoxHistoryFragment());
+        for (int i = 0; i < mTradingBoxListVoBeanList.size(); i++) {
+            mFragmentList.add(new TradingBoxDetailFragment());
         }
 
-        mAdapter = new TradingBoxHistoryAdapter(getSupportFragmentManager());
+        mAdapter = new TradingBoxDetailAdapter(getSupportFragmentManager());
 
         mBinding.viewpager.removeAllViewsInLayout();
         mBinding.viewpager.setAdapter(mAdapter);
         mBinding.viewpager.setOffscreenPageLimit(2);
+        mBinding.viewpager.setCurrentItem(mPosition);
 
-        mBinding.btnPrevious.setVisibility(mHistoryListVoListBeanList.size() == 1 ? View.GONE : View.VISIBLE);
-        mBinding.btnNext.setVisibility(mHistoryListVoListBeanList.size() == 1 ? View.GONE : View.VISIBLE);
+        mBinding.btnPrevious.setVisibility(mTradingBoxListVoBeanList.size() == 1 ? View.GONE : View.VISIBLE);
+        mBinding.btnNext.setVisibility(mTradingBoxListVoBeanList.size() == 1 ? View.GONE : View.VISIBLE);
 
         setChangeLayout();
 
@@ -144,7 +139,7 @@ public class TradingBoxDetailActivity extends JMEBaseActivity {
     }
 
     private void setChangeLayout() {
-        if (mHistoryListVoListBeanList.size() > 1) {
+        if (mTradingBoxListVoBeanList.size() > 1) {
             int currentPage = mBinding.viewpager.getCurrentItem();
 
             mBinding.btnPrevious.setAlpha(currentPage == 0 ? 0.5f : 1.0f);
@@ -152,7 +147,67 @@ public class TradingBoxDetailActivity extends JMEBaseActivity {
         }
     }
 
+    private void querySubscriberCount() {
+        sendRequest(ManagementService.getInstance().querySubscriberCount, new HashMap<>(), false);
+    }
+
+    private void getListExt() {
+        sendRequest(ManagementService.getInstance().getListExt, new HashMap<>(), false);
+    }
+
+    private void setAppSubscribe() {
+        sendRequest(ManagementService.getInstance().setAppSubscribe, new HashMap<>(), true);
+    }
+
+    @Override
+    protected void DataReturn(DTRequest request, Head head, Object response) {
+        super.DataReturn(request, head, response);
+
+        switch (request.getApi().getName()) {
+            case "QuerySubscriberCount":
+                if (head.isSuccess())
+                    mBinding.tvSubscribeNumber.setText(String.format(getString(R.string.trading_box_subscribe_number), null == response ? 0 : (int) response));
+
+                break;
+            case "GetListExt":
+                if (head.isSuccess()) {
+                    SubscribeStateVo subscribeStateVo;
+
+                    try {
+                        subscribeStateVo = (SubscribeStateVo) response;
+                    } catch (Exception e) {
+                        subscribeStateVo = null;
+
+                        e.printStackTrace();
+                    }
+
+                    if (null == subscribeStateVo) {
+                        mBinding.tvUnSubscribe.setVisibility(View.GONE);
+                        mBinding.tvSubscribe.setVisibility(View.GONE);
+                    } else {
+                        List<SubscribeStateVo.SubscribeBean> subscribeBeanList = subscribeStateVo.getList();
+
+                        boolean subscribeFlag = null == subscribeBeanList || 0 == subscribeBeanList.size() ? false : true;
+
+                        mBinding.tvUnSubscribe.setVisibility(subscribeFlag ? View.GONE : View.VISIBLE);
+                        mBinding.tvSubscribe.setVisibility(subscribeFlag ? View.VISIBLE : View.GONE);
+                    }
+                }
+
+                break;
+            case "SetAppSubscribe":
+                if (head.isSuccess())
+                    getListExt();
+
+                break;
+        }
+    }
+
     public class ClickHandlers {
+
+        public void onClickSubcribe() {
+            setAppSubscribe();
+        }
 
         public void onClickPrevious() {
             int currentItem = mBinding.viewpager.getCurrentItem();
@@ -164,24 +219,24 @@ public class TradingBoxDetailActivity extends JMEBaseActivity {
         public void onClickNext() {
             int currentItem = mBinding.viewpager.getCurrentItem();
 
-            if (currentItem < mHistoryListVoListBeanList.size() - 1)
+            if (currentItem < mTradingBoxListVoBeanList.size() - 1)
                 mBinding.viewpager.setCurrentItem(currentItem + 1, true);
         }
 
     }
 
-    public class TradingBoxHistoryAdapter extends FragmentPagerAdapter {
+    public class TradingBoxDetailAdapter extends FragmentPagerAdapter {
 
-        public TradingBoxHistoryAdapter(FragmentManager fragmentManager) {
+        public TradingBoxDetailAdapter(FragmentManager fragmentManager) {
             super(fragmentManager);
         }
 
         @Override
         public Fragment getItem(int position) {
-            TradingBoxHistoryFragment tradingBoxHistoryFragment = mFragmentList.get(position);
-            tradingBoxHistoryFragment.setData(mType.equals("1") ? mTradeId : mHistoryListVoListBeanList.get(position).getTradeId(), mType);
+            TradingBoxDetailFragment tradingBoxDetailFragment = mFragmentList.get(position);
+            tradingBoxDetailFragment.setData(mTradingBoxListVoBeanList.get(position).getTradeId(), mType);
 
-            return tradingBoxHistoryFragment;
+            return tradingBoxDetailFragment;
         }
 
         @Override
@@ -189,7 +244,7 @@ public class TradingBoxDetailActivity extends JMEBaseActivity {
             if (mType.equals("1"))
                 return 1;
             else
-                return null == mHistoryListVoListBeanList ? 0 : mHistoryListVoListBeanList.size();
+                return null == mTradingBoxListVoBeanList ? 0 : mTradingBoxListVoBeanList.size();
         }
 
     }

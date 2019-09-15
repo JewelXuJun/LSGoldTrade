@@ -12,21 +12,23 @@ public class TradingBoxFragmentPagerAdapter extends FragmentPagerAdapter {
 
     private List<TradingBoxVo.TradingBoxListVoBean> mTradingBoxListVoBeanList;
     private List<TradingBoxFragment> mTradingBoxFragmentList;
+    private String mPeriodName;
     private String mType;
 
     public TradingBoxFragmentPagerAdapter(FragmentManager fragmentManager, List<TradingBoxVo.TradingBoxListVoBean> tradingBoxListVoBeanList,
-                                          List<TradingBoxFragment> tradingBoxFragmentList, String type) {
+                                          List<TradingBoxFragment> tradingBoxFragmentList, String periodName, String type) {
         super(fragmentManager);
 
         mTradingBoxListVoBeanList = tradingBoxListVoBeanList;
         mTradingBoxFragmentList = tradingBoxFragmentList;
+        mPeriodName = periodName;
         mType = type;
     }
 
     @Override
     public Fragment getItem(int position) {
         TradingBoxFragment tradingBoxFragment = mTradingBoxFragmentList.get(position);
-        tradingBoxFragment.setData(mTradingBoxListVoBeanList.get(position), mType);
+        tradingBoxFragment.setData(mPeriodName, mTradingBoxListVoBeanList, mTradingBoxListVoBeanList.get(position), position, mType);
 
         return tradingBoxFragment;
     }

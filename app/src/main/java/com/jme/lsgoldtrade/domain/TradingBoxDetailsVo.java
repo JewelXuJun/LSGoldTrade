@@ -1,184 +1,92 @@
 package com.jme.lsgoldtrade.domain;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class TradingBoxDetailsVo {
+public class TradingBoxDetailsVo implements Serializable {
 
     /**
-     * analystOpinion : string
-     * chance : string
-     * closePositionsTimeBegin : string
-     * closePositionsTimeEnd : string
-     * closeTime : 0
-     * closeTimeStr : string
-     * direction : string
-     * directionDownNum : 0
-     * directionDownRate : string
-     * directionUpNum : 0
-     * directionUpRate : string
-     * fundamentalAnalysis : string
-     * id : string
-     * openPositionsTimeBegin : string
-     * openPositionsTimeEnd : string
-     * periodId : string
-     * periodName : string
-     * relevantInfoListVos : [{"content":"string","id":"string"}]
-     * variety : string
+     * "id": "1173037356840763394",
+     * "periodId": "1173036745260908545",
+     * "periodName": "徐军测试",
+     * "chance": "银",
+     * "fundamentalAnalysis": "银多",
+     * "analystOpinion": "银多",
+     * "variety": "Ag(T+D)",
+     * "direction": "0",
+     * "directionUpNum": 1,
+     * "directionDownNum": 0,
+     * "directionUpRate": "100.00",
+     * "directionDownRate": "0",
+     * "relevantInfoListVos": [
+     * {
+     * "id": "1173037357868367874",
+     * "content": "银多"
+     * }
+     * ],
+     * "openPositionsTimeBegin": "2019-09-15 00:00:00",
+     * "openPositionsTimeEnd": "2019-09-20 00:00:00",
+     * "closePositionsTimeBegin": "2019-09-21 00:00:00",
+     * "closePositionsTimeEnd": "2019-09-24 00:00:00",
+     * "closeTimeStr": "2019-09-26 00:00:00",
+     * "closeTime": 890139,
+     * "mainTitle": "安卓测试",
+     * "mainContent": "安卓测试",
+     * "moodUrl": null,
+     * "etfUrl": null,
+     * "moodUrlShow": "0",
+     * "etfUrlShow": "0"
      */
 
-    private String analystOpinion;
-
-    private String chance;
-
-    private String closePositionsTimeBegin;
-
-    private String closePositionsTimeEnd;
-
-    private long closeTime;
-
-    private String closeTimeStr;
-
-    private String direction;
-
-    private int directionDownNum;
-
-    private String directionDownRate;
-
-    private int directionUpNum;
-
-    private String directionUpRate;
-
-    private String fundamentalAnalysis;
-
     private String id;
-
-    private String openPositionsTimeBegin;
-
-    private String openPositionsTimeEnd;
 
     private String periodId;
 
     private String periodName;
 
+    private String chance;
+
+    private String fundamentalAnalysis;
+
+    private String analystOpinion;
+
     private String variety;
 
-    private String earningsLine;
+    private String direction;
 
-    private String lossLine;
+    private int directionUpNum;
+
+    private int directionDownNum;
+
+    private String directionUpRate;
+
+    private String directionDownRate;
 
     private List<RelevantInfoListVosBean> relevantInfoListVos;
 
-    public String getLossLine() {
-        return lossLine;
-    }
+    private String openPositionsTimeBegin;
 
-    public void setLossLine(String lossLine) {
-        this.lossLine = lossLine;
-    }
+    private String openPositionsTimeEnd;
 
-    public String getEarningsLine() {
-        return earningsLine;
-    }
+    private String closePositionsTimeBegin;
 
-    public void setEarningsLine(String earningsLine) {
-        this.earningsLine = earningsLine;
-    }
+    private String closePositionsTimeEnd;
 
-    public String getAnalystOpinion() {
-        return analystOpinion;
-    }
+    private String closeTimeStr;
 
-    public void setAnalystOpinion(String analystOpinion) {
-        this.analystOpinion = analystOpinion;
-    }
+    private long closeTime;
 
-    public String getChance() {
-        return chance;
-    }
+    private String mainTitle;
 
-    public void setChance(String chance) {
-        this.chance = chance;
-    }
+    private String mainContent;
 
-    public String getClosePositionsTimeBegin() {
-        return closePositionsTimeBegin;
-    }
+    private String moodUrl;
 
-    public void setClosePositionsTimeBegin(String closePositionsTimeBegin) {
-        this.closePositionsTimeBegin = closePositionsTimeBegin;
-    }
+    private String etfUrl;
 
-    public String getClosePositionsTimeEnd() {
-        return closePositionsTimeEnd;
-    }
+    private String moodUrlShow;
 
-    public void setClosePositionsTimeEnd(String closePositionsTimeEnd) {
-        this.closePositionsTimeEnd = closePositionsTimeEnd;
-    }
-
-    public long getCloseTime() {
-        return closeTime;
-    }
-
-    public void setCloseTime(long closeTime) {
-        this.closeTime = closeTime;
-    }
-
-    public String getCloseTimeStr() {
-        return closeTimeStr;
-    }
-
-    public void setCloseTimeStr(String closeTimeStr) {
-        this.closeTimeStr = closeTimeStr;
-    }
-
-    public String getDirection() {
-        return direction;
-    }
-
-    public void setDirection(String direction) {
-        this.direction = direction;
-    }
-
-    public int getDirectionDownNum() {
-        return directionDownNum;
-    }
-
-    public void setDirectionDownNum(int directionDownNum) {
-        this.directionDownNum = directionDownNum;
-    }
-
-    public String getDirectionDownRate() {
-        return directionDownRate;
-    }
-
-    public void setDirectionDownRate(String directionDownRate) {
-        this.directionDownRate = directionDownRate;
-    }
-
-    public int getDirectionUpNum() {
-        return directionUpNum;
-    }
-
-    public void setDirectionUpNum(int directionUpNum) {
-        this.directionUpNum = directionUpNum;
-    }
-
-    public String getDirectionUpRate() {
-        return directionUpRate;
-    }
-
-    public void setDirectionUpRate(String directionUpRate) {
-        this.directionUpRate = directionUpRate;
-    }
-
-    public String getFundamentalAnalysis() {
-        return fundamentalAnalysis;
-    }
-
-    public void setFundamentalAnalysis(String fundamentalAnalysis) {
-        this.fundamentalAnalysis = fundamentalAnalysis;
-    }
+    private String etfUrlShow;
 
     public String getId() {
         return id;
@@ -186,22 +94,6 @@ public class TradingBoxDetailsVo {
 
     public void setId(String id) {
         this.id = id;
-    }
-
-    public String getOpenPositionsTimeBegin() {
-        return openPositionsTimeBegin;
-    }
-
-    public void setOpenPositionsTimeBegin(String openPositionsTimeBegin) {
-        this.openPositionsTimeBegin = openPositionsTimeBegin;
-    }
-
-    public String getOpenPositionsTimeEnd() {
-        return openPositionsTimeEnd;
-    }
-
-    public void setOpenPositionsTimeEnd(String openPositionsTimeEnd) {
-        this.openPositionsTimeEnd = openPositionsTimeEnd;
     }
 
     public String getPeriodId() {
@@ -220,12 +112,76 @@ public class TradingBoxDetailsVo {
         this.periodName = periodName;
     }
 
+    public String getChance() {
+        return chance;
+    }
+
+    public void setChance(String chance) {
+        this.chance = chance;
+    }
+
+    public String getFundamentalAnalysis() {
+        return fundamentalAnalysis;
+    }
+
+    public void setFundamentalAnalysis(String fundamentalAnalysis) {
+        this.fundamentalAnalysis = fundamentalAnalysis;
+    }
+
+    public String getAnalystOpinion() {
+        return analystOpinion;
+    }
+
+    public void setAnalystOpinion(String analystOpinion) {
+        this.analystOpinion = analystOpinion;
+    }
+
     public String getVariety() {
         return variety;
     }
 
     public void setVariety(String variety) {
         this.variety = variety;
+    }
+
+    public String getDirection() {
+        return direction;
+    }
+
+    public void setDirection(String direction) {
+        this.direction = direction;
+    }
+
+    public int getDirectionUpNum() {
+        return directionUpNum;
+    }
+
+    public void setDirectionUpNum(int directionUpNum) {
+        this.directionUpNum = directionUpNum;
+    }
+
+    public int getDirectionDownNum() {
+        return directionDownNum;
+    }
+
+    public void setDirectionDownNum(int directionDownNum) {
+        this.directionDownNum = directionDownNum;
+    }
+
+    public String getDirectionUpRate() {
+        return directionUpRate;
+    }
+
+    public void setDirectionUpRate(String directionUpRate) {
+        this.directionUpRate = directionUpRate;
+    }
+
+    public String getDirectionDownRate() {
+        return directionDownRate;
+    }
+
+    public void setDirectionDownRate(String directionDownRate) {
+        this.directionDownRate = directionDownRate;
     }
 
     public List<RelevantInfoListVosBean> getRelevantInfoListVos() {
@@ -236,23 +192,111 @@ public class TradingBoxDetailsVo {
         this.relevantInfoListVos = relevantInfoListVos;
     }
 
-    public static class RelevantInfoListVosBean {
+    public String getOpenPositionsTimeBegin() {
+        return openPositionsTimeBegin;
+    }
+
+    public void setOpenPositionsTimeBegin(String openPositionsTimeBegin) {
+        this.openPositionsTimeBegin = openPositionsTimeBegin;
+    }
+
+    public String getOpenPositionsTimeEnd() {
+        return openPositionsTimeEnd;
+    }
+
+    public void setOpenPositionsTimeEnd(String openPositionsTimeEnd) {
+        this.openPositionsTimeEnd = openPositionsTimeEnd;
+    }
+
+    public String getClosePositionsTimeBegin() {
+        return closePositionsTimeBegin;
+    }
+
+    public void setClosePositionsTimeBegin(String closePositionsTimeBegin) {
+        this.closePositionsTimeBegin = closePositionsTimeBegin;
+    }
+
+    public String getClosePositionsTimeEnd() {
+        return closePositionsTimeEnd;
+    }
+
+    public void setClosePositionsTimeEnd(String closePositionsTimeEnd) {
+        this.closePositionsTimeEnd = closePositionsTimeEnd;
+    }
+
+    public String getCloseTimeStr() {
+        return closeTimeStr;
+    }
+
+    public void setCloseTimeStr(String closeTimeStr) {
+        this.closeTimeStr = closeTimeStr;
+    }
+
+    public long getCloseTime() {
+        return closeTime;
+    }
+
+    public void setCloseTime(long closeTime) {
+        this.closeTime = closeTime;
+    }
+
+    public String getMainTitle() {
+        return mainTitle;
+    }
+
+    public void setMainTitle(String mainTitle) {
+        this.mainTitle = mainTitle;
+    }
+
+    public String getMainContent() {
+        return mainContent;
+    }
+
+    public void setMainContent(String mainContent) {
+        this.mainContent = mainContent;
+    }
+
+    public String getMoodUrl() {
+        return moodUrl;
+    }
+
+    public void setMoodUrl(String moodUrl) {
+        this.moodUrl = moodUrl;
+    }
+
+    public String getEtfUrl() {
+        return etfUrl;
+    }
+
+    public void setEtfUrl(String etfUrl) {
+        this.etfUrl = etfUrl;
+    }
+
+    public String getMoodUrlShow() {
+        return moodUrlShow;
+    }
+
+    public void setMoodUrlShow(String moodUrlShow) {
+        this.moodUrlShow = moodUrlShow;
+    }
+
+    public String getEtfUrlShow() {
+        return etfUrlShow;
+    }
+
+    public void setEtfUrlShow(String etfUrlShow) {
+        this.etfUrlShow = etfUrlShow;
+    }
+
+    public static class RelevantInfoListVosBean implements Serializable{
         /**
          * content : string
          * id : string
          */
 
-        private String content;
-
         private String id;
 
-        public String getContent() {
-            return content;
-        }
-
-        public void setContent(String content) {
-            this.content = content;
-        }
+        private String content;
 
         public String getId() {
             return id;
@@ -260,6 +304,14 @@ public class TradingBoxDetailsVo {
 
         public void setId(String id) {
             this.id = id;
+        }
+
+        public String getContent() {
+            return content;
+        }
+
+        public void setContent(String content) {
+            this.content = content;
         }
     }
 }

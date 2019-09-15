@@ -36,10 +36,10 @@ public class TradingBoxAdapter extends BaseQuickAdapter<TradingBoxVo, BaseViewHo
         if (null == tradingBoxListVoBeanList || 0 == tradingBoxListVoBeanList.size())
             return;
 
-        initViewPager(tradingBoxListVoBeanList, helper, helper.getAdapterPosition() + 1);
+        initViewPager(tradingBoxListVoBeanList, helper, item.getPeriodName(), helper.getAdapterPosition() + 1);
     }
 
-    private void initViewPager(List<TradingBoxVo.TradingBoxListVoBean> tradingBoxListVoBeanList, BaseViewHolder helper, int position) {
+    private void initViewPager(List<TradingBoxVo.TradingBoxListVoBean> tradingBoxListVoBeanList, BaseViewHolder helper, String periodName, int position) {
         List<TradingBoxFragment> fragmentList = new ArrayList<>();
 
         for (int i = 0; i < tradingBoxListVoBeanList.size(); i++) {
@@ -47,7 +47,7 @@ public class TradingBoxAdapter extends BaseQuickAdapter<TradingBoxVo, BaseViewHo
         }
 
         TradingBoxFragmentPagerAdapter adapter = new TradingBoxFragmentPagerAdapter(mActivity.getSupportFragmentManager(),
-                tradingBoxListVoBeanList, fragmentList, "TradingBox");
+                tradingBoxListVoBeanList, fragmentList, periodName, "TradingBox");
 
         ViewPager viewPager = helper.getView(R.id.viewpager);
         LinearLayout layoutPrevious = helper.getView(R.id.layout_previous);

@@ -23,6 +23,52 @@
 
             <include layout="@layout/item_line_vertical" />
 
+            <RelativeLayout
+                android:id="@+id/layout_subcribe_number"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/common_item_height_normal"
+                android:layout_below="@id/layout_toolbar"
+                android:background="@color/white"
+                android:orientation="horizontal"
+                android:paddingLeft="@dimen/common_area_margin"
+                android:paddingRight="@dimen/common_area_margin">
+
+                <TextView
+                    android:id="@+id/tv_subscribe_number"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/sp_14" />
+
+                <TextView
+                    android:id="@+id/tv_unSubscribe"
+                    android:layout_width="@dimen/width_subscribe"
+                    android:layout_height="@dimen/height_subscribe"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:background="@drawable/bg_btn_blue_solid"
+                    android:gravity="center"
+                    android:onClick="@{() -> handlers.onClickSubcribe()}"
+                    android:text="@string/trading_box_subscribe"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/sp_14"
+                    android:visibility="gone" />
+
+                <TextView
+                    android:id="@+id/tv_subscribe"
+                    android:layout_width="@dimen/width_subscribe"
+                    android:layout_height="@dimen/height_subscribe"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:gravity="center"
+                    android:text="@string/trading_box_subscribed"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/sp_14"
+                    android:visibility="gone" />
+
+            </RelativeLayout>
+
         </LinearLayout>
 
         <android.support.v4.view.ViewPager

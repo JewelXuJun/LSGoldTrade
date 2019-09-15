@@ -3,23 +3,31 @@ package com.jme.lsgoldtrade.ui.tradingbox;
 import android.os.Bundle;
 import android.text.TextUtils;
 
+import com.alibaba.android.arouter.launcher.ARouter;
+import com.google.gson.Gson;
 import com.jme.common.util.DateUtil;
 import com.jme.lsgoldtrade.R;
 import com.jme.lsgoldtrade.base.JMEBaseFragment;
-import com.jme.lsgoldtrade.databinding.FragmentTradingBoxItemBinding;
+import com.jme.lsgoldtrade.config.Constants;
+import com.jme.lsgoldtrade.databinding.FragmentTradingBoxBinding;
 import com.jme.lsgoldtrade.domain.TradingBoxVo;
+
+import java.util.List;
 
 public class TradingBoxFragment extends JMEBaseFragment {
 
-    private FragmentTradingBoxItemBinding mBinding;
+    private FragmentTradingBoxBinding mBinding;
 
+    private List<TradingBoxVo.TradingBoxListVoBean> mTradingBoxListVoBeanList;
     private TradingBoxVo.TradingBoxListVoBean mTradingBoxListVoBean;
 
+    private int mPosition;
+    private String mPeriodName;
     private String mType;
 
     @Override
     protected int getContentViewId() {
-        return R.layout.fragment_trading_box_item;
+        return R.layout.fragment_trading_box;
     }
 
     @Override
@@ -41,12 +49,15 @@ public class TradingBoxFragment extends JMEBaseFragment {
     public void initBinding() {
         super.initBinding();
 
-        mBinding = (FragmentTradingBoxItemBinding) mBindingUtil;
+        mBinding = (FragmentTradingBoxBinding) mBindingUtil;
         mBinding.setHandlers(new ClickHandlers());
     }
 
-    public void setData(TradingBoxVo.TradingBoxListVoBean tradingBoxListVoBean, String type) {
+    public void setData(String periodName, List<TradingBoxVo.TradingBoxListVoBean> tradingBoxListVoBeanList, TradingBoxVo.TradingBoxListVoBean tradingBoxListVoBean, int position, String type) {
+        mPeriodName = periodName;
+        mTradingBoxListVoBeanList = tradingBoxListVoBeanList;
         mTradingBoxListVoBean = tradingBoxListVoBean;
+        mPosition = position;
         mType = type;
     }
 
@@ -78,6 +89,14 @@ public class TradingBoxFragment extends JMEBaseFragment {
         public void onClickCheck() {
             if (TextUtils.isEmpty(mType))
                 return;
+
+            ARouter.getInstance()
+                    .build(Constants.ARouterUriConst.TRADINGBOXDETAIL)
+                    .withString("PeriodName",  mPeriodName)
+                    .withString("Value", new Gson().toJson(mTradingBoxListVoBeanList))
+                    .withInt("Position", mPosition)
+                    .withString("Type", mType)
+                    .navigation();
         }
 
     }

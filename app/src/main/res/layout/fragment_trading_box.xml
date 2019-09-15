@@ -5,243 +5,121 @@
 
         <variable
             name="handlers"
-            type="com.jme.lsgoldtrade.ui.tradingbox.TradingBoxItemFragment.ClickHandlers" />
+            type="com.jme.lsgoldtrade.ui.tradingbox.TradingBoxFragment.ClickHandlers" />
 
     </data>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:paddingTop="@dimen/common_page_margin"
+        android:paddingBottom="@dimen/common_area_margin">
 
-        <android.support.v4.widget.NestedScrollView
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:scrollbars="none">
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/margin_trading_box_item"
+            android:background="@mipmap/ic_trading_box_bg_corner"
+            android:layout_marginRight="@dimen/margin_trading_box_item"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_abstract"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/common_area_margin"
+                android:layout_marginTop="@dimen/common_area_margin"
+                android:layout_marginRight="@dimen/common_area_margin_big"
+                android:background="@drawable/bg_translate"
+                android:ellipsize="end"
+                android:gravity="center"
+                android:maxLines="1"
+                android:paddingTop="@dimen/margin_tiny"
+                android:paddingBottom="@dimen/margin_tiny"
+                android:textColor="@color/white"
+                android:textSize="@dimen/sp_14" />
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@color/common_background"
-                android:orientation="vertical">
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/margin_big"
+                android:layout_marginTop="@dimen/common_area_margin_middle"
+                android:layout_marginRight="@dimen/margin_big"
+                android:orientation="horizontal">
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/height_trading_box_info"
-                    android:background="@mipmap/ic_trading_box_bg"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
                     android:orientation="vertical">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_marginTop="@dimen/common_area_margin"
-                        android:text="@string/trading_box_chance"
+                        android:text="@string/trading_box_forecast"
                         android:textColor="@color/white"
-                        android:textSize="@dimen/sp_14" />
-
-                    <TextView
-                        android:id="@+id/tv_abstract"
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/common_item_height_middle"
-                        android:layout_marginLeft="@dimen/common_area_margin_big"
-                        android:layout_marginTop="@dimen/common_area_margin_tiny"
-                        android:layout_marginRight="@dimen/common_area_margin_big"
-                        android:background="@drawable/bg_translate"
-                        android:ellipsize="end"
-                        android:gravity="center"
-                        android:maxLines="1"
-                        android:textColor="@color/white"
-                        android:textSize="@dimen/common_font_size" />
+                        android:textSize="@dimen/sp_12" />
 
                     <TextView
                         android:id="@+id/tv_contract"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_marginTop="@dimen/common_area_margin"
+                        android:layout_marginTop="@dimen/margin_tiny"
                         android:textColor="@color/white"
-                        android:textSize="@dimen/common_font_size" />
-
-                    <TextView
-                        android:id="@+id/tv_publish_time"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_marginTop="@dimen/common_area_margin_big"
-                        android:textColor="@color/white"
-                        android:textSize="@dimen/sp_12" />
+                        android:textSize="@dimen/sp_16" />
 
                 </LinearLayout>
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/common_item_height_normal"
-                    android:background="@color/white"
-                    android:drawableLeft="@drawable/drawleft_blue_rectangle"
-                    android:drawablePadding="@dimen/common_area_margin_tiny"
-                    android:gravity="center|left"
-                    android:paddingLeft="@dimen/common_area_margin"
-                    android:text="@string/trading_box_analyst"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/sp_14" />
-
-                <include layout="@layout/item_line_vertical_list" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@color/white"
+                    android:layout_weight="1"
+                    android:gravity="center"
                     android:orientation="vertical">
 
                     <TextView
-                        android:id="@+id/tv_analyst"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="@color/white"
-                        android:paddingLeft="@dimen/common_area_margin"
-                        android:maxLines="20"
-                        android:paddingTop="@dimen/common_page_padding"
-                        android:paddingRight="@dimen/common_area_margin"
-                        android:paddingBottom="@dimen/common_page_padding"
-                        android:textColor="@color/color_text_normal"
-                        android:textSize="@dimen/sp_14" />
-
-                    <ImageView
-                        android:id="@+id/img_analyst"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:background="@mipmap/ic_content_open"
-                        android:onClick="@{() -> handlers.onClickAnalyst()}"
-                        android:visibility="gone" />
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/common_item_height_normal"
-                    android:layout_marginTop="@dimen/common_area_margin_tiny"
-                    android:background="@color/white"
-                    android:orientation="horizontal">
+                        android:text="@string/trading_box_forecast_direction"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/sp_12" />
 
                     <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:drawableLeft="@drawable/drawleft_blue_rectangle"
-                        android:drawablePadding="@dimen/common_area_margin_tiny"
-                        android:gravity="center|left"
-                        android:paddingLeft="@dimen/common_area_margin"
-                        android:text="@string/trading_box_speculation"
-                        android:textColor="@color/black"
-                        android:textSize="@dimen/sp_14" />
-
-                    <RelativeLayout
+                        android:id="@+id/tv_direction"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:onClick="@{() -> handlers.onClickSpeculation()}"
-                        android:padding="@dimen/margin_market_price">
-
-                        <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_centerInParent="true"
-                            android:src="@mipmap/ic_prompt" />
-
-                    </RelativeLayout>
+                        android:layout_marginTop="@dimen/margin_tiny"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/common_font_size" />
 
                 </LinearLayout>
-
-                <include layout="@layout/item_line_vertical_list" />
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@color/white">
-
-                    <ImageView
-                        android:id="@+id/img_speculation"
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/height_analyst_picture"
-                        android:layout_marginLeft="@dimen/common_area_margin"
-                        android:layout_marginTop="@dimen/common_page_margin"
-                        android:layout_marginRight="@dimen/common_area_margin"
-                        android:layout_marginBottom="@dimen/common_page_margin"
-                        android:background="@color/color_bg_img"
-                        android:scaleType="fitXY" />
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/common_item_height_normal"
-                    android:layout_marginTop="@dimen/common_area_margin_tiny"
-                    android:background="@color/white"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:drawableLeft="@drawable/drawleft_blue_rectangle"
-                        android:drawablePadding="@dimen/common_area_margin_tiny"
-                        android:gravity="center|left"
-                        android:paddingLeft="@dimen/common_area_margin"
-                        android:text="@string/trading_box_gold_etf"
-                        android:textColor="@color/black"
-                        android:textSize="@dimen/sp_14" />
-
-                    <RelativeLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:onClick="@{() -> handlers.onClickETF()}"
-                        android:padding="@dimen/margin_market_price">
-
-                        <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_centerInParent="true"
-                            android:src="@mipmap/ic_prompt" />
-
-                    </RelativeLayout>
-
-                </LinearLayout>
-
-                <include layout="@layout/item_line_vertical_list" />
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@color/white">
-
-                    <ImageView
-                        android:id="@+id/img_etf"
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/height_analyst_picture"
-                        android:layout_marginLeft="@dimen/common_area_margin"
-                        android:layout_marginTop="@dimen/common_page_margin"
-                        android:layout_marginRight="@dimen/common_area_margin"
-                        android:layout_marginBottom="@dimen/common_page_margin"
-                        android:background="@color/color_bg_img"
-                        android:scaleType="fitXY" />
-
-                </LinearLayout>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginTop="@dimen/common_page_margin"
-                    android:layout_marginBottom="@dimen/common_area_margin_big"
-                    android:gravity="center_vertical"
-                    android:text="@string/trading_box_suggest"
-                    android:textColor="@color/gray"
-                    android:textSize="@dimen/sp_12" />
 
             </LinearLayout>
 
-        </android.support.v4.widget.NestedScrollView>
+            <Button
+                android:id="@+id/btn_check"
+                android:layout_width="@dimen/width_trading_box_btn"
+                android:layout_height="@dimen/height_trading_box_btn"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="@dimen/common_page_margin"
+                android:background="@drawable/bg_btn_black_solid"
+                android:onClick="@{()-> handlers.onClickCheck()}"
+                android:textColor="@color/white"
+                android:textSize="@dimen/sp_14" />
+
+            <TextView
+                android:id="@+id/tv_publish_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="@dimen/common_area_margin_middle"
+                android:layout_marginBottom="@dimen/common_area_margin_tiny"
+                android:textColor="@color/white"
+                android:textSize="@dimen/size_small" />
+
+        </LinearLayout>
 
     </LinearLayout>
 
