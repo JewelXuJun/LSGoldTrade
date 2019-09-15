@@ -115,13 +115,6 @@ public class ManagementService extends IService<ManagementApi> {
         }
     };
 
-    public API listInPage = new API<InfoVo>("ListInPage") {
-        @Override
-        public Call<DTResponse> request(HashMap<String, String> params) {
-            return mApi.listInPage(params);
-        }
-    };
-
     public API channelList = new API<InfoVo>("ChannelList") {
         @Override
         public Call<DTResponse> request(HashMap<String, String> params) {
@@ -197,20 +190,6 @@ public class ManagementService extends IService<ManagementApi> {
         @Override
         public Call<DTResponse> request(HashMap<String, String> params) {
             return mApi.add(params);
-        }
-    };
-
-    public API hasProfitLossRiskSign = new API<String>("HasProfitLossRiskSign") {
-        @Override
-        public Call<DTResponse> request(HashMap<String, String> params) {
-            return mApi.hasProfitLossRiskSign(params);
-        }
-    };
-
-    public API agree = new API<String>("Agree") {
-        @Override
-        public Call<DTResponse> request(HashMap<String, String> params) {
-            return mApi.agree(params);
         }
     };
 

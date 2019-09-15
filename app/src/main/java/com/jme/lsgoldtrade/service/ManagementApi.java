@@ -28,9 +28,6 @@ public interface ManagementApi {
     @GET("/tjsmanage/infoapi/v1/android/cmsChannel/allList")
     Call<DTResponse> channelAllList(@QueryMap Map<String, String> map);
 
-    @GET("/tjsmanage/infoapi/v1/android/embeddedSingle/listInPage")
-    Call<DTResponse> listInPage(@QueryMap Map<String, String> map);
-
     @GET("/tjsmanage/infoapi/v1/android/cmsComtent/list")
     Call<DTResponse> channelList(@QueryMap Map<String, String> map);
 
@@ -62,9 +59,6 @@ public interface ManagementApi {
     Call<DTResponse> revocation(@QueryMap Map<String, String> map);
 
     @GET("/tjsmanage/infoapi/v1/android/protocol/hasProfitLossRiskSign")
-    Call<DTResponse> hasProfitLossRiskSign(@QueryMap Map<String, String> map);
-
-    @GET("/tjsmanage/infoapi/v1/android/protocol/hasProfitLossRiskSign")
     Call<DTResponse> diyanfangxiang(@QueryMap Map<String, String> map);
 
     @GET("/tjsmanage/infoapi/v1/android/customerService/getGreeting")
@@ -81,9 +75,6 @@ public interface ManagementApi {
 
     @GET("/tjsmanage/infoapi/v1/android/getUserAddedServicesStatus")
     Call<DTResponse> getUserAddedServicesStatus(@QueryMap Map<String, String> map);
-
-    @POST("/tjsmanage/infoapi/v1/android/protocol/agreeProfitLossRisk")
-    Call<DTResponse> agree(@Body Map<String, String> map);
 
     @POST("/tjsmanage/infoapi/v1/android/vote/add")
     Call<DTResponse> add(@Body Map<String, String> map);
