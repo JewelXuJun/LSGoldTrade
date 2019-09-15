@@ -30,7 +30,6 @@ public class ElectronicCardAdapter extends BaseQuickAdapter<TransactionDetailVo.
 
        String time[] = item.getCreatedTime().split(" ");
        String businessStatus = item.getBusinessStatus();
-       String status = item.getStatus();
 
         helper.setText(R.id.tv_time, time[0])
                 .setText(R.id.trade_time, time[1])
@@ -40,9 +39,26 @@ public class ElectronicCardAdapter extends BaseQuickAdapter<TransactionDetailVo.
                         ? "" : businessStatus.equals("recharge") ? mContext.getResources().getString(R.string.trade_transfer_icbc_electronic_card_in)
                         : businessStatus.equals("withdraw") ? mContext.getResources().getString(R.string.trade_transfer_icbc_electronic_card_out) : "")
                 .setTextColor(R.id.tv_type, ContextCompat.getColor(mContext, MarketUtil.getInOutMoneyStatusColor(businessStatus)))
-                .setText(R.id.tv_state, TextUtils.isEmpty(status)
-                        ? "" : status.equals("true") ? mContext.getResources().getString(R.string.trade_transfer_success)
-                        : status.equals("false") ? mContext.getResources().getString(R.string.trade_transfer_fail) : "");
+                .setText(R.id.tv_state, getState(item.getStatus()));
+    }
+
+    private String getState(String status) {
+        String state;
+
+        if (TextUtils.isEmpty(status)) {
+            state = "";
+        } else {
+            if (status.equals("true"))
+                state = mContext.getResources().getString(R.string.trade_transfer_success);
+            else if (status.equals("false"))
+                state = mContext.getResources().getString(R.string.trade_transfer_fail);
+            else if (status.equals("processing"))
+                state = mContext.getResources().getString(R.string.trade_transfer_processing);
+            else
+                state = "";
+        }
+
+        return state;
     }
 
 }

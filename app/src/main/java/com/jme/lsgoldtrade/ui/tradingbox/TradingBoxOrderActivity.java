@@ -32,9 +32,6 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-/**
- * 我的订单
- */
 @Route(path = Constants.ARouterUriConst.TRADINGBOXORDER)
 public class TradingBoxOrderActivity extends JMEBaseActivity implements OnRefreshListener {
 

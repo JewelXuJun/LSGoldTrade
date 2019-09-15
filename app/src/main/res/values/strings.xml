@@ -114,6 +114,7 @@
     <string name="trade_transfer_withdraw">提现</string>
     <string name="trade_transfer_success">成功</string>
     <string name="trade_transfer_fail">失败</string>
+    <string name="trade_transfer_processing">处理中</string>
     <string name="trade_transfer_amount">转账金额</string>
     <string name="trade_transfer_amount_hint">请输入金额</string>
     <string name="trade_transfer_reserve">非工行储蓄卡开户信息预留</string>
