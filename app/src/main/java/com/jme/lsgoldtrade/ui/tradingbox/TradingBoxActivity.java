@@ -1,8 +1,7 @@
 package com.jme.lsgoldtrade.ui.tradingbox;
 
 import android.os.Bundle;
-import android.text.TextUtils;
-import android.view.Gravity;
+import android.support.v7.widget.LinearLayoutManager;
 import android.view.View;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
@@ -14,31 +13,19 @@ import com.jme.lsgoldtrade.base.JMEBaseActivity;
 import com.jme.lsgoldtrade.config.Constants;
 import com.jme.lsgoldtrade.databinding.ActivityTradingBoxBinding;
 import com.jme.lsgoldtrade.domain.SubscribeStateVo;
-import com.jme.lsgoldtrade.domain.TradeBoxVo;
-import com.jme.lsgoldtrade.domain.TradingBoxDataInfoVo;
+import com.jme.lsgoldtrade.domain.TradingBoxVo;
 import com.jme.lsgoldtrade.service.ManagementService;
-import com.jme.lsgoldtrade.ui.trade.TradeMessagePopUpWindow;
 import com.jme.lsgoldtrade.util.TradeBoxFunctionUtils;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-/**
- * 交易匣子
- */
 @Route(path = Constants.ARouterUriConst.TRADINGBOX)
 public class TradingBoxActivity extends JMEBaseActivity {
 
     private ActivityTradingBoxBinding mBinding;
 
-    private List<TradingBoxDataInfoVo.HistoryVoBean> mHistoryVoBeanList;
-    private ArrayList<TradingBoxFragment> mListFragment = new ArrayList<>();
-
     private TradingBoxAdapter mAdapter;
-    private TradeMessagePopUpWindow mTradeMessagePopUpWindow;
-
-    private String mPeriodName;
 
     @Override
     protected int getContentViewId() {
@@ -51,20 +38,19 @@ public class TradingBoxActivity extends JMEBaseActivity {
 
         initToolbar(R.string.trading_box_title, true);
 
-        setRightNavigation("", R.mipmap.ic_more, 0, () ->
-                TradeBoxFunctionUtils.show(this, Constants.HttpConst.URL_TRADINGBOX, String.format(getString(R.string.trading_box_number), mPeriodName),
-                        getString(R.string.trading_box_share_content), mBinding.recyclerView.getId(), false));
-
-        mTradeMessagePopUpWindow = new TradeMessagePopUpWindow(mContext);
-        mTradeMessagePopUpWindow.setOutsideTouchable(true);
-        mTradeMessagePopUpWindow.setFocusable(true);
+        setRightNavigation("", R.mipmap.ic_more, 0, () -> TradeBoxFunctionUtils.show(this, "", "", "",0, false));
     }
 
     @Override
     protected void initData(Bundle savedInstanceState) {
         super.initData(savedInstanceState);
 
-//        getTradeBoxHomedataInfo();
+        mAdapter = new TradingBoxAdapter(this, null);
+
+        mBinding.recyclerView.setHasFixedSize(false);
+        mBinding.recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        mBinding.recyclerView.setAdapter(mAdapter);
+
         querySubscriberCount();
         getListExt();
         queryTradeBoxList();
@@ -83,56 +69,8 @@ public class TradingBoxActivity extends JMEBaseActivity {
         mBinding.setHandlers(new ClickHandlers());
     }
 
-    private void initViewPager() {
-       /* for (int i = 0; i < mHistoryVoBeanList.size(); i++) {
-            mListFragment.add(new TradingBoxFragment());
-        }
-
-        mAdapter = new TradingBoxAdapter(getSupportFragmentManager(), mHistoryVoBeanList, mListFragment);
-
-        mBinding.viewpager.removeAllViewsInLayout();
-        mBinding.viewpager.setAdapter(mAdapter);
-        mBinding.viewpager.setOffscreenPageLimit(2);
-
-        mBinding.btnPrevious.setVisibility(mHistoryVoBeanList.size() == 1 ? View.GONE : View.VISIBLE);
-        mBinding.btnNext.setVisibility(mHistoryVoBeanList.size() == 1 ? View.GONE : View.VISIBLE);
-
-        isCanBuy(0);
-
-        mBinding.viewpager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-            @Override
-            public void onPageScrolled(int i, float v, int i1) {
-
-            }
-
-            @Override
-            public void onPageSelected(int position) {
-                isCanBuy(position);
-            }
-
-            @Override
-            public void onPageScrollStateChanged(int i) {
-
-            }
-        });*/
-    }
-
-    private void isCanBuy(int position) {
-        /*if (mHistoryVoBeanList.size() > 1) {
-            int currentPage = mBinding.viewpager.getCurrentItem();
-
-            mBinding.btnPrevious.setAlpha(currentPage == 0 ? 0.5f : 1.0f);
-            mBinding.btnNext.setAlpha(currentPage == mListFragment.size() - 1 ? 0.5f : 1.0f);
-        }
-
-        long closeTime = mHistoryVoBeanList.get(position).getCloseTime();
-
-        mBinding.tvBuy.setEnabled(closeTime <= 0 ? false : true);
-        mBinding.tvBuy.setBackgroundResource(closeTime <= 0 ? R.color.color_text_gray_hint : R.color.color_blue_deep);*/
-    }
-
     private void querySubscriberCount() {
-        sendRequest(ManagementService.getInstance().querySubscriberCount, new HashMap<>(), false, false, false);
+        sendRequest(ManagementService.getInstance().querySubscriberCount, new HashMap<>(), false);
     }
 
     private void getListExt() {
@@ -145,18 +83,6 @@ public class TradingBoxActivity extends JMEBaseActivity {
 
     private void queryTradeBoxList() {
         sendRequest(ManagementService.getInstance().queryTradeBoxList, new HashMap<>(), true);
-    }
-
-    private void getTradeBoxHomedataInfo() {
-        sendRequest(ManagementService.getInstance().tradeBoxHomedataInfo, new HashMap<>(), true);
-    }
-
-    private void getUserAddedServicesStatus() {
-        sendRequest(ManagementService.getInstance().getUserAddedServicesStatus, new HashMap<>(), true);
-    }
-
-    private void getStatus() {
-        sendRequest(ManagementService.getInstance().getStatus, new HashMap<>(), false);
     }
 
     @Override
@@ -202,119 +128,26 @@ public class TradingBoxActivity extends JMEBaseActivity {
                 break;
             case "QueryTradeBoxList":
                 if (head.isSuccess()) {
-                    List<TradeBoxVo> tradeBoxVoList;
+                    List<TradingBoxVo> tradingBoxVoList;
 
                     try {
-                        tradeBoxVoList = (List<TradeBoxVo>) response;
+                        tradingBoxVoList = (List<TradingBoxVo>) response;
                     } catch (Exception e) {
-                        tradeBoxVoList = null;
+                        tradingBoxVoList = null;
 
                         e.printStackTrace();
                     }
 
-                    if (null == tradeBoxVoList || 0 == tradeBoxVoList.size()) {
+                    if (null == tradingBoxVoList || 0 == tradingBoxVoList.size()) {
                         mBinding.layoutNoData.setVisibility(View.VISIBLE);
                         mBinding.nestedScrollView.setVisibility(View.GONE);
                     } else {
                         mBinding.layoutNoData.setVisibility(View.GONE);
                         mBinding.nestedScrollView.setVisibility(View.VISIBLE);
                     }
+
+                    mAdapter.setNewData(tradingBoxVoList);
                 }
-
-                break;
-            case "TradeBoxHomedataInfo":
-                if (head.isSuccess()) {
-                    TradingBoxDataInfoVo tradingBoxDataInfoVo;
-
-                    try {
-                        tradingBoxDataInfoVo = (TradingBoxDataInfoVo) response;
-                    } catch (Exception e) {
-                        tradingBoxDataInfoVo = null;
-
-                        e.printStackTrace();
-                    }
-
-                    if (null == tradingBoxDataInfoVo)
-                        return;
-
-                    mPeriodName = tradingBoxDataInfoVo.getPeriodName();
-
-                    mHistoryVoBeanList = tradingBoxDataInfoVo.getHistoryListVoList();
-
-                    if (null == mHistoryVoBeanList || 0 == mHistoryVoBeanList.size())
-                        return;
-
-                    initViewPager();
-                }
-
-                break;
-            case "GetUserAddedServicesStatus":
-                String incrementState;
-
-                if (null == response)
-                    incrementState = "";
-                else
-                    incrementState = response.toString();
-
-                if (incrementState.equals("T")) {
-                    getStatus();
-                } else {
-                    if (null != mTradeMessagePopUpWindow && !mTradeMessagePopUpWindow.isShowing()) {
-                        mTradeMessagePopUpWindow.setData(mContext.getResources().getString(R.string.trade_increment_error),
-                                mContext.getResources().getString(R.string.trade_increment_goto_open),
-                                (view) -> {
-                                    ARouter.getInstance().build(Constants.ARouterUriConst.VALUEADDEDSERVICE).navigation();
-
-                                    mTradeMessagePopUpWindow.dismiss();
-                                });
-                        mTradeMessagePopUpWindow.showAtLocation(mBinding.recyclerView, Gravity.CENTER, 0, 0);
-                    }
-                }
-
-                break;
-            case "GetStatus":
-                /*if (head.isSuccess()) {
-                    String status;
-
-                    if (null == response)
-                        status = "";
-                    else
-                        status = response.toString();
-
-                    if (status.equals("1")) {
-                        if (null != mTradeMessagePopUpWindow && !mTradeMessagePopUpWindow.isShowing()) {
-                            mTradeMessagePopUpWindow.setData(mContext.getResources().getString(R.string.trade_account_error),
-                                    mContext.getResources().getString(R.string.trade_account_goto_recharge),
-                                    (view) -> {
-                                        ARouter.getInstance().build(Constants.ARouterUriConst.RECHARGE).navigation();
-
-                                        mTradeMessagePopUpWindow.dismiss();
-                                    });
-                            mTradeMessagePopUpWindow.showAtLocation(mBinding.recyclerView, Gravity.CENTER, 0, 0);
-                        }
-                    } else {
-                        if (null == mHistoryVoBeanList || 0 == mHistoryVoBeanList.size())
-                            return;
-
-                        TradingBoxDataInfoVo.HistoryVoBean historyVoBean = mHistoryVoBeanList.get(mBinding.viewpager.getCurrentItem());
-
-                        if (null == historyVoBean)
-                            return;
-
-                        String tradeId = historyVoBean.getTradeId();
-                        String direction = historyVoBean.getDirection();
-
-                        if (TextUtils.isEmpty(tradeId) || TextUtils.isEmpty(direction))
-                            return;
-
-                        ARouter.getInstance()
-                                .build(Constants.ARouterUriConst.PLACEORDER)
-                                .withString("Type", "Place")
-                                .withString("Direction", direction)
-                                .withString("TradeId", tradeId)
-                                .navigation();
-                    }
-                }*/
 
                 break;
         }
@@ -330,48 +163,6 @@ public class TradingBoxActivity extends JMEBaseActivity {
             ARouter.getInstance().build(Constants.ARouterUriConst.TRADINGBOXHISTROY).navigation();
         }
 
-        public void onClickPrevious() {
-          /*  int currentItem = mBinding.viewpager.getCurrentItem();
-
-            if (currentItem != 0)
-                mBinding.viewpager.setCurrentItem(currentItem - 1, true);*/
-        }
-
-        public void onClickNext() {
-           /* int currentItem = mBinding.viewpager.getCurrentItem();
-
-            if (currentItem < mHistoryVoBeanList.size() - 1)
-                mBinding.viewpager.setCurrentItem(currentItem + 1, true);*/
-        }
-
-        public void onClickDetails() {
-           /* if (null == mHistoryVoBeanList || 0 == mHistoryVoBeanList.size())
-                return;
-
-            TradingBoxDataInfoVo.HistoryVoBean historyVoBean = mHistoryVoBeanList.get(mBinding.viewpager.getCurrentItem());
-
-            if (null == historyVoBean)
-                return;
-
-            String tradeId = historyVoBean.getTradeId();
-
-            if (TextUtils.isEmpty(tradeId))
-                return;
-
-            ARouter.getInstance()
-                    .build(Constants.ARouterUriConst.TRADINGBOXDETAIL)
-                    .withString("Value", tradeId)
-                    .withString("PeriodName", mPeriodName)
-                    .withString("Type", "1")
-                    .navigation();*/
-        }
-
-        public void onClickBuy() {
-            if (null == mUser || !mUser.isLogin())
-                gotoLogin();
-            else
-                getUserAddedServicesStatus();
-        }
     }
 
 }

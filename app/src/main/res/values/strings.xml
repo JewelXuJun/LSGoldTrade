@@ -505,8 +505,10 @@
         \n数据解读：黄金ETF是美国民间最普及的黄金投资方式，其持仓变化可以反映市场情绪变化；黄金ETF持仓增加，表明买盘增加，市场看涨黄金的情绪升温，利多黄金；\n黄金ETF持仓减少，表明卖盘增加，市场看跌黄金的情绪升温，利空黄金。</string>
     <string name="trading_box_no_data_release">当前无交易匣子发布</string>
     <string name="trading_box_check_history">查看历史匣子</string>
-    <string name="trading_box_forecast">预测交易品种</string>
+    <string name="trading_box_forecast">预测品种</string>
     <string name="trading_box_no_data_history">当前无历史交易匣子</string>
+    <string name="trading_box_participate_in">立即参与</string>
+    <string name="trading_box_check">查看</string>
 
     <string name="text_withdraw_rule">提现规则：\n\n1. 提现申请时间：交易日9:00&#8211;15:30，将于提现申请的次日到账；\n2. 到账金额：到账金额=提现金额-提现手续费\n提现手续费=提现金额*%1$s；\n3. 提现到账查询：请到微信—我的—支付—钱包—零钱—零钱明细查询；\n4. 单日提现次数5次，单笔提现限额5000元，单日和累计限额20000元。</string>
 

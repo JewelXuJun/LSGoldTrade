@@ -72,7 +72,7 @@
             android:layout_marginTop="@dimen/margin_big"
             android:gravity="center"
             android:orientation="vertical"
-            android:visibility="visible">
+            android:visibility="gone">
 
             <ImageView
                 android:layout_width="wrap_content"
@@ -103,6 +103,7 @@
             android:id="@+id/nestedScrollView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_marginTop="@dimen/common_area_margin_tiny"
             android:fillViewport="true"
             android:scrollbars="none"
             android:visibility="gone">
@@ -122,7 +123,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:layout_marginTop="@dimen/common_area_margin"
+                    android:layout_marginTop="@dimen/common_area_margin_tiny"
                     android:layout_marginBottom="@dimen/margin_normal"
                     android:gravity="center_vertical"
                     android:text="@string/trading_box_suggest"

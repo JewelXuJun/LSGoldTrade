@@ -14,7 +14,7 @@ import com.jme.lsgoldtrade.domain.ChannelVo;
 import com.jme.lsgoldtrade.domain.CustomerServiceVo;
 import com.jme.lsgoldtrade.domain.MarketJudgmentListVo;
 import com.jme.lsgoldtrade.domain.AnalystVo;
-import com.jme.lsgoldtrade.domain.TradeBoxVo;
+import com.jme.lsgoldtrade.domain.TradingBoxVo;
 import com.jme.lsgoldtrade.domain.TradingBoxItemVo;
 import com.jme.lsgoldtrade.domain.InfoVo;
 import com.jme.lsgoldtrade.domain.SubscribeStateVo;
@@ -26,7 +26,6 @@ import com.jme.lsgoldtrade.domain.StrategyVo;
 import com.jme.lsgoldtrade.domain.SubscribeVo;
 import com.jme.lsgoldtrade.domain.TradingBoxDetailsVo;
 import com.jme.lsgoldtrade.domain.TradingBoxInfoVo;
-import com.jme.lsgoldtrade.domain.TradingBoxDataInfoVo;
 import com.jme.lsgoldtrade.domain.TradingBoxResponse;
 import com.jme.lsgoldtrade.domain.UpdateInfoVo;
 
@@ -326,13 +325,6 @@ public class ManagementService extends IService<ManagementApi> {
         }
     };
 
-    public API tradeBoxHomedataInfo = new API<TradingBoxDataInfoVo>("TradeBoxHomedataInfo") {
-        @Override
-        public Call<DTResponse> request(HashMap<String, String> params) {
-            return mApi.tradeBoxHomedataInfo(params);
-        }
-    };
-
     public API tradeBoxHistoryInfo = new API<List<TradingBoxItemVo>>("TradeBoxHistoryInfo") {
         @Override
         public Call<DTResponse> request(HashMap<String, String> params) {
@@ -354,7 +346,7 @@ public class ManagementService extends IService<ManagementApi> {
         }
     };
 
-    public API queryTradeBoxList = new API<List<TradeBoxVo>>("QueryTradeBoxList") {
+    public API queryTradeBoxList = new API<List<TradingBoxVo>>("QueryTradeBoxList") {
         @Override
         public Call<DTResponse> request(HashMap<String, String> params) {
             return mApi.queryTradeBoxList(params);

@@ -115,9 +115,6 @@ public interface ManagementApi {
     @GET("/tjsmanage/infoapi/v1/android/getListExt")
     Call<DTResponse> getListExt(@QueryMap Map<String, String> map);
 
-    @GET("/tjsmanage/infoapi/v1/android/tradingBox/tradeBoxHomedataInfo")
-    Call<DTResponse> tradeBoxHomedataInfo(@QueryMap Map<String, String> map);
-
     @POST("/tjsmanage/infoapi/v1/android/setAppSubscribe")
     Call<DTResponse> setAppSubscribe(@Body Map<String, String> map);
 
