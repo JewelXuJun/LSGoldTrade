@@ -113,6 +113,7 @@
     <dimen name="icon_normal">40dp</dimen>
     <dimen name="icon_middle">30dp</dimen>
     <dimen name="icon_time">22dp</dimen>
+    <dimen name="icon_trading_box_arrow">7.5dp</dimen>
 
     <dimen name="radius_small">2dp</dimen>
     <dimen name="radius_middle">3dp</dimen>
