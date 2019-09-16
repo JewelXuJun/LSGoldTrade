@@ -395,112 +395,130 @@
                 </LinearLayout>
 
                 <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/common_item_height_normal"
-                    android:layout_marginTop="@dimen/common_area_margin_tiny"
-                    android:background="@color/white"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:drawableLeft="@drawable/drawleft_blue_rectangle"
-                        android:drawablePadding="@dimen/common_area_margin_tiny"
-                        android:gravity="center|left"
-                        android:paddingLeft="@dimen/common_area_margin"
-                        android:text="@string/trading_box_speculation"
-                        android:textColor="@color/black"
-                        android:textSize="@dimen/sp_14" />
-
-                    <RelativeLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:onClick="@{() -> handlers.onClickSpeculation()}"
-                        android:padding="@dimen/margin_market_price">
-
-                        <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_centerInParent="true"
-                            android:src="@mipmap/ic_prompt" />
-
-                    </RelativeLayout>
-
-                </LinearLayout>
-
-                <include layout="@layout/item_line_vertical_list" />
-
-                <LinearLayout
+                    android:id="@+id/layout_speculation"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@color/white">
-
-                    <ImageView
-                        android:id="@+id/img_speculation"
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/height_analyst_picture"
-                        android:layout_marginLeft="@dimen/common_area_margin"
-                        android:layout_marginTop="@dimen/common_page_margin"
-                        android:layout_marginRight="@dimen/common_area_margin"
-                        android:layout_marginBottom="@dimen/common_page_margin"
-                        android:background="@color/color_bg_img"
-                        android:scaleType="fitXY" />
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/common_item_height_normal"
                     android:layout_marginTop="@dimen/common_area_margin_tiny"
-                    android:background="@color/white"
-                    android:orientation="horizontal">
+                    android:orientation="vertical"
+                    android:visibility="gone">
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:drawableLeft="@drawable/drawleft_blue_rectangle"
-                        android:drawablePadding="@dimen/common_area_margin_tiny"
-                        android:gravity="center|left"
-                        android:paddingLeft="@dimen/common_area_margin"
-                        android:text="@string/trading_box_gold_etf"
-                        android:textColor="@color/black"
-                        android:textSize="@dimen/sp_14" />
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/common_item_height_normal"
+                        android:background="@color/white"
+                        android:orientation="horizontal">
 
-                    <RelativeLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:onClick="@{() -> handlers.onClickETF()}"
-                        android:padding="@dimen/margin_market_price">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:drawableLeft="@drawable/drawleft_blue_rectangle"
+                            android:drawablePadding="@dimen/common_area_margin_tiny"
+                            android:gravity="center|left"
+                            android:paddingLeft="@dimen/common_area_margin"
+                            android:text="@string/trading_box_speculation"
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/sp_14" />
 
-                        <ImageView
+                        <RelativeLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_centerInParent="true"
-                            android:src="@mipmap/ic_prompt" />
+                            android:layout_gravity="center"
+                            android:onClick="@{() -> handlers.onClickSpeculation()}"
+                            android:padding="@dimen/margin_market_price">
 
-                    </RelativeLayout>
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerInParent="true"
+                                android:src="@mipmap/ic_prompt" />
+
+                        </RelativeLayout>
+
+                    </LinearLayout>
+
+                    <include layout="@layout/item_line_vertical_list" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/white">
+
+                        <ImageView
+                            android:id="@+id/img_speculation"
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/height_analyst_picture"
+                            android:layout_marginLeft="@dimen/common_area_margin"
+                            android:layout_marginTop="@dimen/common_page_margin"
+                            android:layout_marginRight="@dimen/common_area_margin"
+                            android:layout_marginBottom="@dimen/common_page_margin"
+                            android:background="@color/color_bg_img"
+                            android:scaleType="fitXY" />
+
+                    </LinearLayout>
 
                 </LinearLayout>
 
-                <include layout="@layout/item_line_vertical_list" />
-
                 <LinearLayout
+                    android:id="@+id/layout_gold_etf"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@color/white">
+                    android:layout_marginTop="@dimen/common_area_margin_tiny"
+                    android:orientation="vertical"
+                    android:visibility="gone">
 
-                    <ImageView
-                        android:id="@+id/img_etf"
+                    <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="@dimen/height_analyst_picture"
-                        android:layout_marginLeft="@dimen/common_area_margin"
-                        android:layout_marginTop="@dimen/common_page_margin"
-                        android:layout_marginRight="@dimen/common_area_margin"
-                        android:layout_marginBottom="@dimen/common_page_margin"
-                        android:background="@color/color_bg_img"
-                        android:scaleType="fitXY" />
+                        android:layout_height="@dimen/common_item_height_normal"
+                        android:background="@color/white"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:drawableLeft="@drawable/drawleft_blue_rectangle"
+                            android:drawablePadding="@dimen/common_area_margin_tiny"
+                            android:gravity="center|left"
+                            android:paddingLeft="@dimen/common_area_margin"
+                            android:text="@string/trading_box_gold_etf"
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/sp_14" />
+
+                        <RelativeLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:onClick="@{() -> handlers.onClickETF()}"
+                            android:padding="@dimen/margin_market_price">
+
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerInParent="true"
+                                android:src="@mipmap/ic_prompt" />
+
+                        </RelativeLayout>
+
+                    </LinearLayout>
+
+                    <include layout="@layout/item_line_vertical_list" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/white">
+
+                        <ImageView
+                            android:id="@+id/img_etf"
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/height_analyst_picture"
+                            android:layout_marginLeft="@dimen/common_area_margin"
+                            android:layout_marginTop="@dimen/common_page_margin"
+                            android:layout_marginRight="@dimen/common_area_margin"
+                            android:layout_marginBottom="@dimen/common_page_margin"
+                            android:background="@color/color_bg_img"
+                            android:scaleType="fitXY" />
+
+                    </LinearLayout>
 
                 </LinearLayout>
 

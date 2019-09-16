@@ -21,6 +21,7 @@ import com.jme.lsgoldtrade.config.Constants;
 import com.jme.lsgoldtrade.databinding.FragmentTradingBoxDetailBinding;
 import com.jme.lsgoldtrade.domain.TradingBoxDetailsVo;
 import com.jme.lsgoldtrade.service.ManagementService;
+import com.squareup.picasso.Picasso;
 
 import java.math.BigDecimal;
 import java.util.HashMap;
@@ -296,6 +297,10 @@ public class TradingBoxDetailFragment extends JMEBaseFragment {
                     String openPositionsTimeEnd = tradingBoxDetailsVo.getOpenPositionsTimeEnd();
                     String closePositionsTimeBegin = tradingBoxDetailsVo.getClosePositionsTimeBegin();
                     String closePositionsTimeEnd = tradingBoxDetailsVo.getClosePositionsTimeEnd();
+                    String moodUrlShow = tradingBoxDetailsVo.getMoodUrlShow();
+                    String moodUrl = tradingBoxDetailsVo.getMoodUrl();
+                    String etfUrlShow = tradingBoxDetailsVo.getEtfUrlShow();
+                    String etfUrl = tradingBoxDetailsVo.getEtfUrl();
                     String[] openTimeStart = openPositionsTimeBegin.split(" ");
                     String[] openTimeEnd = openPositionsTimeEnd.split(" ");
                     String[] closeTimeStart = closePositionsTimeBegin.split(" ");
@@ -329,6 +334,24 @@ public class TradingBoxDetailFragment extends JMEBaseFragment {
                     mBinding.tvOpenTimeEqualStartHour.setText(closeTimeStart[1]);
                     mBinding.tvOpenTimeEqualEndDate.setText(closeTimeEnd[0].replace("-", "/"));
                     mBinding.tvOpenTimeEqualEndHour.setText(closeTimeEnd[1]);
+
+                    if (moodUrlShow.equals("0")) {
+                        mBinding.layoutSpeculation.setVisibility(View.VISIBLE);
+
+                        if (!TextUtils.isEmpty(moodUrl))
+                            Picasso.with(mContext).load(moodUrl).into(mBinding.imgSpeculation);
+                    } else {
+                        mBinding.layoutSpeculation.setVisibility(View.GONE);
+                    }
+
+                    if (etfUrlShow.equals("0")) {
+                        mBinding.layoutGoldEtf.setVisibility(View.VISIBLE);
+
+                        if (!TextUtils.isEmpty(etfUrl))
+                            Picasso.with(mContext).load(etfUrl).into(mBinding.imgEtf);
+                    } else {
+                        mBinding.layoutGoldEtf.setVisibility(View.GONE);
+                    }
 
                     setFundamentalAnalysisValue(tradingBoxDetailsVo.getFundamentalAnalysis());
                     setAnalystValue(tradingBoxDetailsVo.getAnalystOpinion());
