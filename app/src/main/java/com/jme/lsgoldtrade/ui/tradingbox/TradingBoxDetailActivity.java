@@ -72,16 +72,6 @@ public class TradingBoxDetailActivity extends JMEBaseActivity {
                                     + mTradingBoxListVoBeanList.get(mBinding.viewpager.getCurrentItem()).getTradeId(),
                     String.format(getString(R.string.trading_box_number), mPeriodName),
                     getString(R.string.trading_box_share_content), mBinding.layout.getId(),true));
-        } else if (mType.equals("2")) {
-           /* TradingBoxHistoryItemVo tradingBoxHistoryItemVo = new Gson().fromJson(getIntent().getStringExtra("Value"), new TypeToken<TradingBoxHistoryItemVo>() {
-            }.getType());
-
-            if (null == tradingBoxHistoryItemVo)
-                return;
-
-            mHistoryListVoListBeanList = tradingBoxHistoryItemVo.getHistoryListVoList();
-
-            */
         }
 
         initViewPager();
