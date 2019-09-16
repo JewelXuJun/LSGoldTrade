@@ -1,6 +1,7 @@
 package com.jme.lsgoldtrade.ui.tradingbox;
 
 import android.os.Bundle;
+import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.View;
 
@@ -28,7 +29,6 @@ public class TradingBoxHistroyActivity extends JMEBaseActivity implements BaseQu
     private TradingBoxAdapter mAdapter;
 
     private int mCurrentPage = 1;
-    private int mTotal = 0;
 
     @Override
     protected int getContentViewId() {
@@ -46,6 +46,7 @@ public class TradingBoxHistroyActivity extends JMEBaseActivity implements BaseQu
         mBinding.recyclerView.setHasFixedSize(false);
         mBinding.recyclerView.setLayoutManager(new LinearLayoutManager(this));
         mBinding.recyclerView.setAdapter(mAdapter);
+        mBinding.recyclerView.setNestedScrollingEnabled(false);
     }
 
     @Override
@@ -54,7 +55,7 @@ public class TradingBoxHistroyActivity extends JMEBaseActivity implements BaseQu
 
         querySubscriberCount();
         getListExt();
-        queryTradeBoxLossHistoryInfo();
+        queryTradeBoxLossHistoryInfo(true);
     }
 
     @Override
@@ -62,6 +63,21 @@ public class TradingBoxHistroyActivity extends JMEBaseActivity implements BaseQu
         super.initListener();
 
         mAdapter.setOnLoadMoreListener(this, mBinding.recyclerView);
+
+        mBinding.nestedScrollView.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
+            @Override
+            public void onScrollChange(NestedScrollView view, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
+                if (scrollY == (view.getChildAt(0).getMeasuredHeight() - view.getMeasuredHeight())) {
+                    if (mAdapter.getData().size() < mCurrentPage * 10) {
+                        mAdapter.loadMoreEnd();
+                    } else {
+                        mCurrentPage++;
+
+                        queryTradeBoxLossHistoryInfo(false);
+                    }
+                }
+            }
+        });
     }
 
     @Override
@@ -84,12 +100,12 @@ public class TradingBoxHistroyActivity extends JMEBaseActivity implements BaseQu
         sendRequest(ManagementService.getInstance().setAppSubscribe, new HashMap<>(), true);
     }
 
-    private void queryTradeBoxLossHistoryInfo() {
+    private void queryTradeBoxLossHistoryInfo(boolean enable) {
         HashMap<String, String> params = new HashMap<>();
         params.put("current", String.valueOf(mCurrentPage));
         params.put("pageSize", "10");
 
-        sendRequest(ManagementService.getInstance().queryTradeBoxLossHistoryInfo, params, true);
+        sendRequest(ManagementService.getInstance().queryTradeBoxLossHistoryInfo, params, enable);
     }
 
     @Override
@@ -146,16 +162,18 @@ public class TradingBoxHistroyActivity extends JMEBaseActivity implements BaseQu
                     }
 
                     if (null == tradingBoxHistoryVo) {
-                        mBinding.layoutNoData.setVisibility(View.VISIBLE);
-                        mBinding.nestedScrollView.setVisibility(View.GONE);
+                        if (mCurrentPage == 1) {
+                            mBinding.layoutNoData.setVisibility(View.VISIBLE);
+                            mBinding.nestedScrollView.setVisibility(View.GONE);
+                        }
                     } else {
-                        mTotal = tradingBoxHistoryVo.getTotal();
-
                         List<TradingBoxVo> tradingBoxVoList = tradingBoxHistoryVo.getRecords();
 
                         if (null == tradingBoxVoList || 0 == tradingBoxVoList.size()) {
-                            mBinding.layoutNoData.setVisibility(View.VISIBLE);
-                            mBinding.nestedScrollView.setVisibility(View.GONE);
+                            if (mCurrentPage == 1) {
+                                mBinding.layoutNoData.setVisibility(View.VISIBLE);
+                                mBinding.nestedScrollView.setVisibility(View.GONE);
+                            }
                         } else {
                             mBinding.layoutNoData.setVisibility(View.GONE);
                             mBinding.nestedScrollView.setVisibility(View.VISIBLE);
@@ -176,15 +194,7 @@ public class TradingBoxHistroyActivity extends JMEBaseActivity implements BaseQu
 
     @Override
     public void onLoadMoreRequested() {
-        mBinding.recyclerView.postDelayed(() -> {
-            if (mCurrentPage < mTotal) {
-                mCurrentPage++;
 
-                queryTradeBoxLossHistoryInfo();
-            } else {
-                mAdapter.loadMoreEnd();
-            }
-        }, 0);
     }
 
     public class ClickHandlers {
