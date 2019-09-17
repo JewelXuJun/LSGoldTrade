@@ -66,13 +66,12 @@ public class TradingBoxDetailActivity extends JMEBaseActivity {
         if (null == mTradingBoxListVoBeanList || 0 == mTradingBoxListVoBeanList.size())
             return;
 
-        if (mType.equals("TradingBox")) {
+        if (mType.equals("TradingBox"))
             setRightNavigation("", R.mipmap.ic_more, 0, () ->
                     TradeBoxFunctionUtils.show(this, Constants.HttpConst.URL_TRADINGBOXINFO
                                     + mTradingBoxListVoBeanList.get(mBinding.viewpager.getCurrentItem()).getTradeId(),
-                    String.format(getString(R.string.trading_box_number), mPeriodName),
-                    getString(R.string.trading_box_share_content), mBinding.layout.getId(),true));
-        }
+                            mTradingBoxListVoBeanList.get(mBinding.viewpager.getCurrentItem()).getMainTitle(),
+                            mTradingBoxListVoBeanList.get(mBinding.viewpager.getCurrentItem()).getMainContent(), mBinding.layout.getId(), true));
 
         initViewPager();
 
