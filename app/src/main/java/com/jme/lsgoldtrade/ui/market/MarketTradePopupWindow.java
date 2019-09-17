@@ -135,12 +135,12 @@ public class MarketTradePopupWindow extends JMEBasePopupWindow {
         mBinding.etAmount.setText("1");
 
         mContractID = tenSpeedVo.getContractId();
-        mPriceMove = new BigDecimal(contractInfoVo.getMinPriceMove()).divide(new BigDecimal(100)).floatValue();
+        mPriceMove = null == mContractInfoVo ? 0 : new BigDecimal(mContractInfoVo.getMinPriceMove()).divide(new BigDecimal(100)).floatValue();
         mLowerLimitPrice = tenSpeedVo.getLowerLimitPrice();
         mHighLimitPrice = tenSpeedVo.getHighLimitPrice();
-        mMinOrderQty = mContractInfoVo.getMinOrderQty();
-        mMaxOrderQty = mContractInfoVo.getMaxOrderQty();
-        mMaxHoldQty = mContractInfoVo.getMaxHoldQty();
+        mMinOrderQty = null == mContractInfoVo ? 0 : mContractInfoVo.getMinOrderQty();
+        mMaxOrderQty = null == mContractInfoVo ? 0 : mContractInfoVo.getMaxOrderQty();
+        mMaxHoldQty = null == mContractInfoVo ? 0 : mContractInfoVo.getMaxHoldQty();
         mBsFlag = bsFlag;
         mOcFlag = ocFlag;
 

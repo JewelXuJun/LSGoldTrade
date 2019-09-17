@@ -874,9 +874,6 @@ public class MarketDetailActivity extends JMEBaseActivity implements FChart.OnPr
                         e.printStackTrace();
                     }
 
-                    if (null == mAccountVo)
-                        return;
-
                     position();
                 }
 
@@ -893,22 +890,20 @@ public class MarketDetailActivity extends JMEBaseActivity implements FChart.OnPr
                         e.printStackTrace();
                     }
 
-                    if (null == positionPageVo)
-                        return;
-
-                    List<PositionVo> positionVoList = positionPageVo.getPositionList();
-
-                    if (null == positionVoList || 0 == positionVoList.size())
-                        return;
-
                     PositionVo positionVoValue = null;
 
-                    for (PositionVo positionVo : positionVoList) {
-                        if (null != positionVo && positionVo.getContractId().equals(mContractId)) {
-                            if (mBsFlag == 1 && positionVo.getType().equals("多"))
-                                positionVoValue = positionVo;
-                            else if (mBsFlag == 2 && positionVo.getType().equals("空"))
-                                positionVoValue = positionVo;
+                    if (null != positionPageVo) {
+                        List<PositionVo> positionVoList = positionPageVo.getPositionList();
+
+                        if (null != positionVoList && 0 != positionVoList.size()) {
+                            for (PositionVo positionVo : positionVoList) {
+                                if (null != positionVo && positionVo.getContractId().equals(mContractId)) {
+                                    if (mBsFlag == 1 && positionVo.getType().equals("多"))
+                                        positionVoValue = positionVo;
+                                    else if (mBsFlag == 2 && positionVo.getType().equals("空"))
+                                        positionVoValue = positionVo;
+                                }
+                            }
                         }
                     }
 
