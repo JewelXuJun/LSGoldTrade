@@ -359,6 +359,11 @@ public class DeclarationFormFragment extends JMEBaseFragment implements FChart.O
                     }
 
                     break;
+                case Constants.RxBusConst.RXBUS_LOGOUT_SUCCESS:
+                    mBinding.etPrice.setText("");
+                    mBinding.etAmount.setText("1");
+
+                    break;
             }
         });
     }
