@@ -17,8 +17,9 @@ public class Constants {
         public static final int PRODUCE = 2;
         public static final int UAT = 3;
         public static final int PREPRODUCE = 4;
+        public static final int SECURITY = 5;
 
-        public static int Envi = PREPRODUCE;
+        public static int Envi = SECURITY;
 
         private HttpConst() {
 
@@ -82,9 +83,17 @@ public class Constants {
                 URL_BASE_TRADE = "http://180.97.47.179:18080";
                 URL_BASE_ACCOUNT = "http://180.97.47.179:18080";
                 URL_BASE_MANAGEMENT = "http://180.97.47.179:18080";
-                URL_INFO = "http://180.97.47.179:18080/tjsmanage/infoapi/v1/ios/cmsComtentTxt/get?contentId=";
+                URL_INFO = "http://180.97.47.179:18080/tjsmanage/infoapi/v1/android/cmsComtentTxt/get?contentId=";
                 URL_TRADINGBOX = "http://180.97.47.179:18080/tjsmanage/openacct/wap/tradingBox.html";
                 URL_TRADINGBOXINFO = "http://180.97.47.179:18080/tjsmanage/openacct/wap/tradingBoxDetail.html?tradeId=";
+            } else if (Envi == SECURITY) {
+                URL_BASE_MARKET = "http://222.190.245.2:18038";
+                URL_BASE_TRADE = "http://222.190.245.2:18038";
+                URL_BASE_ACCOUNT = "http://222.190.245.2:18038";
+                URL_BASE_MANAGEMENT = "http://222.190.245.2:18038";
+                URL_INFO = "http://222.190.245.2:18038/tjsmanage/infoapi/v1/android/cmsComtentTxt/get?contentId=";
+                URL_TRADINGBOX = "http://222.190.245.2:18038/tjsmanage/openacct/wap/tradingBox.html";
+                URL_TRADINGBOXINFO = "http://222.190.245.2:18038/tjsmanage/openacct/wap/tradingBoxDetail.html?tradeId=";
             }
         }
 
