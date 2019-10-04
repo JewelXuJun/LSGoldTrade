@@ -19,7 +19,7 @@ public class Constants {
         public static final int PREPRODUCE = 4;
         public static final int SECURITY = 5;
 
-        public static int Envi = SECURITY;
+        public static int Envi = UAT;
 
         private HttpConst() {
 
@@ -66,10 +66,10 @@ public class Constants {
                 URL_BASE_MARKET = "https://180.96.49.165:18002";
                 URL_BASE_TRADE = "https://180.96.49.165:18001";
                 URL_BASE_ACCOUNT = "https://180.96.49.165:18001";
-                URL_BASE_MANAGEMENT = "https://u.taijs.com";
-                URL_INFO = "https://u.taijs.com/tjsmanage/infoapi/v1/android/cmsComtentTxt/get?contentId=";
-                URL_TRADINGBOX = "https://u.taijs.com/tjsmanage/openacct/wap/tradingBox.html";
-                URL_TRADINGBOXINFO = "https://u.taijs.com/tjsmanage/openacct/wap/tradingBoxDetail.html?tradeId=";
+                URL_BASE_MANAGEMENT = "https://www.taijs.com";
+                URL_INFO = "https://www.taijs.com/tjsmanage/infoapi/v1/android/cmsComtentTxt/get?contentId=";
+                URL_TRADINGBOX = "https://www.taijs.com/tjsmanage/openacct/wap/tradingBox.html";
+                URL_TRADINGBOXINFO = "https://www.taijs.com/tjsmanage/openacct/wap/tradingBoxDetail.html?tradeId=";
             } else if (Envi == UAT) {
                 URL_BASE_MARKET = "http://tjsuat1866543.developer.jsdttec.com";
                 URL_BASE_TRADE = "http://tjsuat1866666.developer.jsdttec.com";
