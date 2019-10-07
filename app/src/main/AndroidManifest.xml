@@ -226,7 +226,7 @@
             android:windowSoftInputMode="adjustResize" />
 
         <activity
-            android:name=".ui.mainpage.DiYanActivity"
+            android:name=".ui.mainpage.DeferredActivity"
             android:screenOrientation="portrait" />
 
         <activity

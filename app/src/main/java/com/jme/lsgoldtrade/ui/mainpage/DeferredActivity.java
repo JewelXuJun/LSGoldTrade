@@ -7,7 +7,7 @@ import com.alibaba.android.arouter.facade.annotation.Route;
 import com.jme.lsgoldtrade.R;
 import com.jme.lsgoldtrade.base.JMEBaseActivity;
 import com.jme.lsgoldtrade.config.Constants;
-import com.jme.lsgoldtrade.databinding.ActivityDiYanBinding;
+import com.jme.lsgoldtrade.databinding.ActivityDeferredBinding;
 import com.jme.lsgoldtrade.service.ManagementService;
 
 import java.util.ArrayList;
@@ -17,18 +17,18 @@ import java.util.List;
 /**
  * 递延方向
  */
-@Route(path = Constants.ARouterUriConst.DIYAN)
-public class DiYanActivity extends JMEBaseActivity {
+@Route(path = Constants.ARouterUriConst.DEFERRED)
+public class DeferredActivity extends JMEBaseActivity {
 
-    private ActivityDiYanBinding mBinding;
+    private ActivityDeferredBinding mBinding;
 
-    private DiYanAdapter adapter;
+    private DeferredAdapter adapter;
 
     private List<String> list = new ArrayList<>();
 
     @Override
     protected int getContentViewId() {
-        return R.layout.activity_di_yan;
+        return R.layout.activity_deferred;
     }
 
     @Override
@@ -41,7 +41,8 @@ public class DiYanActivity extends JMEBaseActivity {
     @Override
     protected void initData(Bundle savedInstanceState) {
         super.initData(savedInstanceState);
-        adapter = new DiYanAdapter(R.layout.item_diyan, list);
+
+        adapter = new DeferredAdapter(R.layout.item_deferred, list);
         mBinding.recyclerView.setHasFixedSize(false);
         mBinding.recyclerView.setLayoutManager(new LinearLayoutManager(this));
         mBinding.recyclerView.setAdapter(adapter);
@@ -54,7 +55,7 @@ public class DiYanActivity extends JMEBaseActivity {
     }
 
     private void getDateFromNet() {
-        sendRequest(ManagementService.getInstance().diyanfangxiang, new HashMap<>(), false);
+        sendRequest(ManagementService.getInstance().hasProfitLossRiskSign, new HashMap<>(), false);
     }
 
     @Override
@@ -67,7 +68,7 @@ public class DiYanActivity extends JMEBaseActivity {
     protected void initBinding() {
         super.initBinding();
 
-        mBinding = (ActivityDiYanBinding) mBindingUtil;
+        mBinding = (ActivityDeferredBinding) mBindingUtil;
         mBinding.setHandlers(new ClickHandlers());
     }
 

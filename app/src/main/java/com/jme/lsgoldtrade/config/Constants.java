@@ -191,7 +191,7 @@ public class Constants {
         public static final String TRADINGBOXORDER = "/TradingBoxActivity/TradingBoxOrderActivity";
         public static final String ORDERDETAILS = "/Order/OrderDetailsActivity";
         public static final String FASTMANAGEMENT = "/Mainpager/FastManagementActivity";
-        public static final String DIYAN = "/Mainpager/DiYanActivity";
+        public static final String DEFERRED = "/Mainpager/DeferredActivity";
         public static final String VALUEADDEDSERVICE = "/Personal/ValueAddedServiceActivity";
         public static final String MARKETJUDGMENT = "/Mainpager/MarketJudgmentActivity";
         public static final String WARNING = "/Market/WarningActivity";

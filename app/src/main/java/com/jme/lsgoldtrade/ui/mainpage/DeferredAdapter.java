@@ -5,9 +5,9 @@ import com.chad.library.adapter.base.BaseViewHolder;
 
 import java.util.List;
 
-public class DiYanAdapter extends BaseQuickAdapter<String, BaseViewHolder> {
+public class DeferredAdapter extends BaseQuickAdapter<String, BaseViewHolder> {
 
-    public DiYanAdapter(int resId, List<String> list) {
+    public DeferredAdapter(int resId, List<String> list) {
         super(resId, list);
     }
 

@@ -59,7 +59,7 @@ public interface ManagementApi {
     Call<DTResponse> revocation(@QueryMap Map<String, String> map);
 
     @GET("/tjsmanage/infoapi/v1/android/protocol/hasProfitLossRiskSign")
-    Call<DTResponse> diyanfangxiang(@QueryMap Map<String, String> map);
+    Call<DTResponse> hasProfitLossRiskSign(@QueryMap Map<String, String> map);
 
     @GET("/tjsmanage/infoapi/v1/android/customerService/getGreeting")
     Call<DTResponse> getGreeting(@QueryMap Map<String, String> map);

@@ -5,22 +5,20 @@
 
         <variable
             name="handlers"
-            type="com.jme.lsgoldtrade.ui.mainpage.DiYanActivity.ClickHandlers" />
+            type="com.jme.lsgoldtrade.ui.mainpage.DeferredActivity.ClickHandlers" />
 
     </data>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        >
+        android:orientation="vertical">
 
         <LinearLayout
             android:id="@+id/lltitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            >
+            android:orientation="vertical">
 
             <include layout="@layout/layout_toolbar" />
 
@@ -31,73 +29,64 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical"
-            >
+            android:orientation="vertical">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="80dp"
-                android:orientation="horizontal"
-                android:gravity="center"
                 android:background="@color/white"
-                >
+                android:gravity="center"
+                android:orientation="horizontal">
 
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
                     android:gravity="center"
-                    >
+                    android:orientation="vertical">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="起始时间"
-                        android:textSize="@dimen/sp_12"
                         android:textColor="@color/black_deep"
-                        />
+                        android:textSize="@dimen/sp_12" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="2019-04-04"
-                        android:textSize="@dimen/sp_18"
                         android:textColor="@color/color_blue_deep"
-                        />
+                        android:textSize="@dimen/sp_18" />
 
                 </LinearLayout>
 
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@mipmap/ic_arrow_yellow"
                     android:layout_gravity="center"
                     android:layout_marginLeft="32dp"
                     android:layout_marginRight="32dp"
-                    />
+                    android:src="@mipmap/ic_arrow_yellow" />
 
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
                     android:gravity="center"
-                    >
+                    android:orientation="vertical">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="结束时间"
-                        android:textSize="@dimen/sp_12"
                         android:textColor="@color/black_deep"
-                        />
+                        android:textSize="@dimen/sp_12" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="2019-03-03"
-                        android:textSize="@dimen/sp_18"
                         android:textColor="@color/color_blue_deep"
-                        />
+                        android:textSize="@dimen/sp_18" />
 
                 </LinearLayout>
 
@@ -106,8 +95,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                >
+                android:orientation="horizontal">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -134,8 +122,7 @@
                     <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        >
+                        android:layout_weight="1">
 
                         <TextView
                             android:id="@+id/tv_last_price"
@@ -151,8 +138,7 @@
                     <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        >
+                        android:layout_weight="1">
 
                         <TextView
                             android:id="@+id/tv_range"
@@ -191,8 +177,7 @@
                 android:id="@+id/swipeRefreshLayout"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@color/white"
-                >
+                android:background="@color/white">
 
                 <com.scwang.smartrefresh.layout.header.ClassicsHeader
                     android:layout_width="match_parent"
@@ -202,9 +187,9 @@
                     android:id="@+id/recyclerView"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:cacheColorHint="@null"
                     android:paddingLeft="20dp"
                     android:paddingRight="20dp"
-                    android:cacheColorHint="@null"
                     android:scrollbars="none" />
 
             </com.scwang.smartrefresh.layout.SmartRefreshLayout>
