@@ -1,10 +1,7 @@
-package com.jme.lsgoldtrade.ui.trade;
+package com.jme.lsgoldtrade.ui.transaction;
 
 import android.os.Bundle;
-import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.content.ContextCompat;
 import android.text.SpannableString;
 import android.text.Spanned;
@@ -22,8 +19,9 @@ import com.jme.common.util.RxBus;
 import com.jme.common.util.StatusBarUtil;
 import com.jme.lsgoldtrade.R;
 import com.jme.lsgoldtrade.base.JMEBaseFragment;
+import com.jme.lsgoldtrade.base.TabViewPagerAdapter;
 import com.jme.lsgoldtrade.config.Constants;
-import com.jme.lsgoldtrade.databinding.FragmentTradeBinding;
+import com.jme.lsgoldtrade.databinding.FragmentTransactionBinding;
 import com.jme.lsgoldtrade.domain.IdentityInfoVo;
 import com.jme.lsgoldtrade.service.TradeService;
 
@@ -31,39 +29,31 @@ import java.util.HashMap;
 
 import rx.Subscription;
 
-/**
- * 交易
- */
-public class TradeFragment extends JMEBaseFragment implements TabLayout.OnTabSelectedListener{
+public class TransactionFragment extends JMEBaseFragment {
 
-    private FragmentTradeBinding mBinding;
+    private FragmentTransactionBinding mBinding;
 
     private Fragment[] mFragmentArrays;
     private String[] mTabTitles;
 
     private TabViewPagerAdapter mAdapter;
-
-    private Subscription mRxbus;
+    private Subscription mRxBus;
 
     @Override
     protected int getContentViewId() {
-        return R.layout.fragment_trade;
+        return R.layout.fragment_transaction;
     }
 
     @Override
     protected void initView() {
         super.initView();
 
-        mBinding = (FragmentTradeBinding) mBindingUtil;
-
-        StatusBarUtil.setStatusBarMode(mActivity, true, R.color.color_blue_deep);
+        initInfoTabs();
     }
 
     @Override
     protected void initData(Bundle savedInstanceState) {
         super.initData(savedInstanceState);
-
-        initInfoTabs();
     }
 
     @Override
@@ -71,15 +61,14 @@ public class TradeFragment extends JMEBaseFragment implements TabLayout.OnTabSel
         super.initListener();
 
         initRxBus();
-
-        mBinding.tablayout.addOnTabSelectedListener(this);
     }
 
     @Override
     public void initBinding() {
         super.initBinding();
 
-        mBinding.setHandlers(new ClickHandlers());
+        mBinding = (FragmentTransactionBinding) mBindingUtil;
+        mBinding.setHandlers(new ClicKHandlers());
     }
 
     @Override
@@ -97,8 +86,24 @@ public class TradeFragment extends JMEBaseFragment implements TabLayout.OnTabSel
         setLayout();
     }
 
+    private void initInfoTabs() {
+        mTabTitles = new String[2];
+        mTabTitles[0] = mContext.getResources().getString(R.string.transaction_place_order);
+        mTabTitles[1] = mContext.getResources().getString(R.string.transaction_hold_positions);
+
+        mFragmentArrays = new Fragment[2];
+        mFragmentArrays[0] = new PlaceOrderFragment();
+        mFragmentArrays[1] = new HoldPositionsFragment();
+
+        mAdapter = new TabViewPagerAdapter(getChildFragmentManager(), mTabTitles, mFragmentArrays);
+
+        mBinding.tabViewpager.removeAllViewsInLayout();
+        mBinding.tabViewpager.setAdapter(mAdapter);
+        mBinding.tablayout.setupWithViewPager(mBinding.tabViewpager);
+    }
+
     private void initRxBus() {
-        mRxbus = RxBus.getInstance().toObserverable(RxBus.Message.class).subscribe(message -> {
+        mRxBus = RxBus.getInstance().toObserverable(RxBus.Message.class).subscribe(message -> {
             String callType = message.getObject().toString();
 
             if (TextUtils.isEmpty(callType))
@@ -109,16 +114,12 @@ public class TradeFragment extends JMEBaseFragment implements TabLayout.OnTabSel
                     setLayout();
 
                     break;
-                case Constants.RxBusConst.RXBUS_TRANSACTION_HOLD_POSITIONS:
+                case Constants.RxBusConst.RXBUS_TRANSACTION_PLACE_ORDER:
                     mActivity.runOnUiThread(() -> mBinding.tabViewpager.setCurrentItem(0));
 
                     break;
-                case Constants.RxBusConst.RXBUS_TRANSACTION_PLACE_ORDER:
+                case Constants.RxBusConst.RXBUS_TRANSACTION_HOLD_POSITIONS:
                     mActivity.runOnUiThread(() -> mBinding.tabViewpager.setCurrentItem(1));
-
-                    break;
-                case Constants.RxBusConst.RXBUS_CANCELORDERFRAGMENT:
-                    mActivity.runOnUiThread(() -> mBinding.tabViewpager.setCurrentItem(2));
 
                     break;
             }
@@ -126,26 +127,18 @@ public class TradeFragment extends JMEBaseFragment implements TabLayout.OnTabSel
     }
 
     private void setLayout() {
-        if (null == mUser || !mUser.isLogin()) {
-            setUnLoginLayout();
-        } else {
-            if (TextUtils.isEmpty(mUser.getAccountID()))
-                setUnLoginLayout();
-            else
-                setLoginLayout();
-        }
+        if (null == mUser || !mUser.isLogin() || TextUtils.isEmpty(mUser.getAccountID()))
+            setCannotTransactionLayout();
+        else
+            setTransactionLayout();
     }
 
-    private void setUnLoginLayout() {
+    private void setCannotTransactionLayout() {
         mBinding.layoutLogin.setVisibility(View.GONE);
         mBinding.layoutNoLogin.setVisibility(View.VISIBLE);
 
+        StatusBarUtil.setStatusBarMode(mActivity, true, R.color.color_blue_deep);
         setCourseLayout(mContext.getResources().getString(R.string.trade_open_account_course));
-    }
-
-    private void setLoginLayout() {
-        mBinding.layoutLogin.setVisibility(View.VISIBLE);
-        mBinding.layoutNoLogin.setVisibility(View.GONE);
     }
 
     private void setCourseLayout(String value) {
@@ -158,31 +151,11 @@ public class TradeFragment extends JMEBaseFragment implements TabLayout.OnTabSel
         mBinding.tvOpenAccountCourse.setText(spannableString);
     }
 
-    private void initInfoTabs() {
-        mAdapter = new TabViewPagerAdapter(getChildFragmentManager());
+    private void setTransactionLayout() {
+        mBinding.layoutLogin.setVisibility(View.VISIBLE);
+        mBinding.layoutNoLogin.setVisibility(View.GONE);
 
-        mTabTitles = new String[4];
-        mTabTitles[0] = mContext.getResources().getString(R.string.trade_hold_position);
-        mTabTitles[1] = mContext.getResources().getString(R.string.market_declaration_form);
-        mTabTitles[2] = mContext.getResources().getString(R.string.trade_cancel_order);
-        mTabTitles[3] = mContext.getResources().getString(R.string.trade_query);
-
-        mFragmentArrays = new Fragment[4];
-        mFragmentArrays[0] = new HoldPositionFragment();
-        mFragmentArrays[1] = new DeclarationFormFragment();
-        mFragmentArrays[2] = new CancelOrderFragment();
-        mFragmentArrays[3] = new QueryFragment();
-
-        initTabLayout();
-    }
-
-    private void initTabLayout() {
-        mBinding.tabViewpager.removeAllViewsInLayout();
-        mBinding.tabViewpager.setAdapter(mAdapter);
-        mBinding.tabViewpager.setOffscreenPageLimit(3);
-        mBinding.tablayout.setTabMode(TabLayout.MODE_FIXED);
-        mBinding.tablayout.setSelectedTabIndicatorHeight(4);
-        mBinding.tablayout.setupWithViewPager(mBinding.tabViewpager);
+        StatusBarUtil.setStatusBarMode(mActivity, true, R.color.white);
     }
 
     private void getWhetherIdCard() {
@@ -231,22 +204,7 @@ public class TradeFragment extends JMEBaseFragment implements TabLayout.OnTabSel
         }
     }
 
-    @Override
-    public void onTabSelected(TabLayout.Tab tab) {
-
-    }
-
-    @Override
-    public void onTabUnselected(TabLayout.Tab tab) {
-
-    }
-
-    @Override
-    public void onTabReselected(TabLayout.Tab tab) {
-
-    }
-
-    public class ClickHandlers {
+    public class ClicKHandlers {
 
         public void onClickNews() {
             if (null == mUser || !mUser.isLogin())
@@ -279,6 +237,7 @@ public class TradeFragment extends JMEBaseFragment implements TabLayout.OnTabSel
             else
                 getWhetherIdCard();
         }
+
     }
 
     private class TextClick extends ClickableSpan {
@@ -298,33 +257,12 @@ public class TradeFragment extends JMEBaseFragment implements TabLayout.OnTabSel
         }
     }
 
-    final class TabViewPagerAdapter extends FragmentPagerAdapter {
-        public TabViewPagerAdapter(FragmentManager fm) {
-            super(fm);
-        }
-
-        @Override
-        public Fragment getItem(int position) {
-            return mFragmentArrays[position];
-        }
-
-        @Override
-        public int getCount() {
-            return mFragmentArrays.length;
-        }
-
-        @Override
-        public CharSequence getPageTitle(int position) {
-            return mTabTitles[position];
-        }
-    }
-
     @Override
     public void onDestroy() {
         super.onDestroy();
 
-        if (!mRxbus.isUnsubscribed())
-            mRxbus.unsubscribe();
+        if (!mRxBus.isUnsubscribed())
+            mRxBus.unsubscribe();
     }
 
 }

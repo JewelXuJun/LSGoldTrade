@@ -182,7 +182,7 @@ public class CheckServiceActivity extends JMEBaseActivity {
 
         public void onClickEntrust() {
             finish();
-            RxBus.getInstance().post(Constants.RxBusConst.RXBUS_TRADEFRAGMENT_HOLD, null);
+            RxBus.getInstance().post(Constants.RxBusConst.RXBUS_TRANSACTION_HOLD_POSITIONS, null);
         }
 
         public void onClickService() {

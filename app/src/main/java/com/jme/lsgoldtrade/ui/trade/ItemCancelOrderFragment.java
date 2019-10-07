@@ -45,8 +45,6 @@ public class ItemCancelOrderFragment extends JMEBaseFragment implements BaseQuic
     @Override
     protected void initView() {
         super.initView();
-
-        mBinding = (FragmentItemCancelOrderBinding) mBindingUtil;
     }
 
     @Override
@@ -96,6 +94,8 @@ public class ItemCancelOrderFragment extends JMEBaseFragment implements BaseQuic
     @Override
     public void initBinding() {
         super.initBinding();
+
+        mBinding = (FragmentItemCancelOrderBinding) mBindingUtil;
     }
 
     @Override

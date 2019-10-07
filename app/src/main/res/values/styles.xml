@@ -18,11 +18,8 @@
     </style>
 
     <style name="ColorSwitchStyle">
-        <!-- Active thumb color & Active track color(30% transparency) switch 打开时的拇指按钮的颜色 轨迹颜色默认为30%这个颜色 -->
         <item name="colorControlActivated">@color/color_blue</item>
-        <!-- Inactive thumb color switch关闭时的拇指按钮的颜色 -->
         <item name="colorSwitchThumbNormal">@color/white</item>
-        <!-- inactive track color (30% transparency) -->
         <item name="android:colorForeground">@android:color/darker_gray</item>
     </style>
 
@@ -31,22 +28,24 @@
     </style>
 
     <style name="function_dialog" parent="@android:style/Theme.Dialog">
-        <item name="android:windowFrame">@null</item><!--边框-->
-        <item name="android:windowIsFloating">true</item><!--是否浮现在activity之上-->
-        <item name="android:windowIsTranslucent">false</item><!--半透明-->
-        <item name="android:windowNoTitle">true</item><!--无标题-->
-        <item name="android:windowBackground">@color/transparent</item><!--背景透明-->
-        <item name="android:backgroundDimEnabled">false</item><!--模糊-->
+        <item name="android:windowFrame">@null</item>
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:windowIsTranslucent">false</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowBackground">@color/transparent</item>
+        <item name="android:backgroundDimEnabled">false</item>
     </style>
 
-    <!-- CustomCheckBox theme -->
     <style name="CustomPayCheckBoxTheme" parent="@android:style/Widget.CompoundButton.CheckBox">
         <item name="android:button">@drawable/choose_pay</item>
     </style>
 
-    <!-- CustomCheckBox theme -->
-    <style name="CustomYuJingTheme" parent="@android:style/Widget.CompoundButton.CheckBox">
+    <style name="CustomWarningTheme" parent="@android:style/Widget.CompoundButton.CheckBox">
         <item name="android:button">@drawable/ic_warning_choose</item>
+    </style>
+
+    <style name="TabLayoutTextStyle">
+        <item name="android:textSize">@dimen/sp_16</item>
     </style>
 
 </resources>

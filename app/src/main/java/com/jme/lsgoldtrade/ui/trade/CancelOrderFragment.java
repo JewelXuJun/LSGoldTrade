@@ -47,8 +47,6 @@ public class CancelOrderFragment extends JMEBaseFragment implements OnRefreshLis
     @Override
     protected void initView() {
         super.initView();
-
-        mBinding = (FragmentCancelOrderBinding) mBindingUtil;
     }
 
     @Override
@@ -123,6 +121,8 @@ public class CancelOrderFragment extends JMEBaseFragment implements OnRefreshLis
     @Override
     public void initBinding() {
         super.initBinding();
+
+        mBinding = (FragmentCancelOrderBinding) mBindingUtil;
     }
 
     @Override

@@ -6,7 +6,7 @@
 
         <variable
             name="handlers"
-            type="com.jme.lsgoldtrade.ui.trade.TradeFragment.ClickHandlers" />
+            type="com.jme.lsgoldtrade.ui.transaction.TransactionFragment.ClicKHandlers" />
 
     </data>
 
@@ -14,49 +14,47 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/common_background"
-        android:clipToPadding="false"
-        android:fitsSystemWindows="true"
         android:orientation="vertical">
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/color_blue_deep"
-            android:fitsSystemWindows="true"
-            android:minHeight="?attr/actionBarSize">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:text="@string/main_trade"
-                android:textColor="@color/white"
-                android:textSize="@dimen/common_font_size" />
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:onClick="@{() -> handlers.onClickNews()}"
-                android:orientation="horizontal"
-                android:padding="@dimen/common_page_padding">
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@mipmap/ic_news_white" />
-
-            </LinearLayout>
-
-        </RelativeLayout>
 
         <LinearLayout
             android:id="@+id/layout_no_login"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
-            android:visibility="visible">
+            android:visibility="gone">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/color_blue_deep"
+                android:fitsSystemWindows="true"
+                android:minHeight="?attr/actionBarSize">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:text="@string/main_trade"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/common_font_size" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:onClick="@{() -> handlers.onClickNews()}"
+                    android:orientation="horizontal"
+                    android:padding="@dimen/common_page_padding">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@mipmap/ic_news_white" />
+
+                </LinearLayout>
+
+            </RelativeLayout>
 
             <ImageView
                 android:id="@+id/img_banner"
@@ -298,13 +296,20 @@
             <android.support.design.widget.TabLayout
                 android:id="@+id/tablayout"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/common_item_height_middle"
+                android:layout_height="@dimen/common_item_height_normal"
                 android:background="@color/white"
+                app:tabGravity="center"
                 app:tabIndicatorColor="@color/color_blue"
-                app:tabIndicatorFullWidth="true"
+                app:tabIndicatorFullWidth="false"
                 app:tabIndicatorHeight="@dimen/height_line"
+                app:tabMaxWidth="@dimen/width_item_large"
+                app:tabMinWidth="@dimen/width_item_middle"
+                app:tabMode="fixed"
+                app:tabPaddingEnd="@dimen/common_area_margin_big"
+                app:tabPaddingStart="@dimen/common_area_margin_big"
                 app:tabRippleColor="@null"
                 app:tabSelectedTextColor="@color/color_blue_deep"
+                app:tabTextAppearance="@style/TabLayoutTextStyle"
                 app:tabTextColor="@color/color_text_normal" />
 
             <include layout="@layout/item_line_vertical" />
@@ -312,8 +317,7 @@
             <android.support.v4.view.ViewPager
                 android:id="@+id/tab_viewpager"
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1" />
+                android:layout_height="match_parent" />
 
         </LinearLayout>
 

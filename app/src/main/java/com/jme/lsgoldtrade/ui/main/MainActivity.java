@@ -212,9 +212,9 @@ public class MainActivity extends JMEBaseActivity implements TabHost.OnTabChange
                 return;
 
             switch (callType) {
-                case Constants.RxBusConst.RXBUS_TRADE:
+                case Constants.RxBusConst.RXBUS_TRANSACTION_PLACE_ORDER:
                 case Constants.RxBusConst.RXBUS_CANCELORDERFRAGMENT:
-                case Constants.RxBusConst.RXBUS_TRADEFRAGMENT_HOLD:
+                case Constants.RxBusConst.RXBUS_TRANSACTION_HOLD_POSITIONS:
                     runOnUiThread(() -> mBinding.tabhost.setCurrentTab(2));
 
                     break;

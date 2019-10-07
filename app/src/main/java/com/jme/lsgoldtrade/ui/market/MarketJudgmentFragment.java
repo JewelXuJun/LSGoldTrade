@@ -103,8 +103,6 @@ public class MarketJudgmentFragment extends JMEBaseFragment {
     protected void initView() {
         super.initView();
 
-        mBinding = (FragmentMarketJudgmentBinding) mBindingUtil;
-
         initKChart();
     }
 
@@ -127,6 +125,7 @@ public class MarketJudgmentFragment extends JMEBaseFragment {
     public void initBinding() {
         super.initBinding();
 
+        mBinding = (FragmentMarketJudgmentBinding) mBindingUtil;
         mBinding.setHandlers(new ClickHandlers());
     }
 

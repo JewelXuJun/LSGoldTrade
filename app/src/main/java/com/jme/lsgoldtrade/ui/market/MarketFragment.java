@@ -77,8 +77,6 @@ public class MarketFragment extends JMEBaseFragment implements OnRefreshListener
     protected void initView() {
         super.initView();
 
-        mBinding = (FragmentMarketBinding) mBindingUtil;
-
         StatusBarUtil.setStatusBarMode(mActivity, true, R.color.color_blue_deep);
     }
 
@@ -124,6 +122,7 @@ public class MarketFragment extends JMEBaseFragment implements OnRefreshListener
     public void initBinding() {
         super.initBinding();
 
+        mBinding = (FragmentMarketBinding) mBindingUtil;
         mBinding.setHandlers(new ClickHandlers());
     }
 

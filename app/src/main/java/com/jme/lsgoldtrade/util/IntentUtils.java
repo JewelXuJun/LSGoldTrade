@@ -47,19 +47,11 @@ public class IntentUtils {
 
         switch (code) {
             case "MFKH":  //免费开户
-                if (null == user || !user.isLogin()) {
-                    gotoLogin(context);
-                } else {
-                    RxBus.getInstance().post(Constants.RxBusConst.RXBUS_TRADE, null);
-                    ARouter.getInstance().build(Constants.ARouterUriConst.MAIN).navigation();
-                }
-
-                break;
             case "KSXD":  //快速下单
                 if (null == user || !user.isLogin()) {
                     gotoLogin(context);
                 } else {
-                    RxBus.getInstance().post(Constants.RxBusConst.RXBUS_TRADE, null);
+                    RxBus.getInstance().post(Constants.RxBusConst.RXBUS_TRANSACTION_PLACE_ORDER, null);
                     ARouter.getInstance().build(Constants.ARouterUriConst.MAIN).navigation();
                 }
 
@@ -95,7 +87,7 @@ public class IntentUtils {
                 if (null == user || !user.isLogin()) {
                     gotoLogin(context);
                 } else {
-                    RxBus.getInstance().post(Constants.RxBusConst.RXBUS_TRADEFRAGMENT_HOLD, null);
+                    RxBus.getInstance().post(Constants.RxBusConst.RXBUS_TRANSACTION_HOLD_POSITIONS, null);
                     ARouter.getInstance().build(Constants.ARouterUriConst.MAIN).navigation();
                 }
 

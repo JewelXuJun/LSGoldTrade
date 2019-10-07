@@ -255,12 +255,7 @@ public abstract class BaseActivity extends AppCompatActivity implements OnResult
     public void OnResult(DTRequest request, Head head, Object response) {
         dismissLoadingDialog();
 //        handleErrorInfo(request, head);
-        DataReturn(request, head.getCode(), response);
         DataReturn(request, head, response);
-    }
-
-    protected void DataReturn(DTRequest request, String msgCode, Object response) {
-
     }
 
     protected void DataReturn(DTRequest request, Head head, Object response) {

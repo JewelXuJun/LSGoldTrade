@@ -391,7 +391,7 @@ public class MarketJudgmentActivity extends JMEBaseActivity {
             } else {
                 AppConfig.Select_ContractId = "Au(T+D)";
 
-                RxBus.getInstance().post(Constants.RxBusConst.RXBUS_TRADE, "Au(T+D)");
+                RxBus.getInstance().post(Constants.RxBusConst.RXBUS_TRANSACTION_PLACE_ORDER, "Au(T+D)");
                 ARouter.getInstance().build(Constants.ARouterUriConst.MAIN).navigation();
 
                 finish();

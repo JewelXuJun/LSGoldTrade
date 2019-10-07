@@ -81,8 +81,6 @@ public class ItemHoldPositionFragment extends JMEBaseFragment implements BaseQui
     @Override
     protected void initView() {
         super.initView();
-
-        mBinding = (FragmentItemHoldPositionBinding) mBindingUtil;
     }
 
     @Override
@@ -119,6 +117,8 @@ public class ItemHoldPositionFragment extends JMEBaseFragment implements BaseQui
     @Override
     public void initBinding() {
         super.initBinding();
+
+        mBinding = (FragmentItemHoldPositionBinding) mBindingUtil;
     }
 
     @Override

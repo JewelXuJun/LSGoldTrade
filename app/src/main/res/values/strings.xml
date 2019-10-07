@@ -301,6 +301,10 @@
     <string name="trade_about_amount">约可交易手数</string>
     <string name="trade_money_error">您的可用资金不足</string>
 
+    <!-- Transaction -->
+    <string name="transaction_place_order">下单</string>
+    <string name="transaction_hold_positions">持仓</string>
+
     <!-- Personal -->
     <string name="personal_login">登录/注册</string>
     <string name="personal_login_message">马上登录享受更多服务</string>

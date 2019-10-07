@@ -45,6 +45,8 @@ public abstract class JMEBaseFragment<T> extends BaseFragment {
     @Override
     protected void initView() {
         super.initView();
+
+        initBinding();
     }
 
     @Override
@@ -53,8 +55,6 @@ public abstract class JMEBaseFragment<T> extends BaseFragment {
 
         mUser = User.getInstance();
         mContract = Contract.getInstance();
-
-        initBinding();
     }
 
     @Override

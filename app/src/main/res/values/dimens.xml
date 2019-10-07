@@ -51,8 +51,10 @@
     <dimen name="width_shelves">25dp</dimen>
     <dimen name="width_amount">60dp</dimen>
     <dimen name="width_empty">30dp</dimen>
+    <dimen name="width_item_middle">70dp</dimen>
     <dimen name="width_item">82dp</dimen>
     <dimen name="width_item_big">90dp</dimen>
+    <dimen name="width_item_large">120dp</dimen>
     <dimen name="width_login_verification_code">90dp</dimen>
     <dimen name="width_market_detail_landscape_close">40dp</dimen>
     <dimen name="width_reset_item">85dp</dimen>

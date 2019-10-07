@@ -104,8 +104,6 @@ public class HoldPositionFragment extends JMEBaseFragment implements OnRefreshLi
     protected void initView() {
         super.initView();
 
-        mBinding = (FragmentHoldPositionBinding) mBindingUtil;
-
         mTradeMessagePopUpWindow = new TradeMessagePopUpWindow(mContext);
         mTradeMessagePopUpWindow.setOutsideTouchable(true);
         mTradeMessagePopUpWindow.setFocusable(true);
@@ -158,6 +156,7 @@ public class HoldPositionFragment extends JMEBaseFragment implements OnRefreshLi
     public void initBinding() {
         super.initBinding();
 
+        mBinding = (FragmentHoldPositionBinding) mBindingUtil;
         mBinding.setHandlers(new ClickHandlers());
     }
 

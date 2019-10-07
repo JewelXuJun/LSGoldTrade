@@ -299,7 +299,7 @@
 
                         <CheckBox
                             android:id="@+id/cb_1"
-                            style="@style/CustomYuJingTheme"
+                            style="@style/CustomWarningTheme"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_centerVertical="true"
@@ -308,7 +308,7 @@
 
                         <CheckBox
                             android:id="@+id/cb_3"
-                            style="@style/CustomYuJingTheme"
+                            style="@style/CustomWarningTheme"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_centerInParent="true"
@@ -316,7 +316,7 @@
 
                         <CheckBox
                             android:id="@+id/cb_7"
-                            style="@style/CustomYuJingTheme"
+                            style="@style/CustomWarningTheme"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_alignParentRight="true"
