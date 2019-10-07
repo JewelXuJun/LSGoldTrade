@@ -8,25 +8,20 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+
 import com.datai.common.R;
 import com.datai.common.charts.common.Descriptor;
+
 import java.math.BigDecimal;
 import java.util.List;
 
-/**
- * Created by XuJun on 2016/5/4.
- * Fields Chart 十档实时行情
- */
 public class FChart extends LinearLayout implements AdapterView.OnItemClickListener {
-
-    private ListView mListView;
-
-    private FChartAdapter mFChartAdapter;
 
     private Context mContext;
 
+    private ListView mListView;
+    private FChartAdapter mFChartAdapter;
     private Descriptor mDescriptor;
-
     private OnPriceClickListener mClickListener;
 
     public FChart(Context context) {
@@ -35,8 +30,11 @@ public class FChart extends LinearLayout implements AdapterView.OnItemClickListe
 
     public FChart(Context context, AttributeSet attrs) {
         super(context, attrs);
+
         setupLayoutResource(R.layout.view_fchart);
+
         mContext = context;
+
         init();
     }
 
@@ -50,7 +48,7 @@ public class FChart extends LinearLayout implements AdapterView.OnItemClickListe
     private void init() {
         mDescriptor = new Descriptor();
 
-        mListView =  findViewById(R.id.listview);
+        mListView = findViewById(R.id.listview);
 
         mFChartAdapter = new FChartAdapter(mContext, null);
         mListView.setAdapter(mFChartAdapter);
@@ -78,10 +76,6 @@ public class FChart extends LinearLayout implements AdapterView.OnItemClickListe
     public void setOnPriceClickListener(OnPriceClickListener onPriceClickListener) {
         mClickListener = onPriceClickListener;
         mListView.setOnItemClickListener(this);
-    }
-
-    public void removeOnItemClickListener() {
-        mListView.setOnItemClickListener(null);
     }
 
     public interface OnPriceClickListener {

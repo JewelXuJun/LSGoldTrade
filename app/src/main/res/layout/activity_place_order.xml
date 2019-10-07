@@ -53,7 +53,7 @@
                         android:layout_marginLeft="@dimen/common_area_margin_big"
                         android:layout_weight="1"
                         android:textColor="@color/black_deep"
-                        android:textSize="@dimen/sp_18" />
+                        android:textSize="@dimen/common_font_size" />
 
                 </LinearLayout>
 

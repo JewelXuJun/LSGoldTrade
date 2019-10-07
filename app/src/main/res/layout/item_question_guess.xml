@@ -14,7 +14,7 @@
         android:paddingTop="@dimen/common_area_margin_middle"
         android:paddingBottom="@dimen/common_area_margin_middle"
         android:textColor="@color/black"
-        android:textSize="@dimen/sp_15" />
+        android:textSize="@dimen/size_normal" />
 
     <include layout="@layout/item_line_vertical_list" />
 

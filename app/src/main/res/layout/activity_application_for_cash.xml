@@ -84,7 +84,7 @@
                 android:id="@+id/cash_mode"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="@dimen/sp_18"
+                android:textSize="@dimen/common_font_size"
                 android:textColor="@color/black_deep"
                 android:layout_gravity="center_vertical"
                 android:layout_marginLeft="30dp"

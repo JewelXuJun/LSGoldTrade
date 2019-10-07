@@ -304,6 +304,12 @@
     <!-- Transaction -->
     <string name="transaction_place_order">下单</string>
     <string name="transaction_hold_positions">持仓</string>
+    <string name="transaction_limit_up_price">涨停价</string>
+    <string name="transaction_limit_down_price">跌停价</string>
+    <string name="transaction_entrust_price">委托价格</string>
+    <string name="transaction_entrust_hands_number">委托手数</string>
+    <string name="transaction_latest">最新</string>
+    <string name="transaction_max_order_number">单笔最大下单量：</string>
 
     <!-- Personal -->
     <string name="personal_login">登录/注册</string>

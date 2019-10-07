@@ -37,6 +37,7 @@ public class PlaceOrderFragment extends JMEBaseFragment {
         super.initBinding();
 
         mBinding = (FragmentPlaceOrderBinding) mBindingUtil;
+        mBinding.setHandlers(new ClickHandlers());
     }
 
     @Override
@@ -46,5 +47,44 @@ public class PlaceOrderFragment extends JMEBaseFragment {
 
     public class ClickHandlers {
 
+        public void onClickSelectContract() {
+
+        }
+
+        public void onClickLimitDownPrice() {
+
+        }
+
+        public void onClickLimitUpPrice() {
+
+        }
+
+        public void onClickLatestPrice() {
+
+        }
+
+        public void onClickPriceMinus() {
+
+        }
+
+        public void onClickPriceAdd() {
+
+        }
+
+        public void onClickAmountMinus() {
+
+        }
+
+        public void onClickAmountAdd() {
+
+        }
+
+        public void onClickBuyMore() {
+
+        }
+
+        public void onClickSaleEmpty() {
+
+        }
     }
 }

@@ -3,6 +3,7 @@
 
     <dimen name="main_tab_margin">7dp</dimen>
     <dimen name="main_tab_line">1px</dimen>
+    <dimen name="line_width">1.5px</dimen>
 
     <dimen name="height_main_page_banner">150dp</dimen>
     <dimen name="height_main_page_market">90dp</dimen>
@@ -19,7 +20,7 @@
     <dimen name="height_trade_hold_position_account_detail">120dp</dimen>
     <dimen name="height_btn">50dp</dimen>
     <dimen name="height_turnover_time">80dp</dimen>
-    <dimen name="height_fchart">146dp</dimen>
+    <dimen name="height_fchart">150dp</dimen>
     <dimen name="height_feedback">180dp</dimen>
     <dimen name="height_chart">400dp</dimen>
     <dimen name="height_market_detail_landscape">60dp</dimen>
@@ -126,16 +127,5 @@
 
     <dimen name="lineSpacingExtra_normal">3sp</dimen>
     <dimen name="lineSpacingExtra_big">5sp</dimen>
-
-    <dimen name="sp_30">30sp</dimen>
-    <dimen name="sp_27">27sp</dimen>
-    <dimen name="sp_21">21sp</dimen>
-    <dimen name="sp_20">20sp</dimen>
-    <dimen name="sp_18">18sp</dimen>
-    <dimen name="sp_16">16sp</dimen>
-    <dimen name="sp_15">15sp</dimen>
-    <dimen name="sp_14">14sp</dimen>
-    <dimen name="sp_12">12sp</dimen>
-    <dimen name="sp_10">10sp</dimen>
 
 </resources>

@@ -24,7 +24,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="盈亏设置"
-                android:textSize="@dimen/sp_18"
+                android:textSize="@dimen/common_font_size"
                 android:textColor="@color/black_deep"
                 android:layout_centerInParent="true"
                 />
@@ -108,7 +108,7 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:text="点数"
-                    android:textSize="@dimen/sp_18"
+                    android:textSize="@dimen/common_font_size"
                     android:textColor="@color/black_deep"
                     android:gravity="center"
                     />
@@ -222,7 +222,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="元"
-                        android:textSize="@dimen/sp_15"
+                        android:textSize="@dimen/size_normal"
                         android:textColor="@color/color_red"
                         android:layout_marginLeft="8dp"
                         />
@@ -328,7 +328,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="元"
-                        android:textSize="@dimen/sp_15"
+                        android:textSize="@dimen/size_normal"
                         android:textColor="@color/color_green"
                         android:layout_marginLeft="8dp"
                         />
@@ -444,7 +444,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="点"
-                        android:textSize="@dimen/sp_15"
+                        android:textSize="@dimen/size_normal"
                         android:textColor="@color/color_red"
                         android:layout_marginLeft="8dp"
                         />
@@ -550,7 +550,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="点"
-                        android:textSize="@dimen/sp_15"
+                        android:textSize="@dimen/size_normal"
                         android:textColor="@color/color_green"
                         android:layout_marginLeft="8dp"
                         />
@@ -579,7 +579,7 @@
                 android:background="@drawable/bg_btn_blue_stroke"
                 android:text="取消"
                 android:textColor="@color/color_blue_deep"
-                android:textSize="@dimen/sp_18"
+                android:textSize="@dimen/common_font_size"
                 android:layout_marginRight="15dp"
                 />
 
@@ -591,7 +591,7 @@
                 android:background="@drawable/bg_btn_blue_solid"
                 android:text="修改"
                 android:textColor="@color/white"
-                android:textSize="@dimen/sp_18" />
+                android:textSize="@dimen/common_font_size" />
 
         </LinearLayout>
 

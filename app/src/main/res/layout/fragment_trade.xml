@@ -284,7 +284,7 @@
                 android:onClick="@{() -> handlers.onClickBind()}"
                 android:text="@string/trade_open_account_bind"
                 android:textColor="@color/color_blue_deep"
-                android:textSize="@dimen/sp_18" />
+                android:textSize="@dimen/common_font_size" />
 
         </LinearLayout>
 

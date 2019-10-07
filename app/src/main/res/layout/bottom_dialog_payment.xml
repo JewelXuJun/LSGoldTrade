@@ -16,7 +16,7 @@
             android:layout_height="wrap_content"
             android:text="选择支付方式"
             android:textColor="@color/black_deep"
-            android:textSize="@dimen/sp_18"
+            android:textSize="@dimen/common_font_size"
             android:layout_centerInParent="true"/>
 
         <ImageView
@@ -57,7 +57,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="工行e支付"
-                android:textSize="@dimen/sp_15"
+                android:textSize="@dimen/size_normal"
                 android:textColor="@color/black"/>
 
             <TextView
@@ -107,7 +107,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="支付宝"
-                android:textSize="@dimen/sp_15"
+                android:textSize="@dimen/size_normal"
                 android:textColor="@color/black"/>
 
             <TextView
@@ -159,7 +159,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="微信"
-                android:textSize="@dimen/sp_15"
+                android:textSize="@dimen/size_normal"
                 android:textColor="@color/black"/>
 
             <TextView
@@ -198,6 +198,6 @@
         android:gravity="center"
         android:text="去付款"
         android:textColor="@color/white"
-        android:textSize="@dimen/sp_18" />
+        android:textSize="@dimen/common_font_size" />
 
 </LinearLayout>

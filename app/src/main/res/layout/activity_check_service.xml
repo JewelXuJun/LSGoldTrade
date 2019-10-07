@@ -167,7 +167,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="交易匣子"
-                    android:textSize="@dimen/sp_15"
+                    android:textSize="@dimen/size_normal"
                     android:textColor="@color/black"
                     android:textStyle="bold"/>
 
@@ -221,7 +221,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="委托风控"
-                    android:textSize="@dimen/sp_15"
+                    android:textSize="@dimen/size_normal"
                     android:textColor="@color/black"
                     android:textStyle="bold"/>
 
@@ -277,7 +277,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="策略共建服务"
-                    android:textSize="@dimen/sp_15"
+                    android:textSize="@dimen/size_normal"
                     android:textColor="@color/black"
                     />
 
@@ -295,7 +295,7 @@
                 android:layout_width="75dp"
                 android:layout_height="40dp"
                 android:text="去使用"
-                android:textSize="@dimen/sp_18"
+                android:textSize="@dimen/common_font_size"
                 android:textColor="@color/color_blue_deep"
                 android:layout_gravity="center"
                 android:gravity="center"
