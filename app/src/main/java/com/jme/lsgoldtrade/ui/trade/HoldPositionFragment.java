@@ -29,6 +29,7 @@ import com.jme.lsgoldtrade.domain.TenSpeedVo;
 import com.jme.lsgoldtrade.service.ManagementService;
 import com.jme.lsgoldtrade.service.MarketService;
 import com.jme.lsgoldtrade.service.TradeService;
+import com.jme.lsgoldtrade.view.TransactionMessagePopUpWindow;
 import com.jme.lsgoldtrade.util.MarketUtil;
 import com.jme.lsgoldtrade.view.ConfirmPopupwindow;
 import com.jme.lsgoldtrade.view.EveningUpPopupWindow;
@@ -66,7 +67,7 @@ public class HoldPositionFragment extends JMEBaseFragment implements OnRefreshLi
     private String mEveningUpContractID;
     private BigDecimal mUnliquidatedProfitTotal = new BigDecimal(0);
 
-    private TradeMessagePopUpWindow mTradeMessagePopUpWindow;
+    private TransactionMessagePopUpWindow mTransactionMessagePopUpWindow;
     private EveningUpPopupWindow mEveningUpPopupWindow;
     private ConfirmPopupwindow mConfirmPopupwindow;
 
@@ -104,17 +105,9 @@ public class HoldPositionFragment extends JMEBaseFragment implements OnRefreshLi
     protected void initView() {
         super.initView();
 
-        mTradeMessagePopUpWindow = new TradeMessagePopUpWindow(mContext);
-        mTradeMessagePopUpWindow.setOutsideTouchable(true);
-        mTradeMessagePopUpWindow.setFocusable(true);
-
+        mTransactionMessagePopUpWindow = new TransactionMessagePopUpWindow(mContext);
         mEveningUpPopupWindow = new EveningUpPopupWindow(mContext);
-        mEveningUpPopupWindow.setOutsideTouchable(true);
-        mEveningUpPopupWindow.setFocusable(true);
-
         mConfirmPopupwindow = new ConfirmPopupwindow(mContext);
-        mConfirmPopupwindow.setOutsideTouchable(true);
-        mConfirmPopupwindow.setFocusable(true);
     }
 
     @Override
@@ -279,7 +272,7 @@ public class HoldPositionFragment extends JMEBaseFragment implements OnRefreshLi
                     for (FiveSpeedVo fiveSpeedVo : fiveSpeedVoList) {
                         if (null != fiveSpeedVo) {
                             if (contractID.equals(fiveSpeedVo.getContractId())) {
-                                long latestprice = fiveSpeedVo.getLatestPrice();
+                                long latestprice = Long.parseLong(fiveSpeedVo.getLatestPrice());
                                 long average = positionVo.getPositionAverage();
                                 long handWeight = mContract.getHandWeightFromID(contractID);
                                 long position = positionVo.getPosition();
@@ -633,17 +626,17 @@ public class HoldPositionFragment extends JMEBaseFragment implements OnRefreshLi
                                     String amount = mEveningUpPopupWindow.getAmount();
 
                                     if (TextUtils.isEmpty(price) || price.equals(mContext.getResources().getString(R.string.text_no_data_default))) {
-                                        showShortToast(R.string.trade_price_error);
+                                        showShortToast(R.string.transaction_price_error);
                                     } else if (new BigDecimal(price).compareTo(new BigDecimal(lowerLimitPrice)) == -1) {
-                                        showShortToast(R.string.trade_limit_down_price_error);
+                                        showShortToast(R.string.transaction_limit_down_price_error);
                                     } else if (new BigDecimal(price).compareTo(new BigDecimal(highLimitPrice)) == 1) {
-                                        showShortToast(R.string.trade_limit_up_price_error);
+                                        showShortToast(R.string.transaction_limit_up_price_error);
                                     } else if (TextUtils.isEmpty(amount)) {
-                                        showShortToast(R.string.trade_number_error);
+                                        showShortToast(R.string.transaction_number_error);
                                     } else if (new BigDecimal(amount).compareTo(new BigDecimal(0)) == 0) {
-                                        showShortToast(R.string.trade_number_error_zero);
+                                        showShortToast(R.string.transaction_number_error_zero);
                                     } else if (minOrderQty != -1 && new BigDecimal(amount).compareTo(new BigDecimal(minOrderQty)) == -1) {
-                                        showShortToast(R.string.trade_limit_min_amount_error);
+                                        showShortToast(R.string.transaction_limit_min_amount_error);
                                     } else if (maxOrderQty == -1 && new BigDecimal(amount).compareTo(new BigDecimal(maxHoldQty == -1 ? maxAmount : Math.min(maxAmount, maxHoldQty))) == 1) {
                                         showShortToast(R.string.trade_limit_max_amount_error_canbuy);
                                     } else if (maxOrderQty != -1 && new BigDecimal(amount).compareTo(new BigDecimal(Math.min(maxAmount, maxOrderQty))) == 1) {
@@ -671,15 +664,15 @@ public class HoldPositionFragment extends JMEBaseFragment implements OnRefreshLi
                 if (incrementState.equals("T")) {
                     getStatus();
                 } else {
-                    if (null != mTradeMessagePopUpWindow && !mTradeMessagePopUpWindow.isShowing()) {
-                        mTradeMessagePopUpWindow.setData(mContext.getResources().getString(R.string.trade_increment_error),
+                    if (null != mTransactionMessagePopUpWindow && !mTransactionMessagePopUpWindow.isShowing()) {
+                        mTransactionMessagePopUpWindow.setData(mContext.getResources().getString(R.string.trade_increment_error),
                                 mContext.getResources().getString(R.string.trade_increment_goto_open),
                                 (view) -> {
                                     ARouter.getInstance().build(Constants.ARouterUriConst.VALUEADDEDSERVICE).navigation();
 
-                                    mTradeMessagePopUpWindow.dismiss();
+                                    mTransactionMessagePopUpWindow.dismiss();
                                 });
-                        mTradeMessagePopUpWindow.showAtLocation(mBinding.tvRiskRate, Gravity.CENTER, 0, 0);
+                        mTransactionMessagePopUpWindow.showAtLocation(mBinding.tvRiskRate, Gravity.CENTER, 0, 0);
                     }
                 }
 
@@ -694,15 +687,15 @@ public class HoldPositionFragment extends JMEBaseFragment implements OnRefreshLi
                         status = response.toString();
 
                     if (status.equals("1")) {
-                        if (null != mTradeMessagePopUpWindow && !mTradeMessagePopUpWindow.isShowing()) {
-                            mTradeMessagePopUpWindow.setData(mContext.getResources().getString(R.string.trade_account_error),
-                                    mContext.getResources().getString(R.string.trade_account_goto_recharge),
+                        if (null != mTransactionMessagePopUpWindow && !mTransactionMessagePopUpWindow.isShowing()) {
+                            mTransactionMessagePopUpWindow.setData(mContext.getResources().getString(R.string.transaction_account_error),
+                                    mContext.getResources().getString(R.string.transaction_account_goto_recharge),
                                     (view) -> {
                                         ARouter.getInstance().build(Constants.ARouterUriConst.RECHARGE).navigation();
 
-                                        mTradeMessagePopUpWindow.dismiss();
+                                        mTransactionMessagePopUpWindow.dismiss();
                                     });
-                            mTradeMessagePopUpWindow.showAtLocation(mBinding.tvRiskRate, Gravity.CENTER, 0, 0);
+                            mTransactionMessagePopUpWindow.showAtLocation(mBinding.tvRiskRate, Gravity.CENTER, 0, 0);
                         }
                     } else {
                         ARouter.getInstance()
@@ -717,7 +710,7 @@ public class HoldPositionFragment extends JMEBaseFragment implements OnRefreshLi
                 break;
             case "LimitOrder":
                 if (head.isSuccess()) {
-                    showShortToast(R.string.trade_success);
+                    showShortToast(R.string.transaction_success);
 
                     mHandler.removeMessages(Constants.Msg.MSG_TRADE_POSITION_UPDATE_DATA);
                     mHandler.removeMessages(Constants.Msg.MSG_TRADE_POSITION_UPDATE_ACCOUNT_DATA);
@@ -728,8 +721,8 @@ public class HoldPositionFragment extends JMEBaseFragment implements OnRefreshLi
                 } else {
                     if (head.getMsg().contains("可用资金不足")) {
                         if (null != mConfirmPopupwindow && !mConfirmPopupwindow.isShowing()) {
-                            mConfirmPopupwindow.setData(mContext.getResources().getString(R.string.trade_money_error),
-                                    mContext.getResources().getString(R.string.trade_money_in),
+                            mConfirmPopupwindow.setData(mContext.getResources().getString(R.string.transaction_money_error),
+                                    mContext.getResources().getString(R.string.transaction_money_in),
                                     (view) -> ARouter.getInstance().build(Constants.ARouterUriConst.CAPITALTRANSFER).navigation());
                             mConfirmPopupwindow.showAtLocation(mBinding.tvRiskRate, Gravity.CENTER, 0, 0);
                         }

@@ -65,8 +65,6 @@ public class GuaranteeFundSettingActivity extends JMEBaseActivity {
                 new BigDecimal(mForcecloseth).multiply(new BigDecimal(100)).setScale(0, BigDecimal.ROUND_DOWN).toPlainString() + "%"));
 
         mWindow = new GuaranteeFundPopUpWindow(this);
-        mWindow.setOutsideTouchable(true);
-        mWindow.setFocusable(true);
     }
 
     @Override

@@ -52,8 +52,6 @@ public class TradingBoxOrderActivity extends JMEBaseActivity implements OnRefres
         initToolbar(R.string.trading_box_order, true);
 
         mWindow = new ConfirmPopupwindow(this);
-        mWindow.setOutsideTouchable(true);
-        mWindow.setFocusable(true);
     }
 
     @Override

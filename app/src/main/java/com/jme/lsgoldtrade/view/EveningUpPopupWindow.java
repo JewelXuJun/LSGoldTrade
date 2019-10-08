@@ -154,7 +154,7 @@ public class EveningUpPopupWindow extends JMEBasePopupWindow {
             float value = new BigDecimal(price).subtract(new BigDecimal(mPriceMove)).floatValue();
 
             if (new BigDecimal(String.valueOf(value)).compareTo(new BigDecimal(mLowerLimitPrice)) == -1) {
-                Toast.makeText(mContext, R.string.trade_limit_down_price_error, Toast.LENGTH_SHORT).show();
+                Toast.makeText(mContext, R.string.transaction_limit_down_price_error, Toast.LENGTH_SHORT).show();
 
                 mBinding.etPrice.setText(price);
                 mBinding.etPrice.setSelection(price.length());
@@ -177,7 +177,7 @@ public class EveningUpPopupWindow extends JMEBasePopupWindow {
             float value = new BigDecimal(price).add(new BigDecimal(mPriceMove)).floatValue();
 
             if (new BigDecimal(String.valueOf(value)).compareTo(new BigDecimal(mHighLimitPrice)) == 1) {
-                Toast.makeText(mContext, R.string.trade_limit_up_price_error, Toast.LENGTH_SHORT).show();
+                Toast.makeText(mContext, R.string.transaction_limit_up_price_error, Toast.LENGTH_SHORT).show();
 
                 mBinding.etPrice.setText(price);
                 mBinding.etPrice.setSelection(price.length());
@@ -203,10 +203,10 @@ public class EveningUpPopupWindow extends JMEBasePopupWindow {
                 if (new BigDecimal(value).compareTo(new BigDecimal(0)) == 1)
                     mBinding.etAmount.setText(String.valueOf(value));
                 else
-                    Toast.makeText(mContext, R.string.trade_number_error_zero, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(mContext, R.string.transaction_number_error_zero, Toast.LENGTH_SHORT).show();
             } else {
                 if (new BigDecimal(value).compareTo(new BigDecimal(mMinOrderQty)) == -1)
-                    Toast.makeText(mContext, R.string.trade_limit_min_amount_error, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(mContext, R.string.transaction_limit_min_amount_error, Toast.LENGTH_SHORT).show();
                 else
                     mBinding.etAmount.setText(String.valueOf(value));
             }

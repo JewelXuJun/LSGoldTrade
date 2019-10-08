@@ -1,4 +1,4 @@
-package com.jme.lsgoldtrade.ui.trade;
+package com.jme.lsgoldtrade.view;
 
 import android.content.Context;
 import android.databinding.DataBindingUtil;
@@ -9,13 +9,13 @@ import android.view.ViewGroup;
 import com.jme.common.util.DensityUtil;
 import com.jme.lsgoldtrade.R;
 import com.jme.lsgoldtrade.base.JMEBasePopupWindow;
-import com.jme.lsgoldtrade.databinding.PopupwindowTradeMessageBinding;
+import com.jme.lsgoldtrade.databinding.PopupwindowTransactionMessageBinding;
 
-public class TradeMessagePopUpWindow extends JMEBasePopupWindow {
+public class TransactionMessagePopUpWindow extends JMEBasePopupWindow {
 
-    private PopupwindowTradeMessageBinding mBinding;
+    private PopupwindowTransactionMessageBinding mBinding;
 
-    public TradeMessagePopUpWindow(Context context) {
+    public TransactionMessagePopUpWindow(Context context) {
         super(context);
     }
 
@@ -31,7 +31,7 @@ public class TradeMessagePopUpWindow extends JMEBasePopupWindow {
     public void iniWindow() {
         super.iniWindow();
 
-        mBinding = DataBindingUtil.inflate(LayoutInflater.from(getContext()), R.layout.popupwindow_trade_message, null, false);
+        mBinding = DataBindingUtil.inflate(LayoutInflater.from(getContext()), R.layout.popupwindow_transaction_message, null, false);
 
         if (null == mBinding)
             return;

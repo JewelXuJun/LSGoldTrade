@@ -106,8 +106,6 @@ public class BindAccountActivity extends JMEBaseActivity {
         mBinding.tvIdCard.setText(mIDCard);
 
         mWindow = new BindSuccessPopupWindow(mContext);
-        mWindow.setOutsideTouchable(true);
-        mWindow.setFocusable(true);
 
         mCountDownTimer = new JMECountDownTimer(60000, 1000,
                 mBinding.btnVerificationCode, getString(R.string.trade_get_verification_code));

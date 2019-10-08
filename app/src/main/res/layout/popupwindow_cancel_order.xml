@@ -34,7 +34,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/trade_popupwindow_contract_code"
+                    android:text="@string/transaction_popupwindow_contract_code"
                     android:textColor="@color/gray"
                     android:textSize="@dimen/sp_14" />
 
@@ -80,7 +80,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/trade_popupwindow_type"
+                    android:text="@string/transaction_popupwindow_type"
                     android:textColor="@color/gray"
                     android:textSize="@dimen/sp_14" />
 
@@ -126,7 +126,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/trade_popupwindow_entrust_amount"
+                    android:text="@string/transaction_popupwindow_entrust_amount"
                     android:textColor="@color/gray"
                     android:textSize="@dimen/sp_14" />
 

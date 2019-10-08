@@ -51,8 +51,6 @@ public class ElectronicCardMoneyOutFragment extends JMEBaseFragment implements O
         super.initData(savedInstanceState);
 
         mConfirmSimplePopupwindow = new ConfirmSimplePopupwindow(mContext);
-        mConfirmSimplePopupwindow.setOutsideTouchable(true);
-        mConfirmSimplePopupwindow.setFocusable(true);
     }
 
     @Override

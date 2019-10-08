@@ -95,7 +95,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:layout_weight="3"
-                    android:text="@string/trade_popupwindow_account"
+                    android:text="@string/transaction_popupwindow_account"
                     android:textColor="@color/color_text_normal"
                     android:textSize="@dimen/sp_14" />
 

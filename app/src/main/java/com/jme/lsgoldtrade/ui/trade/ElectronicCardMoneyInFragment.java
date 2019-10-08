@@ -60,8 +60,6 @@ public class ElectronicCardMoneyInFragment extends JMEBaseFragment {
         mRelevanceId = getArguments().getString("RelevanceId");
 
         mConfirmSimplePopupwindow = new ConfirmSimplePopupwindow(mContext);
-        mConfirmSimplePopupwindow.setOutsideTouchable(true);
-        mConfirmSimplePopupwindow.setFocusable(true);
 
         mBinding.tvIcbcElectronicBankCard.setText(StringUtils.formatBankCard(mElectronicAccounts));
         mBinding.tvMessage.setText(TextUtils.isEmpty(mRelevanceId) ? ""

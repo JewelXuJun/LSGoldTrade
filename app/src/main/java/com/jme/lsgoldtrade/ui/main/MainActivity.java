@@ -178,8 +178,6 @@ public class MainActivity extends JMEBaseActivity implements TabHost.OnTabChange
         mProtocolUpdatePopUpWindow.setFocusable(false);
 
         mConfirmSimplePopupwindow = new ConfirmSimplePopupwindow(this);
-        mConfirmSimplePopupwindow.setOutsideTouchable(true);
-        mConfirmSimplePopupwindow.setFocusable(true);
 
         registerReceiver(mStateReceiver, mIntentFilter);
         initDownLoadData();

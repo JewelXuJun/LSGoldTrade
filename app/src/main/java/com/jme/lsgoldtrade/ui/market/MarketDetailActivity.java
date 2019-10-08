@@ -48,7 +48,7 @@ import com.jme.lsgoldtrade.domain.TenSpeedVo;
 import com.jme.lsgoldtrade.service.ManagementService;
 import com.jme.lsgoldtrade.service.MarketService;
 import com.jme.lsgoldtrade.service.TradeService;
-import com.jme.lsgoldtrade.ui.trade.TradeMessagePopUpWindow;
+import com.jme.lsgoldtrade.view.TransactionMessagePopUpWindow;
 import com.jme.lsgoldtrade.util.MarketUtil;
 import com.jme.lsgoldtrade.view.ConfirmPopupwindow;
 
@@ -73,7 +73,7 @@ public class MarketDetailActivity extends JMEBaseActivity implements FChart.OnPr
     private AccountVo mAccountVo;
     private ContractInfoVo mContractInfoVo;
     private MarketTradePopupWindow mMarketTradePopupWindow;
-    private TradeMessagePopUpWindow mTradeMessagePopUpWindow;
+    private TransactionMessagePopUpWindow mTransactionMessagePopUpWindow;
     private ConfirmPopupwindow mConfirmPopupwindow;
     private Chart mChart;
     private TChart mTChart;
@@ -145,17 +145,9 @@ public class MarketDetailActivity extends JMEBaseActivity implements FChart.OnPr
         mTChart = mChart.getTChart();
         mKChart = mChart.getKChart();
 
-        mTradeMessagePopUpWindow = new TradeMessagePopUpWindow(mContext);
-        mTradeMessagePopUpWindow.setOutsideTouchable(true);
-        mTradeMessagePopUpWindow.setFocusable(true);
-
+        mTransactionMessagePopUpWindow = new TransactionMessagePopUpWindow(mContext);
         mMarketTradePopupWindow = new MarketTradePopupWindow(mContext);
-        mMarketTradePopupWindow.setOutsideTouchable(true);
-        mMarketTradePopupWindow.setFocusable(true);
-
         mConfirmPopupwindow = new ConfirmPopupwindow(mContext);
-        mConfirmPopupwindow.setOutsideTouchable(true);
-        mConfirmPopupwindow.setFocusable(true);
     }
 
     @Override
@@ -848,15 +840,15 @@ public class MarketDetailActivity extends JMEBaseActivity implements FChart.OnPr
                         status = response.toString();
 
                     if (status.equals("1")) {
-                        if (null != mTradeMessagePopUpWindow && !mTradeMessagePopUpWindow.isShowing()) {
-                            mTradeMessagePopUpWindow.setData(mContext.getResources().getString(R.string.trade_account_error),
-                                    mContext.getResources().getString(R.string.trade_account_goto_recharge),
+                        if (null != mTransactionMessagePopUpWindow && !mTransactionMessagePopUpWindow.isShowing()) {
+                            mTransactionMessagePopUpWindow.setData(mContext.getResources().getString(R.string.transaction_account_error),
+                                    mContext.getResources().getString(R.string.transaction_account_goto_recharge),
                                     (view) -> {
                                         ARouter.getInstance().build(Constants.ARouterUriConst.RECHARGE).navigation();
 
-                                        mTradeMessagePopUpWindow.dismiss();
+                                        mTransactionMessagePopUpWindow.dismiss();
                                     });
-                            mTradeMessagePopUpWindow.showAtLocation(mBinding.tvHigh, Gravity.CENTER, 0, 0);
+                            mTransactionMessagePopUpWindow.showAtLocation(mBinding.tvHigh, Gravity.CENTER, 0, 0);
                         }
                     } else {
                         getAccount();
@@ -934,12 +926,12 @@ public class MarketDetailActivity extends JMEBaseActivity implements FChart.OnPr
                 break;
             case "LimitOrder":
                 if (head.isSuccess()) {
-                    showShortToast(R.string.trade_success);
+                    showShortToast(R.string.transaction_success);
                 } else {
                     if (head.getMsg().contains("可用资金不足")) {
                         if (null != mConfirmPopupwindow && !mConfirmPopupwindow.isShowing()) {
-                            mConfirmPopupwindow.setData(mContext.getResources().getString(R.string.trade_money_error),
-                                    mContext.getResources().getString(R.string.trade_money_in),
+                            mConfirmPopupwindow.setData(mContext.getResources().getString(R.string.transaction_money_error),
+                                    mContext.getResources().getString(R.string.transaction_money_in),
                                     (view) -> ARouter.getInstance().build(Constants.ARouterUriConst.CAPITALTRANSFER).navigation());
                             mConfirmPopupwindow.showAtLocation(mBinding.tvHigh, Gravity.CENTER, 0, 0);
                         }
@@ -1101,7 +1093,7 @@ public class MarketDetailActivity extends JMEBaseActivity implements FChart.OnPr
 
     @Override
     public boolean dispatchTouchEvent(MotionEvent event) {
-        if (null != mTradeMessagePopUpWindow && mTradeMessagePopUpWindow.isShowing())
+        if (null != mTransactionMessagePopUpWindow && mTransactionMessagePopUpWindow.isShowing())
             return false;
 
         return super.dispatchTouchEvent(event);
@@ -1110,8 +1102,8 @@ public class MarketDetailActivity extends JMEBaseActivity implements FChart.OnPr
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (KeyEvent.KEYCODE_BACK == keyCode) {
-            if (null != mTradeMessagePopUpWindow && mTradeMessagePopUpWindow.isShowing())
-                mTradeMessagePopUpWindow.dismiss();
+            if (null != mTransactionMessagePopUpWindow && mTransactionMessagePopUpWindow.isShowing())
+                mTransactionMessagePopUpWindow.dismiss();
             else
                 finish();
 

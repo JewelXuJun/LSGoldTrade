@@ -141,7 +141,7 @@ public class Constants {
         public static final int MSG_RELOAD_DATA = 3;
         public static final int MSG_UPDATE_DATA_LANDSCAPE = 4;
         public static final int MSG_RELOAD_DATA_LANDSCAPE = 5;
-        public static final int MSG_TRADE_UPDATE_DATA = 6;
+        public static final int MSG_TRANSACTION_UPDATE_DATA = 6;
         public static final int MSG_POSITION_UPDATE_DATA = 7;
         public static final int MSG_DECLARATIONFORM_POSITION_UPDATE_DATA = 8;
         public static final int MSG_TRADE_POSITION_UPDATE_DATA = 9;

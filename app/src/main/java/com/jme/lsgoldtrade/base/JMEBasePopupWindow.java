@@ -59,8 +59,8 @@ public class JMEBasePopupWindow extends PopupWindow {
         setAnimationStyle(android.R.style.Animation_Dialog);
         setHeight(ViewGroup.LayoutParams.WRAP_CONTENT);
         setWidth(ViewGroup.LayoutParams.WRAP_CONTENT);
-        setOutsideTouchable(false);
-        setFocusable(false);
+        setOutsideTouchable(true);
+        setFocusable(true);
     }
 
     @Override

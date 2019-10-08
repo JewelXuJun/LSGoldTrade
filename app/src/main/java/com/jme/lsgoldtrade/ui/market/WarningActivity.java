@@ -275,7 +275,7 @@ public class WarningActivity extends JMEBaseActivity {
             float value = new BigDecimal(price).subtract(new BigDecimal(mPriceMove)).floatValue();
 
             if (new BigDecimal(String.valueOf(value)).compareTo(new BigDecimal(0)) == -1) {
-                showShortToast(R.string.trade_limit_down_price_error);
+                showShortToast(R.string.transaction_limit_down_price_error);
 
                 mBinding.etCeilingPrice.setText(price);
                 mBinding.etCeilingPrice.setSelection(price.length());
@@ -314,7 +314,7 @@ public class WarningActivity extends JMEBaseActivity {
             float value = new BigDecimal(price).subtract(new BigDecimal(mPriceMove)).floatValue();
 
             if (new BigDecimal(String.valueOf(value)).compareTo(new BigDecimal(0)) == -1) {
-                showShortToast(R.string.trade_limit_down_price_error);
+                showShortToast(R.string.transaction_limit_down_price_error);
 
                 mBinding.etFloorPrice.setText(price);
                 mBinding.etFloorPrice.setSelection(price.length());

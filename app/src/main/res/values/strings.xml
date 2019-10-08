@@ -103,7 +103,6 @@
     <string name="trade_available_hold_position">可用/持仓</string>
     <string name="trade_average_price">持仓均价</string>
     <string name="trade_floating_rate">盈亏/比例</string>
-    <string name="trade_money_in">入金</string>
     <string name="trade_money_out">出金</string>
     <string name="trade_turnover">流水</string>
     <string name="trade_money_in_max">当前最大可入金金额</string>
@@ -214,27 +213,11 @@
     <string name="trade_start_time_error">起始时间必须早于截止时间</string>
     <string name="trade_end_time_error">截止时间必须晚于起始时间</string>
     <string name="trade_img_verify_code">图形验证码</string>
-    <string name="trade_limit_down_price_error">您的价格低于跌停价</string>
-    <string name="trade_limit_up_price_error">您的价格高于涨停价</string>
-    <string name="trade_limit_min_amount_error">您的数量低于单笔最低交易数量</string>
-    <string name="trade_limit_max_amount_error">您的数量高于单笔最高交易数量</string>
-    <string name="trade_limit_max_amount_error2">您的数量高于最大持仓量</string>
     <string name="trade_limit_max_amount_error_canbuy">您的数量高于可交易手数</string>
     <string name="trade_limit_max_amount_error_canbuy2">您的数量高于可用数量</string>
-    <string name="trade_contract_error">请选择报单合约</string>
-    <string name="trade_price_error">请输入价格</string>
-    <string name="trade_number_error">请输入数量</string>
-    <string name="trade_number_error_zero">您的数量必须大于0</string>
     <string name="trade_popupwindow_title">报单确认</string>
-    <string name="trade_popupwindow_account">黄金账号</string>
-    <string name="trade_popupwindow_contract_code">合约代码</string>
-    <string name="trade_popupwindow_entrust_price">委托价格</string>
-    <string name="trade_popupwindow_entrust_amount">委托数量</string>
-    <string name="trade_popupwindow_entrust_varieties">委托品种</string>
-    <string name="trade_popupwindow_type">交易类型</string>
     <string name="trade_buy">买入</string>
     <string name="trade_sale">卖出</string>
-    <string name="trade_success">报单成功</string>
     <string name="trade_popupwindow_time">交易时间</string>
     <string name="trade_popupwindow_trade_price">交易价格</string>
     <string name="trade_popupwindow_surplus_amount">剩余数量</string>
@@ -289,17 +272,11 @@
     <string name="trade_bind">立即绑定</string>
     <string name="trade_bind_success">恭喜您已绑定成功！</string>
     <string name="trade_bind_success_time">%1$s秒后自动关闭</string>
-    <string name="trade_buy_more_confirm">买多报单确认</string>
-    <string name="trade_sale_empty_confirm">卖空报单确认</string>
     <string name="trade_evening_up_confirm">平仓报单确认</string>
-    <string name="trade_buy_open">买入开仓</string>
-    <string name="trade_sale_open">卖出开仓</string>
     <string name="trade_sale_evening">卖空平仓</string>
     <string name="trade_buy_evening">买多平仓</string>
-    <string name="trade_amount_unit">%1$s手</string>
     <string name="trade_see_order">查看订单</string>
     <string name="trade_about_amount">约可交易手数</string>
-    <string name="trade_money_error">您的可用资金不足</string>
 
     <!-- Transaction -->
     <string name="transaction_place_order">下单</string>
@@ -310,6 +287,31 @@
     <string name="transaction_entrust_hands_number">委托手数</string>
     <string name="transaction_latest">最新</string>
     <string name="transaction_max_order_number">单笔最大下单量：</string>
+    <string name="transaction_account_error">您当前有服务费未缴纳，无法使用交易、增值服务、出金等功能，请先进行欠费补缴后再使用。</string>
+    <string name="transaction_account_goto_recharge">去充值</string>
+    <string name="transaction_money_error">您的可用资金不足</string>
+    <string name="transaction_money_in">入金</string>
+    <string name="transaction_success">报单成功</string>
+    <string name="transaction_limit_down_price_error">您的价格低于跌停价</string>
+    <string name="transaction_limit_up_price_error">您的价格高于涨停价</string>
+    <string name="transaction_number_error_zero">您的数量必须大于0</string>
+    <string name="transaction_limit_min_amount_error">您的数量低于单笔最低交易数量</string>
+    <string name="transaction_limit_max_amount_error2">您的数量高于最大持仓量</string>
+    <string name="transaction_limit_max_amount_error">您的数量高于单笔最高交易数量</string>
+    <string name="transaction_contract_error">请选择报单合约</string>
+    <string name="transaction_price_error">请输入价格</string>
+    <string name="transaction_number_error">请输入数量</string>
+    <string name="transaction_buy_more_confirm">买多报单确认</string>
+    <string name="transaction_sale_empty_confirm">卖空报单确认</string>
+    <string name="transaction_buy_open">买入开仓</string>
+    <string name="transaction_sale_open">卖出开仓</string>
+    <string name="transaction_amount_unit">%1$s手</string>
+    <string name="transaction_popupwindow_account">黄金账号</string>
+    <string name="transaction_popupwindow_contract_code">合约代码</string>
+    <string name="transaction_popupwindow_entrust_price">委托价格</string>
+    <string name="transaction_popupwindow_entrust_amount">委托数量</string>
+    <string name="transaction_popupwindow_entrust_varieties">委托品种</string>
+    <string name="transaction_popupwindow_type">交易类型</string>
 
     <!-- Personal -->
     <string name="personal_login">登录/注册</string>

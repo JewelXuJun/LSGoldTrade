@@ -26,9 +26,8 @@ import com.jme.lsgoldtrade.domain.PositionVo;
 import com.jme.lsgoldtrade.domain.TenSpeedVo;
 import com.jme.lsgoldtrade.service.ManagementService;
 import com.jme.lsgoldtrade.service.TradeService;
-import com.jme.lsgoldtrade.ui.trade.TradeMessagePopUpWindow;
+import com.jme.lsgoldtrade.view.TransactionMessagePopUpWindow;
 import com.jme.lsgoldtrade.view.ConfirmPopupwindow;
-import com.jme.lsgoldtrade.view.EveningUpPopupWindow;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -58,8 +57,7 @@ public class MarketJudgmentActivity extends JMEBaseActivity {
     private AccountVo mAccountVo;
 
     private MarketJudgmentPagerAdapter mAdapter;
-    private EveningUpPopupWindow mEveningUpPopupWindow;
-    private TradeMessagePopUpWindow mTradeMessagePopUpWindow;
+    private TransactionMessagePopUpWindow mTransactionMessagePopUpWindow;
     private MarketTradePopupWindow mMarketTradePopupWindow;
     private ConfirmPopupwindow mConfirmPopupwindow;
 
@@ -76,21 +74,9 @@ public class MarketJudgmentActivity extends JMEBaseActivity {
 
         initToolbar(R.string.market_judgment, true);
 
-        mEveningUpPopupWindow = new EveningUpPopupWindow(this);
-        mEveningUpPopupWindow.setOutsideTouchable(true);
-        mEveningUpPopupWindow.setFocusable(true);
-
-        mTradeMessagePopUpWindow = new TradeMessagePopUpWindow(mContext);
-        mTradeMessagePopUpWindow.setOutsideTouchable(true);
-        mTradeMessagePopUpWindow.setFocusable(true);
-
+        mTransactionMessagePopUpWindow = new TransactionMessagePopUpWindow(mContext);
         mMarketTradePopupWindow = new MarketTradePopupWindow(mContext);
-        mMarketTradePopupWindow.setOutsideTouchable(true);
-        mMarketTradePopupWindow.setFocusable(true);
-
         mConfirmPopupwindow = new ConfirmPopupwindow(mContext);
-        mConfirmPopupwindow.setOutsideTouchable(true);
-        mConfirmPopupwindow.setFocusable(true);
     }
 
     @Override
@@ -246,15 +232,15 @@ public class MarketJudgmentActivity extends JMEBaseActivity {
                         status = response.toString();
 
                     if (status.equals("1")) {
-                        if (null != mTradeMessagePopUpWindow && !mTradeMessagePopUpWindow.isShowing()) {
-                            mTradeMessagePopUpWindow.setData(mContext.getResources().getString(R.string.trade_account_error),
-                                    mContext.getResources().getString(R.string.trade_account_goto_recharge),
+                        if (null != mTransactionMessagePopUpWindow && !mTransactionMessagePopUpWindow.isShowing()) {
+                            mTransactionMessagePopUpWindow.setData(mContext.getResources().getString(R.string.transaction_account_error),
+                                    mContext.getResources().getString(R.string.transaction_account_goto_recharge),
                                     (view) -> {
                                         ARouter.getInstance().build(Constants.ARouterUriConst.RECHARGE).navigation();
 
-                                        mTradeMessagePopUpWindow.dismiss();
+                                        mTransactionMessagePopUpWindow.dismiss();
                                     });
-                            mTradeMessagePopUpWindow.showAtLocation(mBinding.tablayout, Gravity.CENTER, 0, 0);
+                            mTransactionMessagePopUpWindow.showAtLocation(mBinding.tablayout, Gravity.CENTER, 0, 0);
                         }
                     } else {
                         getAccount();
@@ -315,12 +301,12 @@ public class MarketJudgmentActivity extends JMEBaseActivity {
                 break;
             case "LimitOrder":
                 if (head.isSuccess()) {
-                    showShortToast(R.string.trade_success);
+                    showShortToast(R.string.transaction_success);
                 } else {
                     if (head.getMsg().contains("可用资金不足")) {
                         if (null != mConfirmPopupwindow && !mConfirmPopupwindow.isShowing()) {
-                            mConfirmPopupwindow.setData(mContext.getResources().getString(R.string.trade_money_error),
-                                    mContext.getResources().getString(R.string.trade_money_in),
+                            mConfirmPopupwindow.setData(mContext.getResources().getString(R.string.transaction_money_error),
+                                    mContext.getResources().getString(R.string.transaction_money_in),
                                     (view) -> ARouter.getInstance().build(Constants.ARouterUriConst.CAPITALTRANSFER).navigation());
                             mConfirmPopupwindow.showAtLocation(mBinding.tablayout, Gravity.CENTER, 0, 0);
                         }

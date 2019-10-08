@@ -46,12 +46,7 @@ public class ValueAddedServiceActivity extends JMEBaseActivity {
         super.initData(savedInstanceState);
 
         mWindow = new OpenServicePopupWindow(mContext);
-        mWindow.setOutsideTouchable(true);
-        mWindow.setFocusable(true);
-
         mConfirmPopupwindow = new ConfirmPopupwindow(mContext);
-        mConfirmPopupwindow.setOutsideTouchable(true);
-        mConfirmPopupwindow.setFocusable(true);
 
         mBinding.cbAgree.setChecked(true);
     }

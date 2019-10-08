@@ -94,7 +94,7 @@ public class CapitalTransferActivity extends JMEBaseActivity {
 
     private void initInfoTabs() {
         mTabTitles = new String[3];
-        mTabTitles[0] = getString(R.string.trade_money_in);
+        mTabTitles[0] = getString(R.string.transaction_money_in);
         mTabTitles[1] = getString(R.string.trade_money_out);
         mTabTitles[2] = getString(R.string.trade_turnover);
 

@@ -168,7 +168,7 @@
                         android:maxLines="1"
                         android:textColor="@color/color_blue_deep"
                         android:textColorHint="@color/color_text_hint"
-                        android:textSize="@dimen/sp_16" />
+                        android:textSize="@dimen/size_normal" />
 
                     <include layout="@layout/item_line_horizontal" />
 
@@ -231,7 +231,7 @@
                         android:maxLines="1"
                         android:textColor="@color/color_blue_deep"
                         android:textColorHint="@color/color_text_hint"
-                        android:textSize="@dimen/sp_16" />
+                        android:textSize="@dimen/size_normal" />
 
                     <include layout="@layout/item_line_horizontal" />
 
@@ -253,28 +253,6 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/common_area_margin_tiny"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/transaction_max_order_number"
-                        android:textColor="@color/color_text_black"
-                        android:textSize="@dimen/sp_12" />
-
-                    <TextView
-                        android:id="@+id/tv_max_order_number"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textColor="@color/color_text_black"
-                        android:textSize="@dimen/sp_12" />
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
                     android:layout_height="@dimen/common_item_height_middle"
                     android:layout_marginTop="@dimen/common_area_margin_big"
                     android:layout_marginBottom="@dimen/common_area_margin"
@@ -290,7 +268,7 @@
                         android:onClick="@{() -> handlers.onClickBuyMore()}"
                         android:text="@string/market_buy_more"
                         android:textColor="@color/white"
-                        android:textSize="@dimen/sp_16" />
+                        android:textSize="@dimen/size_normal" />
 
                     <Button
                         android:layout_width="match_parent"
@@ -301,7 +279,7 @@
                         android:onClick="@{() -> handlers.onClickSaleEmpty()}"
                         android:text="@string/market_sale_empty"
                         android:textColor="@color/white"
-                        android:textSize="@dimen/sp_16" />
+                        android:textSize="@dimen/size_normal" />
 
                 </LinearLayout>
 
@@ -336,7 +314,7 @@
                         android:textSize="@dimen/size_tiny" />
 
                     <TextView
-                        android:id="@+id/tv_price"
+                        android:id="@+id/tv_last_price"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="2.9"
@@ -347,7 +325,7 @@
                         android:textSize="@dimen/size_tiny" />
 
                     <TextView
-                        android:id="@+id/tv_amount"
+                        android:id="@+id/tv_last_amount"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="3.1"

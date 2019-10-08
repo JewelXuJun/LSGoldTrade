@@ -28,6 +28,7 @@ import com.jme.lsgoldtrade.domain.UserInfoVo;
 import com.jme.lsgoldtrade.service.ManagementService;
 import com.jme.lsgoldtrade.service.TradeService;
 import com.jme.lsgoldtrade.service.UserService;
+import com.jme.lsgoldtrade.view.TransactionMessagePopUpWindow;
 import com.jme.lsgoldtrade.util.MarketUtil;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
@@ -49,7 +50,7 @@ public class MoneyOutFragment extends JMEBaseFragment implements OnRefreshListen
 
     private JMECountDownTimer mCountDownTimer;
     private Subscription mRxbus;
-    private TradeMessagePopUpWindow mTradeMessagePopUpWindow;
+    private TransactionMessagePopUpWindow mTransactionMessagePopUpWindow;
 
     @Override
     protected int getContentViewId() {
@@ -62,9 +63,7 @@ public class MoneyOutFragment extends JMEBaseFragment implements OnRefreshListen
 
         mBinding = (FragmentMoneyOutBinding) mBindingUtil;
 
-        mTradeMessagePopUpWindow = new TradeMessagePopUpWindow(mContext);
-        mTradeMessagePopUpWindow.setOutsideTouchable(true);
-        mTradeMessagePopUpWindow.setFocusable(true);
+        mTransactionMessagePopUpWindow = new TransactionMessagePopUpWindow(mContext);
     }
 
     @Override
@@ -362,15 +361,15 @@ public class MoneyOutFragment extends JMEBaseFragment implements OnRefreshListen
                         status = response.toString();
 
                     if (status.equals("1")) {
-                        if (null != mTradeMessagePopUpWindow && !mTradeMessagePopUpWindow.isShowing()) {
-                            mTradeMessagePopUpWindow.setData(mContext.getResources().getString(R.string.trade_account_error),
-                                    mContext.getResources().getString(R.string.trade_account_goto_recharge),
+                        if (null != mTransactionMessagePopUpWindow && !mTransactionMessagePopUpWindow.isShowing()) {
+                            mTransactionMessagePopUpWindow.setData(mContext.getResources().getString(R.string.transaction_account_error),
+                                    mContext.getResources().getString(R.string.transaction_account_goto_recharge),
                                     (view) -> {
                                         ARouter.getInstance().build(Constants.ARouterUriConst.RECHARGE).navigation();
 
-                                        mTradeMessagePopUpWindow.dismiss();
+                                        mTransactionMessagePopUpWindow.dismiss();
                                     });
-                            mTradeMessagePopUpWindow.showAtLocation(mBinding.etTransferAmount, Gravity.CENTER, 0, 0);
+                            mTransactionMessagePopUpWindow.showAtLocation(mBinding.etTransferAmount, Gravity.CENTER, 0, 0);
                         }
                     } else {
                         inoutMoney(mBinding.etTransferAmount.getText().toString(), mBinding.etVerificationCode.getText().toString(),

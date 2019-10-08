@@ -5,7 +5,7 @@
 
         <variable
             name="handlers"
-            type="com.jme.lsgoldtrade.ui.trade.DeclarationFormPopupWindow.ClickHandlers" />
+            type="com.jme.lsgoldtrade.view.PlaceOrderPopupWindow.ClickHandlers" />
 
     </data>
 
@@ -69,7 +69,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/trade_popupwindow_account"
+                    android:text="@string/transaction_popupwindow_account"
                     android:textColor="@color/black_deep"
                     android:textSize="@dimen/sp_14" />
 
@@ -93,7 +93,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/trade_popupwindow_type"
+                    android:text="@string/transaction_popupwindow_type"
                     android:textColor="@color/black_deep"
                     android:textSize="@dimen/sp_14" />
 
@@ -117,7 +117,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/trade_popupwindow_entrust_varieties"
+                    android:text="@string/transaction_popupwindow_entrust_varieties"
                     android:textColor="@color/black_deep"
                     android:textSize="@dimen/sp_14" />
 
@@ -141,7 +141,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/trade_popupwindow_entrust_price"
+                    android:text="@string/transaction_popupwindow_entrust_price"
                     android:textColor="@color/black_deep"
                     android:textSize="@dimen/sp_14" />
 
@@ -165,7 +165,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/trade_popupwindow_entrust_amount"
+                    android:text="@string/transaction_popupwindow_entrust_amount"
                     android:textColor="@color/black_deep"
                     android:textSize="@dimen/sp_14" />
 

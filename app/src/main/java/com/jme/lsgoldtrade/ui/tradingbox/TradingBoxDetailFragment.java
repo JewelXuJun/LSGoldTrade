@@ -54,8 +54,6 @@ public class TradingBoxDetailFragment extends JMEBaseFragment {
         super.initView();
 
         mWindow = new TradingBoxPopupwindow(mContext);
-        mWindow.setOutsideTouchable(true);
-        mWindow.setFocusable(true);
     }
 
     @Override

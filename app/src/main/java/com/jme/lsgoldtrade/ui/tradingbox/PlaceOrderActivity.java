@@ -32,7 +32,7 @@ import com.jme.lsgoldtrade.domain.TradingBoxInfoVo;
 import com.jme.lsgoldtrade.service.ManagementService;
 import com.jme.lsgoldtrade.service.MarketService;
 import com.jme.lsgoldtrade.service.TradeService;
-import com.jme.lsgoldtrade.ui.trade.TradeMessagePopUpWindow;
+import com.jme.lsgoldtrade.view.TransactionMessagePopUpWindow;
 import com.jme.lsgoldtrade.util.MarketUtil;
 import com.jme.lsgoldtrade.view.MessagePopupwindow;
 
@@ -49,7 +49,7 @@ public class PlaceOrderActivity extends JMEBaseActivity {
     private ActivityPlaceOrderBinding mBinding;
 
     private TradingBoxPopupwindow mWindow;
-    private TradeMessagePopUpWindow mTradeMessagePopUpWindow;
+    private TransactionMessagePopUpWindow mTransactionMessagePopUpWindow;
     private MessagePopupwindow mMessagePopupwindow;
 
     private String mType;
@@ -81,16 +81,8 @@ public class PlaceOrderActivity extends JMEBaseActivity {
         initToolbar(R.string.trading_box_prepaid_bill, true);
 
         mWindow = new TradingBoxPopupwindow(this);
-        mWindow.setOutsideTouchable(true);
-        mWindow.setFocusable(true);
-
-        mTradeMessagePopUpWindow = new TradeMessagePopUpWindow(mContext);
-        mTradeMessagePopUpWindow.setOutsideTouchable(true);
-        mTradeMessagePopUpWindow.setFocusable(true);
-
+        mTransactionMessagePopUpWindow = new TransactionMessagePopUpWindow(mContext);
         mMessagePopupwindow = new MessagePopupwindow(mContext);
-        mMessagePopupwindow.setOutsideTouchable(true);
-        mMessagePopupwindow.setFocusable(true);
     }
 
     @Override
@@ -396,15 +388,15 @@ public class PlaceOrderActivity extends JMEBaseActivity {
                 if (incrementState.equals("T")) {
                     getStatus();
                 } else {
-                    if (null != mTradeMessagePopUpWindow && !mTradeMessagePopUpWindow.isShowing()) {
-                        mTradeMessagePopUpWindow.setData(mContext.getResources().getString(R.string.trade_increment_error),
+                    if (null != mTransactionMessagePopUpWindow && !mTransactionMessagePopUpWindow.isShowing()) {
+                        mTransactionMessagePopUpWindow.setData(mContext.getResources().getString(R.string.trade_increment_error),
                                 mContext.getResources().getString(R.string.trade_increment_goto_open),
                                 (view) -> {
                                     ARouter.getInstance().build(Constants.ARouterUriConst.VALUEADDEDSERVICE).navigation();
 
-                                    mTradeMessagePopUpWindow.dismiss();
+                                    mTransactionMessagePopUpWindow.dismiss();
                                 });
-                        mTradeMessagePopUpWindow.showAtLocation(mBinding.tvBalanceMessage, Gravity.CENTER, 0, 0);
+                        mTransactionMessagePopUpWindow.showAtLocation(mBinding.tvBalanceMessage, Gravity.CENTER, 0, 0);
                     }
                 }
 
@@ -419,15 +411,15 @@ public class PlaceOrderActivity extends JMEBaseActivity {
                         status = response.toString();
 
                     if (status.equals("1")) {
-                        if (null != mTradeMessagePopUpWindow && !mTradeMessagePopUpWindow.isShowing()) {
-                            mTradeMessagePopUpWindow.setData(mContext.getResources().getString(R.string.trade_account_error),
-                                    mContext.getResources().getString(R.string.trade_account_goto_recharge),
+                        if (null != mTransactionMessagePopUpWindow && !mTransactionMessagePopUpWindow.isShowing()) {
+                            mTransactionMessagePopUpWindow.setData(mContext.getResources().getString(R.string.transaction_account_error),
+                                    mContext.getResources().getString(R.string.transaction_account_goto_recharge),
                                     (view) -> {
                                         ARouter.getInstance().build(Constants.ARouterUriConst.RECHARGE).navigation();
 
-                                        mTradeMessagePopUpWindow.dismiss();
+                                        mTransactionMessagePopUpWindow.dismiss();
                                     });
-                            mTradeMessagePopUpWindow.showAtLocation(mBinding.tvBalanceMessage, Gravity.CENTER, 0, 0);
+                            mTransactionMessagePopUpWindow.showAtLocation(mBinding.tvBalanceMessage, Gravity.CENTER, 0, 0);
                         }
                     } else {
                         checkOrder();

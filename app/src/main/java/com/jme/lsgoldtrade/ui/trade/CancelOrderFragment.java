@@ -55,8 +55,6 @@ public class CancelOrderFragment extends JMEBaseFragment implements OnRefreshLis
 
         mAdapter = new CancelOrderAdapter(mContext, R.layout.item_cancel_order, null);
         mWindow = new CancelOrderPopUpWindow(mContext);
-        mWindow.setOutsideTouchable(true);
-        mWindow.setFocusable(true);
 
         mBinding.recyclerView.setHasFixedSize(false);
         mBinding.recyclerView.setLayoutManager(new LinearLayoutManager(mContext));
