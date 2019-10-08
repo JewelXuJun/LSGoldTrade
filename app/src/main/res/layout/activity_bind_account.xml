@@ -154,7 +154,7 @@
 
                     <Button
                         android:id="@+id/btn_verification_code"
-                        android:layout_width="@dimen/width_login_verification_code"
+                        android:layout_width="@dimen/width_item_big"
                         android:layout_height="@dimen/common_item_height_middle"
                         android:layout_alignParentRight="true"
                         android:layout_centerVertical="true"

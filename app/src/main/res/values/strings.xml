@@ -312,6 +312,7 @@
     <string name="transaction_popupwindow_entrust_amount">委托数量</string>
     <string name="transaction_popupwindow_entrust_varieties">委托品种</string>
     <string name="transaction_popupwindow_type">交易类型</string>
+    <string name="transaction_create_condition_sheet">创建条件单</string>
 
     <!-- Personal -->
     <string name="personal_login">登录/注册</string>

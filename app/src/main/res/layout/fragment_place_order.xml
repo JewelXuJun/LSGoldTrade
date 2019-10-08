@@ -92,7 +92,7 @@
                             android:layout_marginLeft="@dimen/common_area_margin_tiny"
                             android:text="@string/text_no_data_default"
                             android:textColor="@color/common_font_decrease"
-                            android:textSize="@dimen/common_font_size_exiguity" />
+                            android:textSize="@dimen/sp_12" />
 
                     </LinearLayout>
 
@@ -118,7 +118,7 @@
                             android:layout_marginLeft="@dimen/common_area_margin_tiny"
                             android:text="@string/text_no_data_default"
                             android:textColor="@color/common_font_increase"
-                            android:textSize="@dimen/common_font_size_exiguity" />
+                            android:textSize="@dimen/sp_12" />
 
                     </LinearLayout>
 
@@ -255,7 +255,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/common_item_height_middle"
                     android:layout_marginTop="@dimen/common_area_margin_big"
-                    android:layout_marginBottom="@dimen/common_area_margin"
+                    android:layout_marginBottom="@dimen/common_page_margin"
                     android:gravity="center"
                     android:orientation="horizontal">
 
@@ -333,7 +333,7 @@
                         android:paddingRight="@dimen/margin_tiny"
                         android:text="@string/text_no_data_default"
                         android:textColor="@color/color_text_black"
-                        android:textSize="@dimen/size_exiguity_tiny" />
+                        android:textSize="@dimen/size_exiguity" />
 
                 </LinearLayout>
 
@@ -358,6 +358,16 @@
             </LinearLayout>
 
         </LinearLayout>
+
+        <Button
+            android:layout_width="@dimen/width_btn_big"
+            android:layout_height="@dimen/height_btn"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="@dimen/margin_larger"
+            android:background="@drawable/bg_btn_blue_solid"
+            android:text="@string/transaction_create_condition_sheet"
+            android:textColor="@color/white"
+            android:textSize="@dimen/size_normal_middle" />
 
     </LinearLayout>
 

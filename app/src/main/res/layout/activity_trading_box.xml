@@ -88,7 +88,7 @@
                 android:textColor="@color/black"/>
 
             <Button
-                android:layout_width="@dimen/width_trading_box_btn"
+                android:layout_width="@dimen/width_item_large"
                 android:layout_height="@dimen/common_item_height_middle"
                 android:layout_marginTop="@dimen/margin_big"
                 android:background="@drawable/bg_btn_blue_hollow"

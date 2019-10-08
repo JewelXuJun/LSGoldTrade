@@ -84,7 +84,7 @@
 
             <Button
                 android:id="@+id/btn_send_sms"
-                android:layout_width="@dimen/width_login_verification_code"
+                android:layout_width="@dimen/width_item_big"
                 android:layout_height="@dimen/common_item_height_middle"
                 android:layout_marginRight="5dp"
                 android:background="@drawable/selector_blue"
