@@ -48,7 +48,7 @@ public class TransactionFragment extends JMEBaseFragment {
     protected void initView() {
         super.initView();
 
-        initInfoTabs();
+        initTabs();
     }
 
     @Override
@@ -86,7 +86,7 @@ public class TransactionFragment extends JMEBaseFragment {
         setLayout();
     }
 
-    private void initInfoTabs() {
+    private void initTabs() {
         mTabTitles = new String[2];
         mTabTitles[0] = mContext.getResources().getString(R.string.transaction_place_order);
         mTabTitles[1] = mContext.getResources().getString(R.string.transaction_hold_positions);

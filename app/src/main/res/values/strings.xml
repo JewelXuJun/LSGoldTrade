@@ -168,7 +168,6 @@
     <string name="trade_curren_hold_position">当日持仓</string>
     <string name="trade_history_hold_position">历史持仓</string>
     <string name="trade_trade_query">交易查询</string>
-    <string name="trade_current_entrust">当日委托</string>
     <string name="trade_history_entrust">历史委托</string>
     <string name="trade_current_deal">当日成交</string>
     <string name="trade_history_deal">历史成交</string>
@@ -317,6 +316,8 @@
     <string name="transaction_entrust_risk_management">委托风控</string>
     <string name="transaction_daily_statement_sheet">日结单</string>
     <string name="transaction_condition_sheet">条件单</string>
+    <string name="transaction_current_positions">当前持仓</string>
+    <string name="transaction_current_entrust">当日委托</string>
 
     <!-- Personal -->
     <string name="personal_login">登录/注册</string>

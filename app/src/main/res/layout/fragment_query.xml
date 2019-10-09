@@ -244,7 +244,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_centerVertical="true"
-                            android:text="@string/trade_current_entrust"
+                            android:text="@string/transaction_current_entrust"
                             android:textColor="@color/color_text_black"
                             android:textSize="@dimen/sp_14" />
 

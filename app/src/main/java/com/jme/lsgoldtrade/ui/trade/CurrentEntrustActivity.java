@@ -46,7 +46,7 @@ public class CurrentEntrustActivity extends JMEBaseActivity implements OnRefresh
     protected void initView() {
         super.initView();
 
-        initToolbar(R.string.trade_current_entrust, true);
+        initToolbar(R.string.transaction_current_entrust, true);
     }
 
     @Override
