@@ -68,7 +68,7 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/height_trade_rule"
+                android:layout_height="@dimen/height_transaction_item"
                 android:background="@color/white"
                 android:orientation="vertical">
 

@@ -49,7 +49,7 @@ public class GuaranteeFundSettingActivity extends JMEBaseActivity {
     protected void initView() {
         super.initView();
 
-        initToolbar(R.string.trade_guarantee_fund_text, true);
+        initToolbar(R.string.transaction_entrust_risk_management, true);
     }
 
     @Override

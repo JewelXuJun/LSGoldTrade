@@ -51,7 +51,7 @@ public class ElectronicCardInOutMoneyActivity extends JMEBaseActivity {
     }
 
     public void setImageViewWideHigh() {
-        Bitmap bitmap =  BitmapFactory.decodeResource(getResources(), R.mipmap.ic_inout_money);
+        Bitmap bitmap =  BitmapFactory.decodeResource(getResources(), R.mipmap.ic_inout_money_detail);
         ViewGroup.LayoutParams params = mBinding.img.getLayoutParams();
 
         float bitmapWidth = bitmap.getWidth();

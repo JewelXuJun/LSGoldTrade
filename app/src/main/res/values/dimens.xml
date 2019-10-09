@@ -25,7 +25,7 @@
     <dimen name="height_chart">400dp</dimen>
     <dimen name="height_market_detail_landscape">60dp</dimen>
     <dimen name="height_trade_banner">130dp</dimen>
-    <dimen name="height_trade_rule">160dp</dimen>
+    <dimen name="height_transaction_item">160dp</dimen>
     <dimen name="height_line">2dp</dimen>
     <dimen name="height_subscribe">27dp</dimen>
     <dimen name="height_trading_box_info">173dp</dimen>
@@ -40,6 +40,7 @@
     <dimen name="height_transfer_btn">30dp</dimen>
     <dimen name="height_trading_box_item">196dp</dimen>
     <dimen name="height_trading_box_btn">32dp</dimen>
+    <dimen name="height_floating">50dp</dimen>
 
     <dimen name="width_market_item">46dp</dimen>
     <dimen name="width_trade_hold_position_account_item">102dp</dimen>
@@ -64,6 +65,7 @@
     <dimen name="width_economic_calendar">130dp</dimen>
     <dimen name="width_transfer_btn">50dp</dimen>
     <dimen name="width_transfer_card">70dp</dimen>
+    <dimen name="width_floating">130dp</dimen>
 
     <dimen name="margin_main_page_info">30dp</dimen>
     <dimen name="margin_main_page_market">2.5dp</dimen>

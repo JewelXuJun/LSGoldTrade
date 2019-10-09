@@ -37,6 +37,7 @@ public class HoldPositionsFragment extends JMEBaseFragment {
         super.initBinding();
 
         mBinding = (FragmentHoldPositionsBinding) mBindingUtil;
+        mBinding.setHandlers(new ClickHandlers());
     }
 
     @Override
@@ -45,6 +46,38 @@ public class HoldPositionsFragment extends JMEBaseFragment {
     }
 
     public class ClickHandlers {
+
+        public void onClickTotalEquity() {
+
+        }
+
+        public void onClickGuaranteeFundSetting() {
+
+        }
+
+        public void onClickRiskRateTips() {
+
+        }
+
+        public void onClickDealQuery() {
+
+        }
+
+        public void onClickInOutMoney() {
+
+        }
+
+        public void onClickEntrustRiskManagement() {
+
+        }
+
+        public void onClickDailyStatementSheet() {
+
+        }
+
+        public void onClickConditionSheet() {
+
+        }
 
     }
 }
