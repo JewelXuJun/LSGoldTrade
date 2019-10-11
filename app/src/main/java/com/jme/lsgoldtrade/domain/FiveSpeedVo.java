@@ -187,8 +187,8 @@ public class FiveSpeedVo implements Serializable {
         this.lowestPrice = lowestPrice;
     }
 
-    public String getLatestPrice() {
-        return MarketUtil.getPriceValue(latestPrice);
+    public long getLatestPrice() {
+        return latestPrice;
     }
 
     public void setLatestPrice(long latestPrice) {

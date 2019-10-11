@@ -479,7 +479,7 @@ public class PlaceOrderFragment extends JMEBaseFragment implements FChart.OnPric
                         return;
 
                     String lastSettlePrice = mFiveSpeedVo.getLastSettlePrice();
-                    String latestPrice = mFiveSpeedVo.getLatestPrice();
+                    String latestPrice = mFiveSpeedVo.getLatestPriceValue();
                     mLowerLimitPrice = mFiveSpeedVo.getLowerLimitPrice();
                     mHighLimitPrice = mFiveSpeedVo.getHighLimitPrice();
 

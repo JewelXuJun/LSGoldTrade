@@ -206,7 +206,7 @@ public class ItemHoldPositionFragment extends JMEBaseFragment implements BaseQui
                 for (FiveSpeedVo fiveSpeedVo : fiveSpeedVoList) {
                     if (null != fiveSpeedVo) {
                         if (contractID.equals(fiveSpeedVo.getContractId())) {
-                            long latestprice = Long.parseLong(fiveSpeedVo.getLatestPrice());
+                            long latestprice = fiveSpeedVo.getLatestPrice();
                             long average = positionVo.getPositionAverage();
                             long handWeight = mContract.getHandWeightFromID(contractID);
                             long position = positionVo.getPosition();

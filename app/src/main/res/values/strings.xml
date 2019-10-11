@@ -95,7 +95,6 @@
     <string name="trade_capital_transfer">资金划转</string>
     <string name="trade_contract_pupil">合约/多空</string>
     <string name="trade_available_hold_position">可用/持仓</string>
-    <string name="trade_average_price">持仓均价</string>
     <string name="trade_floating_rate">盈亏/比例</string>
     <string name="trade_money_out">出金</string>
     <string name="trade_turnover">流水</string>
@@ -305,6 +304,7 @@
     <string name="transaction_create_condition_sheet">创建条件单</string>
     <string name="transaction_total_equity">总权益(元)</string>
     <string name="transaction_floating">浮动盈亏(元)</string>
+    <string name="transaction_floating_title">浮动盈亏</string>
     <string name="transaction_available_funds">可用资金(元)</string>
     <string name="transaction_desirable_capital">可取资金(元)</string>
     <string name="transaction_market_capitalization">持仓保证金(元)</string>
@@ -318,6 +318,10 @@
     <string name="transaction_condition_sheet">条件单</string>
     <string name="transaction_current_positions">当前持仓</string>
     <string name="transaction_current_entrust">当日委托</string>
+    <string name="transaction_average_price">持仓均价</string>
+    <string name="transaction_amount">持仓数量</string>
+    <string name="transaction_amount_available">可用数量</string>
+    <string name="transaction_stop">止盈止损</string>
 
     <!-- Personal -->
     <string name="personal_login">登录/注册</string>

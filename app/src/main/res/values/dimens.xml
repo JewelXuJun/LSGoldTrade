@@ -35,7 +35,7 @@
     <dimen name="height_btn_aggree">33dp</dimen>
     <dimen name="height_buy_item">56dp</dimen>
     <dimen name="height_order_item">72dp</dimen>
-    <dimen name="height_order_btn">28dp</dimen>
+    <dimen name="height_order_btn">26dp</dimen>
     <dimen name="height_market">300dp</dimen>
     <dimen name="height_transfer_btn">30dp</dimen>
     <dimen name="height_trading_box_item">196dp</dimen>

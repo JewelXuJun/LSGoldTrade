@@ -59,10 +59,6 @@ public class MarketUtil {
                 color = R.color.common_font_decrease;
 
                 break;
-            case 0:
-                color = R.color.color_text_black;
-
-                break;
             case 1:
                 color = R.color.common_font_increase;
 
@@ -82,10 +78,6 @@ public class MarketUtil {
         switch (type) {
             case -1:
                 drawable = R.drawable.bg_decrease;
-
-                break;
-            case 0:
-                drawable = R.drawable.bg_stable;
 
                 break;
             case 1:
@@ -418,7 +410,36 @@ public class MarketUtil {
         else
             format.applyPattern("#,###,###.00");
 
-        return format.format(new BigDecimal(flag ? ("-" + value) : value));
+        return format.format(new BigDecimal(flag ? "-" + value : value));
+    }
+
+    public static String decimalFormatFloating(String money) {
+        boolean flag;
+
+        String value = formatValueNum(money, 2);
+
+        if (TextUtils.isEmpty(value))
+            return "";
+
+        DecimalFormat format = new DecimalFormat();
+
+        if (money.startsWith("-")) {
+            flag = true;
+
+            value = money.substring(1);
+        } else {
+            flag = false;
+        }
+
+        if (Double.parseDouble(value) < 1.0)
+            format.applyPattern("0.00");
+        else
+            format.applyPattern("#,###,###.00");
+
+        if (new BigDecimal(value).compareTo(new BigDecimal(0)) == 0)
+            return "0.00";
+        else
+            return (flag ? "-" : "+") + format.format(new BigDecimal(value));
     }
 
     public static String getEntrustState(int state) {
@@ -494,7 +515,7 @@ public class MarketUtil {
         if (divisor.compareTo(new BigDecimal("0")) == 0)
             return new BigDecimal("0");
         else
-            return new BigDecimal(original.toString()).divide(divisor,2, BigDecimal.ROUND_HALF_UP);
+            return new BigDecimal(original.toString()).divide(divisor, 2, BigDecimal.ROUND_HALF_UP);
 
     }
 

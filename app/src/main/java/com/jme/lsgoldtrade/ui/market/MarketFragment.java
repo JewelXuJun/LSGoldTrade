@@ -230,8 +230,8 @@ public class MarketFragment extends JMEBaseFragment implements OnRefreshListener
                         if (null == leftValue || null == rightValue)
                             return 0;
 
-                        long leftLastPrice = Long.parseLong(leftValue.getLatestPrice());
-                        long rightLastPrice = Long.parseLong(rightValue.getLatestPrice());
+                        long leftLastPrice = leftValue.getLatestPrice();
+                        long rightLastPrice = rightValue.getLatestPrice();
 
                         return new BigDecimal(leftLastPrice).compareTo(new BigDecimal(rightLastPrice));
                     });
@@ -242,8 +242,8 @@ public class MarketFragment extends JMEBaseFragment implements OnRefreshListener
                         if (null == leftValue || null == rightValue)
                             return 0;
 
-                        long leftLastPrice = Long.parseLong(leftValue.getLatestPrice());
-                        long rightLastPrice = Long.parseLong(rightValue.getLatestPrice());
+                        long leftLastPrice = leftValue.getLatestPrice();
+                        long rightLastPrice = rightValue.getLatestPrice();
 
                         return new BigDecimal(rightLastPrice).compareTo(new BigDecimal(leftLastPrice));
                     });
