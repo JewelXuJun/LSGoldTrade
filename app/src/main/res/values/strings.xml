@@ -301,6 +301,7 @@
     <string name="transaction_popupwindow_entrust_varieties">委托品种</string>
     <string name="transaction_popupwindow_type">交易类型</string>
     <string name="transaction_create_condition_sheet">创建条件单</string>
+    <string name="transaction_hidden_value">****</string>
     <string name="transaction_total_equity">总权益(元)</string>
     <string name="transaction_floating">浮动盈亏(元)</string>
     <string name="transaction_floating_title">浮动盈亏</string>

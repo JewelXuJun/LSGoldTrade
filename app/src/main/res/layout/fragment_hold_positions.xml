@@ -58,13 +58,15 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_marginLeft="@dimen/common_area_margin"
-                                    android:layout_marginTop="@dimen/common_area_margin"
+                                    android:layout_marginTop="@dimen/common_page_margin"
                                     android:layout_marginRight="@dimen/common_area_margin"
                                     android:orientation="horizontal">
 
                                     <TextView
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
+                                        android:layout_marginTop="@dimen/common_area_margin_tiny"
+                                        android:layout_marginBottom="@dimen/common_area_margin_tiny"
                                         android:text="@string/transaction_total_equity"
                                         android:textColor="@color/white"
                                         android:textSize="@dimen/sp_12" />
@@ -74,11 +76,11 @@
                                         android:layout_height="wrap_content"
                                         android:layout_gravity="center_vertical"
                                         android:layout_marginLeft="@dimen/common_area_margin_tiny"
-                                        android:onClick="@{() -> handlers.onClickTotalEquity()}"
-                                        android:paddingLeft="@dimen/common_area_margin_tiny"
-                                        android:paddingRight="@dimen/common_area_margin_tiny">
+                                        android:onClick="@{() -> handlers.onClickHiddenTotalEquity()}"
+                                        android:padding="@dimen/common_area_margin_tiny">
 
                                         <ImageView
+                                            android:id="@+id/img_hidden_status"
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
                                             android:background="@mipmap/ic_show" />
@@ -89,8 +91,7 @@
 
                                 <RelativeLayout
                                     android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginTop="@dimen/common_area_margin_tiny">
+                                    android:layout_height="wrap_content">
 
                                     <FrameLayout
                                         android:layout_width="@dimen/width_floating"
