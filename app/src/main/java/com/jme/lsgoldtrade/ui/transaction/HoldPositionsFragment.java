@@ -462,7 +462,7 @@ public class HoldPositionsFragment extends JMEBaseFragment implements OnRefreshL
                     mBinding.tvMarketCapitalization.setText(bHiddenStatus ? mContext.getResources().getString(R.string.transaction_hidden_value)
                             : TextUtils.isEmpty(mMarketCapitalization) ? mContext.getResources().getString(R.string.text_no_data_default) : MarketUtil.decimalFormatMoney(mMarketCapitalization));
                     mBinding.tvGuaranteeFund.setText(TextUtils.isEmpty(minReserveFund) ? getResources().getString(R.string.text_no_data_default)
-                            : MarketUtil.decimalFormatMoney(minReserveFund));
+                            : new BigDecimal(minReserveFund).compareTo(new BigDecimal(0)) == 0 ? getResources().getString(R.string.text_no_data_default) : MarketUtil.decimalFormatMoney(minReserveFund));
 
                     calculateFloat(mFiveSpeedVoList, mCurrentHoldPositionsFragment.getData());
                 } else {
