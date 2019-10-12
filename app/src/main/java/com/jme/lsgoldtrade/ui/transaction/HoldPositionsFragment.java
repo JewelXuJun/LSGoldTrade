@@ -252,7 +252,8 @@ public class HoldPositionsFragment extends JMEBaseFragment implements OnRefreshL
         mBinding.tvAvailableFunds.setText(bHiddenStatus ? R.string.transaction_hidden_value : R.string.text_no_data_default);
         mBinding.tvDesirableCapital.setText(bHiddenStatus ? R.string.transaction_hidden_value : R.string.text_no_data_default);
         mBinding.tvMarketCapitalization.setText(bHiddenStatus ? R.string.transaction_hidden_value : R.string.text_no_data_default);
-        mBinding.tvRiskRate.setText(bHiddenStatus ? R.string.transaction_hidden_value : R.string.text_no_data_default);
+        mBinding.tvGuaranteeFund.setText(R.string.text_no_data_default);
+        mBinding.tvRiskRate.setText(R.string.text_no_data_default);
 
         mCurrentHoldPositionsFragment.setCurrentHoldPositionsData(null);
     }
@@ -454,11 +455,14 @@ public class HoldPositionsFragment extends JMEBaseFragment implements OnRefreshL
 
                     mAvailableFunds = MarketUtil.getPriceValue(mAccountVo.getTransactionBalance() - mAccountVo.getRuntimeFee());
                     mMarketCapitalization = MarketUtil.getPriceValue(mAccountVo.getPositionMargin());
+                    String minReserveFund = mAccountVo.getMinReserveFundStr();
 
                     mBinding.tvAvailableFunds.setText(bHiddenStatus ? mContext.getResources().getString(R.string.transaction_hidden_value)
                             : TextUtils.isEmpty(mAvailableFunds) ? mContext.getResources().getString(R.string.text_no_data_default) : MarketUtil.decimalFormatMoney(mAvailableFunds));
                     mBinding.tvMarketCapitalization.setText(bHiddenStatus ? mContext.getResources().getString(R.string.transaction_hidden_value)
                             : TextUtils.isEmpty(mMarketCapitalization) ? mContext.getResources().getString(R.string.text_no_data_default) : MarketUtil.decimalFormatMoney(mMarketCapitalization));
+                    mBinding.tvGuaranteeFund.setText(TextUtils.isEmpty(minReserveFund) ? getResources().getString(R.string.text_no_data_default)
+                            : MarketUtil.decimalFormatMoney(minReserveFund));
 
                     calculateFloat(mFiveSpeedVoList, mCurrentHoldPositionsFragment.getData());
                 } else {
