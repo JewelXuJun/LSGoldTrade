@@ -121,7 +121,7 @@
                                             android:layout_height="wrap_content"
                                             android:layout_marginTop="@dimen/margin_tiny"
                                             android:textColor="@color/white"
-                                            android:textSize="@dimen/sp_16" />
+                                            android:textSize="@dimen/size_normal" />
 
                                     </LinearLayout>
 
@@ -241,44 +241,25 @@
                                     <TextView
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:text="@string/transaction_guarantee_fund"
+                                        android:text="@string/transaction_guarantee_fund_title"
                                         android:textColor="@color/color_text_normal"
                                         android:textSize="@dimen/sp_12" />
 
-                                    <RelativeLayout
-                                        android:layout_width="match_parent"
+                                    <TextView
+                                        android:id="@+id/tv_guarantee_fund_setting"
+                                        android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:layout_marginTop="@dimen/margin_tiny">
-
-                                        <TextView
-                                            android:id="@+id/tv_guarantee_fund"
-                                            android:layout_width="match_parent"
-                                            android:layout_height="wrap_content"
-                                            android:layout_centerVertical="true"
-                                            android:layout_marginRight="@dimen/common_area_margin"
-                                            android:layout_toLeftOf="@+id/tv_guarantee_fund_setting"
-                                            android:text="@string/text_no_data_default"
-                                            android:textColor="@color/color_blue_deep"
-                                            android:textSize="@dimen/size_big" />
-
-                                        <TextView
-                                            android:id="@+id/tv_guarantee_fund_setting"
-                                            android:layout_width="wrap_content"
-                                            android:layout_height="wrap_content"
-                                            android:layout_alignParentRight="true"
-                                            android:layout_centerVertical="true"
-                                            android:layout_marginRight="@dimen/common_area_margin_big"
-                                            android:background="@drawable/bg_btn_blue_hollow"
-                                            android:onClick="@{() -> handlers.onClickGuaranteeFundSetting()}"
-                                            android:paddingLeft="@dimen/common_area_margin_tiny"
-                                            android:paddingTop="@dimen/margin_tiny_small"
-                                            android:paddingRight="@dimen/common_area_margin_tiny"
-                                            android:paddingBottom="@dimen/margin_tiny_small"
-                                            android:text="@string/transaction_setting"
-                                            android:textColor="@color/color_blue"
-                                            android:textSize="@dimen/sp_14" />
-
-                                    </RelativeLayout>
+                                        android:layout_centerVertical="true"
+                                        android:layout_marginTop="@dimen/common_page_margin"
+                                        android:background="@drawable/bg_btn_blue_hollow"
+                                        android:onClick="@{() -> handlers.onClickGuaranteeFundSetting()}"
+                                        android:paddingLeft="@dimen/common_area_margin_tiny"
+                                        android:paddingTop="@dimen/margin_tiny_small"
+                                        android:paddingRight="@dimen/common_area_margin_tiny"
+                                        android:paddingBottom="@dimen/margin_tiny_small"
+                                        android:text="@string/transaction_setting"
+                                        android:textColor="@color/color_blue"
+                                        android:textSize="@dimen/sp_14" />
 
                                 </LinearLayout>
 

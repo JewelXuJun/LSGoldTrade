@@ -230,6 +230,9 @@ public class HoldPositionsFragment extends JMEBaseFragment implements OnRefreshL
                     setInitData();
 
                     break;
+                case Constants.RxBusConst.RXBUS_TRANSACTION_EVENING_UP:
+
+                    break;
             }
         });
     }
@@ -240,7 +243,6 @@ public class HoldPositionsFragment extends JMEBaseFragment implements OnRefreshL
         mBinding.tvAvailableFunds.setText(R.string.text_no_data_default);
         mBinding.tvDesirableCapital.setText(R.string.text_no_data_default);
         mBinding.tvMarketCapitalization.setText(R.string.text_no_data_default);
-        mBinding.tvGuaranteeFund.setText(R.string.text_no_data_default);
         mBinding.tvRiskRate.setText(R.string.text_no_data_default);
 
         mCurrentHoldPositionsFragment.setCurrentHoldPositionsData(null);
@@ -436,7 +438,6 @@ public class HoldPositionsFragment extends JMEBaseFragment implements OnRefreshL
 
                     long availableFunds = mAccountVo.getTransactionBalance() - mAccountVo.getRuntimeFee();
 
-                    mBinding.tvGuaranteeFund.setText(MarketUtil.decimalFormatMoney(mAccountVo.getMinReserveFundStr()));
                     mBinding.tvAvailableFunds.setText(MarketUtil.decimalFormatMoney(MarketUtil.getPriceValue(availableFunds)));
                     mBinding.tvMarketCapitalization.setText(MarketUtil.decimalFormatMoney(MarketUtil.getPriceValue(mAccountVo.getPositionMargin())));
 

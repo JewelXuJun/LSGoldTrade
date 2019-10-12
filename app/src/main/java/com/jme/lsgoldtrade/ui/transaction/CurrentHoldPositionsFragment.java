@@ -2,12 +2,15 @@ package com.jme.lsgoldtrade.ui.transaction;
 
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
+import android.text.TextUtils;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.jme.common.network.DTRequest;
 import com.jme.common.network.Head;
+import com.jme.common.util.RxBus;
 import com.jme.lsgoldtrade.R;
 import com.jme.lsgoldtrade.base.JMEBaseFragment;
+import com.jme.lsgoldtrade.config.Constants;
 import com.jme.lsgoldtrade.databinding.FragmentCurrentHoldPositionsBinding;
 import com.jme.lsgoldtrade.domain.FiveSpeedVo;
 import com.jme.lsgoldtrade.domain.PositionVo;
@@ -46,6 +49,26 @@ public class CurrentHoldPositionsFragment extends JMEBaseFragment implements Bas
         super.initListener();
 
         mAdapter.setOnLoadMoreListener(this, mBinding.recyclerView);
+
+        mAdapter.setOnItemChildClickListener((adapter, view, position) -> {
+            switch (view.getId()) {
+                case R.id.layout_stop_transaction:
+
+                    break;
+                case R.id.btn_evening_up:
+                    PositionVo positionVo = (PositionVo) adapter.getItem(position);
+
+                    if (null == positionVo)
+                        return;
+
+                    String contractId = positionVo.getContractId();
+
+                    if (!TextUtils.isEmpty(contractId))
+                        RxBus.getInstance().post(Constants.RxBusConst.RXBUS_TRANSACTION_EVENING_UP, contractId);
+
+                    break;
+            }
+        });
     }
 
     @Override

@@ -30,7 +30,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/trade_guarantee_fund_title"
+                android:text="@string/transaction_guarantee_fund_title"
                 android:textColor="@color/color_text_normal"
                 android:textSize="@dimen/size_normal" />
 
