@@ -428,7 +428,7 @@ public class HoldPositionsFragment extends JMEBaseFragment implements OnRefreshL
     }
 
     private void getUserAddedServicesStatus() {
-        sendRequest(ManagementService.getInstance().getUserAddedServicesStatus, new HashMap<>(), true);
+        sendRequest(ManagementService.getInstance().getUserAddedServicesStatus, new HashMap<>(), false);
     }
 
     private void getStatus() {
@@ -491,24 +491,12 @@ public class HoldPositionsFragment extends JMEBaseFragment implements OnRefreshL
                         mPagingKey = positionPageVo.getPagingKey();
                         List<PositionVo> positionVoList = positionPageVo.getPositionList();
 
-                        BigDecimal marketValueTotal = new BigDecimal(0);
-
                         mList.clear();
 
                         if (null != positionVoList && 0 != positionVoList.size()) {
                             for (PositionVo positionVo : positionVoList) {
-                                if (null != positionVo) {
+                                if (null != positionVo)
                                     mList.add(MarketUtil.getPriceValue(positionVo.getFloatProfit()));
-
-                                    String contractID = positionVo.getContractId();
-                                    long handWeight = mContract.getHandWeightFromID(contractID);
-
-                                    marketValueTotal = marketValueTotal.add(
-                                            new BigDecimal(positionVo.getPositionAverage())
-                                                    .multiply(new BigDecimal(contractID.equals("Ag(T+D)") ?
-                                                            new BigDecimal(handWeight).divide(new BigDecimal(1000), 0, BigDecimal.ROUND_HALF_UP).longValue() : handWeight))
-                                                    .multiply(new BigDecimal(positionVo.getPosition())));
-                                }
                             }
                         }
 
@@ -618,12 +606,7 @@ public class HoldPositionsFragment extends JMEBaseFragment implements OnRefreshL
                             mTransactionMessagePopUpWindow.showAtLocation(mBinding.tvRiskRate, Gravity.CENTER, 0, 0);
                         }
                     } else {
-                        ARouter.getInstance()
-                                .build(Constants.ARouterUriConst.GUARANTEEFUNDSETTINGACTIVITY)
-                                .withString("Total", mTotal)
-                                .withFloat("Warnth", mAccountVo.getWarnth())
-                                .withFloat("Forcecloseth", mAccountVo.getForcecloseth())
-                                .navigation();
+                        ARouter.getInstance().build(Constants.ARouterUriConst.ENTRUSTRISKMANAGEMENT).navigation();
                     }
                 }
 
@@ -669,8 +652,11 @@ public class HoldPositionsFragment extends JMEBaseFragment implements OnRefreshL
             SharedPreUtils.setBoolean(mContext, SharedPreUtils.Key_Transaction_Hidden_Status, bHiddenStatus);
         }
 
-        public void onClickGuaranteeFundSetting() {
-
+        public void onClickEntrustRiskManagementSetting() {
+            if (null == mUser || !mUser.isLogin())
+                gotoLogin();
+            else
+                getUserAddedServicesStatus();
         }
 
         public void onClickRiskRateTips() {

@@ -25,7 +25,7 @@ public class ConfirmSimplePopupwindow extends JMEBasePopupWindow {
         super.initPopupWindow();
 
         setHeight(ViewGroup.LayoutParams.WRAP_CONTENT);
-        setWidth(DensityUtil.dpTopx(getContext(), 295));
+        setWidth(DensityUtil.dpTopx(getContext(), 280));
     }
 
     @Override

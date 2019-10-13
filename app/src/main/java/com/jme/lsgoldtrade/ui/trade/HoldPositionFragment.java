@@ -699,7 +699,7 @@ public class HoldPositionFragment extends JMEBaseFragment implements OnRefreshLi
                         }
                     } else {
                         ARouter.getInstance()
-                                .build(Constants.ARouterUriConst.GUARANTEEFUNDSETTINGACTIVITY)
+                                .build(Constants.ARouterUriConst.ENTRUSTRISKMANAGEMENT)
                                 .withString("Total", mTotal)
                                 .withFloat("Warnth", mAccountVo.getWarnth())
                                 .withFloat("Forcecloseth", mAccountVo.getForcecloseth())

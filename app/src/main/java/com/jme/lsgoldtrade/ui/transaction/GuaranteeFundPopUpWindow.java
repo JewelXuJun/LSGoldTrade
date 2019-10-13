@@ -1,4 +1,4 @@
-package com.jme.lsgoldtrade.ui.trade;
+package com.jme.lsgoldtrade.ui.transaction;
 
 import android.content.Context;
 import android.databinding.DataBindingUtil;
@@ -38,12 +38,20 @@ public class GuaranteeFundPopUpWindow extends JMEBasePopupWindow {
 
         setContentView(mBinding.getRoot());
 
-        mBinding.btnCancel.setOnClickListener((view) -> dismiss());
+        mBinding.setHandlers(new ClickHandlers());
     }
 
     public void setData(String message, View.OnClickListener confirmListener) {
         mBinding.tvMessage.setText(message);
         mBinding.btnConfirm.setOnClickListener(confirmListener);
+    }
+
+    public class ClickHandlers {
+
+        public void onClickCancel() {
+            dismiss();
+        }
+
     }
 
 }

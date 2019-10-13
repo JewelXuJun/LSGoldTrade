@@ -26,6 +26,7 @@
     <color name="color_bg_img">#f5f5f5</color>
     <color name="color_gradient_start">#0DFFFFFF</color>
     <color name="color_gradient_end">#FFFFFF</color>
+    <color name="color_gray">#DCDCDC</color>
 
     <drawable name="drawable_white">#FFFFFF</drawable>
     <drawable name="drawable_blue">#4285f4</drawable>
