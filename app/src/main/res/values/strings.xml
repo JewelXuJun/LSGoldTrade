@@ -153,7 +153,6 @@
     <string name="trade_newest">最新</string>
     <string name="trade_entrust">委托</string>
     <string name="trade_deal">成交</string>
-    <string name="trade_contract_time">合约/时间</string>
     <string name="trade_type_price">类型/价格</string>
     <string name="trade_entrust_surplus">委托/剩余</string>
     <string name="trade_turnover_volume">成交数量</string>
@@ -187,8 +186,6 @@
     <string name="trade_multipoint_nominal">多头/空头</string>
     <string name="trade_more_open_empty">多开/空开</string>
     <string name="trade_equal_open_empty">多平/空平</string>
-    <string name="trade_type">类型</string>
-    <string name="trade_amount_dealprice">数量/成交价</string>
     <string name="trade_mobile_error">当前签约银行手机号码异常，请查询后再操作</string>
     <string name="trade_bankcard_error">您的银行账号信息异常</string>
     <string name="trade_amount_error">您的账户余额不足</string>
@@ -335,6 +332,9 @@
     <string name="transaction_today_deal">今日成交</string>
     <string name="transaction_historical_deal">历史成交</string>
     <string name="transaction_historical_entrust">历史委托</string>
+    <string name="transaction_contract_time">合约/时间</string>
+    <string name="transaction_type">类型</string>
+    <string name="transaction_amount_dealprice">数量/成交价</string>
 
     <!-- Personal -->
     <string name="personal_login">登录/注册</string>

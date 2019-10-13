@@ -18,7 +18,7 @@
                 android:layout_weight="1"
                 android:gravity="center|left"
                 android:paddingLeft="@dimen/common_page_padding"
-                android:text="@string/trade_contract_time"
+                android:text="@string/transaction_contract_time"
                 android:textColor="@color/black_pale"
                 android:textSize="@dimen/sp_12" />
 
@@ -27,7 +27,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="@string/trade_type"
+                android:text="@string/transaction_type"
                 android:textColor="@color/black_pale"
                 android:textSize="@dimen/sp_12" />
 
@@ -37,7 +37,7 @@
                 android:layout_weight="1"
                 android:gravity="center|right"
                 android:paddingRight="@dimen/common_page_padding"
-                android:text="@string/trade_amount_dealprice"
+                android:text="@string/transaction_amount_dealprice"
                 android:textColor="@color/black_pale"
                 android:textSize="@dimen/sp_12" />
 

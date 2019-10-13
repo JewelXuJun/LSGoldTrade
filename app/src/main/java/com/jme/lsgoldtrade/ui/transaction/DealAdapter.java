@@ -1,4 +1,4 @@
-package com.jme.lsgoldtrade.ui.trade;
+package com.jme.lsgoldtrade.ui.transaction;
 
 import android.content.Context;
 import android.support.annotation.Nullable;

@@ -20,7 +20,7 @@
                 android:layout_weight="1"
                 android:gravity="center|left"
                 android:paddingLeft="@dimen/common_page_padding"
-                android:text="@string/trade_contract_time"
+                android:text="@string/transaction_contract_time"
                 android:textColor="@color/black_pale"
                 android:textSize="@dimen/sp_12" />
 
