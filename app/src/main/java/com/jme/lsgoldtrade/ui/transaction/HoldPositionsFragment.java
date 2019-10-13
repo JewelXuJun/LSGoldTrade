@@ -679,7 +679,7 @@ public class HoldPositionsFragment extends JMEBaseFragment implements OnRefreshL
         }
 
         public void onClickEntrustRiskManagement() {
-
+            ARouter.getInstance().build(Constants.ARouterUriConst.ENTRUSTRISKMANAGEMENT).navigation();
         }
 
         public void onClickDailyStatementSheet() {
