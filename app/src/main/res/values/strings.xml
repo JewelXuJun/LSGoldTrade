@@ -141,8 +141,6 @@
     <string name="trade_verification_code_hint">请输入验证码</string>
     <string name="trade_get_verification_code">获取验证码</string>
     <string name="trade_out_all">全部转出</string>
-    <string name="trade_start_time">起始时间</string>
-    <string name="trade_end_time">截止时间</string>
     <string name="trade_application_time">申请日期</string>
     <string name="trade_transfer_amount_unit">划转金额(元)</string>
     <string name="trade_business_type">业务类型</string>
@@ -335,6 +333,8 @@
     <string name="transaction_contract_time">合约/时间</string>
     <string name="transaction_type">类型</string>
     <string name="transaction_amount_dealprice">数量/成交价</string>
+    <string name="transaction_start_time">起始时间</string>
+    <string name="transaction_end_time">截止时间</string>
 
     <!-- Personal -->
     <string name="personal_login">登录/注册</string>

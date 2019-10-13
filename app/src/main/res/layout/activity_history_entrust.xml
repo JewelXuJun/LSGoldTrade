@@ -37,7 +37,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:text="@string/trade_start_time"
+                    android:text="@string/transaction_start_time"
                     android:textColor="@color/black_pale"
                     android:textSize="@dimen/sp_12" />
 
@@ -71,7 +71,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:text="@string/trade_end_time"
+                    android:text="@string/transaction_end_time"
                     android:textColor="@color/black_pale"
                     android:textSize="@dimen/sp_12" />
 
