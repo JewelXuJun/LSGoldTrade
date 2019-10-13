@@ -256,8 +256,10 @@
     <!-- Transaction -->
     <string name="transaction_place_order">下单</string>
     <string name="transaction_hold_positions">持仓</string>
-    <string name="transaction_limit_up_price">涨停价</string>
-    <string name="transaction_limit_down_price">跌停价</string>
+    <string name="transaction_varieties">交易品种</string>
+    <string name="transaction_limit_up_price">涨停</string>
+    <string name="transaction_limit_down_price">跌停</string>
+    <string name="transaction_market">5档行情</string>
     <string name="transaction_entrust_price">委托价格</string>
     <string name="transaction_entrust_hands_number">委托手数</string>
     <string name="transaction_latest">最新</string>

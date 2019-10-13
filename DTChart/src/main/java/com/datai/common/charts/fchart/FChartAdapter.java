@@ -31,6 +31,8 @@ public class FChartAdapter extends BaseAdapter {
     private FData mFData;
 
     private int mType = FData.TYPE_BUY;
+    private int mBigSize = 9;
+    private int mSmallSize = 8;
 
     private String[] mSell = {"卖10", "卖9", "卖8", "卖7", "卖6", "卖5", "卖4", "卖3", "卖2", "卖1"};
     private String[] mBuy = {"买1", "买2", "买3", "买4", "买5", "买6", "买7", "买8", "买9", "买10"};
@@ -81,6 +83,11 @@ public class FChartAdapter extends BaseAdapter {
             return new String[3];
     }
 
+    public void setSize(int bigSize, int smallSize) {
+        mBigSize = bigSize;
+        mSmallSize = smallSize;
+    }
+
     @Override
     public long getItemId(int position) {
         return 0;
@@ -98,6 +105,8 @@ public class FChartAdapter extends BaseAdapter {
             holder.tv_item_first = convertView.findViewById(R.id.tv_item_first);
             holder.tv_item_second = convertView.findViewById(R.id.tv_item_second);
             holder.tv_item_third = convertView.findViewById(R.id.tv_item_third);
+
+            holder.tv_item_first.setTextSize(TypedValue.COMPLEX_UNIT_SP, mSmallSize);
 
             convertView.setTag(holder);
         } else {
@@ -129,9 +138,9 @@ public class FChartAdapter extends BaseAdapter {
                                 Float.parseFloat(mPreClose))));
 
                         if (new BigDecimal(second).compareTo(new BigDecimal(1000)) == -1) {
-                            holder.tv_item_second.setTextSize(TypedValue.COMPLEX_UNIT_SP, 9);
+                            holder.tv_item_second.setTextSize(TypedValue.COMPLEX_UNIT_SP, mBigSize);
                         } else {
-                            holder.tv_item_second.setTextSize(TypedValue.COMPLEX_UNIT_SP, 8);
+                            holder.tv_item_second.setTextSize(TypedValue.COMPLEX_UNIT_SP, mSmallSize);
                         }
                     }
 
@@ -143,9 +152,9 @@ public class FChartAdapter extends BaseAdapter {
                         holder.tv_item_third.setText(mDescriptor.floatValue(third, 0));
 
                         if (new BigDecimal(third).compareTo(new BigDecimal(1000)) == -1) {
-                            holder.tv_item_third.setTextSize(TypedValue.COMPLEX_UNIT_SP, 9);
+                            holder.tv_item_third.setTextSize(TypedValue.COMPLEX_UNIT_SP, mBigSize);
                         } else {
-                            holder.tv_item_third.setTextSize(TypedValue.COMPLEX_UNIT_SP, 8);
+                            holder.tv_item_third.setTextSize(TypedValue.COMPLEX_UNIT_SP, mSmallSize);
                         }
                     }
                 }

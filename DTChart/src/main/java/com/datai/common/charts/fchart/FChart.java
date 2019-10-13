@@ -54,6 +54,10 @@ public class FChart extends LinearLayout implements AdapterView.OnItemClickListe
         mListView.setAdapter(mFChartAdapter);
     }
 
+    public void setSize(int bigSize, int smallSize) {
+        mFChartAdapter.setSize(bigSize, smallSize);
+    }
+
     public void setData(List<String[]> list, int type, String preClose) {
         mFChartAdapter.setType(type);
         mFChartAdapter.setPreClose(preClose);

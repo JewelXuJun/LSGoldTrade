@@ -102,6 +102,9 @@ public class PlaceOrderFragment extends JMEBaseFragment implements FChart.OnPric
         mTransactionMessagePopUpWindow = new TransactionMessagePopUpWindow(mContext);
         mConfirmPopupwindow = new ConfirmPopupwindow(mContext);
         mPlaceOrderPopupWindow = new PlaceOrderPopupWindow(mContext);
+
+        mBinding.fchartSale.setSize(12, 11);
+        mBinding.fchartBuy.setSize(12, 11);
     }
 
     @Override
@@ -480,18 +483,38 @@ public class PlaceOrderFragment extends JMEBaseFragment implements FChart.OnPric
 
                     String lastSettlePrice = mFiveSpeedVo.getLastSettlePrice();
                     String latestPrice = mFiveSpeedVo.getLatestPriceValue();
+                    String upDown = mFiveSpeedVo.getUpDownValue();
                     mLowerLimitPrice = mFiveSpeedVo.getLowerLimitPrice();
                     mHighLimitPrice = mFiveSpeedVo.getHighLimitPrice();
 
                     if (TextUtils.isEmpty(lastSettlePrice))
                         return;
 
+                    int rateType;
+
+                    if (TextUtils.isEmpty(upDown))
+                        rateType = 0;
+                    else
+                        rateType = new BigDecimal(upDown).compareTo(new BigDecimal(0));
+
                     mBinding.tvLastPrice.setText(latestPrice);
-                    mBinding.tvLastPrice.setTextColor(ContextCompat.getColor(mContext, new BigDecimal(latestPrice).compareTo(new BigDecimal(0)) == 0
-                            ? R.color.color_text_black : MarketUtil.getMarketStateColor(new BigDecimal(latestPrice).compareTo(new BigDecimal(lastSettlePrice)))));
+                    mBinding.tvRange.setText(MarketUtil.getMarketRangeValue(rateType, upDown));
+                    mBinding.tvRate.setText(MarketUtil.getMarketRateValue(rateType, mFiveSpeedVo.getUpDownRateValue()));
+
+                    if (new BigDecimal(latestPrice).compareTo(new BigDecimal(0)) == 0) {
+                        mBinding.tvLastPrice.setTextColor(ContextCompat.getColor(mContext, R.color.color_text_black));
+                        mBinding.tvRange.setTextColor(ContextCompat.getColor(mContext, R.color.color_text_black));
+                        mBinding.tvRate.setTextColor(ContextCompat.getColor(mContext, R.color.color_text_black));
+                        mBinding.tvLastPrice.setBackgroundResource(R.drawable.bg_white_light);
+                    } else {
+                        mBinding.tvLastPrice.setTextColor(ContextCompat.getColor(mContext, MarketUtil.getMarketStateColor(rateType)));
+                        mBinding.tvRange.setTextColor(ContextCompat.getColor(mContext, MarketUtil.getMarketStateColor(rateType)));
+                        mBinding.tvRate.setTextColor(ContextCompat.getColor(mContext, MarketUtil.getMarketStateColor(rateType)));
+                        mBinding.tvLastPrice.setBackgroundResource(MarketUtil.getMarketStateBackground(rateType));
+                    }
+
                     mBinding.tvLimitDownPrice.setText(mLowerLimitPrice);
                     mBinding.tvLimitUpPrice.setText(mHighLimitPrice);
-                    mBinding.tvLastAmount.setText(MarketUtil.getVolumeValue(String.valueOf(new BigDecimal(mFiveSpeedVo.getTurnover()).divide(new BigDecimal(100))), false));
                     mBinding.fchartSale.setData(mFiveSpeedVo.getFiveAskLists(), FData.TYPE_SELL, lastSettlePrice);
                     mBinding.fchartBuy.setData(mFiveSpeedVo.getFiveBidLists(), FData.TYPE_BUY, lastSettlePrice);
                 }
