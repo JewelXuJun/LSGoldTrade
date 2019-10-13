@@ -65,7 +65,7 @@ public class HistoryDealActivity extends JMEBaseActivity implements OnRefreshLis
     protected void initView() {
         super.initView();
 
-        initToolbar(R.string.trade_history_deal, true);
+        initToolbar(R.string.transaction_historical_deal, true);
     }
 
     @Override

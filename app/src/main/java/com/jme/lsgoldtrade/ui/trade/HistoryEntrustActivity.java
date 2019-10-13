@@ -65,7 +65,7 @@ public class HistoryEntrustActivity extends JMEBaseActivity implements OnRefresh
     protected void initView() {
         super.initView();
 
-        initToolbar(R.string.trade_history_entrust, true);
+        initToolbar(R.string.transaction_historical_entrust, true);
     }
 
     @Override

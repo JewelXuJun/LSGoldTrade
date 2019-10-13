@@ -184,6 +184,7 @@ public class Constants {
         public static final String NEWSDETAILACTIVITY = "/NewsCenterActivity/NewsDetailActivity";
         public static final String BEGINNERSACTIVITY = "/MainPageFragment/BeginnersActivity";
         public static final String ENTRUSTRISKMANAGEMENT = "/HoldPositionsFragment/EntrustRiskManagementActivity";
+        public static final String QUERY = "/HoldPositionsFragment/QueryActivity";
         public static final String TRADINGBOX = "/MainPageFragment/TradingBoxActivity";
         public static final String TRADINGBOXDETAIL = "/TradingboxDetails/TradingBoxDetailActivity";
         public static final String RELEVANTINFO = "/TradingboxDetails/RelevantInfoActivity";

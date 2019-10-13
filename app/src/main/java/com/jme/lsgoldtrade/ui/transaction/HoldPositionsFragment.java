@@ -670,8 +670,8 @@ public class HoldPositionsFragment extends JMEBaseFragment implements OnRefreshL
             }
         }
 
-        public void onClickDealQuery() {
-
+        public void onClickQuery() {
+            ARouter.getInstance().build(Constants.ARouterUriConst.QUERY).navigation();
         }
 
         public void onClickInOutMoney() {
