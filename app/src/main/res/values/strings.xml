@@ -144,15 +144,12 @@
     <string name="trade_application_time">申请日期</string>
     <string name="trade_transfer_amount_unit">划转金额(元)</string>
     <string name="trade_business_type">业务类型</string>
-    <string name="trade_state">状态</string>
     <string name="trade_limit_up_price">涨停价</string>
     <string name="trade_limit_down_price">跌停价</string>
     <string name="trade_evening_up">平仓</string>
     <string name="trade_newest">最新</string>
     <string name="trade_entrust">委托</string>
     <string name="trade_deal">成交</string>
-    <string name="trade_type_price">类型/价格</string>
-    <string name="trade_entrust_surplus">委托/剩余</string>
     <string name="trade_turnover_volume">成交数量</string>
     <string name="trade_turnover_money">成交金额</string>
     <string name="trade_check_all">全选</string>
@@ -335,6 +332,9 @@
     <string name="transaction_amount_dealprice">数量/成交价</string>
     <string name="transaction_start_time">起始时间</string>
     <string name="transaction_end_time">截止时间</string>
+    <string name="transaction_type_price">类型/价格</string>
+    <string name="transaction_entrust_surplus">委托/剩余</string>
+    <string name="transaction_state">状态</string>
 
     <!-- Personal -->
     <string name="personal_login">登录/注册</string>

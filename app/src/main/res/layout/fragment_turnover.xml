@@ -124,7 +124,7 @@
                 android:layout_weight="1"
                 android:gravity="right"
                 android:paddingRight="@dimen/common_page_padding"
-                android:text="@string/trade_state"
+                android:text="@string/transaction_state"
                 android:textColor="@color/black_pale"
                 android:textSize="@dimen/sp_12" />
 

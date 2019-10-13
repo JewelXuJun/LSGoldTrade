@@ -20,6 +20,7 @@ import com.jme.lsgoldtrade.databinding.ActivityHistoryEntrustBinding;
 import com.jme.lsgoldtrade.domain.OrderHisPageVo;
 import com.jme.lsgoldtrade.domain.OrderPageVo;
 import com.jme.lsgoldtrade.service.TradeService;
+import com.jme.lsgoldtrade.ui.transaction.EntrustAdapter;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 
