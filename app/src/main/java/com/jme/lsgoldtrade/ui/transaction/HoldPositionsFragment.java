@@ -29,6 +29,7 @@ import com.jme.lsgoldtrade.service.ManagementService;
 import com.jme.lsgoldtrade.service.MarketService;
 import com.jme.lsgoldtrade.service.TradeService;
 import com.jme.lsgoldtrade.util.MarketUtil;
+import com.jme.lsgoldtrade.view.ConfirmSimplePopupwindow;
 import com.jme.lsgoldtrade.view.TransactionMessagePopUpWindow;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
@@ -68,6 +69,7 @@ public class HoldPositionsFragment extends JMEBaseFragment implements OnRefreshL
     private TabViewPagerAdapter mAdapter;
     private AccountVo mAccountVo;
     private TransactionMessagePopUpWindow mTransactionMessagePopUpWindow;
+    private ConfirmSimplePopupwindow mConfirmSimplePopupwindow;
     private Subscription mRxbus;
 
     private Handler mHandler = new Handler() {
@@ -105,6 +107,7 @@ public class HoldPositionsFragment extends JMEBaseFragment implements OnRefreshL
         super.initView();
 
         mTransactionMessagePopUpWindow = new TransactionMessagePopUpWindow(mContext);
+        mConfirmSimplePopupwindow = new ConfirmSimplePopupwindow(mContext);
     }
 
     @Override
@@ -660,7 +663,11 @@ public class HoldPositionsFragment extends JMEBaseFragment implements OnRefreshL
         }
 
         public void onClickRiskRateTips() {
-
+            if (null != mConfirmSimplePopupwindow && !mConfirmSimplePopupwindow.isShowing()) {
+                mConfirmSimplePopupwindow.setData(String.format(getResources().getString(R.string.transaction_riskrate_rule), "100%"),
+                        (view) -> mConfirmSimplePopupwindow.dismiss());
+                mConfirmSimplePopupwindow.showAtLocation(mBinding.tvGuaranteeFundSetting, Gravity.CENTER, 0, 0);
+            }
         }
 
         public void onClickDealQuery() {
