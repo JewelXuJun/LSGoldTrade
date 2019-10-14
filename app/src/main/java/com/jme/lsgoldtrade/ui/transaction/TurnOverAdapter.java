@@ -1,4 +1,4 @@
-package com.jme.lsgoldtrade.ui.trade;
+package com.jme.lsgoldtrade.ui.transaction;
 
 import android.content.Context;
 import android.support.annotation.Nullable;
@@ -30,9 +30,6 @@ public class TurnOverAdapter extends BaseQuickAdapter<InOutTurnOverVo.TurnOverBe
         String date = item.getTradeDate().replace("/", "-");
         String time = item.getTradeTime().replace(".", ":");
         int direction = item.getDirection();
-
-//        if (!TextUtils.isEmpty(date) && date.contains("-"))
-//            date = date.replace("-", "/");
 
         helper.setText(R.id.tv_time, date)
                 .setText(R.id.trade_time, time)

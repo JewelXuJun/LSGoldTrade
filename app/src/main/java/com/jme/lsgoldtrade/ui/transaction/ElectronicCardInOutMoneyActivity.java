@@ -1,4 +1,4 @@
-package com.jme.lsgoldtrade.ui.trade;
+package com.jme.lsgoldtrade.ui.transaction;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -28,7 +28,7 @@ public class ElectronicCardInOutMoneyActivity extends JMEBaseActivity {
     protected void initView() {
         super.initView();
 
-        initToolbar(R.string.trade_capital_transfer, true);
+        initToolbar(R.string.transaction_capital_transfer, true);
     }
 
     @Override

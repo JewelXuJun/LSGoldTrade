@@ -675,7 +675,17 @@ public class HoldPositionsFragment extends JMEBaseFragment implements OnRefreshL
         }
 
         public void onClickInOutMoney() {
+            if (null == mUser || null == mUser.getCurrentUser())
+                return;
 
+            if (!TextUtils.isEmpty(mUser.getIsFromTjs()) && mUser.getIsFromTjs().equals("true")) {
+                if (mUser.getCurrentUser().getCardType().equals("2") && mUser.getCurrentUser().getReserveFlag().equals("N"))
+                    ARouter.getInstance().build(Constants.ARouterUriConst.BANKRESERVE).navigation();
+                else
+                    ARouter.getInstance().build(Constants.ARouterUriConst.CAPITALTRANSFER).navigation();
+            } else {
+                ARouter.getInstance().build(Constants.ARouterUriConst.CAPITALTRANSFER).navigation();
+            }
         }
 
         public void onClickEntrustRiskManagement() {

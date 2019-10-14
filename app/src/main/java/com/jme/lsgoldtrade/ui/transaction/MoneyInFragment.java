@@ -1,4 +1,4 @@
-package com.jme.lsgoldtrade.ui.trade;
+package com.jme.lsgoldtrade.ui.transaction;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -56,8 +56,6 @@ public class MoneyInFragment extends JMEBaseFragment implements OnRefreshListene
     @Override
     protected void initView() {
         super.initView();
-
-        mBinding = (FragmentMoneyInBinding) mBindingUtil;
     }
 
     @Override
@@ -65,7 +63,7 @@ public class MoneyInFragment extends JMEBaseFragment implements OnRefreshListene
         super.initData(savedInstanceState);
 
         mCountDownTimer = new JMECountDownTimer(60000, 1000,
-                mBinding.btnVerificationCode, getString(R.string.trade_get_verification_code));
+                mBinding.btnVerificationCode, getString(R.string.transaction_get_verification_code));
 
         if (null != mUser) {
             UserInfoVo userInfoVo = mUser.getCurrentUser();
@@ -161,6 +159,7 @@ public class MoneyInFragment extends JMEBaseFragment implements OnRefreshListene
     public void initBinding() {
         super.initBinding();
 
+        mBinding = (FragmentMoneyInBinding) mBindingUtil;
         mBinding.setHandlers(new ClickHandlers());
     }
 
@@ -261,15 +260,15 @@ public class MoneyInFragment extends JMEBaseFragment implements OnRefreshListene
             amount = amount.substring(0, amount.length() - 1);
 
         if (TextUtils.isEmpty(mCurAccountBalance))
-            showShortToast(R.string.trade_amount_error);
+            showShortToast(R.string.transaction_amount_error);
         else if (new BigDecimal(mCurAccountBalance).compareTo(new BigDecimal(0)) != 1)
-            showShortToast(R.string.trade_amount_error);
+            showShortToast(R.string.transaction_amount_error);
         else if (TextUtils.isEmpty(mobile))
-            showShortToast(R.string.trade_mobile_error);
+            showShortToast(R.string.transaction_mobile_error);
         else if (new BigDecimal(amount).compareTo(new BigDecimal(0)) != 1)
-            showShortToast(R.string.trade_money_min_error);
+            showShortToast(R.string.transaction_money_min_error);
         else if (new BigDecimal(amount).compareTo(new BigDecimal(mCurAccountBalance)) == 1)
-            showShortToast(R.string.trade_money_in_max_error);
+            showShortToast(R.string.transaction_money_in_max_error);
         else if (!bFlag)
             showShortToast(R.string.login_verification_code_unget);
         else if (verifyCode.length() < 6)
@@ -355,7 +354,7 @@ public class MoneyInFragment extends JMEBaseFragment implements OnRefreshListene
                 break;
             case "InoutMoney":
                 if (head.isSuccess()) {
-                    showShortToast(R.string.trade_money_in_success);
+                    showShortToast(R.string.transaction_money_in_success);
 
                     mBinding.etTransferAmount.setText("");
                     mBinding.etVerificationCode.setText("");
@@ -415,7 +414,7 @@ public class MoneyInFragment extends JMEBaseFragment implements OnRefreshListene
 
         public void onClickGetVerificationCode() {
             if (TextUtils.isEmpty(mBinding.tvMobileNumber.getText().toString()))
-                showShortToast(R.string.trade_mobile_error);
+                showShortToast(R.string.transaction_mobile_error);
             else
                 fundInoutMsg();
         }

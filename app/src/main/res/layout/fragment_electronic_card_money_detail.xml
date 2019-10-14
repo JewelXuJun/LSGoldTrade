@@ -5,7 +5,7 @@
 
         <variable
             name="handlers"
-            type="com.jme.lsgoldtrade.ui.trade.ElectronicCardDetailFragment.ClickHanlders" />
+            type="com.jme.lsgoldtrade.ui.transaction.ElectronicCardDetailFragment.ClickHanlders" />
 
     </data>
 
@@ -95,7 +95,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:paddingLeft="@dimen/common_page_padding"
-                android:text="@string/trade_transfer_icbc_electronic_card_time"
+                android:text="@string/transaction_transfer_icbc_electronic_card_time"
                 android:textColor="@color/black_pale"
                 android:textSize="@dimen/sp_12" />
 
@@ -104,7 +104,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="@string/trade_transfer_amount_unit"
+                android:text="@string/transaction_transfer_amount_unit"
                 android:textColor="@color/black_pale"
                 android:textSize="@dimen/sp_12" />
 

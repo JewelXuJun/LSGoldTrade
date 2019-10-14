@@ -1,4 +1,4 @@
-package com.jme.lsgoldtrade.ui.trade;
+package com.jme.lsgoldtrade.ui.transaction;
 
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
@@ -11,7 +11,6 @@ import android.view.View;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
-import com.datai.common.charts.common.Config;
 import com.jme.common.network.DTRequest;
 import com.jme.common.network.Head;
 import com.jme.common.util.RxBus;
@@ -51,7 +50,7 @@ public class CapitalTransferActivity extends JMEBaseActivity {
     protected void initView() {
         super.initView();
 
-        initToolbar(R.string.trade_capital_transfer, true);
+        initToolbar(R.string.transaction_capital_transfer, true);
     }
 
     @Override
@@ -95,8 +94,8 @@ public class CapitalTransferActivity extends JMEBaseActivity {
     private void initInfoTabs() {
         mTabTitles = new String[3];
         mTabTitles[0] = getString(R.string.transaction_money_in);
-        mTabTitles[1] = getString(R.string.trade_money_out);
-        mTabTitles[2] = getString(R.string.trade_turnover);
+        mTabTitles[1] = getString(R.string.transaction_money_out);
+        mTabTitles[2] = getString(R.string.transaction_turnover);
 
         mFragmentArrays = new Fragment[3];
         mFragmentArrays[0] = new MoneyInFragment();

@@ -116,7 +116,7 @@
                                 android:layout_centerVertical="true"
                                 android:background="@drawable/selector_blue"
                                 android:onClick="@{() -> handlers.onClickGetVerificationCode()}"
-                                android:text="@string/trade_get_verification_code"
+                                android:text="@string/transaction_get_verification_code"
                                 android:textColor="@drawable/selector_text"
                                 android:textSize="@dimen/size_middle" />
 

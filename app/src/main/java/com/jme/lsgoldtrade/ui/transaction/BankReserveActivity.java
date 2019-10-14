@@ -1,4 +1,4 @@
-package com.jme.lsgoldtrade.ui.trade;
+package com.jme.lsgoldtrade.ui.transaction;
 
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
@@ -46,7 +46,7 @@ public class BankReserveActivity extends JMEBaseActivity {
     protected void initView() {
         super.initView();
 
-        initToolbar(R.string.trade_transfer_bank_reserve, true);
+        initToolbar(R.string.transaction_transfer_bank_reserve, true);
     }
 
     @Override
@@ -56,7 +56,7 @@ public class BankReserveActivity extends JMEBaseActivity {
         setFileValue();
 
         mCountDownTimer = new JMECountDownTimer(60000, 1000,
-                mBinding.btnVerificationCode, getResources().getString(R.string.trade_get_verification_code));
+                mBinding.btnVerificationCode, getResources().getString(R.string.transaction_get_verification_code));
     }
 
     @Override
@@ -79,7 +79,7 @@ public class BankReserveActivity extends JMEBaseActivity {
     }
 
     private void setFileValue() {
-        String fileValue = getResources().getString(R.string.trade_transfer_icbc_electronic_card_file_message);
+        String fileValue = getResources().getString(R.string.transaction_transfer_icbc_electronic_card_file_message);
         SpannableString spannableString = new SpannableString(fileValue);
         spannableString.setSpan(new ForegroundColorSpan(ContextCompat.getColor(this, R.color.color_blue)),
                 fileValue.length() - 5, fileValue.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
@@ -133,7 +133,7 @@ public class BankReserveActivity extends JMEBaseActivity {
                 break;
             case "KeepInfoIntoList":
                 if (head.isSuccess()) {
-                    showShortToast(R.string.trade_transfer_bank_save_success);
+                    showShortToast(R.string.transaction_transfer_bank_save_success);
 
                     if (null != mUser && null != mUser.getCurrentUser()) {
                         mUser.getCurrentUser().setCardType("2");
@@ -154,9 +154,9 @@ public class BankReserveActivity extends JMEBaseActivity {
             String mobile = mBinding.etMobile.getText().toString();
 
             if (TextUtils.isEmpty(etIcbcElectronicCard))
-                showShortToast(R.string.trade_transfer_icbc_electronic_card_input);
+                showShortToast(R.string.transaction_transfer_icbc_electronic_card_input);
             else if (TextUtils.isEmpty(mobile) || mobile.length() < 11)
-                showShortToast(R.string.trade_transfer_icbc_electronic_card_mobile_input);
+                showShortToast(R.string.transaction_transfer_icbc_electronic_card_mobile_input);
             else
                 sendPassCode(mobile);
         }
@@ -166,7 +166,7 @@ public class BankReserveActivity extends JMEBaseActivity {
             String verificationCode = mBinding.etVerificationCode.getText().toString();
 
             if (mobile.length() < 11)
-                showShortToast(R.string.trade_transfer_icbc_electronic_card_mobile_input);
+                showShortToast(R.string.transaction_transfer_icbc_electronic_card_mobile_input);
             else if (!bFlag)
                 showShortToast(R.string.login_verification_code_unget);
             else if (verificationCode.length() < 6)
@@ -200,4 +200,5 @@ public class BankReserveActivity extends JMEBaseActivity {
         if (null != mCountDownTimer)
             mCountDownTimer.cancel();
     }
+
 }

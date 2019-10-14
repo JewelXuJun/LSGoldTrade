@@ -1,4 +1,4 @@
-package com.jme.lsgoldtrade.ui.trade;
+package com.jme.lsgoldtrade.ui.transaction;
 
 import android.content.Context;
 import android.support.annotation.Nullable;
@@ -36,8 +36,8 @@ public class ElectronicCardAdapter extends BaseQuickAdapter<TransactionDetailVo.
                 .setText(R.id.tv_amount, MarketUtil.decimalFormatMoney(MarketUtil.getPriceValue(item.getAmount())))
                 .setTextColor(R.id.tv_amount, ContextCompat.getColor(mContext, MarketUtil.getInOutMoneyStatusColor(businessStatus)))
                 .setText(R.id.tv_type, TextUtils.isEmpty(businessStatus)
-                        ? "" : businessStatus.equals("recharge") ? mContext.getResources().getString(R.string.trade_transfer_icbc_electronic_card_in)
-                        : businessStatus.equals("withdraw") ? mContext.getResources().getString(R.string.trade_transfer_icbc_electronic_card_out) : "")
+                        ? "" : businessStatus.equals("recharge") ? mContext.getResources().getString(R.string.transaction_transfer_icbc_electronic_card_in)
+                        : businessStatus.equals("withdraw") ? mContext.getResources().getString(R.string.transaction_transfer_icbc_electronic_card_out) : "")
                 .setTextColor(R.id.tv_type, ContextCompat.getColor(mContext, MarketUtil.getInOutMoneyStatusColor(businessStatus)))
                 .setText(R.id.tv_state, getState(item.getStatus()));
     }
@@ -49,11 +49,11 @@ public class ElectronicCardAdapter extends BaseQuickAdapter<TransactionDetailVo.
             state = "";
         } else {
             if (status.equals("true"))
-                state = mContext.getResources().getString(R.string.trade_transfer_success);
+                state = mContext.getResources().getString(R.string.transaction_transfer_success);
             else if (status.equals("false"))
-                state = mContext.getResources().getString(R.string.trade_transfer_fail);
+                state = mContext.getResources().getString(R.string.transaction_transfer_fail);
             else if (status.equals("processing"))
-                state = mContext.getResources().getString(R.string.trade_transfer_processing);
+                state = mContext.getResources().getString(R.string.transaction_transfer_processing);
             else
                 state = "";
         }

@@ -1,4 +1,4 @@
-package com.jme.lsgoldtrade.ui.trade;
+package com.jme.lsgoldtrade.ui.transaction;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -164,7 +164,7 @@ public class ElectronicCardMoneyOutFragment extends JMEBaseFragment implements O
                     mBinding.tvIcbcElectronicCardMoneyOutAvalible.setText(TextUtils.isEmpty(moneyValue)
                             ? getResources().getString(R.string.text_no_data_default) : moneyValue + mContext.getResources().getString(R.string.text_money_unit));
                     mBinding.tvMessage.setText(TextUtils.isEmpty(relevanceId) ? ""
-                            : String.format(mContext.getResources().getString(R.string.trade_transfer_icbc_electronic_card_money_out_message),
+                            : String.format(mContext.getResources().getString(R.string.transaction_transfer_icbc_electronic_card_money_out_message),
                             relevanceId.substring(relevanceId.length() - 4)));
                 } else {
                     mBinding.swipeRefreshLayout.finishRefresh(false);
@@ -176,7 +176,7 @@ public class ElectronicCardMoneyOutFragment extends JMEBaseFragment implements O
                     mBinding.etTransferIcbcElectronicCardMoneyOut.setText("");
 
                     if (null != mConfirmSimplePopupwindow && !mConfirmSimplePopupwindow.isShowing()) {
-                        mConfirmSimplePopupwindow.setData(getResources().getString(R.string.trade_transfer_icbc_electronic_card_withdraw_message),
+                        mConfirmSimplePopupwindow.setData(getResources().getString(R.string.transaction_transfer_icbc_electronic_card_withdraw_message),
                                 (view) -> {
                                     mConfirmSimplePopupwindow.dismiss();
 
@@ -211,11 +211,11 @@ public class ElectronicCardMoneyOutFragment extends JMEBaseFragment implements O
                 amount = amount.substring(0, amount.length() - 1);
 
             if (TextUtils.isEmpty(mMoney))
-                showShortToast(R.string.trade_amount_error);
+                showShortToast(R.string.transaction_amount_error);
             else if (new BigDecimal(amount).compareTo(new BigDecimal(0)) != 1)
-                showShortToast(R.string.trade_money_min_error);
+                showShortToast(R.string.transaction_money_min_error);
             else if (new BigDecimal(amount).compareTo(new BigDecimal(mMoney)) == 1)
-                showShortToast(String.format(mContext.getResources().getString(R.string.trade_money_out_max_error_detail), mMoney));
+                showShortToast(String.format(mContext.getResources().getString(R.string.transaction_money_out_max_error_detail), mMoney));
             else
                 withdraw(amount);
         }

@@ -1,4 +1,4 @@
-package com.jme.lsgoldtrade.ui.trade;
+package com.jme.lsgoldtrade.ui.transaction;
 
 import android.annotation.TargetApi;
 import android.app.DatePickerDialog;
@@ -153,7 +153,7 @@ public class ElectronicCardDetailFragment extends JMEBaseFragment implements OnR
 
             initQueryTransactionDetail(true);
         } else {
-            showShortToast(R.string.trade_start_time_error);
+            showShortToast(R.string.transaction_start_time_error);
         }
     }
 
@@ -166,7 +166,7 @@ public class ElectronicCardDetailFragment extends JMEBaseFragment implements OnR
 
             initQueryTransactionDetail(true);
         } else {
-            showShortToast(R.string.trade_end_time_error);
+            showShortToast(R.string.transaction_end_time_error);
         }
     }
 

@@ -1,4 +1,4 @@
-package com.jme.lsgoldtrade.ui.trade;
+package com.jme.lsgoldtrade.ui.transaction;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -63,7 +63,7 @@ public class ElectronicCardMoneyInFragment extends JMEBaseFragment {
 
         mBinding.tvIcbcElectronicBankCard.setText(StringUtils.formatBankCard(mElectronicAccounts));
         mBinding.tvMessage.setText(TextUtils.isEmpty(mRelevanceId) ? ""
-                : String.format(mContext.getResources().getString(R.string.trade_transfer_icbc_electronic_card_money_in_message),
+                : String.format(mContext.getResources().getString(R.string.transaction_transfer_icbc_electronic_card_money_in_message),
                 mRelevanceId.substring(mRelevanceId.length() - 4)));
     }
 
@@ -137,7 +137,7 @@ public class ElectronicCardMoneyInFragment extends JMEBaseFragment {
                     mBinding.etTransferIcbcElectronicCardMoneyIn.setText("");
 
                     if (null != mConfirmSimplePopupwindow && !mConfirmSimplePopupwindow.isShowing()) {
-                        mConfirmSimplePopupwindow.setData(getResources().getString(R.string.trade_transfer_icbc_electronic_card_recharge_message),
+                        mConfirmSimplePopupwindow.setData(getResources().getString(R.string.transaction_transfer_icbc_electronic_card_recharge_message),
                                 (view) -> {
                                     mConfirmSimplePopupwindow.dismiss();
 
@@ -161,11 +161,11 @@ public class ElectronicCardMoneyInFragment extends JMEBaseFragment {
                 amount = amount.substring(0, amount.length() - 1);
 
             if (TextUtils.isEmpty(mElectronicAccounts) || TextUtils.isEmpty(mRelevanceId))
-                showShortToast(R.string.trade_bankcard_error);
+                showShortToast(R.string.transaction_bankcard_error);
             else if (new BigDecimal(amount).compareTo(new BigDecimal(0)) != 1)
-                showShortToast(R.string.trade_money_min_error);
+                showShortToast(R.string.transaction_money_min_error);
             else if (new BigDecimal(amount).compareTo(new BigDecimal(200000)) == 1)
-                showShortToast(R.string.trade_money_in_max_error_detail);
+                showShortToast(R.string.transaction_money_in_max_error_detail);
             else
                 recharge(amount);
         }

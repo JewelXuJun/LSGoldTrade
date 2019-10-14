@@ -83,7 +83,7 @@
                                     android:layout_centerVertical="true"
                                     android:background="@drawable/selector_blue"
                                     android:onClick="@{() -> handlers.onClickCapitalTransfer()}"
-                                    android:text="@string/trade_capital_transfer"
+                                    android:text="@string/transaction_capital_transfer"
                                     android:textColor="@drawable/selector_text" />
 
                             </RelativeLayout>

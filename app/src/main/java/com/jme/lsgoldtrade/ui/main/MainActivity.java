@@ -291,7 +291,7 @@ public class MainActivity extends JMEBaseActivity implements TabHost.OnTabChange
         if (null != mUser && null != mUser.getCurrentUser()
                 && mUser.getCurrentUser().getCardType().equals("2") && mUser.getCurrentUser().getReserveFlag().equals("N")) {
             if (null != mConfirmSimplePopupwindow && !mConfirmSimplePopupwindow.isShowing()) {
-                mConfirmSimplePopupwindow.setData(getResources().getString(R.string.trade_transfer_icbc_electronic_card_message),
+                mConfirmSimplePopupwindow.setData(getResources().getString(R.string.transaction_transfer_icbc_electronic_card_message),
                         (view) -> {
                             mConfirmSimplePopupwindow.dismiss();
 

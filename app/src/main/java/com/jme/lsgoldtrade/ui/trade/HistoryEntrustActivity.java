@@ -159,7 +159,7 @@ public class HistoryEntrustActivity extends JMEBaseActivity implements OnRefresh
 
             initOrderHisPage(true);
         } else {
-            showShortToast(R.string.trade_start_time_error);
+            showShortToast(R.string.transaction_start_time_error);
         }
     }
 
@@ -173,7 +173,7 @@ public class HistoryEntrustActivity extends JMEBaseActivity implements OnRefresh
 
             initOrderHisPage(true);
         } else {
-            showShortToast(R.string.trade_end_time_error);
+            showShortToast(R.string.transaction_end_time_error);
         }
     }
 

@@ -59,7 +59,7 @@ public class RegisterActivity extends JMEBaseActivity {
         super.initData(savedInstanceState);
 
         mCountDownTimer = new JMECountDownTimer(60000, 1000,
-                mBinding.btnVerificationCode, getString(R.string.trade_get_verification_code));
+                mBinding.btnVerificationCode, getString(R.string.transaction_get_verification_code));
     }
 
     @Override

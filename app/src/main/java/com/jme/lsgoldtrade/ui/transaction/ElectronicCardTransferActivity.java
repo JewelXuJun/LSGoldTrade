@@ -1,4 +1,4 @@
-package com.jme.lsgoldtrade.ui.trade;
+package com.jme.lsgoldtrade.ui.transaction;
 
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
@@ -42,7 +42,7 @@ public class ElectronicCardTransferActivity extends JMEBaseActivity {
     protected void initView() {
         super.initView();
 
-        initToolbar(R.string.trade_transfer_icbc_electronic, true);
+        initToolbar(R.string.transaction_transfer_icbc_electronic, true);
     }
 
     @Override
@@ -79,9 +79,9 @@ public class ElectronicCardTransferActivity extends JMEBaseActivity {
 
     private void initInfoTabs() {
         mTabTitles = new String[3];
-        mTabTitles[0] = getString(R.string.trade_transfer_icbc_electronic_card_in);
-        mTabTitles[1] = getString(R.string.trade_transfer_icbc_electronic_card_out);
-        mTabTitles[2] = getString(R.string.trade_transfer_icbc_electronic_card_detail);
+        mTabTitles[0] = getString(R.string.transaction_transfer_icbc_electronic_card_in);
+        mTabTitles[1] = getString(R.string.transaction_transfer_icbc_electronic_card_out);
+        mTabTitles[2] = getString(R.string.transaction_transfer_icbc_electronic_card_detail);
 
         mFragmentArrays = new Fragment[3];
         mFragmentArrays[0] = ElectronicCardMoneyInFragment.newInstance(mElectronicAccounts, mRelevanceId);

@@ -253,7 +253,7 @@ public class DeclarationFormFragment extends JMEBaseFragment implements FChart.O
 
     private void initInfoTabs() {
         mTabTitles = new String[4];
-        mTabTitles[0] = mContext.getResources().getString(R.string.trade_hold_position);
+        mTabTitles[0] = mContext.getResources().getString(R.string.transaction_hold_positions);
         mTabTitles[1] = mContext.getResources().getString(R.string.trade_entrust);
         mTabTitles[2] = mContext.getResources().getString(R.string.trade_deal);
         mTabTitles[3] = mContext.getResources().getString(R.string.trade_cancel_order);
