@@ -92,7 +92,7 @@
             android:screenOrientation="portrait" />
 
         <activity
-            android:name=".ui.trade.DailyStatementActivity"
+            android:name=".ui.transaction.DailyStatementActivity"
             android:screenOrientation="portrait" />
 
         <activity

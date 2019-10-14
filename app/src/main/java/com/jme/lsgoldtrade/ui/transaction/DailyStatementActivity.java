@@ -1,10 +1,11 @@
-package com.jme.lsgoldtrade.ui.trade;
+package com.jme.lsgoldtrade.ui.transaction;
 
 import android.annotation.TargetApi;
 import android.app.DatePickerDialog;
 import android.os.Bundle;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
+import com.datai.common.charts.common.Config;
 import com.jme.common.network.DTRequest;
 import com.jme.common.network.Head;
 import com.jme.common.util.DateUtil;
@@ -33,6 +34,7 @@ public class DailyStatementActivity extends JMEBaseActivity {
     private int mYear;
     private int mMonth;
     private int mDayOfMonth;
+    private long mCurrentTime;
 
     @Override
     protected int getContentViewId() {
@@ -43,15 +45,16 @@ public class DailyStatementActivity extends JMEBaseActivity {
     protected void initView() {
         super.initView();
 
-        initToolbar(R.string.trade_daily_statement_query, true);
+        initToolbar(R.string.transaction_daily_statement_query, true);
     }
 
     @Override
     protected void initData(Bundle savedInstanceState) {
         super.initData(savedInstanceState);
 
-        String time = getIntent().getStringExtra("time");
-        mBinding.tvTime.setText(time);
+        mCurrentTime = System.currentTimeMillis() - Config.DAY;
+
+        mBinding.tvTime.setText(DateUtil.dateToString(mCurrentTime));
     }
 
     @Override
@@ -91,22 +94,25 @@ public class DailyStatementActivity extends JMEBaseActivity {
         calendar.set(Calendar.SECOND, 0);
         calendar.set(Calendar.MILLISECOND, 0);
 
-        mBinding.tvTime.setText(DateUtil.dateToString(calendar.getTimeInMillis()));
+        mCurrentTime = calendar.getTimeInMillis();
+
+        mBinding.tvTime.setText(DateUtil.dateToString(mCurrentTime));
 
         dailystatement();
     }
 
     private void setDailyStatementData(DailyStatementVo dailyStatementVo) {
-        mBinding.tvCurrentClientInterest.setText(MarketUtil.decimalFormatMoney(dailyStatementVo.getLastTradingBalanceStr()));
-        mBinding.tvPreviousCustomerInterest.setText(MarketUtil.decimalFormatMoney(dailyStatementVo.getCurrentBalanceStr()));
-        mBinding.tvCurrentAvailableFunds.setText(MarketUtil.decimalFormatMoney(dailyStatementVo.getCurrentBalanceStr()));
         mBinding.tvTodayFloat.setText(MarketUtil.decimalFormatMoney(dailyStatementVo.getTodayProfitStr()));
+        mBinding.tvFeeUnit.setText(MarketUtil.decimalFormatMoney(dailyStatementVo.getTradingFeeStr()));
+        mBinding.tvDeferredChargesUnit.setText(MarketUtil.decimalFormatMoney(dailyStatementVo.getTdDeferFeeStr()));
+        mBinding.tvCurrentClientInterest.setText(MarketUtil.decimalFormatMoney(dailyStatementVo.getLastTradingBalanceStr()));
+        mBinding.tvCurrentAvailableFunds.setText(MarketUtil.decimalFormatMoney(dailyStatementVo.getCurrentBalanceStr()));
         mBinding.tvCurrentHoldPositionBond.setText(MarketUtil.decimalFormatMoney(dailyStatementVo.getCurrentPositionMarginStr()));
         mBinding.tvBreakEvenFund.setText(MarketUtil.decimalFormatMoney(dailyStatementVo.getMinReserveFundStr()));
         mBinding.tvCurrentOutmoney.setText(MarketUtil.decimalFormatMoney(dailyStatementVo.getCurrentWithdrawalStr()));
         mBinding.tvCurrentInmoney.setText(MarketUtil.decimalFormatMoney(dailyStatementVo.getCurrentIncomingsStr()));
         mBinding.tvFee.setText(MarketUtil.decimalFormatMoney(dailyStatementVo.getTradingFeeStr()));
-        mBinding.tvDeferredFee.setText(MarketUtil.decimalFormatMoney(dailyStatementVo.getTdDeferFeeStr()));
+        mBinding.tvDeferredCharges.setText(MarketUtil.decimalFormatMoney(dailyStatementVo.getTdDeferFeeStr()));
     }
 
     private void dailystatement() {
@@ -163,6 +169,25 @@ public class DailyStatementActivity extends JMEBaseActivity {
                 mDatePickerDialog.getDatePicker().setMaxDate(new Date().getTime());
 
             mDatePickerDialog.show();
+        }
+
+        public void onClickPreviousDay() {
+            mCurrentTime = mCurrentTime - Config.DAY;
+
+            mBinding.tvTime.setText(DateUtil.dateToString(mCurrentTime));
+
+            dailystatement();
+        }
+
+        public void onClickNextDay() {
+            if (mCurrentTime + Config.DAY > System.currentTimeMillis())
+                return;
+
+            mCurrentTime = mCurrentTime + Config.DAY;
+
+            mBinding.tvTime.setText(DateUtil.dateToString(mCurrentTime));
+
+            dailystatement();
         }
 
     }

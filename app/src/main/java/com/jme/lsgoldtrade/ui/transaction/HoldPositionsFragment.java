@@ -693,7 +693,7 @@ public class HoldPositionsFragment extends JMEBaseFragment implements OnRefreshL
         }
 
         public void onClickDailyStatementSheet() {
-
+            ARouter.getInstance().build(Constants.ARouterUriConst.DAILYSTATEMENT).navigation();
         }
 
         public void onClickConditionSheet() {

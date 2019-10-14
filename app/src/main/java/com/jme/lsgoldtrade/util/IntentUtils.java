@@ -131,10 +131,7 @@ public class IntentUtils {
                 if (null == user || !user.isLogin())
                     gotoLogin(context);
                 else
-                    ARouter.getInstance()
-                            .build(Constants.ARouterUriConst.DAILYSTATEMENT)
-                            .withString("time", DateUtil.dataToStringWithData2(System.currentTimeMillis()))
-                            .navigation();
+                    ARouter.getInstance().build(Constants.ARouterUriConst.DAILYSTATEMENT).navigation();
                 break;
             case "WDDY":  //我的订阅
                 if (null == user || !user.isLogin())

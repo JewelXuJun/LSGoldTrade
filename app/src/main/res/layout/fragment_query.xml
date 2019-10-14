@@ -128,7 +128,7 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="@string/trade_fee"
+                                android:text="@string/transaction_fee"
                                 android:textColor="@color/black_pale"
                                 android:textSize="@dimen/sp_12" />
 
@@ -153,7 +153,7 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="@string/trade_deferred_charges"
+                                android:text="@string/transaction_deferred_charges"
                                 android:textColor="@color/black_pale"
                                 android:textSize="@dimen/sp_12" />
 
