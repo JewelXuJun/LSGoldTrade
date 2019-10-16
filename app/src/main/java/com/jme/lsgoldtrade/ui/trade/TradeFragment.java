@@ -164,7 +164,7 @@ public class TradeFragment extends JMEBaseFragment implements TabLayout.OnTabSel
         mTabTitles = new String[4];
         mTabTitles[0] = mContext.getResources().getString(R.string.transaction_hold_positions);
         mTabTitles[1] = mContext.getResources().getString(R.string.market_declaration_form);
-        mTabTitles[2] = mContext.getResources().getString(R.string.trade_cancel_order);
+        mTabTitles[2] = mContext.getResources().getString(R.string.transaction_cancel_order);
         mTabTitles[3] = mContext.getResources().getString(R.string.trade_query);
 
         mFragmentArrays = new Fragment[4];

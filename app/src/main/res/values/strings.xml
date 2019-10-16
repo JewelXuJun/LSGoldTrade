@@ -89,7 +89,6 @@
     <string name="market_edit_sort_success">排序成功</string>
 
     <!-- Trade -->
-    <string name="trade_cancel_order">撤单</string>
     <string name="trade_query">查询</string>
     <string name="trade_contract_pupil">合约/多空</string>
     <string name="trade_available_hold_position">可用/持仓</string>
@@ -117,10 +116,6 @@
     <string name="trade_popupwindow_title">报单确认</string>
     <string name="trade_buy">买入</string>
     <string name="trade_sale">卖出</string>
-    <string name="trade_popupwindow_time">交易时间</string>
-    <string name="trade_popupwindow_trade_price">交易价格</string>
-    <string name="trade_popupwindow_surplus_amount">剩余数量</string>
-    <string name="trade_popupwindow_trade_status">交易状态</string>
     <string name="trade_cancel_order_success">撤单成功</string>
     <string name="trade_increment_error">您尚未开通增值服务，请开通后使用该服务。</string>
     <string name="trade_account_error">您当前有服务费未缴纳，无法使用交易、增值服务、出金等功能，请先进行欠费补缴后再使用。</string>
@@ -199,6 +194,10 @@
     <string name="transaction_popupwindow_entrust_amount">委托数量</string>
     <string name="transaction_popupwindow_entrust_varieties">委托品种</string>
     <string name="transaction_popupwindow_type">交易类型</string>
+    <string name="transaction_popupwindow_time">交易时间</string>
+    <string name="transaction_popupwindow_trade_price">交易价格</string>
+    <string name="transaction_popupwindow_surplus_amount">剩余数量</string>
+    <string name="transaction_popupwindow_trade_status">交易状态</string>
     <string name="transaction_create_condition_sheet">创建条件单</string>
     <string name="transaction_hidden_value">****</string>
     <string name="transaction_total_equity">总权益(元)</string>
@@ -330,6 +329,9 @@
     <string name="transaction_current_inmoney">当期入金</string>
     <string name="transaction_fee">交易手续费</string>
     <string name="transaction_deferred_charges">递延费</string>
+    <string name="transaction_historical_entrust_query">历史委托与成交查询</string>
+    <string name="transaction_entrust_empty">当前无委托</string>
+    <string name="transaction_cancel_order">撤单</string>
 
     <!-- Personal -->
     <string name="personal_login">登录/注册</string>

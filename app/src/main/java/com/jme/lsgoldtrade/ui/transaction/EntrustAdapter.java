@@ -40,6 +40,7 @@ public class EntrustAdapter extends BaseQuickAdapter<OrderPageVo.OrderBean, Base
         String date = item.getTradeDate();
         String time = item.getDeclareTime();
         int bsFlag = item.getBsFlag();
+        int status = item.getStatus();
 
         if (mType.equals("History"))
             helper.setGone(R.id.tv_date, mList.get(helper.getAdapterPosition()));
@@ -55,6 +56,9 @@ public class EntrustAdapter extends BaseQuickAdapter<OrderPageVo.OrderBean, Base
                 .setTextColor(R.id.tv_price, ContextCompat.getColor(mContext, MarketUtil.getTradeDirectionColor(bsFlag)))
                 .setText(R.id.tv_entrust, String.valueOf(item.getEntrustNumber()))
                 .setText(R.id.tv_surplus, String.valueOf(item.getRemnantNumber()))
-                .setText(R.id.tv_state, MarketUtil.getEntrustState(item.getStatus()));
+                .setText(R.id.tv_state, MarketUtil.getEntrustState(status))
+                .setGone(R.id.tv_state, status == 3 || status == 4 ? false : true)
+                .setGone(R.id.btn_cancel_order, status == 3 || status == 4 ? true : false)
+                .addOnClickListener(R.id.btn_cancel_order);
     }
 }

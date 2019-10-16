@@ -622,6 +622,8 @@ public class HoldPositionsFragment extends JMEBaseFragment implements OnRefreshL
         bFlag = true;
 
         getMarket();
+
+        RxBus.getInstance().post(Constants.RxBusConst.RXBUS_TRANSACTION_HOLDPOSITIONS_REFRESH, null);
     }
 
     public class ClickHandlers {

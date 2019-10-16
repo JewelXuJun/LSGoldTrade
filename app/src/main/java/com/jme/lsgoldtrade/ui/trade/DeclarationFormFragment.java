@@ -37,6 +37,7 @@ import com.jme.lsgoldtrade.domain.TenSpeedVo;
 import com.jme.lsgoldtrade.service.ManagementService;
 import com.jme.lsgoldtrade.service.MarketService;
 import com.jme.lsgoldtrade.service.TradeService;
+import com.jme.lsgoldtrade.ui.transaction.CancelOrderPopUpWindow;
 import com.jme.lsgoldtrade.view.PlaceOrderPopupWindow;
 import com.jme.lsgoldtrade.view.TransactionMessagePopUpWindow;
 import com.jme.lsgoldtrade.util.MarketUtil;
@@ -256,7 +257,7 @@ public class DeclarationFormFragment extends JMEBaseFragment implements FChart.O
         mTabTitles[0] = mContext.getResources().getString(R.string.transaction_hold_positions);
         mTabTitles[1] = mContext.getResources().getString(R.string.trade_entrust);
         mTabTitles[2] = mContext.getResources().getString(R.string.trade_deal);
-        mTabTitles[3] = mContext.getResources().getString(R.string.trade_cancel_order);
+        mTabTitles[3] = mContext.getResources().getString(R.string.transaction_cancel_order);
 
         mFragmentArrays = new Fragment[4];
         mFragmentArrays[0] = new ItemHoldPositionFragment();

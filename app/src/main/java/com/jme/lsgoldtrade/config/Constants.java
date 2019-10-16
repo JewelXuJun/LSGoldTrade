@@ -128,6 +128,7 @@ public class Constants {
         public static final String RXBUS_ELECTRONICCARD_UPDATE = "electronicCardUpdate";
         public static final String RXBUS_ELECTRONICCARD_INOUT_SUCCESS = "electronicCardInoutSuccess";
         public static final String RXBUS_TRANSACTION_EVENING_UP = "transactionEveningUp";
+        public static final String RXBUS_TRANSACTION_HOLDPOSITIONS_REFRESH = "transactionHoldPositionsRefresh";
     }
 
     public static final class Msg {
