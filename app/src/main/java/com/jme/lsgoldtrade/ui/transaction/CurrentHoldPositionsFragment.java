@@ -3,8 +3,10 @@ package com.jme.lsgoldtrade.ui.transaction;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.text.TextUtils;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.TextView;
 
-import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.jme.common.network.DTRequest;
 import com.jme.common.network.Head;
 import com.jme.common.util.RxBus;
@@ -15,13 +17,15 @@ import com.jme.lsgoldtrade.databinding.FragmentCurrentHoldPositionsBinding;
 import com.jme.lsgoldtrade.domain.FiveSpeedVo;
 import com.jme.lsgoldtrade.domain.PositionVo;
 
+import java.util.ArrayList;
 import java.util.List;
 
-public class CurrentHoldPositionsFragment extends JMEBaseFragment implements BaseQuickAdapter.RequestLoadMoreListener {
+public class CurrentHoldPositionsFragment extends JMEBaseFragment {
 
     private FragmentCurrentHoldPositionsBinding mBinding;
 
     private HoldPositionsAdapter mAdapter;
+    private View mEmptyView;
 
     @Override
     protected int getContentViewId() {
@@ -47,8 +51,6 @@ public class CurrentHoldPositionsFragment extends JMEBaseFragment implements Bas
     @Override
     protected void initListener() {
         super.initListener();
-
-        mAdapter.setOnLoadMoreListener(this, mBinding.recyclerView);
 
         mAdapter.setOnItemChildClickListener((adapter, view, position) -> {
             switch (view.getId()) {
@@ -76,6 +78,17 @@ public class CurrentHoldPositionsFragment extends JMEBaseFragment implements Bas
         super.initBinding();
 
         mBinding = (FragmentCurrentHoldPositionsBinding) mBindingUtil;
+        mBinding.setHandlers(new ClickHandlers());
+    }
+
+    private View getEmptyView() {
+        if (null == mEmptyView)
+            mEmptyView = LayoutInflater.from(mContext).inflate(R.layout.layout_empty_margin_small, null);
+
+        TextView tv_empty = mEmptyView.findViewById(R.id.tv_empty);
+        tv_empty.setText(R.string.transaction_hold_positions_empty);
+
+        return mEmptyView;
     }
 
     public void setFloatingList(List<String> list) {
@@ -87,15 +100,22 @@ public class CurrentHoldPositionsFragment extends JMEBaseFragment implements Bas
     }
 
     public void setCurrentHoldPositionsData(List<PositionVo> positionVoList) {
-        mAdapter.setNewData(positionVoList);
+        if (null == positionVoList) {
+            mAdapter.setEmptyView(getEmptyView());
+        } else {
+            List<PositionVo> positionVos = new ArrayList<>();
 
-        if (null != positionVoList)
-            mAdapter.loadMoreComplete();
-    }
+            for (PositionVo positionVo : positionVoList) {
+                if (null != positionVo && positionVo.getPosition() != 0) {
+                    positionVos.add(positionVo);
+                }
+            }
 
-    public void addCurrentHoldPositionsData(List<PositionVo> positionVoList) {
-        mAdapter.addData(positionVoList);
-        mAdapter.loadMoreComplete();
+            if (0 == positionVos.size())
+                mAdapter.setEmptyView(getEmptyView());
+            else
+                mAdapter.setNewData(positionVoList);
+        }
     }
 
     public List<PositionVo> getData() {
@@ -107,8 +127,11 @@ public class CurrentHoldPositionsFragment extends JMEBaseFragment implements Bas
         super.DataReturn(request, head, response);
     }
 
-    @Override
-    public void onLoadMoreRequested() {
+    public class ClickHandlers {
+
+        public void onClickGoToTransaction() {
+
+        }
 
     }
 

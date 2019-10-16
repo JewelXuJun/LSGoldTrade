@@ -63,6 +63,7 @@ public class HoldPositionsFragment extends JMEBaseFragment implements OnRefreshL
     private String[] mTabTitles;
     private List<String> mList;
     private List<FiveSpeedVo> mFiveSpeedVoList;
+    private List<PositionVo> mPositionVoList;
 
     private CurrentHoldPositionsFragment mCurrentHoldPositionsFragment;
     private CurrentEntrustFragment mCurrentEntrustFragment;
@@ -116,6 +117,7 @@ public class HoldPositionsFragment extends JMEBaseFragment implements OnRefreshL
 
         bHiddenStatus = SharedPreUtils.getBoolean(mContext, SharedPreUtils.Key_Transaction_Hidden_Status, false);
         mList = new ArrayList<>();
+        mPositionVoList = new ArrayList<>();
         mCurrentHoldPositionsFragment = new CurrentHoldPositionsFragment();
         mCurrentEntrustFragment = new CurrentEntrustFragment();
 
@@ -215,11 +217,13 @@ public class HoldPositionsFragment extends JMEBaseFragment implements OnRefreshL
         bFlag = true;
         mCurrentPage = 1;
         mPagingKey = "";
+        mList.clear();
+        mPositionVoList.clear();
 
         mHandler.removeMessages(Constants.Msg.MSG_TRADE_POSITION_UPDATE_DATA);
         mHandler.removeMessages(Constants.Msg.MSG_TRADE_POSITION_UPDATE_ACCOUNT_DATA);
 
-        position();
+        getPosition();
     }
 
     private void initRxBus() {
@@ -410,7 +414,7 @@ public class HoldPositionsFragment extends JMEBaseFragment implements OnRefreshL
         sendRequest(TradeService.getInstance().account, params, enable);
     }
 
-    private void position() {
+    private void getPosition() {
         String accountID = mUser.getAccountID();
 
         if (TextUtils.isEmpty(accountID))
@@ -486,63 +490,40 @@ public class HoldPositionsFragment extends JMEBaseFragment implements OnRefreshL
                     }
 
                     if (null == positionPageVo) {
-                        mBinding.swipeRefreshLayout.finishRefresh(true);
-
                         calculateValue();
                     } else {
                         bHasNext = positionPageVo.isHasNext();
                         mPagingKey = positionPageVo.getPagingKey();
                         List<PositionVo> positionVoList = positionPageVo.getPositionList();
 
-                        mList.clear();
-
                         if (null != positionVoList && 0 != positionVoList.size()) {
                             for (PositionVo positionVo : positionVoList) {
-                                if (null != positionVo)
+                                if (null != positionVo) {
                                     mList.add(MarketUtil.getPriceValue(positionVo.getFloatProfit()));
+                                    mPositionVoList.add(positionVo);
+                                }
                             }
-                        }
-
-                        if (bFlag) {
-                            calculateFloat(mFiveSpeedVoList, mCurrentHoldPositionsFragment.getData());
-                        } else {
-                            mCurrentHoldPositionsFragment.setFloatingList(mList);
-
-                            calculateValue();
                         }
 
                         if (bHasNext) {
-                            if (mCurrentPage == 1)
-                                mCurrentHoldPositionsFragment.setCurrentHoldPositionsData(positionVoList);
-                            else
-                                mCurrentHoldPositionsFragment.addCurrentHoldPositionsData(positionVoList);
-
-                            mBinding.swipeRefreshLayout.finishRefresh(true);
+                            getPosition();
                         } else {
-                            if (mCurrentPage == 1) {
-                                if (null == positionVoList || 0 == positionVoList.size())
-                                    mCurrentHoldPositionsFragment.setCurrentHoldPositionsData(null);
-                                else
-                                    mCurrentHoldPositionsFragment.setCurrentHoldPositionsData(positionVoList);
-                            } else {
-                                mCurrentHoldPositionsFragment.addCurrentHoldPositionsData(positionVoList);
-                            }
+                            mCurrentHoldPositionsFragment.setFloatingList(mList);
+                            mCurrentHoldPositionsFragment.setCurrentHoldPositionsData(positionVoList);
 
-                            mBinding.swipeRefreshLayout.finishRefresh(true);
+                            calculateValue();
+
+                            if (bFlag) {
+                                bFlag = false;
+
+                                mHandler.sendEmptyMessageDelayed(Constants.Msg.MSG_TRADE_POSITION_UPDATE_DATA, 0);
+                                mHandler.sendEmptyMessageDelayed(Constants.Msg.MSG_TRADE_POSITION_UPDATE_ACCOUNT_DATA, AppConfig.Minute);
+                            }
                         }
                     }
-
-                    if (bFlag) {
-                        bFlag = false;
-
-                        mHandler.sendEmptyMessageDelayed(Constants.Msg.MSG_TRADE_POSITION_UPDATE_DATA, 0);
-                        mHandler.sendEmptyMessageDelayed(Constants.Msg.MSG_TRADE_POSITION_UPDATE_ACCOUNT_DATA, AppConfig.Minute);
-                    }
-                } else {
-                    position();
-
-                    mBinding.swipeRefreshLayout.finishRefresh(false);
                 }
+
+                mBinding.swipeRefreshLayout.finishRefresh(false);
 
                 break;
             case "GetFiveSpeedQuotes":

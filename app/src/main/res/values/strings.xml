@@ -330,6 +330,8 @@
     <string name="transaction_fee">交易手续费</string>
     <string name="transaction_deferred_charges">递延费</string>
     <string name="transaction_historical_entrust_query">历史委托与成交查询</string>
+    <string name="transaction_goto">去交易</string>
+    <string name="transaction_hold_positions_empty">当前无持仓</string>
     <string name="transaction_entrust_empty">当前无委托</string>
     <string name="transaction_cancel_order">撤单</string>
 

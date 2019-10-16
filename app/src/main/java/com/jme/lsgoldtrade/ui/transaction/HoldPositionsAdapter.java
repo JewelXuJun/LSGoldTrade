@@ -23,8 +23,6 @@ public class HoldPositionsAdapter extends BaseQuickAdapter<PositionVo, BaseViewH
     private List<String> mList;
     private List<FiveSpeedVo> mFiveSpeedVos;
 
-    private String mLastPrice;
-
     public HoldPositionsAdapter(Context context, @Nullable List<PositionVo> data) {
         super(R.layout.item_hold_positions, data);
 
@@ -70,8 +68,7 @@ public class HoldPositionsAdapter extends BaseQuickAdapter<PositionVo, BaseViewH
             }
         }
 
-        helper.setGone(R.id.layout_item, position == 0 ? false : true)
-                .setText(R.id.tv_pupil, type)
+        helper.setText(R.id.tv_pupil, type)
                 .setTextColor(R.id.tv_pupil, type.equals("多") ? ContextCompat.getColor(mContext, R.color.common_font_increase)
                         : ContextCompat.getColor(mContext, R.color.common_font_decrease))
                 .setText(R.id.tv_contract, contractID)
