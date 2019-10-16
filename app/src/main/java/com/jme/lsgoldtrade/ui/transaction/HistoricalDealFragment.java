@@ -291,7 +291,7 @@ public class HistoricalDealFragment extends JMEBaseFragment implements OnRefresh
 
                 dealhispage(true);
             } else {
-                mAdapter.loadMoreEnd();
+                mAdapter.loadMoreEnd(true);
             }
         }, 0);
     }

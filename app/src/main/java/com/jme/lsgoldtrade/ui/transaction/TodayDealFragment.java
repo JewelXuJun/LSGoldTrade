@@ -164,7 +164,7 @@ public class TodayDealFragment extends JMEBaseFragment implements OnRefreshListe
 
                 dealpage(true);
             } else {
-                mAdapter.loadMoreEnd();
+                mAdapter.loadMoreEnd(true);
             }
         }, 0);
     }

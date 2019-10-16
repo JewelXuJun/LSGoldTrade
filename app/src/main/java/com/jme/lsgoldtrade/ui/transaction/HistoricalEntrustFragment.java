@@ -5,6 +5,8 @@ import android.app.DatePickerDialog;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.LinearLayoutManager;
+import android.text.TextUtils;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 
@@ -18,6 +20,7 @@ import com.jme.lsgoldtrade.databinding.FragmentHistoricalEntrustBinding;
 import com.jme.lsgoldtrade.domain.OrderHisPageVo;
 import com.jme.lsgoldtrade.domain.OrderPageVo;
 import com.jme.lsgoldtrade.service.TradeService;
+import com.jme.lsgoldtrade.util.MarketUtil;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 
@@ -31,12 +34,6 @@ public class HistoricalEntrustFragment extends JMEBaseFragment implements OnRefr
 
     public FragmentHistoricalEntrustBinding mBinding;
 
-    private EntrustAdapter mAdapter;
-    private DatePickerDialog mDatePickerDialog;
-    private View mEmptyView;
-
-    private List<Boolean> mList;
-
     private long mStartTime = 0;
     private long mEndTime = 0;
     private int mYear;
@@ -46,6 +43,13 @@ public class HistoricalEntrustFragment extends JMEBaseFragment implements OnRefr
     private boolean bHasNext = false;
     private String mDate = "";
     private String mPagingKey = "";
+
+    private List<Boolean> mList;
+
+    private EntrustAdapter mAdapter;
+    private DatePickerDialog mDatePickerDialog;
+    private View mEmptyView;
+    private CancelOrderPopUpWindow mCancelOrderPopUpWindow;
 
     private static final int TIME_START = 0;
     private static final int TIME_END = 1;
@@ -58,6 +62,8 @@ public class HistoricalEntrustFragment extends JMEBaseFragment implements OnRefr
     @Override
     protected void initView() {
         super.initView();
+
+        mCancelOrderPopUpWindow = new CancelOrderPopUpWindow(mContext);
     }
 
     @Override
@@ -81,6 +87,35 @@ public class HistoricalEntrustFragment extends JMEBaseFragment implements OnRefr
 
         mBinding.swipeRefreshLayout.setOnRefreshListener(this);
         mAdapter.setOnLoadMoreListener(this, mBinding.recyclerView);
+
+        mAdapter.setOnItemChildClickListener((adapter, view, position) -> {
+            switch (view.getId()) {
+                case R.id.btn_cancel_order:
+                    OrderPageVo.OrderBean orderBean = (OrderPageVo.OrderBean) adapter.getItem(position);
+
+                    if (null == orderBean)
+                        return;
+
+                    if (null != mCancelOrderPopUpWindow && !mCancelOrderPopUpWindow.isShowing()) {
+                        String time = orderBean.getDeclareTime();
+                        String contractId = orderBean.getContractId();
+
+                        mCancelOrderPopUpWindow.setData(contractId, TextUtils.isEmpty(time) ? "" : time.replace(".", ":"),
+                                MarketUtil.getTradeDirection(orderBean.getBsFlag()) + MarketUtil.getOCState(orderBean.getOcFlag()),
+                                orderBean.getMatchPriceStr(), String.valueOf(orderBean.getEntrustNumber()),
+                                String.valueOf(orderBean.getRemnantNumber()), MarketUtil.getEntrustState(orderBean.getStatus()),
+                                (View) -> mCancelOrderPopUpWindow.dismiss(),
+                                (View) -> {
+                                    revocateorder(contractId, String.valueOf(orderBean.getOrderNo()));
+
+                                    mCancelOrderPopUpWindow.dismiss();
+                                });
+                        mCancelOrderPopUpWindow.showAtLocation(mBinding.recyclerView, Gravity.CENTER, 0, 0);
+                    }
+
+                    break;
+            }
+        });
     }
 
     @Override
@@ -211,6 +246,18 @@ public class HistoricalEntrustFragment extends JMEBaseFragment implements OnRefr
         sendRequest(TradeService.getInstance().orderhispage, params, enable);
     }
 
+    private void revocateorder(String contractId, String orderNo) {
+        if (null == mUser || !mUser.isLogin())
+            return;
+
+        HashMap<String, String> params = new HashMap<>();
+        params.put("contractId", contractId);
+        params.put("accountId", mUser.getAccountID());
+        params.put("orderNo", orderNo);
+
+        sendRequest(TradeService.getInstance().revocateorder, params, true);
+    }
+
     @Override
     protected void DataReturn(DTRequest request, Head head, Object response) {
         super.DataReturn(request, head, response);
@@ -277,6 +324,13 @@ public class HistoricalEntrustFragment extends JMEBaseFragment implements OnRefr
                 }
 
                 break;
+            case "RevocateOrder":
+                if (head.isSuccess())
+                    showShortToast(R.string.trade_cancel_order_success);
+
+                initOrderHisPage(true);
+
+                break;
         }
     }
 
@@ -288,7 +342,7 @@ public class HistoricalEntrustFragment extends JMEBaseFragment implements OnRefr
 
                 orderhispage(true);
             } else {
-                mAdapter.loadMoreEnd();
+                mAdapter.loadMoreEnd(true);
             }
         }, 0);
     }
