@@ -7,6 +7,7 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.text.TextUtils;
 import android.view.Gravity;
+import android.widget.Toast;
 
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.jme.common.network.DTRequest;
@@ -22,6 +23,7 @@ import com.jme.lsgoldtrade.config.AppConfig;
 import com.jme.lsgoldtrade.config.Constants;
 import com.jme.lsgoldtrade.databinding.FragmentHoldPositionsBinding;
 import com.jme.lsgoldtrade.domain.AccountVo;
+import com.jme.lsgoldtrade.domain.ContractInfoVo;
 import com.jme.lsgoldtrade.domain.FiveSpeedVo;
 import com.jme.lsgoldtrade.domain.PositionPageVo;
 import com.jme.lsgoldtrade.domain.PositionVo;
@@ -29,6 +31,7 @@ import com.jme.lsgoldtrade.service.ManagementService;
 import com.jme.lsgoldtrade.service.MarketService;
 import com.jme.lsgoldtrade.service.TradeService;
 import com.jme.lsgoldtrade.util.MarketUtil;
+import com.jme.lsgoldtrade.view.ConfirmPopupwindow;
 import com.jme.lsgoldtrade.view.ConfirmSimplePopupwindow;
 import com.jme.lsgoldtrade.view.TransactionMessagePopUpWindow;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
@@ -71,6 +74,8 @@ public class HoldPositionsFragment extends JMEBaseFragment implements OnRefreshL
     private AccountVo mAccountVo;
     private TransactionMessagePopUpWindow mTransactionMessagePopUpWindow;
     private ConfirmSimplePopupwindow mConfirmSimplePopupwindow;
+    private EveningUpPopupWindow mEveningUpPopupWindow;
+    private ConfirmPopupwindow mConfirmPopupwindow;
     private Subscription mRxbus;
 
     private Handler mHandler = new Handler() {
@@ -109,6 +114,8 @@ public class HoldPositionsFragment extends JMEBaseFragment implements OnRefreshL
 
         mTransactionMessagePopUpWindow = new TransactionMessagePopUpWindow(mContext);
         mConfirmSimplePopupwindow = new ConfirmSimplePopupwindow(mContext);
+        mEveningUpPopupWindow = new EveningUpPopupWindow(mContext);
+        mConfirmPopupwindow = new ConfirmPopupwindow(mContext);
     }
 
     @Override
@@ -247,6 +254,14 @@ public class HoldPositionsFragment extends JMEBaseFragment implements OnRefreshL
 
                     break;
                 case Constants.RxBusConst.RXBUS_TRANSACTION_EVENING_UP:
+                    Object object = message.getObject2();
+
+                    PositionVo positionVo = (PositionVo) object;
+
+                    if (null == positionVo)
+                        return;
+
+                    showEveningUpPopupWindow(positionVo);
 
                     break;
             }
@@ -398,6 +413,74 @@ public class HoldPositionsFragment extends JMEBaseFragment implements OnRefreshL
         }
     }
 
+    private void showEveningUpPopupWindow(PositionVo positionVo) {
+        String contractID = positionVo.getContractId();
+
+        if (TextUtils.isEmpty(contractID) || null == mContract)
+            return;
+
+        ContractInfoVo contractInfoVo = mContract.getContractInfoFromID(contractID);
+
+        if (null == contractInfoVo)
+            return;
+
+        if (null == mFiveSpeedVoList || 0 == mFiveSpeedVoList.size())
+            return;
+
+        FiveSpeedVo fiveSpeedVo = null;
+
+        for (FiveSpeedVo fiveSpeedVoValue : mFiveSpeedVoList) {
+            if (null != fiveSpeedVoValue && fiveSpeedVoValue.getContractId().equals(contractID))
+                fiveSpeedVo = fiveSpeedVoValue;
+        }
+
+        if (null == fiveSpeedVo)
+            return;
+
+        if (null != mEveningUpPopupWindow && !mEveningUpPopupWindow.isShowing() && null != contractInfoVo) {
+            String lowerLimitPrice = fiveSpeedVo.getLowerLimitPrice();
+            String highLimitPrice = fiveSpeedVo.getHighLimitPrice();
+            String type = positionVo.getType();
+            long minOrderQty = contractInfoVo.getMinOrderQty();
+            long maxOrderQty = contractInfoVo.getMaxOrderQty();
+            long maxHoldQty = contractInfoVo.getMaxHoldQty();
+            long maxAmount = positionVo.getPosition();
+
+            mEveningUpPopupWindow.setData(mUser.getAccount(), contractID,
+                    type.equals("多") ? fiveSpeedVo.getFiveBidLists().get(0)[1] : fiveSpeedVo.getFiveAskLists().get(4)[1],
+                    type, new BigDecimal(contractInfoVo.getMinPriceMove()).divide(new BigDecimal(100)).floatValue(),
+                    lowerLimitPrice, highLimitPrice, minOrderQty, maxOrderQty, maxHoldQty, maxAmount,
+                    (view) -> {
+                        String price = mEveningUpPopupWindow.getPrice();
+                        String amount = mEveningUpPopupWindow.getAmount();
+
+                        if (TextUtils.isEmpty(price) || price.equals(mContext.getResources().getString(R.string.text_no_data_default))) {
+                            showShortToast(R.string.transaction_price_error);
+                        } else if (new BigDecimal(price).compareTo(new BigDecimal(lowerLimitPrice)) == -1) {
+                            showShortToast(R.string.transaction_limit_down_price_error);
+                        } else if (new BigDecimal(price).compareTo(new BigDecimal(highLimitPrice)) == 1) {
+                            showShortToast(R.string.transaction_limit_up_price_error);
+                        } else if (TextUtils.isEmpty(amount)) {
+                            showShortToast(R.string.transaction_number_error);
+                        } else if (new BigDecimal(amount).compareTo(new BigDecimal(0)) == 0) {
+                            showShortToast(R.string.transaction_number_error_zero);
+                        } else if (minOrderQty != -1 && new BigDecimal(amount).compareTo(new BigDecimal(minOrderQty)) == -1) {
+                            showShortToast(R.string.transaction_limit_min_amount_error);
+                        } else if (maxOrderQty == -1 && new BigDecimal(amount).compareTo(new BigDecimal(maxHoldQty == -1 ? maxAmount : Math.min(maxAmount, maxHoldQty))) == 1) {
+                            Toast.makeText(mContext, R.string.transaction_limit_max_amount_error_canbuy, Toast.LENGTH_SHORT).show();
+                        } else if (maxOrderQty != -1 && new BigDecimal(amount).compareTo(new BigDecimal(Math.min(maxAmount, maxOrderQty))) == 1) {
+                            Toast.makeText(mContext, R.string.transaction_limit_max_amount_error_canbuy, Toast.LENGTH_SHORT).show();
+                        } else {
+                            limitOrder(contractID, mEveningUpPopupWindow.getPrice(),
+                                    mEveningUpPopupWindow.getAmount(), positionVo.getType().equals("多") ? 2 : 1, 1);
+
+                            mEveningUpPopupWindow.dismiss();
+                        }
+                    });
+            mEveningUpPopupWindow.showAtLocation(mBinding.tvRiskRate, Gravity.BOTTOM, 0, 0);
+        }
+    }
+
     private long getTimeInterval() {
         return NetWorkUtils.isWifiConnected(mContext) ? AppConfig.TimeInterval_WiFi : AppConfig.TimeInterval_NetWork;
     }
@@ -440,6 +523,22 @@ public class HoldPositionsFragment extends JMEBaseFragment implements OnRefreshL
 
     private void getStatus() {
         sendRequest(ManagementService.getInstance().getStatus, new HashMap<>(), true);
+    }
+
+    private void limitOrder(String contractId, String price, String amount, int bsFlag, int ocFlag) {
+        if (null == mUser || !mUser.isLogin())
+            return;
+
+        HashMap<String, String> params = new HashMap<>();
+        params.put("contractId", contractId);
+        params.put("accountId", mUser.getAccountID());
+        params.put("entrustPrice", String.valueOf(new BigDecimal(price).multiply(new BigDecimal(100)).longValue()));
+        params.put("entrustNumber", amount);
+        params.put("bsFlag", String.valueOf(bsFlag));
+        params.put("ocFlag", String.valueOf(ocFlag));
+        params.put("tradingType", "0");
+
+        sendRequest(TradeService.getInstance().limitOrder, params, true);
     }
 
     @Override
@@ -508,8 +607,8 @@ public class HoldPositionsFragment extends JMEBaseFragment implements OnRefreshL
                         if (bHasNext) {
                             getPosition();
                         } else {
-                            mCurrentHoldPositionsFragment.setFloatingList(mList);
                             mCurrentHoldPositionsFragment.setCurrentHoldPositionsData(positionVoList);
+                            mCurrentHoldPositionsFragment.setFloatingList(mList);
 
                             calculateValue();
 
@@ -591,6 +690,23 @@ public class HoldPositionsFragment extends JMEBaseFragment implements OnRefreshL
                         }
                     } else {
                         ARouter.getInstance().build(Constants.ARouterUriConst.ENTRUSTRISKMANAGEMENT).navigation();
+                    }
+                }
+
+                break;
+            case "LimitOrder":
+                if (head.isSuccess()) {
+                    showShortToast(R.string.transaction_success);
+
+                    initPosition();
+                } else {
+                    if (head.getMsg().contains("可用资金不足")) {
+                        if (null != mConfirmPopupwindow && !mConfirmPopupwindow.isShowing()) {
+                            mConfirmPopupwindow.setData(mContext.getResources().getString(R.string.transaction_money_error),
+                                    mContext.getResources().getString(R.string.transaction_money_in),
+                                    (view) -> ARouter.getInstance().build(Constants.ARouterUriConst.CAPITALTRANSFER).navigation());
+                            mConfirmPopupwindow.showAtLocation(mBinding.tvRiskRate, Gravity.CENTER, 0, 0);
+                        }
                     }
                 }
 

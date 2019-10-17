@@ -32,6 +32,7 @@ public class CurrentEntrustFragment extends JMEBaseFragment implements BaseQuick
 
     private int mCurrentPage = 1;
     private boolean bHasNext = false;
+    private boolean bVisibleToUser = false;
     private String mPagingKey = "";
 
     private EntrustAdapter mAdapter;
@@ -60,8 +61,6 @@ public class CurrentEntrustFragment extends JMEBaseFragment implements BaseQuick
         mBinding.recyclerView.setHasFixedSize(false);
         mBinding.recyclerView.setLayoutManager(new LinearLayoutManager(mContext));
         mBinding.recyclerView.setAdapter(mAdapter);
-
-        initOrderPage(true);
     }
 
     @Override
@@ -110,6 +109,34 @@ public class CurrentEntrustFragment extends JMEBaseFragment implements BaseQuick
         mBinding.setHandlers(new ClickHandlers());
     }
 
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        bVisibleToUser = isVisibleToUser;
+
+        super.setUserVisibleHint(isVisibleToUser);
+
+        if (null != mBinding && bVisibleToUser)
+            initOrderPage(true);
+    }
+
+    @Override
+    public void onHiddenChanged(boolean hidden) {
+        bVisibleToUser = !hidden;
+
+        super.onHiddenChanged(hidden);
+
+        if (hidden)
+            initOrderPage(true);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        if (bVisibleToUser)
+            initOrderPage(true);
+    }
+
     private void initRxBus() {
         mRxbus = RxBus.getInstance().toObserverable(RxBus.Message.class).subscribe(message -> {
             String callType = message.getObject().toString();
@@ -147,6 +174,8 @@ public class CurrentEntrustFragment extends JMEBaseFragment implements BaseQuick
 
         TextView tv_empty = mEmptyView.findViewById(R.id.tv_empty);
         tv_empty.setText(R.string.transaction_entrust_empty);
+
+        mBinding.tvQuery.setVisibility(View.VISIBLE);
 
         return mEmptyView;
     }
@@ -248,7 +277,7 @@ public class CurrentEntrustFragment extends JMEBaseFragment implements BaseQuick
             if (bHasNext) {
                 mCurrentPage++;
 
-                orderpage(true);
+                orderpage(false);
             } else {
                 mAdapter.loadMoreEnd(true);
 

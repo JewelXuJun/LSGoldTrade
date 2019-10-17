@@ -235,9 +235,9 @@ public class MarketTradePopupWindow extends JMEBasePopupWindow {
         else if (mMinOrderQty != -1 && new BigDecimal(amount).compareTo(new BigDecimal(mMinOrderQty)) == -1)
             Toast.makeText(mContext, R.string.transaction_limit_min_amount_error, Toast.LENGTH_SHORT).show();
         else if (mMaxOrderQty == -1 && new BigDecimal(amount).compareTo(new BigDecimal(mMaxHoldQty == -1 ? mMaxAmount : Math.min(mMaxAmount, mMaxHoldQty))) == 1)
-            Toast.makeText(mContext, R.string.trade_limit_max_amount_error_canbuy, Toast.LENGTH_SHORT).show();
+            Toast.makeText(mContext, R.string.transaction_limit_max_amount_error_canbuy, Toast.LENGTH_SHORT).show();
         else if (mMaxOrderQty != -1 && new BigDecimal(amount).compareTo(new BigDecimal(Math.min(mMaxAmount, mMaxOrderQty))) == 1)
-            Toast.makeText(mContext, R.string.trade_limit_max_amount_error_canbuy, Toast.LENGTH_SHORT).show();
+            Toast.makeText(mContext, R.string.transaction_limit_max_amount_error_canbuy, Toast.LENGTH_SHORT).show();
         else
             sendData(price, amount);
     }
@@ -329,12 +329,12 @@ public class MarketTradePopupWindow extends JMEBasePopupWindow {
 
             if (mMaxOrderQty == -1) {
                 if (new BigDecimal(value).compareTo(new BigDecimal(mMaxHoldQty == -1 ? mMaxAmount : Math.min(mMaxAmount, mMaxHoldQty))) == 1)
-                    Toast.makeText(mContext, R.string.trade_limit_max_amount_error_canbuy, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(mContext, R.string.transaction_limit_max_amount_error_canbuy, Toast.LENGTH_SHORT).show();
                 else
                     mBinding.etAmount.setText(String.valueOf(value));
             } else {
                 if (new BigDecimal(value).compareTo(new BigDecimal(Math.min(mMaxAmount, mMaxOrderQty))) == 1)
-                    Toast.makeText(mContext, R.string.trade_limit_max_amount_error_canbuy, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(mContext, R.string.transaction_limit_max_amount_error_canbuy, Toast.LENGTH_SHORT).show();
                 else
                     mBinding.etAmount.setText(String.valueOf(value));
             }

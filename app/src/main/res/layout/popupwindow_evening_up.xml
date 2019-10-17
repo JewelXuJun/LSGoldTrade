@@ -5,7 +5,7 @@
 
         <variable
             name="handlers"
-            type="com.jme.lsgoldtrade.view.EveningUpPopupWindow.ClickHandlers" />
+            type="com.jme.lsgoldtrade.ui.transaction.EveningUpPopupWindow.ClickHandlers" />
 
     </data>
 
@@ -25,7 +25,7 @@
                 android:layout_centerInParent="true"
                 android:paddingTop="@dimen/common_area_margin"
                 android:paddingBottom="@dimen/common_area_margin"
-                android:text="@string/trade_evening_up_confirm"
+                android:text="@string/transaction_evening_up_confirm"
                 android:textColor="@color/black_deep"
                 android:textSize="@dimen/common_font_size" />
 

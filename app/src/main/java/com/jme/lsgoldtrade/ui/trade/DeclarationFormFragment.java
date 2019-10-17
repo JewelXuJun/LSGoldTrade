@@ -42,7 +42,7 @@ import com.jme.lsgoldtrade.view.PlaceOrderPopupWindow;
 import com.jme.lsgoldtrade.view.TransactionMessagePopUpWindow;
 import com.jme.lsgoldtrade.util.MarketUtil;
 import com.jme.lsgoldtrade.view.ConfirmPopupwindow;
-import com.jme.lsgoldtrade.view.EveningUpPopupWindow;
+import com.jme.lsgoldtrade.ui.transaction.EveningUpPopupWindow;
 
 import java.math.BigDecimal;
 import java.util.HashMap;
@@ -627,9 +627,9 @@ public class DeclarationFormFragment extends JMEBaseFragment implements FChart.O
                                     } else if (minOrderQty != -1 && new BigDecimal(amount).compareTo(new BigDecimal(minOrderQty)) == -1) {
                                         showShortToast(R.string.transaction_limit_min_amount_error);
                                     } else if (mMaxOrderQty == -1 && new BigDecimal(amount).compareTo(new BigDecimal(mMaxHoldQty == -1 ? maxAmount : Math.min(maxAmount, mMaxHoldQty))) == 1) {
-                                        Toast.makeText(mContext, R.string.trade_limit_max_amount_error_canbuy, Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(mContext, R.string.transaction_limit_max_amount_error_canbuy, Toast.LENGTH_SHORT).show();
                                     } else if (mMaxOrderQty != -1 && new BigDecimal(amount).compareTo(new BigDecimal(Math.min(maxAmount, mMaxOrderQty))) == 1) {
-                                        Toast.makeText(mContext, R.string.trade_limit_max_amount_error_canbuy, Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(mContext, R.string.transaction_limit_max_amount_error_canbuy, Toast.LENGTH_SHORT).show();
                                     } else {
                                         limitOrder(mEveningUpContractID, mEveningUpPopupWindow.getPrice(),
                                                 mEveningUpPopupWindow.getAmount(), mPositionVo.getType().equals("多") ? 2 : 1, 1);

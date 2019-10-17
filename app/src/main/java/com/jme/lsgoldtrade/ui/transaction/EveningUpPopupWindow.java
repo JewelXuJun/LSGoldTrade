@@ -1,4 +1,4 @@
-package com.jme.lsgoldtrade.view;
+package com.jme.lsgoldtrade.ui.transaction;
 
 import android.content.Context;
 import android.databinding.DataBindingUtil;
@@ -112,8 +112,8 @@ public class EveningUpPopupWindow extends JMEBasePopupWindow {
                         String highLimitPrice, long minOrderQty, long maxOrderQty, long maxHoldQty, long maxAmount,
                         View.OnClickListener confirmListener) {
         mBinding.tvGoldAccount.setText(account);
-        mBinding.tvBusinessType.setText(type.equals("多") ? mContext.getString(R.string.trade_buy_evening)
-                : mContext.getString(R.string.trade_sale_evening));
+        mBinding.tvBusinessType.setText(type.equals("多") ? mContext.getString(R.string.transaction_buy_evening)
+                : mContext.getString(R.string.transaction_sale_evening));
         mBinding.tvBusinessVarieties.setText(contractID);
         mBinding.etPrice.setText(price);
         mBinding.etAmount.setText(String.valueOf(maxAmount));
@@ -224,12 +224,12 @@ public class EveningUpPopupWindow extends JMEBasePopupWindow {
 
             if (mMaxOrderQty == -1) {
                 if (new BigDecimal(value).compareTo(new BigDecimal(mMaxHoldQty == -1 ? mMaxAmount : Math.min(mMaxAmount, mMaxHoldQty))) == 1)
-                    Toast.makeText(mContext, R.string.trade_limit_max_amount_error_canbuy2, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(mContext, R.string.transaction_limit_max_amount_error_canbuy2, Toast.LENGTH_SHORT).show();
                 else
                     mBinding.etAmount.setText(String.valueOf(value));
             } else {
                 if (new BigDecimal(value).compareTo(new BigDecimal(Math.min(mMaxAmount, mMaxOrderQty))) == 1)
-                    Toast.makeText(mContext, R.string.trade_limit_max_amount_error_canbuy2, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(mContext, R.string.transaction_limit_max_amount_error_canbuy2, Toast.LENGTH_SHORT).show();
                 else
                     mBinding.etAmount.setText(String.valueOf(value));
             }

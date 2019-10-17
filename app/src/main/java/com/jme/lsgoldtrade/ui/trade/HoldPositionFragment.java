@@ -32,7 +32,7 @@ import com.jme.lsgoldtrade.service.TradeService;
 import com.jme.lsgoldtrade.view.TransactionMessagePopUpWindow;
 import com.jme.lsgoldtrade.util.MarketUtil;
 import com.jme.lsgoldtrade.view.ConfirmPopupwindow;
-import com.jme.lsgoldtrade.view.EveningUpPopupWindow;
+import com.jme.lsgoldtrade.ui.transaction.EveningUpPopupWindow;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 
@@ -638,9 +638,9 @@ public class HoldPositionFragment extends JMEBaseFragment implements OnRefreshLi
                                     } else if (minOrderQty != -1 && new BigDecimal(amount).compareTo(new BigDecimal(minOrderQty)) == -1) {
                                         showShortToast(R.string.transaction_limit_min_amount_error);
                                     } else if (maxOrderQty == -1 && new BigDecimal(amount).compareTo(new BigDecimal(maxHoldQty == -1 ? maxAmount : Math.min(maxAmount, maxHoldQty))) == 1) {
-                                        showShortToast(R.string.trade_limit_max_amount_error_canbuy);
+                                        showShortToast(R.string.transaction_limit_max_amount_error_canbuy);
                                     } else if (maxOrderQty != -1 && new BigDecimal(amount).compareTo(new BigDecimal(Math.min(maxAmount, maxOrderQty))) == 1) {
-                                        showShortToast(R.string.trade_limit_max_amount_error_canbuy);
+                                        showShortToast(R.string.transaction_limit_max_amount_error_canbuy);
                                     } else {
                                         limitOrder(mEveningUpContractID, mEveningUpPopupWindow.getPrice(),
                                                 mEveningUpPopupWindow.getAmount(), mPositionVo.getType().equals("多") ? 2 : 1, 1);

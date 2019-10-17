@@ -63,10 +63,7 @@ public class CurrentHoldPositionsFragment extends JMEBaseFragment {
                     if (null == positionVo)
                         return;
 
-                    String contractId = positionVo.getContractId();
-
-                    if (!TextUtils.isEmpty(contractId))
-                        RxBus.getInstance().post(Constants.RxBusConst.RXBUS_TRANSACTION_EVENING_UP, contractId);
+                    RxBus.getInstance().post(Constants.RxBusConst.RXBUS_TRANSACTION_EVENING_UP, positionVo);
 
                     break;
             }
@@ -111,10 +108,10 @@ public class CurrentHoldPositionsFragment extends JMEBaseFragment {
                 }
             }
 
+            mAdapter.setNewData(positionVos);
+
             if (0 == positionVos.size())
                 mAdapter.setEmptyView(getEmptyView());
-            else
-                mAdapter.setNewData(positionVoList);
         }
     }
 
@@ -130,7 +127,7 @@ public class CurrentHoldPositionsFragment extends JMEBaseFragment {
     public class ClickHandlers {
 
         public void onClickGoToTransaction() {
-
+            RxBus.getInstance().post(Constants.RxBusConst.RXBUS_TRANSACTION_PLACE_ORDER, null);
         }
 
     }
