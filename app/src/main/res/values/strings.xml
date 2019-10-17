@@ -519,6 +519,14 @@
     <string name="increment_recharge_current_account_input">请输入充值金额</string>
     <string name="increment_recharge_current_account_hint">请输入>=100元的整数倍</string>
     <string name="increment_recharge_pay">去支付</string>
+    <string name="increment_recharge_type_select">选择支付方式</string>
+    <string name="increment_recharge_type_icbc">工行e支付</string>
+    <string name="increment_recharge_type_icbc_message">推荐工行用户使用</string>
+    <string name="increment_recharge_type_alipay">支付宝</string>
+    <string name="increment_recharge_type_alipay_message">推荐支付宝用户使用</string>
+    <string name="increment_recharge_type_wechat">微信</string>
+    <string name="increment_recharge_type_wechat_message">推荐微信用户使用</string>
+    <string name="increment_recharge_payment">去付款</string>
     <string name="increment_recharge_tips">注意：增值服务充值仅限用于您使用增值服务，非交易资金，用于黄金/白银交易的资金请您前往交易界面操作入金。</string>
 
 </resources>

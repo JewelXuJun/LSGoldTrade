@@ -47,7 +47,7 @@ public class RechargeActivity extends JMEBaseActivity {
 
     private ActivityRechargeBinding mBinding;
 
-    private int payType = 0;    // 支付宝支付-0 微信支付-1
+//    private int payType = 1;    // 支付宝支付-0 微信支付-1
 
     private PaymentHelper mPaymentHelper;
     private IWXAPI wxapi;
@@ -148,15 +148,21 @@ public class RechargeActivity extends JMEBaseActivity {
     }
 
     private void gotoPayment() {
-        if (payType == 0)
+       /* if (payType == 0) {
             alipay();
-        else {
+        } else {
             if (!wxapi.isWXAppInstalled()) {
                 showShortToast("没有安装微信");
+
                 return;
             }
+
             wechatPay();
-        }
+        }*/
+        if (!wxapi.isWXAppInstalled())
+            showShortToast("没有安装微信");
+        else
+            wechatPay();
     }
 
     private void showPaymentBottomDialog() {
@@ -164,32 +170,37 @@ public class RechargeActivity extends JMEBaseActivity {
         View paymentView = View.inflate(this, R.layout.bottom_dialog_payment, null);
 
         ImageView ivCancel = paymentView.findViewById(R.id.iv_cancel);
-        ImageView ivAlipaySelect = paymentView.findViewById(R.id.iv_alipay_select);
         ImageView ivWechatSelect = paymentView.findViewById(R.id.iv_wechat_select);
         RelativeLayout layoutAlipay = paymentView.findViewById(R.id.layout_alipay);
         RelativeLayout layoutWechat = paymentView.findViewById(R.id.layout_wechat);
         TextView tvPay = paymentView.findViewById(R.id.tv_pay);
 
-        if (payType == 0) {
+       /* if (payType == 0) {
             ivAlipaySelect.setVisibility(View.VISIBLE);
             ivWechatSelect.setVisibility(View.GONE);
         } else {
             ivAlipaySelect.setVisibility(View.GONE);
             ivWechatSelect.setVisibility(View.VISIBLE);
-        }
-        ivCancel.setOnClickListener(v -> {
-            dialog.dismiss();
-        });
-        layoutAlipay.setOnClickListener(v -> {
+        }*/
+
+        ivWechatSelect.setVisibility(View.VISIBLE);
+
+        ivCancel.setOnClickListener(v -> dialog.dismiss());
+
+       /* layoutAlipay.setOnClickListener(v -> {
             payType = 0;
             ivAlipaySelect.setVisibility(View.VISIBLE);
             ivWechatSelect.setVisibility(View.GONE);
         });
+
         layoutWechat.setOnClickListener(v -> {
             payType = 1;
             ivAlipaySelect.setVisibility(View.GONE);
             ivWechatSelect.setVisibility(View.VISIBLE);
-        });
+        });*/
+
+        layoutWechat.setOnClickListener(v -> ivWechatSelect.setVisibility(View.VISIBLE));
+
         tvPay.setOnClickListener(v -> {
             dialog.dismiss();
             gotoPayment();
@@ -202,12 +213,14 @@ public class RechargeActivity extends JMEBaseActivity {
     private void alipay() {
         HashMap<String, String> params = new HashMap<>();
         params.put("totalAmount", mBinding.etFunds.getText().toString().trim());
+
         sendRequest(PaymentService.getInstance().getTradeAppPayResponse, params, true);
     }
 
     private void wechatPay() {
         HashMap<String, String> params = new HashMap<>();
         params.put("totalFee", mBinding.etFunds.getText().toString().trim());
+
         sendRequest(PaymentService.getInstance().wechatPay, params, true);
     }
 
