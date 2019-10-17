@@ -7,7 +7,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.security.GeneralSecurityException;
 import java.security.KeyStore;
-import java.security.SecureRandom;
 import java.security.cert.Certificate;
 import java.security.cert.CertificateException;
 import java.security.cert.CertificateFactory;
@@ -58,20 +57,17 @@ public class Connection {
 
             OkHttpClient.Builder builder = new OkHttpClient.Builder();
 
-            builder.connectTimeout(60, TimeUnit.SECONDS);
-            builder.readTimeout(60, TimeUnit.SECONDS);
-            builder.writeTimeout(60, TimeUnit.SECONDS);
+            builder.connectTimeout(20, TimeUnit.SECONDS);
+            builder.readTimeout(20, TimeUnit.SECONDS);
+            builder.writeTimeout(20, TimeUnit.SECONDS);
             builder.sslSocketFactory(sslSocketFactory, trustManager);
             builder.addInterceptor(new Interceptor() {
                 @Override
                 public Response intercept(Chain chain) throws IOException {
                     Request request = chain.request();
                     Request.Builder builder = request.newBuilder();
-                    /*builder.addHeader(CommonConstants.HttpHeadConfig.TONCE, DateUtil.getCurrentSecondTime())
-                            .addHeader(CommonConstants.HttpHeadConfig.DEVICE, String.valueOf(BuildConfig.VERSION_NAME))
-                            .addHeader(CommonConstants.HttpHeadConfig.PLATFORM, "android")
-                            .addHeader(CommonConstants.HttpHeadConfig.VERSIONCODE, String.valueOf(BuildConfig.VERSION_CODE))*/
                     Response response = chain.proceed(builder.build());
+
                     return response;
                 }
             });

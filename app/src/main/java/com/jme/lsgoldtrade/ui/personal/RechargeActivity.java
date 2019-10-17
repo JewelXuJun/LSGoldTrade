@@ -5,11 +5,16 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.design.widget.BottomSheetDialog;
+import android.support.v4.content.ContextCompat;
+import android.text.SpannableString;
+import android.text.Spanned;
 import android.text.TextUtils;
+import android.text.style.ForegroundColorSpan;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alipay.sdk.app.PayTask;
 import com.jme.common.network.DTRequest;
@@ -29,6 +34,7 @@ import com.jme.lsgoldtrade.util.PayResult;
 import com.jme.lsgoldtrade.util.PaymentHelper;
 import com.tencent.mm.opensdk.openapi.IWXAPI;
 import com.tencent.mm.opensdk.openapi.WXAPIFactory;
+
 import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Map;
@@ -81,78 +87,48 @@ public class RechargeActivity extends JMEBaseActivity {
     @Override
     protected void initView() {
         super.initView();
-        initToolbar("在线充值", true);
+
+        initToolbar(R.string.increment_recharge_online, true);
+
+        setMessage();
     }
 
     @Override
     protected void initData(Bundle savedInstanceState) {
         super.initData(savedInstanceState);
+
         mPaymentHelper = new PaymentHelper();
         wxapi = WXAPIFactory.createWXAPI(this, AppConfig.WECHATAPPID, true);
     }
 
     @Override
-    protected void onResume() {
-        super.onResume();
-        getUserInfo();
-    }
-
-    private void getUserInfo() {
-        sendRequest(AccountService.getInstance().getUserInfo, new HashMap<>(), true);
+    protected void initListener() {
+        super.initListener();
     }
 
     @Override
-    protected void DataReturn(DTRequest request, Head head, Object response) {
-        super.DataReturn(request, head, response);
-        switch (request.getApi().getName()) {
-            case "GetUserInfo":
-                if (head.isSuccess()) {
-                    UsernameVo value;
-                    try {
-                        value = (UsernameVo) response;
-                    } catch (Exception e) {
-                        value = null;
-                        e.printStackTrace();
-                    }
-                    if (value == null)
-                        return;
+    protected void initBinding() {
+        super.initBinding();
 
-                    mBinding.tvBanlace.setText(TextUtils.isEmpty(value.getBalance()) ? getString(R.string.text_no_data_default) :
-                            BigDecimalUtil.formatMoney(new BigDecimal(value.getBalance()).divide(new BigDecimal(100)).toPlainString()) + "元");
-                }
-                break;
-            case "GetTradeAppPayResponse":
-                if (head.isSuccess()) {
-                    String orderInfo;
-                    try {
-                        orderInfo = (String) response;
-                    } catch (Exception e) {
-                        orderInfo = null;
-                        e.printStackTrace();
-                    }
-                    if (TextUtils.isEmpty(orderInfo))
-                        return;
-                    startAlipay(orderInfo);
-                }
-                break;
-            case "WechatPay":
-                if (head.isSuccess()) {
-                    WechatPayVo wechatPayVo;
-                    try {
-                        wechatPayVo = (WechatPayVo) response;
-                    } catch (Exception e) {
-                        wechatPayVo = null;
-                        e.printStackTrace();
-                    }
-                    if (wechatPayVo == null)
-                        return;
+        mBinding = (ActivityRechargeBinding) mBindingUtil;
+        mBinding.setHandlers(new ClickHandlers());
+    }
 
-                    mPaymentHelper.startWeChatPay(this, wechatPayVo);
-                }
-                break;
-            default:
-                break;
-        }
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        getUserInfo();
+    }
+
+    private void setMessage() {
+        String value = getString(R.string.increment_recharge_tips);
+
+        SpannableString spannableString = new SpannableString(value);
+        spannableString.setSpan(new ForegroundColorSpan(ContextCompat.getColor(this, R.color.color_red)),
+                21, 26, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+        mBinding.tvMessage.setText(spannableString);
     }
 
     private void startAlipay(String orderInfo) {
@@ -171,14 +147,6 @@ public class RechargeActivity extends JMEBaseActivity {
         payThread.start();
     }
 
-    @Override
-    protected void initBinding() {
-        super.initBinding();
-
-        mBinding = (ActivityRechargeBinding) mBindingUtil;
-        mBinding.setHandlers(new ClickHandlers());
-    }
-
     private void gotoPayment() {
         if (payType == 0)
             alipay();
@@ -188,39 +156,6 @@ public class RechargeActivity extends JMEBaseActivity {
                 return;
             }
             wechatPay();
-        }
-    }
-
-    private void alipay() {
-        HashMap<String, String> params = new HashMap<>();
-        params.put("totalAmount", mBinding.etFunds.getText().toString().trim());
-        sendRequest(PaymentService.getInstance().getTradeAppPayResponse, params, true);
-    }
-
-    private void wechatPay() {
-        HashMap<String, String> params = new HashMap<>();
-        params.put("totalFee", mBinding.etFunds.getText().toString().trim());
-        sendRequest(PaymentService.getInstance().wechatPay, params, true);
-    }
-
-    public class ClickHandlers {
-        public void onClickPay() {
-            String funds = mBinding.etFunds.getText().toString().trim();
-            if (TextUtils.isEmpty(funds)) {
-                showShortToast("请输入充值金额");
-                return;
-            } else {
-                int fundsInt = Integer.parseInt(funds);
-                if (fundsInt == 0) {
-                    showShortToast("请输入充值金额");
-                    return;
-                }
-                if (fundsInt % 100 != 0) {
-                    showShortToast("请输入>=100元的整数倍");
-                    return;
-                }
-            }
-            showPaymentBottomDialog();
         }
     }
 
@@ -263,4 +198,111 @@ public class RechargeActivity extends JMEBaseActivity {
         dialog.setContentView(paymentView);
         dialog.show();
     }
+
+    private void alipay() {
+        HashMap<String, String> params = new HashMap<>();
+        params.put("totalAmount", mBinding.etFunds.getText().toString().trim());
+        sendRequest(PaymentService.getInstance().getTradeAppPayResponse, params, true);
+    }
+
+    private void wechatPay() {
+        HashMap<String, String> params = new HashMap<>();
+        params.put("totalFee", mBinding.etFunds.getText().toString().trim());
+        sendRequest(PaymentService.getInstance().wechatPay, params, true);
+    }
+
+    private void getUserInfo() {
+        sendRequest(AccountService.getInstance().getUserInfo, new HashMap<>(), true);
+    }
+
+    @Override
+    protected void DataReturn(DTRequest request, Head head, Object response) {
+        super.DataReturn(request, head, response);
+
+        switch (request.getApi().getName()) {
+            case "GetUserInfo":
+                if (head.isSuccess()) {
+                    UsernameVo value;
+
+                    try {
+                        value = (UsernameVo) response;
+                    } catch (Exception e) {
+                        value = null;
+                        e.printStackTrace();
+                    }
+
+                    if (value == null)
+                        return;
+
+                    mBinding.tvBanlace.setText(TextUtils.isEmpty(value.getBalance()) ? getString(R.string.text_no_data_default) :
+                            BigDecimalUtil.formatMoney(new BigDecimal(value.getBalance()).divide(new BigDecimal(100)).toPlainString()) + "元");
+                }
+
+                break;
+            case "GetTradeAppPayResponse":
+                if (head.isSuccess()) {
+                    String orderInfo;
+
+                    try {
+                        orderInfo = (String) response;
+                    } catch (Exception e) {
+                        orderInfo = null;
+                        e.printStackTrace();
+                    }
+
+                    if (TextUtils.isEmpty(orderInfo))
+                        return;
+
+                    startAlipay(orderInfo);
+                }
+
+                break;
+            case "WechatPay":
+                if (head.isSuccess()) {
+                    WechatPayVo wechatPayVo;
+
+                    try {
+                        wechatPayVo = (WechatPayVo) response;
+                    } catch (Exception e) {
+                        wechatPayVo = null;
+                        e.printStackTrace();
+                    }
+
+                    if (wechatPayVo == null)
+                        return;
+
+                    mPaymentHelper.startWeChatPay(this, wechatPayVo);
+                }
+
+                break;
+        }
+    }
+
+    public class ClickHandlers {
+
+        public void onClickPay() {
+            String funds = mBinding.etFunds.getText().toString().trim();
+
+            if (TextUtils.isEmpty(funds)) {
+                showShortToast(R.string.increment_recharge_current_account_input);
+
+                return;
+            } else {
+                int fundsInt = Integer.parseInt(funds);
+                if (fundsInt == 0) {
+                    showShortToast(R.string.increment_recharge_current_account_input);
+
+                    return;
+                }
+                if (fundsInt % 100 != 0) {
+                    showShortToast(R.string.increment_recharge_current_account_hint);
+
+                    return;
+                }
+            }
+
+            showPaymentBottomDialog();
+        }
+    }
+
 }

@@ -513,5 +513,12 @@
 
     <string name="text_withdraw_rule">提现规则：\n\n1. 提现申请时间：交易日9:00&#8211;15:30，将于提现申请的次日到账；\n2. 到账金额：到账金额=提现金额-提现手续费\n提现手续费=提现金额*%1$s；\n3. 提现到账查询：请到微信—我的—支付—钱包—零钱—零钱明细查询；\n4. 单日提现次数5次，单笔提现限额5000元，单日和累计限额20000元。</string>
 
+    <!--增值服务 -->
+    <string name="increment_recharge_online">在线充值</string>
+    <string name="increment_recharge_current_account_balance">当前账户余额</string>
+    <string name="increment_recharge_current_account_input">请输入充值金额</string>
+    <string name="increment_recharge_current_account_hint">请输入>=100元的整数倍</string>
+    <string name="increment_recharge_pay">去支付</string>
+    <string name="increment_recharge_tips">注意：增值服务充值仅限用于您使用增值服务，非交易资金，用于黄金/白银交易的资金请您前往交易界面操作入金。</string>
 
 </resources>
