@@ -1,6 +1,8 @@
 package com.jme.lsgoldtrade.ui.news;
 
 import android.os.Bundle;
+import android.text.TextUtils;
+import android.view.View;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.jme.common.network.DTRequest;
@@ -84,9 +86,23 @@ public class NewsDetailActivity extends JMEBaseActivity {
                     if (null == noticeBean)
                         return;
 
+                    String suggest = noticeBean.getSuggest();
+                    String content = noticeBean.getContent();
+
                     mBinding.tvTitle.setText(noticeBean.getTitle());
                     mBinding.tvTime.setText(noticeBean.getCreateTime());
-                    mBinding.tvContent.setText(noticeBean.getContent());
+
+                    if (TextUtils.isEmpty(suggest)) {
+                        mBinding.tvContent.setText(content);
+                        mBinding.tvContent.setVisibility(View.VISIBLE);
+                        mBinding.layoutQuestion.setVisibility(View.GONE);
+                    } else {
+                        mBinding.tvQuestion.setText(suggest);
+                        mBinding.tvAnswer.setText(content);
+                        mBinding.tvContent.setVisibility(View.GONE);
+                        mBinding.layoutQuestion.setVisibility(View.VISIBLE);
+                    }
+
                 }
 
                 break;

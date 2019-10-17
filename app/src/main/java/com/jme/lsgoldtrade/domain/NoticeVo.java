@@ -75,6 +75,8 @@ public class NoticeVo implements Serializable {
 
         private String cFlag;
 
+        private String suggest;
+
         public long getId() {
             return id;
         }
@@ -193,6 +195,14 @@ public class NoticeVo implements Serializable {
 
         public void setcFlag(String cFlag) {
             this.cFlag = cFlag;
+        }
+
+        public String getSuggest() {
+            return suggest;
+        }
+
+        public void setSuggest(String suggest) {
+            this.suggest = suggest;
         }
     }
 

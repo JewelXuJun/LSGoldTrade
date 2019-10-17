@@ -60,6 +60,8 @@ public class NewsCenterActivity extends JMEBaseActivity implements OnRefreshList
         mBinding.recyclerView.setHasFixedSize(false);
         mBinding.recyclerView.setLayoutManager(new LinearLayoutManager(this));
         mBinding.recyclerView.setAdapter(mAdapter);
+
+        initNoticePageData(true);
     }
 
     @Override
@@ -86,13 +88,6 @@ public class NewsCenterActivity extends JMEBaseActivity implements OnRefreshList
         super.initBinding();
 
         mBinding = (ActivityNewsCenterBinding) mBindingUtil;
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-
-        initNoticePageData(true);
     }
 
     private void setTotalPage(int total) {
