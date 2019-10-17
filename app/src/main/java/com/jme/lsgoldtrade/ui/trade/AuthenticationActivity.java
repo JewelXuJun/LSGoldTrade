@@ -9,6 +9,7 @@ import com.jme.common.network.DTRequest;
 import com.jme.common.network.Head;
 import com.jme.common.util.IDUtils;
 import com.jme.common.util.RxBus;
+import com.jme.common.util.StringUtils;
 import com.jme.lsgoldtrade.R;
 import com.jme.lsgoldtrade.base.JMEBaseActivity;
 import com.jme.lsgoldtrade.config.Constants;
@@ -30,6 +31,7 @@ public class AuthenticationActivity extends JMEBaseActivity {
     private ActivityAuthenticationBinding mBinding;
 
     private String mType;
+    private String mIDCard;
 
     private Subscription mRxbus;
 
@@ -126,7 +128,9 @@ public class AuthenticationActivity extends JMEBaseActivity {
                         mBinding.etName.setEnabled(false);
                         mBinding.etName.setFocusable(false);
 
-                        mBinding.etIdCard.setText(identityInfoVo.getIdCard());
+                        mIDCard = identityInfoVo.getIdCard();
+
+                        mBinding.etIdCard.setText(StringUtils.formatIDCardNumber(mIDCard));
                         mBinding.etIdCard.setEnabled(false);
                         mBinding.etIdCard.setFocusable(false);
                     }
@@ -153,17 +157,16 @@ public class AuthenticationActivity extends JMEBaseActivity {
 
         public void onClickBind() {
             String name = mBinding.etName.getText().toString().trim();
-            String idCard = mBinding.etIdCard.getText().toString().trim();
-            String errorMsg = IDUtils.IDCardValidate(idCard);
+            String errorMsg = IDUtils.IDCardValidate(mIDCard);
 
             if (TextUtils.isEmpty(name))
                 showShortToast(R.string.trade_name_hint);
-            else if (TextUtils.isEmpty(idCard))
+            else if (TextUtils.isEmpty(mIDCard))
                 showShortToast(R.string.trade_id_card_hint);
             else if (!TextUtils.isEmpty(errorMsg))
                 showShortToast(errorMsg);
             else
-                verifyIdCard(name, idCard);
+                verifyIdCard(name, mIDCard);
         }
     }
 

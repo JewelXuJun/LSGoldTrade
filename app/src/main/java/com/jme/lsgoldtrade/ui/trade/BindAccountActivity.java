@@ -13,6 +13,7 @@ import com.jme.common.network.DTRequest;
 import com.jme.common.network.Head;
 import com.jme.common.ui.base.JMECountDownTimer;
 import com.jme.common.util.RxBus;
+import com.jme.common.util.StringUtils;
 import com.jme.lsgoldtrade.R;
 import com.jme.lsgoldtrade.base.JMEBaseActivity;
 import com.jme.lsgoldtrade.config.Constants;
@@ -103,7 +104,7 @@ public class BindAccountActivity extends JMEBaseActivity {
         mIDCard = getIntent().getStringExtra("IDCard");
 
         mBinding.tvName.setText(mName);
-        mBinding.tvIdCard.setText(mIDCard);
+        mBinding.tvIdCard.setText(StringUtils.formatIDCardNumber(mIDCard));
 
         mWindow = new BindSuccessPopupWindow(mContext);
         mWindow.setOutsideTouchable(true);
@@ -282,7 +283,7 @@ public class BindAccountActivity extends JMEBaseActivity {
             else if (goldAccount.length() < 16)
                 showShortToast(R.string.trade_gold_account_hint);
             else
-                getIcbcMsg(mBinding.tvName.getText().toString().trim(), mBinding.tvIdCard.getText().toString().trim(), goldAccount);
+                getIcbcMsg(mBinding.tvName.getText().toString().trim(), mIDCard, goldAccount);
         }
 
         public void onClickBind() {
@@ -304,7 +305,7 @@ public class BindAccountActivity extends JMEBaseActivity {
             else if (!bAgreeFlag)
                 showShortToast(R.string.register_aggrement_unread);
             else
-                bindAccount(mBinding.tvName.getText().toString().trim(), mBinding.tvIdCard.getText().toString().trim(), goldAccount, verifyCode);
+                bindAccount(mBinding.tvName.getText().toString().trim(), mIDCard, goldAccount, verifyCode);
         }
     }
 

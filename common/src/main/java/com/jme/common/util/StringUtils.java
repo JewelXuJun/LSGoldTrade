@@ -15,6 +15,7 @@ public class StringUtils {
 
         return !TextUtils.isEmpty(pass) && pass.matches(passRegex);
     }
+
     /**
      * 手机号中间四位替换为*
      *
@@ -28,19 +29,13 @@ public class StringUtils {
         return "";
     }
 
-    /**
-     * 身份证中间替换为*
-     *
-     * @param cardID
-     * @return 3****************6
-     */
-    public static String cardIDInvisibleMiddle(String cardID) {
-        int length = cardID.length();
+    public static String formatIDCardNumber(String IDCard) {
+        if (TextUtils.isEmpty(IDCard))
+            return "";
 
-        if (!TextUtils.isEmpty(cardID))
-            return cardID.substring(0, 1) + "****************" + cardID.substring(length - 1, length);
+        int length = IDCard.length();
 
-        return "";
+        return IDCard.substring(0, 3) + "*************" + IDCard.substring(length - 2, length);
     }
 
     /**
