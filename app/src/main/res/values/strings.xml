@@ -530,5 +530,8 @@
     <string name="increment_recharge_type_wechat_message">推荐微信用户使用</string>
     <string name="increment_recharge_payment">去付款</string>
     <string name="increment_recharge_tips">注意：增值服务充值仅限用于您使用增值服务，非交易资金，用于黄金/白银交易的资金请您前往交易界面操作入金。</string>
+    <string name="increment_time">日期时间</string>
+    <string name="increment_money">金额(元)</string>
+    <string name="increment_account_detail">账户明细</string>
 
 </resources>

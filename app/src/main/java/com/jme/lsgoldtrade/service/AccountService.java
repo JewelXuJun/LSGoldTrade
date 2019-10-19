@@ -3,13 +3,13 @@ package com.jme.lsgoldtrade.service;
 import com.jme.common.network.API;
 import com.jme.common.network.DTResponse;
 import com.jme.common.network.IService;
-import com.jme.lsgoldtrade.domain.UserDetailsVo;
 import com.jme.lsgoldtrade.config.Constants;
 import com.jme.lsgoldtrade.config.User;
 import com.jme.lsgoldtrade.domain.UsernameVo;
 import com.jme.lsgoldtrade.domain.WithDraw;
+
 import java.util.HashMap;
-import java.util.List;
+
 import okhttp3.Interceptor;
 import okhttp3.Request;
 import okhttp3.Response;
@@ -43,13 +43,6 @@ public class AccountService extends IService<AccountApi> {
         @Override
         public Call<DTResponse> request(HashMap<String, String> params) {
             return mApi.getUserInfo(params);
-        }
-    };
-
-    public API accountDetailList = new API<List<UserDetailsVo>>("AccountDetailList") {
-        @Override
-        public Call<DTResponse> request(HashMap<String, String> params) {
-            return mApi.accountDetailList(params);
         }
     };
 

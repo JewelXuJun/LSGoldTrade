@@ -171,9 +171,7 @@ public class CheckServiceActivity extends JMEBaseActivity {
         }
 
         public void onClickDetailed() {
-            ARouter.getInstance()
-                    .build(Constants.ARouterUriConst.DETAILS)
-                    .navigation();
+            ARouter.getInstance().build(Constants.ARouterUriConst.DETAILS).navigation();
         }
 
         public void onClickTradingBox() {
@@ -182,6 +180,7 @@ public class CheckServiceActivity extends JMEBaseActivity {
 
         public void onClickEntrust() {
             finish();
+
             RxBus.getInstance().post(Constants.RxBusConst.RXBUS_TRADEFRAGMENT_HOLD, null);
         }
 

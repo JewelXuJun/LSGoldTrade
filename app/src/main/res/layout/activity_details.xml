@@ -5,7 +5,7 @@
 
         <variable
             name="handlers"
-            type="com.jme.lsgoldtrade.ui.personal.DetailsActivity.ClickHandlers"/>
+            type="com.jme.lsgoldtrade.ui.personal.DetailsActivity.ClickHandlers" />
 
     </data>
 
@@ -15,85 +15,143 @@
         android:background="@color/common_background"
         android:orientation="vertical">
 
-        <LinearLayout
-            android:id="@+id/lltitle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <include layout="@layout/layout_toolbar"/>
-
-            <include layout="@layout/item_line_vertical"/>
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="80dp"
-            android:gravity="center"
-            android:orientation="vertical"
-            android:background="@color/white">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="选择日期"
-                android:textColor="@color/black_deep"
-                android:textSize="@dimen/sp_12"/>
-
-            <TextView
-                android:id="@+id/tv_time"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/common_area_margin_tiny"
-                android:onClick="@{() -> handlers.onClickTimeChoose()}"
-                android:textColor="@color/color_blue_deep"
-                android:textSize="@dimen/common_font_size"/>
-
-        </LinearLayout>
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="30dp"
-            android:background="@color/color_tabhost"
-            android:layout_marginTop="@dimen/dp_10"
-            android:paddingLeft="15dp"
-            android:paddingRight="15dp">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:text="类型"
-                android:textColor="@color/color_text_normal"
-                android:textSize="@dimen/sp_12"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:text="状态"
-                android:textColor="@color/color_text_normal"
-                android:textSize="@dimen/sp_12"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:text="金额(元)"
-                android:textColor="@color/color_text_normal"
-                android:textSize="@dimen/sp_12"/>
-
-        </RelativeLayout>
+        <include layout="@layout/layout_toolbar" />
 
         <include layout="@layout/item_line_vertical" />
 
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/recyclerView"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:scrollbars="none"/>
+            android:layout_height="@dimen/height_turnover_time"
+            android:background="@color/white"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="@dimen/width_date"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:onClick="@{() -> handlers.onClickSelectDate(0)}"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="@string/trade_start_time"
+                    android:textColor="@color/black_pale"
+                    android:textSize="@dimen/sp_12" />
+
+                <TextView
+                    android:id="@+id/tv_start_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="@dimen/margin_small"
+                    android:textColor="@color/color_blue"
+                    android:textSize="@dimen/common_font_size" />
+
+            </LinearLayout>
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginLeft="@dimen/margin_normal"
+                android:layout_marginRight="@dimen/margin_normal"
+                android:background="@mipmap/ic_arrow_yellow" />
+
+            <LinearLayout
+                android:layout_width="@dimen/width_date"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:onClick="@{() -> handlers.onClickSelectDate(1)}"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="@string/trade_end_time"
+                    android:textColor="@color/black_pale"
+                    android:textSize="@dimen/sp_12" />
+
+                <TextView
+                    android:id="@+id/tv_end_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="@dimen/margin_small"
+                    android:textColor="@color/color_blue"
+                    android:textSize="@dimen/common_font_size" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/height_tabhost"
+            android:layout_marginTop="@dimen/dp_10"
+            android:background="@color/color_tabhost"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="@string/increment_time"
+                android:textColor="@color/color_text_normal"
+                android:textSize="@dimen/sp_12" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="@string/increment_money"
+                android:textColor="@color/color_text_normal"
+                android:textSize="@dimen/sp_12" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="@string/trade_type"
+                android:textColor="@color/color_text_normal"
+                android:textSize="@dimen/sp_12" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="@string/trade_state"
+                android:textColor="@color/color_text_normal"
+                android:textSize="@dimen/sp_12" />
+
+        </LinearLayout>
+
+        <include layout="@layout/item_line_vertical" />
+
+        <com.scwang.smartrefresh.layout.SmartRefreshLayout
+            android:id="@+id/swipeRefreshLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <com.scwang.smartrefresh.layout.header.ClassicsHeader
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:cacheColorHint="@null"
+                android:scrollbars="none" />
+
+        </com.scwang.smartrefresh.layout.SmartRefreshLayout>
 
     </LinearLayout>
 

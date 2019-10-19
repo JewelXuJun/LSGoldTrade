@@ -172,7 +172,7 @@ public class NewsCenterActivity extends JMEBaseActivity implements OnRefreshList
             } else {
                 mPageNo++;
 
-                getNoticePage(false);
+                getNoticePage(true);
             }
         }, 0);
     }

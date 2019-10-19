@@ -5,6 +5,7 @@ import com.jme.common.network.DTResponse;
 import com.jme.common.network.IService;
 import com.jme.lsgoldtrade.config.Constants;
 import com.jme.lsgoldtrade.config.User;
+import com.jme.lsgoldtrade.domain.AccountDetailVo;
 import com.jme.lsgoldtrade.domain.AdvertisementVo;
 import com.jme.lsgoldtrade.domain.OrderVo;
 import com.jme.lsgoldtrade.domain.ProtocolVo;
@@ -336,6 +337,13 @@ public class ManagementService extends IService<ManagementApi> {
         @Override
         public Call<DTResponse> request(HashMap<String, String> params) {
             return mApi.querySubscriberCount(params);
+        }
+    };
+
+    public API accountDetailList = new API<AccountDetailVo>("AccountDetailList") {
+        @Override
+        public Call<DTResponse> request(HashMap<String, String> params) {
+            return mApi.accountDetailList(params);
         }
     };
 

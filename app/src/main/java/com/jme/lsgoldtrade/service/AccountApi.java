@@ -16,9 +16,6 @@ public interface AccountApi {
     @GET("/fundAccount/api/v1/android/userInfo/getUserInfo")
     Call<DTResponse> getUserInfo(@QueryMap Map<String, String> map);
 
-    @GET("/fundAccount/api/v1/android/userFund/accountDetailList")
-    Call<DTResponse> accountDetailList(@QueryMap Map<String, String> map);
-
     @GET("/fundAccount/api/v1/android/userInfo/hasWeChatWithdrawAuth")
     Call<DTResponse> hasWeChatWithdrawAuth(@QueryMap Map<String, String> map);
 

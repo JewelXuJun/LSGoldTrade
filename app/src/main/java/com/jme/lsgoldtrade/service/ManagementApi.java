@@ -124,4 +124,7 @@ public interface ManagementApi {
     @GET("/tjsmanage/infoapi/v1/android/tradingBox/querySubscriberCount")
     Call<DTResponse> querySubscriberCount(@QueryMap Map<String, String> map);
 
+    @GET("/tjsmanage/infoapi/v1/android/userFund/accountDetailList")
+    Call<DTResponse> accountDetailList(@QueryMap Map<String, String> map);
+
 }

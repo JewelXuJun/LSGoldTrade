@@ -230,6 +230,21 @@ public class MarketUtil {
         return value;
     }
 
+    public static String getAccountDetailStatus(int status) {
+        String value = "";
+
+        if (status == -2)
+            value = "作废";
+        else if (status == -1)
+            value = "失败";
+        else if (status == 0)
+            value = "处理中";
+        else if (status == 1)
+            value = "成功";
+
+        return value;
+    }
+
     public static int getTradeDirectionColor(int direction) {
         int color;
 
@@ -494,7 +509,7 @@ public class MarketUtil {
         if (divisor.compareTo(new BigDecimal("0")) == 0)
             return new BigDecimal("0");
         else
-            return new BigDecimal(original.toString()).divide(divisor,2, BigDecimal.ROUND_HALF_UP);
+            return new BigDecimal(original.toString()).divide(divisor, 2, BigDecimal.ROUND_HALF_UP);
 
     }
 
