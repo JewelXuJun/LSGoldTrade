@@ -304,6 +304,7 @@
     <!-- Personal -->
     <string name="personal_login">登录/注册</string>
     <string name="personal_login_message">马上登录享受更多服务</string>
+    <string name="personal_account_security">账号信息与交易安全管理</string>
     <string name="personal_open_account">免费开户</string>
     <string name="personal_increment">我的增值服务</string>
     <string name="personal_customer_service">在线客服</string>

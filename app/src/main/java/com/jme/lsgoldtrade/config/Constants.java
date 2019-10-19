@@ -157,10 +157,16 @@ public class Constants {
     }
 
     public static final class ARouterUriConst {
+
+        private ARouterUriConst() {
+
+        }
+
         public static final String MAIN = "/JME/MainActivity";
         public static final String JMEWEBVIEW = "/JMEBase/JMEBaseWebViewActivity";
         public static final String ACCOUNTLOGIN = "/PersonalFragment/AccountLoginActivity";
         public static final String MOBILELOGIN = "/PersonalFragment/MobileLoginActivity";
+        public static final String ACCOUNTSECURITY = "/PersonalFragment/AccountSecurityActivity";
         public static final String FEEDBACK = "/PersonalFragment/FeedBackActivity";
         public static final String SETTING = "/PersonalFragment/SettingActivity";
         public static final String MARKETREFRESH = "/SettingActivity/MarketRefreshActivity";
@@ -216,6 +222,7 @@ public class Constants {
         public static final String CHECKUSERINFO = "/Personal/CheckUserInfoActivity";
         public static final String WITHDRAW = "/Personal/WithdrawActivity";
         public static final String WITHDRAWRESULT = "/Personal/WithdrawResultActivity";
+
     }
 
     public static final long SPLASH_DELAY_MILLIS = 2000;

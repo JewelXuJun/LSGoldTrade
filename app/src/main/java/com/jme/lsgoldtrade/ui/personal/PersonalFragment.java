@@ -67,6 +67,7 @@ public class PersonalFragment extends JMEBaseFragment {
 
         if (null == mUser || !mUser.isLogin()) {
             mBinding.tvAccount.setVisibility(View.GONE);
+            mBinding.layoutAccountSecurity.setVisibility(View.GONE);
             mBinding.layoutLoginMessage.setVisibility(View.VISIBLE);
             mBinding.layoutOpenAccount.setVisibility(View.VISIBLE);
             mBinding.layoutSubscribe.setVisibility(View.GONE);
@@ -74,6 +75,7 @@ public class PersonalFragment extends JMEBaseFragment {
         } else {
             mBinding.tvAccount.setText(StringUtils.phoneInvisibleMiddle(mUser.getCurrentUser().getMobile()));
             mBinding.tvAccount.setVisibility(View.VISIBLE);
+            mBinding.layoutAccountSecurity.setVisibility(View.VISIBLE);
             mBinding.layoutLoginMessage.setVisibility(View.GONE);
             mBinding.layoutOpenAccount.setVisibility(TextUtils.isEmpty(mUser.getAccountID()) ? View.VISIBLE : View.GONE);
 
@@ -148,6 +150,13 @@ public class PersonalFragment extends JMEBaseFragment {
         public void onClickLogin() {
             if (null == mUser || !mUser.isLogin())
                 gotoLogin();
+        }
+
+        public void onClickAccountSecurity() {
+            if (null == mUser || !mUser.isLogin())
+                gotoLogin();
+            else
+                ARouter.getInstance().build(Constants.ARouterUriConst.ACCOUNTSECURITY).navigation();
         }
 
         public void onClickOpenAccount() {

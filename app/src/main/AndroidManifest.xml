@@ -9,7 +9,7 @@
     <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.CALL_PHONE" />
-    <uses-permission android:name="android.permission.GET_TASKS"/>
+    <uses-permission android:name="android.permission.GET_TASKS" />
 
     <application
         android:name=".base.JMEApplication"
@@ -50,6 +50,10 @@
         <activity
             android:name=".ui.login.MobileLoginActivity"
             android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".ui.personal.AccountSecurityActivity"
             android:screenOrientation="portrait" />
 
         <activity
@@ -287,7 +291,7 @@
             android:name=".push.CustomPushService"
             android:exported="true"
             android:label="PushService"
-            android:process=":pushservice"/>
+            android:process=":pushservice" />
 
         <activity
             android:name="com.umeng.socialize.editorpage.ShareActivity"
