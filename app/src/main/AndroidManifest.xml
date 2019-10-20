@@ -53,7 +53,7 @@
             android:screenOrientation="portrait" />
 
         <activity
-            android:name=".ui.personal.AccountSecurityActivity"
+            android:name=".ui.security.AccountSecurityActivity"
             android:screenOrientation="portrait" />
 
         <activity

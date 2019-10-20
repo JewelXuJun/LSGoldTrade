@@ -1,4 +1,4 @@
-package com.jme.lsgoldtrade.ui.personal;
+package com.jme.lsgoldtrade.ui.security;
 
 import android.os.Bundle;
 import android.view.Gravity;
