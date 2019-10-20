@@ -226,6 +226,7 @@ public class Constants {
         public static final String TRADINGPASSWORDSETTING = "/AccountSecurityActivity/TradingPasswordSettingActivity";
         public static final String TRADINGPASSWORDSETTINGCONFIRM = "/TradingPasswordSettingActivity/TradingPasswordSettingConfirmActivity";
         public static final String FINGERPRINT = "/AccountSecurityActivity/FingerprintActivity";
+        public static final String GESTURE = "/AccountSecurityActivity/GestureActivity";
     }
 
     public static final long SPLASH_DELAY_MILLIS = 2000;

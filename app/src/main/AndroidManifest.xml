@@ -73,6 +73,10 @@
             android:screenOrientation="portrait" />
 
         <activity
+            android:name=".ui.security.GestureActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
             android:name=".ui.market.MarketDetailActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize" />

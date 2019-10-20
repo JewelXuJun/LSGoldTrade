@@ -382,6 +382,10 @@
     <string name="security_fingerprint_setting">设置指纹登录</string>
     <string name="security_fingerprint_use">使用指纹登录</string>
     <string name="security_fingerprint_message">开启后可以使用Touch ID验证指纹快速完成交易界面登录，设置仅对本机生效。如需修改指纹，请在系统设置中操作。</string>
+    <string name="security_gesture_setting">设置手势登录</string>
+    <string name="security_gesture_use">使用手势登录</string>
+    <string name="security_gesture_password_setting">设置手势密码</string>
+    <string name="security_gesture_password_modify">修改手势密码</string>
 
     <!-- News -->
     <string name="news_title">消息中心</string>

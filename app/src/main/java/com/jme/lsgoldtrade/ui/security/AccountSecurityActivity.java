@@ -80,7 +80,7 @@ public class AccountSecurityActivity extends JMEBaseActivity {
         }
 
         public void onClickGesture() {
-
+            ARouter.getInstance().build(Constants.ARouterUriConst.GESTURE).navigation();
         }
 
         public void onClickOnlineDuration() {
