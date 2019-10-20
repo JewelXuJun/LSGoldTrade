@@ -36,7 +36,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:text="@string/personal_tjs_account"
+                    android:text="@string/security_tjs_account"
                     android:textColor="@color/color_text_normal"
                     android:textSize="@dimen/size_normal" />
 
@@ -62,7 +62,7 @@
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
                     android:textColor="@color/color_text_normal"
-                    android:textSize="@dimen/common_font_size" />
+                    android:textSize="@dimen/sp_16" />
 
             </RelativeLayout>
 
@@ -78,7 +78,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:text="@string/personal_trading_password_setting"
+                    android:text="@string/security_trading_password_setting"
                     android:textColor="@color/color_text_normal"
                     android:textSize="@dimen/size_normal" />
 
@@ -102,7 +102,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:text="@string/personal_login_fingerprint"
+                    android:text="@string/security_login_fingerprint"
                     android:textColor="@color/color_text_normal"
                     android:textSize="@dimen/size_normal" />
 
@@ -137,7 +137,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:text="@string/personal_login_gesture"
+                    android:text="@string/security_login_gesture"
                     android:textColor="@color/color_text_normal"
                     android:textSize="@dimen/size_normal" />
 
@@ -172,7 +172,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:text="@string/personal_online_duration"
+                    android:text="@string/security_online_duration"
                     android:textColor="@color/color_text_normal"
                     android:textSize="@dimen/size_normal" />
 

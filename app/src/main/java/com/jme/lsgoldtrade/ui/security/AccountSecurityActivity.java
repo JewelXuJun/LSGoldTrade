@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.Gravity;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
+import com.alibaba.android.arouter.launcher.ARouter;
 import com.jme.common.network.DTRequest;
 import com.jme.common.network.Head;
 import com.jme.lsgoldtrade.R;
@@ -64,14 +65,14 @@ public class AccountSecurityActivity extends JMEBaseActivity {
 
         public void onClickTips() {
             if (null != mConfirmSimplePopupwindow && !mConfirmSimplePopupwindow.isShowing()) {
-                mConfirmSimplePopupwindow.setData(getResources().getString(R.string.personal_account_security_tips),
+                mConfirmSimplePopupwindow.setData(getResources().getString(R.string.security_account_security_tips),
                         (view) -> mConfirmSimplePopupwindow.dismiss());
                 mConfirmSimplePopupwindow.showAtLocation(mBinding.tvAccount, Gravity.CENTER, 0, 0);
             }
         }
 
         public void onClickTradingPassword() {
-
+            ARouter.getInstance().build(Constants.ARouterUriConst.TRADINGPASSWORD).navigation();
         }
 
         public void onClickFingerprint() {

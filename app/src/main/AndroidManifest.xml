@@ -57,6 +57,18 @@
             android:screenOrientation="portrait" />
 
         <activity
+            android:name=".ui.security.TradingPasswordActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".ui.security.TradingPasswordSettingActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".ui.security.TradingPasswordSettingConfirmActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
             android:name=".ui.market.MarketDetailActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize" />

@@ -338,8 +338,8 @@
     <string name="personal_feedback_surplus">剩余</string>
     <string name="personal_feedback_word">字</string>
     <string name="personal_feedback_emoji">禁止输入Emoji表情</string>
-    <string name="setting_feedback_empty">请再多写两句吧</string>
-    <string name="setting_feedback_success">感谢您的宝贵意见，我们会及时处理</string>
+    <string name="personal_setting_feedback_empty">请再多写两句吧</string>
+    <string name="personal_setting_feedback_success">感谢您的宝贵意见，我们会及时处理</string>
     <string name="personal_aboutus_version">泰金所&#160;%1$s</string>
     <string name="personal_send">发送</string>
     <string name="personal_clear_cache_success">清除缓存成功</string>
@@ -364,14 +364,21 @@
     <string name="personal_fast_management_more">更多</string>
     <string name="personal_economic_calendar">财经日历</string>
     <string name="personal_news">快讯</string>
-    <string name="personal_tjs_account">泰金所交易账号</string>
-    <string name="personal_trading_password_setting">设置交易密码</string>
-    <string name="personal_login_fingerprint">指纹登录</string>
-    <string name="personal_login_gesture">手势登录</string>
-    <string name="personal_online_duration">在线时长</string>
-    <string name="personal_enable">已启用</string>
-    <string name="personal_not_enable">未启用</string>
-    <string name="personal_account_security_tips">该交易账号是用于您在泰金所APP或者PC客户端登录的交易账号</string>
+
+    <!-- Security -->
+    <string name="security_tjs_account">泰金所交易账号</string>
+    <string name="security_trading_password_setting">设置交易密码</string>
+    <string name="security_trading_password_modify">修改交易密码</string>
+    <string name="security_login_fingerprint">指纹登录</string>
+    <string name="security_login_gesture">手势登录</string>
+    <string name="security_online_duration">在线时长</string>
+    <string name="security_enable">已启用</string>
+    <string name="security_not_enable">未启用</string>
+    <string name="security_account_security_tips">该交易账号是用于您在泰金所APP或者PC客户端登录的交易账号</string>
+    <string name="security_password">登录密码</string>
+    <string name="security_password_input">请输入6位数字交易密码</string>
+    <string name="security_password_input_confirm">请再次输入6位数字交易密码</string>
+    <string name="security_password_setting_success">交易密码设置成功！</string>
 
     <!-- News -->
     <string name="news_title">消息中心</string>
