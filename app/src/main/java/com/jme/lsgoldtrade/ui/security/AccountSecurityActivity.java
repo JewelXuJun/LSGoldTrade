@@ -76,7 +76,7 @@ public class AccountSecurityActivity extends JMEBaseActivity {
         }
 
         public void onClickFingerprint() {
-
+            ARouter.getInstance().build(Constants.ARouterUriConst.FINGERPRINT).navigation();
         }
 
         public void onClickGesture() {
