@@ -84,7 +84,7 @@ public class AccountSecurityActivity extends JMEBaseActivity {
         }
 
         public void onClickOnlineDuration() {
-
+            ARouter.getInstance().build(Constants.ARouterUriConst.ONLINEDURATION).navigation();
         }
 
     }

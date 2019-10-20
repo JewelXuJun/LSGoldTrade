@@ -386,6 +386,11 @@
     <string name="security_gesture_use">使用手势登录</string>
     <string name="security_gesture_password_setting">设置手势密码</string>
     <string name="security_gesture_password_modify">修改手势密码</string>
+    <string name="security_duration_two_minutes">2分钟</string>
+    <string name="security_duration_thirty_minutes">30分钟</string>
+    <string name="security_duration_one_hour">1小时</string>
+    <string name="security_duration_two_hour">2小时</string>
+    <string name="security_duration_message">如果应用在后台超过设定的时间未发生操作，再次打开交易界面需要验证后登录。</string>
 
     <!-- News -->
     <string name="news_title">消息中心</string>

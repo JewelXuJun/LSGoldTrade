@@ -46,7 +46,7 @@
             android:background="@color/white"
             android:textColor="@color/color_text_normal"
             android:text="@string/security_fingerprint_message"
-            android:textSize="@dimen/size_normal"
+            android:textSize="@dimen/sp_14"
             android:lineSpacingExtra="@dimen/lineSpacingExtra_normal"
             android:paddingBottom="@dimen/common_area_margin_tiny"/>
 
