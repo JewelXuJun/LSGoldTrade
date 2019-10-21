@@ -127,4 +127,30 @@ public interface ManagementApi {
     @GET("/tjsmanage/infoapi/v1/android/userFund/accountDetailList")
     Call<DTResponse> accountDetailList(@QueryMap Map<String, String> map);
 
+    @GET("/tjsmanage/infoapi/v1/android/tradeSafety/getOnlineTimeList")
+    Call<DTResponse> getOnlineTimeList(@QueryMap Map<String, String> map);
+
+    @POST("/tjsmanage/infoapi/v1/android/tradeSafety/setUserOnlineTime")
+    Call<DTResponse> setUserOnlineTime(@QueryMap Map<String, String> map);
+
+    @GET("/tjsmanage/infoapi/v1/android/tradeSafety/getUserOnlineTime")
+    Call<DTResponse> getUserOnlineTime(@QueryMap Map<String, String> map);
+
+    @GET("/tjsmanage/infoapi/v1/android/tradeSafety/getUserPasswordSettingInfo")
+    Call<DTResponse> getUserPasswordSettingInfo(@QueryMap Map<String, String> map);
+
+    @POST("/tjsmanage/infoapi/v1/android/tradeSafety/updatePasswordOpenStatus")
+    Call<DTResponse> updatePasswordOpenStatus(@QueryMap Map<String, String> map);
+
+    @POST("/tjsmanage/infoapi/v1/android/tradeSafety/setTradePassword")
+    Call<DTResponse> setTradePassword(@QueryMap Map<String, String> map);
+
+    @GET("/tjsmanage/infoapi/v1/android/tradeSafety/sendMessage")
+    Call<DTResponse> sendMessage(@QueryMap Map<String, String> map);
+
+    @POST("/tjsmanage/infoapi/v1/android/tradeSafety/validateLoginPassword")
+    Call<DTResponse> validateLoginPassword(@QueryMap Map<String, String> map);
+
+    @POST("/tjsmanage/infoapi/v1/android/tradeSafety/unlockTradePassword")
+    Call<DTResponse> unlockTradePassword(@QueryMap Map<String, String> map);
 }
