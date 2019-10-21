@@ -60,7 +60,7 @@ public class VerificationCodeView extends RelativeLayout {
 
         TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.VerificationCodeView, defStyleAttr, 0);
         mEtNumber = typedArray.getInteger(R.styleable.VerificationCodeView_icv_et_number, 1);
-        mEtHeight = typedArray.getDimensionPixelSize(R.styleable.VerificationCodeView_icv_et_height, 60);
+        mEtHeight = typedArray.getDimensionPixelSize(R.styleable.VerificationCodeView_icv_et_height, (int) dp2px(50, context));
         mEtDividerDrawable = typedArray.getDrawable(R.styleable.VerificationCodeView_icv_et_divider_drawable);
         mEtTextSize = typedArray.getDimensionPixelSize(R.styleable.VerificationCodeView_icv_et_text_size, (int) sp2px(16, context));
         mEtTextColor = typedArray.getColor(R.styleable.VerificationCodeView_icv_et_text_color, Color.BLACK);
@@ -103,7 +103,7 @@ public class VerificationCodeView extends RelativeLayout {
             TextView textView = new TextView(context);
             textView.setTextSize(TypedValue.COMPLEX_UNIT_PX, etTextSize);
             textView.setTextColor(etTextColor);
-            textView.setWidth((ScreenUtil.getScreenWidth(context) - (int) dp2px(10, context)) / 6 - (int) dp2px(10, context));
+            textView.setWidth((int) dp2px(40, context));
             textView.setHeight(etHeight);
             textView.setBackground(mEtBackgroundDrawable);
             textView.setGravity(Gravity.CENTER);

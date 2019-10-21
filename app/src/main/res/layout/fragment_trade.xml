@@ -39,14 +39,14 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
-                android:onClick="@{() -> handlers.onClickNews()}"
+                android:onClick="@{() -> handlers.onClickSecuritySetting()}"
                 android:orientation="horizontal"
                 android:padding="@dimen/common_page_padding">
 
                 <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@mipmap/ic_news_white" />
+                    android:layout_width="@dimen/icon_time"
+                    android:layout_height="@dimen/icon_time"
+                    android:src="@mipmap/ic_security_setting" />
 
             </LinearLayout>
 

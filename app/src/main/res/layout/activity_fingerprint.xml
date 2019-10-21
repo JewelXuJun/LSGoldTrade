@@ -31,6 +31,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
+                android:track="@drawable/selector_switch_track"
+                android:switchMinWidth="20dp"
+                android:textOn=" "
+                android:textOff=" "
+                android:thumb="@drawable/selector_switch_thumb"
                 android:layout_centerVertical="true" />
 
         </RelativeLayout>

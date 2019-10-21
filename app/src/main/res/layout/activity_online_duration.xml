@@ -23,15 +23,13 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/white"
-            android:orientation="vertical"
-            android:paddingLeft="@dimen/common_area_margin"
-            android:paddingRight="@dimen/common_area_margin">
+            android:orientation="vertical">
 
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/height_item_normal"
-                android:layout_marginLeft="@dimen/common_area_margin_tiny"
-                android:layout_marginRight="@dimen/common_area_margin_tiny"
+                android:paddingLeft="@dimen/common_area_margin"
+                android:paddingRight="@dimen/common_area_margin"
                 android:onClick="@{() -> handlers.ClicDurationSeconds(2)}">
 
                 <TextView
@@ -59,8 +57,8 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/height_item_normal"
-                android:layout_marginLeft="@dimen/common_area_margin_tiny"
-                android:layout_marginRight="@dimen/common_area_margin_tiny"
+                android:paddingLeft="@dimen/common_area_margin"
+                android:paddingRight="@dimen/common_area_margin"
                 android:onClick="@{() -> handlers.ClicDurationSeconds(30)}">
 
                 <TextView
@@ -88,9 +86,8 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/height_item_normal"
-                android:layout_marginLeft="@dimen/common_area_margin_tiny"
-                android:layout_marginRight="@dimen/common_area_margin_tiny"
-                android:background="?android:attr/selectableItemBackground"
+                android:paddingLeft="@dimen/common_area_margin"
+                android:paddingRight="@dimen/common_area_margin"
                 android:onClick="@{() -> handlers.ClicDurationSeconds(60)}">
 
                 <TextView
@@ -119,9 +116,8 @@
                 android:id="@+id/layout_network_5s"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/height_item_normal"
-                android:layout_marginLeft="@dimen/common_area_margin_tiny"
-                android:layout_marginRight="@dimen/common_area_margin_tiny"
-                android:background="?android:attr/selectableItemBackground"
+                android:paddingLeft="@dimen/common_area_margin"
+                android:paddingRight="@dimen/common_area_margin"
                 android:onClick="@{() -> handlers.ClicDurationSeconds(120)}">
 
                 <TextView

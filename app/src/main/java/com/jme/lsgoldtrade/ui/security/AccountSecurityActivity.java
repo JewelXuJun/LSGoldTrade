@@ -72,7 +72,7 @@ public class AccountSecurityActivity extends JMEBaseActivity {
         }
 
         public void onClickTradingPassword() {
-            ARouter.getInstance().build(Constants.ARouterUriConst.TRADINGPASSWORD).navigation();
+            ARouter.getInstance().build(Constants.ARouterUriConst.TRADINGPASSWORDSETTING).navigation();
         }
 
         public void onClickFingerprint() {

@@ -248,11 +248,11 @@ public class TradeFragment extends JMEBaseFragment implements TabLayout.OnTabSel
 
     public class ClickHandlers {
 
-        public void onClickNews() {
+        public void onClickSecuritySetting() {
             if (null == mUser || !mUser.isLogin())
                 gotoLogin();
             else
-                ARouter.getInstance().build(Constants.ARouterUriConst.NEWSCENTERACTIVITY).navigation();
+                ARouter.getInstance().build(Constants.ARouterUriConst.ACCOUNTSECURITY).navigation();
         }
 
         public void onClickBanner() {

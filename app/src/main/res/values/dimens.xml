@@ -40,6 +40,7 @@
     <dimen name="height_trading_box_item">196dp</dimen>
     <dimen name="height_trading_box_btn">32dp</dimen>
     <dimen name="height_recharge_item">80dp</dimen>
+    <dimen name="height_switch">25dp</dimen>
 
     <dimen name="width_main_page_info_img">100dp</dimen>
     <dimen name="width_market_limit">100dp</dimen>
@@ -68,6 +69,7 @@
     <dimen name="width_transfer_btn">50dp</dimen>
     <dimen name="width_transfer_card">70dp</dimen>
     <dimen name="width_trading_box_btn">120dp</dimen>
+    <dimen name="width_password">40dp</dimen>
 
     <dimen name="margin_main_page_info">30dp</dimen>
     <dimen name="margin_main_page_market">2.5dp</dimen>
@@ -122,6 +124,7 @@
     <dimen name="radius_middle">3dp</dimen>
     <dimen name="radius_normal">4dp</dimen>
     <dimen name="radius_big">5dp</dimen>
+    <dimen name="radius_bigger">15dp</dimen>
     <dimen name="radius_large">20dp</dimen>
     <dimen name="radius_fast_item">8dp</dimen>
 
