@@ -145,7 +145,7 @@ public class AuthenticationActivity extends JMEBaseActivity {
                         ARouter.getInstance()
                                 .build(Constants.ARouterUriConst.BINDACCOUNT)
                                 .withString("Name", mBinding.etName.getText().toString().trim())
-                                .withString("IDCard", mBinding.etIdCard.getText().toString().trim())
+                                .withString("IDCard", mIDCard)
                                 .navigation();
                 }
 
@@ -157,6 +157,10 @@ public class AuthenticationActivity extends JMEBaseActivity {
 
         public void onClickBind() {
             String name = mBinding.etName.getText().toString().trim();
+
+            if (TextUtils.isEmpty(mIDCard))
+                mIDCard = mBinding.etIdCard.getText().toString().trim();
+
             String errorMsg = IDUtils.IDCardValidate(mIDCard);
 
             if (TextUtils.isEmpty(name))
