@@ -41,11 +41,9 @@ public class DetailsAdapter extends BaseQuickAdapter<UserDetailsVo, BaseViewHold
             }
         }
 
-        int type = item.getType();
-
         helper.setText(R.id.tv_money, BigDecimalUtil.formatMoney(new BigDecimal(item.getAmount()).divide(new BigDecimal(100)).toPlainString()))
                 .setText(R.id.tv_type, item.getOperateType())
-                .setText(R.id.tv_status, type == 100 ? "" : MarketUtil.getAccountDetailStatus(item.getStatus()));
+                .setText(R.id.tv_status, item.getStatusStr());
     }
 }
 
