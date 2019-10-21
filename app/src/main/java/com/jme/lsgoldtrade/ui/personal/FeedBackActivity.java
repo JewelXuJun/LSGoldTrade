@@ -65,16 +65,7 @@ public class FeedBackActivity extends JMEBaseActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
-                int index = mBinding.etSuggestion.getSelectionStart() - 1;
 
-                if (index > 0) {
-                    if (isEmojiCharacter(s.charAt(index))) {
-                        Editable edit = mBinding.etSuggestion.getText();
-                        edit.delete(index, index + 1);
-
-                        showShortToast(R.string.personal_feedback_emoji);
-                    }
-                }
             }
         });
     }
@@ -100,13 +91,6 @@ public class FeedBackActivity extends JMEBaseActivity {
     private void updateUIWithValidation() {
         mBinding.tvSurplus.setText(getString(R.string.personal_feedback_surplus)
                 + (mMaxLength - mBinding.etSuggestion.getText().toString().trim().length()) + getString(R.string.personal_feedback_word));
-    }
-
-
-    private static boolean isEmojiCharacter(char codePoint) {
-        return !((codePoint == 0x0) || (codePoint == 0x9) || (codePoint == 0xA) || (codePoint == 0xD)
-                || ((codePoint >= 0x20) && codePoint <= 0xD7FF)) || ((codePoint >= 0xE000)
-                && (codePoint <= 0xFFFD)) || ((codePoint >= 0x10000) && (codePoint <= 0x10FFFF));
     }
 
     private void feedBack(String suggest) {
