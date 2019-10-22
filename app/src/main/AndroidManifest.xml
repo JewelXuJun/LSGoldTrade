@@ -57,7 +57,7 @@
             android:screenOrientation="portrait" />
 
         <activity
-            android:name=".ui.security.TradingPasswordActivity"
+            android:name=".ui.security.TradingPasswordValidateActivity"
             android:screenOrientation="portrait" />
 
         <activity

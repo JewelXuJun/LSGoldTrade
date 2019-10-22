@@ -223,7 +223,7 @@ public class Constants {
         public static final String WITHDRAW = "/Personal/WithdrawActivity";
         public static final String WITHDRAWRESULT = "/Personal/WithdrawResultActivity";
         public static final String ACCOUNTSECURITY = "/PersonalFragment/AccountSecurityActivity";
-        public static final String TRADINGPASSWORD = "/AccountSecurityActivity/TradingPasswordActivity";
+        public static final String TRADINGPASSWORDVALIDATE = "/AccountSecurityActivity/TradingPasswordValidateActivity";
         public static final String TRADINGPASSWORDSETTING = "/AccountSecurityActivity/TradingPasswordSettingActivity";
         public static final String TRADINGPASSWORDSETTINGCONFIRM = "/TradingPasswordSettingActivity/TradingPasswordSettingConfirmActivity";
         public static final String FINGERPRINT = "/AccountSecurityActivity/FingerprintActivity";

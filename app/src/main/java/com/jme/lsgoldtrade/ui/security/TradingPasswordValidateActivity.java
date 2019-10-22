@@ -9,16 +9,16 @@ import com.jme.common.network.Head;
 import com.jme.lsgoldtrade.R;
 import com.jme.lsgoldtrade.base.JMEBaseActivity;
 import com.jme.lsgoldtrade.config.Constants;
-import com.jme.lsgoldtrade.databinding.ActivityTradingPasswordBinding;
+import com.jme.lsgoldtrade.databinding.ActivityTradingPasswordValidateBinding;
 
-@Route(path = Constants.ARouterUriConst.TRADINGPASSWORD)
-public class TradingPasswordActivity extends JMEBaseActivity {
+@Route(path = Constants.ARouterUriConst.TRADINGPASSWORDVALIDATE)
+public class TradingPasswordValidateActivity extends JMEBaseActivity {
 
-    private ActivityTradingPasswordBinding mBinding;
+    private ActivityTradingPasswordValidateBinding mBinding;
 
     @Override
     protected int getContentViewId() {
-        return R.layout.activity_trading_password;
+        return R.layout.activity_trading_password_validate;
     }
 
     @Override
@@ -42,7 +42,7 @@ public class TradingPasswordActivity extends JMEBaseActivity {
     protected void initBinding() {
         super.initBinding();
 
-        mBinding = (ActivityTradingPasswordBinding) mBindingUtil;
+        mBinding = (ActivityTradingPasswordValidateBinding) mBindingUtil;
         mBinding.setHandlers(new ClickHandlers());
     }
 

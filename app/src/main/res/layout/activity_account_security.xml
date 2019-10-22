@@ -78,7 +78,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:text="@string/security_trading_password_setting"
+                    android:text="@string/security_trading_password_modify"
                     android:textColor="@color/color_text_normal"
                     android:textSize="@dimen/size_normal" />
 
