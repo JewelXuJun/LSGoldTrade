@@ -15,6 +15,7 @@ import com.jme.lsgoldtrade.R;
 import com.jme.lsgoldtrade.base.JMEBaseFragment;
 import com.jme.lsgoldtrade.config.Constants;
 import com.jme.lsgoldtrade.databinding.FragmentPersonalBinding;
+import com.jme.lsgoldtrade.domain.PasswordInfoVo;
 import com.jme.lsgoldtrade.domain.SubscribeStateVo;
 import com.jme.lsgoldtrade.service.ManagementService;
 
@@ -84,6 +85,10 @@ public class PersonalFragment extends JMEBaseFragment {
         }
     }
 
+    private void getUserPasswordSettingInfo() {
+        sendRequest(ManagementService.getInstance().getUserPasswordSettingInfo, new HashMap<>(), true);
+    }
+
     private void getUserAddedServicesStatus() {
         sendRequest(ManagementService.getInstance().getUserAddedServicesStatus, new HashMap<>(), false, false, false);
     }
@@ -97,6 +102,33 @@ public class PersonalFragment extends JMEBaseFragment {
         super.DataReturn(request, head, response);
 
         switch (request.getApi().getName()) {
+            case "GetUserPasswordSettingInfo":
+                if (head.isSuccess()) {
+                    PasswordInfoVo passwordInfoVo;
+
+                    try {
+                        passwordInfoVo = (PasswordInfoVo) response;
+                    } catch (Exception e) {
+                        passwordInfoVo = null;
+
+                        e.printStackTrace();
+                    }
+
+                    if (null == passwordInfoVo)
+                        return;
+
+                    String hasSettingDigital = passwordInfoVo.getHasSettingDigital();
+
+                    if (TextUtils.isEmpty(hasSettingDigital))
+                        return;
+
+                    if (hasSettingDigital.equals("N"))
+                        RxBus.getInstance().post(Constants.RxBusConst.RXBUS_TRADING_PASSWORD_SETTING, null);
+                    else
+                        ARouter.getInstance().build(Constants.ARouterUriConst.ACCOUNTSECURITY).navigation();
+                }
+
+                break;
             case "GetUserAddedServicesStatus":
                 if (null == response)
                     mIncrementState = "";
@@ -156,7 +188,7 @@ public class PersonalFragment extends JMEBaseFragment {
             if (null == mUser || !mUser.isLogin())
                 gotoLogin();
             else
-                ARouter.getInstance().build(Constants.ARouterUriConst.ACCOUNTSECURITY).navigation();
+                getUserPasswordSettingInfo();
         }
 
         public void onClickOpenAccount() {
