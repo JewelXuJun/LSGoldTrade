@@ -178,7 +178,8 @@ public class ElectronicCardMoneyOutFragment extends JMEBaseFragment implements O
                     mBinding.etTransferIcbcElectronicCardMoneyOut.setText("");
 
                     if (null != mConfirmSimplePopupwindow && !mConfirmSimplePopupwindow.isShowing()) {
-                        mConfirmSimplePopupwindow.setData(getResources().getString(R.string.trade_transfer_icbc_electronic_card_withdraw_message),
+                        mConfirmSimplePopupwindow.setData(mContext.getResources().getString(R.string.trade_transfer_icbc_electronic_card_withdraw_message),
+                                mContext.getResources().getString(R.string.text_confirm),
                                 (view) -> {
                                     mConfirmSimplePopupwindow.dismiss();
 

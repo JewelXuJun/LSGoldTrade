@@ -139,7 +139,8 @@ public class ElectronicCardMoneyInFragment extends JMEBaseFragment {
                     mBinding.etTransferIcbcElectronicCardMoneyIn.setText("");
 
                     if (null != mConfirmSimplePopupwindow && !mConfirmSimplePopupwindow.isShowing()) {
-                        mConfirmSimplePopupwindow.setData(getResources().getString(R.string.trade_transfer_icbc_electronic_card_recharge_message),
+                        mConfirmSimplePopupwindow.setData(mContext.getResources().getString(R.string.trade_transfer_icbc_electronic_card_recharge_message),
+                                mContext.getResources().getString(R.string.text_confirm),
                                 (view) -> {
                                     mConfirmSimplePopupwindow.dismiss();
 

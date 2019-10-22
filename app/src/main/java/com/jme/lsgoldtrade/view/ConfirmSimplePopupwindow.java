@@ -40,8 +40,9 @@ public class ConfirmSimplePopupwindow extends JMEBasePopupWindow {
         setContentView(mBinding.getRoot());
     }
 
-    public void setData(String content, View.OnClickListener confirmListener) {
+    public void setData(String content, String confirmStr, View.OnClickListener confirmListener) {
         mBinding.tvContent.setText(content);
+        mBinding.btnConfirm.setText(confirmStr);
         mBinding.btnConfirm.setOnClickListener(confirmListener);
     }
 }

@@ -86,6 +86,7 @@ public class MainActivity extends JMEBaseActivity implements TabHost.OnTabChange
     private UpdateDialog mForceDialog;
     private ProtocolUpdatePopUpWindow mProtocolUpdatePopUpWindow;
     private ConfirmSimplePopupwindow mConfirmSimplePopupwindow;
+    private ConfirmSimplePopupwindow mTradingPasswordConfirmSimplePopupwindow;
     private IntentFilter mIntentFilter;
     private NetStateReceiver mStateReceiver;
     private Subscription mRxbus;
@@ -181,6 +182,10 @@ public class MainActivity extends JMEBaseActivity implements TabHost.OnTabChange
         mConfirmSimplePopupwindow.setOutsideTouchable(true);
         mConfirmSimplePopupwindow.setFocusable(true);
 
+        mTradingPasswordConfirmSimplePopupwindow = new ConfirmSimplePopupwindow(this);
+        mTradingPasswordConfirmSimplePopupwindow.setOutsideTouchable(false);
+        mTradingPasswordConfirmSimplePopupwindow.setFocusable(false);
+
         registerReceiver(mStateReceiver, mIntentFilter);
         initDownLoadData();
 
@@ -227,6 +232,19 @@ public class MainActivity extends JMEBaseActivity implements TabHost.OnTabChange
 
                     if (null != mUser && mUser.isLogin() && !TextUtils.isEmpty(mUser.getIsFromTjs()) && mUser.getIsFromTjs().equals("true"))
                         showElectronicCardPopupWindow();
+
+                    break;
+                case Constants.RxBusConst.RXBUS_TRADING_PASSWORD_SETTING:
+                    if (null != mTradingPasswordConfirmSimplePopupwindow && !mTradingPasswordConfirmSimplePopupwindow.isShowing()) {
+                        mTradingPasswordConfirmSimplePopupwindow.setData(mContext.getResources().getString(R.string.security_setting_tips),
+                                mContext.getResources().getString(R.string.personal_setting),
+                                (view) -> {
+                                    ARouter.getInstance().build(Constants.ARouterUriConst.TRADINGPASSWORDSETTING).navigation();
+
+                                    mTradingPasswordConfirmSimplePopupwindow.dismiss();
+                                });
+                        mTradingPasswordConfirmSimplePopupwindow.showAtLocation(mBinding.tabhost, Gravity.CENTER, 0, 0);
+                    }
 
                     break;
             }
@@ -294,6 +312,7 @@ public class MainActivity extends JMEBaseActivity implements TabHost.OnTabChange
                 && mUser.getCurrentUser().getCardType().equals("2") && mUser.getCurrentUser().getReserveFlag().equals("N")) {
             if (null != mConfirmSimplePopupwindow && !mConfirmSimplePopupwindow.isShowing()) {
                 mConfirmSimplePopupwindow.setData(getResources().getString(R.string.trade_transfer_icbc_electronic_card_message),
+                        getResources().getString(R.string.text_confirm),
                         (view) -> {
                             mConfirmSimplePopupwindow.dismiss();
 
@@ -805,11 +824,13 @@ public class MainActivity extends JMEBaseActivity implements TabHost.OnTabChange
     }
 
     @Override
-    public boolean dispatchTouchEvent(MotionEvent ev) {
+    public boolean dispatchTouchEvent(MotionEvent event) {
         if (null != mProtocolUpdatePopUpWindow && mProtocolUpdatePopUpWindow.isShowing())
             return false;
+        else if (null != mTradingPasswordConfirmSimplePopupwindow && mTradingPasswordConfirmSimplePopupwindow.isShowing())
+            return false;
 
-        return super.dispatchTouchEvent(ev);
+        return super.dispatchTouchEvent(event);
     }
 
 }

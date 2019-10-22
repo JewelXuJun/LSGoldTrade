@@ -66,6 +66,7 @@ public class AccountSecurityActivity extends JMEBaseActivity {
         public void onClickTips() {
             if (null != mConfirmSimplePopupwindow && !mConfirmSimplePopupwindow.isShowing()) {
                 mConfirmSimplePopupwindow.setData(getResources().getString(R.string.security_account_security_tips),
+                        getResources().getString(R.string.text_confirm),
                         (view) -> mConfirmSimplePopupwindow.dismiss());
                 mConfirmSimplePopupwindow.showAtLocation(mBinding.tvAccount, Gravity.CENTER, 0, 0);
             }

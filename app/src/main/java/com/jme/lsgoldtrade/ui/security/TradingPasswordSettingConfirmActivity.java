@@ -53,6 +53,7 @@ public class TradingPasswordSettingConfirmActivity extends JMEBaseActivity {
 
                 if (!TextUtils.isEmpty(content) && content.length() == 6 && null != mConfirmSimplePopupwindow && !mConfirmSimplePopupwindow.isShowing()) {
                     mConfirmSimplePopupwindow.setData(getResources().getString(R.string.security_password_setting_success),
+                            mContext.getResources().getString(R.string.text_confirm),
                             (view) -> mConfirmSimplePopupwindow.dismiss());
                     mConfirmSimplePopupwindow.showAtLocation(mBinding.verificationCodeView, Gravity.CENTER, 0, 0);
                 }

@@ -25,6 +25,8 @@ import com.jme.lsgoldtrade.base.JMEBaseFragment;
 import com.jme.lsgoldtrade.config.Constants;
 import com.jme.lsgoldtrade.databinding.FragmentTradeBinding;
 import com.jme.lsgoldtrade.domain.IdentityInfoVo;
+import com.jme.lsgoldtrade.domain.PasswordInfoVo;
+import com.jme.lsgoldtrade.service.ManagementService;
 import com.jme.lsgoldtrade.service.TradeService;
 
 import java.util.HashMap;
@@ -34,9 +36,11 @@ import rx.Subscription;
 /**
  * 交易
  */
-public class TradeFragment extends JMEBaseFragment implements TabLayout.OnTabSelectedListener{
+public class TradeFragment extends JMEBaseFragment implements TabLayout.OnTabSelectedListener {
 
     private FragmentTradeBinding mBinding;
+
+    private boolean bHidden = false;
 
     private Fragment[] mFragmentArrays;
     private String[] mTabTitles;
@@ -86,6 +90,11 @@ public class TradeFragment extends JMEBaseFragment implements TabLayout.OnTabSel
     public void onHiddenChanged(boolean hidden) {
         super.onHiddenChanged(hidden);
 
+        bHidden = hidden;
+
+        if (!bHidden)
+            getUserPasswordSettingInfo();
+
         if (null != mBinding && null != mBinding.tabViewpager && null != mAdapter)
             mAdapter.getItem(mBinding.tabViewpager.getCurrentItem()).onHiddenChanged(hidden);
     }
@@ -95,6 +104,9 @@ public class TradeFragment extends JMEBaseFragment implements TabLayout.OnTabSel
         super.onResume();
 
         setLayout();
+
+        if (!bHidden)
+            getUserPasswordSettingInfo();
     }
 
     private void initRxBus() {
@@ -189,6 +201,10 @@ public class TradeFragment extends JMEBaseFragment implements TabLayout.OnTabSel
         sendRequest(TradeService.getInstance().whetherIdCard, new HashMap<>(), true);
     }
 
+    private void getUserPasswordSettingInfo() {
+        sendRequest(ManagementService.getInstance().getUserPasswordSettingInfo, new HashMap<>(), false, false, false);
+    }
+
     @Override
     protected void DataReturn(DTRequest request, Head head, Object response) {
         super.DataReturn(request, head, response);
@@ -225,6 +241,31 @@ public class TradeFragment extends JMEBaseFragment implements TabLayout.OnTabSel
                                 .build(Constants.ARouterUriConst.AUTHENTICATION)
                                 .withString("Type", "2")
                                 .navigation();
+                }
+
+                break;
+            case "GetUserPasswordSettingInfo":
+                if (head.isSuccess()) {
+                    PasswordInfoVo passwordInfoVo;
+
+                    try {
+                        passwordInfoVo = (PasswordInfoVo) response;
+                    } catch (Exception e) {
+                        passwordInfoVo = null;
+
+                        e.printStackTrace();
+                    }
+
+                    if (null == passwordInfoVo)
+                        return;
+
+                    String hasSettingDigital = passwordInfoVo.getHasSettingDigital();
+
+                    if (TextUtils.isEmpty(hasSettingDigital))
+                        return;
+
+                    if (hasSettingDigital.equals("N"))
+                        RxBus.getInstance().post(Constants.RxBusConst.RXBUS_TRADING_PASSWORD_SETTING, null);
                 }
 
                 break;
