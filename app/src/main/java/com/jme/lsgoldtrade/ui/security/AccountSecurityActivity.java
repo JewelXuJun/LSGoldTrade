@@ -11,7 +11,11 @@ import com.jme.lsgoldtrade.R;
 import com.jme.lsgoldtrade.base.JMEBaseActivity;
 import com.jme.lsgoldtrade.config.Constants;
 import com.jme.lsgoldtrade.databinding.ActivityAccountSecurityBinding;
+import com.jme.lsgoldtrade.domain.OnlineTimeVo;
+import com.jme.lsgoldtrade.service.ManagementService;
 import com.jme.lsgoldtrade.view.ConfirmSimplePopupwindow;
+
+import java.util.HashMap;
 
 @Route(path = Constants.ARouterUriConst.ACCOUNTSECURITY)
 public class AccountSecurityActivity extends JMEBaseActivity {
@@ -57,8 +61,41 @@ public class AccountSecurityActivity extends JMEBaseActivity {
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+
+        getUserOnlineTime();
+    }
+
+    private void getUserOnlineTime() {
+        sendRequest(ManagementService.getInstance().getUserOnlineTime, new HashMap<>(), false);
+    }
+
+    @Override
     protected void DataReturn(DTRequest request, Head head, Object response) {
         super.DataReturn(request, head, response);
+
+        switch (request.getApi().getName()) {
+            case "GetUserOnlineTime":
+                if (head.isSuccess()) {
+                    OnlineTimeVo onlineTimeVo;
+
+                    try {
+                        onlineTimeVo = (OnlineTimeVo) response;
+                    } catch (Exception e) {
+                        onlineTimeVo = null;
+
+                        e.printStackTrace();
+                    }
+
+                    if (null == onlineTimeVo)
+                        return;
+
+                    mBinding.tvOnlineDuration.setText(onlineTimeVo.getTimeName());
+                }
+
+                break;
+        }
     }
 
     public class ClickHandlers {
