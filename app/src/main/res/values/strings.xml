@@ -393,6 +393,9 @@
     <string name="security_password_setting_success_message">为便于交易登陆您还可以设置指纹/手势密码</string>
     <string name="security_next_time">下次再说</string>
     <string name="security_goto_setting">前往设置</string>
+    <string name="security_forget_password">忘记密码?</string>
+    <string name="security_password_error_message">您已连续5次输错密码，请重置交易密码</string>
+    <string name="security_trading_password_reset">重置交易密码</string>
 
     <!-- News -->
     <string name="news_title">消息中心</string>

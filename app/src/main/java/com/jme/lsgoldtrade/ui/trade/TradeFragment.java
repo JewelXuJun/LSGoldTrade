@@ -264,8 +264,12 @@ public class TradeFragment extends JMEBaseFragment implements TabLayout.OnTabSel
                     if (TextUtils.isEmpty(hasSettingDigital))
                         return;
 
-                    if (hasSettingDigital.equals("N"))
+                    if (hasSettingDigital.equals("N")) {
                         RxBus.getInstance().post(Constants.RxBusConst.RXBUS_TRADING_PASSWORD_SETTING, null);
+                    } else {
+                        if (passwordInfoVo.getHasTimeout().equals("Y"))
+                            ARouter.getInstance().build(Constants.ARouterUriConst.UNLOCKTRADINGPASSWORD).navigation();
+                    }
                 }
 
                 break;

@@ -94,6 +94,7 @@
     <dimen name="margin_popupwindow">17dp</dimen>
     <dimen name="margin_trading_box_item">35dp</dimen>
     <dimen name="margin_recharge_type">160dp</dimen>
+    <dimen name="margin_forget_password">45dp</dimen>
 
     <dimen name="size_exiguity_tiny">7sp</dimen>
     <dimen name="size_exiguity">8sp</dimen>

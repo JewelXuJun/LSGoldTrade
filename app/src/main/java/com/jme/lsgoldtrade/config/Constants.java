@@ -129,6 +129,7 @@ public class Constants {
         public static final String RXBUS_ELECTRONICCARD_INOUT_SUCCESS = "electronicCardInoutSuccess";
         public static final String RXBUS_TRADING_PASSWORD_SETTING = "tradingPasswordSetting";
         public static final String RXBUS_TRADING_PASSWORD_SETTING_SUCCESS = "tradingPasswordSettingSuccess";
+        public static final String RXBUS_TRADING_PASSWORD_CANCEL = "tradingPasswordCancel";
     }
 
     public static final class Msg {
@@ -230,6 +231,7 @@ public class Constants {
         public static final String FINGERPRINT = "/AccountSecurityActivity/FingerprintActivity";
         public static final String GESTURE = "/AccountSecurityActivity/GestureActivity";
         public static final String ONLINEDURATION = "/AccountSecurityActivity/OnlineDurationActivity";
+        public static final String UNLOCKTRADINGPASSWORD = "/TradeFragment/UnlockTradingPasswordActivity";
     }
 
     public static final long SPLASH_DELAY_MILLIS = 2000;

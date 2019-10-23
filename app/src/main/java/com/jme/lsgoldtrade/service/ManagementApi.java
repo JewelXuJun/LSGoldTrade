@@ -152,5 +152,5 @@ public interface ManagementApi {
     Call<DTResponse> validateLoginPassword(@Body Map<String, String> map);
 
     @POST("/tjsmanage/infoapi/v1/android/tradeSafety/unlockTradePassword")
-    Call<DTResponse> unlockTradePassword(@QueryMap Map<String, String> map);
+    Call<DTResponse> unlockTradePassword(@Body Map<String, String> map);
 }

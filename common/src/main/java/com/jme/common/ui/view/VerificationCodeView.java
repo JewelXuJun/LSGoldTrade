@@ -143,6 +143,7 @@ public class VerificationCodeView extends RelativeLayout {
 
             if (tv.getText().toString().trim().equals("")) {
                 tv.setText(inputContent);
+
                 if (inputCompleteListener != null)
                     inputCompleteListener.inputComplete();
 
@@ -157,6 +158,7 @@ public class VerificationCodeView extends RelativeLayout {
 
             if (!tv.getText().toString().trim().equals("")) {
                 tv.setText("");
+
                 if (inputCompleteListener != null)
                     inputCompleteListener.deleteContent();
 
@@ -198,6 +200,7 @@ public class VerificationCodeView extends RelativeLayout {
     }
 
     public interface InputCompleteListener {
+
         void inputComplete();
 
         void deleteContent();
