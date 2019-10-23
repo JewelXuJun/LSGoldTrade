@@ -48,7 +48,7 @@ public class TradingPasswordSettingConfirmActivity extends JMEBaseActivity {
     protected void initView() {
         super.initView();
 
-        initToolbar(R.string.security_trading_password_setting, true);
+        initToolbar(R.string.security_trading_password_setting, false);
 
         tvClose = findViewById(R.id.tv_close);
         tvClose.setText(R.string.text_cancel);
@@ -162,7 +162,14 @@ public class TradingPasswordSettingConfirmActivity extends JMEBaseActivity {
                         if (null != mConfirmSimplePopupwindow && !mConfirmSimplePopupwindow.isShowing()) {
                             mConfirmSimplePopupwindow.setData(getResources().getString(R.string.security_password_setting_success),
                                     mContext.getResources().getString(R.string.text_confirm),
-                                    (view) -> mConfirmSimplePopupwindow.dismiss());
+                                    (view) -> {
+                                        RxBus.getInstance().post(Constants.RxBusConst.RXBUS_TRADE, null);
+                                        ARouter.getInstance().build(Constants.ARouterUriConst.MAIN).navigation();
+
+                                        mConfirmSimplePopupwindow.dismiss();
+
+                                        finish();
+                                    });
                             mConfirmSimplePopupwindow.showAtLocation(mBinding.verificationCodeView, Gravity.CENTER, 0, 0);
                         }
                     }
