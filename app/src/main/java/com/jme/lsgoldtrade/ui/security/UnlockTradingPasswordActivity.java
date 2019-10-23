@@ -84,6 +84,13 @@ public class UnlockTradingPasswordActivity extends JMEBaseActivity {
         mBinding.setHandlers(new ClickHandlers());
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        mBinding.tvErrorMessage.setText("");
+    }
+
     private void initRxBus() {
         mRxbus = RxBus.getInstance().toObserverable(RxBus.Message.class).subscribe(message -> {
             String callType = message.getObject().toString();
@@ -120,17 +127,6 @@ public class UnlockTradingPasswordActivity extends JMEBaseActivity {
                 } else {
                     mBinding.tvErrorMessage.setText(head.getMsg());
                     mBinding.verificationCodeView.clearInputContent();
-
-                    if (null != mConfirmSimplePopupwindow && !mConfirmSimplePopupwindow.isShowing()) {
-                        mConfirmSimplePopupwindow.setData(getResources().getString(R.string.security_password_error_message),
-                                getResources().getString(R.string.security_trading_password_reset),
-                                (view) -> {
-                                    ARouter.getInstance().build(Constants.ARouterUriConst.TRADINGPASSWORDVALIDATE).navigation();
-
-                                    mConfirmSimplePopupwindow.dismiss();
-                                });
-                        mConfirmSimplePopupwindow.showAtLocation(mBinding.tvErrorMessage, Gravity.CENTER, 0, 0);
-                    }
 
                     if (head.getCode().equals("-3001")) {
                         if (null != mConfirmSimplePopupwindow && !mConfirmSimplePopupwindow.isShowing()) {
