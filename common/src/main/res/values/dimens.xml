@@ -28,8 +28,8 @@
     <dimen name="common_item_height_big">60dp</dimen>
     <dimen name="common_item_height_large">64dp</dimen>
     <!--分隔线的宽度-->
-    <dimen name="common_line_width">1px</dimen>
-    <dimen name="common_line_height">1px</dimen>
+    <dimen name="common_line_width">1.5px</dimen>
+    <dimen name="common_line_height">1.5px</dimen>
     <dimen name="common_line_height_small">1dp</dimen>
     <dimen name="common_line_height_big">2dp</dimen>
 
