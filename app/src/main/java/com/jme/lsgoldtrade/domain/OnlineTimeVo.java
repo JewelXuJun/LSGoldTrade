@@ -16,7 +16,6 @@ public class OnlineTimeVo implements Serializable {
 
     private long timeSeconds;
 
-
     public String getId() {
         return id;
     }

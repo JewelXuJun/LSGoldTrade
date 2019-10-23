@@ -131,7 +131,7 @@ public interface ManagementApi {
     Call<DTResponse> getOnlineTimeList(@QueryMap Map<String, String> map);
 
     @POST("/tjsmanage/infoapi/v1/android/tradeSafety/setUserOnlineTime")
-    Call<DTResponse> setUserOnlineTime(@QueryMap Map<String, String> map);
+    Call<DTResponse> setUserOnlineTime(@Body Map<String, String> map);
 
     @GET("/tjsmanage/infoapi/v1/android/tradeSafety/getUserOnlineTime")
     Call<DTResponse> getUserOnlineTime(@QueryMap Map<String, String> map);
