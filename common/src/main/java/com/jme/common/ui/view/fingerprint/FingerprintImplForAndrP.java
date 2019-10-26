@@ -98,6 +98,7 @@ public class FingerprintImplForAndrP implements IFingerprint {
             if (fingerprintCallback != null) {
                 if (errorCode == 5) {//用户取消指纹验证，不必向用户抛提示信息
                     fingerprintCallback.onCancel();
+                    fingerprintCallback.onFailed("");
                     return;
                 }
             }
@@ -119,7 +120,7 @@ public class FingerprintImplForAndrP implements IFingerprint {
         public void onAuthenticationFailed() {
             super.onAuthenticationFailed();
             if (fingerprintCallback != null)
-                fingerprintCallback.onFailed();
+                fingerprintCallback.onFailed("");
         }
     };
 

@@ -1,6 +1,10 @@
 package com.jme.lsgoldtrade.ui.trade;
 
+import android.content.Context;
+import android.hardware.fingerprint.FingerprintManager;
+import android.os.Build;
 import android.os.Bundle;
+
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -47,7 +51,6 @@ public class TradeFragment extends JMEBaseFragment implements TabLayout.OnTabSel
     private String[] mTabTitles;
 
     private TabViewPagerAdapter mAdapter;
-
     private Subscription mRxbus;
 
     @Override
@@ -260,16 +263,47 @@ public class TradeFragment extends JMEBaseFragment implements TabLayout.OnTabSel
                     if (null == passwordInfoVo)
                         return;
 
+                    String hasTimeout = passwordInfoVo.getHasTimeout();
                     String hasSettingDigital = passwordInfoVo.getHasSettingDigital();
+                    String hasOpenFingerPrint = passwordInfoVo.getHasOpenFingerPrint();
+                    String hasOpenGestures = passwordInfoVo.getHasOpenGestures();
 
-                    if (TextUtils.isEmpty(hasSettingDigital))
-                        return;
-
-                    if (hasSettingDigital.equals("N")) {
+                    if (TextUtils.isEmpty(hasSettingDigital) || hasSettingDigital.equals("N")) {
                         RxBus.getInstance().post(Constants.RxBusConst.RXBUS_TRADING_PASSWORD_SETTING, null);
                     } else {
-                        if (passwordInfoVo.getHasTimeout().equals("Y"))
-                            ARouter.getInstance().build(Constants.ARouterUriConst.UNLOCKTRADINGPASSWORD).navigation();
+                        if (TextUtils.isEmpty(hasTimeout) || hasTimeout.equals("N"))
+                            return;
+
+                        int type = 1;
+
+                        if (!TextUtils.isEmpty(hasOpenFingerPrint) && hasOpenFingerPrint.equals("Y")) {
+                            boolean isCanUseFingerPrint = false;
+
+                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                                FingerprintManager manager = (FingerprintManager) mContext.getSystemService(Context.FINGERPRINT_SERVICE);
+
+                                if (manager.isHardwareDetected() && manager.hasEnrolledFingerprints())
+                                    isCanUseFingerPrint = true;
+                            }
+
+                            if (isCanUseFingerPrint) {
+                                type = 2;
+                            } else {
+                                if (!TextUtils.isEmpty(hasOpenGestures) && hasOpenGestures.equals("Y"))
+                                    type = 3;
+                                else
+                                    type = 1;
+                            }
+                        } else if (!TextUtils.isEmpty(hasOpenGestures) && hasOpenGestures.equals("Y")) {
+                            type = 3;
+                        } else if (passwordInfoVo.getHasTimeout().equals("Y")) {
+                            type = 1;
+                        }
+
+                        ARouter.getInstance()
+                                .build(Constants.ARouterUriConst.UNLOCKTRADINGPASSWORD)
+                                .withInt("Type", type)
+                                .navigation();
                     }
                 }
 

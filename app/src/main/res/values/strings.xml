@@ -385,6 +385,7 @@
     <string name="security_fingerprint_use">使用指纹登录</string>
     <string name="security_fingerprint_message">开启后可以使用Touch ID验证指纹快速完成交易界面登录，设置仅对本机生效。如需修改指纹，请在系统设置中操作。</string>
     <string name="security_fingerprint_not_set">您本机还没有设置指纹，请在系统设置中操作。</string>
+    <string name="security_fingerprint_click">点击指纹进行验证</string>
     <string name="security_gesture_setting">设置手势登录</string>
     <string name="security_gesture_use">使用手势登录</string>
     <string name="security_gesture_password_setting">设置手势密码</string>
@@ -399,6 +400,8 @@
     <string name="security_forget_password">忘记密码?</string>
     <string name="security_password_error_message">您已连续5次输错密码，请重置交易密码</string>
     <string name="security_trading_password_reset">重置交易密码</string>
+    <string name="security_trading_password_use">使用交易密码登录</string>
+    <string name="security_verify_fail">验证失败</string>
 
     <!-- News -->
     <string name="news_title">消息中心</string>

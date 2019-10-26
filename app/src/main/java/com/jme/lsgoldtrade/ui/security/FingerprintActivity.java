@@ -122,7 +122,7 @@ public class FingerprintActivity extends JMEBaseActivity {
             }
 
             @Override
-            public void onFailed() {
+            public void onFailed(String errorMessage) {
                 mErrorIndex++;
 
                 if (mErrorIndex == 3) {

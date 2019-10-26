@@ -97,8 +97,10 @@ public class FingerprintImplForAndrM implements IFingerprint {
         public void onAuthenticationError(int errMsgId, CharSequence errString) {
             super.onAuthenticationError(errMsgId, errString);
 
-            if (errMsgId != 5)//用户取消指纹验证
+            if (errMsgId != 5) {//用户取消指纹验证
                 fingerprintDialog.setTip(errString.toString(), R.color.black);
+                fingerprintCallback.onFailed(errString.toString());
+            }
         }
 
         @Override
@@ -122,7 +124,7 @@ public class FingerprintImplForAndrM implements IFingerprint {
             super.onAuthenticationFailed();
 
             fingerprintDialog.setTip(context.getString(R.string.fingerprint_verify_failed), R.color.fingerprint_fail);
-            fingerprintCallback.onFailed();
+            fingerprintCallback.onFailed(context.getString(R.string.fingerprint_verify_failed));
         }
     };
 

@@ -4,13 +4,19 @@ import android.content.Context;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.Gravity;
+import android.view.KeyEvent;
+import android.view.MotionEvent;
+import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.jme.common.network.DTRequest;
 import com.jme.common.network.Head;
 import com.jme.common.ui.view.VerificationCodeView;
+import com.jme.common.ui.view.fingerprint.FingerprintCallback;
+import com.jme.common.ui.view.fingerprint.FingerprintVerifyManager;
 import com.jme.common.util.RxBus;
 import com.jme.common.util.StatusBarUtil;
 import com.jme.lsgoldtrade.R;
@@ -30,6 +36,11 @@ public class UnlockTradingPasswordActivity extends JMEBaseActivity {
 
     private ActivityUnlockTradingPasswordBinding mBinding;
 
+    private int mType;
+    private int mErrorIndex = 0;
+    private boolean bFlag = false;
+
+    private FingerprintVerifyManager.Builder mBuilder;
     private ConfirmSimplePopupwindow mConfirmSimplePopupwindow;
     private Subscription mRxbus;
 
@@ -44,9 +55,17 @@ public class UnlockTradingPasswordActivity extends JMEBaseActivity {
 
         StatusBarUtil.setStatusBarMode(this, true, R.color.color_blue_deep);
 
+        mType = getIntent().getIntExtra("Type", 1);
+
+        mBuilder = new FingerprintVerifyManager.Builder(this);
+        mBuilder.enableAndroidP(false);
+
+        mBinding.layoutDigitalCipher.setVisibility(mType == 1 ? View.VISIBLE : View.GONE);
+        mBinding.layoutFingerprint.setVisibility(mType == 2 ? View.VISIBLE : View.GONE);
+
         mConfirmSimplePopupwindow = new ConfirmSimplePopupwindow(this);
-        mConfirmSimplePopupwindow.setOutsideTouchable(true);
-        mConfirmSimplePopupwindow.setFocusable(true);
+        mConfirmSimplePopupwindow.setOutsideTouchable(false);
+        mConfirmSimplePopupwindow.setFocusable(false);
     }
 
     @Override
@@ -74,6 +93,63 @@ public class UnlockTradingPasswordActivity extends JMEBaseActivity {
 
             }
         });
+
+        mBuilder.callback(new FingerprintCallback() {
+            @Override
+            public void onHwUnavailable() {
+
+            }
+
+            @Override
+            public void onNoneEnrolled() {
+
+            }
+
+            @Override
+            public void onSucceeded() {
+                unlockTradePassword("", "2");
+            }
+
+            @Override
+            public void onFailed(String errorMessage) {
+                mErrorIndex++;
+
+                if (errorMessage.equals(getResources().getString(R.string.fingerprint_verify_failed))) {
+                    if (mErrorIndex == 3) {
+                        mBuilder.dismiss();
+
+                        if (null != mConfirmSimplePopupwindow && !mConfirmSimplePopupwindow.isShowing()) {
+                            mConfirmSimplePopupwindow.setData(getResources().getString(R.string.security_verify_fail),
+                                    getResources().getString(R.string.text_confirm),
+                                    (view) -> {
+                                        mErrorIndex = 0;
+
+                                        mConfirmSimplePopupwindow.dismiss();
+                                    });
+                            mConfirmSimplePopupwindow.showAtLocation(mBinding.tvErrorMessage, Gravity.CENTER, 0, 0);
+                        }
+                    }
+                } else {
+                    bFlag = true;
+                }
+
+            }
+
+            @Override
+            public void onCancel() {
+                if (bFlag) {
+                    mBinding.layoutDigitalCipher.setVisibility(View.VISIBLE);
+                    mBinding.layoutFingerprint.setVisibility(View.GONE);
+
+                    mType = 1;
+
+                    updatePasswordOpenStatus("2", "N");
+                }
+            }
+        });
+
+        if (mType == 2)
+            mBuilder.build();
     }
 
     @Override
@@ -113,7 +189,15 @@ public class UnlockTradingPasswordActivity extends JMEBaseActivity {
         params.put("password", AESUtil.encryptString2Base64(password, "0J4S9B5C0J4S9B5C", "16-Bytes--String").trim());
         params.put("passwordType", type);
 
-        sendRequest(ManagementService.getInstance().unlockTradePassword, params, true, false, false);
+        sendRequest(ManagementService.getInstance().unlockTradePassword, params, true, false, true);
+    }
+
+    private void updatePasswordOpenStatus(String passwordType, String status) {
+        HashMap<String, String> params = new HashMap<>();
+        params.put("passwordType", passwordType);
+        params.put("status", status);
+
+        sendRequest(ManagementService.getInstance().updatePasswordOpenStatus, params, true);
     }
 
     @Override
@@ -160,6 +244,15 @@ public class UnlockTradingPasswordActivity extends JMEBaseActivity {
             ARouter.getInstance().build(Constants.ARouterUriConst.TRADINGPASSWORDVALIDATE).navigation();
         }
 
+        public void onClickFingerPrint() {
+            mBuilder.build();
+        }
+
+        public void onClickUseTradingPassword() {
+            mBinding.layoutDigitalCipher.setVisibility(View.VISIBLE);
+            mBinding.layoutFingerprint.setVisibility(View.GONE);
+        }
+
     }
 
     private void hiddenKeyBoard() {
@@ -173,6 +266,29 @@ public class UnlockTradingPasswordActivity extends JMEBaseActivity {
 
         if (!mRxbus.isUnsubscribed())
             mRxbus.unsubscribe();
+    }
+
+    @Override
+    public boolean dispatchTouchEvent(MotionEvent event) {
+        if (null != mConfirmSimplePopupwindow && mConfirmSimplePopupwindow.isShowing())
+            return false;
+
+        return super.dispatchTouchEvent(event);
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (KeyEvent.KEYCODE_BACK == keyCode) {
+            hiddenKeyBoard();
+
+            RxBus.getInstance().post(Constants.RxBusConst.RXBUS_TRADING_PASSWORD_CANCEL, null);
+
+            finish();
+
+            return true;
+        }
+
+        return super.onKeyDown(keyCode, event);
     }
 
 }

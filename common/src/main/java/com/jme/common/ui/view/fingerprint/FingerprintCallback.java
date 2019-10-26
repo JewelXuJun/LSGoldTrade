@@ -24,7 +24,7 @@ public interface FingerprintCallback {
     /**
      * 验证失败
      */
-    void onFailed();
+    void onFailed(String errorMessage);
 
     /**
      * 取消验证
