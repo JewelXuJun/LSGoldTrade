@@ -124,7 +124,7 @@ public class JMEBasePopupWindow extends PopupWindow {
 
             setWindowBackgroundAlpha(alpha);
         });
-        animator.setDuration(360);
+        animator.setDuration(100);
 
         return animator;
     }
@@ -136,7 +136,7 @@ public class JMEBasePopupWindow extends PopupWindow {
 
             setWindowBackgroundAlpha(alpha);
         });
-        animator.setDuration(320);
+        animator.setDuration(100);
 
         return animator;
     }

@@ -140,7 +140,7 @@ public interface ManagementApi {
     Call<DTResponse> getUserPasswordSettingInfo(@QueryMap Map<String, String> map);
 
     @POST("/tjsmanage/infoapi/v1/android/tradeSafety/updatePasswordOpenStatus")
-    Call<DTResponse> updatePasswordOpenStatus(@QueryMap Map<String, String> map);
+    Call<DTResponse> updatePasswordOpenStatus(@Body Map<String, String> map);
 
     @POST("/tjsmanage/infoapi/v1/android/tradeSafety/setTradePassword")
     Call<DTResponse> setTradePassword(@Body Map<String, String> map);

@@ -374,6 +374,8 @@
     <string name="security_online_duration">在线时长</string>
     <string name="security_enable">已启用</string>
     <string name="security_not_enable">未启用</string>
+    <string name="security_enable_success">启用成功</string>
+    <string name="security_enable_fail">验证失败，未能开启指纹登录</string>
     <string name="security_account_security_tips">该交易账号是用于您在泰金所APP或者PC客户端登录的交易账号</string>
     <string name="security_password">登录密码</string>
     <string name="security_password_input">请输入6位数字交易密码</string>
@@ -382,6 +384,7 @@
     <string name="security_fingerprint_setting">设置指纹登录</string>
     <string name="security_fingerprint_use">使用指纹登录</string>
     <string name="security_fingerprint_message">开启后可以使用Touch ID验证指纹快速完成交易界面登录，设置仅对本机生效。如需修改指纹，请在系统设置中操作。</string>
+    <string name="security_fingerprint_not_set">您本机还没有设置指纹，请在系统设置中操作。</string>
     <string name="security_gesture_setting">设置手势登录</string>
     <string name="security_gesture_use">使用手势登录</string>
     <string name="security_gesture_password_setting">设置手势密码</string>

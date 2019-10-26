@@ -1,7 +1,12 @@
 package com.jme.lsgoldtrade.ui.security;
 
+import android.content.Context;
+import android.hardware.fingerprint.FingerprintManager;
+import android.os.Build;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.Gravity;
+import android.view.View;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
@@ -12,6 +17,7 @@ import com.jme.lsgoldtrade.base.JMEBaseActivity;
 import com.jme.lsgoldtrade.config.Constants;
 import com.jme.lsgoldtrade.databinding.ActivityAccountSecurityBinding;
 import com.jme.lsgoldtrade.domain.OnlineTimeVo;
+import com.jme.lsgoldtrade.domain.PasswordInfoVo;
 import com.jme.lsgoldtrade.service.ManagementService;
 import com.jme.lsgoldtrade.view.ConfirmSimplePopupwindow;
 
@@ -22,6 +28,7 @@ public class AccountSecurityActivity extends JMEBaseActivity {
 
     private ActivityAccountSecurityBinding mBinding;
 
+    private FingerprintManager mManager;
     private ConfirmSimplePopupwindow mConfirmSimplePopupwindow;
 
     @Override
@@ -44,6 +51,14 @@ public class AccountSecurityActivity extends JMEBaseActivity {
     protected void initData(Bundle savedInstanceState) {
         super.initData(savedInstanceState);
 
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            mManager = (FingerprintManager) getSystemService(Context.FINGERPRINT_SERVICE);
+
+            mBinding.layoutFingerprint.setVisibility(mManager.isHardwareDetected() ? View.VISIBLE : View.GONE);
+        } else {
+            mBinding.layoutFingerprint.setVisibility(View.GONE);
+        }
+
         mBinding.tvAccount.setText(null == mUser || !mUser.isLogin() ? "" : mUser.getTraderId());
     }
 
@@ -64,7 +79,12 @@ public class AccountSecurityActivity extends JMEBaseActivity {
     protected void onResume() {
         super.onResume();
 
+        getUserPasswordSettingInfo();
         getUserOnlineTime();
+    }
+
+    private void getUserPasswordSettingInfo() {
+        sendRequest(ManagementService.getInstance().getUserPasswordSettingInfo, new HashMap<>(), true);
     }
 
     private void getUserOnlineTime() {
@@ -76,6 +96,31 @@ public class AccountSecurityActivity extends JMEBaseActivity {
         super.DataReturn(request, head, response);
 
         switch (request.getApi().getName()) {
+            case "GetUserPasswordSettingInfo":
+                if (head.isSuccess()) {
+                    PasswordInfoVo passwordInfoVo;
+
+                    try {
+                        passwordInfoVo = (PasswordInfoVo) response;
+                    } catch (Exception e) {
+                        passwordInfoVo = null;
+
+                        e.printStackTrace();
+                    }
+
+                    if (null == passwordInfoVo)
+                        return;
+
+                    String hasOpenFingerPrint = passwordInfoVo.getHasOpenFingerPrint();
+                    String hasOpenGestures = passwordInfoVo.getHasOpenGestures();
+
+                    mBinding.tvFingerprintStatus.setText(TextUtils.isEmpty(hasOpenFingerPrint) ? R.string.security_not_enable
+                            : hasOpenFingerPrint.equals("Y") ? R.string.security_enable : R.string.security_not_enable);
+                    mBinding.tvGestureStatus.setText(TextUtils.isEmpty(hasOpenGestures) ? R.string.security_not_enable
+                            : hasOpenGestures.equals("Y") ? R.string.security_enable : R.string.security_not_enable);
+                }
+
+                break;
             case "GetUserOnlineTime":
                 if (head.isSuccess()) {
                     OnlineTimeVo onlineTimeVo;

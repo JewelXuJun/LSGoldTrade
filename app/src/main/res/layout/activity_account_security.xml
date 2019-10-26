@@ -93,40 +93,48 @@
 
             <include layout="@layout/item_line_vertical" />
 
-            <RelativeLayout
+            <LinearLayout
+                android:id="@+id/layout_fingerprint"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/height_item_normal"
-                android:onClick="@{() -> handlers.onClickFingerprint()}">
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:text="@string/security_login_fingerprint"
-                    android:textColor="@color/color_text_normal"
-                    android:textSize="@dimen/size_normal" />
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/height_item_normal"
+                    android:onClick="@{() -> handlers.onClickFingerprint()}">
 
-                <ImageView
-                    android:id="@+id/img_login_fingerprint"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:background="@mipmap/ic_next" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:text="@string/security_login_fingerprint"
+                        android:textColor="@color/color_text_normal"
+                        android:textSize="@dimen/size_normal" />
 
-                <TextView
-                    android:id="@+id/tv_login_fingerprint_status"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:textSize="@dimen/size_normal"
-                    android:textColor="@color/color_text_normal"
-                    android:layout_marginRight="@dimen/common_area_margin_tiny"
-                    android:layout_toLeftOf="@+id/img_login_fingerprint"/>
+                    <ImageView
+                        android:id="@+id/img_login_fingerprint"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:background="@mipmap/ic_next" />
 
-            </RelativeLayout>
+                    <TextView
+                        android:id="@+id/tv_fingerprint_status"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="@dimen/common_area_margin_tiny"
+                        android:layout_toLeftOf="@+id/img_login_fingerprint"
+                        android:textColor="@color/color_text_normal"
+                        android:textSize="@dimen/size_normal" />
 
-            <include layout="@layout/item_line_vertical" />
+                </RelativeLayout>
+
+                <include layout="@layout/item_line_vertical" />
+
+            </LinearLayout>
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -150,14 +158,14 @@
                     android:background="@mipmap/ic_next" />
 
                 <TextView
-                    android:id="@+id/tv_login_gesture_status"
+                    android:id="@+id/tv_gesture_status"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:textSize="@dimen/size_normal"
-                    android:textColor="@color/color_text_normal"
                     android:layout_marginRight="@dimen/common_area_margin_tiny"
-                    android:layout_toLeftOf="@+id/img_login_gesture"/>
+                    android:layout_toLeftOf="@+id/img_login_gesture"
+                    android:textColor="@color/color_text_normal"
+                    android:textSize="@dimen/size_normal" />
 
             </RelativeLayout>
 
@@ -189,10 +197,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:textSize="@dimen/size_normal"
-                    android:textColor="@color/color_text_normal"
                     android:layout_marginRight="@dimen/common_area_margin_tiny"
-                    android:layout_toLeftOf="@+id/img_online_duration"/>
+                    android:layout_toLeftOf="@+id/img_online_duration"
+                    android:textColor="@color/color_text_normal"
+                    android:textSize="@dimen/size_normal" />
 
             </RelativeLayout>
 
