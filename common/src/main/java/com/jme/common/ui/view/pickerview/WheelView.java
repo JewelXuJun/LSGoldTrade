@@ -7,13 +7,14 @@ import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.Typeface;
 import android.os.Handler;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.GestureDetector;
 import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
+
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.jme.common.R;
 

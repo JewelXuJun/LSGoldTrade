@@ -1,11 +1,12 @@
 package com.jme.lsgoldtrade.ui.trade;
 
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.Gravity;
+
+import androidx.annotation.NonNull;
 
 import com.jme.common.network.DTRequest;
 import com.jme.common.network.Head;

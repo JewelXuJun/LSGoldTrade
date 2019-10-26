@@ -3,8 +3,9 @@ package com.jme.lsgoldtrade.ui.trade;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.support.v7.widget.LinearLayoutManager;
 import android.text.TextUtils;
+
+import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.jme.common.network.DTRequest;

@@ -2,7 +2,7 @@ package com.jme.lsgoldtrade.ui.tradingbox;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.support.v4.content.ContextCompat;
+import androidx.core.content.ContextCompat;
 import android.text.Editable;
 import android.text.SpannableString;
 import android.text.Spanned;

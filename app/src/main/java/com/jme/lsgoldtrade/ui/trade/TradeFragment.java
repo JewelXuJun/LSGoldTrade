@@ -1,11 +1,11 @@
 package com.jme.lsgoldtrade.ui.trade;
 
 import android.os.Bundle;
-import android.support.design.widget.TabLayout;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.content.ContextCompat;
+import androidx.core.content.ContextCompat;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentPagerAdapter;
+
 import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.TextPaint;
@@ -16,6 +16,7 @@ import android.text.style.ForegroundColorSpan;
 import android.view.View;
 
 import com.alibaba.android.arouter.launcher.ARouter;
+import com.google.android.material.tabs.TabLayout;
 import com.jme.common.network.DTRequest;
 import com.jme.common.network.Head;
 import com.jme.common.util.RxBus;

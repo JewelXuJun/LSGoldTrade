@@ -3,13 +3,14 @@ package com.jme.lsgoldtrade.ui.trade;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.Base64;
 import android.view.View;
 import android.widget.EditText;
+
+import androidx.annotation.NonNull;
 
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.jme.common.network.DTRequest;

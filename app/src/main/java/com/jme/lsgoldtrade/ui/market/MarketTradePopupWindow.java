@@ -1,7 +1,7 @@
 package com.jme.lsgoldtrade.ui.market;
 
 import android.content.Context;
-import android.databinding.DataBindingUtil;
+import androidx.databinding.DataBindingUtil;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;

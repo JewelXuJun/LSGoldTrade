@@ -1,7 +1,7 @@
 package com.jme.lsgoldtrade.ui.trade;
 
 import android.os.Bundle;
-import android.support.v4.content.ContextCompat;
+import androidx.core.content.ContextCompat;
 import android.text.Editable;
 import android.text.SpannableString;
 import android.text.Spanned;
@@ -10,7 +10,6 @@ import android.text.TextWatcher;
 import android.text.method.LinkMovementMethod;
 import android.text.style.ForegroundColorSpan;
 import android.view.Gravity;
-import android.widget.EditText;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.jme.common.network.DTRequest;

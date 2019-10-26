@@ -1,15 +1,16 @@
 package com.jme.lsgoldtrade.ui.market;
 
 import android.os.Bundle;
-import android.support.design.widget.TabLayout;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
 import android.text.TextUtils;
 import android.view.Gravity;
 
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentPagerAdapter;
+
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
+import com.google.android.material.tabs.TabLayout;
 import com.jme.common.network.DTRequest;
 import com.jme.common.network.Head;
 import com.jme.common.util.RxBus;

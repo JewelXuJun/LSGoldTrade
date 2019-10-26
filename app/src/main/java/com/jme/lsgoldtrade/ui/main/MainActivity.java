@@ -2,7 +2,6 @@ package com.jme.lsgoldtrade.ui.main;
 
 import android.Manifest;
 import android.app.ProgressDialog;
-import android.app.Service;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -17,23 +16,23 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.support.design.widget.Snackbar;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
-import android.support.v4.content.FileProvider;
-import android.support.v4.content.LocalBroadcastManager;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+import androidx.core.content.FileProvider;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
+
 import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.TabHost;
 import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
+import com.google.android.material.snackbar.Snackbar;
 import com.jme.common.network.DTRequest;
 import com.jme.common.network.Head;
 import com.jme.common.util.AppInfoUtil;
@@ -54,7 +53,6 @@ import com.jme.lsgoldtrade.domain.ProtocolVo;
 import com.jme.lsgoldtrade.domain.UpdateInfoVo;
 import com.jme.lsgoldtrade.service.ManagementService;
 import com.jme.lsgoldtrade.service.TradeService;
-import com.jme.lsgoldtrade.service.UserService;
 import com.jme.lsgoldtrade.tabhost.MainTab;
 import com.jme.lsgoldtrade.view.ConfirmSimplePopupwindow;
 
@@ -770,7 +768,7 @@ public class MainActivity extends JMEBaseActivity implements TabHost.OnTabChange
                 snackbar.setAction(getString(R.string.text_cancel), v -> exitTime = 0)
                         .setActionTextColor(ContextCompat.getColor(this, R.color.white));
                 View snakebarView = snackbar.getView();
-                TextView textView = snakebarView.findViewById(android.support.design.R.id.snackbar_text);
+                TextView textView = snakebarView.findViewById(R.id.snackbar_text);
                 textView.setTextColor(getResources().getColor(R.color.white));
                 snackbar.show();
 

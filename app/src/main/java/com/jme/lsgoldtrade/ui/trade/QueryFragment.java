@@ -3,7 +3,8 @@ package com.jme.lsgoldtrade.ui.trade;
 import android.annotation.TargetApi;
 import android.app.DatePickerDialog;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
+
+import androidx.annotation.NonNull;
 
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.jme.common.network.DTRequest;

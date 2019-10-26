@@ -1,7 +1,6 @@
 package com.jme.lsgoldtrade.ui.personal;
 
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.util.DisplayMetrics;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +9,8 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.heaven7.android.dragflowlayout.DragAdapter;

@@ -1,11 +1,10 @@
 package com.jme.lsgoldtrade.ui.tradingbox;
 
 import android.content.Context;
-import android.databinding.DataBindingUtil;
-import android.text.Html;
+import androidx.databinding.DataBindingUtil;
+
 import android.text.SpannableString;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
 
 import com.jme.lsgoldtrade.R;

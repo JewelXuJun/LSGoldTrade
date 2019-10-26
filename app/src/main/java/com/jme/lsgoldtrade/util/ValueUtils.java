@@ -1,8 +1,9 @@
 package com.jme.lsgoldtrade.util;
 
-import android.support.annotation.NonNull;
 import android.text.TextUtils;
 import android.util.Log;
+
+import androidx.annotation.NonNull;
 
 import java.net.Inet4Address;
 import java.net.InetAddress;

@@ -1,8 +1,9 @@
 package com.jme.lsgoldtrade.ui.personal;
 
 import android.app.Activity;
-import android.support.annotation.Nullable;
-import android.support.v4.content.ContextCompat;
+
+import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.TextPaint;

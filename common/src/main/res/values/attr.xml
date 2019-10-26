@@ -34,13 +34,6 @@
         <attr name="pickerview_dividerColor" format="color" />
     </declare-styleable>
 
-    <declare-styleable name="NiceSpinner">
-        <attr name="arrowTint" format="color" />
-        <attr name="hideArrow" format="boolean" />
-        <attr name="backgroundSelector" format="integer" />
-        <attr name="textTint" format="color" />
-    </declare-styleable>
-
     <!-- 自定义验证码输入框-->
     <declare-styleable name="VerificationCodeView">
         <!--输入框的数量-->

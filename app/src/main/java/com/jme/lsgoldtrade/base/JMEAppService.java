@@ -1,7 +1,6 @@
 package com.jme.lsgoldtrade.base;
 
 import android.app.ActivityManager;
-import android.app.Dialog;
 import android.app.Service;
 import android.content.ComponentName;
 import android.content.Context;
@@ -9,18 +8,16 @@ import android.content.Intent;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.Message;
-import android.support.annotation.Nullable;
 import android.text.TextUtils;
 
-import com.alibaba.android.arouter.launcher.ARouter;
+import androidx.annotation.Nullable;
+
 import com.jme.common.network.AsynCommon;
 import com.jme.common.network.DTRequest;
 import com.jme.common.network.Head;
 import com.jme.common.network.OnResultListener;
-import com.jme.common.util.DialogHelp;
 import com.jme.common.util.RxBus;
 import com.jme.common.util.SharedPreUtils;
-import com.jme.lsgoldtrade.R;
 import com.jme.lsgoldtrade.config.AppConfig;
 import com.jme.lsgoldtrade.config.Constants;
 import com.jme.lsgoldtrade.config.User;

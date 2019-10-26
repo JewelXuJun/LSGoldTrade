@@ -4,7 +4,8 @@ package com.github.mikephil.charting.data;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.Typeface;
-import android.support.annotation.ColorInt;
+
+import androidx.annotation.ColorInt;
 
 import com.github.mikephil.charting.components.YAxis.AxisDependency;
 import com.github.mikephil.charting.formatter.DefaultValueFormatter;
@@ -794,7 +795,8 @@ public abstract class DataSet<T extends Entry> {
      * @param index
      * @return
      */
-    public @ColorInt int getColor(int index) {
+    public @ColorInt
+    int getColor(int index) {
         return mColors.get(index % mColors.size());
     }
 

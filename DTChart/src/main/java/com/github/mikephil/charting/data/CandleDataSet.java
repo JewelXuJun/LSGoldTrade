@@ -2,7 +2,8 @@
 package com.github.mikephil.charting.data;
 
 import android.graphics.Paint;
-import android.support.annotation.ColorInt;
+
+import androidx.annotation.ColorInt;
 
 import com.github.mikephil.charting.utils.ColorTemplate;
 import com.github.mikephil.charting.utils.Utils;
@@ -195,7 +196,8 @@ public class CandleDataSet extends LineScatterCandleRadarDataSet<CandleEntry> {
      *
      * @return
      */
-    public @ColorInt int getDecreasingColor() {
+    public @ColorInt
+    int getDecreasingColor() {
         return mDecreasingColor;
     }
     

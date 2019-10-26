@@ -4,12 +4,9 @@ import android.graphics.Bitmap;
 import android.net.http.SslError;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.design.widget.TabLayout;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.content.ContextCompat;
-import android.text.TextUtils;
+
+import androidx.core.content.ContextCompat;
+
 import android.webkit.SslErrorHandler;
 import android.webkit.WebResourceError;
 import android.webkit.WebResourceRequest;
@@ -18,19 +15,10 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
-import com.jme.common.util.AppManager;
-import com.jme.common.util.RxBus;
-import com.jme.common.util.StatusBarUtil;
 import com.jme.lsgoldtrade.R;
 import com.jme.lsgoldtrade.base.JMEBaseActivity;
 import com.jme.lsgoldtrade.config.Constants;
 import com.jme.lsgoldtrade.databinding.ActivityEconomicCalendarBinding;
-import com.jme.lsgoldtrade.ui.trade.CancelOrderFragment;
-import com.jme.lsgoldtrade.ui.trade.DeclarationFormFragment;
-import com.jme.lsgoldtrade.ui.trade.HoldPositionFragment;
-import com.jme.lsgoldtrade.ui.trade.QueryFragment;
-
-import rx.Subscription;
 
 /**
  * 财经日历

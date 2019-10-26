@@ -3,10 +3,11 @@ package com.jme.lsgoldtrade.ui.trade;
 import android.annotation.TargetApi;
 import android.app.DatePickerDialog;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.v7.widget.LinearLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
+
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.jme.common.network.DTRequest;

@@ -1,7 +1,7 @@
 package com.jme.lsgoldtrade.view;
 
 import android.content.Context;
-import android.databinding.DataBindingUtil;
+import androidx.databinding.DataBindingUtil;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,7 +9,6 @@ import android.view.ViewGroup;
 import com.jme.common.util.DensityUtil;
 import com.jme.lsgoldtrade.R;
 import com.jme.lsgoldtrade.base.JMEBasePopupWindow;
-import com.jme.lsgoldtrade.databinding.PopupwindowConfirmBinding;
 import com.jme.lsgoldtrade.databinding.PopupwindowConfirmSimpleBinding;
 
 public class ConfirmSimplePopupwindow extends JMEBasePopupWindow {

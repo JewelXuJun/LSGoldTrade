@@ -3,10 +3,11 @@ package com.jme.lsgoldtrade.ui.trade;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.support.annotation.NonNull;
-import android.support.v7.widget.LinearLayoutManager;
 import android.text.TextUtils;
 import android.view.Gravity;
+
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.chad.library.adapter.base.BaseQuickAdapter;
