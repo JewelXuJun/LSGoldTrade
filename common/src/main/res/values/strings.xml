@@ -8,7 +8,8 @@
     <string name="text_loading_overtime">加载页面超时</string>
 
     <string name="fingerprint_verification">指纹验证</string>
-    <string name="fingerprint_verify">请验证您的指纹</string>
+    <string name="fingerprint_verify">“泰金所”的触控ID</string>
+    <string name="fingerprint_verify_message">轻触验证已有手机指纹</string>
     <string name="fingerprint_verify_success">验证通过</string>
     <string name="fingerprint_verify_failed">验证失败</string>
     <string name="fingerprint_cancel">取消</string>

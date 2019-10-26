@@ -23,11 +23,20 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/common_area_margin"
-            android:layout_marginBottom="@dimen/common_area_margin_big"
             android:gravity="center"
             android:text="@string/fingerprint_verify"
             android:textColor="@color/black"
             android:textSize="15sp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/common_area_margin"
+            android:layout_marginBottom="@dimen/common_area_margin_big"
+            android:gravity="center"
+            android:text="@string/fingerprint_verify_message"
+            android:textColor="@color/gray"
+            android:textSize="@dimen/common_font_size_tiny" />
 
         <TextView
             android:layout_width="match_parent"
