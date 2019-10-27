@@ -123,7 +123,7 @@ public class FingerprintImplForAndrM implements IFingerprint {
         public void onAuthenticationFailed() {
             super.onAuthenticationFailed();
 
-            fingerprintDialog.setTip(context.getString(R.string.fingerprint_verify_failed), R.color.fingerprint_fail);
+            fingerprintDialog.setTip(context.getString(R.string.fingerprint_verify_failed), R.color.black);
             fingerprintCallback.onFailed(context.getString(R.string.fingerprint_verify_failed));
         }
     };
