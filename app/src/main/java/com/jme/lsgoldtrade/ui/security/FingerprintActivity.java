@@ -170,6 +170,8 @@ public class FingerprintActivity extends JMEBaseActivity {
     protected void onResume() {
         super.onResume();
 
+        bFlag = true;
+
         getUserPasswordSettingInfo();
     }
 
