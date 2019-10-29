@@ -406,6 +406,7 @@
     <string name="security_trading_password_reset">重置交易密码</string>
     <string name="security_trading_password_use">使用交易密码登录</string>
     <string name="security_verify_fail">验证失败</string>
+    <string name="security_verify_success">验证通过</string>
 
     <!-- News -->
     <string name="news_title">消息中心</string>

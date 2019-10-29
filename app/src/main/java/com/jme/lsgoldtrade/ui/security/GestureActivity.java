@@ -133,7 +133,7 @@ public class GestureActivity extends JMEBaseActivity {
     public class ClickHandlers {
 
         public void onClickGesturePassword() {
-
+            ARouter.getInstance().build(Constants.ARouterUriConst.GESTURESETTINGVALIDATE).navigation();
         }
 
     }

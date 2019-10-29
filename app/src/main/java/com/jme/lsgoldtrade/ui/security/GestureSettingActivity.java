@@ -15,6 +15,7 @@ import com.github.ihsg.patternlocker.OnPatternChangeListener;
 import com.github.ihsg.patternlocker.PatternLockerView;
 import com.jme.common.network.DTRequest;
 import com.jme.common.network.Head;
+import com.jme.common.util.RxBus;
 import com.jme.lsgoldtrade.R;
 import com.jme.lsgoldtrade.base.JMEBaseActivity;
 import com.jme.lsgoldtrade.config.Constants;
@@ -172,6 +173,8 @@ public class GestureSettingActivity extends JMEBaseActivity {
                                 getResources().getString(R.string.text_confirm),
                                 (view) -> {
                                     mConfirmSimplePopupwindow.dismiss();
+
+                                    RxBus.getInstance().post(Constants.RxBusConst.RXBUS_GESTURU_MODIFY_SUCCESS, null);
 
                                     finish();
                                 });

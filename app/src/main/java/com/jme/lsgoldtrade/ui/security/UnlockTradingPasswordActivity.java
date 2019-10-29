@@ -189,7 +189,7 @@ public class UnlockTradingPasswordActivity extends JMEBaseActivity {
         params.put("password", AESUtil.encryptString2Base64(password, "0J4S9B5C0J4S9B5C", "16-Bytes--String").trim());
         params.put("passwordType", type);
 
-        sendRequest(ManagementService.getInstance().unlockTradePassword, params, true, false, true);
+        sendRequest(ManagementService.getInstance().unlockTradePassword, params, true, false, false);
     }
 
     private void updatePasswordOpenStatus(String passwordType, String status) {
