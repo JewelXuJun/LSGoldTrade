@@ -387,8 +387,13 @@
     <string name="security_fingerprint_not_set">您本机还没有设置指纹，请在系统设置中操作。</string>
     <string name="security_fingerprint_click">点击指纹进行验证</string>
     <string name="security_gesture_setting">设置手势登录</string>
+    <string name="security_gesture_password_setting">设置手势密码</string>
     <string name="security_gesture_use">使用手势登录</string>
     <string name="security_gesture_password_modify">修改手势密码</string>
+    <string name="security_gesture_password_message">请绘制解锁图案，至少连接4个点</string>
+    <string name="security_gesture_password_error_point">至少连接4个点，请重新绘制</string>
+    <string name="security_gesture_password_too">请再次绘制解锁图案</string>
+    <string name="security_gesture_password_again">手势不一致，请重新绘制</string>
     <string name="security_duration_message">如果应用在后台超过设定的时间未发生操作，再次打开交易界面需要验证后登录。</string>
     <string name="security_setting_tips">为保证您的交易资金安全，请您先设置交易密码</string>
     <string name="security_password_not_the_same">两次输入的密码不一致，请重新输入</string>

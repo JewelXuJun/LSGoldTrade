@@ -1,4 +1,5 @@
 apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
 
 def releaseTime() {
     return new Date().format("yyyy-MM-dd", TimeZone.getTimeZone("UTC"))
@@ -141,6 +142,8 @@ dependencies {
     implementation 'com.yanzhenjie.alertdialog:alertdialog:1.0.1'
     implementation 'com.getui:sdk:2.13.2.0'
     implementation 'com.heaven7.android.dragflowlayout:dragflowlayout:1.8.8'
+    implementation 'com.github.ihsg:PatternLocker:2.5.4'
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlinVersion"
 
     // 支付宝 SDK AAR 包所需的配置
     implementation (name: 'alipaySdk-15.6.4-20190611174341', ext: 'aar')

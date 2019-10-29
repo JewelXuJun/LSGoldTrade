@@ -230,6 +230,7 @@ public class Constants {
         public static final String TRADINGPASSWORDSETTINGCONFIRM = "/TradingPasswordSettingActivity/TradingPasswordSettingConfirmActivity";
         public static final String FINGERPRINT = "/AccountSecurityActivity/FingerprintActivity";
         public static final String GESTURE = "/AccountSecurityActivity/GestureActivity";
+        public static final String GESTURESETTING = "/GestureActivity/GestureSettingActivity";
         public static final String ONLINEDURATION = "/AccountSecurityActivity/OnlineDurationActivity";
         public static final String UNLOCKTRADINGPASSWORD = "/TradeFragment/UnlockTradingPasswordActivity";
     }

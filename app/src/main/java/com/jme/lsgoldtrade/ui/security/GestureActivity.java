@@ -5,6 +5,7 @@ import android.text.TextUtils;
 import android.view.View;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
+import com.alibaba.android.arouter.launcher.ARouter;
 import com.jme.common.network.DTRequest;
 import com.jme.common.network.Head;
 import com.jme.lsgoldtrade.R;
@@ -22,6 +23,7 @@ public class GestureActivity extends JMEBaseActivity {
     private ActivityGestureBinding mBinding;
 
     private boolean bFlag = true;
+    private String mHasSettingGestures;
 
     @Override
     protected int getContentViewId() {
@@ -47,6 +49,16 @@ public class GestureActivity extends JMEBaseActivity {
         mBinding.switchView.setOnCheckedChangeListener((buttonView, isChecked) -> {
             if (bFlag)
                 return;
+
+            if (isChecked) {
+                if (TextUtils.isEmpty(mHasSettingGestures) || mHasSettingGestures.equalsIgnoreCase("N"))
+                    ARouter.getInstance().build(Constants.ARouterUriConst.GESTURESETTING).navigation();
+                else
+                    updatePasswordOpenStatus("Y");
+            } else {
+                if (!TextUtils.isEmpty(mHasSettingGestures) && mHasSettingGestures.equalsIgnoreCase("Y"))
+                    updatePasswordOpenStatus("N");
+            }
         });
     }
 
@@ -71,6 +83,14 @@ public class GestureActivity extends JMEBaseActivity {
         sendRequest(ManagementService.getInstance().getUserPasswordSettingInfo, new HashMap<>(), bFlag, false, bFlag);
     }
 
+    private void updatePasswordOpenStatus(String status) {
+        HashMap<String, String> params = new HashMap<>();
+        params.put("passwordType", "3");
+        params.put("status", status);
+
+        sendRequest(ManagementService.getInstance().updatePasswordOpenStatus, params, true);
+    }
+
     @Override
     protected void DataReturn(DTRequest request, Head head, Object response) {
         super.DataReturn(request, head, response);
@@ -91,6 +111,7 @@ public class GestureActivity extends JMEBaseActivity {
                     if (null == passwordInfoVo)
                         return;
 
+                    mHasSettingGestures = passwordInfoVo.getHasSettingGestures();
                     String hasOpenGestures = passwordInfoVo.getHasOpenGestures();
 
                     mBinding.switchView.setChecked(TextUtils.isEmpty(hasOpenGestures) ? false : hasOpenGestures.equals("Y"));
@@ -99,6 +120,11 @@ public class GestureActivity extends JMEBaseActivity {
                 }
 
                 bFlag = false;
+
+                break;
+            case "UpdatePasswordOpenStatus":
+                if (head.isSuccess())
+                    mBinding.layoutGestureModify.setVisibility(request.getParams().get("status").equals("Y") ? View.VISIBLE : View.GONE);
 
                 break;
         }

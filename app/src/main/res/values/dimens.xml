@@ -70,6 +70,7 @@
     <dimen name="width_transfer_card">70dp</dimen>
     <dimen name="width_trading_box_btn">120dp</dimen>
     <dimen name="width_password">40dp</dimen>
+    <dimen name="width_geesture_view">50dp</dimen>
 
     <dimen name="margin_main_page_info">30dp</dimen>
     <dimen name="margin_main_page_market">2.5dp</dimen>
