@@ -396,6 +396,7 @@
     <string name="security_gesture_password_again">手势不一致，请重新绘制</string>
     <string name="security_gesture_draw">请绘制手势密码</string>
     <string name="security_gesture_forget">忘记手势?</string>
+    <string name="security_gesture_password_error_message">你已连续5次输错手势密码，手势解锁已关闭，请使用交易密码登录</string>
     <string name="security_duration_message">如果应用在后台超过设定的时间未发生操作，再次打开交易界面需要验证后登录。</string>
     <string name="security_setting_tips">为保证您的交易资金安全，请您先设置交易密码</string>
     <string name="security_password_not_the_same">两次输入的密码不一致，请重新输入</string>
@@ -407,6 +408,7 @@
     <string name="security_password_error_message">您已连续5次输错密码，请重置交易密码</string>
     <string name="security_trading_password_reset">重置交易密码</string>
     <string name="security_trading_password_use">使用交易密码登录</string>
+    <string name="security_trading_password_login">交易密码登录</string>
     <string name="security_verify_fail">验证失败</string>
     <string name="security_verify_success">验证通过</string>
 

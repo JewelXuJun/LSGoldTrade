@@ -9,9 +9,12 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 
-
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
+import com.github.ihsg.patternlocker.DefaultLockerNormalCellView;
+import com.github.ihsg.patternlocker.DefaultStyleDecorator;
+import com.github.ihsg.patternlocker.OnPatternChangeListener;
+import com.github.ihsg.patternlocker.PatternLockerView;
 import com.jme.common.network.DTRequest;
 import com.jme.common.network.Head;
 import com.jme.common.ui.view.VerificationCodeView;
@@ -27,7 +30,10 @@ import com.jme.lsgoldtrade.service.ManagementService;
 import com.jme.lsgoldtrade.util.AESUtil;
 import com.jme.lsgoldtrade.view.ConfirmSimplePopupwindow;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.HashMap;
+import java.util.List;
 
 import rx.Subscription;
 
@@ -62,6 +68,10 @@ public class UnlockTradingPasswordActivity extends JMEBaseActivity {
 
         mBinding.layoutDigitalCipher.setVisibility(mType == 1 ? View.VISIBLE : View.GONE);
         mBinding.layoutFingerprint.setVisibility(mType == 2 ? View.VISIBLE : View.GONE);
+        mBinding.layoutGesture.setVisibility(mType == 3 ? View.VISIBLE : View.GONE);
+
+        if (mType == 3)
+            initPatternLockerView();
 
         mConfirmSimplePopupwindow = new ConfirmSimplePopupwindow(this);
         mConfirmSimplePopupwindow.setOutsideTouchable(false);
@@ -148,6 +158,39 @@ public class UnlockTradingPasswordActivity extends JMEBaseActivity {
             }
         });
 
+        mBinding.patternLockerView.setOnPatternChangedListener(new OnPatternChangeListener() {
+            @Override
+            public void onStart(@NotNull PatternLockerView patternLockerView) {
+
+            }
+
+            @Override
+            public void onChange(@NotNull PatternLockerView patternLockerView, @NotNull List<Integer> list) {
+
+            }
+
+            @Override
+            public void onComplete(@NotNull PatternLockerView patternLockerView, @NotNull List<Integer> list) {
+                if (null == list || list.size() < 4) {
+                    mBinding.tvGestureErrorMessage.setText(R.string.security_gesture_password_error_point);
+                } else {
+                    StringBuffer stringBuffer = new StringBuffer();
+
+                    for (int i = 0; i < list.size(); i++) {
+                        stringBuffer.append(list.get(i));
+                    }
+
+                    unlockTradePassword(stringBuffer.toString(), "3");
+                }
+
+            }
+
+            @Override
+            public void onClear(@NotNull PatternLockerView patternLockerView) {
+
+            }
+        });
+
         if (mType == 2)
             mBuilder.build();
     }
@@ -165,6 +208,22 @@ public class UnlockTradingPasswordActivity extends JMEBaseActivity {
         super.onResume();
 
         mBinding.tvErrorMessage.setText("");
+        mBinding.tvGestureErrorMessage.setText("");
+    }
+
+    private void initPatternLockerView() {
+        DefaultStyleDecorator decorator = ((DefaultLockerNormalCellView) mBinding.patternLockerView.getNormalCellView()).getStyleDecorator();
+
+        GestureNormalCellView normalCellView = new GestureNormalCellView();
+        normalCellView.setDefaultColor(decorator.getNormalColor());
+        normalCellView.setDivide(2.5f);
+
+        GestureHitCellView hitCellView = new GestureHitCellView();
+        hitCellView.setHitColor(decorator.getHitColor());
+        hitCellView.setIndicatorView(false);
+
+        mBinding.patternLockerView.setNormalCellView(normalCellView);
+        mBinding.patternLockerView.setHitCellView(hitCellView);
     }
 
     private void initRxBus() {
@@ -177,6 +236,7 @@ public class UnlockTradingPasswordActivity extends JMEBaseActivity {
             switch (callType) {
                 case Constants.RxBusConst.RXBUS_TRADE:
                 case Constants.RxBusConst.RXBUS_TRADING_PASSWORD_SETTING_SUCCESS:
+                case Constants.RxBusConst.RXBUS_GESTURU_MODIFY_SUCCESS:
                     finish();
 
                     break;
@@ -197,7 +257,7 @@ public class UnlockTradingPasswordActivity extends JMEBaseActivity {
         params.put("passwordType", passwordType);
         params.put("status", status);
 
-        sendRequest(ManagementService.getInstance().updatePasswordOpenStatus, params, true);
+        sendRequest(ManagementService.getInstance().updatePasswordOpenStatus, params, false, false, false);
     }
 
     @Override
@@ -209,15 +269,34 @@ public class UnlockTradingPasswordActivity extends JMEBaseActivity {
                 if (head.isSuccess()) {
                     finish();
                 } else {
-                    mBinding.tvErrorMessage.setText(head.getMsg());
-                    mBinding.verificationCodeView.clearInputContent();
+                    if (mType == 1) {
+                        mBinding.tvErrorMessage.setText(head.getMsg());
+                        mBinding.verificationCodeView.clearInputContent();
+                    } else if (mType == 3) {
+                        mBinding.tvGestureErrorMessage.setText(head.getMsg());
+                    }
 
                     if (head.getCode().equals("-3001")) {
-                        if (null != mConfirmSimplePopupwindow && !mConfirmSimplePopupwindow.isShowing()) {
+                        if (null != mConfirmSimplePopupwindow && !mConfirmSimplePopupwindow.isShowing() && mType == 1) {
                             mConfirmSimplePopupwindow.setData(getResources().getString(R.string.security_password_error_message),
                                     getResources().getString(R.string.security_trading_password_reset),
                                     (view) -> {
                                         ARouter.getInstance().build(Constants.ARouterUriConst.TRADINGPASSWORDVALIDATE).navigation();
+
+                                        mConfirmSimplePopupwindow.dismiss();
+                                    });
+                            mConfirmSimplePopupwindow.showAtLocation(mBinding.tvErrorMessage, Gravity.CENTER, 0, 0);
+                        }
+                    } else if (head.getCode().equals("-3003")) {
+                        if (null != mConfirmSimplePopupwindow && !mConfirmSimplePopupwindow.isShowing() && mType == 3) {
+                            mConfirmSimplePopupwindow.setData(getResources().getString(R.string.security_gesture_password_error_message),
+                                    getResources().getString(R.string.security_trading_password_login),
+                                    (view) -> {
+                                        mBinding.layoutDigitalCipher.setVisibility(View.VISIBLE);
+                                        mBinding.layoutFingerprint.setVisibility(View.GONE);
+                                        mBinding.layoutGesture.setVisibility(View.GONE);
+
+                                        updatePasswordOpenStatus("3", "N");
 
                                         mConfirmSimplePopupwindow.dismiss();
                                     });
@@ -249,12 +328,13 @@ public class UnlockTradingPasswordActivity extends JMEBaseActivity {
         }
 
         public void onClickForgetGesture() {
-
+            ARouter.getInstance().build(Constants.ARouterUriConst.GESTURESETTINGVALIDATE).navigation();
         }
 
         public void onClickUseTradingPassword() {
             mBinding.layoutDigitalCipher.setVisibility(View.VISIBLE);
             mBinding.layoutFingerprint.setVisibility(View.GONE);
+            mBinding.layoutGesture.setVisibility(View.GONE);
         }
 
     }
