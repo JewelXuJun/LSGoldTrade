@@ -83,7 +83,13 @@ public class GestureSettingActivity extends JMEBaseActivity {
                     mBinding.tvMessage.setText(R.string.security_gesture_password_error_point);
                     mBinding.tvMessage.setTextColor(ContextCompat.getColor(GestureSettingActivity.this, R.color.color_red));
                 } else {
-                    String value = list.toString();
+                    StringBuffer stringBuffer = new StringBuffer();
+
+                    for (int i = 0; i < list.size(); i ++) {
+                        stringBuffer.append(list.get(i));
+                    }
+
+                    String value = stringBuffer.toString();
 
                     if (TextUtils.isEmpty(mPassword)) {
                         mPassword = value;
