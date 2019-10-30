@@ -248,6 +248,10 @@ public class UnlockTradingPasswordActivity extends JMEBaseActivity {
             mBuilder.build();
         }
 
+        public void onClickForgetGesture() {
+
+        }
+
         public void onClickUseTradingPassword() {
             mBinding.layoutDigitalCipher.setVisibility(View.VISIBLE);
             mBinding.layoutFingerprint.setVisibility(View.GONE);
