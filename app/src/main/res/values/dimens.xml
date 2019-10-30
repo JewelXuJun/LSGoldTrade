@@ -3,6 +3,8 @@
 
     <dimen name="main_tab_margin">7dp</dimen>
     <dimen name="main_tab_line">1px</dimen>
+    <dimen name="line_width">1.5px</dimen>
+    <dimen name="line_height">1.5px</dimen>
 
     <dimen name="height_main_page_banner">150dp</dimen>
     <dimen name="height_main_page_market">90dp</dimen>
@@ -19,12 +21,12 @@
     <dimen name="height_trade_hold_position_account_detail">120dp</dimen>
     <dimen name="height_btn">50dp</dimen>
     <dimen name="height_turnover_time">80dp</dimen>
-    <dimen name="height_fchart">146dp</dimen>
+    <dimen name="height_fchart">120dp</dimen>
     <dimen name="height_feedback">180dp</dimen>
     <dimen name="height_chart">400dp</dimen>
     <dimen name="height_market_detail_landscape">60dp</dimen>
     <dimen name="height_trade_banner">130dp</dimen>
-    <dimen name="height_trade_rule">160dp</dimen>
+    <dimen name="height_transaction_item">160dp</dimen>
     <dimen name="height_line">2dp</dimen>
     <dimen name="height_subscribe">27dp</dimen>
     <dimen name="height_trading_box_info">173dp</dimen>
@@ -34,49 +36,46 @@
     <dimen name="height_btn_aggree">33dp</dimen>
     <dimen name="height_buy_item">56dp</dimen>
     <dimen name="height_order_item">72dp</dimen>
-    <dimen name="height_order_btn">28dp</dimen>
+    <dimen name="height_order_btn">26dp</dimen>
     <dimen name="height_market">300dp</dimen>
     <dimen name="height_transfer_btn">30dp</dimen>
     <dimen name="height_trading_box_item">196dp</dimen>
     <dimen name="height_trading_box_btn">32dp</dimen>
     <dimen name="height_recharge_item">80dp</dimen>
     <dimen name="height_switch">25dp</dimen>
+    <dimen name="height_floating">50dp</dimen>
+    <dimen name="height_daily_statement">80dp</dimen>
 
-    <dimen name="width_main_page_info_img">100dp</dimen>
-    <dimen name="width_market_limit">100dp</dimen>
     <dimen name="width_market_item">46dp</dimen>
     <dimen name="width_trade_hold_position_account_item">102dp</dimen>
     <dimen name="width_item_title">74dp</dimen>
     <dimen name="width_btn_normal">90dp</dimen>
-    <dimen name="width_btn_big">150dp</dimen>
+    <dimen name="width_btn_large">160dp</dimen>
     <dimen name="width_date">100dp</dimen>
     <dimen name="width_shelves">25dp</dimen>
     <dimen name="width_amount">60dp</dimen>
     <dimen name="width_empty">30dp</dimen>
+    <dimen name="width_item_middle">70dp</dimen>
     <dimen name="width_item">82dp</dimen>
     <dimen name="width_item_big">90dp</dimen>
-    <dimen name="width_login_verification_code">90dp</dimen>
-    <dimen name="width_market_detail_landscape_close">40dp</dimen>
+    <dimen name="width_item_bigger">100dp</dimen>
+    <dimen name="width_item_large">120dp</dimen>
     <dimen name="width_reset_item">85dp</dimen>
     <dimen name="width_send">80dp</dimen>
-    <dimen name="width_customer_service_item">90dp</dimen>
     <dimen name="width_customer_service_question">278dp</dimen>
     <dimen name="width_subscribe">55dp</dimen>
-    <dimen name="width_popupwindow">100dp</dimen>
     <dimen name="width_blue">5dp</dimen>
     <dimen name="width_economic_calendar">130dp</dimen>
-    <dimen name="width_market_title">160dp</dimen>
     <dimen name="width_transfer_btn">50dp</dimen>
     <dimen name="width_transfer_card">70dp</dimen>
-    <dimen name="width_trading_box_btn">120dp</dimen>
-    <dimen name="width_password">40dp</dimen>
-    <dimen name="width_geesture_view">50dp</dimen>
+    <dimen name="width_gesture_view">50dp</dimen>
+    <dimen name="width_floating">130dp</dimen>
+    <dimen name="width_edittext">190dp</dimen>
 
     <dimen name="margin_main_page_info">30dp</dimen>
     <dimen name="margin_main_page_market">2.5dp</dimen>
     <dimen name="margin_login">35dp</dimen>
     <dimen name="margin_head_portrait">50dp</dimen>
-    <dimen name="margin_no_data">100dp</dimen>
     <dimen name="margin_market_price">6dp</dimen>
     <dimen name="margin_tiny_small">1dp</dimen>
     <dimen name="margin_tiny">2dp</dimen>
@@ -86,6 +85,7 @@
     <dimen name="margin_big">40dp</dimen>
     <dimen name="margin_bigger">50dp</dimen>
     <dimen name="margin_large">60dp</dimen>
+    <dimen name="margin_larger">100dp</dimen>
     <dimen name="margin_line">6dp</dimen>
     <dimen name="margin_customer_service_item">65dp</dimen>
     <dimen name="margin_trade_rule">18dp</dimen>
@@ -107,6 +107,7 @@
     <dimen name="size_normal">15sp</dimen>
     <dimen name="size_normal_middle">17sp</dimen>
     <dimen name="size_big">22sp</dimen>
+    <dimen name="size_bigger">26sp</dimen>
     <dimen name="size_middle_large">30sp</dimen>
     <dimen name="size_large">34sp</dimen>
     <dimen name="size_riskrate">20sp</dimen>
@@ -135,16 +136,5 @@
 
     <dimen name="lineSpacingExtra_normal">3sp</dimen>
     <dimen name="lineSpacingExtra_big">5sp</dimen>
-
-    <dimen name="sp_30">30sp</dimen>
-    <dimen name="sp_27">27sp</dimen>
-    <dimen name="sp_21">21sp</dimen>
-    <dimen name="sp_20">20sp</dimen>
-    <dimen name="sp_18">18sp</dimen>
-    <dimen name="sp_16">16sp</dimen>
-    <dimen name="sp_15">15sp</dimen>
-    <dimen name="sp_14">14sp</dimen>
-    <dimen name="sp_12">12sp</dimen>
-    <dimen name="sp_10">10sp</dimen>
 
 </resources>

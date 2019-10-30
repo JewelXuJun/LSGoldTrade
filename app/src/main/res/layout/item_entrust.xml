@@ -101,16 +101,38 @@
 
         </LinearLayout>
 
-        <TextView
-            android:id="@+id/tv_state"
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:gravity="center|right"
-            android:paddingRight="@dimen/common_page_padding"
-            android:text="@string/text_no_data_default"
-            android:textColor="@color/color_text_black"
-            android:textSize="@dimen/sp_12" />
+            android:layout_weight="1">
+
+            <TextView
+                android:id="@+id/tv_state"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="@dimen/common_page_margin"
+                android:text="@string/text_no_data_default"
+                android:textColor="@color/color_text_black"
+                android:textSize="@dimen/size_middle"
+                android:visibility="gone" />
+
+            <Button
+                android:id="@+id/btn_cancel_order"
+                android:layout_width="@dimen/common_item_height_middle"
+                android:layout_height="@dimen/height_order_btn"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="@dimen/common_page_margin"
+                android:background="@drawable/bg_btn_blue_solid"
+                android:gravity="center"
+                android:text="@string/transaction_cancel_order"
+                android:textColor="@color/white"
+                android:textSize="@dimen/sp_12"
+                android:visibility="gone" />
+
+        </RelativeLayout>
 
     </LinearLayout>
 

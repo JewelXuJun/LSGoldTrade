@@ -30,6 +30,7 @@ public class SharedPreUtils {
     public static final String Token = "token";
     public static final String Key_Close_Time = "CloseTime";
     public static final String Key_DownLoad_Size = "DownLoadSize";
+    public static final String Key_Transaction_Hidden_Status = "TransactionHiddenStatus";
 
     /**
      * 序列化对象

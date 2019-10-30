@@ -21,6 +21,7 @@ import com.jme.lsgoldtrade.databinding.ActivityHistoryDealBinding;
 import com.jme.lsgoldtrade.domain.DealHistoryPageVo;
 import com.jme.lsgoldtrade.domain.DealPageVo;
 import com.jme.lsgoldtrade.service.TradeService;
+import com.jme.lsgoldtrade.ui.transaction.DealAdapter;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 
@@ -66,7 +67,7 @@ public class HistoryDealActivity extends JMEBaseActivity implements OnRefreshLis
     protected void initView() {
         super.initView();
 
-        initToolbar(R.string.trade_history_deal, true);
+        initToolbar(R.string.transaction_historical_deal, true);
     }
 
     @Override
@@ -159,7 +160,7 @@ public class HistoryDealActivity extends JMEBaseActivity implements OnRefreshLis
 
             initDealHistory(true);
         } else {
-            showShortToast(R.string.trade_start_time_error);
+            showShortToast(R.string.transaction_start_time_error);
         }
     }
 
@@ -173,7 +174,7 @@ public class HistoryDealActivity extends JMEBaseActivity implements OnRefreshLis
 
             initDealHistory(true);
         } else {
-            showShortToast(R.string.trade_end_time_error);
+            showShortToast(R.string.transaction_end_time_error);
         }
     }
 

@@ -142,7 +142,7 @@ public class TradingPasswordSettingConfirmActivity extends JMEBaseActivity {
                                     getResources().getString(R.string.security_password_setting_success_message),
                                     getResources().getString(R.string.security_next_time), getResources().getString(R.string.security_goto_setting),
                                     (view) -> {
-                                        RxBus.getInstance().post(Constants.RxBusConst.RXBUS_TRADE, null);
+                                        RxBus.getInstance().post(Constants.RxBusConst.RXBUS_TRANSACTION_PLACE_ORDER, null);
                                         ARouter.getInstance().build(Constants.ARouterUriConst.MAIN).navigation();
 
                                         mOperatePopupwindow.dismiss();
@@ -163,7 +163,7 @@ public class TradingPasswordSettingConfirmActivity extends JMEBaseActivity {
                             mConfirmSimplePopupwindow.setData(getResources().getString(R.string.security_password_setting_success),
                                     mContext.getResources().getString(R.string.text_confirm),
                                     (view) -> {
-                                        RxBus.getInstance().post(Constants.RxBusConst.RXBUS_TRADE, null);
+                                        RxBus.getInstance().post(Constants.RxBusConst.RXBUS_TRANSACTION_PLACE_ORDER, null);
                                         ARouter.getInstance().build(Constants.ARouterUriConst.MAIN).navigation();
 
                                         mConfirmSimplePopupwindow.dismiss();

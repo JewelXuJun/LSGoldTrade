@@ -42,7 +42,7 @@
                     android:src="@mipmap/ic_back_white" />
 
                 <RelativeLayout
-                    android:layout_width="@dimen/width_market_title"
+                    android:layout_width="@dimen/width_btn_large"
                     android:layout_height="@dimen/height_tabhost"
                     android:layout_centerInParent="true">
 

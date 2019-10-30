@@ -16,7 +16,7 @@
             android:layout_centerInParent="true"
             android:text="@string/increment_recharge_type_select"
             android:textColor="@color/black_deep"
-            android:textSize="@dimen/sp_18" />
+            android:textSize="@dimen/common_font_size" />
 
         <ImageView
             android:id="@+id/iv_cancel"
@@ -62,7 +62,7 @@
                     android:layout_height="wrap_content"
                     android:text="@string/increment_recharge_type_icbc"
                     android:textColor="@color/black"
-                    android:textSize="@dimen/sp_15" />
+                    android:textSize="@dimen/size_normal" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -120,7 +120,7 @@
                     android:layout_height="wrap_content"
                     android:text="@string/increment_recharge_type_alipay"
                     android:textColor="@color/black"
-                    android:textSize="@dimen/sp_15" />
+                    android:textSize="@dimen/size_normal" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -174,7 +174,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/increment_recharge_type_wechat"
                 android:textColor="@color/black"
-                android:textSize="@dimen/sp_15" />
+                android:textSize="@dimen/size_normal" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -212,6 +212,6 @@
         android:gravity="center"
         android:text="@string/increment_recharge_payment"
         android:textColor="@color/white"
-        android:textSize="@dimen/sp_18" />
+        android:textSize="@dimen/common_font_size" />
 
 </LinearLayout>

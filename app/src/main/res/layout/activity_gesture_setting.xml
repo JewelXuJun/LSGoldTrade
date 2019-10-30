@@ -14,8 +14,8 @@
 
         <com.github.ihsg.patternlocker.PatternIndicatorView
             android:id="@+id/patternIndicatorView"
-            android:layout_width="@dimen/width_geesture_view"
-            android:layout_height="@dimen/width_geesture_view"
+            android:layout_width="@dimen/width_gesture_view"
+            android:layout_height="@dimen/width_gesture_view"
             android:layout_gravity="center"
             android:layout_marginTop="@dimen/margin_bigger"
             app:piv_color="@color/color_tab_line"

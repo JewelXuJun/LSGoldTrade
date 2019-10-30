@@ -14,7 +14,7 @@
         android:lineSpacingExtra="@dimen/lineSpacingExtra_big"
         android:padding="@dimen/common_area_margin_middle"
         android:textColor="@color/white"
-        android:textSize="@dimen/sp_15" />
+        android:textSize="@dimen/size_normal" />
 
     <TextView
         android:id="@+id/tv_answer"
@@ -27,7 +27,7 @@
         android:lineSpacingExtra="@dimen/lineSpacingExtra_big"
         android:padding="@dimen/common_area_margin_middle"
         android:textColor="@color/black"
-        android:textSize="@dimen/sp_15"
+        android:textSize="@dimen/size_normal"
         android:visibility="visible" />
 
     <LinearLayout
@@ -62,7 +62,7 @@
                 android:layout_centerVertical="true"
                 android:text="@string/personal_customer_service_change"
                 android:textColor="@color/color_blue_deep"
-                android:textSize="@dimen/sp_15" />
+                android:textSize="@dimen/size_normal" />
 
         </RelativeLayout>
 
@@ -83,7 +83,7 @@
                 android:paddingTop="@dimen/common_area_margin_middle"
                 android:paddingBottom="@dimen/common_area_margin_middle"
                 android:textColor="@color/black"
-                android:textSize="@dimen/sp_15" />
+                android:textSize="@dimen/size_normal" />
 
             <include layout="@layout/item_line_vertical_list" />
 
@@ -104,7 +104,7 @@
                 android:paddingTop="@dimen/common_area_margin_middle"
                 android:paddingBottom="@dimen/common_area_margin_middle"
                 android:textColor="@color/black"
-                android:textSize="@dimen/sp_15" />
+                android:textSize="@dimen/size_normal" />
 
             <include layout="@layout/item_line_vertical_list" />
 
@@ -125,7 +125,7 @@
                 android:paddingTop="@dimen/common_area_margin_middle"
                 android:paddingBottom="@dimen/common_area_margin_middle"
                 android:textColor="@color/black"
-                android:textSize="@dimen/sp_15" />
+                android:textSize="@dimen/size_normal" />
 
             <include layout="@layout/item_line_vertical_list" />
 
@@ -146,7 +146,7 @@
                 android:paddingTop="@dimen/common_area_margin_middle"
                 android:paddingBottom="@dimen/common_area_margin_middle"
                 android:textColor="@color/black"
-                android:textSize="@dimen/sp_15" />
+                android:textSize="@dimen/size_normal" />
 
             <include layout="@layout/item_line_vertical_list" />
 

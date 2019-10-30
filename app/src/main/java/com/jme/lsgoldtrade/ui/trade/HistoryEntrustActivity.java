@@ -21,6 +21,7 @@ import com.jme.lsgoldtrade.databinding.ActivityHistoryEntrustBinding;
 import com.jme.lsgoldtrade.domain.OrderHisPageVo;
 import com.jme.lsgoldtrade.domain.OrderPageVo;
 import com.jme.lsgoldtrade.service.TradeService;
+import com.jme.lsgoldtrade.ui.transaction.EntrustAdapter;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 
@@ -66,7 +67,7 @@ public class HistoryEntrustActivity extends JMEBaseActivity implements OnRefresh
     protected void initView() {
         super.initView();
 
-        initToolbar(R.string.trade_history_entrust, true);
+        initToolbar(R.string.transaction_historical_entrust, true);
     }
 
     @Override
@@ -159,7 +160,7 @@ public class HistoryEntrustActivity extends JMEBaseActivity implements OnRefresh
 
             initOrderHisPage(true);
         } else {
-            showShortToast(R.string.trade_start_time_error);
+            showShortToast(R.string.transaction_start_time_error);
         }
     }
 
@@ -173,7 +174,7 @@ public class HistoryEntrustActivity extends JMEBaseActivity implements OnRefresh
 
             initOrderHisPage(true);
         } else {
-            showShortToast(R.string.trade_end_time_error);
+            showShortToast(R.string.transaction_end_time_error);
         }
     }
 

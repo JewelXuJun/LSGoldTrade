@@ -107,29 +107,33 @@
             android:screenOrientation="portrait" />
 
         <activity
-            android:name=".ui.trade.GuaranteeFundSettingActivity"
+            android:name=".ui.transaction.EntrustRiskManagementActivity"
             android:screenOrientation="portrait" />
 
         <activity
-            android:name=".ui.trade.CapitalTransferActivity"
+            android:name=".ui.transaction.QueryActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".ui.transaction.CapitalTransferActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustUnspecified|stateHidden" />
 
         <activity
-            android:name=".ui.trade.BankReserveActivity"
+            android:name=".ui.transaction.BankReserveActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustUnspecified|stateHidden" />
 
         <activity
-            android:name=".ui.trade.ElectronicCardTransferActivity"
+            android:name=".ui.transaction.ElectronicCardTransferActivity"
             android:screenOrientation="portrait" />
 
         <activity
-            android:name=".ui.trade.ElectronicCardInOutMoneyActivity"
+            android:name=".ui.transaction.ElectronicCardInOutMoneyActivity"
             android:screenOrientation="portrait" />
 
         <activity
-            android:name=".ui.trade.DailyStatementActivity"
+            android:name=".ui.transaction.DailyStatementActivity"
             android:screenOrientation="portrait" />
 
         <activity
@@ -218,7 +222,7 @@
             android:screenOrientation="portrait" />
 
         <activity
-            android:name=".ui.trade.AuthenticationActivity"
+            android:name=".ui.transaction.AuthenticationActivity"
             android:screenOrientation="portrait" />
 
         <activity
@@ -230,7 +234,7 @@
             android:screenOrientation="portrait" />
 
         <activity
-            android:name=".ui.trade.BindAccountActivity"
+            android:name=".ui.transaction.BindAccountActivity"
             android:screenOrientation="portrait" />
 
         <activity
@@ -267,7 +271,7 @@
             android:windowSoftInputMode="adjustResize" />
 
         <activity
-            android:name=".ui.mainpage.DiYanActivity"
+            android:name=".ui.mainpage.DeferredActivity"
             android:screenOrientation="portrait" />
 
         <activity

@@ -16,8 +16,7 @@
         android:background="@color/common_background"
         android:clipToPadding="false"
         android:fitsSystemWindows="true"
-        android:orientation="vertical"
-        android:visibility="visible">
+        android:orientation="vertical">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -69,7 +68,7 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/height_trade_rule"
+                android:layout_height="@dimen/height_transaction_item"
                 android:background="@color/white"
                 android:orientation="vertical">
 
@@ -285,7 +284,7 @@
                 android:onClick="@{() -> handlers.onClickBind()}"
                 android:text="@string/trade_open_account_bind"
                 android:textColor="@color/color_blue_deep"
-                android:textSize="@dimen/sp_18" />
+                android:textSize="@dimen/common_font_size" />
 
         </LinearLayout>
 

@@ -17,7 +17,7 @@ import com.jme.lsgoldtrade.databinding.ActivityCheckServiceBinding;
 import com.jme.lsgoldtrade.domain.UsernameVo;
 import com.jme.lsgoldtrade.service.AccountService;
 import com.jme.lsgoldtrade.service.ManagementService;
-import com.jme.lsgoldtrade.ui.trade.TradeMessagePopUpWindow;
+import com.jme.lsgoldtrade.view.TransactionMessagePopUpWindow;
 
 import java.math.BigDecimal;
 import java.util.HashMap;
@@ -30,7 +30,7 @@ public class CheckServiceActivity extends JMEBaseActivity {
 
     private ActivityCheckServiceBinding mBinding;
 
-    private TradeMessagePopUpWindow mTradeMessagePopUpWindow;
+    private TransactionMessagePopUpWindow mTransactionMessagePopUpWindow;
 
     @Override
     protected int getContentViewId() {
@@ -48,9 +48,7 @@ public class CheckServiceActivity extends JMEBaseActivity {
     protected void initData(Bundle savedInstanceState) {
         super.initData(savedInstanceState);
 
-        mTradeMessagePopUpWindow = new TradeMessagePopUpWindow(this);
-        mTradeMessagePopUpWindow.setOutsideTouchable(true);
-        mTradeMessagePopUpWindow.setFocusable(true);
+        mTransactionMessagePopUpWindow = new TransactionMessagePopUpWindow(this);
     }
 
     @Override
@@ -113,15 +111,15 @@ public class CheckServiceActivity extends JMEBaseActivity {
                         status = response.toString();
 
                     if (status.equals("1")) {
-                        if (null != mTradeMessagePopUpWindow && !mTradeMessagePopUpWindow.isShowing()) {
-                            mTradeMessagePopUpWindow.setData(mContext.getResources().getString(R.string.trade_account_error),
-                                    mContext.getResources().getString(R.string.trade_account_goto_recharge),
+                        if (null != mTransactionMessagePopUpWindow && !mTransactionMessagePopUpWindow.isShowing()) {
+                            mTransactionMessagePopUpWindow.setData(mContext.getResources().getString(R.string.transaction_account_error),
+                                    mContext.getResources().getString(R.string.transaction_account_goto_recharge),
                                     (view) -> {
                                         ARouter.getInstance().build(Constants.ARouterUriConst.RECHARGE).navigation();
 
-                                        mTradeMessagePopUpWindow.dismiss();
+                                        mTransactionMessagePopUpWindow.dismiss();
                                     });
-                            mTradeMessagePopUpWindow.showAtLocation(mBinding.tvAvailableFunds, Gravity.CENTER, 0, 0);
+                            mTransactionMessagePopUpWindow.showAtLocation(mBinding.tvAvailableFunds, Gravity.CENTER, 0, 0);
                         }
                     } else {
                         hasWeChatWithdrawAuth();
@@ -181,7 +179,7 @@ public class CheckServiceActivity extends JMEBaseActivity {
         public void onClickEntrust() {
             finish();
 
-            RxBus.getInstance().post(Constants.RxBusConst.RXBUS_TRADEFRAGMENT_HOLD, null);
+            RxBus.getInstance().post(Constants.RxBusConst.RXBUS_TRANSACTION_HOLD_POSITIONS, null);
         }
 
         public void onClickService() {

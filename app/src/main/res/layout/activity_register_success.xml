@@ -40,7 +40,7 @@
                 android:layout_marginTop="@dimen/common_page_margin"
                 android:text="@string/register_success_message"
                 android:textColor="@color/black"
-                android:textSize="@dimen/sp_18" />
+                android:textSize="@dimen/common_font_size" />
 
             <Button
                 android:layout_width="match_parent"

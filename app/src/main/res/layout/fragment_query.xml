@@ -54,7 +54,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center"
-                                android:text="@string/trade_daily_statement"
+                                android:text="@string/transaction_daily_statement_sheet"
                                 android:textColor="@color/black_pale"
                                 android:textSize="@dimen/sp_12" />
 
@@ -128,7 +128,7 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="@string/trade_fee"
+                                android:text="@string/transaction_fee"
                                 android:textColor="@color/black_pale"
                                 android:textSize="@dimen/sp_12" />
 
@@ -153,7 +153,7 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="@string/trade_deferred_charges"
+                                android:text="@string/transaction_deferred_charges"
                                 android:textColor="@color/black_pale"
                                 android:textSize="@dimen/sp_12" />
 
@@ -244,7 +244,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_centerVertical="true"
-                            android:text="@string/trade_current_entrust"
+                            android:text="@string/transaction_current_entrust"
                             android:textColor="@color/color_text_black"
                             android:textSize="@dimen/sp_14" />
 
@@ -270,7 +270,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_centerVertical="true"
-                            android:text="@string/trade_history_entrust"
+                            android:text="@string/transaction_historical_entrust"
                             android:textColor="@color/color_text_black"
                             android:textSize="@dimen/sp_14" />
 
@@ -322,7 +322,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_centerVertical="true"
-                            android:text="@string/trade_history_deal"
+                            android:text="@string/transaction_historical_deal"
                             android:textColor="@color/color_text_black"
                             android:textSize="@dimen/sp_14" />
 

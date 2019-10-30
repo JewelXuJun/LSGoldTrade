@@ -12,12 +12,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:paddingLeft="@dimen/margin_normal"
-            android:paddingTop="@dimen/margin_big"
-            android:paddingRight="@dimen/margin_normal"
-            android:paddingBottom="@dimen/margin_big"
+            android:layout_marginLeft="@dimen/common_area_margin_big"
+            android:layout_marginTop="@dimen/common_area_margin_large"
+            android:layout_marginRight="@dimen/common_area_margin_big"
+            android:layout_marginBottom="@dimen/common_area_margin_large"
             android:textColor="@color/black"
-            android:textSize="@dimen/sp_16" />
+            android:textSize="@dimen/sp_14" />
 
         <include layout="@layout/item_line_vertical_list" />
 
@@ -25,10 +25,9 @@
             android:id="@+id/btn_confirm"
             android:layout_width="match_parent"
             android:layout_height="@dimen/height_item_normal"
-            android:layout_weight="1"
             android:background="@drawable/drawable_white_solid"
             android:text="@string/text_confirm"
-            android:textColor="@color/color_blue_deep"
+            android:textColor="@color/color_blue"
             android:textSize="@dimen/sp_16" />
 
     </LinearLayout>

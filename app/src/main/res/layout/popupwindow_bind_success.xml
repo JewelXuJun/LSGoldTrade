@@ -21,7 +21,7 @@
             android:layout_marginTop="@dimen/common_page_margin"
             android:text="@string/trade_bind_success"
             android:textColor="@color/black"
-            android:textSize="@dimen/sp_18" />
+            android:textSize="@dimen/common_font_size" />
 
         <TextView
             android:id="@+id/tv_time"

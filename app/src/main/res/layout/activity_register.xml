@@ -78,13 +78,13 @@
 
                             <Button
                                 android:id="@+id/btn_verification_code"
-                                android:layout_width="@dimen/width_login_verification_code"
+                                android:layout_width="@dimen/width_item_big"
                                 android:layout_height="@dimen/common_item_height_middle"
                                 android:layout_alignParentRight="true"
                                 android:layout_centerVertical="true"
                                 android:background="@drawable/selector_blue"
                                 android:onClick="@{() -> handlers.onClickSms()}"
-                                android:text="@string/trade_get_verification_code"
+                                android:text="@string/transaction_get_verification_code"
                                 android:textColor="@drawable/selector_text"
                                 android:textSize="@dimen/size_middle" />
 
@@ -203,7 +203,7 @@
                                 android:layout_gravity="center_horizontal"
                                 android:text="@string/register_hava_acccount"
                                 android:textColor="@color/black"
-                                android:textSize="@dimen/sp_18" />
+                                android:textSize="@dimen/common_font_size" />
 
                             <TextView
                                 android:layout_width="wrap_content"
@@ -213,7 +213,7 @@
                                 android:onClick="@{() -> handlers.onClickLogin()}"
                                 android:text="@string/register_go_login"
                                 android:textColor="@color/color_blue_deep"
-                                android:textSize="@dimen/sp_18" />
+                                android:textSize="@dimen/common_font_size" />
 
                         </LinearLayout>
 

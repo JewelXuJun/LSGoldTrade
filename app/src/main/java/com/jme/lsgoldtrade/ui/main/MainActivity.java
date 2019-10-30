@@ -177,8 +177,6 @@ public class MainActivity extends JMEBaseActivity implements TabHost.OnTabChange
         mProtocolUpdatePopUpWindow.setFocusable(false);
 
         mConfirmSimplePopupwindow = new ConfirmSimplePopupwindow(this);
-        mConfirmSimplePopupwindow.setOutsideTouchable(true);
-        mConfirmSimplePopupwindow.setFocusable(true);
 
         mTradingPasswordConfirmSimplePopupwindow = new ConfirmSimplePopupwindow(this);
         mTradingPasswordConfirmSimplePopupwindow.setOutsideTouchable(false);
@@ -215,9 +213,9 @@ public class MainActivity extends JMEBaseActivity implements TabHost.OnTabChange
                 return;
 
             switch (callType) {
-                case Constants.RxBusConst.RXBUS_TRADE:
+                case Constants.RxBusConst.RXBUS_TRANSACTION_PLACE_ORDER:
                 case Constants.RxBusConst.RXBUS_CANCELORDERFRAGMENT:
-                case Constants.RxBusConst.RXBUS_TRADEFRAGMENT_HOLD:
+                case Constants.RxBusConst.RXBUS_TRANSACTION_HOLD_POSITIONS:
                     runOnUiThread(() -> mBinding.tabhost.setCurrentTab(2));
 
                     break;
@@ -310,7 +308,7 @@ public class MainActivity extends JMEBaseActivity implements TabHost.OnTabChange
         if (null != mUser && null != mUser.getCurrentUser()
                 && mUser.getCurrentUser().getCardType().equals("2") && mUser.getCurrentUser().getReserveFlag().equals("N")) {
             if (null != mConfirmSimplePopupwindow && !mConfirmSimplePopupwindow.isShowing()) {
-                mConfirmSimplePopupwindow.setData(getResources().getString(R.string.trade_transfer_icbc_electronic_card_message),
+                mConfirmSimplePopupwindow.setData(getResources().getString(R.string.transaction_transfer_icbc_electronic_card_message),
                         getResources().getString(R.string.text_confirm),
                         (view) -> {
                             mConfirmSimplePopupwindow.dismiss();

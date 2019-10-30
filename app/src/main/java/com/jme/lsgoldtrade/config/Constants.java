@@ -107,8 +107,8 @@ public class Constants {
         }
 
         public static final String RXBUS_MAINPAGE_REFRESH = "MainPageRefresh";
-        public static final String RXBUS_TRADE = "Trade";
-        public static final String RXBUS_TRADEFRAGMENT_HOLD = "TradeFragmentHold";
+        public static final String RXBUS_TRANSACTION_PLACE_ORDER = "TransactionPlaceOrder";
+        public static final String RXBUS_TRANSACTION_HOLD_POSITIONS = "TransactionHoldPositions";
         public static final String RXBUS_DECLARATIONFORM_UPDATE = "DeclarationFormUpdate";
         public static final String RXBUS_DECLARATIONFORM_HOLDPOSITION_SELECT = "DeclarationFormHoldPositionSelect";
         public static final String RXBUS_DECLARATIONFORM_SHOW = "DeclarationFormShow";
@@ -131,6 +131,8 @@ public class Constants {
         public static final String RXBUS_TRADING_PASSWORD_SETTING_SUCCESS = "tradingPasswordSettingSuccess";
         public static final String RXBUS_TRADING_PASSWORD_CANCEL = "tradingPasswordCancel";
         public static final String RXBUS_GESTURU_MODIFY_SUCCESS = "gesturuModifySuccess";
+        public static final String RXBUS_TRANSACTION_EVENING_UP = "transactionEveningUp";
+        public static final String RXBUS_TRANSACTION_HOLDPOSITIONS_REFRESH = "transactionHoldPositionsRefresh";
     }
 
     public static final class Msg {
@@ -145,7 +147,7 @@ public class Constants {
         public static final int MSG_RELOAD_DATA = 3;
         public static final int MSG_UPDATE_DATA_LANDSCAPE = 4;
         public static final int MSG_RELOAD_DATA_LANDSCAPE = 5;
-        public static final int MSG_TRADE_UPDATE_DATA = 6;
+        public static final int MSG_TRANSACTION_UPDATE_DATA = 6;
         public static final int MSG_POSITION_UPDATE_DATA = 7;
         public static final int MSG_DECLARATIONFORM_POSITION_UPDATE_DATA = 8;
         public static final int MSG_TRADE_POSITION_UPDATE_DATA = 9;
@@ -191,7 +193,8 @@ public class Constants {
         public static final String NEWSCENTERACTIVITY = "/JME/NewsCenterActivity";
         public static final String NEWSDETAILACTIVITY = "/NewsCenterActivity/NewsDetailActivity";
         public static final String BEGINNERSACTIVITY = "/MainPageFragment/BeginnersActivity";
-        public static final String GUARANTEEFUNDSETTINGACTIVITY = "/HoldPositionFragment/GuaranteeFundSettingActivity";
+        public static final String ENTRUSTRISKMANAGEMENT = "/HoldPositionsFragment/EntrustRiskManagementActivity";
+        public static final String QUERY = "/HoldPositionsFragment/QueryActivity";
         public static final String TRADINGBOX = "/MainPageFragment/TradingBoxActivity";
         public static final String TRADINGBOXDETAIL = "/TradingboxDetails/TradingBoxDetailActivity";
         public static final String RELEVANTINFO = "/TradingboxDetails/RelevantInfoActivity";
@@ -200,7 +203,7 @@ public class Constants {
         public static final String TRADINGBOXORDER = "/TradingBoxActivity/TradingBoxOrderActivity";
         public static final String ORDERDETAILS = "/Order/OrderDetailsActivity";
         public static final String FASTMANAGEMENT = "/Mainpager/FastManagementActivity";
-        public static final String DIYAN = "/Mainpager/DiYanActivity";
+        public static final String DEFERRED = "/Mainpager/DeferredActivity";
         public static final String VALUEADDEDSERVICE = "/Personal/ValueAddedServiceActivity";
         public static final String MARKETJUDGMENT = "/Mainpager/MarketJudgmentActivity";
         public static final String WARNING = "/Market/WarningActivity";

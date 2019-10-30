@@ -197,10 +197,10 @@ public class ManagementService extends IService<ManagementApi> {
         }
     };
 
-    public API diyanfangxiang = new API<String>("Agree") {
+    public API hasProfitLossRiskSign = new API<String>("HasProfitLossRiskSign") {
         @Override
         public Call<DTResponse> request(HashMap<String, String> params) {
-            return mApi.diyanfangxiang(params);
+            return mApi.hasProfitLossRiskSign(params);
         }
     };
 

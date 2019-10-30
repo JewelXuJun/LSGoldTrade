@@ -6,7 +6,7 @@
 
         <variable
             name="handlers"
-            type="com.jme.lsgoldtrade.ui.trade.BindAccountActivity.ClickHandlers" />
+            type="com.jme.lsgoldtrade.ui.transaction.BindAccountActivity.ClickHandlers" />
 
     </data>
 
@@ -95,7 +95,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:layout_weight="3"
-                    android:text="@string/trade_popupwindow_account"
+                    android:text="@string/transaction_popupwindow_account"
                     android:textColor="@color/color_text_normal"
                     android:textSize="@dimen/sp_14" />
 
@@ -154,13 +154,13 @@
 
                     <Button
                         android:id="@+id/btn_verification_code"
-                        android:layout_width="@dimen/width_login_verification_code"
+                        android:layout_width="@dimen/width_item_big"
                         android:layout_height="@dimen/common_item_height_middle"
                         android:layout_alignParentRight="true"
                         android:layout_centerVertical="true"
                         android:background="@drawable/selector_blue"
                         android:onClick="@{() -> handlers.onClickGetVerificationCode()}"
-                        android:text="@string/trade_get_verification_code"
+                        android:text="@string/transaction_get_verification_code"
                         android:textColor="@drawable/selector_text"
                         android:textSize="@dimen/size_middle" />
 

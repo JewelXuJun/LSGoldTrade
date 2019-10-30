@@ -56,7 +56,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_centerVertical="true"
-                                    android:text="@string/trade_total_equity"
+                                    android:text="@string/transaction_total_equity"
                                     android:textColor="@color/black_pale"
                                     android:textSize="@dimen/sp_12" />
 
@@ -83,7 +83,7 @@
                                     android:layout_centerVertical="true"
                                     android:background="@drawable/selector_blue"
                                     android:onClick="@{() -> handlers.onClickCapitalTransfer()}"
-                                    android:text="@string/trade_capital_transfer"
+                                    android:text="@string/transaction_capital_transfer"
                                     android:textColor="@drawable/selector_text" />
 
                             </RelativeLayout>
@@ -112,13 +112,13 @@
                                     <TextView
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:text="@string/trade_guarantee_fund"
+                                        android:text="@string/transaction_guarantee_fund"
                                         android:textColor="@color/black_pale"
                                         android:textSize="@dimen/sp_12" />
 
                                     <ImageView
                                         android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
+                                        android:layout_height="16dp"
                                         android:layout_gravity="center"
                                         android:layout_marginLeft="@dimen/common_area_margin_tiny"
                                         android:background="@mipmap/ic_tips"
@@ -166,7 +166,7 @@
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="@string/trade_risk_rate"
+                                    android:text="@string/transaction_risk_rate"
                                     android:textColor="@color/black_pale"
                                     android:textSize="@dimen/sp_12" />
 
@@ -211,7 +211,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_marginLeft="@dimen/common_area_margin_tiny"
-                                    android:text="@string/trade_available_funds"
+                                    android:text="@string/transaction_available_funds"
                                     android:textColor="@color/black_pale"
                                     android:textSize="@dimen/sp_12" />
 
@@ -239,7 +239,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_marginLeft="@dimen/common_area_margin_tiny"
-                                    android:text="@string/trade_desirable_capital"
+                                    android:text="@string/transaction_desirable_capital"
                                     android:textColor="@color/black_pale"
                                     android:textSize="@dimen/sp_12" />
 
@@ -276,7 +276,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_marginLeft="@dimen/common_area_margin_tiny"
-                                    android:text="@string/trade_market_capitalization"
+                                    android:text="@string/transaction_market_capitalization"
                                     android:textColor="@color/black_pale"
                                     android:textSize="@dimen/sp_12" />
 
@@ -304,7 +304,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_marginLeft="@dimen/common_area_margin_tiny"
-                                    android:text="@string/trade_floating"
+                                    android:text="@string/transaction_floating"
                                     android:textColor="@color/black_pale"
                                     android:textSize="@dimen/sp_12" />
 

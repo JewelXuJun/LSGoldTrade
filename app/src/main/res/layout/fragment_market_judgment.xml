@@ -82,7 +82,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:textColor="@color/black_deep"
-                            android:textSize="@dimen/sp_15" />
+                            android:textSize="@dimen/size_normal" />
 
                         <TextView
                             android:id="@+id/tv_monday_data"
@@ -107,7 +107,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:textColor="@color/black_deep"
-                            android:textSize="@dimen/sp_15" />
+                            android:textSize="@dimen/size_normal" />
 
                         <TextView
                             android:id="@+id/tv_tuesday_data"
@@ -132,7 +132,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:textColor="@color/black_deep"
-                            android:textSize="@dimen/sp_15" />
+                            android:textSize="@dimen/size_normal" />
 
                         <TextView
                             android:id="@+id/tv_wednesday_data"
@@ -157,7 +157,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:textColor="@color/black_deep"
-                            android:textSize="@dimen/sp_15" />
+                            android:textSize="@dimen/size_normal" />
 
                         <TextView
                             android:id="@+id/tv_thursday_data"
@@ -182,7 +182,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:textColor="@color/black_deep"
-                            android:textSize="@dimen/sp_15" />
+                            android:textSize="@dimen/size_normal" />
 
                         <TextView
                             android:id="@+id/tv_friday_data"
@@ -218,7 +218,7 @@
                     android:layout_height="@dimen/common_item_height_normal"
                     android:layout_marginLeft="@dimen/margin_normal"
                     android:layout_marginRight="@dimen/margin_normal"
-                    android:background="@drawable/bg_white_no_corner"
+                    android:background="@drawable/bg_white_no_fill"
                     android:orientation="horizontal">
 
                     <ImageView
@@ -288,7 +288,7 @@
                     android:layout_height="@dimen/common_item_height_normal"
                     android:layout_marginLeft="@dimen/margin_normal"
                     android:layout_marginRight="@dimen/margin_normal"
-                    android:background="@drawable/bg_white_no_corner"
+                    android:background="@drawable/bg_white_no_fill"
                     android:orientation="horizontal">
 
                     <ImageView
@@ -360,11 +360,11 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/margin_normal"
                     android:layout_marginRight="@dimen/margin_normal"
-                    android:background="@drawable/bg_white_no_corner"
+                    android:background="@drawable/bg_white_no_fill"
                     android:lineSpacingExtra="@dimen/lineSpacingExtra_normal"
                     android:padding="@dimen/common_page_padding"
                     android:textColor="@color/color_text_normal"
-                    android:textSize="@dimen/sp_15" />
+                    android:textSize="@dimen/size_normal" />
 
             </LinearLayout>
 

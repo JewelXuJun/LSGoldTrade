@@ -148,7 +148,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="@dimen/common_page_margin"
                                 android:layout_marginTop="@dimen/common_area_margin"
-                                android:text="@string/trade_popupwindow_entrust_price"
+                                android:text="@string/transaction_popupwindow_entrust_price"
                                 android:textColor="@color/color_text_black"
                                 android:textSize="@dimen/sp_14" />
 
@@ -404,7 +404,7 @@
                 android:background="@color/white"
                 app:tabIndicatorColor="@color/color_blue"
                 app:tabIndicatorFullWidth="true"
-                app:tabIndicatorHeight="2dp"
+                app:tabIndicatorHeight="@dimen/height_line"
                 app:tabRippleColor="@null"
                 app:tabSelectedTextColor="@color/color_blue_deep"
                 app:tabTextColor="@color/color_text_normal" />

@@ -38,10 +38,12 @@ import com.jme.lsgoldtrade.domain.TenSpeedVo;
 import com.jme.lsgoldtrade.service.ManagementService;
 import com.jme.lsgoldtrade.service.MarketService;
 import com.jme.lsgoldtrade.service.TradeService;
-import com.jme.lsgoldtrade.util.EidtTextInputUtil;
+import com.jme.lsgoldtrade.ui.transaction.CancelOrderPopUpWindow;
+import com.jme.lsgoldtrade.view.PlaceOrderPopupWindow;
+import com.jme.lsgoldtrade.view.TransactionMessagePopUpWindow;
 import com.jme.lsgoldtrade.util.MarketUtil;
 import com.jme.lsgoldtrade.view.ConfirmPopupwindow;
-import com.jme.lsgoldtrade.view.EveningUpPopupWindow;
+import com.jme.lsgoldtrade.ui.transaction.EveningUpPopupWindow;
 
 import java.math.BigDecimal;
 import java.util.HashMap;
@@ -66,9 +68,9 @@ public class DeclarationFormFragment extends JMEBaseFragment implements FChart.O
     private TenSpeedVo mTenSpeedVo;
     private PositionVo mPositionVo;
     private AlertDialog mDialog;
-    private DeclarationFormPopupWindow mWindow;
+    private PlaceOrderPopupWindow mPlaceOrderPopupWindow;
     private CancelOrderPopUpWindow mCancelWindow;
-    private TradeMessagePopUpWindow mTradeMessagePopUpWindow;
+    private TransactionMessagePopUpWindow mTransactionMessagePopUpWindow;
     private EveningUpPopupWindow mEveningUpPopupWindow;
     private ConfirmPopupwindow mConfirmPopupwindow;
     private Subscription mRxbus;
@@ -90,12 +92,12 @@ public class DeclarationFormFragment extends JMEBaseFragment implements FChart.O
     private Handler mHandler = new Handler() {
         public void handleMessage(Message msg) {
             switch (msg.what) {
-                case Constants.Msg.MSG_TRADE_UPDATE_DATA:
-                    mHandler.removeMessages(Constants.Msg.MSG_TRADE_UPDATE_DATA);
+                case Constants.Msg.MSG_TRANSACTION_UPDATE_DATA:
+                    mHandler.removeMessages(Constants.Msg.MSG_TRANSACTION_UPDATE_DATA);
 
                     getTenSpeedQuotes();
 
-                    mHandler.sendEmptyMessageDelayed(Constants.Msg.MSG_TRADE_UPDATE_DATA, getTimeInterval());
+                    mHandler.sendEmptyMessageDelayed(Constants.Msg.MSG_TRANSACTION_UPDATE_DATA, getTimeInterval());
 
                     break;
             }
@@ -115,17 +117,11 @@ public class DeclarationFormFragment extends JMEBaseFragment implements FChart.O
 
         mBinding = (FragmentDeclarationFormBinding) mBindingUtil;
 
-        mTradeMessagePopUpWindow = new TradeMessagePopUpWindow(mContext);
-        mTradeMessagePopUpWindow.setOutsideTouchable(true);
-        mTradeMessagePopUpWindow.setFocusable(true);
-
+        mTransactionMessagePopUpWindow = new TransactionMessagePopUpWindow(mContext);
         mConfirmPopupwindow = new ConfirmPopupwindow(mContext);
-        mConfirmPopupwindow.setOutsideTouchable(true);
-        mConfirmPopupwindow.setFocusable(true);
-
         mEveningUpPopupWindow = new EveningUpPopupWindow(mContext);
-        mEveningUpPopupWindow.setOutsideTouchable(true);
-        mEveningUpPopupWindow.setFocusable(true);
+        mPlaceOrderPopupWindow = new PlaceOrderPopupWindow(mContext);
+        mCancelWindow = new CancelOrderPopUpWindow(mContext);
     }
 
     @Override
@@ -133,12 +129,6 @@ public class DeclarationFormFragment extends JMEBaseFragment implements FChart.O
         super.initData(savedInstanceState);
 
         mAdapter = new TabViewPagerAdapter(getChildFragmentManager());
-        mWindow = new DeclarationFormPopupWindow(mContext);
-        mWindow.setOutsideTouchable(true);
-        mWindow.setFocusable(true);
-        mCancelWindow = new CancelOrderPopUpWindow(mContext);
-        mCancelWindow.setOutsideTouchable(true);
-        mCancelWindow.setFocusable(true);
 
         initInfoTabs();
         initContractNameValue();
@@ -158,12 +148,6 @@ public class DeclarationFormFragment extends JMEBaseFragment implements FChart.O
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if (mBinding.tvContractId.getText().toString().trim().equals("Ag(T+D)")) {
-                    EidtTextInputUtil.limitInputPointPlaces(mBinding.etPrice, s, 2);
-                    EidtTextInputUtil.limitInputAddStratOneZero(mBinding.etPrice, s);
-                    EidtTextInputUtil.limitInputClearStartMultiZero(mBinding.etPrice, s);
-                }
-
                 if (s.toString().contains(".")) {
                     if (s.length() - 1 - s.toString().indexOf(".") > AppConfig.Length_Limit) {
                         s = s.toString().subSequence(0, s.toString().indexOf(".") + (AppConfig.Length_Limit + 1));
@@ -214,7 +198,7 @@ public class DeclarationFormFragment extends JMEBaseFragment implements FChart.O
         bVisibleToUser = !hidden;
 
         if (null != mHandler && !bVisibleToUser)
-            mHandler.removeMessages(Constants.Msg.MSG_TRADE_UPDATE_DATA);
+            mHandler.removeMessages(Constants.Msg.MSG_TRANSACTION_UPDATE_DATA);
 
         super.onHiddenChanged(hidden);
 
@@ -235,7 +219,7 @@ public class DeclarationFormFragment extends JMEBaseFragment implements FChart.O
             getTenSpeedQuotes();
         } else {
             if (null != mHandler)
-                mHandler.removeMessages(Constants.Msg.MSG_TRADE_UPDATE_DATA);
+                mHandler.removeMessages(Constants.Msg.MSG_TRANSACTION_UPDATE_DATA);
         }
 
         if (null != mBinding && null != mBinding.tabViewpager && null != mAdapter)
@@ -258,7 +242,7 @@ public class DeclarationFormFragment extends JMEBaseFragment implements FChart.O
     public void onPause() {
         super.onPause();
 
-        mHandler.removeMessages(Constants.Msg.MSG_TRADE_UPDATE_DATA);
+        mHandler.removeMessages(Constants.Msg.MSG_TRANSACTION_UPDATE_DATA);
     }
 
     @Override
@@ -271,10 +255,10 @@ public class DeclarationFormFragment extends JMEBaseFragment implements FChart.O
 
     private void initInfoTabs() {
         mTabTitles = new String[4];
-        mTabTitles[0] = mContext.getResources().getString(R.string.trade_hold_position);
+        mTabTitles[0] = mContext.getResources().getString(R.string.transaction_hold_positions);
         mTabTitles[1] = mContext.getResources().getString(R.string.trade_entrust);
         mTabTitles[2] = mContext.getResources().getString(R.string.trade_deal);
-        mTabTitles[3] = mContext.getResources().getString(R.string.trade_cancel_order);
+        mTabTitles[3] = mContext.getResources().getString(R.string.transaction_cancel_order);
 
         mFragmentArrays = new Fragment[4];
         mFragmentArrays[0] = new ItemHoldPositionFragment();
@@ -400,7 +384,7 @@ public class DeclarationFormFragment extends JMEBaseFragment implements FChart.O
                 AppConfig.Select_ContractId = contractID;
                 setContractData();
 
-                mHandler.removeMessages(Constants.Msg.MSG_TRADE_UPDATE_DATA);
+                mHandler.removeMessages(Constants.Msg.MSG_TRANSACTION_UPDATE_DATA);
 
                 getTenSpeedQuotes();
             }
@@ -446,15 +430,15 @@ public class DeclarationFormFragment extends JMEBaseFragment implements FChart.O
     }
 
     private void showPopupWindow(String contractID, String price, String amount, int bsFlag) {
-        if (null == mWindow || mWindow.isShowing())
+        if (null == mPlaceOrderPopupWindow || mPlaceOrderPopupWindow.isShowing())
             return;
 
-        mWindow.setData(mUser.getAccount(), contractID, price, amount, String.valueOf(bsFlag), (view) -> {
+        mPlaceOrderPopupWindow.setData(mUser.getAccount(), contractID, price, amount, String.valueOf(bsFlag), (view) -> {
             getStatus();
 
-            mWindow.dismiss();
+            mPlaceOrderPopupWindow.dismiss();
         });
-        mWindow.showAtLocation(mBinding.etAmount, Gravity.BOTTOM, 0, 0);
+        mPlaceOrderPopupWindow.showAtLocation(mBinding.etAmount, Gravity.BOTTOM, 0, 0);
     }
 
     private void doTrade() {
@@ -474,23 +458,23 @@ public class DeclarationFormFragment extends JMEBaseFragment implements FChart.O
         }
 
         if (TextUtils.isEmpty(contractID))
-            showShortToast(R.string.trade_contract_error);
+            showShortToast(R.string.transaction_contract_error);
         else if (TextUtils.isEmpty(mDeclarationFormPrice) || mDeclarationFormPrice.equals(mContext.getResources().getString(R.string.text_no_data_default)))
-            showShortToast(R.string.trade_price_error);
+            showShortToast(R.string.transaction_price_error);
         else if (new BigDecimal(mDeclarationFormPrice).compareTo(new BigDecimal(mLowerLimitPrice)) == -1)
-            showShortToast(R.string.trade_limit_down_price_error);
+            showShortToast(R.string.transaction_limit_down_price_error);
         else if (new BigDecimal(mDeclarationFormPrice).compareTo(new BigDecimal(mHighLimitPrice)) == 1)
-            showShortToast(R.string.trade_limit_up_price_error);
+            showShortToast(R.string.transaction_limit_up_price_error);
         else if (TextUtils.isEmpty(amount))
-            showShortToast(R.string.trade_number_error);
+            showShortToast(R.string.transaction_number_error);
         else if (new BigDecimal(amount).compareTo(new BigDecimal(0)) == 0)
-            showShortToast(R.string.trade_number_error_zero);
+            showShortToast(R.string.transaction_number_error_zero);
         else if (mMinOrderQty != -1 && new BigDecimal(amount).compareTo(new BigDecimal(mMinOrderQty)) == -1)
-            showShortToast(R.string.trade_limit_min_amount_error);
+            showShortToast(R.string.transaction_limit_min_amount_error);
         else if (mMaxOrderQty != -1 && new BigDecimal(amount).compareTo(new BigDecimal(mMaxOrderQty)) == 1)
-            showShortToast(R.string.trade_limit_max_amount_error);
+            showShortToast(R.string.transaction_limit_max_amount_error);
         else if (mMaxHoldQty != -1 && new BigDecimal(holdAmount).compareTo(new BigDecimal(mMaxHoldQty)) == 1)
-            showShortToast(R.string.trade_limit_max_amount_error2);
+            showShortToast(R.string.transaction_limit_max_amount_error2);
         else
             showPopupWindow(contractID, mDeclarationFormPrice, amount, mBsFlag);
     }
@@ -587,7 +571,7 @@ public class DeclarationFormFragment extends JMEBaseFragment implements FChart.O
                 if (bFlag) {
                     bFlag = false;
 
-                    mHandler.sendEmptyMessageDelayed(Constants.Msg.MSG_TRADE_UPDATE_DATA, getTimeInterval());
+                    mHandler.sendEmptyMessageDelayed(Constants.Msg.MSG_TRANSACTION_UPDATE_DATA, getTimeInterval());
                 }
 
                 break;
@@ -632,21 +616,21 @@ public class DeclarationFormFragment extends JMEBaseFragment implements FChart.O
                                     String amount = mEveningUpPopupWindow.getAmount();
 
                                     if (TextUtils.isEmpty(price) || price.equals(mContext.getResources().getString(R.string.text_no_data_default))) {
-                                        showShortToast(R.string.trade_price_error);
+                                        showShortToast(R.string.transaction_price_error);
                                     } else if (new BigDecimal(price).compareTo(new BigDecimal(lowerLimitPrice)) == -1) {
-                                        showShortToast(R.string.trade_limit_down_price_error);
+                                        showShortToast(R.string.transaction_limit_down_price_error);
                                     } else if (new BigDecimal(price).compareTo(new BigDecimal(highLimitPrice)) == 1) {
-                                        showShortToast(R.string.trade_limit_up_price_error);
+                                        showShortToast(R.string.transaction_limit_up_price_error);
                                     } else if (TextUtils.isEmpty(amount)) {
-                                        showShortToast(R.string.trade_number_error);
+                                        showShortToast(R.string.transaction_number_error);
                                     } else if (new BigDecimal(amount).compareTo(new BigDecimal(0)) == 0) {
-                                        showShortToast(R.string.trade_number_error_zero);
+                                        showShortToast(R.string.transaction_number_error_zero);
                                     } else if (minOrderQty != -1 && new BigDecimal(amount).compareTo(new BigDecimal(minOrderQty)) == -1) {
-                                        showShortToast(R.string.trade_limit_min_amount_error);
+                                        showShortToast(R.string.transaction_limit_min_amount_error);
                                     } else if (mMaxOrderQty == -1 && new BigDecimal(amount).compareTo(new BigDecimal(mMaxHoldQty == -1 ? maxAmount : Math.min(maxAmount, mMaxHoldQty))) == 1) {
-                                        Toast.makeText(mContext, R.string.trade_limit_max_amount_error_canbuy, Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(mContext, R.string.transaction_limit_max_amount_error_canbuy, Toast.LENGTH_SHORT).show();
                                     } else if (mMaxOrderQty != -1 && new BigDecimal(amount).compareTo(new BigDecimal(Math.min(maxAmount, mMaxOrderQty))) == 1) {
-                                        Toast.makeText(mContext, R.string.trade_limit_max_amount_error_canbuy, Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(mContext, R.string.transaction_limit_max_amount_error_canbuy, Toast.LENGTH_SHORT).show();
                                     } else {
                                         limitOrder(mEveningUpContractID, mEveningUpPopupWindow.getPrice(),
                                                 mEveningUpPopupWindow.getAmount(), mPositionVo.getType().equals("多") ? 2 : 1, 1);
@@ -669,15 +653,15 @@ public class DeclarationFormFragment extends JMEBaseFragment implements FChart.O
                         status = response.toString();
 
                     if (status.equals("1")) {
-                        if (null != mTradeMessagePopUpWindow && !mTradeMessagePopUpWindow.isShowing()) {
-                            mTradeMessagePopUpWindow.setData(mContext.getResources().getString(R.string.trade_account_error),
-                                    mContext.getResources().getString(R.string.trade_account_goto_recharge),
+                        if (null != mTransactionMessagePopUpWindow && !mTransactionMessagePopUpWindow.isShowing()) {
+                            mTransactionMessagePopUpWindow.setData(mContext.getResources().getString(R.string.transaction_account_error),
+                                    mContext.getResources().getString(R.string.transaction_account_goto_recharge),
                                     (view) -> {
                                         ARouter.getInstance().build(Constants.ARouterUriConst.RECHARGE).navigation();
 
-                                        mTradeMessagePopUpWindow.dismiss();
+                                        mTransactionMessagePopUpWindow.dismiss();
                                     });
-                            mTradeMessagePopUpWindow.showAtLocation(mBinding.etAmount, Gravity.CENTER, 0, 0);
+                            mTransactionMessagePopUpWindow.showAtLocation(mBinding.etAmount, Gravity.CENTER, 0, 0);
                         }
                     } else {
                         limitOrder(mBinding.tvContractId.getText().toString(), mDeclarationFormPrice, mBinding.etAmount.getText().toString(), mBsFlag, mOcFlag);
@@ -687,14 +671,14 @@ public class DeclarationFormFragment extends JMEBaseFragment implements FChart.O
                 break;
             case "LimitOrder":
                 if (head.isSuccess()) {
-                    showShortToast(R.string.trade_success);
+                    showShortToast(R.string.transaction_success);
 
                     RxBus.getInstance().post(Constants.RxBusConst.RXBUS_DECLARATIONFORM_UPDATE, null);
                 } else {
                     if (head.getMsg().contains("可用资金不足")) {
                         if (null != mConfirmPopupwindow && !mConfirmPopupwindow.isShowing()) {
-                            mConfirmPopupwindow.setData(mContext.getResources().getString(R.string.trade_money_error),
-                                    mContext.getResources().getString(R.string.trade_money_in),
+                            mConfirmPopupwindow.setData(mContext.getResources().getString(R.string.transaction_money_error),
+                                    mContext.getResources().getString(R.string.transaction_money_in),
                                     (view) -> ARouter.getInstance().build(Constants.ARouterUriConst.CAPITALTRANSFER).navigation());
                             mConfirmPopupwindow.showAtLocation(mBinding.etAmount, Gravity.CENTER, 0, 0);
                         }
@@ -761,7 +745,7 @@ public class DeclarationFormFragment extends JMEBaseFragment implements FChart.O
             float value = new BigDecimal(price).subtract(new BigDecimal(mPriceMove)).floatValue();
 
             if (new BigDecimal(String.valueOf(value)).compareTo(new BigDecimal(mLowerLimitPrice)) == -1) {
-                showShortToast(R.string.trade_limit_down_price_error);
+                showShortToast(R.string.transaction_limit_down_price_error);
 
                 mBinding.etPrice.setText(price);
                 mBinding.etPrice.setSelection(price.length());
@@ -784,7 +768,7 @@ public class DeclarationFormFragment extends JMEBaseFragment implements FChart.O
             float value = new BigDecimal(price).add(new BigDecimal(mPriceMove)).floatValue();
 
             if (new BigDecimal(String.valueOf(value)).compareTo(new BigDecimal(mHighLimitPrice)) == 1) {
-                showShortToast(R.string.trade_limit_up_price_error);
+                showShortToast(R.string.transaction_limit_up_price_error);
 
                 mBinding.etPrice.setText(price);
                 mBinding.etPrice.setSelection(price.length());
@@ -810,10 +794,10 @@ public class DeclarationFormFragment extends JMEBaseFragment implements FChart.O
                 if (new BigDecimal(value).compareTo(new BigDecimal(0)) == 1)
                     mBinding.etAmount.setText(String.valueOf(value));
                 else
-                    showShortToast(R.string.trade_number_error_zero);
+                    showShortToast(R.string.transaction_number_error_zero);
             } else {
                 if (new BigDecimal(value).compareTo(new BigDecimal(mMinOrderQty)) == -1)
-                    showShortToast(R.string.trade_limit_min_amount_error);
+                    showShortToast(R.string.transaction_limit_min_amount_error);
                 else
                     mBinding.etAmount.setText(String.valueOf(value));
             }
@@ -834,13 +818,13 @@ public class DeclarationFormFragment extends JMEBaseFragment implements FChart.O
                     mBinding.etAmount.setText(String.valueOf(value));
                 } else {
                     if (new BigDecimal(value).compareTo(new BigDecimal(mMaxHoldQty)) == 1)
-                        showShortToast(R.string.trade_limit_max_amount_error2);
+                        showShortToast(R.string.transaction_limit_max_amount_error2);
                     else
                         mBinding.etAmount.setText(String.valueOf(value));
                 }
             } else {
                 if (new BigDecimal(value).compareTo(new BigDecimal(mMaxOrderQty)) == 1)
-                    showShortToast(R.string.trade_limit_max_amount_error);
+                    showShortToast(R.string.transaction_limit_max_amount_error);
                 else
                     mBinding.etAmount.setText(String.valueOf(value));
             }

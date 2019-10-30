@@ -90,7 +90,7 @@ public class TradingPasswordSettingActivity extends JMEBaseActivity {
                 return;
 
             switch (callType) {
-                case Constants.RxBusConst.RXBUS_TRADE:
+                case Constants.RxBusConst.RXBUS_TRANSACTION_PLACE_ORDER:
                 case Constants.RxBusConst.RXBUS_TRADING_PASSWORD_SETTING_SUCCESS:
                     finish();
 

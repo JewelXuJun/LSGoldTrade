@@ -37,7 +37,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:text="@string/trade_start_time"
+                    android:text="@string/transaction_start_time"
                     android:textColor="@color/black_pale"
                     android:textSize="@dimen/sp_12" />
 
@@ -71,7 +71,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:text="@string/trade_end_time"
+                    android:text="@string/transaction_end_time"
                     android:textColor="@color/black_pale"
                     android:textSize="@dimen/sp_12" />
 
@@ -105,7 +105,7 @@
                     android:layout_weight="1"
                     android:gravity="center|left"
                     android:paddingLeft="@dimen/common_page_padding"
-                    android:text="@string/trade_contract_time"
+                    android:text="@string/transaction_contract_time"
                     android:textColor="@color/black_pale"
                     android:textSize="@dimen/sp_12" />
 
@@ -114,7 +114,7 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:gravity="center"
-                    android:text="@string/trade_type_price"
+                    android:text="@string/transaction_type_price"
                     android:textColor="@color/black_pale"
                     android:textSize="@dimen/sp_12" />
 
@@ -124,7 +124,7 @@
                     android:layout_weight="1"
                     android:gravity="right|center"
                     android:paddingRight="@dimen/common_page_padding"
-                    android:text="@string/trade_entrust_surplus"
+                    android:text="@string/transaction_entrust_surplus"
                     android:textColor="@color/black_pale"
                     android:textSize="@dimen/sp_12" />
 
@@ -134,7 +134,7 @@
                     android:layout_weight="1"
                     android:gravity="center|right"
                     android:paddingRight="@dimen/common_page_padding"
-                    android:text="@string/trade_state"
+                    android:text="@string/transaction_state"
                     android:textColor="@color/black_pale"
                     android:textSize="@dimen/sp_12" />
 

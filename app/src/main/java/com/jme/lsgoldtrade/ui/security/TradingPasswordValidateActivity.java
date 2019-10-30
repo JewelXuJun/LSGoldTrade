@@ -49,7 +49,7 @@ public class TradingPasswordValidateActivity extends JMEBaseActivity {
         super.initData(savedInstanceState);
 
         mCountDownTimer = new JMECountDownTimer(60000, 1000,
-                mBinding.btnVerificationCode, getString(R.string.trade_get_verification_code));
+                mBinding.btnVerificationCode, getString(R.string.transaction_get_verification_code));
 
         if (null != mUser) {
             UserInfoVo userInfoVo = mUser.getCurrentUser();
@@ -135,7 +135,7 @@ public class TradingPasswordValidateActivity extends JMEBaseActivity {
 
         public void onClickGetVerificationCode() {
             if (TextUtils.isEmpty(mBinding.tvMobileNumber.getText().toString()))
-                showShortToast(R.string.trade_mobile_error);
+                showShortToast(R.string.transaction_mobile_error);
             else
                 sendMessage();
         }
@@ -146,7 +146,7 @@ public class TradingPasswordValidateActivity extends JMEBaseActivity {
             String verificationCode = mBinding.etVerificationCode.getText().toString();
 
             if (TextUtils.isEmpty(mobile))
-                showShortToast(R.string.trade_mobile_error);
+                showShortToast(R.string.transaction_mobile_error);
             else if (!bFlag)
                 showShortToast(R.string.login_verification_code_unget);
             else if (verificationCode.length() < 6)

@@ -40,8 +40,6 @@ public class PersonalFragment extends JMEBaseFragment {
     protected void initView() {
         super.initView();
 
-        mBinding = (FragmentPersonalBinding) mBindingUtil;
-
         StatusBarUtil.setStatusBarMode(mActivity, true, R.color.color_blue);
     }
 
@@ -59,6 +57,7 @@ public class PersonalFragment extends JMEBaseFragment {
     public void initBinding() {
         super.initBinding();
 
+        mBinding = (FragmentPersonalBinding) mBindingUtil;
         mBinding.setHandlers(new ClickHandlers());
     }
 
@@ -195,7 +194,7 @@ public class PersonalFragment extends JMEBaseFragment {
             if (null == mUser || !mUser.isLogin())
                 gotoLogin();
             else if (TextUtils.isEmpty(mUser.getAccountID()))
-                RxBus.getInstance().post(Constants.RxBusConst.RXBUS_TRADE, null);
+                RxBus.getInstance().post(Constants.RxBusConst.RXBUS_TRANSACTION_PLACE_ORDER, null);
         }
 
         public void onClickIncrement() {

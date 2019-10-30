@@ -53,7 +53,7 @@
                     android:layout_height="wrap_content"
                     android:text="交易匣子"
                     android:textColor="@color/black"
-                    android:textSize="@dimen/sp_15"
+                    android:textSize="@dimen/size_normal"
                     android:textStyle="bold"/>
 
                 <TextView
@@ -96,7 +96,7 @@
                     android:layout_height="wrap_content"
                     android:text="委托风控"
                     android:textColor="@color/black"
-                    android:textSize="@dimen/sp_15"
+                    android:textSize="@dimen/size_normal"
                     android:textStyle="bold"/>
 
                 <TextView

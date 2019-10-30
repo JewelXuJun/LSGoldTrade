@@ -11,7 +11,7 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/height_item_normal"
             android:gravity="center"
-            android:text="@string/trade_cancel_order"
+            android:text="@string/transaction_cancel_order"
             android:textColor="@color/black_deep"
             android:textSize="@dimen/sp_16" />
 
@@ -34,7 +34,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/trade_popupwindow_contract_code"
+                    android:text="@string/transaction_popupwindow_contract_code"
                     android:textColor="@color/gray"
                     android:textSize="@dimen/sp_14" />
 
@@ -57,7 +57,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/trade_popupwindow_time"
+                    android:text="@string/transaction_popupwindow_time"
                     android:textColor="@color/gray"
                     android:textSize="@dimen/sp_14" />
 
@@ -80,7 +80,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/trade_popupwindow_type"
+                    android:text="@string/transaction_popupwindow_type"
                     android:textColor="@color/gray"
                     android:textSize="@dimen/sp_14" />
 
@@ -103,7 +103,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/trade_popupwindow_trade_price"
+                    android:text="@string/transaction_popupwindow_trade_price"
                     android:textColor="@color/gray"
                     android:textSize="@dimen/sp_14" />
 
@@ -126,7 +126,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/trade_popupwindow_entrust_amount"
+                    android:text="@string/transaction_popupwindow_entrust_amount"
                     android:textColor="@color/gray"
                     android:textSize="@dimen/sp_14" />
 
@@ -149,7 +149,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/trade_popupwindow_surplus_amount"
+                    android:text="@string/transaction_popupwindow_surplus_amount"
                     android:textColor="@color/gray"
                     android:textSize="@dimen/sp_14" />
 
@@ -172,7 +172,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/trade_popupwindow_trade_status"
+                    android:text="@string/transaction_popupwindow_trade_status"
                     android:textColor="@color/gray"
                     android:textSize="@dimen/sp_14" />
 

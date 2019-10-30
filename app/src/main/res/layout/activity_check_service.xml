@@ -12,8 +12,8 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:background="@color/common_background">
+        android:background="@color/common_background"
+        android:orientation="vertical">
 
         <LinearLayout
             android:id="@+id/lltitle"
@@ -30,9 +30,9 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@color/white"
             android:orientation="horizontal"
-            android:padding="15dp"
-            android:background="@color/white">
+            android:padding="15dp">
 
             <LinearLayout
                 android:layout_width="0dp"
@@ -55,7 +55,7 @@
                     android:layout_marginTop="@dimen/common_area_margin_tiny"
                     android:text="@string/text_no_data_default"
                     android:textColor="@color/color_red"
-                    android:textSize="@dimen/common_font_size_big"/>
+                    android:textSize="@dimen/common_font_size_big" />
 
             </LinearLayout>
 
@@ -89,8 +89,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
             android:background="@color/white"
+            android:orientation="horizontal"
             android:paddingLeft="10dp"
             android:paddingRight="10dp"
             android:paddingBottom="20dp">
@@ -98,46 +98,46 @@
             <Button
                 android:layout_width="0dp"
                 android:layout_height="35dp"
+                android:layout_margin="5dp"
                 android:layout_weight="1"
                 android:background="@drawable/selector_btn"
                 android:onClick="@{() -> handlers.onClickRecharge()}"
                 android:text="充值"
                 android:textColor="@color/white"
-                android:textSize="@dimen/sp_16"
-                android:layout_margin="5dp"/>
+                android:textSize="@dimen/sp_16" />
 
             <Button
                 android:layout_width="0dp"
                 android:layout_height="35dp"
+                android:layout_margin="5dp"
                 android:layout_weight="1"
                 android:background="@drawable/selector_btn"
                 android:onClick="@{() -> handlers.onClickWithdraw()}"
                 android:text="提现"
                 android:textColor="@color/white"
-                android:textSize="@dimen/sp_16"
-                android:layout_margin="5dp"/>
+                android:textSize="@dimen/sp_16" />
 
             <Button
                 android:layout_width="0dp"
                 android:layout_height="35dp"
+                android:layout_margin="5dp"
                 android:layout_weight="1"
                 android:background="@drawable/selector_btn"
                 android:onClick="@{() -> handlers.onClickThaw()}"
                 android:text="申请解冻"
                 android:textColor="@color/white"
-                android:textSize="@dimen/sp_16"
-                android:layout_margin="5dp"/>
+                android:textSize="@dimen/sp_16" />
 
             <Button
                 android:layout_width="0dp"
                 android:layout_height="35dp"
+                android:layout_margin="5dp"
                 android:layout_weight="1"
                 android:background="@drawable/selector_btn"
                 android:onClick="@{() -> handlers.onClickDetailed()}"
                 android:text="账户明细"
                 android:textColor="@color/white"
-                android:textSize="@dimen/sp_16"
-                android:layout_margin="5dp"/>
+                android:textSize="@dimen/sp_16" />
 
         </LinearLayout>
 
@@ -146,51 +146,51 @@
             android:layout_height="100dp"
             android:layout_marginTop="@dimen/dp_10"
             android:background="@color/white"
-            android:orientation="horizontal"
             android:gravity="center_vertical"
+            android:orientation="horizontal"
             android:paddingLeft="25dp"
             android:paddingRight="15dp">
 
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@mipmap/ic_box"/>
+                android:src="@mipmap/ic_box" />
 
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
                 android:layout_marginLeft="20dp"
+                android:layout_weight="1"
                 android:orientation="vertical">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="交易匣子"
-                    android:textSize="@dimen/sp_15"
                     android:textColor="@color/black"
-                    android:textStyle="bold"/>
+                    android:textSize="@dimen/size_normal"
+                    android:textStyle="bold" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
                     android:text="把握非农，一键下单"
-                    android:textSize="@dimen/sp_14"
-                    android:textColor="@color/black"/>
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/sp_14" />
 
             </LinearLayout>
 
             <TextView
                 android:layout_width="65dp"
                 android:layout_height="35dp"
-                android:text="去使用"
-                android:textSize="@dimen/sp_14"
-                android:textColor="@color/color_blue_deep"
                 android:layout_gravity="center"
-                android:gravity="center"
                 android:background="@drawable/bg_btn_blue_stroke"
-                android:onClick="@{() -> handlers.onClickTradingBox()}"/>
+                android:gravity="center"
+                android:onClick="@{() -> handlers.onClickTradingBox()}"
+                android:text="去使用"
+                android:textColor="@color/color_blue_deep"
+                android:textSize="@dimen/sp_14" />
 
         </LinearLayout>
 
@@ -199,109 +199,100 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="100dp"
-            android:orientation="horizontal"
             android:background="@color/white"
             android:gravity="center_vertical"
+            android:orientation="horizontal"
             android:paddingLeft="25dp"
             android:paddingRight="15dp">
 
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@mipmap/ic_entrust_risk"/>
+                android:src="@mipmap/ic_entrust_risk" />
 
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
                 android:layout_marginLeft="20dp"
+                android:layout_weight="1"
                 android:orientation="vertical">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="委托风控"
-                    android:textSize="@dimen/sp_15"
                     android:textColor="@color/black"
-                    android:textStyle="bold"/>
+                    android:textSize="@dimen/size_normal"
+                    android:textStyle="bold" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
                     android:text="实时监控，交易安全"
-                    android:textSize="@dimen/sp_14"
-                    android:textColor="@color/black"/>
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/sp_14" />
 
             </LinearLayout>
 
             <TextView
                 android:layout_width="65dp"
                 android:layout_height="35dp"
-                android:text="去使用"
-                android:textSize="@dimen/sp_14"
-                android:textColor="@color/color_blue_deep"
                 android:layout_gravity="center"
-                android:gravity="center"
                 android:background="@drawable/bg_btn_blue_stroke"
-                android:onClick="@{() -> handlers.onClickEntrust()}"/>
+                android:gravity="center"
+                android:onClick="@{() -> handlers.onClickEntrust()}"
+                android:text="去使用"
+                android:textColor="@color/color_blue_deep"
+                android:textSize="@dimen/sp_14" />
 
         </LinearLayout>
-
-        <!--<include layout="@layout/item_line_vertical_margin" />-->
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="100dp"
-            android:orientation="horizontal"
             android:gravity="center_vertical"
+            android:orientation="horizontal"
             android:paddingLeft="28dp"
             android:paddingRight="15dp"
-            android:visibility="gone"
-            >
+            android:visibility="gone">
 
             <ImageView
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-
-                />
+                android:layout_height="wrap_content" />
 
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:orientation="vertical"
-                >
+                android:orientation="vertical">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="策略共建服务"
-                    android:textSize="@dimen/sp_15"
                     android:textColor="@color/black"
-                    />
+                    android:textSize="@dimen/size_normal" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="黄金交易实战、技术分析、指标解读、沙盘实战等系列服务"
-                    android:textSize="@dimen/sp_14"
                     android:textColor="@color/black"
-                    />
+                    android:textSize="@dimen/sp_14" />
 
             </LinearLayout>
 
             <TextView
                 android:layout_width="75dp"
                 android:layout_height="40dp"
-                android:text="去使用"
-                android:textSize="@dimen/sp_18"
-                android:textColor="@color/color_blue_deep"
                 android:layout_gravity="center"
-                android:gravity="center"
                 android:background="@drawable/bg_btn_blue_stroke"
+                android:gravity="center"
                 android:onClick="@{() -> handlers.onClickService()}"
-                />
+                android:text="去使用"
+                android:textColor="@color/color_blue_deep"
+                android:textSize="@dimen/common_font_size" />
 
         </LinearLayout>
 

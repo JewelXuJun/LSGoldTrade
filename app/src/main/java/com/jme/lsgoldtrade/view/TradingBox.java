@@ -62,7 +62,7 @@ public class TradingBox extends RelativeLayout {
                     }
                 } else {
                     if (TextUtils.isEmpty(User.getInstance().getAccountID()))
-                        RxBus.getInstance().post(Constants.RxBusConst.RXBUS_TRADE, null);
+                        RxBus.getInstance().post(Constants.RxBusConst.RXBUS_TRANSACTION_PLACE_ORDER, null);
                     else
                         ARouter.getInstance().build(Constants.ARouterUriConst.TRADINGBOX).navigation();
                 }

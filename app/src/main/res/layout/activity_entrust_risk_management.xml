@@ -1,0 +1,254 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+        <variable
+            name="handlers"
+            type="com.jme.lsgoldtrade.ui.transaction.EntrustRiskManagementActivity.ClickHandlers" />
+
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/common_background"
+        android:orientation="vertical">
+
+        <include layout="@layout/layout_toolbar" />
+
+        <include layout="@layout/item_line_vertical" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:orientation="horizontal"
+            android:paddingLeft="@dimen/common_area_margin_big"
+            android:paddingTop="@dimen/common_page_margin"
+            android:paddingRight="@dimen/common_area_margin_big"
+            android:paddingBottom="@dimen/common_area_margin">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/transaction_current_guarantee_fund"
+                        android:textColor="@color/color_text_normal"
+                        android:textSize="@dimen/sp_12" />
+
+                    <ImageView
+                        android:id="@+id/img_to_be_effective"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/margin_small"
+                        android:background="@mipmap/ic_to_be_effective"
+                        android:visibility="gone" />
+
+                </LinearLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_tiny">
+
+                    <TextView
+                        android:id="@+id/tv_guarantee_fund"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:text="@string/text_no_data_default"
+                        android:textColor="@color/color_blue_deep"
+                        android:textSize="@dimen/size_big" />
+
+                    <TextView
+                        android:id="@+id/tv_guarantee_fund_setting"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginTop="@dimen/margin_market_price"
+                        android:layout_marginRight="@dimen/margin_login"
+                        android:background="@drawable/bg_btn_blue_hollow"
+                        android:onClick="@{() -> handlers.onClickEntrustRiskManagementSetting()}"
+                        android:paddingLeft="@dimen/common_area_margin_tiny"
+                        android:paddingTop="@dimen/margin_tiny_small"
+                        android:paddingRight="@dimen/common_area_margin_tiny"
+                        android:paddingBottom="@dimen/margin_tiny_small"
+                        android:text="@string/transaction_setting"
+                        android:textColor="@color/color_blue"
+                        android:textSize="@dimen/size_middle"
+                        android:visibility="gone" />
+
+                </RelativeLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="2">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/transaction_risk_rate"
+                            android:textColor="@color/black_pale"
+                            android:textSize="@dimen/sp_12" />
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:onClick="@{() -> handlers.onClickRiskRateTips()}"
+                            android:paddingLeft="@dimen/common_area_margin_tiny"
+                            android:paddingRight="@dimen/common_area_margin_tiny">
+
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:background="@mipmap/ic_tips" />
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/tv_risk_rate"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/margin_tiny_small"
+                        android:text="@string/text_no_data_default"
+                        android:textColor="@color/color_orange"
+                        android:textSize="@dimen/size_big" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/layout_to_be_effective"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:orientation="vertical"
+            android:paddingLeft="@dimen/common_page_padding"
+            android:paddingRight="@dimen/common_page_padding"
+            android:paddingBottom="@dimen/common_area_margin"
+            android:visibility="gone">
+
+            <include layout="@layout/item_line_vertical" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/common_page_margin"
+                android:layout_marginTop="@dimen/common_page_margin"
+                android:layout_marginRight="@dimen/common_page_margin"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/transaction_current_guarantee_fund_to_be_effective"
+                    android:textColor="@color/color_text_normal"
+                    android:textSize="@dimen/sp_12" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/margin_small"
+                    android:text="@string/transaction_current_guarantee_fund_to_be_effective_tips"
+                    android:textColor="@color/color_red"
+                    android:textSize="@dimen/sp_12" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/common_page_margin"
+                android:layout_marginRight="@dimen/common_page_margin"
+                android:orientation="horizontal">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_tiny"
+                    android:layout_weight="1">
+
+                    <TextView
+                        android:id="@+id/tv_guarantee_fund_to_be_effective"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:text="@string/text_no_data_default"
+                        android:textColor="@color/color_blue_deep"
+                        android:textSize="@dimen/size_big" />
+
+                    <TextView
+                        android:id="@+id/tv_guarantee_fund_modify"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginTop="@dimen/margin_market_price"
+                        android:layout_marginRight="@dimen/margin_login"
+                        android:background="@drawable/bg_btn_blue_hollow"
+                        android:onClick="@{() -> handlers.onClickEntrustRiskManagementSetting()}"
+                        android:paddingLeft="@dimen/common_area_margin_tiny"
+                        android:paddingTop="@dimen/margin_tiny_small"
+                        android:paddingRight="@dimen/common_area_margin_tiny"
+                        android:paddingBottom="@dimen/margin_tiny_small"
+                        android:text="@string/transaction_modify"
+                        android:textColor="@color/color_blue"
+                        android:textSize="@dimen/size_middle" />
+
+                </RelativeLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="2" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tv_message"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/common_page_margin"
+            android:background="@color/white"
+            android:lineSpacingExtra="@dimen/lineSpacingExtra_normal"
+            android:paddingLeft="@dimen/common_area_margin_big"
+            android:paddingTop="@dimen/common_area_margin"
+            android:paddingRight="@dimen/common_area_margin_big"
+            android:paddingBottom="@dimen/common_area_margin_big"
+            android:textColor="@color/black_deep"
+            android:textSize="@dimen/sp_12" />
+
+    </LinearLayout>
+
+</layout>

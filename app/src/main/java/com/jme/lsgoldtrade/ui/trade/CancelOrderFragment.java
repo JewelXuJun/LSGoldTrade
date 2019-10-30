@@ -17,6 +17,7 @@ import com.jme.lsgoldtrade.base.JMEBaseFragment;
 import com.jme.lsgoldtrade.databinding.FragmentCancelOrderBinding;
 import com.jme.lsgoldtrade.domain.OrderPageVo;
 import com.jme.lsgoldtrade.service.TradeService;
+import com.jme.lsgoldtrade.ui.transaction.CancelOrderPopUpWindow;
 import com.jme.lsgoldtrade.util.MarketUtil;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
@@ -48,8 +49,6 @@ public class CancelOrderFragment extends JMEBaseFragment implements OnRefreshLis
     @Override
     protected void initView() {
         super.initView();
-
-        mBinding = (FragmentCancelOrderBinding) mBindingUtil;
     }
 
     @Override
@@ -58,8 +57,6 @@ public class CancelOrderFragment extends JMEBaseFragment implements OnRefreshLis
 
         mAdapter = new CancelOrderAdapter(mContext, R.layout.item_cancel_order, null);
         mWindow = new CancelOrderPopUpWindow(mContext);
-        mWindow.setOutsideTouchable(true);
-        mWindow.setFocusable(true);
 
         mBinding.recyclerView.setHasFixedSize(false);
         mBinding.recyclerView.setLayoutManager(new LinearLayoutManager(mContext));
@@ -124,6 +121,8 @@ public class CancelOrderFragment extends JMEBaseFragment implements OnRefreshLis
     @Override
     public void initBinding() {
         super.initBinding();
+
+        mBinding = (FragmentCancelOrderBinding) mBindingUtil;
     }
 
     @Override

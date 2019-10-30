@@ -5,7 +5,7 @@
 
         <variable
             name="handlers"
-            type="com.jme.lsgoldtrade.ui.trade.DailyStatementActivity.ClickHandlers" />
+            type="com.jme.lsgoldtrade.ui.transaction.DailyStatementActivity.ClickHandlers" />
 
     </data>
 
@@ -32,32 +32,163 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="@dimen/height_daily_statement"
                     android:background="@color/white"
                     android:gravity="center"
-                    android:paddingTop="@dimen/common_area_margin_big"
-                    android:paddingBottom="@dimen/common_area_margin_big">
+                    android:orientation="horizontal">
 
                     <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center|left">
+
+                        <TextView
+                            android:id="@+id/tv_previous_day"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:drawableLeft="@mipmap/ic_arrow_left"
+                            android:onClick="@{() -> handlers.onClickPreviousDay()}"
+                            android:padding="@dimen/common_page_padding"
+                            android:paddingLeft="@dimen/common_area_margin_tiny"
+                            android:text="@string/transaction_previous_day"
+                            android:textColor="@color/black_deep"
+                            android:textSize="@dimen/sp_14" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="2"
+                        android:gravity="center">
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:onClick="@{() -> handlers.onClickSelectDate()}"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/transaction_select_date"
+                                android:textColor="@color/black_pale"
+                                android:textSize="@dimen/sp_12" />
+
+                            <TextView
+                                android:id="@+id/tv_time"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/common_area_margin_tiny"
+                                android:textColor="@color/color_blue"
+                                android:textSize="@dimen/common_font_size" />
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center|right">
+
+                        <TextView
+                            android:id="@+id/tv_next_day"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:drawableRight="@mipmap/ic_arrow_right"
+                            android:onClick="@{() -> handlers.onClickNextDay()}"
+                            android:padding="@dimen/common_page_padding"
+                            android:paddingLeft="@dimen/common_area_margin_tiny"
+                            android:text="@string/transaction_next_day"
+                            android:textColor="@color/black_deep"
+                            android:textSize="@dimen/sp_14" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/height_daily_statement"
+                    android:layout_marginTop="@dimen/common_area_margin_tiny"
+                    android:background="@color/white"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
                         android:gravity="center"
-                        android:onClick="@{() -> handlers.onClickSelectDate()}"
                         android:orientation="vertical">
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@string/trade_select_date"
-                            android:textColor="@color/black_pale"
-                            android:textSize="@dimen/sp_12" />
+                            android:text="@string/transaction_current_daily_profit_and_loss"
+                            android:textColor="@color/color_text_black"
+                            android:textSize="@dimen/sp_14" />
 
                         <TextView
-                            android:id="@+id/tv_time"
+                            android:id="@+id/tv_today_float"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/common_area_margin_tiny"
-                            android:textColor="@color/color_blue"
+                            android:layout_marginTop="@dimen/margin_small"
+                            android:text="@string/text_no_data_default"
+                            android:textColor="@color/black_deep"
+                            android:textSize="@dimen/common_font_size" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/transaction_fee_unit"
+                            android:textColor="@color/color_text_black"
+                            android:textSize="@dimen/sp_14" />
+
+                        <TextView
+                            android:id="@+id/tv_fee_unit"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/margin_small"
+                            android:text="@string/text_no_data_default"
+                            android:textColor="@color/black_deep"
+                            android:textSize="@dimen/common_font_size" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/transaction_deferred_charges_unit"
+                            android:textColor="@color/color_text_black"
+                            android:textSize="@dimen/sp_14" />
+
+                        <TextView
+                            android:id="@+id/tv_deferred_charges_unit"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/margin_small"
+                            android:text="@string/text_no_data_default"
+                            android:textColor="@color/black_deep"
                             android:textSize="@dimen/common_font_size" />
 
                     </LinearLayout>
@@ -78,7 +209,7 @@
                         android:drawableLeft="@mipmap/ic_money"
                         android:gravity="center|left"
                         android:paddingLeft="@dimen/common_page_margin"
-                        android:text="@string/trade_equity"
+                        android:text="@string/transaction_daily_statement_detail"
                         android:textColor="@color/gray"
                         android:textSize="@dimen/sp_12" />
 
@@ -92,7 +223,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_centerVertical="true"
-                            android:text="@string/trade_current_client_interest"
+                            android:text="@string/transaction_current_client_interest"
                             android:textColor="@color/color_text_black"
                             android:textSize="@dimen/sp_14" />
 
@@ -114,40 +245,13 @@
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/height_item_normal"
                         android:paddingLeft="@dimen/common_area_margin"
-                        android:paddingRight="@dimen/common_area_margin"
-                        android:visibility="gone">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_centerVertical="true"
-                            android:text="@string/trade_previous_customer_interest"
-                            android:textColor="@color/color_text_black"
-                            android:textSize="@dimen/sp_14" />
-
-                        <TextView
-                            android:id="@+id/tv_previous_customer_interest"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentRight="true"
-                            android:layout_centerVertical="true"
-                            android:text="@string/text_no_data_default"
-                            android:textColor="@color/black_deep"
-                            android:textSize="@dimen/common_font_size" />
-
-                    </RelativeLayout>
-
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/height_item_normal"
-                        android:paddingLeft="@dimen/common_area_margin"
                         android:paddingRight="@dimen/common_area_margin">
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_centerVertical="true"
-                            android:text="@string/trade_current_available_funds"
+                            android:text="@string/transaction_current_available_funds"
                             android:textColor="@color/color_text_black"
                             android:textSize="@dimen/sp_14" />
 
@@ -163,25 +267,7 @@
 
                     </RelativeLayout>
 
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/common_page_margin"
-                    android:background="@color/white"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/common_item_height_small"
-                        android:background="@color/color_tabhost"
-                        android:drawableLeft="@mipmap/ic_money"
-                        android:gravity="center|left"
-                        android:paddingLeft="@dimen/common_page_margin"
-                        android:text="@string/trade_profit_and_loss"
-                        android:textColor="@color/gray"
-                        android:textSize="@dimen/sp_12" />
+                    <include layout="@layout/item_line_vertical" />
 
                     <RelativeLayout
                         android:layout_width="match_parent"
@@ -193,53 +279,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_centerVertical="true"
-                            android:text="@string/trade_current_daily_profit_and_loss"
-                            android:textColor="@color/color_text_black"
-                            android:textSize="@dimen/sp_14" />
-
-                        <TextView
-                            android:id="@+id/tv_today_float"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentRight="true"
-                            android:layout_centerVertical="true"
-                            android:text="@string/text_no_data_default"
-                            android:textColor="@color/black_deep"
-                            android:textSize="@dimen/common_font_size" />
-
-                    </RelativeLayout>
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/common_page_margin"
-                    android:background="@color/white"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/common_item_height_small"
-                        android:background="@color/color_tabhost"
-                        android:drawableLeft="@mipmap/ic_money"
-                        android:gravity="center|left"
-                        android:paddingLeft="@dimen/common_page_margin"
-                        android:text="@string/trade_bond"
-                        android:textColor="@color/gray"
-                        android:textSize="@dimen/sp_12" />
-
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/height_item_normal"
-                        android:paddingLeft="@dimen/common_area_margin"
-                        android:paddingRight="@dimen/common_area_margin">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_centerVertical="true"
-                            android:text="@string/trade_current_hold_position_bond"
+                            android:text="@string/transaction_current_hold_position_bond"
                             android:textColor="@color/color_text_black"
                             android:textSize="@dimen/sp_14" />
 
@@ -267,7 +307,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_centerVertical="true"
-                            android:text="@string/trade_break_even_fund"
+                            android:text="@string/transaction_break_even_fund"
                             android:textColor="@color/color_text_black"
                             android:textSize="@dimen/sp_14" />
 
@@ -283,25 +323,7 @@
 
                     </RelativeLayout>
 
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/common_page_margin"
-                    android:background="@color/white"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/common_item_height_small"
-                        android:background="@color/color_tabhost"
-                        android:drawableLeft="@mipmap/ic_money"
-                        android:gravity="center|left"
-                        android:paddingLeft="@dimen/common_page_margin"
-                        android:text="@string/trade_inoutmoney"
-                        android:textColor="@color/gray"
-                        android:textSize="@dimen/sp_12" />
+                    <include layout="@layout/item_line_vertical" />
 
                     <RelativeLayout
                         android:layout_width="match_parent"
@@ -313,7 +335,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_centerVertical="true"
-                            android:text="@string/trade_current_outmoney"
+                            android:text="@string/transaction_current_outmoney"
                             android:textColor="@color/color_text_black"
                             android:textSize="@dimen/sp_14" />
 
@@ -341,7 +363,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_centerVertical="true"
-                            android:text="@string/trade_current_inmoney"
+                            android:text="@string/transaction_current_inmoney"
                             android:textColor="@color/color_text_black"
                             android:textSize="@dimen/sp_14" />
 
@@ -357,26 +379,7 @@
 
                     </RelativeLayout>
 
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/common_page_margin"
-                    android:layout_marginBottom="@dimen/common_area_margin"
-                    android:background="@color/white"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/common_item_height_small"
-                        android:background="@color/color_tabhost"
-                        android:drawableLeft="@mipmap/ic_money"
-                        android:gravity="center|left"
-                        android:paddingLeft="@dimen/common_page_margin"
-                        android:text="@string/trade_cost"
-                        android:textColor="@color/gray"
-                        android:textSize="@dimen/sp_12" />
+                    <include layout="@layout/item_line_vertical" />
 
                     <RelativeLayout
                         android:layout_width="match_parent"
@@ -388,7 +391,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_centerVertical="true"
-                            android:text="@string/trade_fee"
+                            android:text="@string/transaction_fee"
                             android:textColor="@color/color_text_black"
                             android:textSize="@dimen/sp_14" />
 
@@ -416,12 +419,12 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_centerVertical="true"
-                            android:text="@string/trade_deferred_charges"
+                            android:text="@string/transaction_deferred_charges"
                             android:textColor="@color/color_text_black"
                             android:textSize="@dimen/sp_14" />
 
                         <TextView
-                            android:id="@+id/tv_deferred_fee"
+                            android:id="@+id/tv_deferred_charges"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_alignParentRight="true"

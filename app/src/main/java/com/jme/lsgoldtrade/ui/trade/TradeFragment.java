@@ -125,11 +125,11 @@ public class TradeFragment extends JMEBaseFragment implements TabLayout.OnTabSel
                     setLayout();
 
                     break;
-                case Constants.RxBusConst.RXBUS_TRADEFRAGMENT_HOLD:
+                case Constants.RxBusConst.RXBUS_TRANSACTION_HOLD_POSITIONS:
                     mActivity.runOnUiThread(() -> mBinding.tabViewpager.setCurrentItem(0));
 
                     break;
-                case Constants.RxBusConst.RXBUS_TRADE:
+                case Constants.RxBusConst.RXBUS_TRANSACTION_PLACE_ORDER:
                     mActivity.runOnUiThread(() -> mBinding.tabViewpager.setCurrentItem(1));
 
                     break;
@@ -178,9 +178,9 @@ public class TradeFragment extends JMEBaseFragment implements TabLayout.OnTabSel
         mAdapter = new TabViewPagerAdapter(getChildFragmentManager());
 
         mTabTitles = new String[4];
-        mTabTitles[0] = mContext.getResources().getString(R.string.trade_hold_position);
+        mTabTitles[0] = mContext.getResources().getString(R.string.transaction_hold_positions);
         mTabTitles[1] = mContext.getResources().getString(R.string.market_declaration_form);
-        mTabTitles[2] = mContext.getResources().getString(R.string.trade_cancel_order);
+        mTabTitles[2] = mContext.getResources().getString(R.string.transaction_cancel_order);
         mTabTitles[3] = mContext.getResources().getString(R.string.trade_query);
 
         mFragmentArrays = new Fragment[4];
