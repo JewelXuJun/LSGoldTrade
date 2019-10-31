@@ -318,6 +318,10 @@
             android:name=".ui.personal.WithdrawResultActivity"
             android:screenOrientation="portrait" />
 
+        <activity
+            android:name=".ui.transaction.ConditionSheetActivity"
+            android:screenOrientation="portrait" />
+
         <service
             android:name=".base.JMEAppService"
             android:exported="false" />

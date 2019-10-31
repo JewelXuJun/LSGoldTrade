@@ -769,6 +769,14 @@ public class PlaceOrderFragment extends JMEBaseFragment implements FChart.OnPric
                 doTransaction();
             }
         }
+
+        public void onClickCreateConditionSheet() {
+            ARouter.getInstance()
+                    .build(Constants.ARouterUriConst.CONDITIONSHEET)
+                    .withInt("Type", 1)
+                    .navigation();
+        }
+
     }
 
     @Override

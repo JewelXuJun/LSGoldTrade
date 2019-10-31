@@ -442,6 +442,7 @@
                 android:layout_marginRight="@dimen/common_area_margin_tiny"
                 android:layout_weight="1.2"
                 android:background="@drawable/bg_btn_blue_solid"
+                android:onClick="@{() -> handlers.onClickCreateConditionSheet()}"
                 android:text="@string/transaction_create_condition_sheet"
                 android:textColor="@color/white"
                 android:textSize="@dimen/sp_16" />

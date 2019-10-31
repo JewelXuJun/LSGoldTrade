@@ -798,7 +798,10 @@ public class HoldPositionsFragment extends JMEBaseFragment implements OnRefreshL
         }
 
         public void onClickConditionSheet() {
-
+            ARouter.getInstance()
+                    .build(Constants.ARouterUriConst.CONDITIONSHEET)
+                    .withInt("Type", 1)
+                    .navigation();
         }
 
     }

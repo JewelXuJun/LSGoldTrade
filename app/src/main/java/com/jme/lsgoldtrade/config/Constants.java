@@ -246,7 +246,8 @@ public class Constants {
         public static final String GESTURESETTING = "/GestureActivity/GestureSettingActivity";
         public static final String GESTURESETTINGVALIDATE = "/GestureSettingActivity/GestureSettingValidateActivity";
         public static final String ONLINEDURATION = "/AccountSecurityActivity/OnlineDurationActivity";
-        public static final String UNLOCKTRADINGPASSWORD = "/TradeFragment/UnlockTradingPasswordActivity";
+        public static final String UNLOCKTRADINGPASSWORD = "/TransactionFragment/UnlockTradingPasswordActivity";
+        public static final String CONDITIONSHEET = "/TransactionFragment/ConditionSheetActivity";
     }
 
     public static final long SPLASH_DELAY_MILLIS = 2000;
