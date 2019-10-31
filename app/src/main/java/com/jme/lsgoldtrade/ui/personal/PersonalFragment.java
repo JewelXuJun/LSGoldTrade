@@ -1,7 +1,9 @@
 package com.jme.lsgoldtrade.ui.personal;
 
 import android.os.Bundle;
+
 import androidx.core.content.ContextCompat;
+
 import android.text.TextUtils;
 import android.view.View;
 
@@ -75,7 +77,7 @@ public class PersonalFragment extends JMEBaseFragment {
         } else {
             mBinding.tvAccount.setText(StringUtils.phoneInvisibleMiddle(mUser.getCurrentUser().getMobile()));
             mBinding.tvAccount.setVisibility(View.VISIBLE);
-            mBinding.layoutAccountSecurity.setVisibility(View.VISIBLE);
+            mBinding.layoutAccountSecurity.setVisibility(TextUtils.isEmpty(mUser.getAccountID()) ? View.GONE : View.VISIBLE);
             mBinding.layoutLoginMessage.setVisibility(View.GONE);
             mBinding.layoutOpenAccount.setVisibility(TextUtils.isEmpty(mUser.getAccountID()) ? View.VISIBLE : View.GONE);
 

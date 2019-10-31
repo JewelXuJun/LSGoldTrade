@@ -85,7 +85,7 @@ public class TransactionFragment extends JMEBaseFragment {
 
         bHidden = hidden;
 
-        if (!bHidden)
+        if (!bHidden && null != mUser && !TextUtils.isEmpty(mUser.getAccountID()))
             getUserPasswordSettingInfo();
 
         if (null != mBinding && null != mBinding.tabViewpager && null != mAdapter)
@@ -98,7 +98,7 @@ public class TransactionFragment extends JMEBaseFragment {
 
         setLayout();
 
-        if (!bHidden)
+        if (!bHidden && null != mUser && !TextUtils.isEmpty(mUser.getAccountID()))
             getUserPasswordSettingInfo();
     }
 
