@@ -18,6 +18,7 @@ public class Constants {
         public static final int UAT = 3;
         public static final int PREPRODUCE = 4;
         public static final int SECURITY = 5;
+        public static final int SECURITY_WAN = 6;
 
         public static int Envi = UAT;
 
@@ -94,6 +95,14 @@ public class Constants {
                 URL_INFO = "http://222.190.245.2:18038/tjsmanage/infoapi/v1/android/cmsComtentTxt/get?contentId=";
                 URL_TRADINGBOX = "http://222.190.245.2:18038/tjsmanage/openacct/wap/tradingBox.html";
                 URL_TRADINGBOXINFO = "http://222.190.245.2:18038/tjsmanage/openacct/wap/tradingBoxDetail.html?tradeId=";
+            } else if (Envi == SECURITY_WAN) {
+                URL_BASE_MARKET = "http://1786543.developer.jsdttec.com";
+                URL_BASE_TRADE = "http://1788081.developer.jsdttec.com";
+                URL_BASE_ACCOUNT = "http://1788008.developer.jsdttec.com";
+                URL_BASE_MANAGEMENT = "http://17818090.developer.jsdttec.com";
+                URL_INFO = "http://17818090.developer.jsdttec.com/tjsmanage/infoapi/v1/android/cmsComtentTxt/get?contentId=";
+                URL_TRADINGBOX = "http://17818081.developer.jsdttec.com/tjsmanage/openacct/wap/tradingBox.html";
+                URL_TRADINGBOXINFO = "http://17818081.developer.jsdttec.com/tjsmanage/openacct/wap/tradingBoxDetail.html?tradeId=";
             }
         }
 
