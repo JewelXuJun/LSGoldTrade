@@ -1,7 +1,5 @@
 package com.jme.lsgoldtrade.ui.security;
 
-import android.content.Context;
-import android.hardware.fingerprint.FingerprintManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -81,10 +79,9 @@ public class FingerprintActivity extends JMEBaseActivity {
         mBuilder = new FingerprintVerifyManager.Builder(this);
         mBuilder.enableAndroidP(false);
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            if (!FingerprintManagerCompat.from(this).hasEnrolledFingerprints())
-                mHandler.sendEmptyMessageDelayed(0, 500);
-        }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M
+                && !FingerprintManagerCompat.from(this).hasEnrolledFingerprints())
+            mHandler.sendEmptyMessageDelayed(0, 500);
 
         mConfirmSimplePopupwindow = new ConfirmSimplePopupwindow(this);
         mConfirmSimplePopupwindow.setOutsideTouchable(false);

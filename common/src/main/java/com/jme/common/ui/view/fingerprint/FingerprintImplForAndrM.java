@@ -7,7 +7,6 @@ import android.os.Build;
 import androidx.annotation.RequiresApi;
 import androidx.core.hardware.fingerprint.FingerprintManagerCompat;
 import androidx.core.os.CancellationSignal;
-
 import com.jme.common.R;
 import com.jme.common.ui.view.fingerprint.bean.VerificationDialogStyleBean;
 import com.jme.common.ui.view.fingerprint.uitls.CipherHelper;

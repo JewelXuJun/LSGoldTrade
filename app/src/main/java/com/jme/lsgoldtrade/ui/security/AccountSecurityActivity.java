@@ -1,7 +1,5 @@
 package com.jme.lsgoldtrade.ui.security;
 
-import android.content.Context;
-import android.hardware.fingerprint.FingerprintManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
