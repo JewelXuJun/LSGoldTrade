@@ -414,7 +414,12 @@ public class EntrustRiskManagementActivity extends JMEBaseActivity {
                         boolean hasNext = positionPageVo.isHasNext();
                         mPagingKey = positionPageVo.getPagingKey();
 
-                        mPositionVoList.addAll(positionPageVo.getPositionList());
+                        List<PositionVo> positionVoList = positionPageVo.getPositionList();
+
+                        mPositionVoList.clear();
+
+                        if (null != positionVoList && 0 != positionVoList.size())
+                            mPositionVoList.addAll(positionVoList);
 
                         if (hasNext) {
                             getPosition();
