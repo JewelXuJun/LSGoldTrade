@@ -8,6 +8,8 @@ import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.View;
 
+import androidx.core.hardware.fingerprint.FingerprintManagerCompat;
+
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.jme.common.network.DTRequest;
@@ -28,7 +30,6 @@ public class AccountSecurityActivity extends JMEBaseActivity {
 
     private ActivityAccountSecurityBinding mBinding;
 
-    private FingerprintManager mManager;
     private ConfirmSimplePopupwindow mConfirmSimplePopupwindow;
 
     @Override
@@ -51,13 +52,10 @@ public class AccountSecurityActivity extends JMEBaseActivity {
     protected void initData(Bundle savedInstanceState) {
         super.initData(savedInstanceState);
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            mManager = (FingerprintManager) getSystemService(Context.FINGERPRINT_SERVICE);
-
-            mBinding.layoutFingerprint.setVisibility(mManager.isHardwareDetected() ? View.VISIBLE : View.GONE);
-        } else {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
+            mBinding.layoutFingerprint.setVisibility(FingerprintManagerCompat.from(this).isHardwareDetected() ? View.VISIBLE : View.GONE);
+        else
             mBinding.layoutFingerprint.setVisibility(View.GONE);
-        }
 
         mBinding.tvAccount.setText(null == mUser || !mUser.isLogin() ? "" : mUser.getTraderId());
     }

@@ -27,9 +27,8 @@ public class FingerprintVerifyManager {
             return;
         }
         //检测指纹硬件是否存在或者是否可用，若false，不再弹出指纹验证框
-        if (!fingerprint.canAuthenticate(builder.context, builder.callback)) {
+        if (!fingerprint.canAuthenticate(builder.context, builder.callback))
             return;
-        }
         /**
          * 设定指纹验证框的样式
          */

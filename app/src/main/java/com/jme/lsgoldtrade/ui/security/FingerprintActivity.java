@@ -10,6 +10,8 @@ import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.MotionEvent;
 
+import androidx.core.hardware.fingerprint.FingerprintManagerCompat;
+
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.jme.common.network.DTRequest;
 import com.jme.common.network.Head;
@@ -34,7 +36,6 @@ public class FingerprintActivity extends JMEBaseActivity {
     private int mErrorIndex = 0;
 
     private FingerprintVerifyManager.Builder mBuilder;
-    private FingerprintManager mManager;
     private ConfirmSimplePopupwindow mConfirmSimplePopupwindow;
 
     private Handler mHandler = new Handler() {
@@ -81,9 +82,7 @@ public class FingerprintActivity extends JMEBaseActivity {
         mBuilder.enableAndroidP(false);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            mManager = (FingerprintManager) getSystemService(Context.FINGERPRINT_SERVICE);
-
-            if (!mManager.hasEnrolledFingerprints())
+            if (!FingerprintManagerCompat.from(this).hasEnrolledFingerprints())
                 mHandler.sendEmptyMessageDelayed(0, 500);
         }
 
