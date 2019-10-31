@@ -2,7 +2,9 @@ package com.jme.lsgoldtrade.ui.security;
 
 import android.content.Context;
 import android.os.Bundle;
+
 import androidx.core.content.ContextCompat;
+
 import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.MotionEvent;
@@ -85,10 +87,20 @@ public class TradingPasswordSettingConfirmActivity extends JMEBaseActivity {
                 if (!TextUtils.isEmpty(content) && content.length() == 6) {
                     hiddenKeyBoard();
 
-                    if (content.equals(mTradingPassword))
+                    if (content.equals(mTradingPassword)) {
                         setTradePassword(mTradingPassword);
-                    else
-                        showShortToast(R.string.security_password_not_the_same);
+                    } else {
+                        if (null != mConfirmSimplePopupwindow && !mConfirmSimplePopupwindow.isShowing()) {
+                            mConfirmSimplePopupwindow.setData(getResources().getString(R.string.security_password_not_the_same),
+                                    getResources().getString(R.string.text_confirm),
+                                    (view) -> {
+                                        mBinding.verificationCodeView.clearInputContent();
+
+                                        mConfirmSimplePopupwindow.dismiss();
+                                    });
+                            mConfirmSimplePopupwindow.showAtLocation(mBinding.verificationCodeView, Gravity.CENTER, 0, 0);
+                        }
+                    }
                 }
             }
 
