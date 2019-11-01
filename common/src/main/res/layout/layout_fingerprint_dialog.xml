@@ -23,10 +23,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/common_area_margin"
+            android:layout_marginLeft="@dimen/common_page_margin"
+            android:layout_marginRight="@dimen/common_page_margin"
             android:gravity="center"
             android:text="@string/fingerprint_verify"
             android:textColor="@color/black"
-            android:textSize="15sp" />
+            android:textSize="13sp" />
 
         <TextView
             android:layout_width="match_parent"
@@ -36,7 +38,7 @@
             android:gravity="center"
             android:text="@string/fingerprint_verify_message"
             android:textColor="@color/gray"
-            android:textSize="@dimen/common_font_size_tiny" />
+            android:textSize="13sp" />
 
         <TextView
             android:layout_width="match_parent"
