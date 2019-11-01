@@ -41,7 +41,7 @@ public class FingerprintVerifyManager {
         bean.setDescription(builder.description);
         bean.setCancelBtnText(builder.cancelBtnText);
 
-        fingerprint.authenticate(builder.context, bean, builder.callback);
+        fingerprint.authenticate(builder.context, bean, builder.callback, builder.type);
     }
 
     /**

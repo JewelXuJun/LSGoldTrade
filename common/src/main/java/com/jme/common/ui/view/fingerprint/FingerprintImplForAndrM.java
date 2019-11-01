@@ -101,10 +101,11 @@ public class FingerprintImplForAndrM implements IFingerprint {
             super.onAuthenticationError(errMsgId, errString);
 
             if (errMsgId != 5) {//用户取消指纹验证
-                fingerprintDialog.setTip(errString.equals("0") ? !TextUtils.isEmpty(type) && type.equals("Unlock")
+                String errorMsg = !TextUtils.isEmpty(type) && type.equals("Unlock")
                         ? context.getResources().getString(R.string.fingerprint_verify_error_trade)
-                        : context.getResources().getString(R.string.fingerprint_verify_error)
-                        : errString.toString(), R.color.black);
+                        : context.getResources().getString(R.string.fingerprint_verify_error);
+
+                fingerprintDialog.setTip(errorMsg, R.color.black);
                 fingerprintCallback.onFailed(errString.toString());
             }
         }
