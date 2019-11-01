@@ -3,10 +3,12 @@ package com.jme.common.ui.view.fingerprint;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Build;
+import android.text.TextUtils;
 
 import androidx.annotation.RequiresApi;
 import androidx.core.hardware.fingerprint.FingerprintManagerCompat;
 import androidx.core.os.CancellationSignal;
+
 import com.jme.common.R;
 import com.jme.common.ui.view.fingerprint.bean.VerificationDialogStyleBean;
 import com.jme.common.ui.view.fingerprint.uitls.CipherHelper;
@@ -20,6 +22,7 @@ public class FingerprintImplForAndrM implements IFingerprint {
 
     private final String TAG = FingerprintImplForAndrM.class.getName();
     private Activity context;
+    private String type;
 
     private static FingerprintImplForAndrM fingerprintImplForAndrM;
     //指纹验证框
@@ -35,10 +38,11 @@ public class FingerprintImplForAndrM implements IFingerprint {
     private FingerprintManagerCompat fingerprintManagerCompat;
 
     @Override
-    public void authenticate(Activity context, VerificationDialogStyleBean bean, FingerprintCallback callback) {
+    public void authenticate(Activity context, VerificationDialogStyleBean bean, FingerprintCallback callback, String type) {
 
         this.context = context;
         this.fingerprintCallback = callback;
+        this.type = type;
         //Android 6.0 指纹管理 实例化
         fingerprintManagerCompat = FingerprintManagerCompat.from(context);
 
@@ -97,7 +101,9 @@ public class FingerprintImplForAndrM implements IFingerprint {
             super.onAuthenticationError(errMsgId, errString);
 
             if (errMsgId != 5) {//用户取消指纹验证
-                fingerprintDialog.setTip(errString.equals("0") ? context.getResources().getString(R.string.fingerprint_verify_error)
+                fingerprintDialog.setTip(errString.equals("0") ? !TextUtils.isEmpty(type) && type.equals("Unlock")
+                        ? context.getResources().getString(R.string.fingerprint_verify_error_trade)
+                        : context.getResources().getString(R.string.fingerprint_verify_error)
                         : errString.toString(), R.color.black);
                 fingerprintCallback.onFailed(errString.toString());
             }

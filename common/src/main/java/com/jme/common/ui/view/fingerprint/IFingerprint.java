@@ -26,7 +26,7 @@ public interface IFingerprint {
      * @param verificationDialogStyleBean
      * @param callback
      */
-    void authenticate(Activity context, VerificationDialogStyleBean verificationDialogStyleBean, FingerprintCallback callback);
+    void authenticate(Activity context, VerificationDialogStyleBean verificationDialogStyleBean, FingerprintCallback callback, String type);
 
     void dismiss();
 

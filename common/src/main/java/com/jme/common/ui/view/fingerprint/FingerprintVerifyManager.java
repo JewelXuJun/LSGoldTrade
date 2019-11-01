@@ -56,6 +56,7 @@ public class FingerprintVerifyManager {
         private FingerprintCallback callback;
 
         private boolean enableAndroidP;//在Android 9.0系统上，是否开启google提供的验证方式及验证框
+        private String type;
         private String title;
         private String subTitle;
         private String description;
@@ -97,6 +98,11 @@ public class FingerprintVerifyManager {
          */
         public Builder title(String title) {
             this.title = title;
+            return this;
+        }
+
+        public Builder type(String type) {
+            this.type = type;
             return this;
         }
 

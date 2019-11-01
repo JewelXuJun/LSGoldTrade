@@ -31,7 +31,7 @@ public class FingerprintImplForAndrP implements IFingerprint {
     private static BiometricPrompt.CryptoObject cryptoObject;
 
     @Override
-    public void authenticate(Activity context, VerificationDialogStyleBean verificationDialogStyleBean, FingerprintCallback callback) {
+    public void authenticate(Activity context, VerificationDialogStyleBean verificationDialogStyleBean, FingerprintCallback callback, String type) {
 
         this.fingerprintCallback = callback;
 

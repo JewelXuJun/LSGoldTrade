@@ -65,6 +65,7 @@ public class UnlockTradingPasswordActivity extends JMEBaseActivity {
 
         mBuilder = new FingerprintVerifyManager.Builder(this);
         mBuilder.enableAndroidP(false);
+        mBuilder.type("Unlock");
 
         mBinding.layoutDigitalCipher.setVisibility(mType == 1 ? View.VISIBLE : View.GONE);
         mBinding.layoutFingerprint.setVisibility(mType == 2 ? View.VISIBLE : View.GONE);
