@@ -357,6 +357,7 @@
     <string name="transaction_trigger_price">触发价</string>
     <string name="transaction_cancel">撤销</string>
     <string name="transaction_condition_sheet_explain">条件单说明</string>
+    <string name="transaction_agree">我已阅读并知晓</string>
 
     <!-- Personal -->
     <string name="personal_login">登录/注册</string>

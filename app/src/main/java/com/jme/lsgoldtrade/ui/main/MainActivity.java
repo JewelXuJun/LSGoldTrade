@@ -55,6 +55,7 @@ import com.jme.lsgoldtrade.service.ManagementService;
 import com.jme.lsgoldtrade.service.TradeService;
 import com.jme.lsgoldtrade.tabhost.MainTab;
 import com.jme.lsgoldtrade.view.ConfirmSimplePopupwindow;
+import com.jme.lsgoldtrade.view.ProtocolUpdatePopUpWindow;
 
 import java.io.File;
 import java.util.HashMap;

@@ -1,4 +1,4 @@
-package com.jme.lsgoldtrade.ui.main;
+package com.jme.lsgoldtrade.view;
 
 import android.content.Context;
 import androidx.databinding.DataBindingUtil;
@@ -16,6 +16,7 @@ import com.jme.lsgoldtrade.base.JMEBasePopupWindow;
 import com.jme.lsgoldtrade.config.Constants;
 import com.jme.lsgoldtrade.databinding.PopupwindowProtocolUpdateBinding;
 import com.jme.lsgoldtrade.domain.ProtocolVo;
+import com.jme.lsgoldtrade.ui.main.ProtocolAdapter;
 
 import java.util.List;
 
