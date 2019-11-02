@@ -248,6 +248,7 @@ public class Constants {
         public static final String ONLINEDURATION = "/AccountSecurityActivity/OnlineDurationActivity";
         public static final String UNLOCKTRADINGPASSWORD = "/TransactionFragment/UnlockTradingPasswordActivity";
         public static final String CONDITIONSHEET = "/TransactionFragment/ConditionSheetActivity";
+        public static final String CONDITIONSHEETEXPLAIN = "/ConditionSheetActivity/ConditionSheetExplainActivity";
     }
 
     public static final long SPLASH_DELAY_MILLIS = 2000;

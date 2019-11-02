@@ -11,6 +11,7 @@ import android.widget.TextView;
 import androidx.fragment.app.Fragment;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
+import com.alibaba.android.arouter.launcher.ARouter;
 import com.google.android.material.tabs.TabLayout;
 import com.jme.common.util.DensityUtil;
 import com.jme.common.util.ScreenUtil;
@@ -41,7 +42,8 @@ public class ConditionSheetActivity extends JMEBaseActivity {
 
         initToolbar(R.string.transaction_condition_sheet, true);
 
-        setRightNavigation(getResources().getString(R.string.transaction_explain), 0, R.style.ToolbarThemeBlue, null);
+        setRightNavigation(getResources().getString(R.string.transaction_explain), 0, R.style.ToolbarThemeBlue,
+                () -> ARouter.getInstance().build(Constants.ARouterUriConst.CONDITIONSHEETEXPLAIN).navigation());
     }
 
     @Override
