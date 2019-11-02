@@ -236,8 +236,6 @@ public class UnlockTradingPasswordActivity extends JMEBaseActivity {
 
             switch (callType) {
                 case Constants.RxBusConst.RXBUS_TRANSACTION_PLACE_ORDER:
-                case Constants.RxBusConst.RXBUS_TRADING_PASSWORD_SETTING_SUCCESS:
-                case Constants.RxBusConst.RXBUS_GESTURU_MODIFY_SUCCESS:
                     finish();
 
                     break;
@@ -293,6 +291,8 @@ public class UnlockTradingPasswordActivity extends JMEBaseActivity {
                             mConfirmSimplePopupwindow.setData(getResources().getString(R.string.security_gesture_password_error_message),
                                     getResources().getString(R.string.security_trading_password_login),
                                     (view) -> {
+                                        mType = 1;
+
                                         mBinding.layoutDigitalCipher.setVisibility(View.VISIBLE);
                                         mBinding.layoutFingerprint.setVisibility(View.GONE);
                                         mBinding.layoutGesture.setVisibility(View.GONE);
