@@ -338,6 +338,21 @@
     <string name="transaction_explain">说明</string>
     <string name="transaction_own_condition_sheet">我的条件单</string>
     <string name="transaction_stop_sheet">止盈止损单</string>
+    <string name="transaction_contract_name">合约名称</string>
+    <string name="transaction_direction">买卖方向</string>
+    <string name="transaction_trigger_price_setting">触发价设置</string>
+    <string name="transaction_last_price_range">最新价&#60;=</string>
+    <string name="transaction_range">范围</string>
+    <string name="transaction_price_range">[%1$s,%2$s]</string>
+    <string name="transaction_entrust_type">委托方式</string>
+    <string name="transaction_market_price_fak">市价FAK</string>
+    <string name="transaction_entrust_amount">委托手数</string>
+    <string name="transaction_entrust_about">约可委托</string>
+    <string name="transaction_effective_time">有效时间</string>
+    <string name="transaction_effective_on_that_day">当日生效</string>
+    <string name="transaction_effective_before_cancel">撤销前有效</string>
+    <string name="transaction_condition_sheet_detail">条件单详情</string>
+    <string name="transaction_condition_sheet_risk_tips">《条件单风险提示》</string>
 
     <!-- Personal -->
     <string name="personal_login">登录/注册</string>

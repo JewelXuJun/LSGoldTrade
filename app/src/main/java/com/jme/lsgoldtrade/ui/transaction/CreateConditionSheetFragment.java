@@ -47,5 +47,49 @@ public class CreateConditionSheetFragment extends JMEBaseFragment {
 
     public class ClickHandlers {
 
+        public void onClickSelectContract() {
+
+        }
+
+        public void onClickBuyMore() {
+
+        }
+
+        public void onClickSellEmpty() {
+
+        }
+
+        public void onClickPriceMinus() {
+
+        }
+
+        public void onClickPriceAdd() {
+
+        }
+
+        public void onClickEntrustTypeTips() {
+
+        }
+
+        public void onClickAmountMinus() {
+
+        }
+
+        public void onClickAmountAdd() {
+
+        }
+
+        public void onClickEffectiveTimeTips() {
+
+        }
+
+        public void onCliclConditionSheetRiskTips() {
+
+        }
+
+        public void onClickSubmit() {
+
+        }
+
     }
 }

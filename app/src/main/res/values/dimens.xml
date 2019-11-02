@@ -49,6 +49,7 @@
     <dimen name="width_market_item">46dp</dimen>
     <dimen name="width_trade_hold_position_account_item">102dp</dimen>
     <dimen name="width_item_title">74dp</dimen>
+    <dimen name="width_btn_middle">80dp</dimen>
     <dimen name="width_btn_normal">90dp</dimen>
     <dimen name="width_btn_large">160dp</dimen>
     <dimen name="width_date">100dp</dimen>
@@ -59,9 +60,9 @@
     <dimen name="width_item">82dp</dimen>
     <dimen name="width_item_big">90dp</dimen>
     <dimen name="width_item_bigger">100dp</dimen>
+    <dimen name="width_item_middle_large">110dp</dimen>
     <dimen name="width_item_large">120dp</dimen>
     <dimen name="width_reset_item">85dp</dimen>
-    <dimen name="width_send">80dp</dimen>
     <dimen name="width_customer_service_question">278dp</dimen>
     <dimen name="width_subscribe">55dp</dimen>
     <dimen name="width_blue">5dp</dimen>
@@ -71,6 +72,8 @@
     <dimen name="width_gesture_view">50dp</dimen>
     <dimen name="width_floating">130dp</dimen>
     <dimen name="width_edittext">190dp</dimen>
+    <dimen name="width_range">96dp</dimen>
+    <dimen name="width_entrust_type">160dp</dimen>
 
     <dimen name="margin_main_page_info">30dp</dimen>
     <dimen name="margin_main_page_market">2.5dp</dimen>
@@ -98,6 +101,7 @@
     <dimen name="margin_recharge_type">160dp</dimen>
     <dimen name="margin_forget_password">45dp</dimen>
     <dimen name="margin_fingerprint">150dp</dimen>
+    <dimen name="margin_condition_sheet">95dp</dimen>
 
     <dimen name="size_exiguity_tiny">7sp</dimen>
     <dimen name="size_exiguity">8sp</dimen>
@@ -117,6 +121,7 @@
     <dimen name="icon_head_portrait">60dp</dimen>
     <dimen name="icon_cancel">10dp</dimen>
     <dimen name="icon_checkbox">20dp</dimen>
+    <dimen name="icon_checkbox_circle">18dp</dimen>
     <dimen name="icon_arrow">15dp</dimen>
     <dimen name="icon_trading_box">60dp</dimen>
     <dimen name="icon_trading_box_cancel">15dp</dimen>

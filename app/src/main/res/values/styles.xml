@@ -37,11 +37,15 @@
     </style>
 
     <style name="CustomPayCheckBoxTheme" parent="@android:style/Widget.CompoundButton.CheckBox">
-        <item name="android:button">@drawable/choose_pay</item>
+        <item name="android:button">@drawable/selector_choose_pay</item>
     </style>
 
     <style name="CustomWarningTheme" parent="@android:style/Widget.CompoundButton.CheckBox">
         <item name="android:button">@drawable/ic_warning_choose</item>
+    </style>
+
+    <style name="CustomCheckBoxCircleTheme" parent="@android:style/Widget.CompoundButton.CheckBox">
+        <item name="android:button">@drawable/selector_choose_circle</item>
     </style>
 
     <style name="TabLayoutTextStyle">
