@@ -76,6 +76,8 @@
     <dimen name="width_edittext">190dp</dimen>
     <dimen name="width_range">96dp</dimen>
     <dimen name="width_entrust_type">160dp</dimen>
+    <dimen name="width_transaction_item_amount">150dp</dimen>
+    <dimen name="width_transaction_item_normal">180dp</dimen>
     <dimen name="width_transaction_item">190dp</dimen>
 
     <dimen name="margin_main_page_info">30dp</dimen>
@@ -105,6 +107,8 @@
     <dimen name="margin_forget_password">45dp</dimen>
     <dimen name="margin_fingerprint">150dp</dimen>
     <dimen name="margin_condition_sheet">95dp</dimen>
+    <dimen name="margin_condition_sheet_checkbox">75dp</dimen>
+    <dimen name="margin_condition_sheet_modify">85dp</dimen>
     <dimen name="margin_transaction_setting">120dp</dimen>
 
     <dimen name="size_exiguity_tiny">7sp</dimen>

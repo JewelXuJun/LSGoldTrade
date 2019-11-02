@@ -364,6 +364,8 @@
     <string name="transaction_stop_loss_price_title">止损价</string>
     <string name="transaction_stop_profit_price">止盈价&#60;=%1$s</string>
     <string name="transaction_stop_loss_price">止损价&#60;=%1$s</string>
+    <string name="transaction_sheet_modify">修改条件单</string>
+    <string name="transaction_trigger_condition">触发条件</string>
 
     <!-- Personal -->
     <string name="personal_login">登录/注册</string>

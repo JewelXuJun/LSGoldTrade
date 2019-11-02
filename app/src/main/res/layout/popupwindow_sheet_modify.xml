@@ -1,0 +1,406 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+        <variable
+            name="handlers"
+            type="com.jme.lsgoldtrade.view.SheetModifyPopUpWindow.ClickHandlers" />
+
+    </data>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/height_condition_sheet_setting_popupwindow"
+        android:background="@color/white"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:id="@+id/layout_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:paddingTop="@dimen/common_area_margin"
+                android:paddingBottom="@dimen/common_area_margin"
+                android:text="@string/transaction_sheet_modify"
+                android:textColor="@color/black_deep"
+                android:textSize="@dimen/common_font_size" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="@dimen/common_area_margin_tiny"
+                android:padding="@dimen/common_page_padding">
+
+                <ImageView
+                    android:id="@+id/img_cancel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:onClick="@{() -> handlers.onClickCancel()}"
+                    android:src="@mipmap/ic_close_blue" />
+
+            </LinearLayout>
+
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/layout_toolbar"
+            android:layout_marginTop="@dimen/common_page_margin"
+            android:orientation="vertical"
+            android:paddingLeft="@dimen/common_area_margin"
+            android:paddingRight="@dimen/common_area_margin"
+            android:visibility="visible">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/common_item_height_middle"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="@dimen/width_btn_middle"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:text="@string/transaction_contract_name"
+                    android:textColor="@color/color_text_normal"
+                    android:textSize="@dimen/sp_14" />
+
+                <TextView
+                    android:id="@+id/tv_contract_name"
+                    android:layout_width="@dimen/width_item_big"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:text="mAu(T+D)"
+                    android:layout_marginLeft="@dimen/common_area_margin_tiny"
+                    android:textColor="@color/color_text_normal"
+                    android:textSize="@dimen/sp_16" />
+
+                <TextView
+                    android:id="@+id/tv_direction"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="@dimen/common_page_margin"
+                    android:gravity="center_vertical"
+                    android:text="买多"
+                    android:textColor="@color/color_text_normal"
+                    android:textSize="@dimen/size_normal_middle" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/common_item_height_middle"
+                android:layout_marginTop="@dimen/common_page_margin"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="@dimen/width_btn_middle"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:text="@string/transaction_trigger_condition"
+                    android:textColor="@color/color_text_normal"
+                    android:textSize="@dimen/sp_14" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:text="@string/transaction_last_price_range"
+                    android:layout_marginLeft="@dimen/common_area_margin_tiny"
+                    android:textColor="@color/color_text_normal"
+                    android:textSize="@dimen/sp_14" />
+
+                <LinearLayout
+                    android:layout_width="@dimen/width_transaction_item_normal"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="@dimen/common_area_margin_tiny"
+                    android:background="@drawable/bg_btn_gray_hollow"
+                    android:orientation="horizontal">
+
+                    <RelativeLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:onClick="@{() -> handlers.onClickPriceMinus()}">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerInParent="true"
+                            android:background="@mipmap/ic_minus" />
+
+                    </RelativeLayout>
+
+                    <include layout="@layout/item_line_horizontal" />
+
+                    <EditText
+                        android:id="@+id/et_price"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_alignParentTop="true"
+                        android:layout_weight="2.2"
+                        android:background="@null"
+                        android:gravity="center"
+                        android:inputType="numberDecimal"
+                        android:maxLines="1"
+                        android:textColor="@color/color_blue_deep"
+                        android:textColorHint="@color/color_text_hint"
+                        android:textSize="@dimen/size_normal" />
+
+                    <include layout="@layout/item_line_horizontal" />
+
+                    <RelativeLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:onClick="@{() -> handlers.onClickPriceAdd()}">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerInParent="true"
+                            android:background="@mipmap/ic_add" />
+
+                    </RelativeLayout>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/common_item_height_middle"
+                android:layout_marginTop="@dimen/common_page_margin"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="@dimen/width_btn_middle"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:text="@string/transaction_entrust_amount"
+                    android:textColor="@color/color_text_normal"
+                    android:textSize="@dimen/sp_14" />
+
+                <LinearLayout
+                    android:layout_width="@dimen/width_transaction_item_amount"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="@dimen/common_area_margin_tiny"
+                    android:background="@drawable/bg_btn_gray_hollow"
+                    android:orientation="horizontal">
+
+                    <RelativeLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1.1"
+                        android:onClick="@{() -> handlers.onClickAmountMinus()}">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerInParent="true"
+                            android:background="@mipmap/ic_minus" />
+
+                    </RelativeLayout>
+
+                    <include layout="@layout/item_line_horizontal" />
+
+                    <EditText
+                        android:id="@+id/et_amount"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_alignParentTop="true"
+                        android:layout_weight="2"
+                        android:background="@null"
+                        android:gravity="center"
+                        android:inputType="numberDecimal"
+                        android:maxLines="1"
+                        android:textColor="@color/color_blue_deep"
+                        android:textColorHint="@color/color_text_hint"
+                        android:textSize="@dimen/size_normal" />
+
+                    <include layout="@layout/item_line_horizontal" />
+
+                    <RelativeLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1.1"
+                        android:onClick="@{() -> handlers.onClickAmountAdd()}">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerInParent="true"
+                            android:background="@mipmap/ic_add" />
+
+                    </RelativeLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="@dimen/common_area_margin"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/transaction_entrust_about"
+                        android:textColor="@color/color_text_normal"
+                        android:textSize="@dimen/sp_12" />
+
+                    <TextView
+                        android:id="@+id/tv_count"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/common_area_margin_tiny"
+                        android:text="X手"
+                        android:textColor="@color/color_text_normal"
+                        android:textSize="@dimen/sp_12" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/common_item_height_middle"
+                android:layout_marginTop="@dimen/common_page_margin"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="@dimen/width_btn_middle"
+                    android:layout_height="match_parent"
+                    android:text="@string/transaction_condition_sheet_detail"
+                    android:textColor="@color/color_text_normal"
+                    android:textSize="@dimen/sp_14" />
+
+                <TextView
+                    android:id="@+id/tv_condition_sheet_detail"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="@dimen/common_area_margin_tiny"
+                    android:gravity="center_vertical"
+                    android:text="当最新价≤4300时，发出委托：Ag(T+D)，多头，开仓，市价FAK，1手"
+                    android:textColor="@color/color_text_normal"
+                    android:textSize="@dimen/sp_16" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="@dimen/margin_condition_sheet_checkbox"
+                android:layout_marginTop="@dimen/margin_middle"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <CheckBox
+                    android:id="@+id/checkbox_effective_on_that_day"
+                    style="@style/CustomCheckBoxCircleTheme"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:scaleX="0.45"
+                    android:scaleY="0.45" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/transaction_effective_on_that_day"
+                    android:textColor="@color/color_text_normal"
+                    android:textSize="@dimen/size_middle" />
+
+                <CheckBox
+                    android:id="@+id/checkbox_effective_before_cancel"
+                    style="@style/CustomCheckBoxCircleTheme"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/common_page_margin"
+                    android:scaleX="0.45"
+                    android:scaleY="0.45" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/transaction_effective_before_cancel"
+                    android:textColor="@color/color_text_normal"
+                    android:textSize="@dimen/size_middle" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/margin_condition_sheet_modify"
+                android:layout_marginTop="@dimen/common_area_margin_big"
+                android:orientation="horizontal">
+
+                <CheckBox
+                    android:id="@+id/checkbox_agree"
+                    style="@style/CustomPayCheckBoxTheme"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:scaleX="0.9"
+                    android:scaleY="0.9" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:onClick="@{() -> handlers.onCliclConditionSheetRiskTips()}"
+                    android:text="@string/transaction_condition_sheet_risk_tips"
+                    android:textColor="@color/color_blue_deep"
+                    android:textSize="@dimen/sp_14" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/height_item_normal"
+            android:layout_alignParentBottom="true"
+            android:layout_marginLeft="@dimen/common_area_margin"
+            android:layout_marginRight="@dimen/common_area_margin"
+            android:layout_marginBottom="@dimen/common_area_margin"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/btn_cancel"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginRight="@dimen/common_area_margin_middle"
+                android:layout_weight="1"
+                android:background="@drawable/bg_btn_blue_stroke"
+                android:onClick="@{() -> handlers.onClickCancel()}"
+                android:text="@string/text_cancel"
+                android:textColor="@color/color_blue_deep"
+                android:textSize="@dimen/common_font_size" />
+
+            <Button
+                android:id="@+id/btn_modify"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="@dimen/common_area_margin_middle"
+                android:layout_weight="1"
+                android:background="@drawable/bg_btn_blue_solid"
+                android:onClick="@{() -> handlers.onClickModify()}"
+                android:text="@string/transaction_modify"
+                android:textColor="@color/white"
+                android:textSize="@dimen/common_font_size" />
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
+</layout>
