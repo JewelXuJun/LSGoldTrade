@@ -1,5 +1,6 @@
 package com.jme.lsgoldtrade.ui.transaction;
 
+import android.annotation.TargetApi;
 import android.os.Bundle;
 
 import com.jme.common.network.DTRequest;
@@ -47,5 +48,9 @@ public class OwnConditionSheetFragment extends JMEBaseFragment {
 
     public class ClickHandlers {
 
+        @TargetApi(24)
+        public void onClickSelectDate(int timeType) {
+
+        }
     }
 }

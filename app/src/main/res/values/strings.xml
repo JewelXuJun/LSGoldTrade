@@ -353,6 +353,9 @@
     <string name="transaction_effective_before_cancel">撤销前有效</string>
     <string name="transaction_condition_sheet_detail">条件单详情</string>
     <string name="transaction_condition_sheet_risk_tips">《条件单风险提示》</string>
+    <string name="transaction_direction_amount">方向/手数</string>
+    <string name="transaction_trigger_price">触发价</string>
+    <string name="transaction_cancel">撤销</string>
 
     <!-- Personal -->
     <string name="personal_login">登录/注册</string>
