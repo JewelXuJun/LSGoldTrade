@@ -41,7 +41,7 @@
                 android:layout_alignParentRight="true"
                 android:gravity="center"
                 android:onClick="@{() -> handlers.onClickLatestPrice()}"
-                android:textSize="@dimen/size_bigger" />
+                android:textSize="@dimen/size_market" />
 
             <LinearLayout
                 android:id="@+id/layout_contract_id"

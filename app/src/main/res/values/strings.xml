@@ -336,6 +336,7 @@
     <string name="transaction_buy_evening">买多平仓</string>
     <string name="transaction_running_message">您当前有%1$s笔条件单，%2$s笔止盈止损单在运行。</string>
     <string name="transaction_explain">说明</string>
+    <string name="transaction_own_condition_sheet">我的条件单</string>
     <string name="transaction_stop_sheet">止盈止损单</string>
 
     <!-- Personal -->
