@@ -28,7 +28,7 @@ public class TransactionStopPopupWindow extends JMEBasePopupWindow {
     protected void initPopupWindow() {
         super.initPopupWindow();
 
-        setHeight(DensityUtil.dpTopx(getContext(), 450));
+        setHeight(DensityUtil.dpTopx(getContext(), 440));
         setWidth(ViewGroup.LayoutParams.MATCH_PARENT);
     }
 

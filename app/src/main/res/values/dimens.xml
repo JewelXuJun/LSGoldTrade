@@ -46,7 +46,7 @@
     <dimen name="height_floating">50dp</dimen>
     <dimen name="height_daily_statement">80dp</dimen>
     <dimen name="height_item_condition_sheet">94dp</dimen>
-    <dimen name="height_condition_sheet_setting_popupwindow">450dp</dimen>
+    <dimen name="height_condition_sheet_setting_popupwindow">440dp</dimen>
 
     <dimen name="width_market_item">46dp</dimen>
     <dimen name="width_trade_hold_position_account_item">102dp</dimen>
