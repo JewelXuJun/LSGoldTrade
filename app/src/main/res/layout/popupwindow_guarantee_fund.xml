@@ -5,7 +5,7 @@
 
         <variable
             name="handlers"
-            type="com.jme.lsgoldtrade.ui.transaction.GuaranteeFundPopUpWindow.ClickHandlers" />
+            type="com.jme.lsgoldtrade.view.GuaranteeFundPopUpWindow.ClickHandlers" />
 
     </data>
 

@@ -21,6 +21,7 @@ import com.jme.lsgoldtrade.databinding.FragmentCurrentEntrustBinding;
 import com.jme.lsgoldtrade.domain.OrderPageVo;
 import com.jme.lsgoldtrade.service.TradeService;
 import com.jme.lsgoldtrade.util.MarketUtil;
+import com.jme.lsgoldtrade.view.CancelOrderPopUpWindow;
 
 import java.util.HashMap;
 import java.util.List;

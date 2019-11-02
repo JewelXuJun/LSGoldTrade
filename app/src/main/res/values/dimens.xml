@@ -46,6 +46,7 @@
     <dimen name="height_floating">50dp</dimen>
     <dimen name="height_daily_statement">80dp</dimen>
     <dimen name="height_item_condition_sheet">94dp</dimen>
+    <dimen name="height_condition_sheet_setting_popupwindow">450dp</dimen>
 
     <dimen name="width_market_item">46dp</dimen>
     <dimen name="width_trade_hold_position_account_item">102dp</dimen>
@@ -75,6 +76,7 @@
     <dimen name="width_edittext">190dp</dimen>
     <dimen name="width_range">96dp</dimen>
     <dimen name="width_entrust_type">160dp</dimen>
+    <dimen name="width_transaction_item">190dp</dimen>
 
     <dimen name="margin_main_page_info">30dp</dimen>
     <dimen name="margin_main_page_market">2.5dp</dimen>
@@ -103,6 +105,7 @@
     <dimen name="margin_forget_password">45dp</dimen>
     <dimen name="margin_fingerprint">150dp</dimen>
     <dimen name="margin_condition_sheet">95dp</dimen>
+    <dimen name="margin_transaction_setting">120dp</dimen>
 
     <dimen name="size_exiguity_tiny">7sp</dimen>
     <dimen name="size_exiguity">8sp</dimen>

@@ -353,11 +353,17 @@
     <string name="transaction_effective_before_cancel">撤销前有效</string>
     <string name="transaction_condition_sheet_detail">条件单详情</string>
     <string name="transaction_condition_sheet_risk_tips">《条件单风险提示》</string>
+    <string name="transaction_stop_risk_tips">《止盈止损风险提示》</string>
     <string name="transaction_direction_amount">方向/手数</string>
     <string name="transaction_trigger_price">触发价</string>
     <string name="transaction_cancel">撤销</string>
     <string name="transaction_condition_sheet_explain">条件单说明</string>
     <string name="transaction_agree">我已阅读并知晓</string>
+    <string name="transaction_stop_setting">止盈止损设置</string>
+    <string name="transaction_stop_profit_price_title">止盈价</string>
+    <string name="transaction_stop_loss_price_title">止损价</string>
+    <string name="transaction_stop_profit_price">止盈价&#60;=%1$s</string>
+    <string name="transaction_stop_loss_price">止损价&#60;=%1$s</string>
 
     <!-- Personal -->
     <string name="personal_login">登录/注册</string>

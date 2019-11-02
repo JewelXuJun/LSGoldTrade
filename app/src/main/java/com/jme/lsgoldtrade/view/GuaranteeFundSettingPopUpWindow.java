@@ -1,4 +1,4 @@
-package com.jme.lsgoldtrade.ui.transaction;
+package com.jme.lsgoldtrade.view;
 
 import android.app.Service;
 import android.content.Context;

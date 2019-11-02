@@ -32,6 +32,8 @@ import com.jme.lsgoldtrade.service.MarketService;
 import com.jme.lsgoldtrade.service.TradeService;
 import com.jme.lsgoldtrade.util.MarketUtil;
 import com.jme.lsgoldtrade.view.ConfirmSimplePopupwindow;
+import com.jme.lsgoldtrade.view.GuaranteeFundPopUpWindow;
+import com.jme.lsgoldtrade.view.GuaranteeFundSettingPopUpWindow;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;

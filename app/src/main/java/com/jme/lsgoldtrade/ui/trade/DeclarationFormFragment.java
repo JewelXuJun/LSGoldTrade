@@ -38,12 +38,12 @@ import com.jme.lsgoldtrade.domain.TenSpeedVo;
 import com.jme.lsgoldtrade.service.ManagementService;
 import com.jme.lsgoldtrade.service.MarketService;
 import com.jme.lsgoldtrade.service.TradeService;
-import com.jme.lsgoldtrade.ui.transaction.CancelOrderPopUpWindow;
+import com.jme.lsgoldtrade.view.CancelOrderPopUpWindow;
 import com.jme.lsgoldtrade.view.PlaceOrderPopupWindow;
 import com.jme.lsgoldtrade.view.TransactionMessagePopUpWindow;
 import com.jme.lsgoldtrade.util.MarketUtil;
 import com.jme.lsgoldtrade.view.ConfirmPopupwindow;
-import com.jme.lsgoldtrade.ui.transaction.EveningUpPopupWindow;
+import com.jme.lsgoldtrade.view.EveningUpPopupWindow;
 
 import java.math.BigDecimal;
 import java.util.HashMap;
