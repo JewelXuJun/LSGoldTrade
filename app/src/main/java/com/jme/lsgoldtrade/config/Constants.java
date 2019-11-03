@@ -20,7 +20,7 @@ public class Constants {
         public static final int SECURITY = 5;
         public static final int SECURITY_WAN = 6;
 
-        public static int Envi = UAT;
+        public static int Envi = SECURITY_WAN;
 
         private HttpConst() {
 
@@ -29,6 +29,7 @@ public class Constants {
         public static String URL_BASE_MARKET;         // 行情
         public static String URL_BASE_TRADE;          // 交易
         public static String URL_BASE_ACCOUNT;        // 增值服务
+        public static String URL_BASE_CONDOTION;      // 条件单
         public static String URL_BASE_MANAGEMENT;     // 管理后台 banner 资讯等
         public static String URL_INFO;                // 资讯详情
         public static String URL_REGISTER_AGGREMENT = "http://www.taijs.com/upload/yhxy.htm";
@@ -99,6 +100,7 @@ public class Constants {
                 URL_BASE_MARKET = "http://1786543.developer.jsdttec.com";
                 URL_BASE_TRADE = "http://1788081.developer.jsdttec.com";
                 URL_BASE_ACCOUNT = "http://1788008.developer.jsdttec.com";
+                URL_BASE_CONDOTION = "http://1778088.developer.jsdttec.com";
                 URL_BASE_MANAGEMENT = "http://17818090.developer.jsdttec.com";
                 URL_INFO = "http://17818090.developer.jsdttec.com/tjsmanage/infoapi/v1/android/cmsComtentTxt/get?contentId=";
                 URL_TRADINGBOX = "http://17818081.developer.jsdttec.com/tjsmanage/openacct/wap/tradingBox.html";
