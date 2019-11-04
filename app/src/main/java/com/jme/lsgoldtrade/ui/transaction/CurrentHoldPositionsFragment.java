@@ -99,6 +99,8 @@ public class CurrentHoldPositionsFragment extends JMEBaseFragment {
     public void setCurrentHoldPositionsData(List<PositionVo> positionVoList) {
         if (null == positionVoList) {
             mAdapter.setEmptyView(getEmptyView());
+
+            mBinding.tvGotoTransaction.setVisibility(View.VISIBLE);
         } else {
             List<PositionVo> positionVos = new ArrayList<>();
 
@@ -112,6 +114,8 @@ public class CurrentHoldPositionsFragment extends JMEBaseFragment {
 
             if (0 == positionVos.size())
                 mAdapter.setEmptyView(getEmptyView());
+
+            mBinding.tvGotoTransaction.setVisibility(0 == positionVos.size() ? View.VISIBLE : View.GONE);
         }
     }
 

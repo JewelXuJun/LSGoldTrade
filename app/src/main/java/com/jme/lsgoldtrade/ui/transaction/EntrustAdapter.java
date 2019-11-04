@@ -53,7 +53,7 @@ public class EntrustAdapter extends BaseQuickAdapter<OrderPageVo.OrderBean, Base
                 .setText(R.id.tv_time, TextUtils.isEmpty(time) ? "" : time.replace(".", ":"))
                 .setText(R.id.tv_type, MarketUtil.getTradeDirection(bsFlag) + MarketUtil.getOCState(item.getOcFlag()))
                 .setTextColor(R.id.tv_type, ContextCompat.getColor(mContext, MarketUtil.getTradeDirectionColor(bsFlag)))
-                .setText(R.id.tv_price, "-0.01".equals(MarketUtil.decimalFormatMoney(item.getMatchPriceStr())) ? "市价FAK" : MarketUtil.decimalFormatMoney(item.getMatchPriceStr()))
+                .setText(R.id.tv_price, "-0.01".equals(MarketUtil.decimalFormatMoney(item.getMatchPriceStr())) ? "市价FAK" : item.getMatchPriceStr())
                 .setTextColor(R.id.tv_price, ContextCompat.getColor(mContext, MarketUtil.getTradeDirectionColor(bsFlag)))
                 .setText(R.id.tv_entrust, String.valueOf(item.getEntrustNumber()))
                 .setText(R.id.tv_surplus, String.valueOf(item.getRemnantNumber()))

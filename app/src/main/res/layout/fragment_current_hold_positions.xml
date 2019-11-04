@@ -34,7 +34,8 @@
             android:paddingBottom="@dimen/margin_small"
             android:text="@string/transaction_goto"
             android:textColor="@color/white"
-            android:textSize="@dimen/sp_14" />
+            android:textSize="@dimen/sp_14"
+            android:visibility="gone" />
 
     </LinearLayout>
 

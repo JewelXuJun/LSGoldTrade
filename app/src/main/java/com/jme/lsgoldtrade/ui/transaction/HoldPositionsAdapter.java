@@ -54,6 +54,7 @@ public class HoldPositionsAdapter extends BaseQuickAdapter<PositionVo, BaseViewH
         String lastPrice = "";
         String upDown = "";
         String average = item.getPositionAverageStr();
+        String stopOrderFlag = item.getStopOrderFlag();
         long position = item.getPosition();
         long frozen = item.getOffsetFrozen();
 
@@ -80,9 +81,12 @@ public class HoldPositionsAdapter extends BaseQuickAdapter<PositionVo, BaseViewH
                 .setText(R.id.tv_last_price, lastPrice)
                 .setTextColor(R.id.tv_last_price, TextUtils.isEmpty(upDown) ? ContextCompat.getColor(mContext, R.color.color_text_normal)
                         : ContextCompat.getColor(mContext, MarketUtil.getPriceStateColor(new BigDecimal(upDown).compareTo(new BigDecimal(0)))))
-                .setText(R.id.tv_average_price, MarketUtil.decimalFormatMoney(average))
+                .setText(R.id.tv_average_price, average)
                 .setText(R.id.tv_amount, String.valueOf(position))
                 .setText(R.id.tv_amount_available, String.valueOf(position - frozen))
+                .setBackgroundRes(R.id.img_set_status, !TextUtils.isEmpty(stopOrderFlag) && stopOrderFlag.equals("Y")
+                        ? R.mipmap.ic_set_up : R.mipmap.ic_not_set_up)
+                .setGone(R.id.img_set_status, !TextUtils.isEmpty(stopOrderFlag))
                 .addOnClickListener(R.id.layout_stop_transaction)
                 .addOnClickListener(R.id.btn_evening_up);
     }
