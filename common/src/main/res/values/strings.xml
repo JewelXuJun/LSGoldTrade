@@ -14,6 +14,7 @@
     <string name="fingerprint_verify_failed">再试一次</string>
     <string name="fingerprint_verify_error">尝试次数过多，请稍后重试。</string>
     <string name="fingerprint_verify_error_trade">多次错误，验证失败，使用交易密码登录。</string>
+    <string name="fingerprint_confirm">确认</string>
     <string name="fingerprint_cancel">取消</string>
 
 </resources>

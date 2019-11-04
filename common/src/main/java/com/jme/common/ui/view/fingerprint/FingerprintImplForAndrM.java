@@ -106,6 +106,8 @@ public class FingerprintImplForAndrM implements IFingerprint {
                         : context.getResources().getString(R.string.fingerprint_verify_error);
 
                 fingerprintDialog.setTip(errorMsg, R.color.black);
+                fingerprintDialog.setCancel(errorMsg.equals(context.getResources().getString(R.string.fingerprint_verify_error_trade))
+                        ? context.getResources().getString(R.string.fingerprint_confirm) : context.getResources().getString(R.string.fingerprint_cancel));
                 fingerprintCallback.onFailed(errString.toString());
             }
         }

@@ -106,6 +106,10 @@ public class FingerprintDialog extends DialogFragment {
         tvTip.setTextColor(getResources().getColor(colorId));
     }
 
+    public void setCancel(String cancel) {
+        tvCancel.setText(cancel);
+    }
+
     public interface OnDialogActionListener {
 
         void onCancel();
