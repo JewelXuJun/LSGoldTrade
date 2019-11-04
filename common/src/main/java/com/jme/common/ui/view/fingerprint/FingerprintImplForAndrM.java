@@ -117,6 +117,7 @@ public class FingerprintImplForAndrM implements IFingerprint {
             super.onAuthenticationHelp(helpMsgId, helpString);
 
             fingerprintDialog.setTip(helpString.toString(), R.color.black);
+            fingerprintDialog.setCancel(context.getResources().getString(R.string.fingerprint_cancel));
         }
 
         @Override
@@ -124,6 +125,7 @@ public class FingerprintImplForAndrM implements IFingerprint {
             super.onAuthenticationSucceeded(result);
 
             fingerprintDialog.setTip(context.getString(R.string.fingerprint_verify_success), R.color.fingerprint_success);
+            fingerprintDialog.setCancel(context.getResources().getString(R.string.fingerprint_cancel));
             fingerprintCallback.onSucceeded();
             fingerprintDialog.dismiss();
         }
@@ -133,6 +135,7 @@ public class FingerprintImplForAndrM implements IFingerprint {
             super.onAuthenticationFailed();
 
             fingerprintDialog.setTip(context.getString(R.string.fingerprint_verify_failed), R.color.black);
+            fingerprintDialog.setCancel(context.getResources().getString(R.string.fingerprint_cancel));
             fingerprintCallback.onFailed(context.getString(R.string.fingerprint_verify_failed));
         }
     };
