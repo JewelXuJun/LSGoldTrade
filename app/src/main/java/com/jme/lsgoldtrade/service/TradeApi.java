@@ -21,6 +21,9 @@ public interface TradeApi {
     @POST("/gold-trade/v1.0.0/android/inoutmoney")
     Call<DTResponse> inoutmoney(@Body Map<String, String> map);
 
+    @POST("/gold-trade/v1.0.0/android/inOutMoney2")
+    Call<DTResponse> inOutMoney(@Body Map<String, String> map);
+
     @GET("/gold-trade/v1.0.0/android/transpage")
     Call<DTResponse> transpage(@QueryMap Map<String, String> map);
 

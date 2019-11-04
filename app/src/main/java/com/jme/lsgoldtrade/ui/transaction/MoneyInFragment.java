@@ -1,21 +1,16 @@
 package com.jme.lsgoldtrade.ui.transaction;
 
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
-import android.util.Base64;
 import android.view.View;
-import android.widget.EditText;
 
 import androidx.annotation.NonNull;
 
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.jme.common.network.DTRequest;
 import com.jme.common.network.Head;
-import com.jme.common.ui.base.JMECountDownTimer;
 import com.jme.common.util.RxBus;
 import com.jme.lsgoldtrade.R;
 import com.jme.lsgoldtrade.base.JMEBaseFragment;
@@ -23,10 +18,7 @@ import com.jme.lsgoldtrade.config.AppConfig;
 import com.jme.lsgoldtrade.config.Constants;
 import com.jme.lsgoldtrade.databinding.FragmentMoneyInBinding;
 import com.jme.lsgoldtrade.domain.AccountVo;
-import com.jme.lsgoldtrade.domain.ImageVerifyCodeVo;
-import com.jme.lsgoldtrade.domain.UserInfoVo;
 import com.jme.lsgoldtrade.service.TradeService;
-import com.jme.lsgoldtrade.service.UserService;
 import com.jme.lsgoldtrade.util.MarketUtil;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
@@ -41,12 +33,8 @@ public class MoneyInFragment extends JMEBaseFragment implements OnRefreshListene
     private FragmentMoneyInBinding mBinding;
 
     private boolean bVisibleToUser = false;
-    private boolean bFlag = false;
-    private boolean bShowImgVerifyCode = false;
     private String mCurAccountBalance;
-    private String mKaptchaId;
 
-    private JMECountDownTimer mCountDownTimer;
     private Subscription mRxbus;
 
     @Override
@@ -62,15 +50,6 @@ public class MoneyInFragment extends JMEBaseFragment implements OnRefreshListene
     @Override
     protected void initData(Bundle savedInstanceState) {
         super.initData(savedInstanceState);
-
-        mCountDownTimer = new JMECountDownTimer(60000, 1000,
-                mBinding.btnVerificationCode, getString(R.string.transaction_get_verification_code));
-
-        if (null != mUser) {
-            UserInfoVo userInfoVo = mUser.getCurrentUser();
-
-            mBinding.tvMobileNumber.setText(null == userInfoVo ? "" : userInfoVo.getMobile());
-        }
     }
 
     @Override
@@ -117,41 +96,7 @@ public class MoneyInFragment extends JMEBaseFragment implements OnRefreshListene
 
             @Override
             public void afterTextChanged(Editable s) {
-                updateUIWithValidation();
-            }
-        });
-
-        mBinding.etVerificationCode.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                updateUIWithValidation();
-            }
-        });
-
-        mBinding.etImgVerifyCode.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                updateUIWithValidation();
+                mBinding.btnSubmit.setEnabled(mBinding.etTransferAmount.length() > 0);
             }
         });
     }
@@ -188,9 +133,6 @@ public class MoneyInFragment extends JMEBaseFragment implements OnRefreshListene
     public void onDestroy() {
         super.onDestroy();
 
-        if (null != mCountDownTimer)
-            mCountDownTimer.cancel();
-
         if (!mRxbus.isUnsubscribed())
             mRxbus.unsubscribe();
     }
@@ -211,16 +153,6 @@ public class MoneyInFragment extends JMEBaseFragment implements OnRefreshListene
         });
     }
 
-    private void updateUIWithValidation() {
-        mBinding.btnSubmit.setEnabled(bShowImgVerifyCode
-                ? populated(mBinding.etTransferAmount) && populated(mBinding.etVerificationCode) && populated(mBinding.etImgVerifyCode)
-                : populated(mBinding.etTransferAmount) && populated(mBinding.etVerificationCode));
-    }
-
-    private boolean populated(final EditText editText) {
-        return editText.length() > 0;
-    }
-
     private void setReserveLayout() {
         if (null == mUser || null == mUser.getCurrentUser()) {
             mBinding.btnReserve.setVisibility(View.GONE);
@@ -237,25 +169,8 @@ public class MoneyInFragment extends JMEBaseFragment implements OnRefreshListene
         }
     }
 
-    private Bitmap getBitmap(String kaptchaImg) {
-        Bitmap bitmap = null;
-
-        try {
-            byte[] bitmapArray = Base64.decode(kaptchaImg, Base64.DEFAULT);
-
-            bitmap = BitmapFactory.decodeByteArray(bitmapArray, 0, bitmapArray.length);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        return bitmap;
-    }
-
     private void doSubmit() {
-        String mobile = mBinding.tvMobileNumber.getText().toString();
         String amount = mBinding.etTransferAmount.getText().toString();
-        String verifyCode = mBinding.etVerificationCode.getText().toString();
-        String imgVerifyCode = mBinding.etImgVerifyCode.getText().toString();
 
         if (amount.endsWith("."))
             amount = amount.substring(0, amount.length() - 1);
@@ -264,20 +179,12 @@ public class MoneyInFragment extends JMEBaseFragment implements OnRefreshListene
             showShortToast(R.string.transaction_amount_error);
         else if (new BigDecimal(mCurAccountBalance).compareTo(new BigDecimal(0)) != 1)
             showShortToast(R.string.transaction_amount_error);
-        else if (TextUtils.isEmpty(mobile))
-            showShortToast(R.string.transaction_mobile_error);
         else if (new BigDecimal(amount).compareTo(new BigDecimal(0)) != 1)
             showShortToast(R.string.transaction_money_min_error);
         else if (new BigDecimal(amount).compareTo(new BigDecimal(mCurAccountBalance)) == 1)
             showShortToast(R.string.transaction_money_in_max_error);
-        else if (!bFlag)
-            showShortToast(R.string.login_verification_code_unget);
-        else if (verifyCode.length() < 6)
-            showShortToast(R.string.login_verification_code_error);
-        else if (bShowImgVerifyCode && TextUtils.isEmpty(imgVerifyCode))
-            showShortToast(R.string.login_img_verify_code_error);
         else
-            inoutMoney(amount, verifyCode, imgVerifyCode);
+            inoutMoney(amount);
     }
 
     private void getAccount(boolean enable) {
@@ -290,28 +197,13 @@ public class MoneyInFragment extends JMEBaseFragment implements OnRefreshListene
         sendRequest(TradeService.getInstance().account, params, enable);
     }
 
-    private void fundInoutMsg() {
-        bFlag = true;
-
-        sendRequest(UserService.getInstance().fundInoutMsg, new HashMap<>(), true);
-    }
-
-    private void inoutMoney(String amount, String verifyCode, String imgVerifyCode) {
+    private void inoutMoney(String amount) {
         HashMap<String, String> params = new HashMap<>();
         params.put("accountId", mUser.getAccountID());
         params.put("amount", String.valueOf(new BigDecimal(amount).multiply(new BigDecimal(100)).longValue()));
         params.put("direction", "0");
-        params.put("smsCode", verifyCode);
-        if (bShowImgVerifyCode) {
-            params.put("kaptchaId", mKaptchaId);
-            params.put("kaptchaCode", imgVerifyCode);
-        }
 
-        sendRequest(TradeService.getInstance().inoutmoney, params, true);
-    }
-
-    private void kaptcha() {
-        sendRequest(UserService.getInstance().kaptcha, new HashMap<>(), true, false, false);
+        sendRequest(TradeService.getInstance().inOutMoney, params, true);
     }
 
     @Override
@@ -344,63 +236,16 @@ public class MoneyInFragment extends JMEBaseFragment implements OnRefreshListene
                 }
 
                 break;
-            case "FundInoutMsg":
-                if (head.isSuccess()) {
-                    showShortToast(R.string.login_verification_code_success);
-
-                    if (null != mCountDownTimer)
-                        mCountDownTimer.start();
-                }
-
-                break;
-            case "InoutMoney":
+            case "InOutMoney":
                 if (head.isSuccess()) {
                     showShortToast(R.string.transaction_money_in_success);
 
                     mBinding.etTransferAmount.setText("");
-                    mBinding.etVerificationCode.setText("");
-                    mBinding.etImgVerifyCode.setText("");
 
                     RxBus.getInstance().post(Constants.RxBusConst.RXBUS_CAPITALTRANSFER_SUCCESS, null);
-                } else {
-                    kaptcha();
                 }
 
                 getAccount(true);
-
-                break;
-            case "Kaptcha":
-                if (head.isSuccess()) {
-                    ImageVerifyCodeVo imageVerifyCodeVo;
-
-                    try {
-                        imageVerifyCodeVo = (ImageVerifyCodeVo) response;
-                    } catch (Exception e) {
-                        imageVerifyCodeVo = null;
-
-                        e.printStackTrace();
-                    }
-
-                    if (null == imageVerifyCodeVo)
-                        return;
-
-                    String kaptchaImg = imageVerifyCodeVo.getKaptchaImg();
-
-                    if (TextUtils.isEmpty(kaptchaImg))
-                        return;
-
-                    if (kaptchaImg.contains(","))
-                        kaptchaImg = kaptchaImg.split(",")[1];
-
-                    mBinding.imgVerifyCode.setImageBitmap(getBitmap(kaptchaImg));
-                    mBinding.layoutImgVerifyCode.setVisibility(View.VISIBLE);
-                    mBinding.etImgVerifyCode.setText("");
-                    mBinding.btnSubmit.setEnabled(false);
-
-                    bShowImgVerifyCode = true;
-
-                    mKaptchaId = imageVerifyCodeVo.getKaptchaId();
-                }
 
                 break;
         }
@@ -412,17 +257,6 @@ public class MoneyInFragment extends JMEBaseFragment implements OnRefreshListene
     }
 
     public class ClickHandlers {
-
-        public void onClickGetVerificationCode() {
-            if (TextUtils.isEmpty(mBinding.tvMobileNumber.getText().toString()))
-                showShortToast(R.string.transaction_mobile_error);
-            else
-                fundInoutMsg();
-        }
-
-        public void onClickLoadImageVerifyCode() {
-            kaptcha();
-        }
 
         public void onClickSubmit() {
             doSubmit();
