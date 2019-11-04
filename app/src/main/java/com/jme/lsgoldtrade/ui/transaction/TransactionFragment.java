@@ -26,8 +26,10 @@ import com.jme.lsgoldtrade.base.JMEBaseFragment;
 import com.jme.lsgoldtrade.base.TabViewPagerAdapter;
 import com.jme.lsgoldtrade.config.Constants;
 import com.jme.lsgoldtrade.databinding.FragmentTransactionBinding;
+import com.jme.lsgoldtrade.domain.ConditionOrderRunVo;
 import com.jme.lsgoldtrade.domain.IdentityInfoVo;
 import com.jme.lsgoldtrade.domain.PasswordInfoVo;
+import com.jme.lsgoldtrade.service.ConditionService;
 import com.jme.lsgoldtrade.service.ManagementService;
 import com.jme.lsgoldtrade.service.TradeService;
 
@@ -40,6 +42,8 @@ public class TransactionFragment extends JMEBaseFragment {
     private FragmentTransactionBinding mBinding;
 
     private boolean bHidden = false;
+    private int mConditionOrderRunNum;
+    private int mStopOrderRunNum;
 
     private Fragment[] mFragmentArrays;
     private String[] mTabTitles;
@@ -85,8 +89,10 @@ public class TransactionFragment extends JMEBaseFragment {
 
         bHidden = hidden;
 
-        if (!bHidden && null != mUser && !TextUtils.isEmpty(mUser.getAccountID()))
+        if (!bHidden && null != mUser && !TextUtils.isEmpty(mUser.getAccountID())) {
             getUserPasswordSettingInfo();
+            queryConditionOrderRun();
+        }
 
         if (null != mBinding && null != mBinding.tabViewpager && null != mAdapter)
             mAdapter.getItem(mBinding.tabViewpager.getCurrentItem()).onHiddenChanged(hidden);
@@ -98,8 +104,10 @@ public class TransactionFragment extends JMEBaseFragment {
 
         setLayout();
 
-        if (!bHidden && null != mUser && !TextUtils.isEmpty(mUser.getAccountID()))
+        if (!bHidden && null != mUser && !TextUtils.isEmpty(mUser.getAccountID())) {
             getUserPasswordSettingInfo();
+            queryConditionOrderRun();
+        }
     }
 
     private void initTabs() {
@@ -180,6 +188,10 @@ public class TransactionFragment extends JMEBaseFragment {
 
     private void getUserPasswordSettingInfo() {
         sendRequest(ManagementService.getInstance().getUserPasswordSettingInfo, new HashMap<>(), false, false, false);
+    }
+
+    private void queryConditionOrderRun() {
+        sendRequest(ConditionService.getInstance().queryConditionOrderRun, new HashMap<>(), false, false, false);
     }
 
     @Override
@@ -281,6 +293,42 @@ public class TransactionFragment extends JMEBaseFragment {
                 }
 
                 break;
+            case "QueryConditionOrderRun":
+                if (head.isSuccess()) {
+                    ConditionOrderRunVo conditionOrderRunVo;
+
+                    try {
+                        conditionOrderRunVo = (ConditionOrderRunVo) response;
+                    } catch (Exception e) {
+                        conditionOrderRunVo = null;
+
+                        e.printStackTrace();
+                    }
+
+                    if (null == conditionOrderRunVo)
+                        return;
+
+                    mConditionOrderRunNum = conditionOrderRunVo.getConditionOrderRunNum();
+                    mStopOrderRunNum = conditionOrderRunVo.getStopOrderRunNum();
+
+                    if (0 == mConditionOrderRunNum && 0 == mStopOrderRunNum) {
+                        mBinding.tvRunningMessage.setVisibility(View.GONE);
+                    } else {
+                        String message;
+
+                        if (0 != mConditionOrderRunNum && 0 == mStopOrderRunNum)
+                            message = String.format(mContext.getResources().getString(R.string.transaction_condition_sheet_running_message), mConditionOrderRunNum);
+                        else if (0 == mConditionOrderRunNum && 0 != mStopOrderRunNum)
+                            message = String.format(mContext.getResources().getString(R.string.transaction_stop_running_message), mStopOrderRunNum);
+                        else
+                            message = String.format(mContext.getResources().getString(R.string.transaction_all_running_message), mConditionOrderRunNum, mStopOrderRunNum);
+
+                        mBinding.tvRunningMessage.setText(message);
+                        mBinding.tvRunningMessage.setVisibility(View.VISIBLE);
+                    }
+                }
+
+                break;
         }
     }
 
@@ -316,6 +364,13 @@ public class TransactionFragment extends JMEBaseFragment {
                 gotoLogin();
             else
                 getWhetherIdCard();
+        }
+
+        public void onClickConditionOrderRun() {
+            ARouter.getInstance()
+                    .build(Constants.ARouterUriConst.CONDITIONSHEET)
+                    .withInt("Type", 0 != mConditionOrderRunNum ? 1 : 2)
+                    .navigation();
         }
 
     }

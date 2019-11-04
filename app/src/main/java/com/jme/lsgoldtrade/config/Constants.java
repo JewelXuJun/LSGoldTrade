@@ -144,6 +144,7 @@ public class Constants {
         public static final String RXBUS_GESTURU_MODIFY_SUCCESS = "gesturuModifySuccess";
         public static final String RXBUS_TRANSACTION_EVENING_UP = "transactionEveningUp";
         public static final String RXBUS_TRANSACTION_HOLDPOSITIONS_REFRESH = "transactionHoldPositionsRefresh";
+        public static final String RXBUS_TRANSACTION_CONDITION_ORDER_RUN = "transactionCondition_order_run";
     }
 
     public static final class Msg {

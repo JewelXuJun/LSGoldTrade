@@ -21,6 +21,21 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
+            <TextView
+                android:id="@+id/tv_running_message"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/height_tabhost"
+                android:background="@color/color_red"
+                android:drawableLeft="@mipmap/ic_message"
+                android:drawablePadding="@dimen/common_page_padding"
+                android:gravity="center_vertical"
+                android:onClick="@{() -> handlers.onClickConditionOrderRun()}"
+                android:paddingLeft="@dimen/common_area_margin"
+                android:paddingRight="@dimen/common_area_margin"
+                android:textColor="@color/white"
+                android:textSize="@dimen/size_middle"
+                android:visibility="gone" />
+
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -592,10 +607,10 @@
                         style="@style/CustomPayCheckBoxTheme"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:scaleX="0.9"
-                        android:scaleY="0.9"
                         android:layout_marginLeft="@dimen/margin_condition_sheet"
-                        android:gravity="center_vertical" />
+                        android:gravity="center_vertical"
+                        android:scaleX="0.9"
+                        android:scaleY="0.9" />
 
                     <TextView
                         android:layout_width="wrap_content"

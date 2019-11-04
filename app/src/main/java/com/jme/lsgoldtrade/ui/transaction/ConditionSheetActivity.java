@@ -1,6 +1,7 @@
 package com.jme.lsgoldtrade.ui.transaction;
 
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,6 +15,7 @@ import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.google.android.material.tabs.TabLayout;
 import com.jme.common.util.DensityUtil;
+import com.jme.common.util.RxBus;
 import com.jme.common.util.ScreenUtil;
 import com.jme.lsgoldtrade.R;
 import com.jme.lsgoldtrade.base.JMEBaseActivity;
@@ -21,15 +23,20 @@ import com.jme.lsgoldtrade.base.TabViewPagerAdapter;
 import com.jme.lsgoldtrade.config.Constants;
 import com.jme.lsgoldtrade.databinding.ActivityConditionSheetBinding;
 
+import rx.Subscription;
+
 @Route(path = Constants.ARouterUriConst.CONDITIONSHEET)
 public class ConditionSheetActivity extends JMEBaseActivity {
 
     private ActivityConditionSheetBinding mBinding;
 
+    private int mType;
+
     private String[] mTabTitles;
     private Fragment[] mFragments;
 
     private TabViewPagerAdapter mAdapter;
+    private Subscription mRxbus;
 
     @Override
     protected int getContentViewId() {
@@ -50,12 +57,16 @@ public class ConditionSheetActivity extends JMEBaseActivity {
     protected void initData(Bundle savedInstanceState) {
         super.initData(savedInstanceState);
 
+        mType = getIntent().getIntExtra("Type", 0);
+
         initTabLayout();
     }
 
     @Override
     protected void initListener() {
         super.initListener();
+
+        initRxBus();
     }
 
     @Override
@@ -63,6 +74,28 @@ public class ConditionSheetActivity extends JMEBaseActivity {
         super.initBinding();
 
         mBinding = (ActivityConditionSheetBinding) mBindingUtil;
+    }
+
+    private void initRxBus() {
+        mRxbus = RxBus.getInstance().toObserverable(RxBus.Message.class).subscribe(message -> {
+            String callType = message.getObject().toString();
+
+            if (TextUtils.isEmpty(callType))
+                return;
+
+            switch (callType) {
+                case Constants.RxBusConst.RXBUS_TRANSACTION_CONDITION_ORDER_RUN:
+                    Object object = message.getObject2();
+
+                    if (null != object) {
+                        mType = Integer.parseInt(object.toString());
+
+                        runOnUiThread(() -> mBinding.tabViewpager.setCurrentItem(mType));
+                    }
+
+                    break;
+            }
+        });
     }
 
     private void initTabLayout() {
@@ -89,6 +122,8 @@ public class ConditionSheetActivity extends JMEBaseActivity {
             if (null != tab)
                 tab.setCustomView(getTabView(i));
         }
+
+        runOnUiThread(() -> mBinding.tabViewpager.setCurrentItem(mType));
     }
 
     private View getTabView(int currentPosition) {
@@ -103,5 +138,14 @@ public class ConditionSheetActivity extends JMEBaseActivity {
 
         return view;
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+        if (!mRxbus.isUnsubscribed())
+            mRxbus.unsubscribe();
+    }
+
 
 }
