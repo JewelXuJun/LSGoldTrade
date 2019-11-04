@@ -40,6 +40,10 @@ public class PositionVo implements Serializable {
 
     private long unliquidatedProfit;
 
+    private String stopOrderFlag;
+
+    private int closeFrozenOrderNum;
+
     public String getExists() {
         return exists;
     }
@@ -183,5 +187,21 @@ public class PositionVo implements Serializable {
 
     public String getPositionAverageStr() {
         return MarketUtil.getPriceValue(positionAverage);
+    }
+
+    public String getStopOrderFlag() {
+        return stopOrderFlag;
+    }
+
+    public void setStopOrderFlag(String stopOrderFlag) {
+        this.stopOrderFlag = stopOrderFlag;
+    }
+
+    public int getCloseFrozenOrderNum() {
+        return closeFrozenOrderNum;
+    }
+
+    public void setCloseFrozenOrderNum(int closeFrozenOrderNum) {
+        this.closeFrozenOrderNum = closeFrozenOrderNum;
     }
 }

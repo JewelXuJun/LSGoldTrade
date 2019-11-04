@@ -50,7 +50,6 @@ public class HoldPositionsFragment extends JMEBaseFragment implements OnRefreshL
 
     private FragmentHoldPositionsBinding mBinding;
 
-    private int mCurrentPage = 1;
     private boolean bFlag = true;
     private boolean bVisibleToUser = false;
     private boolean bHasNext = false;
@@ -224,7 +223,6 @@ public class HoldPositionsFragment extends JMEBaseFragment implements OnRefreshL
 
     private void initPosition() {
         bFlag = true;
-        mCurrentPage = 1;
         mPagingKey = "";
         mList.clear();
         mPositionVoList.clear();
