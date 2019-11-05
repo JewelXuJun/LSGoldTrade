@@ -1,5 +1,7 @@
 package com.jme.lsgoldtrade.domain;
 
+import com.jme.lsgoldtrade.util.MarketUtil;
+
 import java.io.Serializable;
 
 public class ConditionOrderInfoVo implements Serializable {
@@ -12,7 +14,7 @@ public class ConditionOrderInfoVo implements Serializable {
 
     private int entrustNumber;
 
-    private int id;
+    private String id;
 
     private int ocFlag;
 
@@ -60,11 +62,11 @@ public class ConditionOrderInfoVo implements Serializable {
         this.entrustNumber = entrustNumber;
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -122,5 +124,9 @@ public class ConditionOrderInfoVo implements Serializable {
 
     public void setTriggerPrice(long triggerPrice) {
         this.triggerPrice = triggerPrice;
+    }
+
+    public String getTriggerPriceStr() {
+        return MarketUtil.getPriceValue(triggerPrice);
     }
 }

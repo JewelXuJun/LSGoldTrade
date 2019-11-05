@@ -250,7 +250,7 @@ public class DetailsActivity extends JMEBaseActivity implements OnRefreshListene
             if (mCurrentPage < mTotalPages) {
                 mCurrentPage++;
 
-                getAccountDetailList(true);
+                getAccountDetailList(false);
             } else {
                 mAdapter.loadMoreEnd(true);
             }

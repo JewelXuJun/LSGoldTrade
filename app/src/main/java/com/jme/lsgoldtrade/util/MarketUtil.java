@@ -243,6 +243,51 @@ public class MarketUtil {
         return value;
     }
 
+    public static String getTransactionState(int state) {
+        String value;
+
+        if (state == 0)
+            value = "待触发";
+        else if (state == 1)
+            value = "已触发";
+        else if (state == 2)
+            value = "已失效";
+        else if (state == 3)
+            value = "已撤销";
+        else
+            value = "";
+
+        return value;
+    }
+
+    public static int getEffectiveStateColor(int state) {
+        int color;
+
+        if (state == 0 || state == 1)
+            color = R.color.color_text_normal;
+        else if (state == 2 || state == 3)
+            color = R.color.color_text_gray_hint;
+        else
+            color = R.color.color_text_normal;
+
+        return color;
+    }
+
+    public static int getSheetStateColor(int state) {
+        int color;
+
+        if (state == 0)
+            color = R.color.color_blue_deep;
+        else if (state == 1)
+            color = R.color.color_text_normal;
+        else if (state == 2 || state == 3)
+            color = R.color.color_text_gray_hint;
+        else
+            color = R.color.color_text_normal;
+
+        return color;
+    }
+
     public static int getTradeDirectionColor(int direction) {
         int color;
 

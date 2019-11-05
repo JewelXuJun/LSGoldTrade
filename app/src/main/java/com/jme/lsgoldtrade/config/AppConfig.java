@@ -11,6 +11,8 @@ public class AppConfig {
     public static final long Second10 = 10 * Second;
     public static final long Second15 = 15 * Second;
     public static final long Minute = 60 * Second;
+    public static final long HOUR = 60 * Minute;
+    public static final long DAY = 24 * HOUR;
 
     public static final long TimeInterval_SYNC = 5 * Second;
 
