@@ -3,6 +3,10 @@ package com.jme.lsgoldtrade.ui.transaction;
 import android.annotation.TargetApi;
 import android.app.DatePickerDialog;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
+import android.text.TextUtils;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 
@@ -10,24 +14,44 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.google.gson.Gson;
 import com.jme.common.network.DTRequest;
 import com.jme.common.network.Head;
 import com.jme.common.util.DateUtil;
+import com.jme.common.util.NetWorkUtils;
+import com.jme.common.util.RxBus;
 import com.jme.lsgoldtrade.R;
 import com.jme.lsgoldtrade.base.JMEBaseFragment;
 import com.jme.lsgoldtrade.config.AppConfig;
+import com.jme.lsgoldtrade.config.Constants;
 import com.jme.lsgoldtrade.databinding.FragmentOwnConditionSheetBinding;
+import com.jme.lsgoldtrade.domain.AccountVo;
 import com.jme.lsgoldtrade.domain.ConditionOrderInfoVo;
 import com.jme.lsgoldtrade.domain.ConditionPageVo;
+import com.jme.lsgoldtrade.domain.ConditionSheetResponse;
+import com.jme.lsgoldtrade.domain.FiveSpeedVo;
+import com.jme.lsgoldtrade.domain.PositionPageVo;
+import com.jme.lsgoldtrade.domain.PositionVo;
 import com.jme.lsgoldtrade.service.ConditionService;
+import com.jme.lsgoldtrade.service.MarketService;
+import com.jme.lsgoldtrade.service.TradeService;
+import com.jme.lsgoldtrade.view.ConfirmPopupwindow;
+import com.jme.lsgoldtrade.view.SheetModifyPopUpWindow;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 
+import java.math.BigDecimal;
+import java.net.ConnectException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import rx.Subscription;
 
 public class OwnConditionSheetFragment extends JMEBaseFragment implements OnRefreshListener, BaseQuickAdapter.RequestLoadMoreListener {
 
@@ -40,16 +64,40 @@ public class OwnConditionSheetFragment extends JMEBaseFragment implements OnRefr
     private int mDayOfMonth;
     private int mCurrentPage = 1;
     private int mTotalPages = 0;
+    private boolean bAccountVoFlag = false;
+    private boolean bPositionVoFlag = false;
     private String mSetDate = "";
 
     private List<Boolean> mList;
+    private List<FiveSpeedVo> mFiveSpeedVoList;
 
+    private ConditionOrderInfoVo mConditionOrderInfoVo;
+    private AccountVo mAccountVo;
+    private PositionVo mPositionVo;
     private ConditionSheetAdapter mAdapter;
     private DatePickerDialog mDatePickerDialog;
+    private SheetModifyPopUpWindow mSheetModifyPopUpWindow;
+    private ConfirmPopupwindow mConfirmPopupwindow;
     private View mEmptyView;
+    private Subscription mRxbus;
 
     private static final int TIME_START = 0;
     private static final int TIME_END = 1;
+
+    private Handler mHandler = new Handler() {
+        public void handleMessage(Message msg) {
+            switch (msg.what) {
+                case Constants.Msg.MSG_MARKET_UPDATE:
+                    mHandler.removeMessages(Constants.Msg.MSG_MARKET_UPDATE);
+
+                    getFiveSpeedQuotes();
+
+                    break;
+            }
+
+            super.handleMessage(msg);
+        }
+    };
 
     @Override
     protected int getContentViewId() {
@@ -67,6 +115,8 @@ public class OwnConditionSheetFragment extends JMEBaseFragment implements OnRefr
 
         mList = new ArrayList<>();
         mAdapter = new ConditionSheetAdapter(mContext, null);
+        mSheetModifyPopUpWindow = new SheetModifyPopUpWindow(mContext);
+        mConfirmPopupwindow = new ConfirmPopupwindow(mContext);
 
         mBinding.recyclerView.setHasFixedSize(false);
         mBinding.recyclerView.setLayoutManager(new LinearLayoutManager(mContext));
@@ -80,15 +130,37 @@ public class OwnConditionSheetFragment extends JMEBaseFragment implements OnRefr
     protected void initListener() {
         super.initListener();
 
+        initRxBus();
+
         mBinding.swipeRefreshLayout.setOnRefreshListener(this);
         mAdapter.setOnLoadMoreListener(this, mBinding.recyclerView);
 
         mAdapter.setOnItemChildClickListener((adapter, view, position) -> {
+            mConditionOrderInfoVo = (ConditionOrderInfoVo) adapter.getItem(position);
+
+            if (null == mConditionOrderInfoVo)
+                return;
+
             switch (view.getId()) {
                 case R.id.btn_modify:
+                    bAccountVoFlag = false;
+                    bPositionVoFlag = false;
+
+                    getAccount();
+                    getPosition();
 
                     break;
                 case R.id.btn_cancel:
+                    if (null != mConfirmPopupwindow && !mConfirmPopupwindow.isShowing()) {
+                        mConfirmPopupwindow.setData(mContext.getResources().getString(R.string.transaction_cancel_message),
+                                mContext.getResources().getString(R.string.text_confirm),
+                                (v) -> {
+                                    mConfirmPopupwindow.dismiss();
+
+                                    revokeConditionOrder(String.valueOf(mConditionOrderInfoVo.getId()));
+                                });
+                        mConfirmPopupwindow.showAtLocation(mBinding.tvStartTime, Gravity.CENTER, 0, 0);
+                    }
 
                     break;
             }
@@ -101,6 +173,46 @@ public class OwnConditionSheetFragment extends JMEBaseFragment implements OnRefr
 
         mBinding = (FragmentOwnConditionSheetBinding) mBindingUtil;
         mBinding.setHandlers(new ClickHandlers());
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        getFiveSpeedQuotes();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+
+        mHandler.removeMessages(Constants.Msg.MSG_MARKET_UPDATE);
+    }
+
+    private void initRxBus() {
+        mRxbus = RxBus.getInstance().toObserverable(RxBus.Message.class).subscribe(message -> {
+            String callType = message.getObject().toString();
+
+            if (TextUtils.isEmpty(callType))
+                return;
+
+            switch (callType) {
+                case Constants.RxBusConst.RXBUS_TRANSACTION_CONDITION_SHEET_MODIFY:
+                    Object object = message.getObject2();
+
+                    if (null == object)
+                        return;
+
+                    List<String> list = (List<String>) object;
+
+                    if (null == list || 4 != list.size())
+                        return;
+
+                    updateConditionOrder(list.get(0), list.get(1), list.get(2), list.get(3));
+
+                    break;
+            }
+        });
     }
 
     private void initDate() {
@@ -211,6 +323,26 @@ public class OwnConditionSheetFragment extends JMEBaseFragment implements OnRefr
         return mEmptyView;
     }
 
+    private long getTimeInterval() {
+        return NetWorkUtils.isWifiConnected(mContext) ? AppConfig.TimeInterval_WiFi : AppConfig.TimeInterval_NetWork;
+    }
+
+    private void showModifyPopUpWindow() {
+        if (bAccountVoFlag && bPositionVoFlag
+                && null != mSheetModifyPopUpWindow && !mSheetModifyPopUpWindow.isShowing()) {
+            FiveSpeedVo fiveSpeedVoValue = null;
+
+            for (FiveSpeedVo fiveSpeedVo : mFiveSpeedVoList) {
+                if (null != fiveSpeedVo && fiveSpeedVo.getContractId().equals(mConditionOrderInfoVo.getContractId()))
+                    fiveSpeedVoValue = fiveSpeedVo;
+            }
+
+            mSheetModifyPopUpWindow.setData(fiveSpeedVoValue, mAccountVo, mPositionVo,
+                    mContract.getContractInfoFromID(mConditionOrderInfoVo.getContractId()), mConditionOrderInfoVo);
+            mSheetModifyPopUpWindow.showAtLocation(mBinding.tvStartTime, Gravity.BOTTOM, 0, 0);
+        }
+    }
+
     private void queryConditionOrderPage(boolean enable) {
         HashMap<String, String> params = new HashMap<>();
         params.put("current", String.valueOf(mCurrentPage));
@@ -219,7 +351,65 @@ public class OwnConditionSheetFragment extends JMEBaseFragment implements OnRefr
         params.put("endDate", mBinding.tvEndTime.getText().toString());
         params.put("type", "1");
 
-        sendRequest(ConditionService.getInstance().queryConditionOrderPage, params, enable);
+        DTRequest request = new DTRequest(ConditionService.getInstance().queryConditionOrderPage, params, enable, false);
+
+        Call restResponse = request.getApi().request(request.getParams());
+
+        restResponse.enqueue(new Callback() {
+            @Override
+            public void onResponse(Call call, Response response) {
+                Head head = new Head();
+                Object body = "";
+
+                if (response.raw().code() != 200) {
+                    head.setSuccess(false);
+                    head.setCode("" + response.raw().code());
+                    head.setMsg("服务器异常");
+                } else {
+                    if (!request.getApi().isResponseJson()) {
+                        body = response.body();
+                        head.setSuccess(true);
+                        head.setCode("0");
+                        head.setMsg("成功");
+                    } else {
+                        ConditionSheetResponse dtResponse = (ConditionSheetResponse) response.body();
+
+                        head = new Head();
+                        head.setCode(dtResponse.getCode());
+                        head.setMsg(dtResponse.getMsg());
+
+                        try {
+                            body = new Gson().fromJson(dtResponse.getBodyToString(),
+                                    request.getApi().getEntryType());
+                        } catch (Exception e) {
+                            body = dtResponse.getBodyToString();
+                        }
+                    }
+                }
+
+                OnResult(request, head, body);
+            }
+
+            @Override
+            public void onFailure(Call call, Throwable t) {
+                Head head = new Head();
+                final Throwable cause = t.getCause() != null ? t.getCause() : t;
+
+                if (cause != null) {
+                    if (cause instanceof ConnectException) {
+                        head.setSuccess(false);
+                        head.setCode("500");
+                        head.setMsg(getResources().getString(com.jme.common.R.string.text_error_server));
+                    } else {
+                        head.setSuccess(false);
+                        head.setCode("408");
+                        head.setMsg(getResources().getString(com.jme.common.R.string.text_error_timeout));
+                    }
+                }
+
+                OnResult(request, head, null);
+            }
+        });
     }
 
     private void revokeConditionOrder(String id) {
@@ -229,17 +419,52 @@ public class OwnConditionSheetFragment extends JMEBaseFragment implements OnRefr
         sendRequest(ConditionService.getInstance().revokeConditionOrder, params, true);
     }
 
-    private void updateConditionOrder(String effectiveTimeFlag, String entrustNumber, String id,
-                                      String stopLossPrice, String stopProfitPrice, String triggerPrice) {
+    private void updateConditionOrder(String id, String effectiveTimeFlag, String triggerPrice, String entrustNumber) {
         HashMap<String, String> params = new HashMap<>();
-        params.put("effectiveTimeFlag", effectiveTimeFlag);
-        params.put("entrustNumber", entrustNumber);
         params.put("id", id);
-        params.put("stopLossPrice", stopLossPrice);
-        params.put("stopProfitPrice", stopProfitPrice);
-        params.put("triggerPrice", triggerPrice);
+        params.put("effectiveTimeFlag", effectiveTimeFlag);
+        params.put("triggerPrice", String.valueOf(new BigDecimal(triggerPrice).multiply(new BigDecimal(100)).longValue()));
+        params.put("entrustNumber", entrustNumber);
 
         sendRequest(ConditionService.getInstance().updateConditionOrder, params, true);
+    }
+
+    private void getFiveSpeedQuotes() {
+        HashMap<String, String> params = new HashMap<>();
+        params.put("list", "");
+
+        sendRequest(MarketService.getInstance().getFiveSpeedQuotes, params, false, false, false);
+    }
+
+    private void getAccount() {
+        if (null == mUser || !mUser.isLogin())
+            return;
+
+        String accountID = mUser.getAccountID();
+
+        if (TextUtils.isEmpty(accountID))
+            return;
+
+        HashMap<String, String> params = new HashMap<>();
+        params.put("accountId", accountID);
+
+        sendRequest(TradeService.getInstance().account, params, false);
+    }
+
+    private void getPosition() {
+        if (null == mUser || !mUser.isLogin())
+            return;
+
+        String accountID = mUser.getAccountID();
+
+        if (TextUtils.isEmpty(accountID))
+            return;
+
+        HashMap<String, String> params = new HashMap<>();
+        params.put("accountId", accountID);
+        params.put("pagingKey", "");
+
+        sendRequest(TradeService.getInstance().position, params, true);
     }
 
     @Override
@@ -301,9 +526,93 @@ public class OwnConditionSheetFragment extends JMEBaseFragment implements OnRefr
 
                 break;
             case "RevokeConditionOrder":
+                if (head.isSuccess()) {
+                    showShortToast(R.string.transaction_cancel_success);
+
+                    initConditionOrderPage(true);
+                }
 
                 break;
             case "UpdateConditionOrder":
+                if (head.isSuccess()) {
+                    showShortToast(R.string.transaction_modify_success);
+
+                    initConditionOrderPage(true);
+                }
+
+                break;
+            case "GetFiveSpeedQuotes":
+                if (head.isSuccess()) {
+                    try {
+                        mFiveSpeedVoList = (List<FiveSpeedVo>) response;
+                    } catch (Exception e) {
+                        mFiveSpeedVoList = null;
+
+                        e.printStackTrace();
+                    }
+
+                    if (null != mSheetModifyPopUpWindow)
+                        mSheetModifyPopUpWindow.setFiveSpeedVo(mFiveSpeedVoList);
+
+                    mHandler.sendEmptyMessageDelayed(Constants.Msg.MSG_MARKET_UPDATE, getTimeInterval());
+                }
+
+                break;
+            case "Account":
+                if (head.isSuccess()) {
+                    try {
+                        mAccountVo = (AccountVo) response;
+                    } catch (Exception e) {
+                        mAccountVo = null;
+
+                        e.printStackTrace();
+                    }
+
+                    bAccountVoFlag = true;
+
+                    showModifyPopUpWindow();
+                }
+
+                break;
+            case "Position":
+                if (head.isSuccess()) {
+                    PositionPageVo positionPageVo;
+
+                    try {
+                        positionPageVo = (PositionPageVo) response;
+                    } catch (Exception e) {
+                        positionPageVo = null;
+
+                        e.printStackTrace();
+                    }
+
+                    if (null != positionPageVo) {
+                        List<PositionVo> positionVoList = positionPageVo.getPositionList();
+
+                        if (null != positionVoList && 0 != positionVoList.size()) {
+                            for (PositionVo positionVo : positionVoList) {
+                                if (null != positionVo && positionVo.getContractId().equals(mConditionOrderInfoVo.getContractId())) {
+                                    if (mConditionOrderInfoVo.getBsFlag() == 1 && positionVo.getType().equals("多"))
+                                        mPositionVo = positionVo;
+                                    else if (mConditionOrderInfoVo.getBsFlag() == 2 && positionVo.getType().equals("空"))
+                                        mPositionVo = positionVo;
+                                }
+                            }
+                        }
+
+                        if (positionPageVo.isHasNext()) {
+                            getPosition();
+                        } else {
+                            bPositionVoFlag = true;
+
+                            showModifyPopUpWindow();
+                        }
+                    } else {
+                        bPositionVoFlag = true;
+
+                        showModifyPopUpWindow();
+                    }
+                }
 
                 break;
         }
@@ -348,5 +657,13 @@ public class OwnConditionSheetFragment extends JMEBaseFragment implements OnRefr
 
             mDatePickerDialog.show();
         }
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+
+        if (!mRxbus.isUnsubscribed())
+            mRxbus.unsubscribe();
     }
 }

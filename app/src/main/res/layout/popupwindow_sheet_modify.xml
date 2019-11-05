@@ -78,9 +78,8 @@
                     android:id="@+id/tv_contract_name"
                     android:layout_width="@dimen/width_item_big"
                     android:layout_height="match_parent"
-                    android:gravity="center_vertical"
-                    android:text="mAu(T+D)"
                     android:layout_marginLeft="@dimen/common_area_margin_tiny"
+                    android:gravity="center_vertical"
                     android:textColor="@color/color_text_normal"
                     android:textSize="@dimen/sp_16" />
 
@@ -88,9 +87,8 @@
                     android:id="@+id/tv_direction"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:layout_marginLeft="@dimen/common_page_margin"
+                    android:layout_marginLeft="@dimen/common_area_margin_tiny"
                     android:gravity="center_vertical"
-                    android:text="买多"
                     android:textColor="@color/color_text_normal"
                     android:textSize="@dimen/size_normal_middle" />
 
@@ -111,11 +109,11 @@
                     android:textSize="@dimen/sp_14" />
 
                 <TextView
+                    android:id="@+id/tv_last_price"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:gravity="center_vertical"
-                    android:text="@string/transaction_last_price_range"
                     android:layout_marginLeft="@dimen/common_area_margin_tiny"
+                    android:gravity="center_vertical"
                     android:textColor="@color/color_text_normal"
                     android:textSize="@dimen/sp_14" />
 
@@ -150,6 +148,7 @@
                         android:layout_weight="2.2"
                         android:background="@null"
                         android:gravity="center"
+                        android:hint="@string/transaction_not_setting"
                         android:inputType="numberDecimal"
                         android:maxLines="1"
                         android:textColor="@color/color_blue_deep"
@@ -221,6 +220,7 @@
                         android:layout_weight="2"
                         android:background="@null"
                         android:gravity="center"
+                        android:hint="@string/transaction_not_setting"
                         android:inputType="numberDecimal"
                         android:maxLines="1"
                         android:textColor="@color/color_blue_deep"
@@ -264,7 +264,6 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="@dimen/common_area_margin_tiny"
-                        android:text="X手"
                         android:textColor="@color/color_text_normal"
                         android:textSize="@dimen/sp_12" />
 
@@ -274,7 +273,7 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/common_item_height_middle"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/common_page_margin"
                 android:orientation="horizontal">
 
@@ -291,9 +290,9 @@
                     android:layout_height="match_parent"
                     android:layout_marginLeft="@dimen/common_area_margin_tiny"
                     android:gravity="center_vertical"
-                    android:text="当最新价≤4300时，发出委托：Ag(T+D)，多头，开仓，市价FAK，1手"
+                    android:lineSpacingExtra="@dimen/lineSpacingExtra_small"
                     android:textColor="@color/color_text_normal"
-                    android:textSize="@dimen/sp_16" />
+                    android:textSize="@dimen/size_normal" />
 
             </LinearLayout>
 
@@ -350,6 +349,7 @@
                     style="@style/CustomPayCheckBoxTheme"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:checked="true"
                     android:gravity="center_vertical"
                     android:scaleX="0.9"
                     android:scaleY="0.9" />

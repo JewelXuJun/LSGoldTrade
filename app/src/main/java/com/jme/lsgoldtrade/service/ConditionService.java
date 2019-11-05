@@ -8,8 +8,10 @@ import com.jme.lsgoldtrade.config.User;
 import com.jme.lsgoldtrade.domain.ConditionOrderInfoVo;
 import com.jme.lsgoldtrade.domain.ConditionOrderRunVo;
 import com.jme.lsgoldtrade.domain.ConditionPageVo;
+import com.jme.lsgoldtrade.domain.ConditionSheetResponse;
 
 import java.util.HashMap;
+import java.util.Map;
 
 import okhttp3.Interceptor;
 import okhttp3.Request;
@@ -63,7 +65,7 @@ public class ConditionService extends IService<ConditionApi> {
 
     public API queryConditionOrderPage = new API<ConditionPageVo>("QueryConditionOrderPage") {
         @Override
-        public Call<DTResponse> request(HashMap<String, String> params) {
+        public Call<ConditionSheetResponse> request(HashMap<String, String> params) {
 
             return mApi.queryConditionOrderPage(params);
         }
@@ -96,8 +98,16 @@ public class ConditionService extends IService<ConditionApi> {
     public API updateConditionOrder = new API<String>("UpdateConditionOrder") {
         @Override
         public Call<DTResponse> request(HashMap<String, String> params) {
+            HashMap<String, Object> paramsValue = new HashMap<>();
+            paramsValue.put("id", Long.parseLong(params.get("id")));
+            paramsValue.put("effectiveTimeFlag", Integer.parseInt(params.get("effectiveTimeFlag")));
+            paramsValue.put("triggerPrice", Long.parseLong(params.get("triggerPrice")));
+            paramsValue.put("entrustNumber", Integer.parseInt(params.get("entrustNumber")));
 
-            return mApi.updateConditionOrder(params);
+            HashMap<String, Map<String, Object>> requestParams = new HashMap<>();
+            requestParams.put("req", paramsValue);
+
+            return mApi.updateConditionOrder(requestParams);
         }
     };
 

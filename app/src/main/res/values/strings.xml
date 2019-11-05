@@ -360,6 +360,8 @@
     <string name="transaction_trigger_price">触发价</string>
     <string name="transaction_last_price_buy_more">最新价&#60;=%1$s</string>
     <string name="transaction_last_price_sell_empty">最新价&#62;=%1$s</string>
+    <string name="transaction_last_price_buy_more_simple">最新价&#60;=</string>
+    <string name="transaction_last_price_sell_empty_simple">最新价&#62;=</string>
     <string name="transaction_cancel">撤销</string>
     <string name="transaction_condition_sheet_explain">条件单说明</string>
     <string name="transaction_agree">我已阅读并知晓</string>
@@ -370,6 +372,18 @@
     <string name="transaction_stop_loss_price">止损价&#60;=%1$s</string>
     <string name="transaction_sheet_modify">修改条件单</string>
     <string name="transaction_trigger_condition">触发条件</string>
+    <string name="transaction_condition_sheet_detail_message">当%1$s%2$s时，发出委托：%3$s，%4$s，%5$s，%6$s，%7$s手</string>
+    <string name="transaction_more">多头</string>
+    <string name="transaction_empty">空头</string>
+    <string name="transaction_open_position">开仓</string>
+    <string name="transaction_not_setting">未设置</string>
+    <string name="transaction_entrust_less">至少委托%1$d手</string>
+    <string name="transaction_entrust_larger">超出最大可委托手数！</string>
+    <string name="transaction_price_setting_range">您设置的触发价应在%1$s - %2$s范围内</string>
+    <string name="transaction_condition_sheet_risk_agree">请先同意并勾选《条件单风险提示》</string>
+    <string name="transaction_modify_success">修改成功</string>
+    <string name="transaction_cancel_success">撤销成功</string>
+    <string name="transaction_cancel_message">请确认是否撤销条件单？</string>
 
     <!-- Personal -->
     <string name="personal_login">登录/注册</string>

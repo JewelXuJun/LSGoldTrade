@@ -1,6 +1,7 @@
 package com.jme.lsgoldtrade.service;
 
 import com.jme.common.network.DTResponse;
+import com.jme.lsgoldtrade.domain.ConditionSheetResponse;
 
 import java.util.Map;
 
@@ -19,7 +20,7 @@ public interface ConditionApi {
     Call<DTResponse> queryConditionOrderById(@QueryMap Map<String, String> map);
 
     @GET("/order/api/v1/android/conditionOrder/queryConditionOrderPage")
-    Call<DTResponse> queryConditionOrderPage(@QueryMap Map<String, String> map);
+    Call<ConditionSheetResponse> queryConditionOrderPage(@QueryMap Map<String, String> map);
 
     @GET("/order/api/v1/android/conditionOrder/queryConditionOrderRun")
     Call<DTResponse> queryConditionOrderRun(@QueryMap Map<String, String> map);
@@ -31,6 +32,6 @@ public interface ConditionApi {
     Call<DTResponse> revokeConditionOrder(@QueryMap Map<String, String> map);
 
     @POST("/order/api/v1/android/conditionOrder/updateConditionOrder")
-    Call<DTResponse> updateConditionOrder(@Body Map<String, String> map);
+    Call<DTResponse> updateConditionOrder(@Body Map<String, Map<String, Object>> map);
 
 }

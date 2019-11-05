@@ -14,7 +14,7 @@ public class ConditionOrderInfoVo implements Serializable {
 
     private int entrustNumber;
 
-    private String id;
+    private long id;
 
     private int ocFlag;
 
@@ -62,11 +62,11 @@ public class ConditionOrderInfoVo implements Serializable {
         this.entrustNumber = entrustNumber;
     }
 
-    public String getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(long id) {
         this.id = id;
     }
 
