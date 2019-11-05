@@ -333,7 +333,8 @@ public class HoldPositionsFragment extends JMEBaseFragment implements OnRefreshL
 
     private void calculateValue() {
         if (null == mList || 0 == mList.size()) {
-            mBinding.tvFloating.setText(bHiddenStatus ? R.string.transaction_hidden_value : R.string.text_no_data_default);
+            mBinding.tvFloating.setText(bHiddenStatus ? mContext.getResources().getString(R.string.transaction_hidden_value)
+                    : "0.00");
 
             if (null != mAccountVo) {
                 BigDecimal floatTotal = new BigDecimal(0);
@@ -353,6 +354,31 @@ public class HoldPositionsFragment extends JMEBaseFragment implements OnRefreshL
 
                 mBinding.tvDesirableCapital.setText(bHiddenStatus ? mContext.getResources().getString(R.string.transaction_hidden_value)
                         : TextUtils.isEmpty(mDesirableCapital) ? mContext.getResources().getString(R.string.text_no_data_default) : MarketUtil.decimalFormatMoney(mDesirableCapital));
+
+                if (new BigDecimal(minReserveFund).compareTo(new BigDecimal(0)) == 0) {
+                    mBinding.tvRiskRate.setText(R.string.text_no_data_default);
+                } else {
+                    BigDecimal fee = new BigDecimal(minReserveFund).add(new BigDecimal(mAccountVo.getRuntimeFeeStr()));
+
+                    if (fee.compareTo(new BigDecimal(0)) == 0) {
+                        mBinding.tvRiskRate.setText(R.string.text_no_data_default);
+                    } else {
+                        String minReserveFundStr = mAccountVo.getMinReserveFundStr();
+                        float riskRate;
+
+                        if (TextUtils.isEmpty(minReserveFundStr)) {
+                            riskRate = 0.00f;
+                        } else {
+                            if (new BigDecimal(minReserveFundStr).compareTo(new BigDecimal(0)) == 0)
+                                riskRate = 0.00f;
+                            else
+                                riskRate = Math.min(new BigDecimal(mTotal).divide(new BigDecimal(minReserveFundStr), 4, BigDecimal.ROUND_HALF_UP)
+                                        .multiply(new BigDecimal(100)).floatValue(), 10000.00f);
+                        }
+
+                        mBinding.tvRiskRate.setText(BigDecimalUtil.formatRate(String.valueOf(riskRate)));
+                    }
+                }
             }
         } else {
             mFloatTotal = new BigDecimal(0);
@@ -598,7 +624,6 @@ public class HoldPositionsFragment extends JMEBaseFragment implements OnRefreshL
                         if (null != positionVoList && 0 != positionVoList.size()) {
                             for (PositionVo positionVo : positionVoList) {
                                 if (null != positionVo) {
-                                    mList.add(MarketUtil.getPriceValue(positionVo.getFloatProfit()));
                                     mPositionVoList.add(positionVo);
                                 }
                             }
@@ -609,8 +634,6 @@ public class HoldPositionsFragment extends JMEBaseFragment implements OnRefreshL
                         } else {
                             mCurrentHoldPositionsFragment.setCurrentHoldPositionsData(positionVoList);
                             mCurrentHoldPositionsFragment.setFloatingList(mList);
-
-                            calculateValue();
 
                             if (bFlag) {
                                 bFlag = false;
@@ -698,6 +721,7 @@ public class HoldPositionsFragment extends JMEBaseFragment implements OnRefreshL
                 if (head.isSuccess()) {
                     showShortToast(R.string.transaction_success);
 
+                    getAccount(false);
                     initPosition();
                 } else {
                     if (head.getMsg().contains("可用资金不足")) {
@@ -799,7 +823,7 @@ public class HoldPositionsFragment extends JMEBaseFragment implements OnRefreshL
         public void onClickConditionSheet() {
             ARouter.getInstance()
                     .build(Constants.ARouterUriConst.CONDITIONSHEET)
-                    .withInt("Type", 1)
+                    .withInt("Type", 0)
                     .navigation();
         }
 

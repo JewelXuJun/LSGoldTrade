@@ -63,29 +63,44 @@
 
         </LinearLayout>
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerView"
+        <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:cacheColorHint="@null"
-            android:scrollbars="none" />
+            android:layout_height="match_parent"
+            android:scrollbars="none">
 
-        <TextView
-            android:id="@+id/tv_query"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="@dimen/margin_middle"
-            android:background="@drawable/bg_btn_blue_solid"
-            android:onClick="@{() -> handlers.onClickQuery()}"
-            android:paddingLeft="@dimen/margin_line"
-            android:paddingTop="@dimen/margin_small"
-            android:paddingRight="@dimen/margin_line"
-            android:paddingBottom="@dimen/margin_small"
-            android:text="@string/transaction_historical_entrust_query"
-            android:textColor="@color/white"
-            android:textSize="@dimen/sp_14"
-            android:visibility="gone" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recyclerView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:cacheColorHint="@null"
+                    android:scrollbars="none" />
+
+                <TextView
+                    android:id="@+id/tv_query"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="@dimen/margin_middle"
+                    android:layout_marginBottom="@dimen/common_area_margin"
+                    android:background="@drawable/bg_btn_blue_solid"
+                    android:onClick="@{() -> handlers.onClickQuery()}"
+                    android:paddingLeft="@dimen/margin_line"
+                    android:paddingTop="@dimen/margin_small"
+                    android:paddingRight="@dimen/margin_line"
+                    android:paddingBottom="@dimen/margin_small"
+                    android:text="@string/transaction_historical_entrust_query"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/sp_14"
+                    android:visibility="gone" />
+
+            </LinearLayout>
+
+        </androidx.core.widget.NestedScrollView>
 
     </LinearLayout>
 

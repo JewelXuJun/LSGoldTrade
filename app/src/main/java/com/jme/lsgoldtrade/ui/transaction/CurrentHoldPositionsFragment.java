@@ -98,6 +98,7 @@ public class CurrentHoldPositionsFragment extends JMEBaseFragment {
 
     public void setCurrentHoldPositionsData(List<PositionVo> positionVoList) {
         if (null == positionVoList) {
+            mAdapter.setNewData(null);
             mAdapter.setEmptyView(getEmptyView());
 
             mBinding.tvGotoTransaction.setVisibility(View.VISIBLE);

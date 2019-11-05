@@ -163,7 +163,7 @@ public class TodayDealFragment extends JMEBaseFragment implements OnRefreshListe
             if (bHasNext) {
                 mCurrentPage++;
 
-                dealpage(true);
+                dealpage(false);
             } else {
                 mAdapter.loadMoreEnd(true);
             }

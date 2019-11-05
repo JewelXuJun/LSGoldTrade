@@ -342,7 +342,7 @@ public class HistoricalEntrustFragment extends JMEBaseFragment implements OnRefr
             if (bHasNext) {
                 mCurrentPage++;
 
-                orderhispage(true);
+                orderhispage(false);
             } else {
                 mAdapter.loadMoreEnd(true);
             }

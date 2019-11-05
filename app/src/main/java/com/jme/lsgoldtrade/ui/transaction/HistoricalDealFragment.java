@@ -290,7 +290,7 @@ public class HistoricalDealFragment extends JMEBaseFragment implements OnRefresh
             if (bHasNext) {
                 mCurrentPage++;
 
-                dealhispage(true);
+                dealhispage(false);
             } else {
                 mAdapter.loadMoreEnd(true);
             }

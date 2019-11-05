@@ -3,6 +3,7 @@ package com.jme.lsgoldtrade.ui.transaction;
 import android.annotation.TargetApi;
 import android.app.DatePickerDialog;
 import android.os.Bundle;
+import android.view.View;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.datai.common.charts.common.Config;
@@ -97,6 +98,7 @@ public class DailyStatementActivity extends JMEBaseActivity {
         mCurrentTime = calendar.getTimeInMillis();
 
         mBinding.tvTime.setText(DateUtil.dateToString(mCurrentTime));
+        mBinding.tvNextDay.setVisibility(mCurrentTime + Config.DAY > System.currentTimeMillis() ? View.GONE : View.VISIBLE);
 
         dailystatement();
     }
@@ -177,17 +179,18 @@ public class DailyStatementActivity extends JMEBaseActivity {
             mBinding.tvTime.setText(DateUtil.dateToString(mCurrentTime));
 
             dailystatement();
+
+            mBinding.tvNextDay.setVisibility(View.VISIBLE);
         }
 
         public void onClickNextDay() {
-            if (mCurrentTime + Config.DAY > System.currentTimeMillis())
-                return;
-
             mCurrentTime = mCurrentTime + Config.DAY;
 
             mBinding.tvTime.setText(DateUtil.dateToString(mCurrentTime));
 
             dailystatement();
+
+            mBinding.tvNextDay.setVisibility(mCurrentTime + Config.DAY > System.currentTimeMillis() ? View.GONE : View.VISIBLE);
         }
 
     }
