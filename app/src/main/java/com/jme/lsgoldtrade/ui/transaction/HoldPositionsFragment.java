@@ -353,7 +353,9 @@ public class HoldPositionsFragment extends JMEBaseFragment implements OnRefreshL
                         new BigDecimal(mAccountVo.getExtractableBalance()).subtract(new BigDecimal(mAccountVo.getRuntimeFee())).longValue()));
 
                 mBinding.tvDesirableCapital.setText(bHiddenStatus ? mContext.getResources().getString(R.string.transaction_hidden_value)
-                        : TextUtils.isEmpty(mDesirableCapital) ? mContext.getResources().getString(R.string.text_no_data_default) : MarketUtil.decimalFormatMoney(mDesirableCapital));
+                        : TextUtils.isEmpty(mDesirableCapital) ? mContext.getResources().getString(R.string.text_no_data_default)
+                        : new BigDecimal(mDesirableCapital).compareTo(BigDecimal.ZERO) == -1
+                        ? "0.00" : MarketUtil.decimalFormatMoney(mDesirableCapital));
 
                 if (new BigDecimal(minReserveFund).compareTo(new BigDecimal(0)) == 0) {
                     mBinding.tvRiskRate.setText(R.string.text_no_data_default);
@@ -434,7 +436,10 @@ public class HoldPositionsFragment extends JMEBaseFragment implements OnRefreshL
                         new BigDecimal(mAccountVo.getExtractableBalance()).subtract(new BigDecimal(mAccountVo.getRuntimeFee())).longValue()));
 
                 mBinding.tvDesirableCapital.setText(bHiddenStatus ? mContext.getResources().getString(R.string.transaction_hidden_value)
-                        : TextUtils.isEmpty(mDesirableCapital) ? mContext.getResources().getString(R.string.text_no_data_default) : MarketUtil.decimalFormatMoney(mDesirableCapital));
+                        : TextUtils.isEmpty(mDesirableCapital)
+                        ? mContext.getResources().getString(R.string.text_no_data_default)
+                        : new BigDecimal(mDesirableCapital).compareTo(BigDecimal.ZERO) == -1
+                        ? "0.00" : MarketUtil.decimalFormatMoney(mDesirableCapital));
             }
         }
     }
@@ -761,7 +766,8 @@ public class HoldPositionsFragment extends JMEBaseFragment implements OnRefreshL
                 mBinding.tvAvailableFunds.setText(TextUtils.isEmpty(mAvailableFunds) ? mContext.getResources().getString(R.string.text_no_data_default)
                         : MarketUtil.decimalFormatMoney(mAvailableFunds));
                 mBinding.tvDesirableCapital.setText(TextUtils.isEmpty(mDesirableCapital) ? mContext.getResources().getString(R.string.text_no_data_default)
-                        : MarketUtil.decimalFormatMoney(mDesirableCapital));
+                        : new BigDecimal(mDesirableCapital).compareTo(BigDecimal.ZERO) == -1
+                        ? "0.00" : MarketUtil.decimalFormatMoney(mDesirableCapital));
                 mBinding.tvMarketCapitalization.setText(TextUtils.isEmpty(mMarketCapitalization) ? mContext.getResources().getString(R.string.text_no_data_default)
                         : MarketUtil.decimalFormatMoney(mMarketCapitalization));
             } else {
