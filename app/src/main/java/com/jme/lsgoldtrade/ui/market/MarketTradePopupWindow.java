@@ -1,7 +1,9 @@
 package com.jme.lsgoldtrade.ui.market;
 
 import android.content.Context;
+
 import androidx.databinding.DataBindingUtil;
+
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
@@ -160,7 +162,7 @@ public class MarketTradePopupWindow extends JMEBasePopupWindow {
     }
 
     private void calculateMaxAmount() {
-        if (TextUtils.isEmpty(mContractID) || null == mAccount || null == mPositionVo || null == mContractInfoVo) {
+        if (TextUtils.isEmpty(mContractID) || null == mAccount || null == mContractInfoVo) {
             mMaxAmount = 0;
         } else {
             String price = mBinding.etPrice.getText().toString();
@@ -193,7 +195,8 @@ public class MarketTradePopupWindow extends JMEBasePopupWindow {
                     BigDecimal feeRate = bankMarginRateValue.add(bankFeeRateValue).add(exchangeFeeRateValue);
                     BigDecimal totalAmount = money.divide(contractMoney.multiply(feeRate), 0, BigDecimal.ROUND_DOWN);
 
-                    mMaxAmount = (new BigDecimal(Math.min(totalAmount.longValue(), mMaxOrderQty)).subtract(new BigDecimal(mPositionVo.getPosition()))).longValue();
+                    mMaxAmount = (new BigDecimal(Math.min(totalAmount.longValue(), mMaxOrderQty))
+                            .subtract(null == mPositionVo ? BigDecimal.ZERO : new BigDecimal(mPositionVo.getPosition()))).longValue();
 
                     if (new BigDecimal(mMaxAmount).compareTo(new BigDecimal(0)) == -1)
                         mMaxAmount = 0;
