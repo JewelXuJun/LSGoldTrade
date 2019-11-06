@@ -318,7 +318,8 @@ public class HoldPositionsFragment extends JMEBaseFragment implements OnRefreshL
                                             .multiply(new BigDecimal(contractValue)).multiply(new BigDecimal(position))).toPlainString(), 2);
                                 }
 
-                                mList.add(floatProfit);
+                                if (position != 0)
+                                    mList.add(floatProfit);
                             }
                         }
                     }
@@ -601,7 +602,7 @@ public class HoldPositionsFragment extends JMEBaseFragment implements OnRefreshL
                     mBinding.tvGuaranteeFund.setText(TextUtils.isEmpty(minReserveFund) ? getResources().getString(R.string.text_no_data_default)
                             : new BigDecimal(minReserveFund).compareTo(new BigDecimal(0)) == 0 ? getResources().getString(R.string.text_no_data_default) : MarketUtil.decimalFormatMoney(minReserveFund));
 
-                    calculateFloat(mFiveSpeedVoList, mCurrentHoldPositionsFragment.getData());
+                    calculateFloat(mFiveSpeedVoList, mPositionVoList);
                 } else {
                     getAccount(false);
                 }
@@ -637,7 +638,7 @@ public class HoldPositionsFragment extends JMEBaseFragment implements OnRefreshL
                         if (bHasNext) {
                             getPosition();
                         } else {
-                            mCurrentHoldPositionsFragment.setCurrentHoldPositionsData(positionVoList);
+                            mCurrentHoldPositionsFragment.setCurrentHoldPositionsData(mPositionVoList);
                             mCurrentHoldPositionsFragment.setFloatingList(mList);
 
                             if (bFlag) {
@@ -668,7 +669,7 @@ public class HoldPositionsFragment extends JMEBaseFragment implements OnRefreshL
                     if (bFlag)
                         initValue(true);
                     else
-                        calculateFloat(mFiveSpeedVoList, mCurrentHoldPositionsFragment.getData());
+                        calculateFloat(mFiveSpeedVoList, mPositionVoList);
                 }
 
                 break;
