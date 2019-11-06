@@ -343,9 +343,8 @@
     <string name="transaction_contract_name">合约名称</string>
     <string name="transaction_direction">买卖方向</string>
     <string name="transaction_trigger_price_setting">触发价设置</string>
-    <string name="transaction_last_price_range">最新价&#60;=</string>
     <string name="transaction_range">范围</string>
-    <string name="transaction_price_range">[%1$s,%2$s]</string>
+    <string name="transaction_price_range">[%1$s~%2$s]</string>
     <string name="transaction_entrust_type">委托方式</string>
     <string name="transaction_market_price_fak">市价FAK</string>
     <string name="transaction_entrust_amount">委托手数</string>
@@ -358,6 +357,7 @@
     <string name="transaction_stop_risk_tips">《止盈止损风险提示》</string>
     <string name="transaction_direction_amount">方向/手数</string>
     <string name="transaction_trigger_price">触发价</string>
+    <string name="transaction_last_price_range">最新价</string>
     <string name="transaction_last_price_buy_more">最新价&#60;=%1$s</string>
     <string name="transaction_last_price_sell_empty">最新价&#62;=%1$s</string>
     <string name="transaction_last_price_buy_more_simple">最新价&#60;=</string>
@@ -379,12 +379,19 @@
     <string name="transaction_not_setting">未设置</string>
     <string name="transaction_entrust_less">至少委托%1$d手</string>
     <string name="transaction_entrust_larger">超出最大可委托手数！</string>
-    <string name="transaction_price_setting_range">您设置的触发价应在%1$s - %2$s范围内</string>
+    <string name="transaction_entrust_larger2">不可大于最大约可下单手数！</string>
+    <string name="transaction_price_setting_range">您设置的触发价应在%1$s ~ %2$s范围内</string>
     <string name="transaction_condition_sheet_risk_agree">请先同意并勾选《条件单风险提示》</string>
     <string name="transaction_modify_success">修改成功</string>
     <string name="transaction_cancel_success">撤销成功</string>
     <string name="transaction_cancel_condition_sheet_message">请确认是否撤销条件单？</string>
     <string name="transaction_cancel_transaction_stop_sheet_message">请确认是否撤销止盈止损单？</string>
+    <string name="transaction_sheet_limit_down_price_error">不可低于最低价！</string>
+    <string name="transaction_sheet_limit_up_price_error">不可高于最高价！</string>
+    <string name="transaction_market_price_fak_rule">根据相关交易规则,市价FAK指令可能会导致成交价格与委托价格不一致（市价报单默认交易品种的涨停价为委托价，委托时按照委托价冻结保证金，实际成交后按照成交价调整保证金）。</string>
+    <string name="transaction_effective_time_rule">当日有效：是指当个交易日内有效，若您下单时不在交易时段内，则默认下单后的第一个交易日内有效；若您下单时在交易时段内，则默认在当个交易日收盘之前有效。\n撤销前有效：是指在您设置条件单后，只要未撤销/未修改且条件单未触发，该条件单始终有效。</string>
+    <string name="transaction_condition_sheet_confirm">条件单确认</string>
+    <string name="transaction_condition_sheet_create_success">条件单创建成功</string>
 
     <!-- Personal -->
     <string name="personal_login">登录/注册</string>

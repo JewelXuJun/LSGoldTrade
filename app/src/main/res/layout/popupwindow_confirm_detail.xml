@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_white"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:padding="@dimen/common_area_margin"
+            android:textColor="@color/black_deep"
+            android:textSize="@dimen/common_font_size" />
+
+        <include layout="@layout/item_line_vertical" />
+
+        <TextView
+            android:id="@+id/tv_content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/common_area_margin_big"
+            android:lineSpacingExtra="@dimen/lineSpacingExtra_small"
+            android:textColor="@color/color_text_normal"
+            android:textSize="@dimen/sp_16" />
+
+        <include layout="@layout/item_line_vertical_list" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/height_item_normal"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/btn_cancel"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/drawable_white_solid"
+                android:text="@string/text_cancel"
+                android:textColor="@color/black"
+                android:textSize="@dimen/sp_16" />
+
+            <Button
+                android:id="@+id/btn_confirm"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/drawable_blue_solid"
+                android:text="@string/text_confirm2"
+                android:textColor="@color/white"
+                android:textSize="@dimen/sp_16" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</layout>

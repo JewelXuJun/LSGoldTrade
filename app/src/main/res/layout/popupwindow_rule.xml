@@ -10,8 +10,8 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingTop="@dimen/common_page_padding"
-            android:paddingBottom="@dimen/common_page_padding">
+            android:paddingTop="@dimen/common_area_margin_tiny"
+            android:paddingBottom="@dimen/common_area_margin_tiny">
 
             <TextView
                 android:id="@+id/tv_title"
@@ -46,7 +46,7 @@
             android:paddingTop="@dimen/common_page_padding"
             android:textColor="@color/color_text_normal"
             android:lineSpacingExtra="@dimen/lineSpacingExtra_normal"
-            android:paddingBottom="@dimen/common_area_margin_big"
+            android:paddingBottom="@dimen/common_area_margin_large"
             android:textSize="@dimen/sp_14" />
 
     </LinearLayout>

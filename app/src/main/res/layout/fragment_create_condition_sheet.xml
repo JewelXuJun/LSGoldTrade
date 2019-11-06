@@ -54,7 +54,7 @@
 
                 <LinearLayout
                     android:id="@+id/layout_market"
-                    android:layout_width="@dimen/width_item_middle_large"
+                    android:layout_width="@dimen/width_item_bigger"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
@@ -64,9 +64,8 @@
                         android:id="@+id/tv_last_price"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="3347.00"
                         android:textColor="@color/color_text_normal"
-                        android:textSize="@dimen/size_bigger" />
+                        android:textSize="@dimen/size_market" />
 
                     <RelativeLayout
                         android:layout_width="match_parent"
@@ -76,18 +75,16 @@
                             android:id="@+id/tv_range"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="+125.25"
                             android:textColor="@color/color_text_normal"
-                            android:textSize="@dimen/size_middle" />
+                            android:textSize="@dimen/sp_12" />
 
                         <TextView
                             android:id="@+id/tv_rate"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_alignParentRight="true"
-                            android:text="+10.01%"
                             android:textColor="@color/color_text_normal"
-                            android:textSize="@dimen/size_middle" />
+                            android:textSize="@dimen/sp_12" />
 
                     </RelativeLayout>
 
@@ -162,6 +159,7 @@
                     android:orientation="horizontal">
 
                     <FrameLayout
+                        android:id="@+id/layout_buy_more"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_marginLeft="@dimen/common_area_margin_tiny"
@@ -171,7 +169,7 @@
                         android:onClick="@{() -> handlers.onClickBuyMore()}">
 
                         <TextView
-                            android:id="@+id/btn_buy_more"
+                            android:id="@+id/tv_buy_more"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
@@ -189,6 +187,7 @@
                     </FrameLayout>
 
                     <FrameLayout
+                        android:id="@+id/layout_sell_empty"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_marginLeft="@dimen/common_area_margin_tiny"
@@ -198,7 +197,7 @@
                         android:onClick="@{() -> handlers.onClickSellEmpty()}">
 
                         <TextView
-                            android:id="@+id/btn_sell_empty"
+                            android:id="@+id/tv_sell_empty"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
@@ -279,7 +278,6 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/margin_small"
-                            android:text="[最新价,涨停价]"
                             android:textColor="@color/color_text_normal"
                             android:textSize="@dimen/sp_12" />
 
@@ -298,7 +296,7 @@
                         <RelativeLayout
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
-                            android:layout_weight="1"
+                            android:layout_weight="2"
                             android:onClick="@{() -> handlers.onClickPriceMinus()}">
 
                             <ImageView
@@ -319,6 +317,7 @@
                             android:layout_weight="3"
                             android:background="@null"
                             android:gravity="center"
+                            android:hint="@string/transaction_not_setting"
                             android:inputType="numberDecimal"
                             android:maxLines="1"
                             android:textColor="@color/color_blue_deep"
@@ -330,7 +329,7 @@
                         <RelativeLayout
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
-                            android:layout_weight="1"
+                            android:layout_weight="2"
                             android:onClick="@{() -> handlers.onClickPriceAdd()}">
 
                             <ImageView
@@ -395,13 +394,14 @@
 
                 </LinearLayout>
 
-                <LinearLayout
+                <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/common_item_height_middle"
                     android:layout_marginTop="@dimen/common_page_margin"
                     android:orientation="horizontal">
 
                     <TextView
+                        android:id="@+id/tv_entrust_amount_title"
                         android:layout_width="@dimen/width_btn_middle"
                         android:layout_height="match_parent"
                         android:gravity="center_vertical"
@@ -410,9 +410,12 @@
                         android:textSize="@dimen/sp_14" />
 
                     <LinearLayout
-                        android:layout_width="@dimen/width_entrust_type"
+                        android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_marginLeft="@dimen/common_area_margin_tiny"
+                        android:layout_marginRight="@dimen/common_area_margin"
+                        android:layout_toLeftOf="@+id/layout_entrust_about"
+                        android:layout_toRightOf="@+id/tv_entrust_amount_title"
                         android:background="@drawable/bg_btn_gray_hollow"
                         android:orientation="horizontal">
 
@@ -465,9 +468,10 @@
                     </LinearLayout>
 
                     <LinearLayout
-                        android:layout_width="match_parent"
+                        android:id="@+id/layout_entrust_about"
+                        android:layout_width="@dimen/width_range"
                         android:layout_height="match_parent"
-                        android:layout_marginLeft="@dimen/common_area_margin"
+                        android:layout_alignParentRight="true"
                         android:gravity="center_vertical"
                         android:orientation="horizontal">
 
@@ -479,16 +483,16 @@
                             android:textSize="@dimen/sp_12" />
 
                         <TextView
+                            android:id="@+id/tv_count"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="@dimen/common_area_margin_tiny"
-                            android:text="X手"
                             android:textColor="@color/color_text_normal"
                             android:textSize="@dimen/sp_12" />
 
                     </LinearLayout>
 
-                </LinearLayout>
+                </RelativeLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -538,6 +542,7 @@
                             style="@style/CustomCheckBoxCircleTheme"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:checked="true"
                             android:scaleX="0.45"
                             android:scaleY="0.45" />
 
@@ -589,7 +594,6 @@
                         android:layout_height="match_parent"
                         android:layout_marginLeft="@dimen/common_area_margin_tiny"
                         android:gravity="center_vertical"
-                        android:text="当最新价≤4300时，发出委托：Ag(T+D)，多头，开仓，市价FAK，1手"
                         android:textColor="@color/color_text_normal"
                         android:textSize="@dimen/sp_16" />
 
@@ -608,6 +612,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="@dimen/margin_condition_sheet"
+                        android:checked="true"
                         android:gravity="center_vertical"
                         android:scaleX="0.9"
                         android:scaleY="0.9" />

@@ -135,6 +135,10 @@ public class ConditionSheetActivity extends JMEBaseActivity {
                     }
 
                     break;
+                case Constants.RxBusConst.RXBUS_TRANSACTION_CONDITION_OWN:
+                    runOnUiThread(() -> mBinding.tabViewpager.setCurrentItem(1));
+
+                    break;
             }
         });
     }

@@ -14,7 +14,7 @@ import retrofit2.http.QueryMap;
 public interface ConditionApi {
 
     @POST("/order/api/v1/android/conditionOrder/entrustConditionOrder")
-    Call<DTResponse> entrustConditionOrder(@Body Map<String, String> map);
+    Call<DTResponse> entrustConditionOrder(@Body Map<String, Object> map);
 
     @GET("/order/api/v1/android/conditionOrder/queryConditionOrderById")
     Call<DTResponse> queryConditionOrderById(@QueryMap Map<String, String> map);

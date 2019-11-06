@@ -32,6 +32,7 @@ import com.jme.lsgoldtrade.domain.TradingBoxInfoVo;
 import com.jme.lsgoldtrade.service.ManagementService;
 import com.jme.lsgoldtrade.service.MarketService;
 import com.jme.lsgoldtrade.service.TradeService;
+import com.jme.lsgoldtrade.view.RulePopupwindow;
 import com.jme.lsgoldtrade.view.TransactionMessagePopUpWindow;
 import com.jme.lsgoldtrade.util.MarketUtil;
 import com.jme.lsgoldtrade.view.MessagePopupwindow;
@@ -48,7 +49,7 @@ public class PlaceOrderActivity extends JMEBaseActivity {
 
     private ActivityPlaceOrderBinding mBinding;
 
-    private TradingBoxPopupwindow mWindow;
+    private RulePopupwindow mWindow;
     private TransactionMessagePopUpWindow mTransactionMessagePopUpWindow;
     private MessagePopupwindow mMessagePopupwindow;
 
@@ -80,7 +81,7 @@ public class PlaceOrderActivity extends JMEBaseActivity {
 
         initToolbar(R.string.trading_box_prepaid_bill, true);
 
-        mWindow = new TradingBoxPopupwindow(this);
+        mWindow = new RulePopupwindow(this);
         mTransactionMessagePopUpWindow = new TransactionMessagePopUpWindow(mContext);
         mMessagePopupwindow = new MessagePopupwindow(mContext);
     }

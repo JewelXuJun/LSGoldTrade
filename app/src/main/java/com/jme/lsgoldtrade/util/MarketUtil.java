@@ -31,7 +31,7 @@ public class MarketUtil {
 
         switch (type) {
             case -1:
-                color = R.color.common_font_decrease;
+                color = R.color.color_green;
 
                 break;
             case 0:
@@ -39,7 +39,7 @@ public class MarketUtil {
 
                 break;
             case 1:
-                color = R.color.common_font_increase;
+                color = R.color.color_red;
 
                 break;
             default:
@@ -77,11 +77,11 @@ public class MarketUtil {
 
         switch (type) {
             case -1:
-                color = R.color.common_font_decrease;
+                color = R.color.color_green;
 
                 break;
             case 1:
-                color = R.color.common_font_increase;
+                color = R.color.color_red;
 
                 break;
             default:
@@ -178,9 +178,9 @@ public class MarketUtil {
         int color;
 
         if (direction == 0)
-            color = R.color.common_font_increase;
+            color = R.color.color_red;
         else if (direction == 1)
-            color = R.color.common_font_decrease;
+            color = R.color.color_green;
         else
             color = R.color.color_text_black;
 
@@ -191,9 +191,9 @@ public class MarketUtil {
         int color;
 
         if (businessStatus.equals("recharge"))
-            color = R.color.common_font_increase;
+            color = R.color.color_red;
         else if (businessStatus.equals("withdraw"))
-            color = R.color.common_font_decrease;
+            color = R.color.color_green;
         else
             color = R.color.color_text_black;
 
@@ -292,9 +292,9 @@ public class MarketUtil {
         int color;
 
         if (direction == 1)
-            color = R.color.common_font_increase;
+            color = R.color.color_red;
         else if (direction == 2)
-            color = R.color.common_font_decrease;
+            color = R.color.color_green;
         else
             color = R.color.color_text_black;
 

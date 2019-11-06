@@ -50,8 +50,18 @@ public class ConditionService extends IService<ConditionApi> {
     public API entrustConditionOrder = new API<String>("EntrustConditionOrder") {
         @Override
         public Call<DTResponse> request(HashMap<String, String> params) {
+            HashMap<String, Object> paramsValue = new HashMap<>();
+            paramsValue.put("accountId", Long.parseLong(params.get("accountId")));
+            paramsValue.put("bsFlag", Integer.parseInt(params.get("bsFlag")));
+            paramsValue.put("contractId", params.get("contractId"));
+            paramsValue.put("effectiveTimeFlag", Integer.parseInt(params.get("effectiveTimeFlag")));
+            paramsValue.put("entrustNumber", Integer.parseInt(params.get("entrustNumber")));
+            paramsValue.put("ocFlag", Integer.parseInt(params.get("ocFlag")));
+            paramsValue.put("tradingType", Integer.parseInt(params.get("tradingType")));
+            paramsValue.put("type", Integer.parseInt(params.get("type")));
+            paramsValue.put("triggerPrice", Long.parseLong(params.get("triggerPrice")));
 
-            return mApi.entrustConditionOrder(params);
+            return mApi.entrustConditionOrder(paramsValue);
         }
     };
 

@@ -21,6 +21,7 @@ import com.jme.lsgoldtrade.config.Constants;
 import com.jme.lsgoldtrade.databinding.FragmentTradingBoxDetailBinding;
 import com.jme.lsgoldtrade.domain.TradingBoxDetailsVo;
 import com.jme.lsgoldtrade.service.ManagementService;
+import com.jme.lsgoldtrade.view.RulePopupwindow;
 import com.squareup.picasso.Picasso;
 
 import java.math.BigDecimal;
@@ -40,7 +41,7 @@ public class TradingBoxDetailFragment extends JMEBaseFragment {
     private boolean bAnalystFlag = false;
 
     private CountDownTimer mCountDownTimer;
-    private TradingBoxPopupwindow mWindow;
+    private RulePopupwindow mWindow;
 
     private List<TradingBoxDetailsVo.RelevantInfoListVosBean> mRelevantInfoListVosBeanList;
 
@@ -53,7 +54,7 @@ public class TradingBoxDetailFragment extends JMEBaseFragment {
     protected void initView() {
         super.initView();
 
-        mWindow = new TradingBoxPopupwindow(mContext);
+        mWindow = new RulePopupwindow(mContext);
     }
 
     @Override

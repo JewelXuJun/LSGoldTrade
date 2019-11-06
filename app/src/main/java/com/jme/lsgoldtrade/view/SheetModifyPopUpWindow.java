@@ -2,6 +2,7 @@ package com.jme.lsgoldtrade.view;
 
 import android.content.Context;
 import android.text.Editable;
+import android.text.InputType;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
@@ -182,6 +183,7 @@ public class SheetModifyPopUpWindow extends JMEBasePopupWindow {
                 : ContextCompat.getColor(mContext, R.color.color_text_normal));
         mBinding.tvLastPrice.setText(getTriggerPriceValue(mBsFlag, mOcFlag));
         mBinding.etPrice.setText(conditionOrderInfoVo.getTriggerPriceStr());
+        mBinding.etPrice.setInputType(mContractID.equals("Ag(T+D)") ? InputType.TYPE_CLASS_NUMBER : InputType.TYPE_NUMBER_FLAG_DECIMAL);
         mBinding.etAmount.setText(String.valueOf(conditionOrderInfoVo.getEntrustNumber()));
         mBinding.checkboxEffectiveOnThatDay.setChecked(mEffectiveTimeFlag == 0);
         mBinding.checkboxEffectiveBeforeCancel.setChecked(mEffectiveTimeFlag == 1);
@@ -229,9 +231,6 @@ public class SheetModifyPopUpWindow extends JMEBasePopupWindow {
             if (TextUtils.isEmpty(price)) {
                 mMaxAmount = mMaxOrderQty;
             } else {
-                if (price.endsWith("."))
-                    price = price.substring(0, price.length() - 1);
-
                 if (new BigDecimal(price).compareTo(new BigDecimal(0)) == 0) {
                     mMaxAmount = mMaxOrderQty;
                 } else {
@@ -295,7 +294,8 @@ public class SheetModifyPopUpWindow extends JMEBasePopupWindow {
         public void onClickPriceMinus() {
             hiddenKeyBoard();
 
-            String valueStr = MarketUtil.formatValue(new BigDecimal(getPrice()).subtract(new BigDecimal(mPriceMove)).toPlainString(), 2);
+            float value = new BigDecimal(getPrice()).subtract(new BigDecimal(mPriceMove)).floatValue();
+            String valueStr = MarketUtil.formatValue(String.valueOf(value), 2);
 
             mBinding.etPrice.setText(valueStr);
             mBinding.etPrice.setSelection(valueStr.length());
@@ -304,7 +304,8 @@ public class SheetModifyPopUpWindow extends JMEBasePopupWindow {
         public void onClickPriceAdd() {
             hiddenKeyBoard();
 
-            String valueStr = MarketUtil.formatValue(new BigDecimal(getPrice()).add(new BigDecimal(mPriceMove)).toPlainString(), 2);
+            float value = new BigDecimal(getPrice()).add(new BigDecimal(mPriceMove)).floatValue();
+            String valueStr = MarketUtil.formatValue(String.valueOf(value), 2);
 
             mBinding.etPrice.setText(valueStr);
             mBinding.etPrice.setSelection(valueStr.length());
