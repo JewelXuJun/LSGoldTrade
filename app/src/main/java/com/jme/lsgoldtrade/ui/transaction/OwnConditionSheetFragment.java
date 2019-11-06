@@ -3,8 +3,6 @@ package com.jme.lsgoldtrade.ui.transaction;
 import android.annotation.TargetApi;
 import android.app.DatePickerDialog;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
 import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -18,7 +16,6 @@ import com.google.gson.Gson;
 import com.jme.common.network.DTRequest;
 import com.jme.common.network.Head;
 import com.jme.common.util.DateUtil;
-import com.jme.common.util.NetWorkUtils;
 import com.jme.common.util.RxBus;
 import com.jme.lsgoldtrade.R;
 import com.jme.lsgoldtrade.base.JMEBaseFragment;
@@ -33,7 +30,6 @@ import com.jme.lsgoldtrade.domain.FiveSpeedVo;
 import com.jme.lsgoldtrade.domain.PositionPageVo;
 import com.jme.lsgoldtrade.domain.PositionVo;
 import com.jme.lsgoldtrade.service.ConditionService;
-import com.jme.lsgoldtrade.service.MarketService;
 import com.jme.lsgoldtrade.service.TradeService;
 import com.jme.lsgoldtrade.view.ConfirmPopupwindow;
 import com.jme.lsgoldtrade.view.SheetModifyPopUpWindow;
@@ -83,21 +79,6 @@ public class OwnConditionSheetFragment extends JMEBaseFragment implements OnRefr
 
     private static final int TIME_START = 0;
     private static final int TIME_END = 1;
-
-    private Handler mHandler = new Handler() {
-        public void handleMessage(Message msg) {
-            switch (msg.what) {
-                case Constants.Msg.MSG_MARKET_UPDATE:
-                    mHandler.removeMessages(Constants.Msg.MSG_MARKET_UPDATE);
-
-                    getFiveSpeedQuotes();
-
-                    break;
-            }
-
-            super.handleMessage(msg);
-        }
-    };
 
     @Override
     protected int getContentViewId() {
@@ -175,20 +156,6 @@ public class OwnConditionSheetFragment extends JMEBaseFragment implements OnRefr
         mBinding.setHandlers(new ClickHandlers());
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-
-        getFiveSpeedQuotes();
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-
-        mHandler.removeMessages(Constants.Msg.MSG_MARKET_UPDATE);
-    }
-
     private void initRxBus() {
         mRxbus = RxBus.getInstance().toObserverable(RxBus.Message.class).subscribe(message -> {
             String callType = message.getObject().toString();
@@ -209,6 +176,18 @@ public class OwnConditionSheetFragment extends JMEBaseFragment implements OnRefr
                         return;
 
                     updateConditionOrder(list.get(0), list.get(1), list.get(2), list.get(3));
+
+                    break;
+                case Constants.RxBusConst.RXBUS_TRANSACTION_CONDITION_SHEET_FIVESPEED:
+                    Object fiveSpeedObject = message.getObject2();
+
+                    if (null == fiveSpeedObject)
+                        return;
+
+                    mFiveSpeedVoList = (List<FiveSpeedVo>) fiveSpeedObject;
+
+                    if (null != mSheetModifyPopUpWindow)
+                        mSheetModifyPopUpWindow.setFiveSpeedVo(mFiveSpeedVoList);
 
                     break;
             }
@@ -323,10 +302,6 @@ public class OwnConditionSheetFragment extends JMEBaseFragment implements OnRefr
         return mEmptyView;
     }
 
-    private long getTimeInterval() {
-        return NetWorkUtils.isWifiConnected(mContext) ? AppConfig.TimeInterval_WiFi : AppConfig.TimeInterval_NetWork;
-    }
-
     private void showModifyPopUpWindow() {
         if (bAccountVoFlag && bPositionVoFlag
                 && null != mSheetModifyPopUpWindow && !mSheetModifyPopUpWindow.isShowing()) {
@@ -427,13 +402,6 @@ public class OwnConditionSheetFragment extends JMEBaseFragment implements OnRefr
         params.put("entrustNumber", entrustNumber);
 
         sendRequest(ConditionService.getInstance().updateConditionOrder, params, true);
-    }
-
-    private void getFiveSpeedQuotes() {
-        HashMap<String, String> params = new HashMap<>();
-        params.put("list", "");
-
-        sendRequest(MarketService.getInstance().getFiveSpeedQuotes, params, false, false, false);
     }
 
     private void getAccount() {
@@ -538,23 +506,6 @@ public class OwnConditionSheetFragment extends JMEBaseFragment implements OnRefr
                     showShortToast(R.string.transaction_modify_success);
 
                     initConditionOrderPage(true);
-                }
-
-                break;
-            case "GetFiveSpeedQuotes":
-                if (head.isSuccess()) {
-                    try {
-                        mFiveSpeedVoList = (List<FiveSpeedVo>) response;
-                    } catch (Exception e) {
-                        mFiveSpeedVoList = null;
-
-                        e.printStackTrace();
-                    }
-
-                    if (null != mSheetModifyPopUpWindow)
-                        mSheetModifyPopUpWindow.setFiveSpeedVo(mFiveSpeedVoList);
-
-                    mHandler.sendEmptyMessageDelayed(Constants.Msg.MSG_MARKET_UPDATE, getTimeInterval());
                 }
 
                 break;

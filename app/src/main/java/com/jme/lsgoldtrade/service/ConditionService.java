@@ -104,10 +104,7 @@ public class ConditionService extends IService<ConditionApi> {
             paramsValue.put("triggerPrice", Long.parseLong(params.get("triggerPrice")));
             paramsValue.put("entrustNumber", Integer.parseInt(params.get("entrustNumber")));
 
-            HashMap<String, Map<String, Object>> requestParams = new HashMap<>();
-            requestParams.put("req", paramsValue);
-
-            return mApi.updateConditionOrder(requestParams);
+            return mApi.updateConditionOrder(paramsValue);
         }
     };
 

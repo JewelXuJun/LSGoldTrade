@@ -32,6 +32,6 @@ public interface ConditionApi {
     Call<DTResponse> revokeConditionOrder(@QueryMap Map<String, String> map);
 
     @POST("/order/api/v1/android/conditionOrder/updateConditionOrder")
-    Call<DTResponse> updateConditionOrder(@Body Map<String, Map<String, Object>> map);
+    Call<DTResponse> updateConditionOrder(@Body Map<String, Object> map);
 
 }
