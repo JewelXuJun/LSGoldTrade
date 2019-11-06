@@ -96,7 +96,7 @@
                 android:background="@color/color_tabhost">
 
                 <TextView
-                    android:layout_width="match_parent"
+                    android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:gravity="center|left"
@@ -106,7 +106,7 @@
                     android:textSize="@dimen/sp_12" />
 
                 <TextView
-                    android:layout_width="match_parent"
+                    android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:gravity="center"
@@ -115,16 +115,16 @@
                     android:textSize="@dimen/sp_12" />
 
                 <TextView
-                    android:layout_width="match_parent"
+                    android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="1"
+                    android:layout_weight="1.2"
                     android:gravity="center"
                     android:text="@string/transaction_trigger_price"
                     android:textColor="@color/black_pale"
                     android:textSize="@dimen/sp_12" />
 
                 <TextView
-                    android:layout_width="match_parent"
+                    android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:gravity="center|right"

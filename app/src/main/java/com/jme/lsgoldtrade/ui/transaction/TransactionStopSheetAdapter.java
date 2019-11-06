@@ -15,14 +15,14 @@ import com.jme.lsgoldtrade.util.MarketUtil;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ConditionSheetAdapter extends BaseQuickAdapter<ConditionOrderInfoVo, BaseViewHolder> {
+public class TransactionStopSheetAdapter extends BaseQuickAdapter<ConditionOrderInfoVo, BaseViewHolder> {
 
     private Context mContext;
 
     private List<Boolean> mList;
 
-    public ConditionSheetAdapter(Context context, @Nullable List<ConditionOrderInfoVo> data) {
-        super(R.layout.item_condition_sheet, data);
+    public TransactionStopSheetAdapter(Context context, @Nullable List<ConditionOrderInfoVo> data) {
+        super(R.layout.item_transaction_stop_sheet, data);
 
         mContext = context;
         mList = new ArrayList<>();
@@ -39,7 +39,8 @@ public class ConditionSheetAdapter extends BaseQuickAdapter<ConditionOrderInfoVo
 
         String contractId = item.getContractId();
         String stime = item.getStime();
-        String triggerPrice = item.getTriggerPriceStr();
+        long stopProfitPrice = item.getStopProfitPrice();
+        long stopLossPrice = item.getStopLossPrice();
         int bsFlag = item.getBsFlag();
         int ocFlag = item.getOcFlag();
         int status = item.getStatus();
@@ -51,40 +52,56 @@ public class ConditionSheetAdapter extends BaseQuickAdapter<ConditionOrderInfoVo
                 .setText(R.id.tv_date, item.getSetDate())
                 .setText(R.id.tv_contract, TextUtils.isEmpty(contractId) ? mContext.getResources().getString(R.string.text_no_data_default) : contractId)
                 .setText(R.id.tv_time, TextUtils.isEmpty(stime) ? mContext.getResources().getString(R.string.text_no_data_default) : stime)
-                .setText(R.id.tv_type, MarketUtil.getTradeDirection(bsFlag) + MarketUtil.getOCState(ocFlag))
+                .setText(R.id.tv_type, bsFlag == 1 && ocFlag == 1 ? mContext.getResources().getString(R.string.market_equal_empty)
+                        : bsFlag == 2 && ocFlag == 1 ? mContext.getResources().getString(R.string.market_equal_more) : "")
                 .setText(R.id.tv_amount, String.valueOf(item.getEntrustNumber()))
-                .setText(R.id.tv_trigger_price, getTriggerPriceValue(triggerPrice, bsFlag, ocFlag))
-                .setText(R.id.tv_trigger_price_type, mContext.getResources().getString(R.string.transaction_market_price_fak))
+                .setText(R.id.tv_stop_profit_price, getStopProfitPriceValue(stopProfitPrice, bsFlag, ocFlag))
+                .setText(R.id.tv_stop_loss_price, getStopLossPriceValue(stopLossPrice, bsFlag, ocFlag))
                 .setText(R.id.tv_state, MarketUtil.getTransactionState(status))
                 .setText(R.id.tv_effective_type, getEffectiveTimeType(effectiveTimeFlag))
-                .setGone(R.id.btn_modify, status == 0)
                 .setGone(R.id.btn_cancel, status == 0)
                 .setTextColor(R.id.tv_contract, color)
                 .setTextColor(R.id.tv_type, color)
                 .setTextColor(R.id.tv_amount, color)
-                .setTextColor(R.id.tv_trigger_price, color)
-                .setTextColor(R.id.tv_trigger_price_type, color)
+                .setTextColor(R.id.tv_stop_profit_price, color)
+                .setTextColor(R.id.tv_stop_loss_price, color)
                 .setTextColor(R.id.tv_state, ContextCompat.getColor(mContext, MarketUtil.getSheetStateColor(status)))
-                .addOnClickListener(R.id.btn_modify)
                 .addOnClickListener(R.id.btn_cancel);
 
     }
 
-    private String getTriggerPriceValue(String triggerPrice, int bsFlag, int ocFlag) {
+    private String getStopProfitPriceValue(long stopProfitPrice, int bsFlag, int ocFlag) {
         String value;
 
-        if (TextUtils.isEmpty(triggerPrice)) {
-            value = "";
+        if (1 == stopProfitPrice) {
+            value = mContext.getResources().getString(R.string.transaction_not_setting);
         } else {
-            if (bsFlag == 1 && ocFlag == 0)
-                value = String.format(mContext.getResources().getString(R.string.transaction_last_price_buy_more), triggerPrice);
-            else if (bsFlag == 2 && ocFlag == 0)
-                value = String.format(mContext.getResources().getString(R.string.transaction_last_price_sell_empty), triggerPrice);
+            if (bsFlag == 1 && ocFlag == 1)
+                value = "<=" + MarketUtil.getPriceValue(stopProfitPrice);
+            else if (bsFlag == 2 && ocFlag == 1)
+                value = ">=" + MarketUtil.getPriceValue(stopProfitPrice);
             else
                 value = "";
         }
 
-        return value;
+        return String.format(mContext.getResources().getString(R.string.transaction_stop_profit_price), value);
+    }
+
+    private String getStopLossPriceValue(long stopLossPrice, int bsFlag, int ocFlag) {
+        String value;
+
+        if (1 == stopLossPrice) {
+            value = mContext.getResources().getString(R.string.transaction_not_setting);
+        } else {
+            if (bsFlag == 1 && ocFlag == 1)
+                value = ">=" + MarketUtil.getPriceValue(stopLossPrice);
+            else if (bsFlag == 2 && ocFlag == 1)
+                value = "<=" + MarketUtil.getPriceValue(stopLossPrice);
+            else
+                value = "";
+        }
+
+        return String.format(mContext.getResources().getString(R.string.transaction_stop_loss_price), value);
     }
 
     private String getEffectiveTimeType(int effectiveTimeFlag) {

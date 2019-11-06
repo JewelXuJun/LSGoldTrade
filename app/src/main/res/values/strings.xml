@@ -368,8 +368,8 @@
     <string name="transaction_stop_setting">止盈止损设置</string>
     <string name="transaction_stop_profit_price_title">止盈价</string>
     <string name="transaction_stop_loss_price_title">止损价</string>
-    <string name="transaction_stop_profit_price">止盈价&#60;=%1$s</string>
-    <string name="transaction_stop_loss_price">止损价&#60;=%1$s</string>
+    <string name="transaction_stop_profit_price">止盈价%1$s</string>
+    <string name="transaction_stop_loss_price">止损价%1$s</string>
     <string name="transaction_sheet_modify">修改条件单</string>
     <string name="transaction_trigger_condition">触发条件</string>
     <string name="transaction_condition_sheet_detail_message">当%1$s%2$s时，发出委托：%3$s，%4$s，%5$s，%6$s，%7$s手</string>
@@ -383,7 +383,8 @@
     <string name="transaction_condition_sheet_risk_agree">请先同意并勾选《条件单风险提示》</string>
     <string name="transaction_modify_success">修改成功</string>
     <string name="transaction_cancel_success">撤销成功</string>
-    <string name="transaction_cancel_message">请确认是否撤销条件单？</string>
+    <string name="transaction_cancel_condition_sheet_message">请确认是否撤销条件单？</string>
+    <string name="transaction_cancel_transaction_stop_sheet_message">请确认是否撤销止盈止损单？</string>
 
     <!-- Personal -->
     <string name="personal_login">登录/注册</string>

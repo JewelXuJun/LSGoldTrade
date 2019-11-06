@@ -152,7 +152,7 @@ public class OwnConditionSheetFragment extends JMEBaseFragment implements OnRefr
                     break;
                 case R.id.btn_cancel:
                     if (null != mConfirmPopupwindow && !mConfirmPopupwindow.isShowing()) {
-                        mConfirmPopupwindow.setData(mContext.getResources().getString(R.string.transaction_cancel_message),
+                        mConfirmPopupwindow.setData(mContext.getResources().getString(R.string.transaction_cancel_condition_sheet_message),
                                 mContext.getResources().getString(R.string.text_confirm),
                                 (v) -> {
                                     mConfirmPopupwindow.dismiss();
