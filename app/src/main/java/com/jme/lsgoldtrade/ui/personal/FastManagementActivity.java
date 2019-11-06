@@ -368,7 +368,7 @@ public class FastManagementActivity extends JMEBaseActivity {
                         for (int i = 0; i < usedModulesBeanList.size(); i++) {
                             NavigatorVo.NavigatorVoBean navigatorVoBean = usedModulesBeanList.get(i);
 
-                            if (null != navigatorVoBean)
+                            if (null != navigatorVoBean && !navigatorVoBean.getCode().equals("DRCC"))
                                 mBinding.dragFlowLayoutAdded.getDragItemManager().addItem(
                                         new FastTabBean(navigatorVoBean.getName(), navigatorVoBean.getImageName(), navigatorVoBean.getCode(), false, false));
                         }
@@ -378,7 +378,7 @@ public class FastManagementActivity extends JMEBaseActivity {
                         for (int i = 0; i < notUsedModulesBeanList.size(); i++) {
                             NavigatorVo.NavigatorVoBean navigatorVoBean = notUsedModulesBeanList.get(i);
 
-                            if (null != navigatorVoBean)
+                            if (null != navigatorVoBean && !navigatorVoBean.getCode().equals("DRCC"))
                                 mBinding.dragFlowLayoutNotAdded.getDragItemManager().addItem(
                                         new FastTabBean(navigatorVoBean.getName(), navigatorVoBean.getImageName(), navigatorVoBean.getCode(), false, false));
                         }

@@ -120,6 +120,7 @@ public class Constants {
         public static final String RXBUS_MAINPAGE_REFRESH = "MainPageRefresh";
         public static final String RXBUS_TRANSACTION_PLACE_ORDER = "TransactionPlaceOrder";
         public static final String RXBUS_TRANSACTION_HOLD_POSITIONS = "TransactionHoldPositions";
+        public static final String RXBUS_TRANSACTION_CANCEL_ORDER = "TransactionCancelOrder";
         public static final String RXBUS_DECLARATIONFORM_UPDATE = "DeclarationFormUpdate";
         public static final String RXBUS_DECLARATIONFORM_HOLDPOSITION_SELECT = "DeclarationFormHoldPositionSelect";
         public static final String RXBUS_DECLARATIONFORM_SHOW = "DeclarationFormShow";
@@ -129,7 +130,6 @@ public class Constants {
         public static final String RXBUS_SYNTIME = "SynTimeMessage";
         public static final String RXBUS_ORDER_SUCCESS = "orderSuccess";
         public static final String RXBUS_CAPITALTRANSFER_SUCCESS = "capitalTransferSuccess";
-        public static final String RXBUS_CANCELORDERFRAGMENT = "cancelorderfragment";
         public static final String RXBUS_CUSTOMER_SERVICE = "customerservice";
         public static final String RXBUS_BIND_SUCCESS = "bindSuccess";
         public static final String RXBUS_LOGIN_SUCCESS = "loginSuccess";
@@ -200,11 +200,6 @@ public class Constants {
         public static final String ELECTRONICCARDINOUTMONEY = "/CapitalTransferActivity/ElectronicCardInOutMoneyActivity";
         public static final String BANKRESERVE = "/CapitalTransferActivity/BankReserveActivity";
         public static final String DAILYSTATEMENT = "/QueryFragment/DailyStatementActivity";
-        public static final String CURRENTHOLDPOSITION = "/QueryFragment/CurrentHoldPositionActivity";
-        public static final String CURRENTENTRUST = "/QueryFragment/CurrentEntrustActivity";
-        public static final String HISTORYENTRUST = "/QueryFragment/HistoryEntrustActivity";
-        public static final String CURRENTDEAL = "/QueryFragment/CurrentDealActivity";
-        public static final String HISTORYDEAL = "/QueryFragment/HistoryDealActivity";
         public static final String NEWSCENTERACTIVITY = "/JME/NewsCenterActivity";
         public static final String NEWSDETAILACTIVITY = "/NewsCenterActivity/NewsDetailActivity";
         public static final String BEGINNERSACTIVITY = "/MainPageFragment/BeginnersActivity";

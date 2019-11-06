@@ -436,7 +436,16 @@ public class MainPageFragment extends JMEBaseFragment implements OnRefreshListen
                         navigatorVoBeanList.add(getDefaultFastManagement());
                     } else {
                         navigatorVoBeanList.clear();
-                        navigatorVoBeanList.addAll(navigatorVo.getUsedModules());
+
+                        List<NavigatorVo.NavigatorVoBean> usedModules = navigatorVo.getUsedModules();
+
+                        if (null != usedModules && 0 != usedModules.size()) {
+                            for (NavigatorVo.NavigatorVoBean navigatorVoBean : usedModules) {
+                                if (null != navigatorVoBean && !navigatorVoBean.getCode().equals("DRCC"))
+                                    navigatorVoBeanList.add(navigatorVoBean);
+                            }
+                        }
+
                         navigatorVoBeanList.add(getDefaultFastManagement());
                     }
 

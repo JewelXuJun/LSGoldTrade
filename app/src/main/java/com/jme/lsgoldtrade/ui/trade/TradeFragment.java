@@ -133,7 +133,7 @@ public class TradeFragment extends JMEBaseFragment implements TabLayout.OnTabSel
                     mActivity.runOnUiThread(() -> mBinding.tabViewpager.setCurrentItem(1));
 
                     break;
-                case Constants.RxBusConst.RXBUS_CANCELORDERFRAGMENT:
+                case Constants.RxBusConst.RXBUS_TRANSACTION_CANCEL_ORDER:
                     mActivity.runOnUiThread(() -> mBinding.tabViewpager.setCurrentItem(2));
 
                     break;

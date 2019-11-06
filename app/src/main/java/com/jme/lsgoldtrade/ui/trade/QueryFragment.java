@@ -172,41 +172,27 @@ public class QueryFragment extends JMEBaseFragment implements OnRefreshListener 
         }
 
         public void onClickQueryDailyStatement() {
-            String time = mBinding.tvTime.getText().toString().trim();
-            ARouter.getInstance()
-                    .build(Constants.ARouterUriConst.DAILYSTATEMENT)
-                    .withString("time", time)
-                    .navigation();
+
         }
 
         public void onClickQueryCurrentHoldPosition() {
-            ARouter.getInstance()
-                    .build(Constants.ARouterUriConst.CURRENTHOLDPOSITION)
-                    .navigation();
+
         }
 
         public void onClickQueryCurrentEntrust() {
-            ARouter.getInstance()
-                    .build(Constants.ARouterUriConst.CURRENTENTRUST)
-                    .navigation();
+
         }
 
         public void onClickQueryHistoryEntrust() {
-            ARouter.getInstance()
-                    .build(Constants.ARouterUriConst.HISTORYENTRUST)
-                    .navigation();
+
         }
 
         public void onClickQueryCurrentDeal() {
-            ARouter.getInstance()
-                    .build(Constants.ARouterUriConst.CURRENTDEAL)
-                    .navigation();
+
         }
 
         public void onClickQueryHistoryDeal() {
-            ARouter.getInstance()
-                    .build(Constants.ARouterUriConst.HISTORYDEAL)
-                    .navigation();
+
         }
     }
 

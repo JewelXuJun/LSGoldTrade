@@ -92,39 +92,34 @@ public class IntentUtils {
                 }
 
                 break;
-            case "DRWT":  //当日委托
-                if (null == user || !user.isLogin())
-                    gotoLogin(context);
-                else
-                    ARouter.getInstance().build(Constants.ARouterUriConst.CURRENTENTRUST).navigation();
-
-                break;
-            case "DRCC":  //当日持仓
-                if (null == user || !user.isLogin())
-                    gotoLogin(context);
-                else
-                    ARouter.getInstance().build(Constants.ARouterUriConst.CURRENTHOLDPOSITION).navigation();
-
-                break;
             case "DRCJ":  //当日成交
                 if (null == user || !user.isLogin())
                     gotoLogin(context);
                 else
-                    ARouter.getInstance().build(Constants.ARouterUriConst.CURRENTDEAL).navigation();
+                    ARouter.getInstance()
+                            .build(Constants.ARouterUriConst.QUERY)
+                            .withInt("Type", 0)
+                            .navigation();
 
                 break;
             case "LSWT":  //历史委托
                 if (null == user || !user.isLogin())
                     gotoLogin(context);
                 else
-                    ARouter.getInstance().build(Constants.ARouterUriConst.HISTORYENTRUST).navigation();
+                    ARouter.getInstance()
+                            .build(Constants.ARouterUriConst.QUERY)
+                            .withInt("Type", 2)
+                            .navigation();
 
                 break;
             case "LSCJ":  //历史成交
                 if (null == user || !user.isLogin())
                     gotoLogin(context);
                 else
-                    ARouter.getInstance().build(Constants.ARouterUriConst.HISTORYDEAL).navigation();
+                    ARouter.getInstance()
+                            .build(Constants.ARouterUriConst.QUERY)
+                            .withInt("Type", 1)
+                            .navigation();
 
                 break;
             case "RJD":   //日结单
@@ -144,11 +139,12 @@ public class IntentUtils {
                 ARouter.getInstance().build(Constants.ARouterUriConst.CUSTOMSERVICE).navigation();
 
                 break;
+            case "DRWT":  //当日委托
             case "CD":  //撤单
                 if (null == user || !user.isLogin()) {
                     gotoLogin(context);
                 } else {
-                    RxBus.getInstance().post(Constants.RxBusConst.RXBUS_CANCELORDERFRAGMENT, null);
+                    RxBus.getInstance().post(Constants.RxBusConst.RXBUS_TRANSACTION_CANCEL_ORDER, null);
                     ARouter.getInstance().build(Constants.ARouterUriConst.MAIN).navigation();
                 }
 

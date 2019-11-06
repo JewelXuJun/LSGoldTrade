@@ -73,7 +73,7 @@ public class CurrentEntrustFragment extends JMEBaseFragment implements BaseQuick
 
         mAdapter.setOnLoadMoreListener(this, mBinding.recyclerView);
 
-        mAdapter.setOnItemChildClickListener((adapter, view, position)  ->{
+        mAdapter.setOnItemChildClickListener((adapter, view, position) -> {
             switch (view.getId()) {
                 case R.id.btn_cancel_order:
                     OrderPageVo.OrderBean orderBean = (OrderPageVo.OrderBean) adapter.getItem(position);
@@ -299,7 +299,10 @@ public class CurrentEntrustFragment extends JMEBaseFragment implements BaseQuick
     public class ClickHandlers {
 
         public void onClickQuery() {
-            ARouter.getInstance().build(Constants.ARouterUriConst.QUERY).navigation();
+            ARouter.getInstance()
+                    .build(Constants.ARouterUriConst.QUERY)
+                    .withInt("Type", 0)
+                    .navigation();
         }
 
     }

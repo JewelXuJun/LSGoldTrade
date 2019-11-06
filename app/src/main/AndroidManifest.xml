@@ -137,26 +137,6 @@
             android:screenOrientation="portrait" />
 
         <activity
-            android:name=".ui.trade.CurrentHoldPositionActivity"
-            android:screenOrientation="portrait" />
-
-        <activity
-            android:name=".ui.trade.CurrentEntrustActivity"
-            android:screenOrientation="portrait" />
-
-        <activity
-            android:name=".ui.trade.HistoryEntrustActivity"
-            android:screenOrientation="portrait" />
-
-        <activity
-            android:name=".ui.trade.CurrentDealActivity"
-            android:screenOrientation="portrait" />
-
-        <activity
-            android:name=".ui.trade.HistoryDealActivity"
-            android:screenOrientation="portrait" />
-
-        <activity
             android:name=".ui.personal.FeedBackActivity"
             android:screenOrientation="portrait" />
 

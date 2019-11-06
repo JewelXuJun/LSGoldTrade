@@ -16,6 +16,8 @@ public class QueryActivity extends JMEBaseActivity {
 
     private ActivityQueryBinding mBinding;
 
+    private int mType;
+
     private Fragment[] mFragmentArrays;
     private String[] mTabTitles;
 
@@ -31,6 +33,8 @@ public class QueryActivity extends JMEBaseActivity {
         super.initView();
 
         initToolbar(R.string.transaction_query, true);
+
+        mType = getIntent().getIntExtra("Type", 0);
 
         initTabs();
     }
@@ -69,5 +73,6 @@ public class QueryActivity extends JMEBaseActivity {
         mBinding.tabViewpager.setOffscreenPageLimit(3);
         mBinding.tabViewpager.setAdapter(mAdapter);
         mBinding.tablayout.setupWithViewPager(mBinding.tabViewpager);
+        mBinding.tabViewpager.setCurrentItem(mType);
     }
 }

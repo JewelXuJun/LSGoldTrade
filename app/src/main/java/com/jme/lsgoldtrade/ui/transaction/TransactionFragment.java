@@ -143,6 +143,7 @@ public class TransactionFragment extends JMEBaseFragment {
 
                     break;
                 case Constants.RxBusConst.RXBUS_TRANSACTION_HOLD_POSITIONS:
+                case Constants.RxBusConst.RXBUS_TRANSACTION_CANCEL_ORDER:
                     mActivity.runOnUiThread(() -> mBinding.tabViewpager.setCurrentItem(1));
 
                     break;

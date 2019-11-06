@@ -264,6 +264,14 @@ public class HoldPositionsFragment extends JMEBaseFragment implements OnRefreshL
                     showEveningUpPopupWindow(positionVo);
 
                     break;
+                case Constants.RxBusConst.RXBUS_TRANSACTION_HOLD_POSITIONS:
+                    mActivity.runOnUiThread(() -> mBinding.tabViewpager.setCurrentItem(0));
+
+                    break;
+                case Constants.RxBusConst.RXBUS_TRANSACTION_CANCEL_ORDER:
+                    mActivity.runOnUiThread(() -> mBinding.tabViewpager.setCurrentItem(1));
+
+                    break;
             }
         });
     }
@@ -630,7 +638,15 @@ public class HoldPositionsFragment extends JMEBaseFragment implements OnRefreshL
                         if (null != positionVoList && 0 != positionVoList.size()) {
                             for (PositionVo positionVo : positionVoList) {
                                 if (null != positionVo) {
-                                    mPositionVoList.add(positionVo);
+                                    boolean isContains = false;
+
+                                    for (PositionVo value : mPositionVoList) {
+                                        if (null != value && value.getContractId().equals(positionVo.getContractId()) && value.getType().equals(positionVo.getType()))
+                                            isContains = true;
+                                    }
+
+                                    if (!isContains)
+                                        mPositionVoList.add(positionVo);
                                 }
                             }
                         }
@@ -802,7 +818,10 @@ public class HoldPositionsFragment extends JMEBaseFragment implements OnRefreshL
         }
 
         public void onClickQuery() {
-            ARouter.getInstance().build(Constants.ARouterUriConst.QUERY).navigation();
+            ARouter.getInstance()
+                    .build(Constants.ARouterUriConst.QUERY)
+                    .withInt("Type", 0)
+                    .navigation();
         }
 
         public void onClickInOutMoney() {

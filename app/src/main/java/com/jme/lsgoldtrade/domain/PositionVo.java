@@ -52,7 +52,6 @@ public class PositionVo implements Serializable {
         this.exists = exists;
     }
 
-
     public String getContractId() {
         return contractId;
     }
