@@ -118,7 +118,7 @@ public class CurrentEntrustFragment extends JMEBaseFragment implements BaseQuick
         super.setUserVisibleHint(isVisibleToUser);
 
         if (null != mBinding && bVisibleToUser)
-            initOrderPage(true);
+            initOrderPage(false);
     }
 
     @Override
@@ -128,7 +128,7 @@ public class CurrentEntrustFragment extends JMEBaseFragment implements BaseQuick
         super.onHiddenChanged(hidden);
 
         if (hidden)
-            initOrderPage(true);
+            initOrderPage(false);
     }
 
     @Override
@@ -136,7 +136,7 @@ public class CurrentEntrustFragment extends JMEBaseFragment implements BaseQuick
         super.onResume();
 
         if (bVisibleToUser)
-            initOrderPage(true);
+            initOrderPage(false);
     }
 
     private void initRxBus() {
@@ -148,7 +148,7 @@ public class CurrentEntrustFragment extends JMEBaseFragment implements BaseQuick
 
             switch (callType) {
                 case Constants.RxBusConst.RXBUS_TRANSACTION_HOLDPOSITIONS_REFRESH:
-                    initOrderPage(false);
+                    initOrderPage(true);
 
                     break;
             }
