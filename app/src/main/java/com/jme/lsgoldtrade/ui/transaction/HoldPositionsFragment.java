@@ -321,9 +321,9 @@ public class HoldPositionsFragment extends JMEBaseFragment implements OnRefreshL
             }
 
             mCurrentHoldPositionsFragment.setFloatingList(mList);
-        }
 
-        calculateValue();
+            calculateValue();
+        }
     }
 
     private void calculateValue() {
@@ -565,6 +565,8 @@ public class HoldPositionsFragment extends JMEBaseFragment implements OnRefreshL
                                 mHandler.sendEmptyMessageDelayed(Constants.Msg.MSG_TRADE_POSITION_UPDATE_DATA, 0);
                                 mHandler.sendEmptyMessageDelayed(Constants.Msg.MSG_TRADE_POSITION_UPDATE_ACCOUNT_DATA, AppConfig.Minute);
                             }
+
+                            calculateFloat(mFiveSpeedVoList, mPositionVoList);
                         }
                     }
                 }
