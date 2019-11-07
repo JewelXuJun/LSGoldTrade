@@ -60,7 +60,7 @@
             android:orientation="vertical"
             android:paddingLeft="@dimen/common_area_margin"
             android:paddingRight="@dimen/common_area_margin"
-            android:visibility="visible">
+            android:visibility="gone">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -389,7 +389,6 @@
                     android:layout_height="wrap_content"
                     android:onClick="@{() -> handlers.onCliclStopRiskTips()}"
                     android:text="@string/transaction_stop_risk_tips"
-
                     android:textColor="@color/color_blue_deep"
                     android:textSize="@dimen/sp_14" />
 
@@ -406,7 +405,7 @@
             android:orientation="vertical"
             android:paddingLeft="@dimen/common_area_margin"
             android:paddingRight="@dimen/common_area_margin"
-            android:visibility="gone">
+            android:visibility="visible">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -427,7 +426,6 @@
                     android:layout_height="match_parent"
                     android:layout_marginLeft="@dimen/common_page_margin"
                     android:gravity="center_vertical"
-                    android:text="4100"
                     android:textColor="@color/color_text_normal"
                     android:textSize="@dimen/sp_16"
                     android:textStyle="bold" />
@@ -454,7 +452,6 @@
                     android:layout_height="match_parent"
                     android:layout_marginLeft="@dimen/common_page_margin"
                     android:gravity="center_vertical"
-                    android:text="未设置"
                     android:textColor="@color/color_text_normal"
                     android:textSize="@dimen/sp_16"
                     android:textStyle="bold" />
@@ -481,7 +478,6 @@
                     android:layout_height="match_parent"
                     android:layout_marginLeft="@dimen/common_page_margin"
                     android:gravity="center_vertical"
-                    android:text="1"
                     android:textColor="@color/color_text_normal"
                     android:textSize="@dimen/sp_16"
                     android:textStyle="bold" />
@@ -492,7 +488,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/common_item_height_middle"
                 android:layout_marginTop="@dimen/common_page_margin"
-                android:layout_marginBottom="@dimen/margin_big"
+                android:layout_marginBottom="@dimen/common_area_margin_big"
                 android:orientation="horizontal">
 
                 <LinearLayout
@@ -526,11 +522,11 @@
                 </LinearLayout>
 
                 <TextView
+                    android:id="@+id/tv_entrust_type"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_marginLeft="@dimen/common_page_margin"
                     android:gravity="center"
-                    android:text="@string/transaction_market_price_fak"
                     android:textColor="@color/color_text_normal"
                     android:textSize="@dimen/sp_16"
                     android:textStyle="bold" />
@@ -544,7 +540,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginTop="@dimen/common_area_margin"
-                android:text="当前设置当前交易日有效"
                 android:textColor="@color/color_text_normal"
                 android:textSize="@dimen/sp_14" />
 
@@ -579,7 +574,7 @@
                 android:layout_marginRight="@dimen/common_area_margin_middle"
                 android:layout_weight="1"
                 android:background="@drawable/bg_btn_blue_solid"
-                android:onClick="@{() -> handlers.onClickConfirm()}"
+                android:onClick="@{() -> handlers.onClickTransactionCancel()}"
                 android:text="@string/transaction_cancel"
                 android:textColor="@color/white"
                 android:textSize="@dimen/common_font_size"

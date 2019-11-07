@@ -340,6 +340,7 @@
     <string name="transaction_stop_price_empty">止盈价和止损价至少设置一个！</string>
     <string name="transaction_stop_profit_price_range">您设置的止盈价超出范围，止盈范围应为【%1$s~%2$s】范围内</string>
     <string name="transaction_stop_loss_price_range">您设置的止损价超出范围，止损范围应为【%1$s~%2$s】范围内</string>
+    <string name="transaction_stop_current_setting_type">当前设置%1$s</string>
     <string name="transaction_evening_up">平仓</string>
     <string name="transaction_cancel_order_success">撤单成功</string>
     <string name="transaction_increment_error">您尚未开通增值服务，请开通后使用该服务。</string>
@@ -373,7 +374,6 @@
     <string name="transaction_bind_success">恭喜您已绑定成功！</string>
     <string name="transaction_bind_success_time">%1$s秒后自动关闭</string>
     <string name="transaction_about_amount">约可交易手数</string>
-
 
     <!-- Personal -->
     <string name="personal_login">登录/注册</string>

@@ -11,6 +11,7 @@ import android.widget.Toast;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.alibaba.android.arouter.launcher.ARouter;
+import com.google.gson.Gson;
 import com.jme.common.network.DTRequest;
 import com.jme.common.network.Head;
 import com.jme.common.util.RxBus;
@@ -19,9 +20,11 @@ import com.jme.lsgoldtrade.base.JMEBaseFragment;
 import com.jme.lsgoldtrade.config.Constants;
 import com.jme.lsgoldtrade.databinding.FragmentCurrentHoldPositionsBinding;
 import com.jme.lsgoldtrade.domain.ConditionOrderInfoVo;
+import com.jme.lsgoldtrade.domain.ConditionSheetResponse;
 import com.jme.lsgoldtrade.domain.ContractInfoVo;
 import com.jme.lsgoldtrade.domain.FiveSpeedVo;
 import com.jme.lsgoldtrade.domain.PositionVo;
+import com.jme.lsgoldtrade.domain.QuerySetStopOrderResponse;
 import com.jme.lsgoldtrade.service.ConditionService;
 import com.jme.lsgoldtrade.service.TradeService;
 import com.jme.lsgoldtrade.view.ConfirmPopupwindow;
@@ -29,10 +32,14 @@ import com.jme.lsgoldtrade.view.EveningUpPopupWindow;
 import com.jme.lsgoldtrade.view.TransactionStopPopupWindow;
 
 import java.math.BigDecimal;
+import java.net.ConnectException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 import rx.Subscription;
 
 public class CurrentHoldPositionsFragment extends JMEBaseFragment {
@@ -101,8 +108,6 @@ public class CurrentHoldPositionsFragment extends JMEBaseFragment {
                     break;
             }
         });
-
-        mTransactionStopPopupWindow.setOnDismissListener(() -> RxBus.getInstance().post(Constants.RxBusConst.RXBUS_TRANSACTION_HOLD_POSITIONS_UPDATE, null));
     }
 
     @Override
@@ -133,6 +138,27 @@ public class CurrentHoldPositionsFragment extends JMEBaseFragment {
                         return;
 
                     entrustConditionOrder(list);
+
+                    break;
+                case Constants.RxBusConst.RXBUS_TRANSACTION_STOP_SHEET_CANCEL_ORDER:
+                    Object objectID = message.getObject2();
+
+                    if (null == objectID)
+                        return;
+
+                    if (null != mTransactionStopPopupWindow)
+                        mTransactionStopPopupWindow.dismiss();
+
+                    if (null != mConfirmPopupwindow && !mConfirmPopupwindow.isShowing()) {
+                        mConfirmPopupwindow.setData(mContext.getResources().getString(R.string.transaction_cancel_transaction_stop_sheet_message),
+                                mContext.getResources().getString(R.string.text_confirm),
+                                (view) -> {
+                                    mConfirmPopupwindow.dismiss();
+
+                                    revokeConditionOrder(objectID.toString());
+                                });
+                        mConfirmPopupwindow.showAtLocation(mBinding.tvGotoTransaction, Gravity.CENTER, 0, 0);
+                    }
 
                     break;
             }
@@ -297,7 +323,65 @@ public class CurrentHoldPositionsFragment extends JMEBaseFragment {
         params.put("bsFlag", String.valueOf(bsFlag));
         params.put("contractId", contractId);
 
-        sendRequest(ConditionService.getInstance().querySetStopOrder, params, true);
+        DTRequest request = new DTRequest(ConditionService.getInstance().querySetStopOrder, params, true, false);
+
+        Call restResponse = request.getApi().request(request.getParams());
+
+        restResponse.enqueue(new Callback() {
+            @Override
+            public void onResponse(Call call, Response response) {
+                Head head = new Head();
+                Object body = "";
+
+                if (response.raw().code() != 200) {
+                    head.setSuccess(false);
+                    head.setCode("" + response.raw().code());
+                    head.setMsg("服务器异常");
+                } else {
+                    if (!request.getApi().isResponseJson()) {
+                        body = response.body();
+                        head.setSuccess(true);
+                        head.setCode("0");
+                        head.setMsg("成功");
+                    } else {
+                        QuerySetStopOrderResponse dtResponse = (QuerySetStopOrderResponse) response.body();
+
+                        head = new Head();
+                        head.setCode(dtResponse.getCode());
+                        head.setMsg(dtResponse.getMsg());
+
+                        try {
+                            body = new Gson().fromJson(dtResponse.getBodyToString(),
+                                    request.getApi().getEntryType());
+                        } catch (Exception e) {
+                            body = dtResponse.getBodyToString();
+                        }
+                    }
+                }
+
+                OnResult(request, head, body);
+            }
+
+            @Override
+            public void onFailure(Call call, Throwable t) {
+                Head head = new Head();
+                final Throwable cause = t.getCause() != null ? t.getCause() : t;
+
+                if (cause != null) {
+                    if (cause instanceof ConnectException) {
+                        head.setSuccess(false);
+                        head.setCode("500");
+                        head.setMsg(getResources().getString(com.jme.common.R.string.text_error_server));
+                    } else {
+                        head.setSuccess(false);
+                        head.setCode("408");
+                        head.setMsg(getResources().getString(com.jme.common.R.string.text_error_timeout));
+                    }
+                }
+
+                OnResult(request, head, null);
+            }
+        });
     }
 
     private void entrustConditionOrder(List<String> list) {
@@ -322,6 +406,13 @@ public class CurrentHoldPositionsFragment extends JMEBaseFragment {
         params.put("type", "2");
 
         sendRequest(ConditionService.getInstance().entrustConditionOrder, params, true);
+    }
+
+    private void revokeConditionOrder(String id) {
+        HashMap<String, String> params = new HashMap<>();
+        params.put("id", id);
+
+        sendRequest(ConditionService.getInstance().revokeConditionOrder, params, true);
     }
 
     @Override
@@ -357,6 +448,9 @@ public class CurrentHoldPositionsFragment extends JMEBaseFragment {
 
                         e.printStackTrace();
                     }
+
+                    if (null != conditionOrderInfoVo)
+                        showTransactionStopPopupWindow(true, mPositionVo.getContractId(), conditionOrderInfoVo);
                 }
 
                 break;
@@ -371,7 +465,17 @@ public class CurrentHoldPositionsFragment extends JMEBaseFragment {
                 }
 
                 break;
+            case "RevokeConditionOrder":
+                if (head.isSuccess()) {
+                    showShortToast(R.string.transaction_cancel_success);
 
+                    if (null != mTransactionStopPopupWindow)
+                        mTransactionStopPopupWindow.dismiss();
+
+                    RxBus.getInstance().post(Constants.RxBusConst.RXBUS_TRANSACTION_HOLD_POSITIONS_UPDATE, null);
+                }
+
+                break;
         }
     }
 

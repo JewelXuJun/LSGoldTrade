@@ -84,7 +84,7 @@ public class TransactionStopSheetAdapter extends BaseQuickAdapter<ConditionOrder
                 value = "";
         }
 
-        return String.format(mContext.getResources().getString(R.string.transaction_stop_profit_price), value);
+        return String.format(mContext.getResources().getString(R.string.transaction_stop_profit_price), value, "");
     }
 
     private String getStopLossPriceValue(long stopLossPrice, int bsFlag, int ocFlag) {
@@ -101,7 +101,7 @@ public class TransactionStopSheetAdapter extends BaseQuickAdapter<ConditionOrder
                 value = "";
         }
 
-        return String.format(mContext.getResources().getString(R.string.transaction_stop_loss_price), value);
+        return String.format(mContext.getResources().getString(R.string.transaction_stop_loss_price), value, "");
     }
 
     private String getEffectiveTimeType(int effectiveTimeFlag) {

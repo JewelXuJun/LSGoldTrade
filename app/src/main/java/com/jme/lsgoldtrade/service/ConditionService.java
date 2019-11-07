@@ -9,6 +9,7 @@ import com.jme.lsgoldtrade.domain.ConditionOrderInfoVo;
 import com.jme.lsgoldtrade.domain.ConditionOrderRunVo;
 import com.jme.lsgoldtrade.domain.ConditionPageVo;
 import com.jme.lsgoldtrade.domain.ConditionSheetResponse;
+import com.jme.lsgoldtrade.domain.QuerySetStopOrderResponse;
 
 import java.util.HashMap;
 
@@ -97,7 +98,7 @@ public class ConditionService extends IService<ConditionApi> {
 
     public API querySetStopOrder = new API<ConditionOrderInfoVo>("QuerySetStopOrder") {
         @Override
-        public Call<DTResponse> request(HashMap<String, String> params) {
+        public Call<QuerySetStopOrderResponse> request(HashMap<String, String> params) {
 
             return mApi.querySetStopOrder(params);
         }

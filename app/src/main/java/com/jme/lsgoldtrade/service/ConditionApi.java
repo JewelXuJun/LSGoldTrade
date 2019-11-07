@@ -2,6 +2,7 @@ package com.jme.lsgoldtrade.service;
 
 import com.jme.common.network.DTResponse;
 import com.jme.lsgoldtrade.domain.ConditionSheetResponse;
+import com.jme.lsgoldtrade.domain.QuerySetStopOrderResponse;
 
 import java.util.Map;
 
@@ -26,7 +27,7 @@ public interface ConditionApi {
     Call<DTResponse> queryConditionOrderRun(@QueryMap Map<String, String> map);
 
     @GET("/order/api/v1/android/conditionOrder/querySetStopOrder")
-    Call<DTResponse> querySetStopOrder(@QueryMap Map<String, String> map);
+    Call<QuerySetStopOrderResponse> querySetStopOrder(@QueryMap Map<String, String> map);
 
     @GET("/order/api/v1/android/conditionOrder/revokeConditionOrder")
     Call<DTResponse> revokeConditionOrder(@QueryMap Map<String, String> map);

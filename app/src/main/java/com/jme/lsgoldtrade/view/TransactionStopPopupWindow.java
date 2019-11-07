@@ -189,7 +189,25 @@ public class TransactionStopPopupWindow extends JMEBasePopupWindow {
         mConditionOrderInfoVo = conditionOrderInfoVo;
 
         if (stopOrderFlag) {
+            mBinding.layoutNotSetting.setVisibility(View.GONE);
+            mBinding.layoutAlreadySetting.setVisibility(View.VISIBLE);
+            mBinding.btnCancel.setVisibility(View.GONE);
+            mBinding.btnConfirm.setVisibility(View.GONE);
+            mBinding.btnTransactionCancel.setVisibility(View.VISIBLE);
+            mBinding.btnModify.setVisibility(View.VISIBLE);
 
+            long stopProfitPrice = mConditionOrderInfoVo.getStopProfitPrice();
+            long stopLossPrice = mConditionOrderInfoVo.getStopLossPrice();
+
+            mBinding.tvStopProfitPrice.setText(1 == stopProfitPrice ? mContext.getResources().getString(R.string.transaction_not_setting)
+                    : MarketUtil.formatValue(MarketUtil.getPriceValue(stopProfitPrice), 2));
+            mBinding.tvStopLossPrice.setText(1 == stopLossPrice ? mContext.getResources().getString(R.string.transaction_not_setting)
+                    : MarketUtil.formatValue(MarketUtil.getPriceValue(stopLossPrice), 2));
+            mBinding.tvAmount.setText(String.valueOf(mConditionOrderInfoVo.getEntrustNumber()));
+            mBinding.tvEntrustType.setText(R.string.transaction_market_price_fak);
+            mBinding.tvSettingType.setText(String.format(mContext.getResources().getString(R.string.transaction_stop_current_setting_type),
+                    mConditionOrderInfoVo.getEffectiveTimeFlag() == 0 ? mContext.getResources().getString(R.string.transaction_effective_on_that_day)
+                    : mContext.getResources().getString(R.string.transaction_effective_before_cancel)));
         } else {
             mType = null == positionVo ? "" : positionVo.getType();
             mPosition = null == mPositionVo ? 0 : mPositionVo.getPosition();
@@ -424,7 +442,13 @@ public class TransactionStopPopupWindow extends JMEBasePopupWindow {
         }
 
         public void onClickCancel() {
+            RxBus.getInstance().post(Constants.RxBusConst.RXBUS_TRANSACTION_HOLD_POSITIONS_UPDATE, null);
+
             dismiss();
+        }
+
+        public void onClickTransactionCancel() {
+            RxBus.getInstance().post(Constants.RxBusConst.RXBUS_TRANSACTION_STOP_SHEET_CANCEL_ORDER, mConditionOrderInfoVo.getId());
         }
 
         public void onClickConfirm() {
