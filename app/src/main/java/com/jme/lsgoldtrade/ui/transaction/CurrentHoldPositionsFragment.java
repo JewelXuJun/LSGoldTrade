@@ -18,17 +18,22 @@ import com.jme.lsgoldtrade.R;
 import com.jme.lsgoldtrade.base.JMEBaseFragment;
 import com.jme.lsgoldtrade.config.Constants;
 import com.jme.lsgoldtrade.databinding.FragmentCurrentHoldPositionsBinding;
+import com.jme.lsgoldtrade.domain.ConditionOrderInfoVo;
 import com.jme.lsgoldtrade.domain.ContractInfoVo;
 import com.jme.lsgoldtrade.domain.FiveSpeedVo;
 import com.jme.lsgoldtrade.domain.PositionVo;
+import com.jme.lsgoldtrade.service.ConditionService;
 import com.jme.lsgoldtrade.service.TradeService;
 import com.jme.lsgoldtrade.view.ConfirmPopupwindow;
 import com.jme.lsgoldtrade.view.EveningUpPopupWindow;
+import com.jme.lsgoldtrade.view.TransactionStopPopupWindow;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+
+import rx.Subscription;
 
 public class CurrentHoldPositionsFragment extends JMEBaseFragment {
 
@@ -36,10 +41,13 @@ public class CurrentHoldPositionsFragment extends JMEBaseFragment {
 
     private List<FiveSpeedVo> mFiveSpeedVoList;
 
+    private PositionVo mPositionVo;
     private HoldPositionsAdapter mAdapter;
     private EveningUpPopupWindow mEveningUpPopupWindow;
     private ConfirmPopupwindow mConfirmPopupwindow;
+    private TransactionStopPopupWindow mTransactionStopPopupWindow;
     private View mEmptyView;
+    private Subscription mRxbus;
 
     @Override
     protected int getContentViewId() {
@@ -58,6 +66,7 @@ public class CurrentHoldPositionsFragment extends JMEBaseFragment {
         mAdapter = new HoldPositionsAdapter(mContext, null);
         mEveningUpPopupWindow = new EveningUpPopupWindow(mContext);
         mConfirmPopupwindow = new ConfirmPopupwindow(mContext);
+        mTransactionStopPopupWindow = new TransactionStopPopupWindow(mContext, mBinding.tvGotoTransaction);
 
         mBinding.recyclerView.setHasFixedSize(false);
         mBinding.recyclerView.setLayoutManager(new LinearLayoutManager(mContext));
@@ -68,22 +77,32 @@ public class CurrentHoldPositionsFragment extends JMEBaseFragment {
     protected void initListener() {
         super.initListener();
 
-        mAdapter.setOnItemChildClickListener((adapter, view, position) -> {
-            PositionVo positionVo = (PositionVo) adapter.getItem(position);
+        initRxBus();
 
-            if (null == positionVo)
+        mAdapter.setOnItemChildClickListener((adapter, view, position) -> {
+            mPositionVo = (PositionVo) adapter.getItem(position);
+
+            if (null == mPositionVo)
                 return;
 
             switch (view.getId()) {
                 case R.id.layout_stop_transaction:
+                    String stopOrderFlag = mPositionVo.getStopOrderFlag();
+
+                    if (!TextUtils.isEmpty(stopOrderFlag) && stopOrderFlag.equals("Y"))
+                        querySetStopOrder(mPositionVo.getType().equals("多") ? 2 : 1, mPositionVo.getContractId());
+                    else
+                        showTransactionStopPopupWindow(false, mPositionVo.getContractId(), null);
 
                     break;
                 case R.id.btn_evening_up:
-                    showEveningUpPopupWindow(positionVo);
+                    showEveningUpPopupWindow(mPositionVo);
 
                     break;
             }
         });
+
+        mTransactionStopPopupWindow.setOnDismissListener(() -> RxBus.getInstance().post(Constants.RxBusConst.RXBUS_TRANSACTION_HOLD_POSITIONS_UPDATE, null));
     }
 
     @Override
@@ -92,6 +111,32 @@ public class CurrentHoldPositionsFragment extends JMEBaseFragment {
 
         mBinding = (FragmentCurrentHoldPositionsBinding) mBindingUtil;
         mBinding.setHandlers(new ClickHandlers());
+    }
+
+    private void initRxBus() {
+        mRxbus = RxBus.getInstance().toObserverable(RxBus.Message.class).subscribe(message -> {
+            String callType = message.getObject().toString();
+
+            if (TextUtils.isEmpty(callType))
+                return;
+
+            switch (callType) {
+                case Constants.RxBusConst.RXBUS_TRANSACTION_STOP_SHEET_UPDATE:
+                    Object object = message.getObject2();
+
+                    if (null == object)
+                        return;
+
+                    List<String> list = (List<String>) object;
+
+                    if (null == list || 7 != list.size())
+                        return;
+
+                    entrustConditionOrder(list);
+
+                    break;
+            }
+        });
     }
 
     private View getEmptyView() {
@@ -112,6 +157,9 @@ public class CurrentHoldPositionsFragment extends JMEBaseFragment {
         mFiveSpeedVoList = fiveSpeedVoList;
 
         mAdapter.setFiveSpeedVoList(fiveSpeedVoList);
+
+        if (null != mTransactionStopPopupWindow && mTransactionStopPopupWindow.isShowing())
+            mTransactionStopPopupWindow.setFiveSpeedVo(mFiveSpeedVoList);
     }
 
     public void setCurrentHoldPositionsData(List<PositionVo> positionVoList) {
@@ -210,6 +258,21 @@ public class CurrentHoldPositionsFragment extends JMEBaseFragment {
         }
     }
 
+    private void showTransactionStopPopupWindow(boolean stopOrderFlag, String contractID, ConditionOrderInfoVo conditionOrderInfoVo) {
+        if (null != mTransactionStopPopupWindow && !mTransactionStopPopupWindow.isShowing()) {
+            FiveSpeedVo fiveSpeedVo = null;
+
+            for (FiveSpeedVo fiveSpeedVoValue : mFiveSpeedVoList) {
+                if (null != fiveSpeedVoValue && fiveSpeedVoValue.getContractId().equals(contractID))
+                    fiveSpeedVo = fiveSpeedVoValue;
+            }
+
+            mTransactionStopPopupWindow.setData(stopOrderFlag, mPositionVo.getContractId(), fiveSpeedVo,
+                    mPositionVo, null == mContract ? null : mContract.getContractInfoFromID(contractID), conditionOrderInfoVo);
+            mTransactionStopPopupWindow.showAtLocation(mBinding.tvGotoTransaction, Gravity.BOTTOM, 0, 0);
+        }
+    }
+
     private void limitOrder(String contractId, String price, String amount, int bsFlag, int ocFlag) {
         if (null == mUser || !mUser.isLogin())
             return;
@@ -226,6 +289,41 @@ public class CurrentHoldPositionsFragment extends JMEBaseFragment {
         sendRequest(TradeService.getInstance().limitOrder, params, true);
     }
 
+    private void querySetStopOrder(int bsFlag, String contractId) {
+        if (TextUtils.isEmpty(contractId))
+            return;
+
+        HashMap<String, String> params = new HashMap<>();
+        params.put("bsFlag", String.valueOf(bsFlag));
+        params.put("contractId", contractId);
+
+        sendRequest(ConditionService.getInstance().querySetStopOrder, params, true);
+    }
+
+    private void entrustConditionOrder(List<String> list) {
+        if (null == mUser || !mUser.isLogin())
+            return;
+
+        String accountID = mUser.getAccountID();
+
+        if (TextUtils.isEmpty(accountID))
+            return;
+
+        HashMap<String, String> params = new HashMap<>();
+        params.put("accountId", accountID);
+        params.put("bsFlag", list.get(0));
+        params.put("ocFlag", list.get(1));
+        params.put("contractId", list.get(2));
+        params.put("effectiveTimeFlag", list.get(3));
+        params.put("stopProfitPrice", TextUtils.isEmpty(list.get(4)) ? "1" : String.valueOf(new BigDecimal(list.get(4)).multiply(new BigDecimal(100)).longValue()));
+        params.put("stopLossPrice", TextUtils.isEmpty(list.get(5)) ? "1" : String.valueOf(new BigDecimal(list.get(5)).multiply(new BigDecimal(100)).longValue()));
+        params.put("entrustNumber", list.get(6));
+        params.put("tradingType", "3");
+        params.put("type", "2");
+
+        sendRequest(ConditionService.getInstance().entrustConditionOrder, params, true);
+    }
+
     @Override
     protected void DataReturn(DTRequest request, Head head, Object response) {
         super.DataReturn(request, head, response);
@@ -233,9 +331,9 @@ public class CurrentHoldPositionsFragment extends JMEBaseFragment {
         switch (request.getApi().getName()) {
             case "LimitOrder":
                 if (head.isSuccess()) {
-                    showShortToast(R.string.transaction_success);
+                    showShortToast(R.string.transaction_evening_up_success);
 
-                    RxBus.getInstance().post(Constants.RxBusConst.RXBUS_TRANSACTION_EVENING_UP_SUCCESS, null);
+                    RxBus.getInstance().post(Constants.RxBusConst.RXBUS_TRANSACTION_HOLD_POSITIONS_UPDATE, null);
                 } else {
                     if (head.getMsg().contains("可用资金不足")) {
                         if (null != mConfirmPopupwindow && !mConfirmPopupwindow.isShowing()) {
@@ -248,6 +346,32 @@ public class CurrentHoldPositionsFragment extends JMEBaseFragment {
                 }
 
                 break;
+            case "QuerySetStopOrder":
+                if (head.isSuccess()) {
+                    ConditionOrderInfoVo conditionOrderInfoVo;
+
+                    try {
+                        conditionOrderInfoVo = (ConditionOrderInfoVo) response;
+                    } catch (Exception e) {
+                        conditionOrderInfoVo = null;
+
+                        e.printStackTrace();
+                    }
+                }
+
+                break;
+            case "EntrustConditionOrder":
+                if (head.isSuccess()) {
+                    showShortToast(R.string.transaction_setting_success);
+
+                    if (null != mTransactionStopPopupWindow)
+                        mTransactionStopPopupWindow.dismiss();
+
+                    RxBus.getInstance().post(Constants.RxBusConst.RXBUS_TRANSACTION_HOLD_POSITIONS_UPDATE, null);
+                }
+
+                break;
+
         }
     }
 
@@ -257,6 +381,14 @@ public class CurrentHoldPositionsFragment extends JMEBaseFragment {
             RxBus.getInstance().post(Constants.RxBusConst.RXBUS_TRANSACTION_PLACE_ORDER, null);
         }
 
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+
+        if (!mRxbus.isUnsubscribed())
+            mRxbus.unsubscribe();
     }
 
 }

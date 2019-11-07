@@ -19,6 +19,10 @@ public class RulePopupwindow extends JMEBasePopupWindow {
         super(context);
     }
 
+    public RulePopupwindow(Context context, int type) {
+        super(context, type);
+    }
+
     @Override
     protected void initPopupWindow() {
         super.initPopupWindow();

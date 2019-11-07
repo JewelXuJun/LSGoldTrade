@@ -121,7 +121,7 @@ public class Constants {
         public static final String RXBUS_TRANSACTION_PLACE_ORDER = "TransactionPlaceOrder";
         public static final String RXBUS_TRANSACTION_HOLD_POSITIONS = "TransactionHoldPositions";
         public static final String RXBUS_TRANSACTION_CANCEL_ORDER = "TransactionCancelOrder";
-        public static final String RXBUS_TRANSACTION_EVENING_UP_SUCCESS = "TransactionEveningUpSuccess";
+        public static final String RXBUS_TRANSACTION_HOLD_POSITIONS_UPDATE = "TransactionHoldPositionsUpdate";
         public static final String RXBUS_MARKETDETAIL_QUICK = "MarketDetailQuick";
         public static final String RXBUS_SYNTIME = "SynTimeMessage";
         public static final String RXBUS_ORDER_SUCCESS = "orderSuccess";
@@ -143,6 +143,7 @@ public class Constants {
         public static final String RXBUS_TRANSACTION_CONDITION_SHEET_MODIFY = "transactionConditionSheetModify";
         public static final String RXBUS_TRANSACTION_CONDITION_SHEET_FIVESPEED = "transactionConditionSheetFiveSpeed";
         public static final String RXBUS_TRANSACTION_CONDITION_OWN = "transactionConditionOwn";
+        public static final String RXBUS_TRANSACTION_STOP_SHEET_UPDATE = "transactionStopSheetUpdate";
     }
 
     public static final class Msg {

@@ -19,12 +19,20 @@ public class JMEBasePopupWindow extends PopupWindow {
 
     protected Context mContext;
 
+    private int mType = 0;
     private float mShowAlpha = 0.2f;
 
     private Drawable mBackgroundDrawable;
 
     public JMEBasePopupWindow(Context context) {
         mContext = context;
+
+        iniWindow();
+    }
+
+    public JMEBasePopupWindow(Context context, int type) {
+        mContext = context;
+        mType = type;
 
         iniWindow();
     }
@@ -82,7 +90,8 @@ public class JMEBasePopupWindow extends PopupWindow {
     public void showAtLocation(View parent, int gravity, int x, int y) {
         super.showAtLocation(parent, gravity, x, y);
 
-        showAnimator().start();
+        if (mType == 0)
+            showAnimator().start();
     }
 
     @Override
@@ -110,7 +119,8 @@ public class JMEBasePopupWindow extends PopupWindow {
     public void dismiss() {
         super.dismiss();
 
-        dismissAnimator().start();
+        if (mType == 0)
+            dismissAnimator().start();
     }
 
     protected void setShowAlpha(float v) {

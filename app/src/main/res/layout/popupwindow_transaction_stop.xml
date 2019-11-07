@@ -52,7 +52,7 @@
         </RelativeLayout>
 
         <LinearLayout
-            android:id="@+id/layout_setting"
+            android:id="@+id/layout_not_setting"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/layout_toolbar"
@@ -60,7 +60,7 @@
             android:orientation="vertical"
             android:paddingLeft="@dimen/common_area_margin"
             android:paddingRight="@dimen/common_area_margin"
-            android:visibility="gone">
+            android:visibility="visible">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -107,6 +107,7 @@
                         android:layout_weight="2.2"
                         android:background="@null"
                         android:gravity="center"
+                        android:hint="@string/transaction_not_setting"
                         android:inputType="numberDecimal"
                         android:maxLines="1"
                         android:textColor="@color/color_blue_deep"
@@ -179,6 +180,7 @@
                         android:layout_weight="2.2"
                         android:background="@null"
                         android:gravity="center"
+                        android:hint="@string/transaction_not_setting"
                         android:inputType="numberDecimal"
                         android:maxLines="1"
                         android:textColor="@color/color_blue_deep"
@@ -250,6 +252,7 @@
                         android:layout_weight="2.2"
                         android:background="@null"
                         android:gravity="center"
+                        android:hint="@string/transaction_not_setting"
                         android:inputType="numberDecimal"
                         android:maxLines="1"
                         android:textColor="@color/color_blue_deep"
@@ -386,6 +389,7 @@
                     android:layout_height="wrap_content"
                     android:onClick="@{() -> handlers.onCliclStopRiskTips()}"
                     android:text="@string/transaction_stop_risk_tips"
+
                     android:textColor="@color/color_blue_deep"
                     android:textSize="@dimen/sp_14" />
 

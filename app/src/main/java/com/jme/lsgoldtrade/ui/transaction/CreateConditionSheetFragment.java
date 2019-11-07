@@ -755,7 +755,7 @@ public class CreateConditionSheetFragment extends JMEBaseFragment {
             if (TextUtils.isEmpty(price))
                 return;
 
-            float value = new BigDecimal(getPrice()).add(new BigDecimal(mPriceMove)).floatValue();
+            float value = new BigDecimal(price).add(new BigDecimal(mPriceMove)).floatValue();
 
             if (mFiveSpeedVo.getContractId().equals(mContractID)) {
                 String maxPrice = mType == TYPE_BUY_MORE ? mFiveSpeedVo.getLatestPriceValue() : mFiveSpeedVo.getHighLimitPrice();

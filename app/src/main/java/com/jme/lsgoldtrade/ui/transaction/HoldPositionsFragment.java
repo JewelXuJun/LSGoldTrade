@@ -253,7 +253,7 @@ public class HoldPositionsFragment extends JMEBaseFragment implements OnRefreshL
                     mActivity.runOnUiThread(() -> mBinding.tabViewpager.setCurrentItem(1));
 
                     break;
-                case Constants.RxBusConst.RXBUS_TRANSACTION_EVENING_UP_SUCCESS:
+                case Constants.RxBusConst.RXBUS_TRANSACTION_HOLD_POSITIONS_UPDATE:
                     getAccount(false);
                     initPosition();
 

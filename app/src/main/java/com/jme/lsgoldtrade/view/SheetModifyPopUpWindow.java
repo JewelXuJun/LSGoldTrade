@@ -41,7 +41,7 @@ public class SheetModifyPopUpWindow extends JMEBasePopupWindow {
     private ContractInfoVo mContractInfoVo;
     private ConditionOrderInfoVo mConditionOrderInfoVo;
 
-    private float mPriceMove = 0.00f;
+    private float mPriceMove = 0.01f;
     private String mContractID;
     private String mLowerLimitPrice;
     private String mHighLimitPrice;
@@ -168,7 +168,7 @@ public class SheetModifyPopUpWindow extends JMEBasePopupWindow {
         mBsFlag = conditionOrderInfoVo.getBsFlag();
         mOcFlag = conditionOrderInfoVo.getOcFlag();
         mEffectiveTimeFlag = conditionOrderInfoVo.getEffectiveTimeFlag();
-        mPriceMove = null == mContractInfoVo ? 0 : new BigDecimal(mContractInfoVo.getMinPriceMove()).divide(new BigDecimal(100)).floatValue();
+        mPriceMove = null == mContractInfoVo ? 0.01f : new BigDecimal(mContractInfoVo.getMinPriceMove()).divide(new BigDecimal(100)).floatValue();
         mLowerLimitPrice = fiveSpeedVo.getLowerLimitPrice();
         mHighLimitPrice = fiveSpeedVo.getHighLimitPrice();
         mMinOrderQty = null == mContractInfoVo ? 0 : mContractInfoVo.getMinOrderQty();

@@ -58,7 +58,12 @@ public class ConditionService extends IService<ConditionApi> {
             paramsValue.put("ocFlag", Integer.parseInt(params.get("ocFlag")));
             paramsValue.put("tradingType", Integer.parseInt(params.get("tradingType")));
             paramsValue.put("type", Integer.parseInt(params.get("type")));
-            paramsValue.put("triggerPrice", Long.parseLong(params.get("triggerPrice")));
+            if (params.containsKey("triggerPrice"))
+                paramsValue.put("triggerPrice", Long.parseLong(params.get("triggerPrice")));
+            if (params.containsKey("stopProfitPrice"))
+                paramsValue.put("stopProfitPrice", Long.parseLong(params.get("stopProfitPrice")));
+            if (params.containsKey("stopLossPrice"))
+                paramsValue.put("stopLossPrice", Long.parseLong(params.get("stopLossPrice")));
 
             return mApi.entrustConditionOrder(paramsValue);
         }
@@ -112,8 +117,13 @@ public class ConditionService extends IService<ConditionApi> {
             HashMap<String, Object> paramsValue = new HashMap<>();
             paramsValue.put("id", Long.parseLong(params.get("id")));
             paramsValue.put("effectiveTimeFlag", Integer.parseInt(params.get("effectiveTimeFlag")));
-            paramsValue.put("triggerPrice", Long.parseLong(params.get("triggerPrice")));
             paramsValue.put("entrustNumber", Integer.parseInt(params.get("entrustNumber")));
+            if (params.containsKey("triggerPrice"))
+                paramsValue.put("triggerPrice", Long.parseLong(params.get("triggerPrice")));
+            if (params.containsKey("stopProfitPrice"))
+                paramsValue.put("stopProfitPrice", Long.parseLong(params.get("stopProfitPrice")));
+            if (params.containsKey("stopLossPrice"))
+                paramsValue.put("stopLossPrice", Long.parseLong(params.get("stopLossPrice")));
 
             return mApi.updateConditionOrder(paramsValue);
         }
