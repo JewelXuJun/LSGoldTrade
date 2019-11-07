@@ -69,16 +69,16 @@ public class CurrentHoldPositionsFragment extends JMEBaseFragment {
         super.initListener();
 
         mAdapter.setOnItemChildClickListener((adapter, view, position) -> {
+            PositionVo positionVo = (PositionVo) adapter.getItem(position);
+
+            if (null == positionVo)
+                return;
+
             switch (view.getId()) {
                 case R.id.layout_stop_transaction:
 
                     break;
                 case R.id.btn_evening_up:
-                    PositionVo positionVo = (PositionVo) adapter.getItem(position);
-
-                    if (null == positionVo)
-                        return;
-
                     showEveningUpPopupWindow(positionVo);
 
                     break;

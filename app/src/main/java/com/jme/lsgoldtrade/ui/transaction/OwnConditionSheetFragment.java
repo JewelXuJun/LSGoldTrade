@@ -7,6 +7,7 @@ import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.PopupWindow;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -60,6 +61,7 @@ public class OwnConditionSheetFragment extends JMEBaseFragment implements OnRefr
     private int mDayOfMonth;
     private int mCurrentPage = 1;
     private int mTotalPages = 0;
+    private boolean bQueryFlag = false;
     private boolean bAccountVoFlag = false;
     private boolean bPositionVoFlag = false;
     private String mSetDate = "";
@@ -117,16 +119,18 @@ public class OwnConditionSheetFragment extends JMEBaseFragment implements OnRefr
         mAdapter.setOnLoadMoreListener(this, mBinding.recyclerView);
 
         mAdapter.setOnItemChildClickListener((adapter, view, position) -> {
-            mConditionOrderInfoVo = (ConditionOrderInfoVo) adapter.getItem(position);
+            ConditionOrderInfoVo conditionOrderInfoVo = (ConditionOrderInfoVo) adapter.getItem(position);
 
-            if (null == mConditionOrderInfoVo)
+            if (null == conditionOrderInfoVo)
                 return;
 
             switch (view.getId()) {
                 case R.id.btn_modify:
+                    bQueryFlag = false;
                     bAccountVoFlag = false;
                     bPositionVoFlag = false;
 
+                    queryConditionOrderById(String.valueOf(conditionOrderInfoVo.getId()));
                     getAccount();
                     getPosition();
 
@@ -146,6 +150,8 @@ public class OwnConditionSheetFragment extends JMEBaseFragment implements OnRefr
                     break;
             }
         });
+
+        mSheetModifyPopUpWindow.setOnDismissListener(() -> initConditionOrderPage(true));
     }
 
     @Override
@@ -307,7 +313,7 @@ public class OwnConditionSheetFragment extends JMEBaseFragment implements OnRefr
     }
 
     private void showModifyPopUpWindow() {
-        if (bAccountVoFlag && bPositionVoFlag
+        if (bQueryFlag && bAccountVoFlag && bPositionVoFlag && null != mConditionOrderInfoVo
                 && null != mSheetModifyPopUpWindow && !mSheetModifyPopUpWindow.isShowing()) {
             FiveSpeedVo fiveSpeedVoValue = null;
 
@@ -408,6 +414,13 @@ public class OwnConditionSheetFragment extends JMEBaseFragment implements OnRefr
         sendRequest(ConditionService.getInstance().updateConditionOrder, params, true);
     }
 
+    private void queryConditionOrderById(String id) {
+        HashMap<String, String> params = new HashMap<>();
+        params.put("id", id);
+
+        sendRequest(ConditionService.getInstance().queryConditionOrderById, params, true);
+    }
+
     private void getAccount() {
         if (null == mUser || !mUser.isLogin())
             return;
@@ -436,7 +449,7 @@ public class OwnConditionSheetFragment extends JMEBaseFragment implements OnRefr
         params.put("accountId", accountID);
         params.put("pagingKey", "");
 
-        sendRequest(TradeService.getInstance().position, params, true);
+        sendRequest(TradeService.getInstance().position, params, false);
     }
 
     @Override
@@ -510,6 +523,22 @@ public class OwnConditionSheetFragment extends JMEBaseFragment implements OnRefr
                     showShortToast(R.string.transaction_modify_success);
 
                     initConditionOrderPage(true);
+                }
+
+                break;
+            case "QueryConditionOrderById":
+                if (head.isSuccess()) {
+                    try {
+                        mConditionOrderInfoVo = (ConditionOrderInfoVo) response;
+                    } catch (Exception e) {
+                        mConditionOrderInfoVo = null;
+
+                        e.printStackTrace();
+                    }
+
+                    bQueryFlag = true;
+
+                    showModifyPopUpWindow();
                 }
 
                 break;

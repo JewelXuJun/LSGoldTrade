@@ -11,7 +11,6 @@ import com.jme.lsgoldtrade.domain.ConditionPageVo;
 import com.jme.lsgoldtrade.domain.ConditionSheetResponse;
 
 import java.util.HashMap;
-import java.util.Map;
 
 import okhttp3.Interceptor;
 import okhttp3.Request;
@@ -68,8 +67,10 @@ public class ConditionService extends IService<ConditionApi> {
     public API queryConditionOrderById = new API<ConditionOrderInfoVo>("QueryConditionOrderById") {
         @Override
         public Call<DTResponse> request(HashMap<String, String> params) {
+            HashMap<String, Object> paramsValue = new HashMap<>();
+            paramsValue.put("id", Long.parseLong(params.get("id")));
 
-            return mApi.queryConditionOrderById(params);
+            return mApi.queryConditionOrderById(paramsValue);
         }
     };
 

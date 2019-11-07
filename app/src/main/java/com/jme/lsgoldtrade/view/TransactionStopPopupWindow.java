@@ -46,6 +46,10 @@ public class TransactionStopPopupWindow extends JMEBasePopupWindow {
         mBinding.setHandlers(new ClickHandlers());
     }
 
+    public void setData(boolean isSetting) {
+
+    }
+
     public class ClickHandlers {
 
         public void onClickProfitPriceMinus() {
