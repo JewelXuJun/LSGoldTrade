@@ -145,6 +145,7 @@ public class Constants {
         public static final String RXBUS_TRANSACTION_CONDITION_OWN = "transactionConditionOwn";
         public static final String RXBUS_TRANSACTION_STOP_SHEET_UPDATE = "transactionStopSheetUpdate";
         public static final String RXBUS_TRANSACTION_STOP_SHEET_CANCEL_ORDER = "transactionStopSheetCancelOrder";
+        public static final String RXBUS_TRANSACTION_STOP_SHEET_MODIFY_ORDER = "transactionStopSheetModifyOrder";
     }
 
     public static final class Msg {

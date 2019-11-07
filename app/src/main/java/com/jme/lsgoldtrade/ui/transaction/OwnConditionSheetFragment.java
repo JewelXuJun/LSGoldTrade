@@ -7,7 +7,6 @@ import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.PopupWindow;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -30,6 +29,7 @@ import com.jme.lsgoldtrade.domain.ConditionSheetResponse;
 import com.jme.lsgoldtrade.domain.FiveSpeedVo;
 import com.jme.lsgoldtrade.domain.PositionPageVo;
 import com.jme.lsgoldtrade.domain.PositionVo;
+import com.jme.lsgoldtrade.domain.QuerySetStopOrderResponse;
 import com.jme.lsgoldtrade.service.ConditionService;
 import com.jme.lsgoldtrade.service.TradeService;
 import com.jme.lsgoldtrade.view.ConfirmPopupwindow;
@@ -336,7 +336,7 @@ public class OwnConditionSheetFragment extends JMEBaseFragment implements OnRefr
         params.put("endDate", mBinding.tvEndTime.getText().toString());
         params.put("type", "1");
 
-        DTRequest request = new DTRequest(ConditionService.getInstance().queryConditionOrderPage, params, enable, false);
+        DTRequest request = new DTRequest(ConditionService.getInstance().queryConditionOrderPage, params, enable, true);
 
         Call restResponse = request.getApi().request(request.getParams());
 
@@ -418,7 +418,65 @@ public class OwnConditionSheetFragment extends JMEBaseFragment implements OnRefr
         HashMap<String, String> params = new HashMap<>();
         params.put("id", id);
 
-        sendRequest(ConditionService.getInstance().queryConditionOrderById, params, true);
+        DTRequest request = new DTRequest(ConditionService.getInstance().queryConditionOrderById, params, true, true);
+
+        Call restResponse = request.getApi().request(request.getParams());
+
+        restResponse.enqueue(new Callback() {
+            @Override
+            public void onResponse(Call call, Response response) {
+                Head head = new Head();
+                Object body = "";
+
+                if (response.raw().code() != 200) {
+                    head.setSuccess(false);
+                    head.setCode("" + response.raw().code());
+                    head.setMsg("服务器异常");
+                } else {
+                    if (!request.getApi().isResponseJson()) {
+                        body = response.body();
+                        head.setSuccess(true);
+                        head.setCode("0");
+                        head.setMsg("成功");
+                    } else {
+                        QuerySetStopOrderResponse dtResponse = (QuerySetStopOrderResponse) response.body();
+
+                        head = new Head();
+                        head.setCode(dtResponse.getCode());
+                        head.setMsg(dtResponse.getMsg());
+
+                        try {
+                            body = new Gson().fromJson(dtResponse.getBodyToString(),
+                                    request.getApi().getEntryType());
+                        } catch (Exception e) {
+                            body = dtResponse.getBodyToString();
+                        }
+                    }
+                }
+
+                OnResult(request, head, body);
+            }
+
+            @Override
+            public void onFailure(Call call, Throwable t) {
+                Head head = new Head();
+                final Throwable cause = t.getCause() != null ? t.getCause() : t;
+
+                if (cause != null) {
+                    if (cause instanceof ConnectException) {
+                        head.setSuccess(false);
+                        head.setCode("500");
+                        head.setMsg(getResources().getString(com.jme.common.R.string.text_error_server));
+                    } else {
+                        head.setSuccess(false);
+                        head.setCode("408");
+                        head.setMsg(getResources().getString(com.jme.common.R.string.text_error_timeout));
+                    }
+                }
+
+                OnResult(request, head, null);
+            }
+        });
     }
 
     private void getAccount() {

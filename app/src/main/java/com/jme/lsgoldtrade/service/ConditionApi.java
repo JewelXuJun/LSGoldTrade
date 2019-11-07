@@ -18,7 +18,7 @@ public interface ConditionApi {
     Call<DTResponse> entrustConditionOrder(@Body Map<String, Object> map);
 
     @GET("/order/api/v1/android/conditionOrder/queryConditionOrderById")
-    Call<DTResponse> queryConditionOrderById(@QueryMap Map<String, Object> map);
+    Call<QuerySetStopOrderResponse> queryConditionOrderById(@QueryMap Map<String, Object> map);
 
     @GET("/order/api/v1/android/conditionOrder/queryConditionOrderPage")
     Call<ConditionSheetResponse> queryConditionOrderPage(@QueryMap Map<String, String> map);

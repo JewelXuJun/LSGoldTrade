@@ -606,6 +606,19 @@
                 android:textSize="@dimen/common_font_size"
                 android:visibility="gone" />
 
+            <Button
+                android:id="@+id/btn_modify_setting"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="@dimen/common_area_margin_middle"
+                android:layout_weight="1"
+                android:background="@drawable/bg_btn_blue_solid"
+                android:onClick="@{() -> handlers.onClickModifySetting()}"
+                android:text="@string/transaction_modify"
+                android:textColor="@color/white"
+                android:textSize="@dimen/common_font_size"
+                android:visibility="gone" />
+
         </LinearLayout>
 
     </RelativeLayout>

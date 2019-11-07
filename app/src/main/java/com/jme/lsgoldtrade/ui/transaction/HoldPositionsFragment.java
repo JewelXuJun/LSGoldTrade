@@ -210,10 +210,10 @@ public class HoldPositionsFragment extends JMEBaseFragment implements OnRefreshL
 
     private void initValue(boolean enable) {
         getAccount(enable);
-        initPosition();
+        initPosition(false);
     }
 
-    private void initPosition() {
+    private void initPosition(boolean enable) {
         bFlag = true;
         mPagingKey = "";
         mList.clear();
@@ -222,7 +222,7 @@ public class HoldPositionsFragment extends JMEBaseFragment implements OnRefreshL
         mHandler.removeMessages(Constants.Msg.MSG_TRADE_POSITION_UPDATE_DATA);
         mHandler.removeMessages(Constants.Msg.MSG_TRADE_POSITION_UPDATE_ACCOUNT_DATA);
 
-        getPosition();
+        getPosition(enable);
     }
 
     private void initRxBus() {
@@ -255,7 +255,7 @@ public class HoldPositionsFragment extends JMEBaseFragment implements OnRefreshL
                     break;
                 case Constants.RxBusConst.RXBUS_TRANSACTION_HOLD_POSITIONS_UPDATE:
                     getAccount(false);
-                    initPosition();
+                    initPosition(true);
 
                     break;
             }
@@ -321,9 +321,9 @@ public class HoldPositionsFragment extends JMEBaseFragment implements OnRefreshL
             }
 
             mCurrentHoldPositionsFragment.setFloatingList(mList);
-
-            calculateValue();
         }
+
+        calculateValue();
     }
 
     private void calculateValue() {
@@ -369,7 +369,7 @@ public class HoldPositionsFragment extends JMEBaseFragment implements OnRefreshL
                             if (new BigDecimal(minReserveFundStr).compareTo(new BigDecimal(0)) == 0)
                                 riskRate = 0.00f;
                             else
-                                riskRate = Math.min(new BigDecimal(mTotal).divide(new BigDecimal(minReserveFundStr), 4, BigDecimal.ROUND_HALF_UP)
+                                riskRate = Math.min(new BigDecimal(mTotal).divide(new BigDecimal(minReserveFundStr), 4, BigDecimal.ROUND_DOWN)
                                         .multiply(new BigDecimal(100)).floatValue(), 10000.00f);
                         }
 
@@ -419,7 +419,7 @@ public class HoldPositionsFragment extends JMEBaseFragment implements OnRefreshL
                             if (new BigDecimal(minReserveFundStr).compareTo(new BigDecimal(0)) == 0)
                                 riskRate = 0.00f;
                             else
-                                riskRate = Math.min(new BigDecimal(mTotal).divide(new BigDecimal(minReserveFundStr), 4, BigDecimal.ROUND_HALF_UP)
+                                riskRate = Math.min(new BigDecimal(mTotal).divide(new BigDecimal(minReserveFundStr), 4, BigDecimal.ROUND_DOWN)
                                         .multiply(new BigDecimal(100)).floatValue(), 10000.00f);
                         }
 
@@ -455,7 +455,7 @@ public class HoldPositionsFragment extends JMEBaseFragment implements OnRefreshL
         sendRequest(TradeService.getInstance().account, params, enable);
     }
 
-    private void getPosition() {
+    private void getPosition(boolean enable) {
         String accountID = mUser.getAccountID();
 
         if (TextUtils.isEmpty(accountID))
@@ -465,7 +465,7 @@ public class HoldPositionsFragment extends JMEBaseFragment implements OnRefreshL
         params.put("accountId", accountID);
         params.put("pagingKey", mPagingKey);
 
-        sendRequest(TradeService.getInstance().position, params, false, false, false);
+        sendRequest(TradeService.getInstance().position, params, enable, false, false);
     }
 
     private void getMarket() {
@@ -554,7 +554,7 @@ public class HoldPositionsFragment extends JMEBaseFragment implements OnRefreshL
                         }
 
                         if (bHasNext) {
-                            getPosition();
+                            getPosition(false);
                         } else {
                             mCurrentHoldPositionsFragment.setCurrentHoldPositionsData(mPositionVoList);
                             mCurrentHoldPositionsFragment.setFloatingList(mList);

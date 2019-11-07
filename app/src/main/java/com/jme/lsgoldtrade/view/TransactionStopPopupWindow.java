@@ -195,6 +195,7 @@ public class TransactionStopPopupWindow extends JMEBasePopupWindow {
             mBinding.btnConfirm.setVisibility(View.GONE);
             mBinding.btnTransactionCancel.setVisibility(View.VISIBLE);
             mBinding.btnModify.setVisibility(View.VISIBLE);
+            mBinding.btnModifySetting.setVisibility(View.GONE);
 
             long stopProfitPrice = mConditionOrderInfoVo.getStopProfitPrice();
             long stopLossPrice = mConditionOrderInfoVo.getStopLossPrice();
@@ -207,9 +208,9 @@ public class TransactionStopPopupWindow extends JMEBasePopupWindow {
             mBinding.tvEntrustType.setText(R.string.transaction_market_price_fak);
             mBinding.tvSettingType.setText(String.format(mContext.getResources().getString(R.string.transaction_stop_current_setting_type),
                     mConditionOrderInfoVo.getEffectiveTimeFlag() == 0 ? mContext.getResources().getString(R.string.transaction_effective_on_that_day)
-                    : mContext.getResources().getString(R.string.transaction_effective_before_cancel)));
+                            : mContext.getResources().getString(R.string.transaction_effective_before_cancel)));
         } else {
-            mType = null == positionVo ? "" : positionVo.getType();
+            mType = null == mPositionVo ? "" : mPositionVo.getType();
             mPosition = null == mPositionVo ? 0 : mPositionVo.getPosition();
             mPriceMove = null == mContractInfoVo ? 0.01f : new BigDecimal(mContractInfoVo.getMinPriceMove()).divide(new BigDecimal(100)).floatValue();
 
@@ -219,6 +220,7 @@ public class TransactionStopPopupWindow extends JMEBasePopupWindow {
             mBinding.btnConfirm.setVisibility(View.VISIBLE);
             mBinding.btnTransactionCancel.setVisibility(View.GONE);
             mBinding.btnModify.setVisibility(View.GONE);
+            mBinding.btnModifySetting.setVisibility(View.GONE);
             mBinding.etProfitPrice.setText("");
             mBinding.etProfitPrice.setInputType(mContractID.equals("Ag(T+D)") ? InputType.TYPE_CLASS_NUMBER : InputType.TYPE_NUMBER_FLAG_DECIMAL);
             mBinding.etLossPrice.setText("");
@@ -276,7 +278,7 @@ public class TransactionStopPopupWindow extends JMEBasePopupWindow {
         return lossPrice;
     }
 
-    private void sendData(String stopProfitPrice, String stopLossPrice, String entrustNumber) {
+    private void sendConfirmData(String stopProfitPrice, String stopLossPrice, String entrustNumber) {
         dismiss();
 
         List<String> list = new ArrayList<>();
@@ -289,6 +291,20 @@ public class TransactionStopPopupWindow extends JMEBasePopupWindow {
         list.add(entrustNumber);
 
         RxBus.getInstance().post(Constants.RxBusConst.RXBUS_TRANSACTION_STOP_SHEET_UPDATE, list);
+    }
+
+
+    private void sendModifyData(String profitPrice, String lossPrice, String amount) {
+        dismiss();
+
+        List<String> list = new ArrayList<>();
+        list.add(String.valueOf(mConditionOrderInfoVo.getId()));
+        list.add(mBinding.checkboxEffectiveOnThatDay.isChecked() ? "0" : "1");
+        list.add(profitPrice);
+        list.add(lossPrice);
+        list.add(amount);
+
+        RxBus.getInstance().post(Constants.RxBusConst.RXBUS_TRANSACTION_STOP_SHEET_MODIFY_ORDER, list);
     }
 
     public class ClickHandlers {
@@ -442,8 +458,6 @@ public class TransactionStopPopupWindow extends JMEBasePopupWindow {
         }
 
         public void onClickCancel() {
-            RxBus.getInstance().post(Constants.RxBusConst.RXBUS_TRANSACTION_HOLD_POSITIONS_UPDATE, null);
-
             dismiss();
         }
 
@@ -491,11 +505,76 @@ public class TransactionStopPopupWindow extends JMEBasePopupWindow {
             else if (!mBinding.checkboxAgree.isChecked())
                 Toast.makeText(mContext, R.string.transaction_condition_sheet_risk_agree, Toast.LENGTH_SHORT).show();
             else
-                sendData(profitPrice, lossPrice, amount);
+                sendConfirmData(profitPrice, lossPrice, amount);
         }
 
         public void onClickModify() {
+            mType = null == mPositionVo ? "" : mPositionVo.getType();
+            mPosition = null == mPositionVo ? 0 : mPositionVo.getPosition();
+            mPriceMove = null == mContractInfoVo ? 0.01f : new BigDecimal(mContractInfoVo.getMinPriceMove()).divide(new BigDecimal(100)).floatValue();
+            long stopProfitPrice = mConditionOrderInfoVo.getStopProfitPrice();
+            long stopLossPrice = mConditionOrderInfoVo.getStopLossPrice();
 
+            mBinding.layoutNotSetting.setVisibility(View.VISIBLE);
+            mBinding.layoutAlreadySetting.setVisibility(View.GONE);
+            mBinding.btnCancel.setVisibility(View.VISIBLE);
+            mBinding.btnConfirm.setVisibility(View.GONE);
+            mBinding.btnTransactionCancel.setVisibility(View.GONE);
+            mBinding.btnModify.setVisibility(View.GONE);
+            mBinding.btnModifySetting.setVisibility(View.VISIBLE);
+            mBinding.etProfitPrice.setText(1 == stopProfitPrice ? "" : MarketUtil.formatValue(MarketUtil.getPriceValue(stopProfitPrice), 2));
+            mBinding.etProfitPrice.setInputType(mContractID.equals("Ag(T+D)") ? InputType.TYPE_CLASS_NUMBER : InputType.TYPE_NUMBER_FLAG_DECIMAL);
+            mBinding.etLossPrice.setText(1 == stopLossPrice ? "" : MarketUtil.formatValue(MarketUtil.getPriceValue(stopLossPrice), 2));
+            mBinding.etLossPrice.setInputType(mContractID.equals("Ag(T+D)") ? InputType.TYPE_CLASS_NUMBER : InputType.TYPE_NUMBER_FLAG_DECIMAL);
+            mBinding.etAmount.setText(String.valueOf(mPosition));
+            mBinding.checkboxEffectiveOnThatDay.setChecked(mConditionOrderInfoVo.getEffectiveTimeFlag() == 0);
+            mBinding.checkboxEffectiveBeforeCancel.setChecked(mConditionOrderInfoVo.getEffectiveTimeFlag() == 1);
+            mBinding.checkboxAgree.setChecked(true);
+
+            setStopPriceTitle();
+        }
+
+        public void onClickModifySetting() {
+            String profitPrice = mBinding.etProfitPrice.getText().toString();
+            String lossPrice = mBinding.etLossPrice.getText().toString();
+            String amount = mBinding.etAmount.getText().toString();
+
+            if (TextUtils.isEmpty(profitPrice) && TextUtils.isEmpty(lossPrice))
+                Toast.makeText(mContext, R.string.transaction_stop_price_empty, Toast.LENGTH_SHORT).show();
+            else if (!TextUtils.isEmpty(profitPrice) && mType.equals("多") && new BigDecimal(profitPrice).compareTo(new BigDecimal(mFiveSpeedVo.getLatestPriceValue())) == -1)
+                Toast.makeText(mContext, String.format(mContext.getResources().getString(R.string.transaction_stop_profit_price_range),
+                        mFiveSpeedVo.getLatestPriceValue(), mFiveSpeedVo.getHighLimitPrice()), Toast.LENGTH_SHORT).show();
+            else if (!TextUtils.isEmpty(profitPrice) && mType.equals("多") && new BigDecimal(profitPrice).compareTo(new BigDecimal(mFiveSpeedVo.getHighLimitPrice())) == 1)
+                Toast.makeText(mContext, String.format(mContext.getResources().getString(R.string.transaction_stop_profit_price_range),
+                        mFiveSpeedVo.getLatestPriceValue(), mFiveSpeedVo.getHighLimitPrice()), Toast.LENGTH_SHORT).show();
+            else if (!TextUtils.isEmpty(profitPrice) && mType.equals("空") && new BigDecimal(profitPrice).compareTo(new BigDecimal(mFiveSpeedVo.getLowerLimitPrice())) == -1)
+                Toast.makeText(mContext, String.format(mContext.getResources().getString(R.string.transaction_stop_profit_price_range),
+                        mFiveSpeedVo.getLowerLimitPrice(), mFiveSpeedVo.getLatestPriceValue()), Toast.LENGTH_SHORT).show();
+            else if (!TextUtils.isEmpty(profitPrice) && mType.equals("空") && new BigDecimal(profitPrice).compareTo(new BigDecimal(mFiveSpeedVo.getLatestPriceValue())) == 1)
+                Toast.makeText(mContext, String.format(mContext.getResources().getString(R.string.transaction_stop_profit_price_range),
+                        mFiveSpeedVo.getLowerLimitPrice(), mFiveSpeedVo.getLatestPriceValue()), Toast.LENGTH_SHORT).show();
+            else if (!TextUtils.isEmpty(lossPrice) && mType.equals("多") && new BigDecimal(lossPrice).compareTo(new BigDecimal(mFiveSpeedVo.getLowerLimitPrice())) == -1)
+                Toast.makeText(mContext, String.format(mContext.getResources().getString(R.string.transaction_stop_loss_price_range),
+                        mFiveSpeedVo.getLowerLimitPrice(), mFiveSpeedVo.getLatestPriceValue()), Toast.LENGTH_SHORT).show();
+            else if (!TextUtils.isEmpty(lossPrice) && mType.equals("多") && new BigDecimal(lossPrice).compareTo(new BigDecimal(mFiveSpeedVo.getLatestPriceValue())) == 1)
+                Toast.makeText(mContext, String.format(mContext.getResources().getString(R.string.transaction_stop_loss_price_range),
+                        mFiveSpeedVo.getLowerLimitPrice(), mFiveSpeedVo.getLatestPriceValue()), Toast.LENGTH_SHORT).show();
+            else if (!TextUtils.isEmpty(lossPrice) && mType.equals("空") && new BigDecimal(lossPrice).compareTo(new BigDecimal(mFiveSpeedVo.getLatestPriceValue())) == -1)
+                Toast.makeText(mContext, String.format(mContext.getResources().getString(R.string.transaction_stop_loss_price_range),
+                        mFiveSpeedVo.getLatestPriceValue(), mFiveSpeedVo.getHighLimitPrice()), Toast.LENGTH_SHORT).show();
+            else if (!TextUtils.isEmpty(lossPrice) && mType.equals("空") && new BigDecimal(lossPrice).compareTo(new BigDecimal(mFiveSpeedVo.getHighLimitPrice())) == 1)
+                Toast.makeText(mContext, String.format(mContext.getResources().getString(R.string.transaction_stop_loss_price_range),
+                        mFiveSpeedVo.getLatestPriceValue(), mFiveSpeedVo.getHighLimitPrice()), Toast.LENGTH_SHORT).show();
+            else if (TextUtils.isEmpty(amount))
+                Toast.makeText(mContext, R.string.transaction_number_error, Toast.LENGTH_SHORT).show();
+            else if (new BigDecimal(amount).compareTo(new BigDecimal(0)) == 0)
+                Toast.makeText(mContext, String.format(mContext.getResources().getString(R.string.transaction_entrust_les2), 1), Toast.LENGTH_SHORT).show();
+            else if (new BigDecimal(amount).compareTo(new BigDecimal(mPosition)) == 1)
+                Toast.makeText(mContext, R.string.transaction_entrust_larger3, Toast.LENGTH_SHORT).show();
+            else if (!mBinding.checkboxAgree.isChecked())
+                Toast.makeText(mContext, R.string.transaction_condition_sheet_risk_agree, Toast.LENGTH_SHORT).show();
+            else
+                sendModifyData(profitPrice, lossPrice, amount);
         }
 
     }

@@ -20,7 +20,6 @@ import com.jme.lsgoldtrade.base.JMEBaseFragment;
 import com.jme.lsgoldtrade.config.Constants;
 import com.jme.lsgoldtrade.databinding.FragmentCurrentHoldPositionsBinding;
 import com.jme.lsgoldtrade.domain.ConditionOrderInfoVo;
-import com.jme.lsgoldtrade.domain.ConditionSheetResponse;
 import com.jme.lsgoldtrade.domain.ContractInfoVo;
 import com.jme.lsgoldtrade.domain.FiveSpeedVo;
 import com.jme.lsgoldtrade.domain.PositionVo;
@@ -108,6 +107,8 @@ public class CurrentHoldPositionsFragment extends JMEBaseFragment {
                     break;
             }
         });
+
+        mTransactionStopPopupWindow.setOnDismissListener(() -> RxBus.getInstance().post(Constants.RxBusConst.RXBUS_TRANSACTION_HOLD_POSITIONS_UPDATE, null));
     }
 
     @Override
@@ -159,6 +160,20 @@ public class CurrentHoldPositionsFragment extends JMEBaseFragment {
                                 });
                         mConfirmPopupwindow.showAtLocation(mBinding.tvGotoTransaction, Gravity.CENTER, 0, 0);
                     }
+
+                    break;
+                case Constants.RxBusConst.RXBUS_TRANSACTION_STOP_SHEET_MODIFY_ORDER:
+                    Object objectModify = message.getObject2();
+
+                    if (null == objectModify)
+                        return;
+
+                    List<String> listModify = (List<String>) objectModify;
+
+                    if (null == listModify || 5 != listModify.size())
+                        return;
+
+                    updateConditionOrder(listModify);
 
                     break;
             }
@@ -323,7 +338,7 @@ public class CurrentHoldPositionsFragment extends JMEBaseFragment {
         params.put("bsFlag", String.valueOf(bsFlag));
         params.put("contractId", contractId);
 
-        DTRequest request = new DTRequest(ConditionService.getInstance().querySetStopOrder, params, true, false);
+        DTRequest request = new DTRequest(ConditionService.getInstance().querySetStopOrder, params, true, true);
 
         Call restResponse = request.getApi().request(request.getParams());
 
@@ -415,6 +430,17 @@ public class CurrentHoldPositionsFragment extends JMEBaseFragment {
         sendRequest(ConditionService.getInstance().revokeConditionOrder, params, true);
     }
 
+    private void updateConditionOrder(List<String> list) {
+        HashMap<String, String> params = new HashMap<>();
+        params.put("id", list.get(0));
+        params.put("effectiveTimeFlag", list.get(1));
+        params.put("stopProfitPrice", TextUtils.isEmpty(list.get(2)) ? "1" : String.valueOf(new BigDecimal(list.get(2)).multiply(new BigDecimal(100)).longValue()));
+        params.put("stopLossPrice", TextUtils.isEmpty(list.get(3)) ? "1" : String.valueOf(new BigDecimal(list.get(3)).multiply(new BigDecimal(100)).longValue()));
+        params.put("entrustNumber", list.get(4));
+
+        sendRequest(ConditionService.getInstance().updateConditionOrder, params, true);
+    }
+
     @Override
     protected void DataReturn(DTRequest request, Head head, Object response) {
         super.DataReturn(request, head, response);
@@ -451,6 +477,8 @@ public class CurrentHoldPositionsFragment extends JMEBaseFragment {
 
                     if (null != conditionOrderInfoVo)
                         showTransactionStopPopupWindow(true, mPositionVo.getContractId(), conditionOrderInfoVo);
+                    else
+                        RxBus.getInstance().post(Constants.RxBusConst.RXBUS_TRANSACTION_HOLD_POSITIONS_UPDATE, null);
                 }
 
                 break;
@@ -471,6 +499,14 @@ public class CurrentHoldPositionsFragment extends JMEBaseFragment {
 
                     if (null != mTransactionStopPopupWindow)
                         mTransactionStopPopupWindow.dismiss();
+
+                    RxBus.getInstance().post(Constants.RxBusConst.RXBUS_TRANSACTION_HOLD_POSITIONS_UPDATE, null);
+                }
+
+                break;
+            case "UpdateConditionOrder":
+                if (head.isSuccess()) {
+                    showShortToast(R.string.transaction_modify_success);
 
                     RxBus.getInstance().post(Constants.RxBusConst.RXBUS_TRANSACTION_HOLD_POSITIONS_UPDATE, null);
                 }

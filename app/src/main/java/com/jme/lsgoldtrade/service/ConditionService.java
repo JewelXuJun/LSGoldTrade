@@ -72,7 +72,7 @@ public class ConditionService extends IService<ConditionApi> {
 
     public API queryConditionOrderById = new API<ConditionOrderInfoVo>("QueryConditionOrderById") {
         @Override
-        public Call<DTResponse> request(HashMap<String, String> params) {
+        public Call<QuerySetStopOrderResponse> request(HashMap<String, String> params) {
             HashMap<String, Object> paramsValue = new HashMap<>();
             paramsValue.put("id", Long.parseLong(params.get("id")));
 
