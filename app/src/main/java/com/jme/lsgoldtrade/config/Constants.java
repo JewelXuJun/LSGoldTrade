@@ -122,10 +122,6 @@ public class Constants {
         public static final String RXBUS_TRANSACTION_HOLD_POSITIONS = "TransactionHoldPositions";
         public static final String RXBUS_TRANSACTION_CANCEL_ORDER = "TransactionCancelOrder";
         public static final String RXBUS_DECLARATIONFORM_UPDATE = "DeclarationFormUpdate";
-        public static final String RXBUS_DECLARATIONFORM_HOLDPOSITION_SELECT = "DeclarationFormHoldPositionSelect";
-        public static final String RXBUS_DECLARATIONFORM_SHOW = "DeclarationFormShow";
-        public static final String RXBUS_DECLARATIONFORM_CANCEL = "DeclarationFormCancel";
-        public static final String RXBUS_DECLARATIONFORM_CONFIRM = "DeclarationFormConfirm";
         public static final String RXBUS_MARKETDETAIL_QUICK = "MarketDetailQuick";
         public static final String RXBUS_SYNTIME = "SynTimeMessage";
         public static final String RXBUS_ORDER_SUCCESS = "orderSuccess";
@@ -163,17 +159,13 @@ public class Constants {
         public static final int MSG_UPDATE_DATA_LANDSCAPE = 4;
         public static final int MSG_RELOAD_DATA_LANDSCAPE = 5;
         public static final int MSG_TRANSACTION_UPDATE_DATA = 6;
-        public static final int MSG_POSITION_UPDATE_DATA = 7;
-        public static final int MSG_DECLARATIONFORM_POSITION_UPDATE_DATA = 8;
-        public static final int MSG_TRADE_POSITION_UPDATE_DATA = 9;
-        public static final int MSG_SYNTIME = 10;
-        public static final int MSG_POSITION_UPDATE_ACCOUNT_DATA = 11;
-        public static final int MSG_TRADE_POSITION_UPDATE_ACCOUNT_DATA = 12;
-        public static final int MSG_DECLARATIONFORM_POSITION_UPDATE_ACCOUNT_DATA = 13;
-        public static final int MSG_BING_ACCOUNT_SUCCESS = 14;
-        public static final int MSG_JUDGEMENT_UPDATE_DATA = 15;
-        public static final int MSG_JUDGEMENT_RELOAD_DATA = 16;
-        public static final int MSG_UARNING_PDATE_DATA = 17;
+        public static final int MSG_TRADE_POSITION_UPDATE_DATA = 7;
+        public static final int MSG_SYNTIME = 8;
+        public static final int MSG_TRADE_POSITION_UPDATE_ACCOUNT_DATA = 9;
+        public static final int MSG_BING_ACCOUNT_SUCCESS = 10;
+        public static final int MSG_JUDGEMENT_UPDATE_DATA = 11;
+        public static final int MSG_JUDGEMENT_RELOAD_DATA = 12;
+        public static final int MSG_UARNING_PDATE_DATA = 13;
 
     }
 

@@ -91,7 +91,7 @@ public class BindAccountActivity extends JMEBaseActivity {
     protected void initView() {
         super.initView();
 
-        initToolbar(R.string.trade_bind_account, true);
+        initToolbar(R.string.transaction_bind_account, true);
 
         mBinding.checkboxAgree.setChecked(true);
     }
@@ -258,7 +258,7 @@ public class BindAccountActivity extends JMEBaseActivity {
         public void onClickSoftWareAgreement() {
             ARouter.getInstance()
                     .build(Constants.ARouterUriConst.JMEWEBVIEW)
-                    .withString("title", getString(R.string.trade_soft_aggrement_title))
+                    .withString("title", getString(R.string.transaction_soft_aggrement_title))
                     .withString("url", "http://www.taijs.com/upload/fwxy.htm" + "?name=" + mName + "&cardNo=" + mIDCard)
                     .navigation();
         }
@@ -266,7 +266,7 @@ public class BindAccountActivity extends JMEBaseActivity {
         public void onClickBusinessAgreement() {
             ARouter.getInstance()
                     .build(Constants.ARouterUriConst.JMEWEBVIEW)
-                    .withString("title", getString(R.string.trade_business_aggrement_title))
+                    .withString("title", getString(R.string.transaction_business_aggrement_title))
                     .withString("url", "http://www.taijs.com/upload/dljj.htm" + "?name=" + mName + "&cardNo=" + mIDCard)
                     .navigation();
         }
@@ -275,11 +275,11 @@ public class BindAccountActivity extends JMEBaseActivity {
             String goldAccount = mBinding.etGoldAccount.getText().toString().trim();
 
             if (TextUtils.isEmpty(goldAccount))
-                showShortToast(R.string.trade_gold_account_hint);
+                showShortToast(R.string.transaction_gold_account_hint);
             else if (!goldAccount.startsWith("000131"))
-                showShortToast(R.string.trade_gold_account_hint);
+                showShortToast(R.string.transaction_gold_account_hint);
             else if (goldAccount.length() < 16)
-                showShortToast(R.string.trade_gold_account_hint);
+                showShortToast(R.string.transaction_gold_account_hint);
             else
                 getIcbcMsg(mBinding.tvName.getText().toString().trim(), mIDCard, goldAccount);
         }
@@ -289,11 +289,11 @@ public class BindAccountActivity extends JMEBaseActivity {
             String verifyCode = mBinding.etVerifyCode.getText().toString();
 
             if (TextUtils.isEmpty(goldAccount))
-                showShortToast(R.string.trade_gold_account_hint);
+                showShortToast(R.string.transaction_gold_account_hint);
             else if (!goldAccount.startsWith("000131"))
-                showShortToast(R.string.trade_gold_account_hint);
+                showShortToast(R.string.transaction_gold_account_hint);
             else if (goldAccount.length() != 16)
-                showShortToast(R.string.trade_gold_account_hint);
+                showShortToast(R.string.transaction_gold_account_hint);
             else if (!bFlag)
                 showShortToast(R.string.login_verification_code_unget);
             else if (TextUtils.isEmpty(verifyCode))

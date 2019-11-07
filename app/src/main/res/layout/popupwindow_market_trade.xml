@@ -259,7 +259,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/trade_about_amount"
+                        android:text="@string/transaction_about_amount"
                         android:textColor="@color/black_deep"
                         android:textSize="@dimen/sp_12" />
 

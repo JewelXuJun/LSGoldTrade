@@ -88,55 +88,6 @@
     <string name="market_edit_sort_message">长按拖动排序</string>
     <string name="market_edit_sort_success">排序成功</string>
 
-    <!-- Trade -->
-    <string name="trade_query">查询</string>
-    <string name="trade_contract_pupil">合约/多空</string>
-    <string name="trade_available_hold_position">可用/持仓</string>
-    <string name="trade_limit_up_price">涨停价</string>
-    <string name="trade_limit_down_price">跌停价</string>
-    <string name="trade_evening_up">平仓</string>
-    <string name="trade_newest">最新</string>
-    <string name="trade_entrust">委托</string>
-    <string name="trade_deal">成交</string>
-    <string name="trade_current_profit_and_loss">当期盈亏</string>
-    <string name="trade_position_query">持仓查询</string>
-    <string name="trade_curren_hold_position">当日持仓</string>
-    <string name="trade_trade_query">交易查询</string>
-    <string name="trade_current_deal">当日成交</string>
-    <string name="trade_cancel_order_success">撤单成功</string>
-    <string name="trade_increment_error">您尚未开通增值服务，请开通后使用该服务。</string>
-    <string name="trade_increment_goto_open">去开通</string>
-    <string name="trade_time_rule">T+0交易</string>
-    <string name="trade_time_rule_message">当日即买即卖</string>
-    <string name="trade_side_rule">双向交易</string>
-    <string name="trade_side_rule_message">即可买涨，又可买跌</string>
-    <string name="trade_bond_rule">保证金交易</string>
-    <string name="trade_bond_rule_message">小资金撬动大收益</string>
-    <string name="trade_open_account_rule">极速开户</string>
-    <string name="trade_open_account_rule_message">三分钟即可完成开户</string>
-    <string name="trade_open_account_free">免费开户</string>
-    <string name="trade_open_account_course">开户有疑问？&#160;来看看&#160;开户教程</string>
-    <string name="trade_open_account_course_title">开户教程</string>
-    <string name="trade_open_account_bind">已有黄金账号，去绑定</string>
-    <string name="trade_rule">交易规则</string>
-    <string name="trade_authentication">身份验证</string>
-    <string name="trade_name">姓名</string>
-    <string name="trade_name_hint">请输入姓名</string>
-    <string name="trade_id_card">身份证号</string>
-    <string name="trade_id_card_hint">请输入身份证号</string>
-    <string name="trade_gold_account_hint">请输入开头为000131的16位黄金账号</string>
-    <string name="trade_soft_aggrement">《软件服务协议》</string>
-    <string name="trade_soft_aggrement_title">软件服务协议</string>
-    <string name="trade_and">和</string>
-    <string name="trade_business_aggrement">《业务服务协议》</string>
-    <string name="trade_business_aggrement_title">业务服务协议</string>
-    <string name="trade_bind_account">账号绑定</string>
-    <string name="trade_bind">立即绑定</string>
-    <string name="trade_bind_success">恭喜您已绑定成功！</string>
-    <string name="trade_bind_success_time">%1$s秒后自动关闭</string>
-    <string name="trade_see_order">查看订单</string>
-    <string name="trade_about_amount">约可交易手数</string>
-
     <!-- Transaction -->
     <string name="transaction_place_order">下单</string>
     <string name="transaction_hold_positions">持仓</string>
@@ -378,6 +329,40 @@
     <string name="transaction_effective_time_rule">当日有效：是指当个交易日内有效，若您下单时不在交易时段内，则默认下单后的第一个交易日内有效；若您下单时在交易时段内，则默认在当个交易日收盘之前有效。\n撤销前有效：是指在您设置条件单后，只要未撤销/未修改且条件单未触发，该条件单始终有效。</string>
     <string name="transaction_condition_sheet_confirm">条件单确认</string>
     <string name="transaction_condition_sheet_create_success">条件单创建成功</string>
+    <string name="transaction_evening_up">平仓</string>
+    <string name="transaction_cancel_order_success">撤单成功</string>
+    <string name="transaction_increment_error">您尚未开通增值服务，请开通后使用该服务。</string>
+    <string name="transaction_increment_goto_open">去开通</string>
+    <string name="transaction_time_rule">T+0交易</string>
+    <string name="transaction_time_rule_message">当日即买即卖</string>
+    <string name="transaction_side_rule">双向交易</string>
+    <string name="transaction_side_rule_message">即可买涨，又可买跌</string>
+    <string name="transaction_bond_rule">保证金交易</string>
+    <string name="transaction_bond_rule_message">小资金撬动大收益</string>
+    <string name="transaction_open_account_rule">极速开户</string>
+    <string name="transaction_open_account_rule_message">三分钟即可完成开户</string>
+    <string name="transaction_open_account_free">免费开户</string>
+    <string name="transaction_open_account_course">开户有疑问？&#160;来看看&#160;开户教程</string>
+    <string name="transaction_open_account_course_title">开户教程</string>
+    <string name="transaction_open_account_bind">已有黄金账号，去绑定</string>
+    <string name="transaction_rule">交易规则</string>
+    <string name="transaction_authentication">身份验证</string>
+    <string name="transaction_name">姓名</string>
+    <string name="transaction_name_hint">请输入姓名</string>
+    <string name="transaction_id_card">身份证号</string>
+    <string name="transaction_id_card_hint">请输入身份证号</string>
+    <string name="transaction_gold_account_hint">请输入开头为000131的16位黄金账号</string>
+    <string name="transaction_soft_aggrement">《软件服务协议》</string>
+    <string name="transaction_soft_aggrement_title">软件服务协议</string>
+    <string name="transaction_and">和</string>
+    <string name="transaction_business_aggrement">《业务服务协议》</string>
+    <string name="transaction_business_aggrement_title">业务服务协议</string>
+    <string name="transaction_bind_account">账号绑定</string>
+    <string name="transaction_bind">立即绑定</string>
+    <string name="transaction_bind_success">恭喜您已绑定成功！</string>
+    <string name="transaction_bind_success_time">%1$s秒后自动关闭</string>
+    <string name="transaction_about_amount">约可交易手数</string>
+
 
     <!-- Personal -->
     <string name="personal_login">登录/注册</string>

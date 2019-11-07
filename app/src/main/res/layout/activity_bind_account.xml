@@ -39,7 +39,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="3"
                     android:paddingLeft="@dimen/common_area_margin_tiny"
-                    android:text="@string/trade_name"
+                    android:text="@string/transaction_name"
                     android:textColor="@color/color_text_normal"
                     android:textSize="@dimen/sp_14" />
 
@@ -67,7 +67,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:layout_weight="3"
-                    android:text="@string/trade_id_card"
+                    android:text="@string/transaction_id_card"
                     android:textColor="@color/color_text_normal"
                     android:textSize="@dimen/sp_14" />
 
@@ -105,7 +105,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:background="@null"
-                    android:hint="@string/trade_gold_account_hint"
+                    android:hint="@string/transaction_gold_account_hint"
                     android:inputType="number"
                     android:maxLength="16"
                     android:textColor="@color/color_text_normal"
@@ -196,7 +196,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:onClick="@{() -> handlers.onClickSoftWareAgreement()}"
-                    android:text="@string/trade_soft_aggrement"
+                    android:text="@string/transaction_soft_aggrement"
                     android:textColor="@color/color_blue_deep"
                     android:textSize="@dimen/sp_14" />
 
@@ -214,7 +214,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/common_area_margin_middle"
-                    android:text="@string/trade_and"
+                    android:text="@string/transaction_and"
                     android:textColor="@color/color_text_normal"
                     android:textSize="@dimen/sp_14" />
 
@@ -222,7 +222,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:onClick="@{() -> handlers.onClickBusinessAgreement()}"
-                    android:text="@string/trade_business_aggrement"
+                    android:text="@string/transaction_business_aggrement"
                     android:textColor="@color/color_blue_deep"
                     android:textSize="@dimen/sp_14" />
 
@@ -239,7 +239,7 @@
             android:layout_marginRight="@dimen/common_area_margin"
             android:background="@drawable/selector_btn"
             android:onClick="@{() -> handlers.onClickBind()}"
-            android:text="@string/trade_bind"
+            android:text="@string/transaction_bind"
             android:textColor="@color/white"
             android:textSize="@dimen/common_font_size" />
 

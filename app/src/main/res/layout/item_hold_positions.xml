@@ -176,8 +176,8 @@
 
         <RelativeLayout
             android:id="@+id/layout_stop_transaction"
-            android:layout_width="@dimen/width_btn_normal"
-            android:layout_height="@dimen/height_order_btn"
+            android:layout_width="@dimen/width_item"
+            android:layout_height="@dimen/height_item_small"
             android:background="@drawable/bg_btn_blue_solid"
             android:gravity="center">
 
@@ -188,7 +188,7 @@
                 android:layout_centerVertical="true"
                 android:text="@string/transaction_stop"
                 android:textColor="@color/white"
-                android:textSize="@dimen/size_middle" />
+                android:textSize="@dimen/sp_12" />
 
             <ImageView
                 android:id="@+id/img_set_status"
@@ -203,12 +203,12 @@
         <Button
             android:id="@+id/btn_evening_up"
             android:layout_width="@dimen/common_item_height_middle"
-            android:layout_height="@dimen/height_order_btn"
+            android:layout_height="@dimen/height_item_small"
             android:layout_alignParentRight="true"
             android:background="@drawable/bg_btn_blue_solid"
-            android:text="@string/trade_evening_up"
+            android:text="@string/transaction_evening_up"
             android:textColor="@color/white"
-            android:textSize="@dimen/size_middle" />
+            android:textSize="@dimen/sp_12" />
 
     </RelativeLayout>
 

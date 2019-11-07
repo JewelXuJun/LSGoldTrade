@@ -211,7 +211,7 @@ public class TradingBoxOrderActivity extends JMEBaseActivity implements OnRefres
                 break;
             case "Revocation":
                 if (head.isSuccess()) {
-                    showShortToast(R.string.trade_cancel_order_success);
+                    showShortToast(R.string.transaction_cancel_order_success);
 
                     getOrderList(true);
                 }

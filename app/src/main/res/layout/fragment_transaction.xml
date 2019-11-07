@@ -101,7 +101,7 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="@string/trade_time_rule"
+                                android:text="@string/transaction_time_rule"
                                 android:textColor="@color/black"
                                 android:textSize="@dimen/sp_14"
                                 android:textStyle="bold" />
@@ -110,7 +110,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="@dimen/margin_small"
-                                android:text="@string/trade_time_rule_message"
+                                android:text="@string/transaction_time_rule_message"
                                 android:textColor="@color/black"
                                 android:textSize="@dimen/sp_14" />
 
@@ -140,7 +140,7 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="@string/trade_side_rule"
+                                android:text="@string/transaction_side_rule"
                                 android:textColor="@color/black"
                                 android:textSize="@dimen/sp_14"
                                 android:textStyle="bold" />
@@ -149,7 +149,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="@dimen/margin_small"
-                                android:text="@string/trade_side_rule_message"
+                                android:text="@string/transaction_side_rule_message"
                                 android:textColor="@color/black"
                                 android:textSize="@dimen/sp_14" />
 
@@ -190,7 +190,7 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="@string/trade_bond_rule"
+                                android:text="@string/transaction_bond_rule"
                                 android:textColor="@color/black"
                                 android:textSize="@dimen/sp_14"
                                 android:textStyle="bold" />
@@ -199,7 +199,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="@dimen/margin_small"
-                                android:text="@string/trade_bond_rule_message"
+                                android:text="@string/transaction_bond_rule_message"
                                 android:textColor="@color/black"
                                 android:textSize="@dimen/sp_14" />
 
@@ -229,7 +229,7 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="@string/trade_open_account_rule"
+                                android:text="@string/transaction_open_account_rule"
                                 android:textColor="@color/black"
                                 android:textSize="@dimen/sp_14"
                                 android:textStyle="bold" />
@@ -238,7 +238,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="@dimen/margin_small"
-                                android:text="@string/trade_open_account_rule_message"
+                                android:text="@string/transaction_open_account_rule_message"
                                 android:textColor="@color/black"
                                 android:textSize="@dimen/sp_14" />
 
@@ -258,7 +258,7 @@
                 android:layout_marginRight="@dimen/margin_login"
                 android:background="@drawable/bg_btn_blue_solid"
                 android:onClick="@{() -> handlers.onClickOpenAccountFree()}"
-                android:text="@string/trade_open_account_free"
+                android:text="@string/transaction_open_account_free"
                 android:textColor="@color/white"
                 android:textSize="@dimen/common_font_size" />
 
@@ -280,7 +280,7 @@
                 android:background="@drawable/bg_btn_blue_stroke"
                 android:gravity="center"
                 android:onClick="@{() -> handlers.onClickBind()}"
-                android:text="@string/trade_open_account_bind"
+                android:text="@string/transaction_open_account_bind"
                 android:textColor="@color/color_blue_deep"
                 android:textSize="@dimen/common_font_size" />
 

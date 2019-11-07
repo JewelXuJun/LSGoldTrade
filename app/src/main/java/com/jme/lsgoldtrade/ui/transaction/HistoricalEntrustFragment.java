@@ -328,7 +328,7 @@ public class HistoricalEntrustFragment extends JMEBaseFragment implements OnRefr
                 break;
             case "RevocateOrder":
                 if (head.isSuccess())
-                    showShortToast(R.string.trade_cancel_order_success);
+                    showShortToast(R.string.transaction_cancel_order_success);
 
                 initOrderHisPage(true);
 

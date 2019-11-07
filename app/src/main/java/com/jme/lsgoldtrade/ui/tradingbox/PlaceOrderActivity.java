@@ -390,8 +390,8 @@ public class PlaceOrderActivity extends JMEBaseActivity {
                     getStatus();
                 } else {
                     if (null != mTransactionMessagePopUpWindow && !mTransactionMessagePopUpWindow.isShowing()) {
-                        mTransactionMessagePopUpWindow.setData(mContext.getResources().getString(R.string.trade_increment_error),
-                                mContext.getResources().getString(R.string.trade_increment_goto_open),
+                        mTransactionMessagePopUpWindow.setData(mContext.getResources().getString(R.string.transaction_increment_error),
+                                mContext.getResources().getString(R.string.transaction_increment_goto_open),
                                 (view) -> {
                                     ARouter.getInstance().build(Constants.ARouterUriConst.VALUEADDEDSERVICE).navigation();
 

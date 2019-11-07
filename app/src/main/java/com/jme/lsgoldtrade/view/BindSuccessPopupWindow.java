@@ -42,6 +42,6 @@ public class BindSuccessPopupWindow extends JMEBasePopupWindow {
     }
 
     public void setData(String time) {
-        mBinding.tvTime.setText(String.format(mContext.getResources().getString(R.string.trade_bind_success_time), time));
+        mBinding.tvTime.setText(String.format(mContext.getResources().getString(R.string.transaction_bind_success_time), time));
     }
 }

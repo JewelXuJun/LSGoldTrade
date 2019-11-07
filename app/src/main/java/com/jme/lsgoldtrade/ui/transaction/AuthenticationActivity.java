@@ -44,7 +44,7 @@ public class AuthenticationActivity extends JMEBaseActivity {
     protected void initView() {
         super.initView();
 
-        initToolbar(R.string.trade_authentication, true);
+        initToolbar(R.string.transaction_authentication, true);
     }
 
     @Override
@@ -164,9 +164,9 @@ public class AuthenticationActivity extends JMEBaseActivity {
             String errorMsg = IDUtils.IDCardValidate(mIDCard);
 
             if (TextUtils.isEmpty(name))
-                showShortToast(R.string.trade_name_hint);
+                showShortToast(R.string.transaction_name_hint);
             else if (TextUtils.isEmpty(mIDCard))
-                showShortToast(R.string.trade_id_card_hint);
+                showShortToast(R.string.transaction_id_card_hint);
             else if (!TextUtils.isEmpty(errorMsg))
                 showShortToast(errorMsg);
             else

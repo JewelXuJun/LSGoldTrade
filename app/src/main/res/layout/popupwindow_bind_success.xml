@@ -19,7 +19,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginTop="@dimen/common_page_margin"
-            android:text="@string/trade_bind_success"
+            android:text="@string/transaction_bind_success"
             android:textColor="@color/black"
             android:textSize="@dimen/common_font_size" />
 

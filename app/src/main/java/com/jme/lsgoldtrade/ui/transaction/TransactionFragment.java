@@ -163,7 +163,7 @@ public class TransactionFragment extends JMEBaseFragment {
         mBinding.layoutNoLogin.setVisibility(View.VISIBLE);
 
         StatusBarUtil.setStatusBarMode(mActivity, true, R.color.color_blue_deep);
-        setCourseLayout(mContext.getResources().getString(R.string.trade_open_account_course));
+        setCourseLayout(mContext.getResources().getString(R.string.transaction_open_account_course));
     }
 
     private void setCourseLayout(String value) {
@@ -345,7 +345,7 @@ public class TransactionFragment extends JMEBaseFragment {
         public void onClickBanner() {
             ARouter.getInstance()
                     .build(Constants.ARouterUriConst.JMEWEBVIEW)
-                    .withString("title", mContext.getResources().getString(R.string.trade_rule))
+                    .withString("title", mContext.getResources().getString(R.string.transaction_rule))
                     .withString("url", Constants.HttpConst.URL_TRADE_RULE)
                     .navigation();
         }
@@ -382,7 +382,7 @@ public class TransactionFragment extends JMEBaseFragment {
         public void onClick(View widget) {
             ARouter.getInstance()
                     .build(Constants.ARouterUriConst.JMEWEBVIEW)
-                    .withString("title", mContext.getResources().getString(R.string.trade_open_account_course_title))
+                    .withString("title", mContext.getResources().getString(R.string.transaction_open_account_course_title))
                     .withString("url", Constants.HttpConst.URL_OPEN_ACCOUNT_COURSE)
                     .navigation();
         }

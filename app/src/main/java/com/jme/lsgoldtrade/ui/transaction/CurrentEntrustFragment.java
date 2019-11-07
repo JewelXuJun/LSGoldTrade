@@ -265,7 +265,7 @@ public class CurrentEntrustFragment extends JMEBaseFragment implements BaseQuick
                 break;
             case "RevocateOrder":
                 if (head.isSuccess())
-                    showShortToast(R.string.trade_cancel_order_success);
+                    showShortToast(R.string.transaction_cancel_order_success);
 
                 initOrderPage(true);
 
