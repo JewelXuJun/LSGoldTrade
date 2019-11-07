@@ -586,8 +586,6 @@ public class PlaceOrderFragment extends JMEBaseFragment implements FChart.OnPric
             case "LimitOrder":
                 if (head.isSuccess()) {
                     showShortToast(R.string.transaction_success);
-
-                    RxBus.getInstance().post(Constants.RxBusConst.RXBUS_DECLARATIONFORM_UPDATE, null);
                 } else {
                     if (head.getMsg().contains("可用资金不足")) {
                         if (null != mConfirmPopupwindow && !mConfirmPopupwindow.isShowing()) {
