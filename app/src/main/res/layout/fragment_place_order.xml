@@ -42,12 +42,12 @@
 
                 <TextView
                     android:id="@+id/tv_last_price"
-                    android:layout_width="@dimen/width_item_large"
+                    android:layout_width="@dimen/width_item_bigger"
                     android:layout_height="@dimen/common_item_height_middle"
                     android:layout_alignParentRight="true"
                     android:gravity="center"
                     android:onClick="@{() -> handlers.onClickLatestPrice()}"
-                    android:textSize="@dimen/size_market" />
+                    android:textSize="@dimen/size_big" />
 
                 <LinearLayout
                     android:id="@+id/layout_contract_id"
@@ -92,7 +92,7 @@
 
                 <LinearLayout
                     android:id="@+id/layout_rang"
-                    android:layout_width="@dimen/width_item_large"
+                    android:layout_width="@dimen/width_item_bigger"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/tv_last_price"
                     android:layout_alignParentRight="true"
@@ -103,7 +103,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:textSize="@dimen/sp_12" />
+                        android:textSize="@dimen/size_small" />
 
                     <TextView
                         android:id="@+id/tv_rate"
@@ -111,7 +111,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:gravity="right"
-                        android:textSize="@dimen/sp_12" />
+                        android:textSize="@dimen/size_small" />
 
                 </LinearLayout>
 
@@ -137,7 +137,7 @@
                             android:layout_height="wrap_content"
                             android:text="@string/transaction_limit_down_price"
                             android:textColor="@color/color_text_black"
-                            android:textSize="@dimen/sp_12" />
+                            android:textSize="@dimen/size_small" />
 
                         <TextView
                             android:id="@+id/tv_limit_down_price"
@@ -147,7 +147,7 @@
                             android:onClick="@{() -> handlers.onClickLimitDownPrice()}"
                             android:text="@string/text_no_data_default"
                             android:textColor="@color/common_font_decrease"
-                            android:textSize="@dimen/sp_12" />
+                            android:textSize="@dimen/size_small" />
 
                     </LinearLayout>
 
@@ -163,7 +163,7 @@
                             android:layout_height="wrap_content"
                             android:text="@string/transaction_limit_up_price"
                             android:textColor="@color/color_text_black"
-                            android:textSize="@dimen/sp_12" />
+                            android:textSize="@dimen/size_small" />
 
                         <TextView
                             android:id="@+id/tv_limit_up_price"
@@ -173,7 +173,7 @@
                             android:onClick="@{() -> handlers.onClickLimitUpPrice()}"
                             android:text="@string/text_no_data_default"
                             android:textColor="@color/common_font_increase"
-                            android:textSize="@dimen/sp_12" />
+                            android:textSize="@dimen/size_small" />
 
                     </LinearLayout>
 
@@ -311,7 +311,7 @@
                             android:maxLines="1"
                             android:textColor="@color/color_blue_deep"
                             android:textColorHint="@color/color_text_hint"
-                            android:textSize="@dimen/size_normal" />
+                            android:textSize="@dimen/sp_14" />
 
                         <include layout="@layout/item_line_horizontal" />
 
@@ -383,7 +383,7 @@
                             android:maxLines="1"
                             android:textColor="@color/color_blue_deep"
                             android:textColorHint="@color/color_text_hint"
-                            android:textSize="@dimen/size_normal" />
+                            android:textSize="@dimen/sp_14" />
 
                         <include layout="@layout/item_line_horizontal" />
 

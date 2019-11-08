@@ -326,6 +326,8 @@ public class PlaceOrderFragment extends JMEBaseFragment implements FChart.OnPric
 
         mDialog = builder.create();
         mDialog.show();
+
+        mDialog.setOnDismissListener((view) -> mBinding.imgSelect.setBackground(ContextCompat.getDrawable(mContext, R.mipmap.ic_down)));
     }
 
     private void showPlaceOrderPopupWindow(String contractID, String price, String amount, int bsFlag) {

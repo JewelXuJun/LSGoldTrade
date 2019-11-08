@@ -250,8 +250,8 @@ public class TransactionStopPopupWindow extends JMEBasePopupWindow {
                 : mType.equals("多") ? String.format(mContext.getResources().getString(R.string.transaction_stop_profit_price), ">=", mFiveSpeedVo.getLatestPriceValue())
                 : String.format(mContext.getResources().getString(R.string.transaction_stop_profit_price), "<=", mFiveSpeedVo.getLatestPriceValue()));
         mBinding.tvStopLossPriceTitle.setText(TextUtils.isEmpty(mType) ? mContext.getResources().getString(R.string.transaction_stop_loss_price_title)
-                : mType.equals("多") ? String.format(mContext.getResources().getString(R.string.transaction_stop_profit_price), "<=", mFiveSpeedVo.getLatestPriceValue())
-                : String.format(mContext.getResources().getString(R.string.transaction_stop_profit_price), ">=", mFiveSpeedVo.getLatestPriceValue()));
+                : mType.equals("多") ? String.format(mContext.getResources().getString(R.string.transaction_stop_loss_price), "<=", mFiveSpeedVo.getLatestPriceValue())
+                : String.format(mContext.getResources().getString(R.string.transaction_stop_loss_price), ">=", mFiveSpeedVo.getLatestPriceValue()));
     }
 
     private String getProfitPrice() {

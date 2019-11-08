@@ -323,6 +323,8 @@ public class CreateConditionSheetFragment extends JMEBaseFragment {
 
         mDialog = builder.create();
         mDialog.show();
+
+        mDialog.setOnDismissListener((view) -> mBinding.imgSelect.setBackground(ContextCompat.getDrawable(mContext, R.mipmap.ic_down)));
     }
 
     private void setMarketData() {

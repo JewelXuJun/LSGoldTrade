@@ -279,7 +279,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/margin_small"
                             android:textColor="@color/color_text_normal"
-                            android:textSize="@dimen/sp_12" />
+                            android:textSize="@dimen/size_small" />
 
                     </LinearLayout>
 
@@ -322,7 +322,7 @@
                             android:maxLines="1"
                             android:textColor="@color/color_blue_deep"
                             android:textColorHint="@color/color_text_hint"
-                            android:textSize="@dimen/size_normal" />
+                            android:textSize="@dimen/sp_14" />
 
                         <include layout="@layout/item_line_horizontal" />
 
@@ -447,7 +447,7 @@
                             android:maxLines="1"
                             android:textColor="@color/color_blue_deep"
                             android:textColorHint="@color/color_text_hint"
-                            android:textSize="@dimen/size_normal" />
+                            android:textSize="@dimen/sp_14" />
 
                         <include layout="@layout/item_line_horizontal" />
 

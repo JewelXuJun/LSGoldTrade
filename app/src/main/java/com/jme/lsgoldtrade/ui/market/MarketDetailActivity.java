@@ -1021,18 +1021,23 @@ public class MarketDetailActivity extends JMEBaseActivity implements FChart.OnPr
             if (null == mUser || !mUser.isLogin()) {
                 gotoLogin();
             } else {
-                if (TextUtils.isEmpty(mContractId) || null == mTenSpeedVo || null == mContract)
-                    return;
+                if (TextUtils.isEmpty(mUser.getAccountID())) {
+                    RxBus.getInstance().post(Constants.RxBusConst.RXBUS_TRANSACTION_PLACE_ORDER, mContractId);
+                    ARouter.getInstance().build(Constants.ARouterUriConst.MAIN).navigation();
+                } else {
+                    if (TextUtils.isEmpty(mContractId) || null == mTenSpeedVo || null == mContract)
+                        return;
 
-                mContractInfoVo = mContract.getContractInfoFromID(mContractId);
+                    mContractInfoVo = mContract.getContractInfoFromID(mContractId);
 
-                if (null == mContractInfoVo)
-                    return;
+                    if (null == mContractInfoVo)
+                        return;
 
-                mBsFlag = 1;
-                mOcFlag = 0;
+                    mBsFlag = 1;
+                    mOcFlag = 0;
 
-                getStatus();
+                    getStatus();
+                }
             }
         }
 
@@ -1040,18 +1045,23 @@ public class MarketDetailActivity extends JMEBaseActivity implements FChart.OnPr
             if (null == mUser || !mUser.isLogin()) {
                 gotoLogin();
             } else {
-                if (TextUtils.isEmpty(mContractId) || null == mTenSpeedVo || null == mContract)
-                    return;
+                if (TextUtils.isEmpty(mUser.getAccountID())) {
+                    RxBus.getInstance().post(Constants.RxBusConst.RXBUS_TRANSACTION_PLACE_ORDER, mContractId);
+                    ARouter.getInstance().build(Constants.ARouterUriConst.MAIN).navigation();
+                } else {
+                    if (TextUtils.isEmpty(mContractId) || null == mTenSpeedVo || null == mContract)
+                        return;
 
-                mContractInfoVo = mContract.getContractInfoFromID(mContractId);
+                    mContractInfoVo = mContract.getContractInfoFromID(mContractId);
 
-                if (null == mContractInfoVo)
-                    return;
+                    if (null == mContractInfoVo)
+                        return;
 
-                mBsFlag = 2;
-                mOcFlag = 0;
+                    mBsFlag = 2;
+                    mOcFlag = 0;
 
-                getStatus();
+                    getStatus();
+                }
             }
         }
 

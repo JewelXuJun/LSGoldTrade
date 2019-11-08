@@ -112,7 +112,7 @@
                         android:maxLines="1"
                         android:textColor="@color/color_blue_deep"
                         android:textColorHint="@color/color_text_hint"
-                        android:textSize="@dimen/size_normal" />
+                        android:textSize="@dimen/sp_14" />
 
                     <include layout="@layout/item_line_horizontal" />
 
@@ -185,7 +185,7 @@
                         android:maxLines="1"
                         android:textColor="@color/color_blue_deep"
                         android:textColorHint="@color/color_text_hint"
-                        android:textSize="@dimen/size_normal" />
+                        android:textSize="@dimen/sp_14" />
 
                     <include layout="@layout/item_line_horizontal" />
 
@@ -257,7 +257,7 @@
                         android:maxLines="1"
                         android:textColor="@color/color_blue_deep"
                         android:textColorHint="@color/color_text_hint"
-                        android:textSize="@dimen/size_normal" />
+                        android:textSize="@dimen/sp_14" />
 
                     <include layout="@layout/item_line_horizontal" />
 
@@ -405,7 +405,7 @@
             android:orientation="vertical"
             android:paddingLeft="@dimen/common_area_margin"
             android:paddingRight="@dimen/common_area_margin"
-            android:visibility="visible">
+            android:visibility="gone">
 
             <LinearLayout
                 android:layout_width="match_parent"
