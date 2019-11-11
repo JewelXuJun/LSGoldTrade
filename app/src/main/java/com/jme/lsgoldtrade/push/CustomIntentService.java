@@ -11,6 +11,7 @@ import android.os.Bundle;
 
 import androidx.annotation.RequiresApi;
 import androidx.core.app.NotificationCompat;
+
 import android.text.TextUtils;
 import android.util.Log;
 
@@ -81,8 +82,11 @@ public class CustomIntentService extends GTIntentService {
 
             try {
                 JSONObject jsonObject = new JSONObject(data);
+
                 showNotification(mContext, jsonObject);
             } catch (JSONException e) {
+                showNotification(mContext, data);
+
                 e.printStackTrace();
             }
         }
@@ -165,6 +169,51 @@ public class CustomIntentService extends GTIntentService {
                         .setContentText(contractId + "已达到您设置的预警价格，最新价为" + latestPrice)
                         .setContentIntent(warningPendingIntent).build();
             }
+        }
+
+        // 点击notification之后，该notification自动消失
+        notification.flags |= Notification.FLAG_AUTO_CANCEL;
+        // notification被notify的时候，触发默认声音和默认震动
+        notification.defaults |= Notification.DEFAULT_SOUND | Notification.DEFAULT_VIBRATE | Notification.DEFAULT_LIGHTS;
+
+        mManager.notify(notificationId, notification);
+    }
+
+    /**
+     * 根据消息内容弹出通知框
+     *
+     * @param context
+     * @param value
+     */
+    private void showNotification(Context context, String value) {
+        int notificationId = (int) System.currentTimeMillis();
+        Notification notification;
+
+        //设置点击通知后是发送广播，传递对应的数据
+        Intent warningIntent = new Intent(context, NotificationReceiver.class);
+        Bundle bundle = new Bundle();
+        bundle.putString("sheet", value.contains("条件单") ? "条件单" : "止盈止损单");
+        warningIntent.putExtras(bundle);
+
+        PendingIntent warningPendingIntent = PendingIntent.getBroadcast(context, notificationId, warningIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            createNotificationChannel(mManager);
+
+            notification = new Notification.Builder(mContext)
+                    .setChannelId(CHANNEL_ID)
+                    .setSmallIcon(R.mipmap.ic_logo)
+                    .setStyle(new Notification.BigTextStyle().bigText(value))
+                    .setContentTitle(value.contains("条件单") ? "条件单" : "止盈止损单")
+                    .setContentText(value)
+                    .setContentIntent(warningPendingIntent).build();
+        } else {
+            notification = new NotificationCompat.Builder(mContext)
+                    .setSmallIcon(R.mipmap.ic_logo)
+                    .setStyle(new NotificationCompat.BigTextStyle().bigText(value))
+                    .setContentTitle(value.contains("条件单") ? "条件单" : "止盈止损单")
+                    .setContentText(value)
+                    .setContentIntent(warningPendingIntent).build();
         }
 
         // 点击notification之后，该notification自动消失
