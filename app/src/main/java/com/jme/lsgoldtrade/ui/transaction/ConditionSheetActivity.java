@@ -72,7 +72,11 @@ public class ConditionSheetActivity extends JMEBaseActivity {
         initToolbar(R.string.transaction_condition_sheet, true);
 
         setRightNavigation(getResources().getString(R.string.transaction_explain), 0, R.style.ToolbarThemeBlue,
-                () -> ARouter.getInstance().build(Constants.ARouterUriConst.CONDITIONSHEETEXPLAIN).navigation());
+                () -> ARouter.getInstance()
+                        .build(Constants.ARouterUriConst.JMEWEBVIEW)
+                        .withString("title", getResources().getString(R.string.transaction_condition_sheet_explain))
+                        .withString("url", Constants.HttpConst.URL_CONDITION_SHEET_EXPLAIN)
+                        .navigation());
     }
 
     @Override

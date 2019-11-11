@@ -15,6 +15,7 @@ import android.widget.Toast;
 
 import androidx.databinding.DataBindingUtil;
 
+import com.alibaba.android.arouter.launcher.ARouter;
 import com.jme.common.util.DensityUtil;
 import com.jme.common.util.RxBus;
 import com.jme.lsgoldtrade.R;
@@ -454,7 +455,11 @@ public class TransactionStopPopupWindow extends JMEBasePopupWindow {
         }
 
         public void onCliclStopRiskTips() {
-
+            ARouter.getInstance()
+                    .build(Constants.ARouterUriConst.JMEWEBVIEW)
+                    .withString("title", mContext.getResources().getString(R.string.transaction_stop_risk_tips_title))
+                    .withString("url", Constants.HttpConst.URL_TRANSACTION_STOP)
+                    .navigation();
         }
 
         public void onClickCancel() {

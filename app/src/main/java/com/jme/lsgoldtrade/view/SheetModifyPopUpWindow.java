@@ -13,6 +13,7 @@ import android.widget.Toast;
 import androidx.core.content.ContextCompat;
 import androidx.databinding.DataBindingUtil;
 
+import com.alibaba.android.arouter.launcher.ARouter;
 import com.jme.common.util.DensityUtil;
 import com.jme.common.util.RxBus;
 import com.jme.lsgoldtrade.R;
@@ -370,7 +371,11 @@ public class SheetModifyPopUpWindow extends JMEBasePopupWindow {
         }
 
         public void onCliclConditionSheetRiskTips() {
-
+            ARouter.getInstance()
+                    .build(Constants.ARouterUriConst.JMEWEBVIEW)
+                    .withString("title", mContext.getResources().getString(R.string.transaction_condition_sheet_risk_tips_title))
+                    .withString("url", Constants.HttpConst.URL_CONDITION_SHEET)
+                    .navigation();
         }
 
         public void onClickCancel() {
