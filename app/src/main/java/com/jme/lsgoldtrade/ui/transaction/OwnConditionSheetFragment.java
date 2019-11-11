@@ -142,7 +142,7 @@ public class OwnConditionSheetFragment extends JMEBaseFragment implements OnRefr
                                 (v) -> {
                                     mConfirmPopupwindow.dismiss();
 
-                                    revokeConditionOrder(String.valueOf(mConditionOrderInfoVo.getId()));
+                                    revokeConditionOrder(String.valueOf(conditionOrderInfoVo.getId()));
                                 });
                         mConfirmPopupwindow.showAtLocation(mBinding.tvStartTime, Gravity.CENTER, 0, 0);
                     }
@@ -313,17 +313,19 @@ public class OwnConditionSheetFragment extends JMEBaseFragment implements OnRefr
     }
 
     private void showModifyPopUpWindow() {
-        if (bQueryFlag && bAccountVoFlag && bPositionVoFlag && null != mConditionOrderInfoVo
+        ConditionOrderInfoVo conditionOrderInfoVo = mConditionOrderInfoVo;
+
+        if (bQueryFlag && bAccountVoFlag && bPositionVoFlag && null != conditionOrderInfoVo
                 && null != mSheetModifyPopUpWindow && !mSheetModifyPopUpWindow.isShowing()) {
             FiveSpeedVo fiveSpeedVoValue = null;
 
             for (FiveSpeedVo fiveSpeedVo : mFiveSpeedVoList) {
-                if (null != fiveSpeedVo && fiveSpeedVo.getContractId().equals(mConditionOrderInfoVo.getContractId()))
+                if (null != fiveSpeedVo && fiveSpeedVo.getContractId().equals(conditionOrderInfoVo.getContractId()))
                     fiveSpeedVoValue = fiveSpeedVo;
             }
 
             mSheetModifyPopUpWindow.setData(fiveSpeedVoValue, mAccountVo, mPositionVo,
-                    mContract.getContractInfoFromID(mConditionOrderInfoVo.getContractId()), mConditionOrderInfoVo);
+                    mContract.getContractInfoFromID(mPositionVo.getContractId()), conditionOrderInfoVo);
             mSheetModifyPopUpWindow.showAtLocation(mBinding.tvStartTime, Gravity.BOTTOM, 0, 0);
         }
     }
