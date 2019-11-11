@@ -189,10 +189,12 @@ public class CustomIntentService extends GTIntentService {
         int notificationId = (int) System.currentTimeMillis();
         Notification notification;
 
+        String title = value.contains("条件单") ? "条件单" : "止盈止损单";
+
         //设置点击通知后是发送广播，传递对应的数据
         Intent warningIntent = new Intent(context, NotificationReceiver.class);
         Bundle bundle = new Bundle();
-        bundle.putString("sheet", value.contains("条件单") ? "条件单" : "止盈止损单");
+        bundle.putString("sheet", title);
         warningIntent.putExtras(bundle);
 
         PendingIntent warningPendingIntent = PendingIntent.getBroadcast(context, notificationId, warningIntent, PendingIntent.FLAG_UPDATE_CURRENT);
@@ -204,14 +206,14 @@ public class CustomIntentService extends GTIntentService {
                     .setChannelId(CHANNEL_ID)
                     .setSmallIcon(R.mipmap.ic_logo)
                     .setStyle(new Notification.BigTextStyle().bigText(value))
-                    .setContentTitle(value.contains("条件单") ? "条件单" : "止盈止损单")
+                    .setContentTitle(title)
                     .setContentText(value)
                     .setContentIntent(warningPendingIntent).build();
         } else {
             notification = new NotificationCompat.Builder(mContext)
                     .setSmallIcon(R.mipmap.ic_logo)
                     .setStyle(new NotificationCompat.BigTextStyle().bigText(value))
-                    .setContentTitle(value.contains("条件单") ? "条件单" : "止盈止损单")
+                    .setContentTitle(title)
                     .setContentText(value)
                     .setContentIntent(warningPendingIntent).build();
         }
