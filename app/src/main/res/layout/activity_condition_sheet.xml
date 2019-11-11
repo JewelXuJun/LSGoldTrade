@@ -20,10 +20,11 @@
             android:layout_marginTop="@dimen/common_page_margin"
             android:layout_marginRight="@dimen/common_area_margin"
             android:layout_marginBottom="@dimen/common_page_margin"
-            android:background="@drawable/bg_btn_gray"
             app:tabGravity="fill"
             app:tabIndicator="@null"
             app:tabMode="fixed"
+            app:tabPaddingEnd="0dp"
+            app:tabPaddingStart="0dp"
             app:tabRippleColor="@null" />
 
         <androidx.viewpager.widget.ViewPager

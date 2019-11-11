@@ -4,11 +4,8 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.text.TextUtils;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
@@ -18,10 +15,8 @@ import com.alibaba.android.arouter.launcher.ARouter;
 import com.google.android.material.tabs.TabLayout;
 import com.jme.common.network.DTRequest;
 import com.jme.common.network.Head;
-import com.jme.common.util.DensityUtil;
 import com.jme.common.util.NetWorkUtils;
 import com.jme.common.util.RxBus;
-import com.jme.common.util.ScreenUtil;
 import com.jme.lsgoldtrade.R;
 import com.jme.lsgoldtrade.base.JMEBaseActivity;
 import com.jme.lsgoldtrade.base.TabViewPagerAdapter;
@@ -41,7 +36,7 @@ public class ConditionSheetActivity extends JMEBaseActivity {
 
     private ActivityConditionSheetBinding mBinding;
 
-    private int mType;
+    private int mType = 0;
 
     private String[] mTabTitles;
     private Fragment[] mFragments;
@@ -164,22 +159,39 @@ public class ConditionSheetActivity extends JMEBaseActivity {
         for (int i = 0; i < mBinding.tablayout.getTabCount(); i++) {
             TabLayout.Tab tab = mBinding.tablayout.getTabAt(i);
 
-            if (null != tab)
-                tab.setCustomView(getTabView(i));
+            if (null != tab) {
+                if (i == 0)
+                    tab.setCustomView(getLeftTabView());
+                else if (i == mBinding.tablayout.getTabCount() - 1)
+                    tab.setCustomView(getRightTabView());
+                else
+                    tab.setCustomView(getMiddleTabView(i));
+            }
         }
 
         runOnUiThread(() -> mBinding.tabViewpager.setCurrentItem(mType));
     }
 
-    private View getTabView(int currentPosition) {
-        View view = LayoutInflater.from(this).inflate(R.layout.item_tab, null);
+    private View getLeftTabView() {
+        View view = LayoutInflater.from(this).inflate(R.layout.item_tab_left, null);
+        TextView textView = view.findViewById(R.id.tv_tab);
+        textView.setText(mTabTitles[0]);
+
+        return view;
+    }
+
+    private View getMiddleTabView(int currentPosition) {
+        View view = LayoutInflater.from(this).inflate(R.layout.item_tab_middle, null);
         TextView textView = view.findViewById(R.id.tv_tab);
         textView.setText(mTabTitles[currentPosition]);
-        textView.setGravity(Gravity.CENTER);
-        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
-        params.width = (ScreenUtil.getScreenWidth(this) - DensityUtil.dpTopx(this, 30)) / 3;
-        params.height = DensityUtil.dpTopx(this, 31);
-        textView.setLayoutParams(params);
+
+        return view;
+    }
+
+    private View getRightTabView() {
+        View view = LayoutInflater.from(this).inflate(R.layout.item_tab_right, null);
+        TextView textView = view.findViewById(R.id.tv_tab);
+        textView.setText(mTabTitles[mTabTitles.length - 1]);
 
         return view;
     }
