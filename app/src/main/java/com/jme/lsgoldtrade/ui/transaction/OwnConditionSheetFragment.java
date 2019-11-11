@@ -325,7 +325,7 @@ public class OwnConditionSheetFragment extends JMEBaseFragment implements OnRefr
             }
 
             mSheetModifyPopUpWindow.setData(fiveSpeedVoValue, mAccountVo, mPositionVo,
-                    mContract.getContractInfoFromID(mPositionVo.getContractId()), conditionOrderInfoVo);
+                    null == mContract ? null : mContract.getContractInfoFromID(conditionOrderInfoVo.getContractId()), conditionOrderInfoVo);
             mSheetModifyPopUpWindow.showAtLocation(mBinding.tvStartTime, Gravity.BOTTOM, 0, 0);
         }
     }
@@ -588,15 +588,18 @@ public class OwnConditionSheetFragment extends JMEBaseFragment implements OnRefr
                 break;
             case "QueryConditionOrderById":
                 if (head.isSuccess()) {
+                    ConditionOrderInfoVo conditionOrderInfoVo;
+
                     try {
-                        mConditionOrderInfoVo = (ConditionOrderInfoVo) response;
+                        conditionOrderInfoVo = (ConditionOrderInfoVo) response;
                     } catch (Exception e) {
-                        mConditionOrderInfoVo = null;
+                        conditionOrderInfoVo = null;
 
                         e.printStackTrace();
                     }
 
                     bQueryFlag = true;
+                    mConditionOrderInfoVo = conditionOrderInfoVo;
 
                     showModifyPopUpWindow();
                 }
