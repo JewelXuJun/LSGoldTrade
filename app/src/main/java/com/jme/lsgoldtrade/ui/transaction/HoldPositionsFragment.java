@@ -571,7 +571,7 @@ public class HoldPositionsFragment extends JMEBaseFragment implements OnRefreshL
                     }
                 }
 
-                mBinding.swipeRefreshLayout.finishRefresh(false);
+                mBinding.swipeRefreshLayout.finishRefresh(true);
 
                 break;
             case "GetFiveSpeedQuotes":
