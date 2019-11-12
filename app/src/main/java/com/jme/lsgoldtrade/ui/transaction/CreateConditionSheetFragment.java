@@ -118,10 +118,14 @@ public class CreateConditionSheetFragment extends JMEBaseFragment {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if (s.toString().length() != mFiveSpeedVo.getLatestPriceValue().length())
+                if (mContractID.equals("Ag(T+D)")) {
+                    if (s.toString().length() != 4)
+                        bFlag = false;
+                } else if (s.toString().length() != mFiveSpeedVo.getLatestPriceValue().length()) {
                     bFlag = false;
+                }
 
-                if (s.toString().contains(".")) {
+                if (s.toString().contains(".") && !s.toString().equals(".")) {
                     if (s.length() - 1 - s.toString().indexOf(".") > mLength) {
                         s = s.toString().subSequence(0, s.toString().indexOf(".") + (mLength + 1));
 
@@ -130,23 +134,23 @@ public class CreateConditionSheetFragment extends JMEBaseFragment {
 
                         mBinding.etPrice.setText(s);
                         mBinding.etPrice.setSelection(s.length());
+                    } else {
+                        mBinding.etPrice.setSelection(s.length());
                     }
-                }
-
-                if (s.toString().trim().equals(".")) {
+                } else if (s.toString().trim().equals(".")) {
                     s = "0" + s;
 
                     mBinding.etPrice.setText(s);
                     mBinding.etPrice.setSelection(2);
-                }
-
-                if (s.toString().startsWith("0") && s.toString().trim().length() > 1) {
+                } else if (s.toString().startsWith("0") && s.toString().trim().length() > 1) {
                     if (!s.toString().substring(1, 2).equals(".")) {
                         mBinding.etPrice.setText(s.subSequence(0, 1));
                         mBinding.etPrice.setSelection(1);
 
                         return;
                     }
+                } else {
+                    mBinding.etPrice.setSelection(s.length());
                 }
             }
 
@@ -356,10 +360,8 @@ public class CreateConditionSheetFragment extends JMEBaseFragment {
         mBinding.tvRange.setText(MarketUtil.getMarketRangeValue(rateType, upDown));
         mBinding.tvRate.setText(MarketUtil.getMarketRateValue(rateType, mFiveSpeedVo.getUpDownRateValue()));
 
-        if (bFlag) {
+        if (bFlag)
             mBinding.etPrice.setText(MarketUtil.formatValue(String.valueOf(lastPrice), mLength));
-            mBinding.etPrice.setSelection(MarketUtil.formatValue(String.valueOf(lastPrice), mLength).length());
-        }
 
         if (new BigDecimal(lastPrice).compareTo(new BigDecimal(0)) == 0) {
             mBinding.tvLastPrice.setTextColor(ContextCompat.getColor(mContext, R.color.color_text_black));
@@ -657,10 +659,8 @@ public class CreateConditionSheetFragment extends JMEBaseFragment {
 
                     bFlag = true;
 
-                    if (null != mFiveSpeedVo && mFiveSpeedVo.getContractId().equals(mContractID)) {
-                        mBinding.etPrice.setText(mFiveSpeedVo.getLatestPriceValue());
-                        mBinding.etPrice.setSelection(mFiveSpeedVo.getLatestPriceValue().length());
-                    }
+                    if (null != mFiveSpeedVo && mFiveSpeedVo.getContractId().equals(mContractID))
+                        mBinding.etPrice.setText(MarketUtil.formatValue(mFiveSpeedVo.getLatestPriceValue(), mLength));
 
                     calculateMaxAmount();
 
@@ -694,10 +694,8 @@ public class CreateConditionSheetFragment extends JMEBaseFragment {
             mType = TYPE_BUY_MORE;
             bFlag = true;
 
-            if (null != mFiveSpeedVo && mFiveSpeedVo.getContractId().equals(mContractID)) {
-                mBinding.etPrice.setText(mFiveSpeedVo.getLatestPriceValue());
-                mBinding.etPrice.setSelection(mFiveSpeedVo.getLatestPriceValue().length());
-            }
+            if (null != mFiveSpeedVo && mFiveSpeedVo.getContractId().equals(mContractID))
+                mBinding.etPrice.setText(MarketUtil.formatValue(mFiveSpeedVo.getLatestPriceValue(), mLength));
 
             setMarketType();
             setConditionSheetDetail();
@@ -711,10 +709,8 @@ public class CreateConditionSheetFragment extends JMEBaseFragment {
             mType = TYPE_SELL_EMPTY;
             bFlag = true;
 
-            if (null != mFiveSpeedVo && mFiveSpeedVo.getContractId().equals(mContractID)) {
-                mBinding.etPrice.setText(mFiveSpeedVo.getLatestPriceValue());
-                mBinding.etPrice.setSelection(mFiveSpeedVo.getLatestPriceValue().length());
-            }
+            if (null != mFiveSpeedVo && mFiveSpeedVo.getContractId().equals(mContractID))
+                mBinding.etPrice.setText(MarketUtil.formatValue(mFiveSpeedVo.getLatestPriceValue(), mLength));
 
             setMarketType();
             setConditionSheetDetail();
@@ -738,14 +734,12 @@ public class CreateConditionSheetFragment extends JMEBaseFragment {
                     showShortToast(R.string.transaction_sheet_limit_down_price_error);
 
                     mBinding.etPrice.setText(price);
-                    mBinding.etPrice.setSelection(price.length());
                 } else {
                     bFlag = false;
 
                     String valueStr = MarketUtil.formatValue(String.valueOf(value), mLength);
 
                     mBinding.etPrice.setText(valueStr);
-                    mBinding.etPrice.setSelection(valueStr.length());
                 }
             } else {
                 bFlag = false;
@@ -753,7 +747,6 @@ public class CreateConditionSheetFragment extends JMEBaseFragment {
                 String valueStr = MarketUtil.formatValue(String.valueOf(value), mLength);
 
                 mBinding.etPrice.setText(valueStr);
-                mBinding.etPrice.setSelection(valueStr.length());
             }
         }
 
@@ -774,14 +767,12 @@ public class CreateConditionSheetFragment extends JMEBaseFragment {
                     showShortToast(R.string.transaction_sheet_limit_up_price_error);
 
                     mBinding.etPrice.setText(price);
-                    mBinding.etPrice.setSelection(price.length());
                 } else {
                     bFlag = false;
 
                     String valueStr = MarketUtil.formatValue(String.valueOf(value), mLength);
 
                     mBinding.etPrice.setText(valueStr);
-                    mBinding.etPrice.setSelection(valueStr.length());
                 }
             } else {
                 bFlag = false;
@@ -789,7 +780,6 @@ public class CreateConditionSheetFragment extends JMEBaseFragment {
                 String valueStr = MarketUtil.formatValue(String.valueOf(value), mLength);
 
                 mBinding.etPrice.setText(valueStr);
-                mBinding.etPrice.setSelection(valueStr.length());
             }
         }
 
@@ -812,19 +802,15 @@ public class CreateConditionSheetFragment extends JMEBaseFragment {
             long value = new BigDecimal(amount).subtract(new BigDecimal(1)).longValue();
 
             if (mMinOrderQty == -1) {
-                if (new BigDecimal(value).compareTo(new BigDecimal(0)) == 1) {
+                if (new BigDecimal(value).compareTo(new BigDecimal(0)) == 1)
                     mBinding.etAmount.setText(String.valueOf(value));
-                    mBinding.etAmount.setSelection(String.valueOf(value).length());
-                } else {
+                else
                     Toast.makeText(mContext, String.format(mContext.getResources().getString(R.string.transaction_entrust_less), 1), Toast.LENGTH_SHORT).show();
-                }
             } else {
-                if (new BigDecimal(value).compareTo(new BigDecimal(mMinOrderQty)) == -1) {
+                if (new BigDecimal(value).compareTo(new BigDecimal(mMinOrderQty)) == -1)
                     Toast.makeText(mContext, String.format(mContext.getResources().getString(R.string.transaction_entrust_less), mMinOrderQty), Toast.LENGTH_SHORT).show();
-                } else {
+                else
                     mBinding.etAmount.setText(String.valueOf(value));
-                    mBinding.etAmount.setSelection(String.valueOf(value).length());
-                }
             }
 
             setConditionSheetDetail();
@@ -841,19 +827,15 @@ public class CreateConditionSheetFragment extends JMEBaseFragment {
             long value = new BigDecimal(amount).add(new BigDecimal(1)).longValue();
 
             if (mMaxOrderQty == -1) {
-                if (new BigDecimal(value).compareTo(new BigDecimal(mMaxHoldQty == -1 ? mMaxAmount : Math.min(mMaxAmount, mMaxHoldQty))) == 1) {
+                if (new BigDecimal(value).compareTo(new BigDecimal(mMaxHoldQty == -1 ? mMaxAmount : Math.min(mMaxAmount, mMaxHoldQty))) == 1)
                     Toast.makeText(mContext, R.string.transaction_entrust_larger, Toast.LENGTH_SHORT).show();
-                } else {
+                else
                     mBinding.etAmount.setText(String.valueOf(value));
-                    mBinding.etAmount.setSelection(String.valueOf(value).length());
-                }
             } else {
-                if (new BigDecimal(value).compareTo(new BigDecimal(Math.min(mMaxAmount, mMaxOrderQty))) == 1) {
+                if (new BigDecimal(value).compareTo(new BigDecimal(Math.min(mMaxAmount, mMaxOrderQty))) == 1)
                     Toast.makeText(mContext, R.string.transaction_entrust_larger, Toast.LENGTH_SHORT).show();
-                } else {
+                else
                     mBinding.etAmount.setText(String.valueOf(value));
-                    mBinding.etAmount.setSelection(String.valueOf(value).length());
-                }
             }
 
             setConditionSheetDetail();

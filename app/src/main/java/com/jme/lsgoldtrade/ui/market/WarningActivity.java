@@ -4,7 +4,9 @@ import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+
 import androidx.core.content.ContextCompat;
+
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
@@ -146,29 +148,32 @@ public class WarningActivity extends JMEBaseActivity {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if (s.toString().contains(".")) {
+                if (s.toString().contains(".") && !s.toString().equals(".")) {
                     if (s.length() - 1 - s.toString().indexOf(".") > mLength) {
                         s = s.toString().subSequence(0, s.toString().indexOf(".") + (mLength + 1));
 
+                        if (s.toString().endsWith("."))
+                            s = s.toString().substring(0, s.toString().length() - 1);
+
                         mBinding.etCeilingPrice.setText(s);
                         mBinding.etCeilingPrice.setSelection(s.length());
+                    } else {
+                        mBinding.etCeilingPrice.setSelection(s.length());
                     }
-                }
-
-                if (s.toString().trim().equals(".")) {
+                } else if (s.toString().trim().equals(".")) {
                     s = "0" + s;
 
                     mBinding.etCeilingPrice.setText(s);
                     mBinding.etCeilingPrice.setSelection(2);
-                }
-
-                if (s.toString().startsWith("0") && s.toString().trim().length() > 1) {
+                } else if (s.toString().startsWith("0") && s.toString().trim().length() > 1) {
                     if (!s.toString().substring(1, 2).equals(".")) {
                         mBinding.etCeilingPrice.setText(s.subSequence(0, 1));
                         mBinding.etCeilingPrice.setSelection(1);
 
                         return;
                     }
+                } else {
+                    mBinding.etCeilingPrice.setSelection(s.length());
                 }
             }
 
@@ -185,29 +190,32 @@ public class WarningActivity extends JMEBaseActivity {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if (s.toString().contains(".")) {
+                if (s.toString().contains(".") && !s.toString().equals(".")) {
                     if (s.length() - 1 - s.toString().indexOf(".") > mLength) {
                         s = s.toString().subSequence(0, s.toString().indexOf(".") + (mLength + 1));
 
+                        if (s.toString().endsWith("."))
+                            s = s.toString().substring(0, s.toString().length() - 1);
+
                         mBinding.etFloorPrice.setText(s);
                         mBinding.etFloorPrice.setSelection(s.length());
+                    } else {
+                        mBinding.etFloorPrice.setSelection(s.length());
                     }
-                }
-
-                if (s.toString().trim().equals(".")) {
+                } else if (s.toString().trim().equals(".")) {
                     s = "0" + s;
 
                     mBinding.etFloorPrice.setText(s);
                     mBinding.etFloorPrice.setSelection(2);
-                }
-
-                if (s.toString().startsWith("0") && s.toString().trim().length() > 1) {
+                } else if (s.toString().startsWith("0") && s.toString().trim().length() > 1) {
                     if (!s.toString().substring(1, 2).equals(".")) {
                         mBinding.etFloorPrice.setText(s.subSequence(0, 1));
                         mBinding.etFloorPrice.setSelection(1);
 
                         return;
                     }
+                } else {
+                    mBinding.etFloorPrice.setSelection(s.length());
                 }
             }
 
@@ -281,12 +289,10 @@ public class WarningActivity extends JMEBaseActivity {
                 showShortToast(R.string.transaction_limit_down_price_error);
 
                 mBinding.etCeilingPrice.setText(price);
-                mBinding.etCeilingPrice.setSelection(price.length());
             } else {
                 String valueStr = MarketUtil.formatValue(String.valueOf(value), mLength);
 
                 mBinding.etCeilingPrice.setText(valueStr);
-                mBinding.etCeilingPrice.setSelection(valueStr.length());
             }
         }
 
@@ -303,7 +309,6 @@ public class WarningActivity extends JMEBaseActivity {
             String valueStr = MarketUtil.formatValue(String.valueOf(value), mLength);
 
             mBinding.etCeilingPrice.setText(valueStr);
-            mBinding.etCeilingPrice.setSelection(valueStr.length());
         }
 
         public void onClickDownMinus() {
@@ -320,12 +325,10 @@ public class WarningActivity extends JMEBaseActivity {
                 showShortToast(R.string.transaction_limit_down_price_error);
 
                 mBinding.etFloorPrice.setText(price);
-                mBinding.etFloorPrice.setSelection(price.length());
             } else {
                 String valueStr = MarketUtil.formatValue(String.valueOf(value), mLength);
 
                 mBinding.etFloorPrice.setText(valueStr);
-                mBinding.etFloorPrice.setSelection(valueStr.length());
             }
         }
 
@@ -342,7 +345,6 @@ public class WarningActivity extends JMEBaseActivity {
             String valueStr = MarketUtil.formatValue(String.valueOf(value), mLength);
 
             mBinding.etFloorPrice.setText(valueStr);
-            mBinding.etFloorPrice.setSelection(valueStr.length());
         }
 
     }

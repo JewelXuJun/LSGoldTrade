@@ -52,29 +52,29 @@ public class GuaranteeFundSettingPopUpWindow extends JMEBasePopupWindow {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if (s.toString().contains(".")) {
+                if (s.toString().contains(".") && !s.toString().equals(".")) {
                     if (s.length() - 1 - s.toString().indexOf(".") > 2) {
                         s = s.toString().subSequence(0, s.toString().indexOf(".") + (2 + 1));
 
                         mBinding.etGuaranteeFund.setText(s);
                         mBinding.etGuaranteeFund.setSelection(s.length());
+                    } else {
+                        mBinding.etGuaranteeFund.setSelection(s.length());
                     }
-                }
-
-                if (s.toString().trim().equals(".")) {
+                } else if (s.toString().trim().equals(".")) {
                     s = "0" + s;
 
                     mBinding.etGuaranteeFund.setText(s);
                     mBinding.etGuaranteeFund.setSelection(2);
-                }
-
-                if (s.toString().startsWith("0") && s.toString().trim().length() > 1) {
+                } else if (s.toString().startsWith("0") && s.toString().trim().length() > 1) {
                     if (!s.toString().substring(1, 2).equals(".")) {
                         mBinding.etGuaranteeFund.setText(s.subSequence(0, 1));
                         mBinding.etGuaranteeFund.setSelection(1);
 
                         return;
                     }
+                } else {
+                    mBinding.etGuaranteeFund.setSelection(s.length());
                 }
             }
 
@@ -99,7 +99,7 @@ public class GuaranteeFundSettingPopUpWindow extends JMEBasePopupWindow {
     }
 
     private void showSoftKeyboard() {
-        mBinding.etGuaranteeFund.setText("")  ;
+        mBinding.etGuaranteeFund.setText("");
         mBinding.etGuaranteeFund.requestFocus();
 
         new Handler().postDelayed(() -> {

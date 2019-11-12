@@ -137,7 +137,7 @@ public class PlaceOrderFragment extends JMEBaseFragment implements FChart.OnPric
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if (s.toString().contains(".")) {
+                if (s.toString().contains(".") && !s.toString().equals(".")) {
                     if (s.length() - 1 - s.toString().indexOf(".") > mLength) {
                         s = s.toString().subSequence(0, s.toString().indexOf(".") + (mLength + 1));
 
@@ -146,23 +146,23 @@ public class PlaceOrderFragment extends JMEBaseFragment implements FChart.OnPric
 
                         mBinding.etPrice.setText(s);
                         mBinding.etPrice.setSelection(s.length());
+                    } else {
+                        mBinding.etPrice.setSelection(s.length());
                     }
-                }
-
-                if (s.toString().trim().equals(".")) {
+                } else if (s.toString().trim().equals(".")) {
                     s = "0" + s;
 
                     mBinding.etPrice.setText(s);
                     mBinding.etPrice.setSelection(2);
-                }
-
-                if (s.toString().startsWith("0") && s.toString().trim().length() > 1) {
+                } else if (s.toString().startsWith("0") && s.toString().trim().length() > 1) {
                     if (!s.toString().substring(1, 2).equals(".")) {
                         mBinding.etPrice.setText(s.subSequence(0, 1));
                         mBinding.etPrice.setSelection(1);
 
                         return;
                     }
+                } else {
+                    mBinding.etPrice.setSelection(s.length());
                 }
             }
 
@@ -391,9 +391,11 @@ public class PlaceOrderFragment extends JMEBaseFragment implements FChart.OnPric
             showShortToast(R.string.transaction_contract_error);
         else if (TextUtils.isEmpty(mPlaceOrderPrice) || mPlaceOrderPrice.equals(mContext.getResources().getString(R.string.text_no_data_default)))
             showShortToast(R.string.transaction_price_error);
-        else if (new BigDecimal(mPlaceOrderPrice).compareTo(new BigDecimal(mLowerLimitPrice)) == -1)
+        else if (new BigDecimal(mPlaceOrderPrice).compareTo(BigDecimal.ZERO) != 0
+                && new BigDecimal(mPlaceOrderPrice).compareTo(new BigDecimal(mLowerLimitPrice)) == -1)
             showShortToast(R.string.transaction_limit_down_price_error);
-        else if (new BigDecimal(mPlaceOrderPrice).compareTo(new BigDecimal(mHighLimitPrice)) == 1)
+        else if (new BigDecimal(mPlaceOrderPrice).compareTo(BigDecimal.ZERO) != 0
+                && new BigDecimal(mPlaceOrderPrice).compareTo(new BigDecimal(mHighLimitPrice)) == 1)
             showShortToast(R.string.transaction_limit_up_price_error);
         else if (TextUtils.isEmpty(amount))
             showShortToast(R.string.transaction_number_error);
@@ -733,12 +735,10 @@ public class PlaceOrderFragment extends JMEBaseFragment implements FChart.OnPric
                 showShortToast(R.string.transaction_limit_down_price_error);
 
                 mBinding.etPrice.setText(price);
-                mBinding.etPrice.setSelection(price.length());
             } else {
                 String valueStr = MarketUtil.formatValue(String.valueOf(value), mLength);
 
                 mBinding.etPrice.setText(valueStr);
-                mBinding.etPrice.setSelection(valueStr.length());
             }
         }
 
@@ -756,12 +756,10 @@ public class PlaceOrderFragment extends JMEBaseFragment implements FChart.OnPric
                 showShortToast(R.string.transaction_limit_up_price_error);
 
                 mBinding.etPrice.setText(price);
-                mBinding.etPrice.setSelection(price.length());
             } else {
                 String valueStr = MarketUtil.formatValue(String.valueOf(value), mLength);
 
                 mBinding.etPrice.setText(valueStr);
-                mBinding.etPrice.setSelection(valueStr.length());
             }
         }
 

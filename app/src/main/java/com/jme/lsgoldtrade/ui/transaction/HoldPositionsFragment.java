@@ -587,7 +587,7 @@ public class HoldPositionsFragment extends JMEBaseFragment implements OnRefreshL
                     mCurrentHoldPositionsFragment.setFiveSpeedVoList(mFiveSpeedVoList);
 
                     if (bFlag)
-                        initValue(true);
+                        initValue(false);
                     else
                         calculateFloat(mFiveSpeedVoList, mPositionVoList);
                 }

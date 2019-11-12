@@ -94,29 +94,32 @@ public class TransactionStopPopupWindow extends JMEBasePopupWindow {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if (s.toString().contains(".")) {
+                if (s.toString().contains(".") && !s.toString().equals(".")) {
                     if (s.length() - 1 - s.toString().indexOf(".") > mLength) {
                         s = s.toString().subSequence(0, s.toString().indexOf(".") + (mLength + 1));
 
+                        if (s.toString().endsWith("."))
+                            s = s.toString().substring(0, s.toString().length() - 1);
+
                         mBinding.etProfitPrice.setText(s);
                         mBinding.etProfitPrice.setSelection(s.length());
+                    } else {
+                        mBinding.etProfitPrice.setSelection(s.length());
                     }
-                }
-
-                if (s.toString().trim().equals(".")) {
+                } else if (s.toString().trim().equals(".")) {
                     s = "0" + s;
 
                     mBinding.etProfitPrice.setText(s);
                     mBinding.etProfitPrice.setSelection(2);
-                }
-
-                if (s.toString().startsWith("0") && s.toString().trim().length() > 1) {
+                } else if (s.toString().startsWith("0") && s.toString().trim().length() > 1) {
                     if (!s.toString().substring(1, 2).equals(".")) {
                         mBinding.etProfitPrice.setText(s.subSequence(0, 1));
                         mBinding.etProfitPrice.setSelection(1);
 
                         return;
                     }
+                } else {
+                    mBinding.etProfitPrice.setSelection(s.length());
                 }
             }
 
@@ -134,29 +137,32 @@ public class TransactionStopPopupWindow extends JMEBasePopupWindow {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if (s.toString().contains(".")) {
+                if (s.toString().contains(".") && !s.toString().equals(".")) {
                     if (s.length() - 1 - s.toString().indexOf(".") > mLength) {
                         s = s.toString().subSequence(0, s.toString().indexOf(".") + (mLength + 1));
 
+                        if (s.toString().endsWith("."))
+                            s = s.toString().substring(0, s.toString().length() - 1);
+
                         mBinding.etLossPrice.setText(s);
                         mBinding.etLossPrice.setSelection(s.length());
+                    } else {
+                        mBinding.etLossPrice.setSelection(s.length());
                     }
-                }
-
-                if (s.toString().trim().equals(".")) {
+                } else if (s.toString().trim().equals(".")) {
                     s = "0" + s;
 
                     mBinding.etLossPrice.setText(s);
                     mBinding.etLossPrice.setSelection(2);
-                }
-
-                if (s.toString().startsWith("0") && s.toString().trim().length() > 1) {
+                } else if (s.toString().startsWith("0") && s.toString().trim().length() > 1) {
                     if (!s.toString().substring(1, 2).equals(".")) {
                         mBinding.etLossPrice.setText(s.subSequence(0, 1));
                         mBinding.etLossPrice.setSelection(1);
 
                         return;
                     }
+                } else {
+                    mBinding.etLossPrice.setSelection(s.length());
                 }
             }
 
@@ -329,12 +335,10 @@ public class TransactionStopPopupWindow extends JMEBasePopupWindow {
                         : R.string.transaction_sheet_limit_down_price_error3, Toast.LENGTH_SHORT).show();
 
                 mBinding.etProfitPrice.setText(price);
-                mBinding.etProfitPrice.setSelection(price.length());
             } else {
                 String valueStr = MarketUtil.formatValue(String.valueOf(value), mLength);
 
                 mBinding.etProfitPrice.setText(valueStr);
-                mBinding.etProfitPrice.setSelection(valueStr.length());
             }
         }
 
@@ -354,12 +358,10 @@ public class TransactionStopPopupWindow extends JMEBasePopupWindow {
                         : R.string.transaction_sheet_limit_up_price_error3, Toast.LENGTH_SHORT).show();
 
                 mBinding.etProfitPrice.setText(price);
-                mBinding.etProfitPrice.setSelection(price.length());
             } else {
                 String valueStr = MarketUtil.formatValue(String.valueOf(value), mLength);
 
                 mBinding.etProfitPrice.setText(valueStr);
-                mBinding.etProfitPrice.setSelection(valueStr.length());
             }
         }
 
@@ -379,12 +381,10 @@ public class TransactionStopPopupWindow extends JMEBasePopupWindow {
                         : R.string.transaction_sheet_limit_down_price_error2, Toast.LENGTH_SHORT).show();
 
                 mBinding.etLossPrice.setText(price);
-                mBinding.etLossPrice.setSelection(price.length());
             } else {
                 String valueStr = MarketUtil.formatValue(String.valueOf(value), mLength);
 
                 mBinding.etLossPrice.setText(valueStr);
-                mBinding.etLossPrice.setSelection(valueStr.length());
             }
         }
 
@@ -404,12 +404,10 @@ public class TransactionStopPopupWindow extends JMEBasePopupWindow {
                         : R.string.transaction_sheet_limit_up_price_error2, Toast.LENGTH_SHORT).show();
 
                 mBinding.etLossPrice.setText(price);
-                mBinding.etLossPrice.setSelection(price.length());
             } else {
                 String valueStr = MarketUtil.formatValue(String.valueOf(value), mLength);
 
                 mBinding.etLossPrice.setText(valueStr);
-                mBinding.etLossPrice.setSelection(valueStr.length());
             }
         }
 
@@ -423,12 +421,10 @@ public class TransactionStopPopupWindow extends JMEBasePopupWindow {
 
             long value = new BigDecimal(amount).subtract(new BigDecimal(1)).longValue();
 
-            if (new BigDecimal(value).compareTo(new BigDecimal(0)) == 1) {
+            if (new BigDecimal(value).compareTo(new BigDecimal(0)) == 1)
                 mBinding.etAmount.setText(String.valueOf(value));
-                mBinding.etAmount.setSelection(String.valueOf(value).length());
-            } else {
+            else
                 Toast.makeText(mContext, String.format(mContext.getResources().getString(R.string.transaction_entrust_les2), 1), Toast.LENGTH_SHORT).show();
-            }
         }
 
         public void onClickAmountAdd() {
@@ -441,12 +437,10 @@ public class TransactionStopPopupWindow extends JMEBasePopupWindow {
 
             long value = new BigDecimal(amount).add(new BigDecimal(1)).longValue();
 
-            if (new BigDecimal(value).compareTo(new BigDecimal(mPosition)) == 1) {
+            if (new BigDecimal(value).compareTo(new BigDecimal(mPosition)) == 1)
                 Toast.makeText(mContext, R.string.transaction_entrust_larger3, Toast.LENGTH_SHORT).show();
-            } else {
+            else
                 mBinding.etAmount.setText(String.valueOf(value));
-                mBinding.etAmount.setSelection(String.valueOf(value).length());
-            }
         }
 
         public void onClickEntrustTypeTips() {

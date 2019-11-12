@@ -507,7 +507,6 @@ public class PlaceOrderActivity extends JMEBaseActivity {
                 String valueStr = String.valueOf(value);
 
                 mBinding.etAmount.setText(valueStr);
-                mBinding.etAmount.setSelection(valueStr.length());
 
                 calculateMoneyEnough(valueStr);
             }
@@ -525,7 +524,6 @@ public class PlaceOrderActivity extends JMEBaseActivity {
             String valueStr = String.valueOf(value);
 
             mBinding.etAmount.setText(valueStr);
-            mBinding.etAmount.setSelection(valueStr.length());
 
             calculateMoneyEnough(valueStr);
         }

@@ -93,7 +93,7 @@ public class SheetModifyPopUpWindow extends JMEBasePopupWindow {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if (s.toString().contains(".")) {
+                if (s.toString().contains(".") && !s.toString().equals(".")) {
                     if (s.length() - 1 - s.toString().indexOf(".") > mLength) {
                         s = s.toString().subSequence(0, s.toString().indexOf(".") + (mLength + 1));
 
@@ -102,23 +102,23 @@ public class SheetModifyPopUpWindow extends JMEBasePopupWindow {
 
                         mBinding.etPrice.setText(s);
                         mBinding.etPrice.setSelection(s.length());
+                    } else {
+                        mBinding.etPrice.setSelection(s.length());
                     }
-                }
-
-                if (s.toString().trim().equals(".")) {
+                } else if (s.toString().trim().equals(".")) {
                     s = "0" + s;
 
                     mBinding.etPrice.setText(s);
                     mBinding.etPrice.setSelection(2);
-                }
-
-                if (s.toString().startsWith("0") && s.toString().trim().length() > 1) {
+                } else if (s.toString().startsWith("0") && s.toString().trim().length() > 1) {
                     if (!s.toString().substring(1, 2).equals(".")) {
                         mBinding.etPrice.setText(s.subSequence(0, 1));
                         mBinding.etPrice.setSelection(1);
 
                         return;
                     }
+                } else {
+                    mBinding.etPrice.setSelection(s.length());
                 }
             }
 
@@ -304,7 +304,6 @@ public class SheetModifyPopUpWindow extends JMEBasePopupWindow {
             String valueStr = MarketUtil.formatValue(String.valueOf(value), mLength);
 
             mBinding.etPrice.setText(valueStr);
-            mBinding.etPrice.setSelection(valueStr.length());
         }
 
         public void onClickPriceAdd() {
@@ -314,7 +313,6 @@ public class SheetModifyPopUpWindow extends JMEBasePopupWindow {
             String valueStr = MarketUtil.formatValue(String.valueOf(value), mLength);
 
             mBinding.etPrice.setText(valueStr);
-            mBinding.etPrice.setSelection(valueStr.length());
         }
 
         public void onClickAmountMinus() {
@@ -328,19 +326,15 @@ public class SheetModifyPopUpWindow extends JMEBasePopupWindow {
             long value = new BigDecimal(amount).subtract(new BigDecimal(1)).longValue();
 
             if (mMinOrderQty == -1) {
-                if (new BigDecimal(value).compareTo(new BigDecimal(0)) == 1) {
+                if (new BigDecimal(value).compareTo(new BigDecimal(0)) == 1)
                     mBinding.etAmount.setText(String.valueOf(value));
-                    mBinding.etAmount.setSelection(String.valueOf(value).length());
-                } else {
+                else
                     Toast.makeText(mContext, String.format(mContext.getResources().getString(R.string.transaction_entrust_less), 1), Toast.LENGTH_SHORT).show();
-                }
             } else {
-                if (new BigDecimal(value).compareTo(new BigDecimal(mMinOrderQty)) == -1) {
+                if (new BigDecimal(value).compareTo(new BigDecimal(mMinOrderQty)) == -1)
                     Toast.makeText(mContext, String.format(mContext.getResources().getString(R.string.transaction_entrust_less), mMinOrderQty), Toast.LENGTH_SHORT).show();
-                } else {
+                else
                     mBinding.etAmount.setText(String.valueOf(value));
-                    mBinding.etAmount.setSelection(String.valueOf(value).length());
-                }
             }
 
             setConditionSheetDetail();
@@ -357,19 +351,15 @@ public class SheetModifyPopUpWindow extends JMEBasePopupWindow {
             long value = new BigDecimal(amount).add(new BigDecimal(1)).longValue();
 
             if (mMaxOrderQty == -1) {
-                if (new BigDecimal(value).compareTo(new BigDecimal(mMaxHoldQty == -1 ? mMaxAmount : Math.min(mMaxAmount, mMaxHoldQty))) == 1) {
+                if (new BigDecimal(value).compareTo(new BigDecimal(mMaxHoldQty == -1 ? mMaxAmount : Math.min(mMaxAmount, mMaxHoldQty))) == 1)
                     Toast.makeText(mContext, R.string.transaction_entrust_larger, Toast.LENGTH_SHORT).show();
-                } else {
+                else
                     mBinding.etAmount.setText(String.valueOf(value));
-                    mBinding.etAmount.setSelection(String.valueOf(value).length());
-                }
             } else {
-                if (new BigDecimal(value).compareTo(new BigDecimal(Math.min(mMaxAmount, mMaxOrderQty))) == 1) {
+                if (new BigDecimal(value).compareTo(new BigDecimal(Math.min(mMaxAmount, mMaxOrderQty))) == 1)
                     Toast.makeText(mContext, R.string.transaction_entrust_larger, Toast.LENGTH_SHORT).show();
-                } else {
+                else
                     mBinding.etAmount.setText(String.valueOf(value));
-                    mBinding.etAmount.setSelection(String.valueOf(value).length());
-                }
             }
 
             setConditionSheetDetail();
