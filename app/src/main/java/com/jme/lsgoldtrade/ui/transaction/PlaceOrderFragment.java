@@ -350,7 +350,10 @@ public class PlaceOrderFragment extends JMEBaseFragment implements FChart.OnPric
     private void doTransaction() {
         String contractID = mBinding.tvContractId.getText().toString();
         String amount = mBinding.etAmount.getText().toString();
-        long holdAmount = Long.parseLong(amount) + getPosition(contractID);
+        long holdAmount = 0;
+
+        if (!TextUtils.isEmpty(amount))
+            holdAmount = Long.parseLong(amount) + getPosition(contractID);
 
         String priceStr = mBinding.etPrice.getText().toString();
 
