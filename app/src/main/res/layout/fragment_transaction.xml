@@ -314,21 +314,6 @@
 
             <include layout="@layout/item_line_vertical" />
 
-            <TextView
-                android:id="@+id/tv_running_message"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/height_tabhost"
-                android:background="@color/color_red"
-                android:drawableLeft="@mipmap/ic_message"
-                android:drawablePadding="@dimen/common_page_padding"
-                android:gravity="center_vertical"
-                android:onClick="@{() -> handlers.onClickConditionOrderRun()}"
-                android:paddingLeft="@dimen/common_area_margin"
-                android:paddingRight="@dimen/common_area_margin"
-                android:textColor="@color/white"
-                android:textSize="@dimen/size_middle"
-                android:visibility="gone" />
-
             <androidx.viewpager.widget.ViewPager
                 android:id="@+id/tab_viewpager"
                 android:layout_width="match_parent"

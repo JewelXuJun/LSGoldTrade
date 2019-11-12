@@ -10,6 +10,7 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
@@ -41,6 +42,7 @@ public class TransactionStopPopupWindow extends JMEBasePopupWindow {
 
     private long mPosition;
     private float mPriceMove = 0.01f;
+    private int mLength = 2;
     private String mContractID;
     private String mType = "";
 
@@ -93,8 +95,8 @@ public class TransactionStopPopupWindow extends JMEBasePopupWindow {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 if (s.toString().contains(".")) {
-                    if (s.length() - 1 - s.toString().indexOf(".") > AppConfig.Length_Limit) {
-                        s = s.toString().subSequence(0, s.toString().indexOf(".") + (AppConfig.Length_Limit + 1));
+                    if (s.length() - 1 - s.toString().indexOf(".") > mLength) {
+                        s = s.toString().subSequence(0, s.toString().indexOf(".") + (mLength + 1));
 
                         mBinding.etProfitPrice.setText(s);
                         mBinding.etProfitPrice.setSelection(s.length());
@@ -133,8 +135,8 @@ public class TransactionStopPopupWindow extends JMEBasePopupWindow {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 if (s.toString().contains(".")) {
-                    if (s.length() - 1 - s.toString().indexOf(".") > AppConfig.Length_Limit) {
-                        s = s.toString().subSequence(0, s.toString().indexOf(".") + (AppConfig.Length_Limit + 1));
+                    if (s.length() - 1 - s.toString().indexOf(".") > mLength) {
+                        s = s.toString().subSequence(0, s.toString().indexOf(".") + (mLength + 1));
 
                         mBinding.etLossPrice.setText(s);
                         mBinding.etLossPrice.setSelection(s.length());
@@ -188,6 +190,7 @@ public class TransactionStopPopupWindow extends JMEBasePopupWindow {
         mPositionVo = positionVo;
         mContractInfoVo = contractInfoVo;
         mConditionOrderInfoVo = conditionOrderInfoVo;
+        mLength = mContractID.equals("Ag(T+D)") ? 0 : 2;
 
         if (stopOrderFlag) {
             mBinding.layoutNotSetting.setVisibility(View.GONE);
@@ -223,9 +226,9 @@ public class TransactionStopPopupWindow extends JMEBasePopupWindow {
             mBinding.btnModify.setVisibility(View.GONE);
             mBinding.btnModifySetting.setVisibility(View.GONE);
             mBinding.etProfitPrice.setText("");
-            mBinding.etProfitPrice.setInputType(mContractID.equals("Ag(T+D)") ? InputType.TYPE_CLASS_NUMBER : InputType.TYPE_NUMBER_FLAG_DECIMAL);
+            mBinding.etProfitPrice.setInputType(mContractID.equals("Ag(T+D)") ? InputType.TYPE_CLASS_NUMBER : EditorInfo.TYPE_CLASS_NUMBER | EditorInfo.TYPE_NUMBER_FLAG_DECIMAL);
             mBinding.etLossPrice.setText("");
-            mBinding.etLossPrice.setInputType(mContractID.equals("Ag(T+D)") ? InputType.TYPE_CLASS_NUMBER : InputType.TYPE_NUMBER_FLAG_DECIMAL);
+            mBinding.etLossPrice.setInputType(mContractID.equals("Ag(T+D)") ? InputType.TYPE_CLASS_NUMBER : EditorInfo.TYPE_CLASS_NUMBER | EditorInfo.TYPE_NUMBER_FLAG_DECIMAL);
             mBinding.etAmount.setText(String.valueOf(mPosition));
             mBinding.checkboxEffectiveOnThatDay.setChecked(true);
             mBinding.checkboxEffectiveBeforeCancel.setChecked(false);
@@ -328,7 +331,7 @@ public class TransactionStopPopupWindow extends JMEBasePopupWindow {
                 mBinding.etProfitPrice.setText(price);
                 mBinding.etProfitPrice.setSelection(price.length());
             } else {
-                String valueStr = MarketUtil.formatValue(String.valueOf(value), 2);
+                String valueStr = MarketUtil.formatValue(String.valueOf(value), mLength);
 
                 mBinding.etProfitPrice.setText(valueStr);
                 mBinding.etProfitPrice.setSelection(valueStr.length());
@@ -353,7 +356,7 @@ public class TransactionStopPopupWindow extends JMEBasePopupWindow {
                 mBinding.etProfitPrice.setText(price);
                 mBinding.etProfitPrice.setSelection(price.length());
             } else {
-                String valueStr = MarketUtil.formatValue(String.valueOf(value), 2);
+                String valueStr = MarketUtil.formatValue(String.valueOf(value), mLength);
 
                 mBinding.etProfitPrice.setText(valueStr);
                 mBinding.etProfitPrice.setSelection(valueStr.length());
@@ -378,7 +381,7 @@ public class TransactionStopPopupWindow extends JMEBasePopupWindow {
                 mBinding.etLossPrice.setText(price);
                 mBinding.etLossPrice.setSelection(price.length());
             } else {
-                String valueStr = MarketUtil.formatValue(String.valueOf(value), 2);
+                String valueStr = MarketUtil.formatValue(String.valueOf(value), mLength);
 
                 mBinding.etLossPrice.setText(valueStr);
                 mBinding.etLossPrice.setSelection(valueStr.length());
@@ -403,7 +406,7 @@ public class TransactionStopPopupWindow extends JMEBasePopupWindow {
                 mBinding.etLossPrice.setText(price);
                 mBinding.etLossPrice.setSelection(price.length());
             } else {
-                String valueStr = MarketUtil.formatValue(String.valueOf(value), 2);
+                String valueStr = MarketUtil.formatValue(String.valueOf(value), mLength);
 
                 mBinding.etLossPrice.setText(valueStr);
                 mBinding.etLossPrice.setSelection(valueStr.length());
@@ -528,9 +531,9 @@ public class TransactionStopPopupWindow extends JMEBasePopupWindow {
             mBinding.btnModify.setVisibility(View.GONE);
             mBinding.btnModifySetting.setVisibility(View.VISIBLE);
             mBinding.etProfitPrice.setText(1 == stopProfitPrice ? "" : MarketUtil.formatValue(MarketUtil.getPriceValue(stopProfitPrice), 2));
-            mBinding.etProfitPrice.setInputType(mContractID.equals("Ag(T+D)") ? InputType.TYPE_CLASS_NUMBER : InputType.TYPE_NUMBER_FLAG_DECIMAL);
+            mBinding.etProfitPrice.setInputType(mContractID.equals("Ag(T+D)") ? InputType.TYPE_CLASS_NUMBER : EditorInfo.TYPE_CLASS_NUMBER | EditorInfo.TYPE_NUMBER_FLAG_DECIMAL);
             mBinding.etLossPrice.setText(1 == stopLossPrice ? "" : MarketUtil.formatValue(MarketUtil.getPriceValue(stopLossPrice), 2));
-            mBinding.etLossPrice.setInputType(mContractID.equals("Ag(T+D)") ? InputType.TYPE_CLASS_NUMBER : InputType.TYPE_NUMBER_FLAG_DECIMAL);
+            mBinding.etLossPrice.setInputType(mContractID.equals("Ag(T+D)") ? InputType.TYPE_CLASS_NUMBER : EditorInfo.TYPE_CLASS_NUMBER | EditorInfo.TYPE_NUMBER_FLAG_DECIMAL);
             mBinding.etAmount.setText(String.valueOf(mPosition));
             mBinding.checkboxEffectiveOnThatDay.setChecked(mConditionOrderInfoVo.getEffectiveTimeFlag() == 0);
             mBinding.checkboxEffectiveBeforeCancel.setChecked(mConditionOrderInfoVo.getEffectiveTimeFlag() == 1);

@@ -69,8 +69,8 @@ public class ElectronicCardMoneyOutFragment extends JMEBaseFragment implements O
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 if (s.toString().contains(".")) {
-                    if (s.length() - 1 - s.toString().indexOf(".") > AppConfig.Length_Limit) {
-                        s = s.toString().subSequence(0, s.toString().indexOf(".") + (AppConfig.Length_Limit + 1));
+                    if (s.length() - 1 - s.toString().indexOf(".") > 2) {
+                        s = s.toString().subSequence(0, s.toString().indexOf(".") + (2 + 1));
 
                         mBinding.etTransferIcbcElectronicCardMoneyOut.setText(s);
                         mBinding.etTransferIcbcElectronicCardMoneyOut.setSelection(s.length());

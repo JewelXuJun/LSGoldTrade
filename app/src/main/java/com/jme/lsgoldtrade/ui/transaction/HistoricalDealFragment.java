@@ -10,6 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.datai.common.charts.common.Config;
 import com.jme.common.network.DTRequest;
 import com.jme.common.network.Head;
 import com.jme.common.util.DateUtil;
@@ -95,7 +96,7 @@ public class HistoricalDealFragment extends JMEBaseFragment implements OnRefresh
     private void initDate() {
         getTodayCalendar();
 
-        mStartTime = getStartTime(mYear, mMonth, mDayOfMonth);
+        mStartTime = getStartTime(mYear, mMonth, mDayOfMonth) - 2 * Config.DAY;
         mEndTime = getEndTime(mYear, mMonth, mDayOfMonth);
 
         mBinding.tvStartTime.setText(DateUtil.dateToString(mStartTime));

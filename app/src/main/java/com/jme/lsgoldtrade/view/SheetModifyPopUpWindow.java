@@ -7,6 +7,7 @@ import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
@@ -53,6 +54,7 @@ public class SheetModifyPopUpWindow extends JMEBasePopupWindow {
     private int mBsFlag;
     private int mOcFlag;
     private int mEffectiveTimeFlag;
+    private int mLength = 2;
 
     public SheetModifyPopUpWindow(Context context) {
         super(context);
@@ -92,8 +94,11 @@ public class SheetModifyPopUpWindow extends JMEBasePopupWindow {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 if (s.toString().contains(".")) {
-                    if (s.length() - 1 - s.toString().indexOf(".") > AppConfig.Length_Limit) {
-                        s = s.toString().subSequence(0, s.toString().indexOf(".") + (AppConfig.Length_Limit + 1));
+                    if (s.length() - 1 - s.toString().indexOf(".") > mLength) {
+                        s = s.toString().subSequence(0, s.toString().indexOf(".") + (mLength + 1));
+
+                        if (s.toString().endsWith("."))
+                            s = s.toString().substring(0, s.toString().length() - 1);
 
                         mBinding.etPrice.setText(s);
                         mBinding.etPrice.setSelection(s.length());
@@ -164,7 +169,6 @@ public class SheetModifyPopUpWindow extends JMEBasePopupWindow {
         mPositionVo = positionVo;
         mContractInfoVo = contractInfoVo;
         mConditionOrderInfoVo = conditionOrderInfoVo;
-
         mContractID = conditionOrderInfoVo.getContractId();
         mBsFlag = conditionOrderInfoVo.getBsFlag();
         mOcFlag = conditionOrderInfoVo.getOcFlag();
@@ -175,6 +179,7 @@ public class SheetModifyPopUpWindow extends JMEBasePopupWindow {
         mMinOrderQty = null == mContractInfoVo ? 0 : mContractInfoVo.getMinOrderQty();
         mMaxOrderQty = null == mContractInfoVo ? 0 : mContractInfoVo.getMaxOrderQty();
         mMaxHoldQty = null == mContractInfoVo ? 0 : mContractInfoVo.getMaxHoldQty();
+        mLength = mContractID.equals("Ag(T+D)") ? 0 : 2;
 
         mBinding.tvContractName.setText(mContractID);
         mBinding.tvDirection.setText(mBsFlag == 1 && mOcFlag == 0 ? mContext.getResources().getString(R.string.market_buy_more)
@@ -184,7 +189,7 @@ public class SheetModifyPopUpWindow extends JMEBasePopupWindow {
                 : ContextCompat.getColor(mContext, R.color.color_text_normal));
         mBinding.tvLastPrice.setText(getTriggerPriceValue(mBsFlag, mOcFlag));
         mBinding.etPrice.setText(conditionOrderInfoVo.getTriggerPriceStr());
-        mBinding.etPrice.setInputType(mContractID.equals("Ag(T+D)") ? InputType.TYPE_CLASS_NUMBER : InputType.TYPE_NUMBER_FLAG_DECIMAL);
+        mBinding.etPrice.setInputType(mContractID.equals("Ag(T+D)") ? InputType.TYPE_CLASS_NUMBER : EditorInfo.TYPE_CLASS_NUMBER | EditorInfo.TYPE_NUMBER_FLAG_DECIMAL);
         mBinding.etAmount.setText(String.valueOf(conditionOrderInfoVo.getEntrustNumber()));
         mBinding.checkboxEffectiveOnThatDay.setChecked(mEffectiveTimeFlag == 0);
         mBinding.checkboxEffectiveBeforeCancel.setChecked(mEffectiveTimeFlag == 1);
@@ -296,7 +301,7 @@ public class SheetModifyPopUpWindow extends JMEBasePopupWindow {
             hiddenKeyBoard();
 
             float value = new BigDecimal(getPrice()).subtract(new BigDecimal(mPriceMove)).floatValue();
-            String valueStr = MarketUtil.formatValue(String.valueOf(value), 2);
+            String valueStr = MarketUtil.formatValue(String.valueOf(value), mLength);
 
             mBinding.etPrice.setText(valueStr);
             mBinding.etPrice.setSelection(valueStr.length());
@@ -306,7 +311,7 @@ public class SheetModifyPopUpWindow extends JMEBasePopupWindow {
             hiddenKeyBoard();
 
             float value = new BigDecimal(getPrice()).add(new BigDecimal(mPriceMove)).floatValue();
-            String valueStr = MarketUtil.formatValue(String.valueOf(value), 2);
+            String valueStr = MarketUtil.formatValue(String.valueOf(value), mLength);
 
             mBinding.etPrice.setText(valueStr);
             mBinding.etPrice.setSelection(valueStr.length());

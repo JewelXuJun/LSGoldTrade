@@ -23,7 +23,6 @@ public class AppConfig {
     public static final long Rate_Divisor = 1000000;
     public static final long HandWeight_Divisor = 1000000;
 
-    public static final int Length_Limit = 2;
     public static final int MaxLength = 500;
 
     public static final String CustomerServicePhone = "4008276006";

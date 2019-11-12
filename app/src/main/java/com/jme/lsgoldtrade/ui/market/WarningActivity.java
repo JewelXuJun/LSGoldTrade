@@ -47,6 +47,7 @@ public class WarningActivity extends JMEBaseActivity {
     private String lowPriceIsOpen = "0";
     private String id = "";
     private boolean bFlag = false;
+    private int mLength = 2;
 
     private Handler mHandler = new Handler() {
         public void handleMessage(Message msg) {
@@ -80,6 +81,8 @@ public class WarningActivity extends JMEBaseActivity {
             mPriceMove = new BigDecimal(100).divide(new BigDecimal(100)).floatValue();
         else
             mPriceMove = new BigDecimal(1).divide(new BigDecimal(100)).floatValue();
+
+        mLength = mContractID.equals("Ag(T+D)") ? 0 : 2;
 
         mBinding.type.setText(mContractID);
     }
@@ -144,8 +147,8 @@ public class WarningActivity extends JMEBaseActivity {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 if (s.toString().contains(".")) {
-                    if (s.length() - 1 - s.toString().indexOf(".") > AppConfig.Length_Limit) {
-                        s = s.toString().subSequence(0, s.toString().indexOf(".") + (AppConfig.Length_Limit + 1));
+                    if (s.length() - 1 - s.toString().indexOf(".") > mLength) {
+                        s = s.toString().subSequence(0, s.toString().indexOf(".") + (mLength + 1));
 
                         mBinding.etCeilingPrice.setText(s);
                         mBinding.etCeilingPrice.setSelection(s.length());
@@ -183,8 +186,8 @@ public class WarningActivity extends JMEBaseActivity {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 if (s.toString().contains(".")) {
-                    if (s.length() - 1 - s.toString().indexOf(".") > AppConfig.Length_Limit) {
-                        s = s.toString().subSequence(0, s.toString().indexOf(".") + (AppConfig.Length_Limit + 1));
+                    if (s.length() - 1 - s.toString().indexOf(".") > mLength) {
+                        s = s.toString().subSequence(0, s.toString().indexOf(".") + (mLength + 1));
 
                         mBinding.etFloorPrice.setText(s);
                         mBinding.etFloorPrice.setSelection(s.length());
@@ -280,7 +283,7 @@ public class WarningActivity extends JMEBaseActivity {
                 mBinding.etCeilingPrice.setText(price);
                 mBinding.etCeilingPrice.setSelection(price.length());
             } else {
-                String valueStr = MarketUtil.formatValue(String.valueOf(value), 2);
+                String valueStr = MarketUtil.formatValue(String.valueOf(value), mLength);
 
                 mBinding.etCeilingPrice.setText(valueStr);
                 mBinding.etCeilingPrice.setSelection(valueStr.length());
@@ -297,7 +300,7 @@ public class WarningActivity extends JMEBaseActivity {
 
             float value = new BigDecimal(price).add(new BigDecimal(mPriceMove)).floatValue();
 
-            String valueStr = MarketUtil.formatValue(String.valueOf(value), 2);
+            String valueStr = MarketUtil.formatValue(String.valueOf(value), mLength);
 
             mBinding.etCeilingPrice.setText(valueStr);
             mBinding.etCeilingPrice.setSelection(valueStr.length());
@@ -319,7 +322,7 @@ public class WarningActivity extends JMEBaseActivity {
                 mBinding.etFloorPrice.setText(price);
                 mBinding.etFloorPrice.setSelection(price.length());
             } else {
-                String valueStr = MarketUtil.formatValue(String.valueOf(value), 2);
+                String valueStr = MarketUtil.formatValue(String.valueOf(value), mLength);
 
                 mBinding.etFloorPrice.setText(valueStr);
                 mBinding.etFloorPrice.setSelection(valueStr.length());
@@ -336,7 +339,7 @@ public class WarningActivity extends JMEBaseActivity {
 
             float value = new BigDecimal(price).add(new BigDecimal(mPriceMove)).floatValue();
 
-            String valueStr = MarketUtil.formatValue(String.valueOf(value), 2);
+            String valueStr = MarketUtil.formatValue(String.valueOf(value), mLength);
 
             mBinding.etFloorPrice.setText(valueStr);
             mBinding.etFloorPrice.setSelection(valueStr.length());

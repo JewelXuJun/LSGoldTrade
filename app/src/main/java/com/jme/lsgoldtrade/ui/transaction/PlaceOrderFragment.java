@@ -10,6 +10,8 @@ import android.text.InputType;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.Gravity;
+import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 
 import androidx.core.content.ContextCompat;
@@ -26,10 +28,12 @@ import com.jme.lsgoldtrade.base.JMEBaseFragment;
 import com.jme.lsgoldtrade.config.AppConfig;
 import com.jme.lsgoldtrade.config.Constants;
 import com.jme.lsgoldtrade.databinding.FragmentPlaceOrderBinding;
+import com.jme.lsgoldtrade.domain.ConditionOrderRunVo;
 import com.jme.lsgoldtrade.domain.ContractInfoVo;
 import com.jme.lsgoldtrade.domain.FiveSpeedVo;
 import com.jme.lsgoldtrade.domain.PositionPageVo;
 import com.jme.lsgoldtrade.domain.PositionVo;
+import com.jme.lsgoldtrade.service.ConditionService;
 import com.jme.lsgoldtrade.service.ManagementService;
 import com.jme.lsgoldtrade.service.MarketService;
 import com.jme.lsgoldtrade.service.TradeService;
@@ -51,13 +55,17 @@ public class PlaceOrderFragment extends JMEBaseFragment implements FChart.OnPric
 
     private boolean bVisibleToUser = false;
     private boolean bFlag = true;
+    private int mConditionOrderRunNum;
+    private int mStopOrderRunNum;
     private int mSelectItem = 0;
     private int mBsFlag = 0;
     private int mOcFlag = 0;
+    private int mLength = 2;
     private float mPriceMove = 0.00f;
     private long mMinOrderQty = 0;
     private long mMaxOrderQty = 0;
     private long mMaxHoldQty = 0;
+
     private String mLowerLimitPrice;
     private String mHighLimitPrice;
     private String mPlaceOrderPrice;
@@ -129,22 +137,23 @@ public class PlaceOrderFragment extends JMEBaseFragment implements FChart.OnPric
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if (!mBinding.tvContractId.getText().toString().trim().equals("Ag(T+D)")) {
-                    if (s.toString().contains(".")) {
-                        if (s.length() - 1 - s.toString().indexOf(".") > AppConfig.Length_Limit) {
-                            s = s.toString().subSequence(0, s.toString().indexOf(".") + (AppConfig.Length_Limit + 1));
+                if (s.toString().contains(".")) {
+                    if (s.length() - 1 - s.toString().indexOf(".") > mLength) {
+                        s = s.toString().subSequence(0, s.toString().indexOf(".") + (mLength + 1));
 
-                            mBinding.etPrice.setText(s);
-                            mBinding.etPrice.setSelection(s.length());
-                        }
-                    }
-
-                    if (s.toString().trim().equals(".")) {
-                        s = "0" + s;
+                        if (s.toString().endsWith("."))
+                            s = s.toString().substring(0, s.toString().length() - 1);
 
                         mBinding.etPrice.setText(s);
-                        mBinding.etPrice.setSelection(2);
+                        mBinding.etPrice.setSelection(s.length());
                     }
+                }
+
+                if (s.toString().trim().equals(".")) {
+                    s = "0" + s;
+
+                    mBinding.etPrice.setText(s);
+                    mBinding.etPrice.setSelection(2);
                 }
 
                 if (s.toString().startsWith("0") && s.toString().trim().length() > 1) {
@@ -197,6 +206,7 @@ public class PlaceOrderFragment extends JMEBaseFragment implements FChart.OnPric
             mPositionVoList.clear();
 
             setContractNameData();
+            queryConditionOrderRun();
             getFiveSpeedQuotes(true);
             getPosition();
         } else {
@@ -215,6 +225,7 @@ public class PlaceOrderFragment extends JMEBaseFragment implements FChart.OnPric
             mPositionVoList.clear();
 
             setContractNameData();
+            queryConditionOrderRun();
             getFiveSpeedQuotes(true);
             getPosition();
         }
@@ -261,10 +272,15 @@ public class PlaceOrderFragment extends JMEBaseFragment implements FChart.OnPric
             mBinding.tvContractId.setText(AppConfig.Select_ContractId);
             mBinding.etPrice.setText("");
 
-            if (mBinding.tvContractId.getText().toString().trim().equals("Ag(T+D)"))
+            if (mBinding.tvContractId.getText().toString().trim().equals("Ag(T+D)")) {
+                mLength = 0;
+
                 mBinding.etPrice.setInputType(InputType.TYPE_CLASS_NUMBER);
-            else
-                mBinding.etPrice.setInputType(InputType.TYPE_NUMBER_FLAG_DECIMAL);
+            } else {
+                mLength = 2;
+
+                mBinding.etPrice.setInputType(EditorInfo.TYPE_CLASS_NUMBER | EditorInfo.TYPE_NUMBER_FLAG_DECIMAL);
+            }
 
             if (null != mContract) {
                 mSelectItem = mContract.getContractIDPosition(mBinding.tvContractId.getText().toString());
@@ -304,10 +320,15 @@ public class PlaceOrderFragment extends JMEBaseFragment implements FChart.OnPric
                 mBinding.etAmount.setText("1");
                 mContractInfoVo = mContract.getContractInfoFromID(contractID);
 
-                if (mBinding.tvContractId.getText().toString().trim().equals("Ag(T+D)"))
+                if (mBinding.tvContractId.getText().toString().trim().equals("Ag(T+D)")) {
+                    mLength = 0;
+
                     mBinding.etPrice.setInputType(InputType.TYPE_CLASS_NUMBER);
-                else
-                    mBinding.etPrice.setInputType(InputType.TYPE_NUMBER_FLAG_DECIMAL);
+                } else {
+                    mLength = 2;
+
+                    mBinding.etPrice.setInputType(EditorInfo.TYPE_CLASS_NUMBER | EditorInfo.TYPE_NUMBER_FLAG_DECIMAL);
+                }
 
                 AppConfig.Select_ContractId = contractID;
                 setContractData();
@@ -424,6 +445,10 @@ public class PlaceOrderFragment extends JMEBaseFragment implements FChart.OnPric
         return NetWorkUtils.isWifiConnected(mContext) ? AppConfig.TimeInterval_WiFi : AppConfig.TimeInterval_NetWork;
     }
 
+    private void queryConditionOrderRun() {
+        sendRequest(ConditionService.getInstance().queryConditionOrderRun, new HashMap<>(), false, false, false);
+    }
+
     private void getFiveSpeedQuotes(boolean enable) {
         HashMap<String, String> params = new HashMap<>();
         params.put("list", mBinding.tvContractId.getText().toString().trim());
@@ -467,6 +492,42 @@ public class PlaceOrderFragment extends JMEBaseFragment implements FChart.OnPric
         super.DataReturn(request, head, response);
 
         switch (request.getApi().getName()) {
+            case "QueryConditionOrderRun":
+                if (head.isSuccess()) {
+                    ConditionOrderRunVo conditionOrderRunVo;
+
+                    try {
+                        conditionOrderRunVo = (ConditionOrderRunVo) response;
+                    } catch (Exception e) {
+                        conditionOrderRunVo = null;
+
+                        e.printStackTrace();
+                    }
+
+                    if (null == conditionOrderRunVo)
+                        return;
+
+                    mConditionOrderRunNum = conditionOrderRunVo.getConditionOrderRunNum();
+                    mStopOrderRunNum = conditionOrderRunVo.getStopOrderRunNum();
+
+                    if (0 == mConditionOrderRunNum && 0 == mStopOrderRunNum) {
+                        mBinding.tvRunningMessage.setVisibility(View.GONE);
+                    } else {
+                        String message;
+
+                        if (0 != mConditionOrderRunNum && 0 == mStopOrderRunNum)
+                            message = String.format(mContext.getResources().getString(R.string.transaction_condition_sheet_running_message), mConditionOrderRunNum);
+                        else if (0 == mConditionOrderRunNum && 0 != mStopOrderRunNum)
+                            message = String.format(mContext.getResources().getString(R.string.transaction_stop_running_message), mStopOrderRunNum);
+                        else
+                            message = String.format(mContext.getResources().getString(R.string.transaction_all_running_message), mConditionOrderRunNum, mStopOrderRunNum);
+
+                        mBinding.tvRunningMessage.setText(message);
+                        mBinding.tvRunningMessage.setVisibility(View.VISIBLE);
+                    }
+                }
+
+                break;
             case "GetFiveSpeedQuotes":
                 if (head.isSuccess()) {
                     List<FiveSpeedVo> list;
@@ -618,6 +679,13 @@ public class PlaceOrderFragment extends JMEBaseFragment implements FChart.OnPric
 
     public class ClickHandlers {
 
+        public void onClickConditionOrderRun() {
+            ARouter.getInstance()
+                    .build(Constants.ARouterUriConst.CONDITIONSHEET)
+                    .withInt("Type", 0 != mConditionOrderRunNum ? 1 : 2)
+                    .navigation();
+        }
+
         public void onClickSelectContract() {
             hiddenKeyBoard();
 
@@ -667,7 +735,7 @@ public class PlaceOrderFragment extends JMEBaseFragment implements FChart.OnPric
                 mBinding.etPrice.setText(price);
                 mBinding.etPrice.setSelection(price.length());
             } else {
-                String valueStr = MarketUtil.formatValue(String.valueOf(value), 2);
+                String valueStr = MarketUtil.formatValue(String.valueOf(value), mLength);
 
                 mBinding.etPrice.setText(valueStr);
                 mBinding.etPrice.setSelection(valueStr.length());
@@ -690,7 +758,7 @@ public class PlaceOrderFragment extends JMEBaseFragment implements FChart.OnPric
                 mBinding.etPrice.setText(price);
                 mBinding.etPrice.setSelection(price.length());
             } else {
-                String valueStr = MarketUtil.formatValue(String.valueOf(value), 2);
+                String valueStr = MarketUtil.formatValue(String.valueOf(value), mLength);
 
                 mBinding.etPrice.setText(valueStr);
                 mBinding.etPrice.setSelection(valueStr.length());

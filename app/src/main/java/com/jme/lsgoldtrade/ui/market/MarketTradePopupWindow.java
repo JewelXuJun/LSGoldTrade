@@ -5,10 +5,12 @@ import android.content.Context;
 import androidx.databinding.DataBindingUtil;
 
 import android.text.Editable;
+import android.text.InputType;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
@@ -48,6 +50,7 @@ public class MarketTradePopupWindow extends JMEBasePopupWindow {
     private long mMaxAmount = 0;
     private int mBsFlag = 0;
     private int mOcFlag = 0;
+    private int mLength = 2;
 
     public MarketTradePopupWindow(Context context) {
         super(context);
@@ -89,8 +92,11 @@ public class MarketTradePopupWindow extends JMEBasePopupWindow {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 if (s.toString().contains(".")) {
-                    if (s.length() - 1 - s.toString().indexOf(".") > AppConfig.Length_Limit) {
-                        s = s.toString().subSequence(0, s.toString().indexOf(".") + (AppConfig.Length_Limit + 1));
+                    if (s.length() - 1 - s.toString().indexOf(".") > mLength) {
+                        s = s.toString().subSequence(0, s.toString().indexOf(".") + (mLength + 1));
+
+                        if (s.toString().endsWith("."))
+                            s = s.toString().substring(0, s.toString().length() - 1);
 
                         mBinding.etPrice.setText(s);
                         mBinding.etPrice.setSelection(s.length());
@@ -127,6 +133,8 @@ public class MarketTradePopupWindow extends JMEBasePopupWindow {
         mAccount = accountVo;
         mPositionVo = positionVo;
         mContractInfoVo = contractInfoVo;
+        mContractID = tenSpeedVo.getContractId();
+        mLength = mContractID.equals("Ag(T+D)") ? 0 : 2;
 
         mBinding.tvTitle.setText(bsFlag == 1 ? mContext.getResources().getString(R.string.transaction_buy_more_confirm)
                 : mContext.getResources().getString(R.string.transaction_sale_empty_confirm));
@@ -134,9 +142,9 @@ public class MarketTradePopupWindow extends JMEBasePopupWindow {
         mBinding.tvBusinessType.setText(bsFlag == 1 ? mContext.getResources().getString(R.string.transaction_buy_open)
                 : mContext.getResources().getString(R.string.transaction_sale_open));
         mBinding.etPrice.setText(bsFlag == 1 ? tenSpeedVo.getTenAskLists().get(9)[1] : tenSpeedVo.getTenBidLists().get(0)[1]);
+        mBinding.etPrice.setInputType(mContractID.equals("Ag(T+D)") ? InputType.TYPE_CLASS_NUMBER : EditorInfo.TYPE_CLASS_NUMBER | EditorInfo.TYPE_NUMBER_FLAG_DECIMAL);
         mBinding.etAmount.setText("1");
 
-        mContractID = tenSpeedVo.getContractId();
         mPriceMove = null == mContractInfoVo ? 0 : new BigDecimal(mContractInfoVo.getMinPriceMove()).divide(new BigDecimal(100)).floatValue();
         mLowerLimitPrice = tenSpeedVo.getLowerLimitPrice();
         mHighLimitPrice = tenSpeedVo.getHighLimitPrice();
@@ -267,7 +275,7 @@ public class MarketTradePopupWindow extends JMEBasePopupWindow {
                 mBinding.etPrice.setText(price);
                 mBinding.etPrice.setSelection(price.length());
             } else {
-                String valueStr = MarketUtil.formatValue(String.valueOf(value), 2);
+                String valueStr = MarketUtil.formatValue(String.valueOf(value), mLength);
 
                 mBinding.etPrice.setText(valueStr);
                 mBinding.etPrice.setSelection(valueStr.length());
@@ -290,7 +298,7 @@ public class MarketTradePopupWindow extends JMEBasePopupWindow {
                 mBinding.etPrice.setText(price);
                 mBinding.etPrice.setSelection(price.length());
             } else {
-                String valueStr = MarketUtil.formatValue(String.valueOf(value), 2);
+                String valueStr = MarketUtil.formatValue(String.valueOf(value), mLength);
 
                 mBinding.etPrice.setText(valueStr);
                 mBinding.etPrice.setSelection(valueStr.length());

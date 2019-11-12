@@ -12,6 +12,7 @@ import android.text.TextWatcher;
 import android.text.style.StyleSpan;
 import android.view.Gravity;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
@@ -56,6 +57,7 @@ public class CreateConditionSheetFragment extends JMEBaseFragment {
     private int mStopOrderRunNum;
     private int mSelectItem = 0;
     private int mType;
+    private int mLength = 2;
     private float mPriceMove = 0.00f;
     private long mMaxAmount;
     private long mMinOrderQty = 0;
@@ -120,8 +122,11 @@ public class CreateConditionSheetFragment extends JMEBaseFragment {
                     bFlag = false;
 
                 if (s.toString().contains(".")) {
-                    if (s.length() - 1 - s.toString().indexOf(".") > AppConfig.Length_Limit) {
-                        s = s.toString().subSequence(0, s.toString().indexOf(".") + (AppConfig.Length_Limit + 1));
+                    if (s.length() - 1 - s.toString().indexOf(".") > mLength) {
+                        s = s.toString().subSequence(0, s.toString().indexOf(".") + (mLength + 1));
+
+                        if (s.toString().endsWith("."))
+                            s = s.toString().substring(0, s.toString().length() - 1);
 
                         mBinding.etPrice.setText(s);
                         mBinding.etPrice.setSelection(s.length());
@@ -270,9 +275,10 @@ public class CreateConditionSheetFragment extends JMEBaseFragment {
 
     private void setContractNameData() {
         mContractID = AppConfig.Select_ContractId;
+        mLength = mContractID.equals("Ag(T+D)") ? 0 : 2;
 
         mBinding.tvContractId.setText(mContractID);
-        mBinding.etPrice.setInputType(mContractID.equals("Ag(T+D)") ? InputType.TYPE_CLASS_NUMBER : InputType.TYPE_NUMBER_FLAG_DECIMAL);
+        mBinding.etPrice.setInputType(mContractID.equals("Ag(T+D)") ? InputType.TYPE_CLASS_NUMBER : EditorInfo.TYPE_CLASS_NUMBER | EditorInfo.TYPE_NUMBER_FLAG_DECIMAL);
 
         if (null != mContract) {
             mSelectItem = mContract.getContractIDPosition(mContractID);
@@ -306,11 +312,12 @@ public class CreateConditionSheetFragment extends JMEBaseFragment {
                 bFlag = true;
 
                 mContractID = mContracIDs[mSelectItem];
+                mLength = mContractID.equals("Ag(T+D)") ? 0 : 2;
 
                 mBinding.tvContractId.setText(mContractID);
                 mContractInfoVo = mContract.getContractInfoFromID(mContractID);
 
-                mBinding.etPrice.setInputType(mContractID.equals("Ag(T+D)") ? InputType.TYPE_CLASS_NUMBER : InputType.TYPE_NUMBER_FLAG_DECIMAL);
+                mBinding.etPrice.setInputType(mContractID.equals("Ag(T+D)") ? InputType.TYPE_CLASS_NUMBER : EditorInfo.TYPE_CLASS_NUMBER | EditorInfo.TYPE_NUMBER_FLAG_DECIMAL);
 
                 setMarketData();
                 setContractData();
@@ -350,8 +357,8 @@ public class CreateConditionSheetFragment extends JMEBaseFragment {
         mBinding.tvRate.setText(MarketUtil.getMarketRateValue(rateType, mFiveSpeedVo.getUpDownRateValue()));
 
         if (bFlag) {
-            mBinding.etPrice.setText(MarketUtil.formatValue(String.valueOf(lastPrice), 2));
-            mBinding.etPrice.setSelection(MarketUtil.formatValue(String.valueOf(lastPrice), 2).length());
+            mBinding.etPrice.setText(MarketUtil.formatValue(String.valueOf(lastPrice), mLength));
+            mBinding.etPrice.setSelection(MarketUtil.formatValue(String.valueOf(lastPrice), mLength).length());
         }
 
         if (new BigDecimal(lastPrice).compareTo(new BigDecimal(0)) == 0) {
@@ -549,7 +556,7 @@ public class CreateConditionSheetFragment extends JMEBaseFragment {
         params.put("ocFlag", "0");
         params.put("tradingType", "3");
         params.put("type", "1");
-        params.put("triggerPrice",  String.valueOf(new BigDecimal(price).multiply(new BigDecimal(100)).longValue()));
+        params.put("triggerPrice", String.valueOf(new BigDecimal(price).multiply(new BigDecimal(100)).longValue()));
 
         sendRequest(ConditionService.getInstance().entrustConditionOrder, params, true);
     }
@@ -735,7 +742,7 @@ public class CreateConditionSheetFragment extends JMEBaseFragment {
                 } else {
                     bFlag = false;
 
-                    String valueStr = MarketUtil.formatValue(String.valueOf(value), 2);
+                    String valueStr = MarketUtil.formatValue(String.valueOf(value), mLength);
 
                     mBinding.etPrice.setText(valueStr);
                     mBinding.etPrice.setSelection(valueStr.length());
@@ -743,7 +750,7 @@ public class CreateConditionSheetFragment extends JMEBaseFragment {
             } else {
                 bFlag = false;
 
-                String valueStr = MarketUtil.formatValue(String.valueOf(value), 2);
+                String valueStr = MarketUtil.formatValue(String.valueOf(value), mLength);
 
                 mBinding.etPrice.setText(valueStr);
                 mBinding.etPrice.setSelection(valueStr.length());
@@ -771,7 +778,7 @@ public class CreateConditionSheetFragment extends JMEBaseFragment {
                 } else {
                     bFlag = false;
 
-                    String valueStr = MarketUtil.formatValue(String.valueOf(value), 2);
+                    String valueStr = MarketUtil.formatValue(String.valueOf(value), mLength);
 
                     mBinding.etPrice.setText(valueStr);
                     mBinding.etPrice.setSelection(valueStr.length());
@@ -779,7 +786,7 @@ public class CreateConditionSheetFragment extends JMEBaseFragment {
             } else {
                 bFlag = false;
 
-                String valueStr = MarketUtil.formatValue(String.valueOf(value), 2);
+                String valueStr = MarketUtil.formatValue(String.valueOf(value), mLength);
 
                 mBinding.etPrice.setText(valueStr);
                 mBinding.etPrice.setSelection(valueStr.length());

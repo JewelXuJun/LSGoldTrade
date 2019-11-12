@@ -3,11 +3,13 @@ package com.jme.lsgoldtrade.view;
 import android.content.Context;
 import androidx.databinding.DataBindingUtil;
 import android.text.Editable;
+import android.text.InputType;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -26,6 +28,7 @@ public class EveningUpPopupWindow extends JMEBasePopupWindow {
 
     private Context mContext;
 
+    private int mLength = 2;
     private float mPriceMove = 0.00f;
     private String mLowerLimitPrice;
     private String mHighLimitPrice;
@@ -76,8 +79,11 @@ public class EveningUpPopupWindow extends JMEBasePopupWindow {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 if (s.toString().contains(".")) {
-                    if (s.length() - 1 - s.toString().indexOf(".") > AppConfig.Length_Limit) {
-                        s = s.toString().subSequence(0, s.toString().indexOf(".") + (AppConfig.Length_Limit + 1));
+                    if (s.length() - 1 - s.toString().indexOf(".") > mLength) {
+                        s = s.toString().subSequence(0, s.toString().indexOf(".") + (mLength + 1));
+
+                        if (s.toString().endsWith("."))
+                            s = s.toString().substring(0, s.toString().length() - 1);
 
                         mBinding.etPrice.setText(s);
                         mBinding.etPrice.setSelection(s.length());
@@ -111,11 +117,14 @@ public class EveningUpPopupWindow extends JMEBasePopupWindow {
     public void setData(String account, String contractID, String price, String type, float priceMove, String lowerLimitPrice,
                         String highLimitPrice, long minOrderQty, long maxOrderQty, long maxHoldQty, long maxAmount,
                         View.OnClickListener confirmListener) {
+        mLength = contractID.equals("Ag(T+D)") ? 0 : 2;
+
         mBinding.tvGoldAccount.setText(account);
         mBinding.tvBusinessType.setText(type.equals("多") ? mContext.getString(R.string.transaction_buy_evening)
                 : mContext.getString(R.string.transaction_sale_evening));
         mBinding.tvBusinessVarieties.setText(contractID);
         mBinding.etPrice.setText(price);
+        mBinding.etPrice.setInputType(contractID.equals("Ag(T+D)") ? InputType.TYPE_CLASS_NUMBER : EditorInfo.TYPE_CLASS_NUMBER | EditorInfo.TYPE_NUMBER_FLAG_DECIMAL);
         mBinding.etAmount.setText(String.valueOf(maxAmount));
 
         mPriceMove = priceMove;
@@ -159,7 +168,7 @@ public class EveningUpPopupWindow extends JMEBasePopupWindow {
                 mBinding.etPrice.setText(price);
                 mBinding.etPrice.setSelection(price.length());
             } else {
-                String valueStr = MarketUtil.formatValue(String.valueOf(value), 2);
+                String valueStr = MarketUtil.formatValue(String.valueOf(value), mLength);
 
                 mBinding.etPrice.setText(valueStr);
                 mBinding.etPrice.setSelection(valueStr.length());
@@ -182,7 +191,7 @@ public class EveningUpPopupWindow extends JMEBasePopupWindow {
                 mBinding.etPrice.setText(price);
                 mBinding.etPrice.setSelection(price.length());
             } else {
-                String valueStr = MarketUtil.formatValue(String.valueOf(value), 2);
+                String valueStr = MarketUtil.formatValue(String.valueOf(value), mLength);
 
                 mBinding.etPrice.setText(valueStr);
                 mBinding.etPrice.setSelection(valueStr.length());
