@@ -164,6 +164,13 @@ public class IntentUtils {
                 }
 
                 break;
+            case "SWGJS": //实物贵金属
+                if (null == user || !user.isLogin())
+                    gotoLogin(context);
+                else
+                    ARouter.getInstance().build(Constants.ARouterUriConst.METAL).navigation();
+
+                break;
             case "QB":  //全部
                 ARouter.getInstance().build(Constants.ARouterUriConst.FASTMANAGEMENT).navigation();
 
