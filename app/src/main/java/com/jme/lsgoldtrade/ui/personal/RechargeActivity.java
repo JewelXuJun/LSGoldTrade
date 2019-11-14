@@ -39,9 +39,6 @@ import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Map;
 
-/**
- * 在线充值
- */
 @Route(path = Constants.ARouterUriConst.RECHARGE)
 public class RechargeActivity extends JMEBaseActivity {
 
@@ -160,7 +157,7 @@ public class RechargeActivity extends JMEBaseActivity {
             wechatPay();
         }*/
         if (!wxapi.isWXAppInstalled())
-            showShortToast("没有安装微信");
+            showShortToast(R.string.text_wechat_uninstalled);
         else
             wechatPay();
     }
@@ -284,7 +281,7 @@ public class RechargeActivity extends JMEBaseActivity {
                     if (wechatPayVo == null)
                         return;
 
-                    mPaymentHelper.startWeChatPay(this, wechatPayVo);
+                    mPaymentHelper.startWeChatPay(this, wechatPayVo, "Recharge");
                 }
 
                 break;
