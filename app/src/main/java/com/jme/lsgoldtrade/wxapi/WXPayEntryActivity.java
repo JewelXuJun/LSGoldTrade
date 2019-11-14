@@ -54,7 +54,7 @@ public class WXPayEntryActivity extends JMEBaseActivity implements IWXAPIEventHa
     public void onResp(BaseResp resp) {
         if (resp.getType() == ConstantsAPI.COMMAND_PAY_BY_WX) {
             int code = resp.errCode;
-            String extData = ((PayResp)resp).extData;
+            String extData = ((PayResp) resp).extData;
 
             String result = "";
 
@@ -89,7 +89,8 @@ public class WXPayEntryActivity extends JMEBaseActivity implements IWXAPIEventHa
                         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         startActivity(intent);
                     } else if (TextUtils.equals(extData, "GoldGoodsPay")) {
-                        RxBus.getInstance().post(Constants.RxBusConst.RXBUS_METAL_PAY_SUCCESS, null);
+                        if (code == 0)
+                            RxBus.getInstance().post(Constants.RxBusConst.RXBUS_METAL_PAY_SUCCESS, null);
 
                         finish();
                     }
