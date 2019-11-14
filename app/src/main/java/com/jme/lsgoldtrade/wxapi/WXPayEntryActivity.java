@@ -89,8 +89,7 @@ public class WXPayEntryActivity extends JMEBaseActivity implements IWXAPIEventHa
                         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         startActivity(intent);
                     } else if (TextUtils.equals(extData, "GoldGoodsPay")) {
-                        if (code == 0)
-                            RxBus.getInstance().post(Constants.RxBusConst.RXBUS_METAL_PAY_SUCCESS, null);
+                        RxBus.getInstance().post(Constants.RxBusConst.RXBUS_METAL_PAY_SUCCESS, null);
 
                         finish();
                     }
