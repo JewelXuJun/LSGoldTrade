@@ -677,5 +677,6 @@
     <string name="increment_bankcard">我的银行卡</string>
     <string name="increment_money_pay">待支付金额</string>
     <string name="incrementaccount_error">您当前有服务费未缴纳，请结清费用后再使用该服务。</string>
+    <string name="incrementaccount_singed_bankcard">代扣签约银行卡</string>
 
 </resources>

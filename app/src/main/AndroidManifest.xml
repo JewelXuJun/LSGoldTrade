@@ -202,6 +202,10 @@
             android:screenOrientation="portrait" />
 
         <activity
+            android:name=".ui.personal.BankCardActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
             android:name=".ui.transaction.AuthenticationActivity"
             android:screenOrientation="portrait" />
 

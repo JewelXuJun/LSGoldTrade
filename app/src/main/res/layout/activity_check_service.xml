@@ -228,6 +228,8 @@
 
                     </RelativeLayout>
 
+                    <include layout="@layout/item_line_vertical_margin" />
+
                     <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/height_order_item"

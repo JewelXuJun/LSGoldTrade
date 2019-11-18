@@ -186,7 +186,7 @@ public class CheckServiceActivity extends JMEBaseActivity {
         }
 
         public void onClickBankCard() {
-
+            ARouter.getInstance().build(Constants.ARouterUriConst.BANKCARD).navigation();
         }
 
         public void onClickPaidPrompt() {

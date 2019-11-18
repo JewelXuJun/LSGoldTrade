@@ -20,7 +20,7 @@ public class Constants {
         public static final int SECURITY = 5;
         public static final int SECURITY_WAN = 6;
 
-        public static int Envi = SECURITY_WAN;
+        public static int Envi = UAT;
 
         private HttpConst() {
 
@@ -234,6 +234,7 @@ public class Constants {
         public static final String DETAILS = "/Personal/DetailsActivity";
         public static final String CHECKUSERINFO = "/Personal/CheckUserInfoActivity";
         public static final String WITHDRAW = "/Personal/WithdrawActivity";
+        public static final String BANKCARD = "/CheckServiceActivity/BankCardActivity";
         public static final String WITHDRAWRESULT = "/Personal/WithdrawResultActivity";
         public static final String ACCOUNTSECURITY = "/PersonalFragment/AccountSecurityActivity";
         public static final String TRADINGPASSWORDVALIDATE = "/AccountSecurityActivity/TradingPasswordValidateActivity";
