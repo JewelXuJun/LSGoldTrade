@@ -17,20 +17,19 @@ import com.jme.lsgoldtrade.databinding.ActivityCheckServiceBinding;
 import com.jme.lsgoldtrade.domain.UsernameVo;
 import com.jme.lsgoldtrade.service.AccountService;
 import com.jme.lsgoldtrade.service.ManagementService;
+import com.jme.lsgoldtrade.view.ConfirmPopupwindow;
 import com.jme.lsgoldtrade.view.TransactionMessagePopUpWindow;
 
 import java.math.BigDecimal;
 import java.util.HashMap;
 
-/**
- * 我的增值服务
- */
 @Route(path = Constants.ARouterUriConst.CHECKSERVICE)
 public class CheckServiceActivity extends JMEBaseActivity {
 
     private ActivityCheckServiceBinding mBinding;
 
     private TransactionMessagePopUpWindow mTransactionMessagePopUpWindow;
+    private ConfirmPopupwindow mConfirmPopupwindow;
 
     @Override
     protected int getContentViewId() {
@@ -41,7 +40,7 @@ public class CheckServiceActivity extends JMEBaseActivity {
     protected void initView() {
         super.initView();
 
-        initToolbar("我的增值服务", true);
+        initToolbar(R.string.increment_mine, true);
     }
 
     @Override
@@ -49,6 +48,12 @@ public class CheckServiceActivity extends JMEBaseActivity {
         super.initData(savedInstanceState);
 
         mTransactionMessagePopUpWindow = new TransactionMessagePopUpWindow(this);
+        mConfirmPopupwindow = new ConfirmPopupwindow(this);
+    }
+
+    @Override
+    protected void initListener() {
+        super.initListener();
     }
 
     @Override
@@ -163,9 +168,7 @@ public class CheckServiceActivity extends JMEBaseActivity {
 
         public void onClickThaw() {
             showShortToast(R.string.personal_expect);
-//            ARouter.getInstance()
-//                    .build(Constants.ARouterUriConst.THAW)
-//                    .navigation();
+//            ARouter.getInstance().build(Constants.ARouterUriConst.THAW).navigation();
         }
 
         public void onClickDetailed() {
@@ -180,6 +183,22 @@ public class CheckServiceActivity extends JMEBaseActivity {
             finish();
 
             RxBus.getInstance().post(Constants.RxBusConst.RXBUS_TRANSACTION_HOLD_POSITIONS, null);
+        }
+
+        public void onClickBankCard() {
+
+        }
+
+        public void onClickPaidPrompt() {
+            if (null != mConfirmPopupwindow && !mConfirmPopupwindow.isShowing()) {
+                mConfirmPopupwindow.setData(getResources().getString(R.string.incrementaccount_error),
+                        getResources().getString(R.string.increment_recharge_pay), null);
+                mConfirmPopupwindow.showAtLocation(mBinding.tvAvailableFunds, Gravity.CENTER, 0, 0);
+            }
+        }
+
+        public void onClickPay() {
+
         }
 
         public void onClickService() {

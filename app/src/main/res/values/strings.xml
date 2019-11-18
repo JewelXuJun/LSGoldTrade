@@ -662,5 +662,20 @@
     <string name="increment_time">日期时间</string>
     <string name="increment_money">金额(元)</string>
     <string name="increment_account_detail">账户明细</string>
+    <string name="increment_mine">我的增值服务</string>
+    <string name="increment_available_funds">可用余额（元）</string>
+    <string name="increment_frozen_funds">冻结资金（元）</string>
+    <string name="increment_recharge">充值</string>
+    <string name="increment_withdrawal">提现</string>
+    <string name="increment_thaw">申请解冻</string>
+    <string name="increment_trading_box_message">把握非农，一键下单</string>
+    <string name="increment_use">去使用</string>
+    <string name="increment_entrust_risk_message">实时监控，交易安全</string>
+    <string name="increment_strategy">策略共建服务</string>
+    <string name="increment_strategy_message">黄金交易实战、技术分析、指标解读、沙盘实战等系列服务</string>
+    <string name="increment_not_signed_message">您尚未签约增值服务，立即签约享5个交易日的免增值服务费试用期。</string>
+    <string name="increment_bankcard">我的银行卡</string>
+    <string name="increment_money_pay">待支付金额</string>
+    <string name="incrementaccount_error">您当前有服务费未缴纳，请结清费用后再使用该服务。</string>
 
 </resources>

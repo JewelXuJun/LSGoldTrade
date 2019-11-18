@@ -32,6 +32,7 @@
     <color name="color_increase_light">#1Ae64020</color>
     <color name="color_decrease_light">#1A00b767</color>
     <color name="color_stable_light">#1A8d959a</color>
+    <color name="color_message_red">#D73030</color>
 
     <drawable name="drawable_white">#FFFFFF</drawable>
     <drawable name="drawable_blue">#4285f4</drawable>
