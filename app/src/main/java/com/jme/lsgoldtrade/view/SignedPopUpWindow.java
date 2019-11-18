@@ -2,15 +2,15 @@ package com.jme.lsgoldtrade.view;
 
 import android.content.Context;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.databinding.DataBindingUtil;
 
+import com.alibaba.android.arouter.launcher.ARouter;
 import com.jme.common.util.DensityUtil;
 import com.jme.lsgoldtrade.R;
 import com.jme.lsgoldtrade.base.JMEBasePopupWindow;
-import com.jme.lsgoldtrade.databinding.PopupwindowAgreeBinding;
+import com.jme.lsgoldtrade.config.Constants;
 import com.jme.lsgoldtrade.databinding.PopupwindowSignedBinding;
 
 public class SignedPopUpWindow extends JMEBasePopupWindow {
@@ -45,11 +45,11 @@ public class SignedPopUpWindow extends JMEBasePopupWindow {
         setContentView(mBinding.getRoot());
 
         mBinding.layoutCancel.setOnClickListener((view) -> dismiss());
+        mBinding.btnSigned.setOnClickListener((view) -> ARouter.getInstance().build(Constants.ARouterUriConst.WITHHOLDCONTRACT).navigation());
     }
 
-    public void setData(int day, View.OnClickListener listener) {
+    public void setData(int day) {
         mBinding.tvSignedMessage.setText(String.format(mContext.getResources().getString(R.string.incrementaccount_singed_message), day));
-        mBinding.btnSigned.setOnClickListener(listener);
     }
 
 }

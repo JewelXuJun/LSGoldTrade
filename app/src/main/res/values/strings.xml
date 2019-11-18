@@ -682,5 +682,17 @@
     <string name="incrementaccount_goto_singed">前往签约</string>
     <string name="incrementaccount_pay_money">支付%1$s元</string>
     <string name="incrementaccount_pay_title">支付</string>
+    <string name="incrementaccount_withhold_contract">代扣签约</string>
+    <string name="incrementaccount_withhold_contract_bankcard_hint">暂只支持借记卡</string>
+    <string name="incrementaccount_withhold_contract_bank_name">银行名称</string>
+    <string name="incrementaccount_withhold_contract_bank_name_hint">请选择银行</string>
+    <string name="incrementaccount_withhold_contract_mobile">预留手机号</string>
+    <string name="incrementaccount_withhold_contract_mobile_hint">请输入银行预留手机号</string>
+    <string name="incrementaccount_withhold_verification_code">验证码</string>
+    <string name="incrementaccount_withhold_verification_aggrement">《华兴银行代扣协议》、《泰金所平台增值服务协议》</string>
+    <string name="incrementaccount_withhold_open">立即开通</string>
+    <string name="incrementaccount_withhold_open_message">温馨提示：\n您通过平台交易产生的服务费将从您签约绑定的银行卡扣除。</string>
+    <string name="incrementaccount_withhold_success">您的代扣签约成功!</string>
+    <string name="incrementaccount_withhold_fail">您的代扣签约失败!</string>
 
 </resources>

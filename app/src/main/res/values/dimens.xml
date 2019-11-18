@@ -57,6 +57,7 @@
     <dimen name="width_amount">60dp</dimen>
     <dimen name="width_empty">30dp</dimen>
     <dimen name="width_item_middle">70dp</dimen>
+    <dimen name="width_item_normal">75dp</dimen>
     <dimen name="width_item">82dp</dimen>
     <dimen name="width_item_big">90dp</dimen>
     <dimen name="width_item_bigger">100dp</dimen>
@@ -109,6 +110,7 @@
     <dimen name="margin_condition_sheet_checkbox">75dp</dimen>
     <dimen name="margin_condition_sheet_modify">85dp</dimen>
     <dimen name="margin_transaction_setting">120dp</dimen>
+    <dimen name="margin_withhold_checkbox">70dp</dimen>
 
     <dimen name="size_exiguity_tiny">7sp</dimen>
     <dimen name="size_exiguity">8sp</dimen>
