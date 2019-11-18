@@ -592,6 +592,7 @@
     <string name="trading_box_entrust_open_time">委托开仓时间段</string>
     <string name="trading_box_entrust_equal_time">委托平仓时间段</string>
     <string name="trading_box_entrust_amount">委托手数</string>
+    <string name="trading_box_entrust_instructions">委托指令</string>
     <string name="trading_box_entrust_setting">盈亏设置</string>
     <string name="trading_box_entrust_mechanism">浮动成交机制</string>
     <string name="trading_box_profit_line">盈利平仓线</string>
@@ -636,6 +637,10 @@
     <string name="trading_box_no_data_history">当前无历史交易匣子</string>
     <string name="trading_box_participate_in">立即参与</string>
     <string name="trading_box_check">查看</string>
+    <string name="trading_box_edit_time">若您要自定义预埋单的开平仓时间段，可前往设置条件单。</string>
+    <string name="trading_box_edit_entrust_instructions">若您要自定义预埋单的委托指令，可前往设置条件单。</string>
+    <string name="trading_box_edit_float_line">若您要自定义预埋单的盈亏线，可前往设置条件单。</string>
+    <string name="trading_box_setting_condition_sheet">设置条件单</string>
 
     <string name="text_withdraw_rule">提现规则：\n\n1. 提现申请时间：交易日9:00&#8211;15:30，将于提现申请的次日到账；\n2. 到账金额：到账金额=提现金额-提现手续费\n提现手续费=提现金额*%1$s；\n3. 提现到账查询：请到微信—我的—支付—钱包—零钱—零钱明细查询；\n4. 单日提现次数5次，单笔提现限额5000元，单日和累计限额20000元。</string>
 

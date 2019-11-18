@@ -32,6 +32,7 @@ import com.jme.lsgoldtrade.domain.TradingBoxInfoVo;
 import com.jme.lsgoldtrade.service.ManagementService;
 import com.jme.lsgoldtrade.service.MarketService;
 import com.jme.lsgoldtrade.service.TradeService;
+import com.jme.lsgoldtrade.view.ConfirmPopupwindow;
 import com.jme.lsgoldtrade.view.RulePopupwindow;
 import com.jme.lsgoldtrade.view.TransactionMessagePopUpWindow;
 import com.jme.lsgoldtrade.util.MarketUtil;
@@ -52,6 +53,7 @@ public class PlaceOrderActivity extends JMEBaseActivity {
     private RulePopupwindow mWindow;
     private TransactionMessagePopUpWindow mTransactionMessagePopUpWindow;
     private MessagePopupwindow mMessagePopupwindow;
+    private ConfirmPopupwindow mConfirmPopupwindow;
 
     private String mType;
     private String mDirection;
@@ -84,6 +86,7 @@ public class PlaceOrderActivity extends JMEBaseActivity {
         mWindow = new RulePopupwindow(this);
         mTransactionMessagePopUpWindow = new TransactionMessagePopUpWindow(mContext);
         mMessagePopupwindow = new MessagePopupwindow(mContext);
+        mConfirmPopupwindow = new ConfirmPopupwindow(mContext);
     }
 
     @Override
@@ -538,6 +541,15 @@ public class PlaceOrderActivity extends JMEBaseActivity {
         public void onClickEntrustEqualTimeTips() {
             if (null != mWindow && !mWindow.isShowing()) {
                 mWindow.setData(getString(R.string.trading_box_entrust_equal_time), new SpannableString(getString(R.string.trading_box_entrust_equal_time_message)));
+                mWindow.showAtLocation(mBinding.etAmount, Gravity.CENTER, 0, 0);
+            }
+        }
+
+        public void onClickEdit() {
+            if (null != mConfirmPopupwindow && !mConfirmPopupwindow.isShowing()) {
+                mConfirmPopupwindow.setData(mContext.getResources().getString(R.string.trading_box_edit_time),
+                        mContext.getResources().getString(R.string.trading_box_setting_condition_sheet),
+                        (view) -> ARouter.getInstance().build(Constants.ARouterUriConst.CONDITIONSHEET).navigation());
                 mWindow.showAtLocation(mBinding.etAmount, Gravity.CENTER, 0, 0);
             }
         }

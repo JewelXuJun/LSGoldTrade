@@ -415,8 +415,7 @@
                     android:background="@color/white"
                     android:gravity="right"
                     android:orientation="horizontal"
-                    android:paddingRight="@dimen/common_area_margin"
-                    android:paddingBottom="@dimen/common_area_margin">
+                    android:paddingRight="@dimen/common_area_margin">
 
                     <TextView
                         android:id="@+id/tv_balance_message"
@@ -424,6 +423,37 @@
                         android:layout_height="wrap_content"
                         android:textColor="@color/black_deep"
                         android:textSize="@dimen/sp_14" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/height_buy_item"
+                    android:background="@color/white"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingLeft="@dimen/common_area_margin"
+                    android:paddingRight="@dimen/common_area_margin">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="2"
+                        android:text="@string/trading_box_entrust_instructions"
+                        android:textColor="@color/black_deep"
+                        android:textSize="@dimen/sp_14" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/common_item_height_middle"
+                        android:layout_marginLeft="@dimen/common_area_margin_big"
+                        android:layout_weight="1"
+                        android:background="@drawable/bg_btn_gray_hollow"
+                        android:gravity="center"
+                        android:orientation="horizontal"
+                        android:text="@string/transaction_market_price_fak"
+                        android:textColor="@color/color_blue_deep"
+                        android:textSize="@dimen/common_font_size" />
 
                 </LinearLayout>
 
@@ -440,24 +470,45 @@
                         android:paddingLeft="@dimen/common_area_margin"
                         android:paddingRight="@dimen/common_area_margin">
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_centerVertical="true"
-                            android:text="@string/trading_box_entrust_setting"
-                            android:textColor="@color/black_deep"
-                            android:textSize="@dimen/sp_14" />
-
                         <LinearLayout
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentRight="true"
-                            android:layout_centerVertical="true"
+                            android:layout_height="match_parent"
                             android:orientation="horizontal">
 
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:layout_gravity="center_vertical"
+                                android:text="@string/trading_box_entrust_setting"
+                                android:textColor="@color/black_deep"
+                                android:textSize="@dimen/sp_14" />
+
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_vertical"
+                                android:layout_marginLeft="@dimen/common_area_margin_tiny"
+                                android:onClick="@{() -> handlers.onClickEdit()}"
+                                android:padding="@dimen/common_area_margin_tiny">
+
+                                <ImageView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:background="@mipmap/ic_place_order_edit" />
+
+                            </LinearLayout>
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_alignParentRight="true"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
                                 android:gravity="center_vertical"
                                 android:text="@string/trading_box_entrust_mechanism"
                                 android:textColor="@color/color_blue_deep"
@@ -466,8 +517,8 @@
                             <ImageView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:layout_gravity="center_vertical"
                                 android:layout_marginLeft="@dimen/common_area_margin_tiny"
-                                android:layout_marginTop="@dimen/margin_tiny"
                                 android:onClick="@{() -> handlers.onClickMechanism()}"
                                 android:src="@mipmap/ic_prompt" />
 
