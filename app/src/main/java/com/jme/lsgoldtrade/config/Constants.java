@@ -19,7 +19,7 @@ public class Constants {
         public static final int PREPRODUCE = 4;
         public static final int SECURITY = 5;
 
-        public static int Envi = UAT;
+        public static int Envi = PREPRODUCE;
 
         private HttpConst() {
 
@@ -89,7 +89,7 @@ public class Constants {
                 URL_BASE_ACCOUNT = "http://180.97.47.179:18080";
                 URL_BASE_MANAGEMENT = "http://180.97.47.179:18080";
                 URL_INFO = "http://180.97.47.179:18080/tjsmanage/infoapi/v1/android/cmsComtentTxt/get?contentId=";
-                URL_METAL_PAY = "http://uuat.taijs.com/swhj/navigate/index?token=";
+                URL_METAL_PAY = "http://180.97.47.179:18080/swhj/navigate/index?token=";
                 URL_TRADINGBOX = "http://180.97.47.179:18080/tjsmanage/openacct/wap/tradingBox.html";
                 URL_TRADINGBOXINFO = "http://180.97.47.179:18080/tjsmanage/openacct/wap/tradingBoxDetail.html?tradeId=";
             } else if (Envi == SECURITY) {
