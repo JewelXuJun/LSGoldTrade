@@ -169,11 +169,11 @@
                         android:background="@mipmap/ic_message" />
 
                     <TextView
+                        android:id="@+id/tv_not_signed_message"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="@dimen/margin_middle"
                         android:lineSpacingExtra="@dimen/lineSpacingExtra_small"
-                        android:text="@string/increment_not_signed_message"
                         android:textColor="@color/color_message_red"
                         android:textSize="@dimen/sp_14" />
 

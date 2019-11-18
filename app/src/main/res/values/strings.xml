@@ -673,10 +673,12 @@
     <string name="increment_entrust_risk_message">实时监控，交易安全</string>
     <string name="increment_strategy">策略共建服务</string>
     <string name="increment_strategy_message">黄金交易实战、技术分析、指标解读、沙盘实战等系列服务</string>
-    <string name="increment_not_signed_message">您尚未签约增值服务，立即签约享5个交易日的免增值服务费试用期。</string>
+    <string name="increment_not_signed_message">您尚未签约增值服务，立即签约享%1$d个交易日的免增值服务费试用期。</string>
     <string name="increment_bankcard">我的银行卡</string>
     <string name="increment_money_pay">待支付金额</string>
     <string name="incrementaccount_error">您当前有服务费未缴纳，请结清费用后再使用该服务。</string>
     <string name="incrementaccount_singed_bankcard">代扣签约银行卡</string>
+    <string name="incrementaccount_singed_message">您尚未签约，签约后您可使用平台提供的服务，立即签约还将享受%1$d个交易日免收增值服务费的试用期。</string>
+    <string name="incrementaccount_goto_singed">前往签约</string>
 
 </resources>
