@@ -639,9 +639,9 @@ public class OwnConditionSheetFragment extends JMEBaseFragment implements OnRefr
                         if (null != positionVoList && 0 != positionVoList.size()) {
                             for (PositionVo positionVo : positionVoList) {
                                 if (null != positionVo && positionVo.getContractId().equals(mConditionOrderInfoVo.getContractId())) {
-                                    if (mConditionOrderInfoVo.getBsFlag() == 1 && positionVo.getType().equals("空"))
+                                    if (mConditionOrderInfoVo.getBsFlag() == 1 && positionVo.getType().equals("多"))
                                         mPositionVo = positionVo;
-                                    else if (mConditionOrderInfoVo.getBsFlag() == 2 && positionVo.getType().equals("多"))
+                                    else if (mConditionOrderInfoVo.getBsFlag() == 2 && positionVo.getType().equals("空"))
                                         mPositionVo = positionVo;
                                 }
                             }

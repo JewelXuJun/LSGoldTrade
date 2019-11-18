@@ -214,7 +214,6 @@ public class CreateConditionSheetFragment extends JMEBaseFragment {
 
             queryConditionOrderRun();
             getAccount();
-            getPosition();
         }
     }
 
@@ -228,7 +227,6 @@ public class CreateConditionSheetFragment extends JMEBaseFragment {
 
             queryConditionOrderRun();
             getAccount();
-            getPosition();
         }
     }
 
@@ -255,7 +253,6 @@ public class CreateConditionSheetFragment extends JMEBaseFragment {
                     mPositionVoList.clear();
 
                     getAccount();
-                    getPosition();
 
                     break;
                 case Constants.RxBusConst.RXBUS_LOGOUT_SUCCESS:
@@ -453,9 +450,9 @@ public class CreateConditionSheetFragment extends JMEBaseFragment {
                     if (null != mPositionVoList && 0 != mPositionVoList.size()) {
                         for (PositionVo positionVo : mPositionVoList) {
                             if (null != positionVo && positionVo.getContractId().equals(mContractID)) {
-                                if (mType == TYPE_BUY_MORE && positionVo.getType().equals("空"))
+                                if (mType == TYPE_BUY_MORE && positionVo.getType().equals("多"))
                                     positionVoValue = positionVo;
-                                else if (mType == TYPE_SELL_EMPTY && positionVo.getType().equals("多"))
+                                else if (mType == TYPE_SELL_EMPTY && positionVo.getType().equals("空"))
                                     positionVoValue = positionVo;
                             }
                         }
@@ -613,9 +610,9 @@ public class CreateConditionSheetFragment extends JMEBaseFragment {
 
                         e.printStackTrace();
                     }
-
-                    calculateMaxAmount();
                 }
+
+                getPosition();
 
                 break;
             case "Position":
