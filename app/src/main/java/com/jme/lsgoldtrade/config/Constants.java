@@ -235,6 +235,7 @@ public class Constants {
         public static final String CHECKUSERINFO = "/Personal/CheckUserInfoActivity";
         public static final String WITHDRAW = "/Personal/WithdrawActivity";
         public static final String BANKCARD = "/CheckServiceActivity/BankCardActivity";
+        public static final String WITHHOLD = "/Main/WithholdActivity";
         public static final String WITHDRAWRESULT = "/Personal/WithdrawResultActivity";
         public static final String ACCOUNTSECURITY = "/PersonalFragment/AccountSecurityActivity";
         public static final String TRADINGPASSWORDVALIDATE = "/AccountSecurityActivity/TradingPasswordValidateActivity";

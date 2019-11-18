@@ -680,5 +680,7 @@
     <string name="incrementaccount_singed_bankcard">代扣签约银行卡</string>
     <string name="incrementaccount_singed_message">您尚未签约，签约后您可使用平台提供的服务，立即签约还将享受%1$d个交易日免收增值服务费的试用期。</string>
     <string name="incrementaccount_goto_singed">前往签约</string>
+    <string name="incrementaccount_pay_money">支付%1$s元</string>
+    <string name="incrementaccount_pay_title">支付</string>
 
 </resources>

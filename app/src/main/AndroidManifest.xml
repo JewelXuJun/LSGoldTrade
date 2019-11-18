@@ -206,6 +206,10 @@
             android:screenOrientation="portrait" />
 
         <activity
+            android:name=".ui.personal.WithholdActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
             android:name=".ui.transaction.AuthenticationActivity"
             android:screenOrientation="portrait" />
 
