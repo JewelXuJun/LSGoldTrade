@@ -14,6 +14,7 @@ import android.text.style.ForegroundColorSpan;
 import android.view.View;
 
 import androidx.core.content.ContextCompat;
+import androidx.core.hardware.fingerprint.FingerprintManagerCompat;
 import androidx.fragment.app.Fragment;
 
 import com.alibaba.android.arouter.launcher.ARouter;
@@ -254,9 +255,8 @@ public class TransactionFragment extends JMEBaseFragment {
                             boolean isCanUseFingerPrint = false;
 
                             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                                FingerprintManager manager = (FingerprintManager) mContext.getSystemService(Context.FINGERPRINT_SERVICE);
-
-                                if (manager.isHardwareDetected() && manager.hasEnrolledFingerprints())
+                                if (FingerprintManagerCompat.from(mContext).isHardwareDetected()
+                                        && FingerprintManagerCompat.from(mContext).hasEnrolledFingerprints())
                                     isCanUseFingerPrint = true;
                             }
 
