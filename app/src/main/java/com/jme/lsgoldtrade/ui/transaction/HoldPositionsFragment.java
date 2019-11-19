@@ -269,6 +269,7 @@ public class HoldPositionsFragment extends JMEBaseFragment implements OnRefreshL
         mBinding.tvDesirableCapital.setText(bHiddenStatus ? R.string.transaction_hidden_value : R.string.text_no_data_default);
         mBinding.tvMarketCapitalization.setText(bHiddenStatus ? R.string.transaction_hidden_value : R.string.text_no_data_default);
         mBinding.tvGuaranteeFund.setText(R.string.text_no_data_default);
+        mBinding.tvGuaranteeFundSetting.setText(mContext.getResources().getString(R.string.transaction_goto_setting));
         mBinding.tvRiskRate.setText(R.string.text_no_data_default);
 
         mCurrentHoldPositionsFragment.setCurrentHoldPositionsData(null);
@@ -510,7 +511,10 @@ public class HoldPositionsFragment extends JMEBaseFragment implements OnRefreshL
                     mBinding.tvMarketCapitalization.setText(bHiddenStatus ? mContext.getResources().getString(R.string.transaction_hidden_value)
                             : TextUtils.isEmpty(mMarketCapitalization) ? mContext.getResources().getString(R.string.text_no_data_default) : MarketUtil.decimalFormatMoney(mMarketCapitalization));
                     mBinding.tvGuaranteeFund.setText(TextUtils.isEmpty(minReserveFund) ? getResources().getString(R.string.text_no_data_default)
-                            : new BigDecimal(minReserveFund).compareTo(new BigDecimal(0)) == 0 ? getResources().getString(R.string.text_no_data_default) : MarketUtil.decimalFormatMoney(minReserveFund));
+                            : new BigDecimal(minReserveFund).compareTo(BigDecimal.ZERO) == 0 ? getResources().getString(R.string.text_no_data_default) : MarketUtil.decimalFormatMoney(minReserveFund));
+                    mBinding.tvGuaranteeFundSetting.setText(TextUtils.isEmpty(minReserveFund) ? mContext.getResources().getString(R.string.transaction_goto_setting)
+                            : new BigDecimal(minReserveFund).compareTo(BigDecimal.ZERO) == 0 ? mContext.getResources().getString(R.string.transaction_goto_setting)
+                            : mContext.getResources().getString(R.string.transaction_modify));
 
                     calculateFloat(mFiveSpeedVoList, mPositionVoList);
                 } else {
