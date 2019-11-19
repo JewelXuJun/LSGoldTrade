@@ -255,6 +255,8 @@
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
                         android:text="@string/transaction_last_price_range"
+                        android:focusable="true"
+                        android:focusableInTouchMode="true"
                         android:textColor="@color/color_text_normal"
                         android:textSize="@dimen/sp_14" />
 
