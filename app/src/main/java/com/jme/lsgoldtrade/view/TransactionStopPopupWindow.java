@@ -45,6 +45,8 @@ public class TransactionStopPopupWindow extends JMEBasePopupWindow {
     private int mLength = 2;
     private String mContractID;
     private String mType = "";
+    private String mName;
+    private String mIDCard;
 
     private View mView;
     private FiveSpeedVo mFiveSpeedVo;
@@ -190,13 +192,16 @@ public class TransactionStopPopupWindow extends JMEBasePopupWindow {
     }
 
     public void setData(boolean stopOrderFlag, String contractId, FiveSpeedVo fiveSpeedVo, PositionVo positionVo,
-                        ContractInfoVo contractInfoVo, ConditionOrderInfoVo conditionOrderInfoVo) {
+                        ContractInfoVo contractInfoVo, ConditionOrderInfoVo conditionOrderInfoVo,
+                        String name, String idCard) {
         mContractID = contractId;
         mFiveSpeedVo = fiveSpeedVo;
         mPositionVo = positionVo;
         mContractInfoVo = contractInfoVo;
         mConditionOrderInfoVo = conditionOrderInfoVo;
         mLength = mContractID.equals("Ag(T+D)") ? 0 : 2;
+        mName = name;
+        mIDCard = idCard;
 
         if (stopOrderFlag) {
             mBinding.layoutNotSetting.setVisibility(View.GONE);
@@ -330,7 +335,7 @@ public class TransactionStopPopupWindow extends JMEBasePopupWindow {
             float value = new BigDecimal(price).subtract(new BigDecimal(mPriceMove)).floatValue();
             String minPrice = mType.equals("多") ? mFiveSpeedVo.getLatestPriceValue() : mFiveSpeedVo.getLowerLimitPrice();
 
-            if (new BigDecimal(value).compareTo(new BigDecimal(minPrice)) == -1) {
+            if (new BigDecimal(String.valueOf(value)).compareTo(new BigDecimal(minPrice)) == -1) {
                 Toast.makeText(mContext, mType.equals("多") ? R.string.transaction_sheet_limit_down_price_error2
                         : R.string.transaction_sheet_limit_down_price_error3, Toast.LENGTH_SHORT).show();
 
@@ -353,7 +358,7 @@ public class TransactionStopPopupWindow extends JMEBasePopupWindow {
             float value = new BigDecimal(price).add(new BigDecimal(mPriceMove)).floatValue();
             String maxPrice = mType.equals("多") ? mFiveSpeedVo.getHighLimitPrice() : mFiveSpeedVo.getLatestPriceValue();
 
-            if (new BigDecimal(value).compareTo(new BigDecimal(maxPrice)) == 1) {
+            if (new BigDecimal(String.valueOf(value)).compareTo(new BigDecimal(maxPrice)) == 1) {
                 Toast.makeText(mContext, mType.equals("多") ? R.string.transaction_sheet_limit_up_price_error2
                         : R.string.transaction_sheet_limit_up_price_error3, Toast.LENGTH_SHORT).show();
 
@@ -376,7 +381,7 @@ public class TransactionStopPopupWindow extends JMEBasePopupWindow {
             float value = new BigDecimal(price).subtract(new BigDecimal(mPriceMove)).floatValue();
             String minPrice = mType.equals("多") ? mFiveSpeedVo.getLowerLimitPrice() : mFiveSpeedVo.getLatestPriceValue();
 
-            if (new BigDecimal(value).compareTo(new BigDecimal(minPrice)) == -1) {
+            if (new BigDecimal(String.valueOf(value)).compareTo(new BigDecimal(minPrice)) == -1) {
                 Toast.makeText(mContext, mType.equals("多") ? R.string.transaction_sheet_limit_down_price_error3
                         : R.string.transaction_sheet_limit_down_price_error2, Toast.LENGTH_SHORT).show();
 
@@ -399,7 +404,7 @@ public class TransactionStopPopupWindow extends JMEBasePopupWindow {
             float value = new BigDecimal(price).add(new BigDecimal(mPriceMove)).floatValue();
             String maxPrice = mType.equals("多") ? mFiveSpeedVo.getLatestPriceValue() : mFiveSpeedVo.getHighLimitPrice();
 
-            if (new BigDecimal(value).compareTo(new BigDecimal(maxPrice)) == 1) {
+            if (new BigDecimal(String.valueOf(value)).compareTo(new BigDecimal(maxPrice)) == 1) {
                 Toast.makeText(mContext, mType.equals("多") ? R.string.transaction_sheet_limit_up_price_error3
                         : R.string.transaction_sheet_limit_up_price_error2, Toast.LENGTH_SHORT).show();
 
@@ -455,7 +460,7 @@ public class TransactionStopPopupWindow extends JMEBasePopupWindow {
             ARouter.getInstance()
                     .build(Constants.ARouterUriConst.JMEWEBVIEW)
                     .withString("title", mContext.getResources().getString(R.string.transaction_stop_risk_tips_title))
-                    .withString("url", Constants.HttpConst.URL_TRANSACTION_STOP)
+                    .withString("url", Constants.HttpConst.URL_TRANSACTION_STOP + "?name=" + mName + "&cardNo=" + mIDCard)
                     .navigation();
         }
 
@@ -528,7 +533,7 @@ public class TransactionStopPopupWindow extends JMEBasePopupWindow {
             mBinding.etProfitPrice.setInputType(mContractID.equals("Ag(T+D)") ? InputType.TYPE_CLASS_NUMBER : EditorInfo.TYPE_CLASS_NUMBER | EditorInfo.TYPE_NUMBER_FLAG_DECIMAL);
             mBinding.etLossPrice.setText(1 == stopLossPrice ? "" : MarketUtil.formatValue(MarketUtil.getPriceValue(stopLossPrice), 2));
             mBinding.etLossPrice.setInputType(mContractID.equals("Ag(T+D)") ? InputType.TYPE_CLASS_NUMBER : EditorInfo.TYPE_CLASS_NUMBER | EditorInfo.TYPE_NUMBER_FLAG_DECIMAL);
-            mBinding.etAmount.setText(String.valueOf(mPosition));
+            mBinding.etAmount.setText(String.valueOf(mConditionOrderInfoVo.getEntrustNumber()));
             mBinding.checkboxEffectiveOnThatDay.setChecked(mConditionOrderInfoVo.getEffectiveTimeFlag() == 0);
             mBinding.checkboxEffectiveBeforeCancel.setChecked(mConditionOrderInfoVo.getEffectiveTimeFlag() == 1);
             mBinding.checkboxAgree.setChecked(true);

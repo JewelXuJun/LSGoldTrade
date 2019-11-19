@@ -47,6 +47,8 @@ public class SheetModifyPopUpWindow extends JMEBasePopupWindow {
     private String mContractID;
     private String mLowerLimitPrice;
     private String mHighLimitPrice;
+    private String mName;
+    private String mIDCard;
     private long mMinOrderQty = 0;
     private long mMaxOrderQty = 0;
     private long mMaxHoldQty = 0;
@@ -163,7 +165,8 @@ public class SheetModifyPopUpWindow extends JMEBasePopupWindow {
     }
 
     public void setData(FiveSpeedVo fiveSpeedVo, AccountVo accountVo, PositionVo positionVo,
-                        ContractInfoVo contractInfoVo, ConditionOrderInfoVo conditionOrderInfoVo) {
+                        ContractInfoVo contractInfoVo, ConditionOrderInfoVo conditionOrderInfoVo,
+                        String name, String idCard) {
         mFiveSpeedVo = fiveSpeedVo;
         mAccount = accountVo;
         mPositionVo = positionVo;
@@ -180,6 +183,8 @@ public class SheetModifyPopUpWindow extends JMEBasePopupWindow {
         mMaxOrderQty = null == mContractInfoVo ? 0 : mContractInfoVo.getMaxOrderQty();
         mMaxHoldQty = null == mContractInfoVo ? 0 : mContractInfoVo.getMaxHoldQty();
         mLength = mContractID.equals("Ag(T+D)") ? 0 : 2;
+        mName = name;
+        mIDCard = idCard;
 
         mBinding.tvContractName.setText(mContractID);
         mBinding.tvDirection.setText(mBsFlag == 1 && mOcFlag == 0 ? mContext.getResources().getString(R.string.market_buy_more)
@@ -369,7 +374,7 @@ public class SheetModifyPopUpWindow extends JMEBasePopupWindow {
             ARouter.getInstance()
                     .build(Constants.ARouterUriConst.JMEWEBVIEW)
                     .withString("title", mContext.getResources().getString(R.string.transaction_condition_sheet_risk_tips_title))
-                    .withString("url", Constants.HttpConst.URL_CONDITION_SHEET)
+                    .withString("url", Constants.HttpConst.URL_CONDITION_SHEET + "?name=" + mName + "&cardNo=" + mIDCard)
                     .navigation();
         }
 
@@ -402,6 +407,8 @@ public class SheetModifyPopUpWindow extends JMEBasePopupWindow {
                 Toast.makeText(mContext, R.string.transaction_number_error, Toast.LENGTH_SHORT).show();
             else if (new BigDecimal(amount).compareTo(new BigDecimal(0)) == 0)
                 Toast.makeText(mContext, String.format(mContext.getResources().getString(R.string.transaction_entrust_less), 1), Toast.LENGTH_SHORT).show();
+            else if (new BigDecimal(amount).compareTo(new BigDecimal(mMaxAmount)) == 1)
+                Toast.makeText(mContext, mContext.getResources().getString(R.string.transaction_entrust_larger2), Toast.LENGTH_SHORT).show();
             else if (!mBinding.checkboxAgree.isChecked())
                 Toast.makeText(mContext, R.string.transaction_condition_sheet_risk_agree, Toast.LENGTH_SHORT).show();
             else

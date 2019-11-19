@@ -22,6 +22,7 @@ import com.jme.lsgoldtrade.databinding.FragmentCurrentHoldPositionsBinding;
 import com.jme.lsgoldtrade.domain.ConditionOrderInfoVo;
 import com.jme.lsgoldtrade.domain.ContractInfoVo;
 import com.jme.lsgoldtrade.domain.FiveSpeedVo;
+import com.jme.lsgoldtrade.domain.IdentityInfoVo;
 import com.jme.lsgoldtrade.domain.PositionVo;
 import com.jme.lsgoldtrade.domain.QuerySetStopOrderResponse;
 import com.jme.lsgoldtrade.service.ConditionService;
@@ -44,6 +45,9 @@ import rx.Subscription;
 public class CurrentHoldPositionsFragment extends JMEBaseFragment {
 
     private FragmentCurrentHoldPositionsBinding mBinding;
+
+    private String mName;
+    private String mIDCard;
 
     private List<FiveSpeedVo> mFiveSpeedVoList;
 
@@ -77,6 +81,8 @@ public class CurrentHoldPositionsFragment extends JMEBaseFragment {
         mBinding.recyclerView.setHasFixedSize(false);
         mBinding.recyclerView.setLayoutManager(new LinearLayoutManager(mContext));
         mBinding.recyclerView.setAdapter(mAdapter);
+
+        getWhetherIdCard();
     }
 
     @Override
@@ -309,9 +315,14 @@ public class CurrentHoldPositionsFragment extends JMEBaseFragment {
             }
 
             mTransactionStopPopupWindow.setData(stopOrderFlag, mPositionVo.getContractId(), fiveSpeedVo,
-                    mPositionVo, null == mContract ? null : mContract.getContractInfoFromID(contractID), conditionOrderInfoVo);
+                    mPositionVo, null == mContract ? null : mContract.getContractInfoFromID(contractID),
+                    conditionOrderInfoVo, mName, mIDCard);
             mTransactionStopPopupWindow.showAtLocation(mBinding.tvGotoTransaction, Gravity.BOTTOM, 0, 0);
         }
+    }
+
+    private void getWhetherIdCard() {
+        sendRequest(TradeService.getInstance().whetherIdCard, new HashMap<>(), true);
     }
 
     private void limitOrder(String contractId, String price, String amount, int bsFlag, int ocFlag) {
@@ -446,6 +457,31 @@ public class CurrentHoldPositionsFragment extends JMEBaseFragment {
         super.DataReturn(request, head, response);
 
         switch (request.getApi().getName()) {
+            case "WhetherIdCard":
+                if (head.isSuccess()) {
+                    IdentityInfoVo identityInfoVo;
+
+                    try {
+                        identityInfoVo = (IdentityInfoVo) response;
+                    } catch (Exception e) {
+                        identityInfoVo = null;
+
+                        e.printStackTrace();
+                    }
+
+                    if (null == identityInfoVo)
+                        return;
+
+                    String flag = identityInfoVo.getFlag();
+
+                    if (TextUtils.isEmpty(flag))
+                        return;
+
+                    mName = identityInfoVo.getName();
+                    mIDCard = identityInfoVo.getIdCard();
+                }
+
+                break;
             case "LimitOrder":
                 if (head.isSuccess()) {
                     showShortToast(R.string.transaction_evening_up_success);

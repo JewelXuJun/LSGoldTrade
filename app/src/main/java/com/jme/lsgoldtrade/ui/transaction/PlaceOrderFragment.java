@@ -380,7 +380,7 @@ public class PlaceOrderFragment extends JMEBaseFragment implements FChart.OnPric
 
         if (TextUtils.isEmpty(priceStr)) {
             if (mBsFlag == 1)
-                mPlaceOrderPrice = mFiveSpeedVo.getFiveAskLists().get(4)[1];
+                mPlaceOrderPrice = mFiveSpeedVo.getFiveAskLists().get(0)[1];
             else
                 mPlaceOrderPrice = mFiveSpeedVo.getFiveBidLists().get(0)[1];
         } else {
