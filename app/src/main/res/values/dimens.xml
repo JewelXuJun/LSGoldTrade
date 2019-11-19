@@ -75,7 +75,7 @@
     <dimen name="width_edittext">190dp</dimen>
     <dimen name="width_range">96dp</dimen>
     <dimen name="width_entrust_type">160dp</dimen>
-    <dimen name="width_transaction_item_amount">160dp</dimen>
+    <dimen name="width_transaction_item_amount">150dp</dimen>
     <dimen name="width_transaction_item_normal">180dp</dimen>
     <dimen name="width_transaction_item">190dp</dimen>
 

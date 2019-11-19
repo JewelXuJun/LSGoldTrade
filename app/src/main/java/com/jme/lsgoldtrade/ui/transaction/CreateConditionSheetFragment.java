@@ -31,13 +31,13 @@ import com.jme.lsgoldtrade.domain.AccountVo;
 import com.jme.lsgoldtrade.domain.ConditionOrderRunVo;
 import com.jme.lsgoldtrade.domain.ContractInfoVo;
 import com.jme.lsgoldtrade.domain.FiveSpeedVo;
+import com.jme.lsgoldtrade.domain.IdentityInfoVo;
 import com.jme.lsgoldtrade.domain.PositionPageVo;
 import com.jme.lsgoldtrade.domain.PositionVo;
 import com.jme.lsgoldtrade.service.ConditionService;
 import com.jme.lsgoldtrade.service.TradeService;
 import com.jme.lsgoldtrade.util.MarketUtil;
 import com.jme.lsgoldtrade.view.ConfirmDetailPopupwindow;
-import com.jme.lsgoldtrade.view.ConfirmPopupwindow;
 import com.jme.lsgoldtrade.view.RulePopupwindow;
 
 import java.math.BigDecimal;
@@ -65,6 +65,8 @@ public class CreateConditionSheetFragment extends JMEBaseFragment {
     private long mMaxHoldQty = 0;
     private String mContractID = "";
     private String mPagingKey = "";
+    private String mName;
+    private String mIDCard;
     private String[] mContracIDs;
 
     private List<PositionVo> mPositionVoList = new ArrayList<>();
@@ -102,6 +104,7 @@ public class CreateConditionSheetFragment extends JMEBaseFragment {
         initContractNameValue();
         setContractNameData();
         setMarketType();
+        getWhetherIdCard();
     }
 
     @Override
@@ -537,6 +540,10 @@ public class CreateConditionSheetFragment extends JMEBaseFragment {
         sendRequest(ConditionService.getInstance().queryConditionOrderRun, new HashMap<>(), false, false, false);
     }
 
+    private void getWhetherIdCard() {
+        sendRequest(TradeService.getInstance().whetherIdCard, new HashMap<>(), true);
+    }
+
     private void entrustConditionOrder(String price, String amount) {
         if (null == mUser || !mUser.isLogin())
             return;
@@ -650,6 +657,31 @@ public class CreateConditionSheetFragment extends JMEBaseFragment {
                 }
 
                 break;
+            case "WhetherIdCard":
+                if (head.isSuccess()) {
+                    IdentityInfoVo identityInfoVo;
+
+                    try {
+                        identityInfoVo = (IdentityInfoVo) response;
+                    } catch (Exception e) {
+                        identityInfoVo = null;
+
+                        e.printStackTrace();
+                    }
+
+                    if (null == identityInfoVo)
+                        return;
+
+                    String flag = identityInfoVo.getFlag();
+
+                    if (TextUtils.isEmpty(flag))
+                        return;
+
+                    mName = identityInfoVo.getName();
+                    mIDCard = identityInfoVo.getIdCard();
+                }
+
+                break;
             case "EntrustConditionOrder":
                 if (head.isSuccess()) {
                     showShortToast(R.string.transaction_condition_sheet_create_success);
@@ -727,7 +759,7 @@ public class CreateConditionSheetFragment extends JMEBaseFragment {
             if (mFiveSpeedVo.getContractId().equals(mContractID)) {
                 String minPrice = mType == TYPE_BUY_MORE ? mFiveSpeedVo.getLowerLimitPrice() : mFiveSpeedVo.getLatestPriceValue();
 
-                if (new BigDecimal(value).compareTo(new BigDecimal(minPrice)) == -1) {
+                if (new BigDecimal(String.valueOf(value)).compareTo(new BigDecimal(minPrice)) == -1) {
                     showShortToast(R.string.transaction_sheet_limit_down_price_error);
 
                     mBinding.etPrice.setText(price);
@@ -760,7 +792,7 @@ public class CreateConditionSheetFragment extends JMEBaseFragment {
             if (mFiveSpeedVo.getContractId().equals(mContractID)) {
                 String maxPrice = mType == TYPE_BUY_MORE ? mFiveSpeedVo.getLatestPriceValue() : mFiveSpeedVo.getHighLimitPrice();
 
-                if (new BigDecimal(value).compareTo(new BigDecimal(maxPrice)) == 1) {
+                if (new BigDecimal(String.valueOf(value)).compareTo(new BigDecimal(maxPrice)) == 1) {
                     showShortToast(R.string.transaction_sheet_limit_up_price_error);
 
                     mBinding.etPrice.setText(price);
@@ -857,7 +889,7 @@ public class CreateConditionSheetFragment extends JMEBaseFragment {
             ARouter.getInstance()
                     .build(Constants.ARouterUriConst.JMEWEBVIEW)
                     .withString("title", mContext.getResources().getString(R.string.transaction_condition_sheet_risk_tips_title))
-                    .withString("url", Constants.HttpConst.URL_CONDITION_SHEET)
+                    .withString("url", Constants.HttpConst.URL_CONDITION_SHEET + "?name=" + mName + "&cardNo=" + mIDCard)
                     .navigation();
         }
 
