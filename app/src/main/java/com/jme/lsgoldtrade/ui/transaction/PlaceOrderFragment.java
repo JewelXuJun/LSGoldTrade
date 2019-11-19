@@ -448,6 +448,9 @@ public class PlaceOrderFragment extends JMEBaseFragment implements FChart.OnPric
     }
 
     private void queryConditionOrderRun() {
+        if (null == mUser || !mUser.isLogin())
+            return;
+
         sendRequest(ConditionService.getInstance().queryConditionOrderRun, new HashMap<>(), false, false, false);
     }
 
