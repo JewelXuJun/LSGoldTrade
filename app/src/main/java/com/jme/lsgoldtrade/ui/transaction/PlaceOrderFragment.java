@@ -55,8 +55,6 @@ public class PlaceOrderFragment extends JMEBaseFragment implements FChart.OnPric
 
     private boolean bVisibleToUser = false;
     private boolean bFlag = true;
-    private int mConditionOrderRunNum;
-    private int mStopOrderRunNum;
     private int mSelectItem = 0;
     private int mBsFlag = 0;
     private int mOcFlag = 0;
@@ -512,20 +510,20 @@ public class PlaceOrderFragment extends JMEBaseFragment implements FChart.OnPric
                     if (null == conditionOrderRunVo)
                         return;
 
-                    mConditionOrderRunNum = conditionOrderRunVo.getConditionOrderRunNum();
-                    mStopOrderRunNum = conditionOrderRunVo.getStopOrderRunNum();
+                    int conditionOrderRunNum = conditionOrderRunVo.getConditionOrderRunNum();
+                    int stopOrderRunNum = conditionOrderRunVo.getStopOrderRunNum();
 
-                    if (0 == mConditionOrderRunNum && 0 == mStopOrderRunNum) {
+                    if (0 == conditionOrderRunNum && 0 == stopOrderRunNum) {
                         mBinding.tvRunningMessage.setVisibility(View.GONE);
                     } else {
                         String message;
 
-                        if (0 != mConditionOrderRunNum && 0 == mStopOrderRunNum)
-                            message = String.format(mContext.getResources().getString(R.string.transaction_condition_sheet_running_message), mConditionOrderRunNum);
-                        else if (0 == mConditionOrderRunNum && 0 != mStopOrderRunNum)
-                            message = String.format(mContext.getResources().getString(R.string.transaction_stop_running_message), mStopOrderRunNum);
+                        if (0 != conditionOrderRunNum && 0 == stopOrderRunNum)
+                            message = String.format(mContext.getResources().getString(R.string.transaction_condition_sheet_running_message), conditionOrderRunNum);
+                        else if (0 == conditionOrderRunNum && 0 != stopOrderRunNum)
+                            message = String.format(mContext.getResources().getString(R.string.transaction_stop_running_message), stopOrderRunNum);
                         else
-                            message = String.format(mContext.getResources().getString(R.string.transaction_all_running_message), mConditionOrderRunNum, mStopOrderRunNum);
+                            message = String.format(mContext.getResources().getString(R.string.transaction_all_running_message), conditionOrderRunNum, stopOrderRunNum);
 
                         mBinding.tvRunningMessage.setText(message);
                         mBinding.tvRunningMessage.setVisibility(View.VISIBLE);
@@ -687,7 +685,7 @@ public class PlaceOrderFragment extends JMEBaseFragment implements FChart.OnPric
         public void onClickConditionOrderRun() {
             ARouter.getInstance()
                     .build(Constants.ARouterUriConst.CONDITIONSHEET)
-                    .withInt("Type", 0 != mConditionOrderRunNum ? 1 : 2)
+                    .withInt("Type", 1)
                     .navigation();
         }
 
