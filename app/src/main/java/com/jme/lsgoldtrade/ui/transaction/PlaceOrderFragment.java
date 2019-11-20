@@ -687,7 +687,7 @@ public class PlaceOrderFragment extends JMEBaseFragment implements FChart.OnPric
         public void onClickConditionOrderRun() {
             ARouter.getInstance()
                     .build(Constants.ARouterUriConst.CONDITIONSHEET)
-                    .withInt("Type", 0 != mConditionOrderRunNum ? 1 : 2)
+                    .withInt("Type", 1)
                     .navigation();
         }
 

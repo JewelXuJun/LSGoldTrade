@@ -710,7 +710,7 @@ public class CreateConditionSheetFragment extends JMEBaseFragment {
     public class ClickHandlers {
 
         public void onClickConditionOrderRun() {
-            RxBus.getInstance().post(Constants.RxBusConst.RXBUS_TRANSACTION_CONDITION_ORDER_RUN, 0 != mConditionOrderRunNum ? 1 : 2);
+            RxBus.getInstance().post(Constants.RxBusConst.RXBUS_TRANSACTION_CONDITION_ORDER_RUN, 1);
         }
 
         public void onClickSelectContract() {
