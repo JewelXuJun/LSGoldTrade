@@ -153,4 +153,16 @@ public interface ManagementApi {
 
     @POST("/tjsmanage/infoapi/v1/android/tradeSafety/unlockTradePassword")
     Call<DTResponse> unlockTradePassword(@Body Map<String, String> map);
+
+    //获取免费天数
+    @GET("/tjsmanage/infoapi/v1/ios/getRemainTradeDay")
+    Call<DTResponse> getRemainTradeDay(@Body Map<String, String> map);
+
+    //获取支付列表
+    @GET("/tjsmanage/infoapi/v1/ios/getPayIcon")
+    Call<DTResponse> getPayIcon(@Body Map<String, String> map);
+
+    //获取欠费金额
+    @GET("/tjsmanage/infoapi/v1/ios/getCustomerArrearage")
+    Call<DTResponse> getCustomerArrearage(@Body Map<String, String> map);
 }

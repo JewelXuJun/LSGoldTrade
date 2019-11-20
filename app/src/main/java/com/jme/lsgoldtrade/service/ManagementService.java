@@ -11,6 +11,7 @@ import com.jme.lsgoldtrade.domain.OnlineTimeVo;
 import com.jme.lsgoldtrade.domain.OrderVo;
 import com.jme.lsgoldtrade.domain.PasswordInfoVo;
 import com.jme.lsgoldtrade.domain.PasswordStatusVo;
+import com.jme.lsgoldtrade.domain.PayIconVo;
 import com.jme.lsgoldtrade.domain.ProtocolVo;
 import com.jme.lsgoldtrade.domain.QuestionVo;
 import com.jme.lsgoldtrade.domain.BannerVo;
@@ -410,6 +411,27 @@ public class ManagementService extends IService<ManagementApi> {
         @Override
         public Call<DTResponse> request(HashMap<String, String> params) {
             return mApi.unlockTradePassword(params);
+        }
+    };
+
+    public API getRemainTradeDay = new API<String>("GetRemainTradeDay") {
+        @Override
+        public Call<DTResponse> request(HashMap<String, String> params) {
+            return mApi.getRemainTradeDay(params);
+        }
+    };
+
+    public API getPayIcon = new API<List<PayIconVo>>("GetPayIcon") {
+        @Override
+        public Call<DTResponse> request(HashMap<String, String> params) {
+            return mApi.getPayIcon(params);
+        }
+    };
+
+    public API getCustomerArrearage = new API<String>("GetCustomerArrearage") {
+        @Override
+        public Call<DTResponse> request(HashMap<String, String> params) {
+            return mApi.getCustomerArrearage(params);
         }
     };
 
