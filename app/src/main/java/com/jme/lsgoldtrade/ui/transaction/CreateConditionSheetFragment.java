@@ -211,12 +211,17 @@ public class CreateConditionSheetFragment extends JMEBaseFragment {
 
         bVisibleToUser = isVisibleToUser;
 
-        if (null != mBinding && bVisibleToUser) {
+        if (null == mBinding)
+            return;
+
+        if (bVisibleToUser) {
             mPagingKey = "";
             mPositionVoList.clear();
 
             queryConditionOrderRun();
             getAccount();
+        } else {
+            hiddenKeyBoard();
         }
     }
 
@@ -230,6 +235,8 @@ public class CreateConditionSheetFragment extends JMEBaseFragment {
 
             queryConditionOrderRun();
             getAccount();
+        } else {
+            hiddenKeyBoard();
         }
     }
 

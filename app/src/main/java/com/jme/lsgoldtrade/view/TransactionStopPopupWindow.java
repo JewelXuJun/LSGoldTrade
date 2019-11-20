@@ -510,7 +510,7 @@ public class TransactionStopPopupWindow extends JMEBasePopupWindow {
             else if (new BigDecimal(amount).compareTo(new BigDecimal(mPosition)) == 1)
                 Toast.makeText(mContext, R.string.transaction_entrust_larger3, Toast.LENGTH_SHORT).show();
             else if (!mBinding.checkboxAgree.isChecked())
-                Toast.makeText(mContext, R.string.transaction_condition_sheet_risk_agree, Toast.LENGTH_SHORT).show();
+                Toast.makeText(mContext, R.string.transaction_transaction_stop_risk_agree, Toast.LENGTH_SHORT).show();
             else
                 sendConfirmData(profitPrice, lossPrice, amount);
         }
