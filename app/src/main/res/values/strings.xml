@@ -323,7 +323,8 @@
     <string name="transaction_entrust_larger2">不可大于最大约可下单手数！</string>
     <string name="transaction_entrust_larger3">可用手数不足！</string>
     <string name="transaction_price_setting_range">您设置的触发价应在%1$s ~ %2$s范围内</string>
-    <string name="transaction_condition_sheet_risk_agree">请先同意并勾选《条件单风险提示》</string>
+    <string name="transaction_condition_sheet_risk_agree">请先同意并勾选《条件单服务协议》</string>
+    <string name="transaction_transaction_stop_risk_agree">请先同意并勾选《止盈止损服务协议》</string>
     <string name="transaction_modify_success">修改成功</string>
     <string name="transaction_cancel_success">撤销成功</string>
     <string name="transaction_setting_success">设置成功</string>
