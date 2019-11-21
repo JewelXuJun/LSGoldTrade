@@ -230,6 +230,12 @@ public class CurrentHoldPositionsFragment extends JMEBaseFragment {
         mAdapter.setList(list);
     }
 
+    public void setFiveSpeedVoList(List<FiveSpeedVo> fiveSpeedVoList) {
+        mFiveSpeedVoList = fiveSpeedVoList;
+
+        mAdapter.setFiveSpeedVoList(fiveSpeedVoList);
+    }
+
     public void setCurrentHoldPositionsData(List<PositionVo> positionVoList) {
         if (null == positionVoList) {
             mAdapter.setNewData(null);
