@@ -2,6 +2,7 @@ package com.jme.lsgoldtrade.view;
 
 import android.content.Context;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.databinding.DataBindingUtil;
@@ -41,8 +42,9 @@ public class WithholdMessagePopUpWindow extends JMEBasePopupWindow {
         mBinding.btnConfirm.setOnClickListener((view) -> dismiss());
     }
 
-    public void setData(String message) {
+    public void setData(String message, View.OnClickListener listener) {
         mBinding.tvMessage.setText(message);
+        mBinding.btnConfirm.setOnClickListener(listener);
     }
 
 }

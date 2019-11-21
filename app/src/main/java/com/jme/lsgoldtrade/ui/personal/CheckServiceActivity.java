@@ -23,6 +23,7 @@ import com.jme.lsgoldtrade.service.ManagementService;
 import com.jme.lsgoldtrade.service.UserService;
 import com.jme.lsgoldtrade.view.ConfirmPopupwindow;
 import com.jme.lsgoldtrade.view.TransactionMessagePopUpWindow;
+import com.jme.lsgoldtrade.view.WithholdMessagePopUpWindow;
 
 import java.math.BigDecimal;
 import java.net.ConnectException;
@@ -37,8 +38,11 @@ public class CheckServiceActivity extends JMEBaseActivity {
 
     private ActivityCheckServiceBinding mBinding;
 
+    private boolean bClickFlag = false;
+
     private TransactionMessagePopUpWindow mTransactionMessagePopUpWindow;
     private ConfirmPopupwindow mConfirmPopupwindow;
+    private WithholdMessagePopUpWindow mWithholdMessagePopUpWindow;
 
     @Override
     protected int getContentViewId() {
@@ -58,6 +62,7 @@ public class CheckServiceActivity extends JMEBaseActivity {
 
         mTransactionMessagePopUpWindow = new TransactionMessagePopUpWindow(this);
         mConfirmPopupwindow = new ConfirmPopupwindow(this);
+        mWithholdMessagePopUpWindow = new WithholdMessagePopUpWindow(this);
 
         getRemainTradeDay();
     }
@@ -65,6 +70,11 @@ public class CheckServiceActivity extends JMEBaseActivity {
     @Override
     protected void initListener() {
         super.initListener();
+
+        mWithholdMessagePopUpWindow.setOnDismissListener(() -> {
+            mBinding.layoutNotSigned.setVisibility(View.GONE);
+            mBinding.layoutSigned.setVisibility(View.VISIBLE);
+        });
     }
 
     @Override
@@ -189,8 +199,29 @@ public class CheckServiceActivity extends JMEBaseActivity {
 
                     String isSign = userInfoVo.getIsSign();
 
-                    mBinding.layoutNotSigned.setVisibility(TextUtils.isEmpty(isSign) || isSign.equals("N") ? View.VISIBLE : View.GONE);
-                    mBinding.layoutSigned.setVisibility(TextUtils.isEmpty(isSign) || isSign.equals("N") ? View.GONE : View.VISIBLE);
+                    if (TextUtils.isEmpty(isSign) || isSign.equals("N")) {
+                        if (bClickFlag) {
+                            bClickFlag = false;
+
+                            ARouter.getInstance().build(Constants.ARouterUriConst.WITHHOLDCONTRACT).navigation();
+                        } else {
+                            mBinding.layoutNotSigned.setVisibility(View.VISIBLE);
+                            mBinding.layoutSigned.setVisibility(View.GONE);
+                        }
+                    } else {
+                        if (bClickFlag) {
+                            if (null != mWithholdMessagePopUpWindow && !mWithholdMessagePopUpWindow.isShowing()) {
+                                bClickFlag = false;
+
+                                mWithholdMessagePopUpWindow.setData(getResources().getString(R.string.incrementaccount_withhold_signed),
+                                        (view) -> mWithholdMessagePopUpWindow.dismiss());
+                                mWithholdMessagePopUpWindow.showAtLocation(mBinding.tvAvailableFunds, Gravity.CENTER, 0, 0);
+                            }
+                        } else {
+                            mBinding.layoutNotSigned.setVisibility(View.GONE);
+                            mBinding.layoutSigned.setVisibility(View.VISIBLE);
+                        }
+                    }
                 }
 
                 break;
@@ -285,7 +316,9 @@ public class CheckServiceActivity extends JMEBaseActivity {
         }
 
         public void onClickWithholdContract() {
-            ARouter.getInstance().build(Constants.ARouterUriConst.WITHHOLDCONTRACT).navigation();
+            bClickFlag = true;
+
+            queryLoginResult();
         }
 
         public void onClickTradingBox() {
