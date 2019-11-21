@@ -370,7 +370,7 @@ public class HoldPositionsFragment extends JMEBaseFragment implements OnRefreshL
                             if (new BigDecimal(minReserveFundStr).compareTo(new BigDecimal(0)) == 0)
                                 riskRate = 0.00f;
                             else
-                                riskRate = Math.min(new BigDecimal(mTotal).divide(new BigDecimal(minReserveFundStr), 4, BigDecimal.ROUND_DOWN)
+                                riskRate = Math.min(new BigDecimal(mTotal).divide(new BigDecimal(minReserveFundStr), 4, BigDecimal.ROUND_HALF_UP)
                                         .multiply(new BigDecimal(100)).floatValue(), 10000.00f);
                         }
 
@@ -420,7 +420,7 @@ public class HoldPositionsFragment extends JMEBaseFragment implements OnRefreshL
                             if (new BigDecimal(minReserveFundStr).compareTo(new BigDecimal(0)) == 0)
                                 riskRate = 0.00f;
                             else
-                                riskRate = Math.min(new BigDecimal(mTotal).divide(new BigDecimal(minReserveFundStr), 4, BigDecimal.ROUND_DOWN)
+                                riskRate = Math.min(new BigDecimal(mTotal).divide(new BigDecimal(minReserveFundStr), 4, BigDecimal.ROUND_HALF_UP)
                                         .multiply(new BigDecimal(100)).floatValue(), 10000.00f);
                         }
 
