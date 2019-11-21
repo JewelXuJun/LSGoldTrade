@@ -2,7 +2,9 @@ package com.jme.lsgoldtrade.ui.tradingbox;
 
 import android.content.Context;
 import android.os.Bundle;
+
 import androidx.core.content.ContextCompat;
+
 import android.text.Editable;
 import android.text.SpannableString;
 import android.text.Spanned;
@@ -42,9 +44,6 @@ import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.List;
 
-/**
- * 预埋单
- */
 @Route(path = Constants.ARouterUriConst.PLACEORDER)
 public class PlaceOrderActivity extends JMEBaseActivity {
 
@@ -55,10 +54,8 @@ public class PlaceOrderActivity extends JMEBaseActivity {
     private MessagePopupwindow mMessagePopupwindow;
     private ConfirmPopupwindow mConfirmPopupwindow;
 
-    private String mType;
     private String mDirection;
     private String mTradeId;
-    private String mDirectionSelected = "";
     private String mVariety;
     private String mID;
     private String mOpenTimeStart;
@@ -93,24 +90,12 @@ public class PlaceOrderActivity extends JMEBaseActivity {
     protected void initData(Bundle savedInstanceState) {
         super.initData(savedInstanceState);
 
-        mType = getIntent().getStringExtra("Type");
         mDirection = getIntent().getStringExtra("Direction");
         mTradeId = getIntent().getStringExtra("TradeId");
 
-        if (mType.equals("Vote")) {
-            mBinding.layoutDirection.setVisibility(View.GONE);
-            mBinding.tvDirection.setVisibility(View.VISIBLE);
-            mBinding.tvDirection.setText(mDirection.equals("0") ? R.string.text_more : R.string.text_empty);
-            mBinding.tvDirection.setTextColor(mDirection.equals("0") ? ContextCompat.getColor(this, R.color.color_red)
-                    : ContextCompat.getColor(this, R.color.color_green));
-            mDirectionSelected = mDirection;
-        } else {
-            mBinding.layoutDirection.setVisibility(View.VISIBLE);
-            mBinding.tvDirection.setVisibility(View.GONE);
-            mDirectionSelected = mDirection;
-
-            setEntrustDirectionLayout();
-        }
+        mBinding.tvDirection.setText(mDirection.equals("0") ? R.string.text_more : R.string.text_empty);
+        mBinding.tvDirection.setTextColor(mDirection.equals("0") ? ContextCompat.getColor(this, R.color.color_red)
+                : ContextCompat.getColor(this, R.color.color_green));
 
         if (TextUtils.isEmpty(mTradeId))
             return;
@@ -153,19 +138,6 @@ public class PlaceOrderActivity extends JMEBaseActivity {
         super.onResume();
 
         getAccount();
-    }
-
-    private void setEntrustDirectionLayout() {
-        mBinding.tvMore.setBackground(mDirectionSelected.equals("0") ? ContextCompat.getDrawable(this, R.drawable.bg_btn_more_fill)
-                : ContextCompat.getDrawable(this, R.drawable.bg_btn_more_solid));
-        mBinding.tvMore.setTextColor(mDirectionSelected.equals("0") ? ContextCompat.getColor(this, R.color.white)
-                : ContextCompat.getColor(this, R.color.color_red));
-        mBinding.tvEmpty.setBackground(mDirectionSelected.equals("0") ? ContextCompat.getDrawable(this, R.drawable.bg_btn_empty_solid)
-                : ContextCompat.getDrawable(this, R.drawable.bg_btn_empty_fill));
-        mBinding.tvEmpty.setTextColor(mDirectionSelected.equals("0") ? ContextCompat.getColor(this, R.color.color_green)
-                : ContextCompat.getColor(this, R.color.white));
-        mBinding.imgMore.setVisibility(mDirectionSelected.equals("0") ? View.VISIBLE : View.GONE);
-        mBinding.imgEmpty.setVisibility(mDirectionSelected.equals("0") ? View.GONE : View.VISIBLE);
     }
 
     private void calculateMoneyEnough(String number) {
@@ -270,7 +242,7 @@ public class PlaceOrderActivity extends JMEBaseActivity {
         params.put("authorizedOpeningTimeEnd", mOpenTimeEnd);
         params.put("boxId", mTradeId);
         params.put("earningsLine", mEarningsLine);
-        params.put("entrustTheDirection", mDirectionSelected);
+        params.put("entrustTheDirection", mDirection);
         params.put("entrustTheHandCount", number);
         params.put("id", mID);
         params.put("lossLine", mLossLine);
@@ -481,16 +453,19 @@ public class PlaceOrderActivity extends JMEBaseActivity {
 
     public class ClickHandlers {
 
-        public void onClickMore() {
-            mDirectionSelected = "0";
+        public void onClickCustomTime() {
+            hiddenKeyBoard();
 
-            setEntrustDirectionLayout();
-        }
+            if (null != mConfirmPopupwindow && !mConfirmPopupwindow.isShowing()) {
+                mConfirmPopupwindow.setData(getResources().getString(R.string.trading_box_edit_time),
+                        getResources().getString(R.string.trading_box_setting_condition_sheet),
+                        (view) -> {
+                            ARouter.getInstance().build(Constants.ARouterUriConst.CONDITIONSHEET).navigation();
 
-        public void onClickEmpty() {
-            mDirectionSelected = "1";
-
-            setEntrustDirectionLayout();
+                            mConfirmPopupwindow.dismiss();
+                        });
+                mConfirmPopupwindow.showAtLocation(mBinding.etAmount, Gravity.CENTER, 0, 0);
+            }
         }
 
         public void onClickAmountMinus() {
@@ -532,6 +507,8 @@ public class PlaceOrderActivity extends JMEBaseActivity {
         }
 
         public void onClickEntrustOpenTimeTips() {
+            hiddenKeyBoard();
+
             if (null != mWindow && !mWindow.isShowing()) {
                 mWindow.setData(getString(R.string.trading_box_entrust_open_time), new SpannableString(getString(R.string.trading_box_entrust_open_time_message)));
                 mWindow.showAtLocation(mBinding.etAmount, Gravity.CENTER, 0, 0);
@@ -539,18 +516,41 @@ public class PlaceOrderActivity extends JMEBaseActivity {
         }
 
         public void onClickEntrustEqualTimeTips() {
+            hiddenKeyBoard();
+
             if (null != mWindow && !mWindow.isShowing()) {
                 mWindow.setData(getString(R.string.trading_box_entrust_equal_time), new SpannableString(getString(R.string.trading_box_entrust_equal_time_message)));
                 mWindow.showAtLocation(mBinding.etAmount, Gravity.CENTER, 0, 0);
             }
         }
 
-        public void onClickEdit() {
+        public void onClickCustomEntrustInstructions() {
+            hiddenKeyBoard();
+
             if (null != mConfirmPopupwindow && !mConfirmPopupwindow.isShowing()) {
-                mConfirmPopupwindow.setData(mContext.getResources().getString(R.string.trading_box_edit_time),
-                        mContext.getResources().getString(R.string.trading_box_setting_condition_sheet),
-                        (view) -> ARouter.getInstance().build(Constants.ARouterUriConst.CONDITIONSHEET).navigation());
-                mWindow.showAtLocation(mBinding.etAmount, Gravity.CENTER, 0, 0);
+                mConfirmPopupwindow.setData(getResources().getString(R.string.trading_box_edit_entrust_instructions),
+                        getResources().getString(R.string.trading_box_setting_condition_sheet),
+                        (view) -> {
+                            ARouter.getInstance().build(Constants.ARouterUriConst.CONDITIONSHEET).navigation();
+
+                            mConfirmPopupwindow.dismiss();
+                        });
+                mConfirmPopupwindow.showAtLocation(mBinding.etAmount, Gravity.CENTER, 0, 0);
+            }
+        }
+
+        public void onClickCustomFloat() {
+            hiddenKeyBoard();
+
+            if (null != mConfirmPopupwindow && !mConfirmPopupwindow.isShowing()) {
+                mConfirmPopupwindow.setData(getResources().getString(R.string.trading_box_edit_float_line),
+                        getResources().getString(R.string.trading_box_setting_condition_sheet),
+                        (view) -> {
+                            ARouter.getInstance().build(Constants.ARouterUriConst.CONDITIONSHEET).navigation();
+
+                            mConfirmPopupwindow.dismiss();
+                        });
+                mConfirmPopupwindow.showAtLocation(mBinding.etAmount, Gravity.CENTER, 0, 0);
             }
         }
 

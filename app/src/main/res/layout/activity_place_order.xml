@@ -74,81 +74,13 @@
                         android:textColor="@color/black_deep"
                         android:textSize="@dimen/sp_14" />
 
-                    <LinearLayout
-                        android:id="@+id/layout_direction"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="@dimen/common_area_margin_big"
-                        android:layout_weight="1"
-                        android:orientation="horizontal"
-                        android:visibility="gone">
-
-                        <RelativeLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="@dimen/common_item_height_middle"
-                            android:layout_marginRight="@dimen/common_area_margin_tiny"
-                            android:layout_weight="1"
-                            android:background="@drawable/bg_btn_more_solid">
-
-                            <TextView
-                                android:id="@+id/tv_more"
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:gravity="center"
-                                android:onClick="@{() -> handlers.onClickMore()}"
-                                android:text="@string/text_more"
-                                android:textColor="@color/color_red"
-                                android:textSize="@dimen/size_normal_middle" />
-
-                            <ImageView
-                                android:id="@+id/img_more"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_alignParentTop="true"
-                                android:layout_alignParentRight="true"
-                                android:background="@mipmap/ic_selected"
-                                android:visibility="gone" />
-
-                        </RelativeLayout>
-
-                        <RelativeLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="@dimen/common_item_height_middle"
-                            android:layout_marginLeft="@dimen/common_area_margin_tiny"
-                            android:layout_weight="1"
-                            android:background="@drawable/bg_btn_empty_solid">
-
-                            <TextView
-                                android:id="@+id/tv_empty"
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:gravity="center"
-                                android:onClick="@{() -> handlers.onClickEmpty()}"
-                                android:text="@string/text_empty"
-                                android:textColor="@color/color_green"
-                                android:textSize="@dimen/size_normal_middle" />
-
-                            <ImageView
-                                android:id="@+id/img_empty"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_alignParentTop="true"
-                                android:layout_alignParentRight="true"
-                                android:background="@mipmap/ic_selected"
-                                android:visibility="gone" />
-
-                        </RelativeLayout>
-
-                    </LinearLayout>
-
                     <TextView
                         android:id="@+id/tv_direction"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="@dimen/common_area_margin_big"
                         android:layout_weight="1"
-                        android:textSize="@dimen/size_normal_middle"
-                        android:visibility="gone" />
+                        android:textSize="@dimen/size_normal_middle" />
 
                 </LinearLayout>
 
@@ -194,7 +126,9 @@
                         <LinearLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:orientation="vertical">
+                            android:onClick="@{() -> handlers.onClickCustomTime()}"
+                            android:orientation="vertical"
+                            android:paddingRight="@dimen/common_area_margin_tiny">
 
                             <TextView
                                 android:id="@+id/tv_open_time_start_date"
@@ -222,7 +156,9 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_alignParentRight="true"
-                            android:orientation="vertical">
+                            android:onClick="@{() -> handlers.onClickCustomTime()}"
+                            android:orientation="vertical"
+                            android:paddingLeft="@dimen/common_area_margin_tiny">
 
                             <TextView
                                 android:id="@+id/tv_open_time_end_date"
@@ -286,7 +222,9 @@
                         <LinearLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:orientation="vertical">
+                            android:onClick="@{() -> handlers.onClickCustomTime()}"
+                            android:orientation="vertical"
+                            android:paddingRight="@dimen/common_area_margin_tiny">
 
                             <TextView
                                 android:id="@+id/tv_equal_time_start_date"
@@ -314,7 +252,9 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_alignParentRight="true"
-                            android:orientation="vertical">
+                            android:onClick="@{() -> handlers.onClickCustomTime()}"
+                            android:orientation="vertical"
+                            android:paddingLeft="@dimen/common_area_margin_tiny">
 
                             <TextView
                                 android:id="@+id/tv_equal_time_end_date"
@@ -450,6 +390,7 @@
                         android:layout_weight="1"
                         android:background="@drawable/bg_btn_gray_hollow"
                         android:gravity="center"
+                        android:onClick="@{() -> handlers.onClickCustomEntrustInstructions()}"
                         android:orientation="horizontal"
                         android:text="@string/transaction_market_price_fak"
                         android:textColor="@color/color_blue_deep"
@@ -487,8 +428,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center_vertical"
-                                android:layout_marginLeft="@dimen/common_area_margin_tiny"
-                                android:onClick="@{() -> handlers.onClickEdit()}"
+                                android:onClick="@{() -> handlers.onClickCustomFloat()}"
                                 android:padding="@dimen/common_area_margin_tiny">
 
                                 <ImageView

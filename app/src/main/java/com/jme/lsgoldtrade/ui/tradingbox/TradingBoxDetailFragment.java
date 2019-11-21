@@ -361,7 +361,6 @@ public class TradingBoxDetailFragment extends JMEBaseFragment {
                 if (head.isSuccess()) {
                     ARouter.getInstance()
                             .build(Constants.ARouterUriConst.PLACEORDER)
-                            .withString("Type", "Vote")
                             .withString("Direction", request.getParams().get("direction").equals("0") ? mDirection
                                     : mDirection.equals("0") ? "1" : "0")
                             .withString("TradeId", mTradeId)
