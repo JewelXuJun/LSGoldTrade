@@ -3,6 +3,8 @@ package com.jme.lsgoldtrade.ui.transaction;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.text.Editable;
 import android.text.InputType;
 import android.text.SpannableString;
@@ -21,6 +23,7 @@ import androidx.core.content.ContextCompat;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.jme.common.network.DTRequest;
 import com.jme.common.network.Head;
+import com.jme.common.util.NetWorkUtils;
 import com.jme.common.util.RxBus;
 import com.jme.lsgoldtrade.R;
 import com.jme.lsgoldtrade.base.JMEBaseFragment;
@@ -30,11 +33,12 @@ import com.jme.lsgoldtrade.databinding.FragmentCreateConditionSheetBinding;
 import com.jme.lsgoldtrade.domain.AccountVo;
 import com.jme.lsgoldtrade.domain.ConditionOrderRunVo;
 import com.jme.lsgoldtrade.domain.ContractInfoVo;
-import com.jme.lsgoldtrade.domain.FiveSpeedVo;
 import com.jme.lsgoldtrade.domain.IdentityInfoVo;
 import com.jme.lsgoldtrade.domain.PositionPageVo;
 import com.jme.lsgoldtrade.domain.PositionVo;
+import com.jme.lsgoldtrade.domain.TenSpeedVo;
 import com.jme.lsgoldtrade.service.ConditionService;
+import com.jme.lsgoldtrade.service.MarketService;
 import com.jme.lsgoldtrade.service.TradeService;
 import com.jme.lsgoldtrade.util.MarketUtil;
 import com.jme.lsgoldtrade.view.ConfirmDetailPopupwindow;
@@ -68,11 +72,10 @@ public class CreateConditionSheetFragment extends JMEBaseFragment {
     private String[] mContracIDs;
 
     private List<PositionVo> mPositionVoList = new ArrayList<>();
-    private List<FiveSpeedVo> mFiveSpeedVoList;
 
     private RulePopupwindow mRulePopupwindow;
     private ConfirmDetailPopupwindow mConfirmDetailPopupwindow;
-    private FiveSpeedVo mFiveSpeedVo;
+    private TenSpeedVo mTenSpeedVo;
     private AccountVo mAccountVo;
     private ContractInfoVo mContractInfoVo;
     private AlertDialog mDialog;
@@ -80,6 +83,22 @@ public class CreateConditionSheetFragment extends JMEBaseFragment {
 
     private static final int TYPE_BUY_MORE = 1;
     private static final int TYPE_SELL_EMPTY = 2;
+
+    private Handler mHandler = new Handler() {
+        public void handleMessage(Message msg) {
+
+            switch (msg.what) {
+                case Constants.Msg.MSG_MARKET_UPDATE:
+                    mHandler.removeMessages(Constants.Msg.MSG_MARKET_UPDATE);
+
+                    queryQuotation();
+
+                    break;
+            }
+
+            super.handleMessage(msg);
+        }
+    };
 
     @Override
     protected int getContentViewId() {
@@ -122,7 +141,7 @@ public class CreateConditionSheetFragment extends JMEBaseFragment {
                 if (mContractID.equals("Ag(T+D)")) {
                     if (s.toString().length() != 4)
                         bFlag = false;
-                } else if (s.toString().length() != mFiveSpeedVo.getLatestPriceValue().length()) {
+                } else if (s.toString().length() != mTenSpeedVo.getLatestPriceValue().length()) {
                     bFlag = false;
                 }
 
@@ -218,8 +237,11 @@ public class CreateConditionSheetFragment extends JMEBaseFragment {
 
             queryConditionOrderRun();
             getAccount();
+            queryQuotation();
         } else {
             hiddenKeyBoard();
+
+            mHandler.removeMessages(Constants.Msg.MSG_MARKET_UPDATE);
         }
     }
 
@@ -233,9 +255,17 @@ public class CreateConditionSheetFragment extends JMEBaseFragment {
 
             queryConditionOrderRun();
             getAccount();
+            queryQuotation();
         } else {
             hiddenKeyBoard();
         }
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+
+        mHandler.removeMessages(Constants.Msg.MSG_MARKET_UPDATE);
     }
 
     private void initRxBus() {
@@ -246,17 +276,6 @@ public class CreateConditionSheetFragment extends JMEBaseFragment {
                 return;
 
             switch (callType) {
-                case Constants.RxBusConst.RXBUS_TRANSACTION_CONDITION_SHEET_FIVESPEED:
-                    Object object = message.getObject2();
-
-                    if (null == object)
-                        return;
-
-                    mFiveSpeedVoList = (List<FiveSpeedVo>) object;
-
-                    setMarketData();
-
-                    break;
                 case Constants.RxBusConst.RXBUS_ORDER_SUCCESS:
                     mPositionVoList.clear();
 
@@ -319,18 +338,17 @@ public class CreateConditionSheetFragment extends JMEBaseFragment {
             if (mSelectItem != position) {
                 mSelectItem = position;
                 bFlag = true;
-
                 mContractID = mContracIDs[mSelectItem];
                 mLength = mContractID.equals("Ag(T+D)") ? 0 : 2;
-
-                mBinding.tvContractId.setText(mContractID);
                 mContractInfoVo = mContract.getContractInfoFromID(mContractID);
 
+                mBinding.tvContractId.setText(mContractID);
                 mBinding.etPrice.setInputType(mContractID.equals("Ag(T+D)") ? InputType.TYPE_CLASS_NUMBER : EditorInfo.TYPE_CLASS_NUMBER | EditorInfo.TYPE_NUMBER_FLAG_DECIMAL);
 
-                setMarketData();
+                mHandler.removeMessages(Constants.Msg.MSG_MARKET_UPDATE);
+
                 setContractData();
-                calculateMaxAmount();
+                queryQuotation();
             }
 
             mBinding.imgSelect.setBackground(ContextCompat.getDrawable(mContext, R.mipmap.ic_down));
@@ -345,25 +363,17 @@ public class CreateConditionSheetFragment extends JMEBaseFragment {
     }
 
     private void setMarketData() {
-        if (null == mFiveSpeedVoList || 0 == mFiveSpeedVoList.size())
+        if (null == mTenSpeedVo)
             return;
 
-        for (FiveSpeedVo fiveSpeedVo : mFiveSpeedVoList) {
-            if (null != fiveSpeedVo && fiveSpeedVo.getContractId().equals(mContractID))
-                mFiveSpeedVo = fiveSpeedVo;
-        }
-
-        if (null == mFiveSpeedVo)
-            return;
-
-        String upDown = mFiveSpeedVo.getUpDownValue();
-        String lastPrice = mFiveSpeedVo.getLatestPriceValue();
+        String upDown = mTenSpeedVo.getUpDownValue();
+        String lastPrice = mTenSpeedVo.getLatestPriceValue();
 
         int rateType = TextUtils.isEmpty(upDown) ? 0 : new BigDecimal(upDown).compareTo(new BigDecimal(0));
 
         mBinding.tvLastPrice.setText(lastPrice);
         mBinding.tvRange.setText(MarketUtil.getMarketRangeValue(rateType, upDown));
-        mBinding.tvRate.setText(MarketUtil.getMarketRateValue(rateType, mFiveSpeedVo.getUpDownRateValue()));
+        mBinding.tvRate.setText(MarketUtil.getMarketRateValue(rateType, mTenSpeedVo.getUpDownRateValue()));
 
         if (bFlag)
             mBinding.etPrice.setText(MarketUtil.formatValue(String.valueOf(lastPrice), mLength));
@@ -380,6 +390,7 @@ public class CreateConditionSheetFragment extends JMEBaseFragment {
 
         setMarketRange();
         setConditionSheetDetail();
+        calculateMaxAmount();
     }
 
     private void setMarketType() {
@@ -401,16 +412,16 @@ public class CreateConditionSheetFragment extends JMEBaseFragment {
     private void setMarketRange() {
         String range;
 
-        if (null == mFiveSpeedVo) {
+        if (null == mTenSpeedVo) {
             range = "";
         } else {
-            if (mFiveSpeedVo.getContractId().equals(mContractID)) {
+            if (mTenSpeedVo.getContractId().equals(mContractID)) {
                 if (mType == TYPE_BUY_MORE)
                     range = String.format(mContext.getResources().getString(R.string.transaction_price_range),
-                            mFiveSpeedVo.getLowerLimitPrice(), mFiveSpeedVo.getLatestPriceValue());
+                            mTenSpeedVo.getLowerLimitPrice(), mTenSpeedVo.getLatestPriceValue());
                 else
                     range = String.format(mContext.getResources().getString(R.string.transaction_price_range),
-                            mFiveSpeedVo.getLatestPriceValue(), mFiveSpeedVo.getHighLimitPrice());
+                            mTenSpeedVo.getLatestPriceValue(), mTenSpeedVo.getHighLimitPrice());
             } else {
                 range = "";
             }
@@ -422,8 +433,8 @@ public class CreateConditionSheetFragment extends JMEBaseFragment {
     private String getPrice() {
         String price = mBinding.etPrice.getText().toString();
 
-        if (TextUtils.isEmpty(price) && null != mFiveSpeedVo && mFiveSpeedVo.getContractId().equals(mContractID))
-            return mFiveSpeedVo.getLatestPriceValue();
+        if (TextUtils.isEmpty(price) && null != mTenSpeedVo && mTenSpeedVo.getContractId().equals(mContractID))
+            return mTenSpeedVo.getLatestPriceValue();
 
         if (price.endsWith("."))
             price = price.substring(0, price.length() - 1);
@@ -442,10 +453,10 @@ public class CreateConditionSheetFragment extends JMEBaseFragment {
     }
 
     private void calculateMaxAmount() {
-        if (TextUtils.isEmpty(mContractID) || null == mFiveSpeedVo || null == mAccountVo || null == mContractInfoVo) {
+        if (TextUtils.isEmpty(mContractID) || null == mTenSpeedVo || null == mAccountVo || null == mContractInfoVo) {
             mMaxAmount = 0;
         } else {
-            String price = mFiveSpeedVo.getHighLimitPrice();
+            String price = mTenSpeedVo.getHighLimitPrice();
 
             if (TextUtils.isEmpty(price)) {
                 mMaxAmount = mMaxOrderQty;
@@ -513,6 +524,17 @@ public class CreateConditionSheetFragment extends JMEBaseFragment {
     private void hiddenKeyBoard() {
         ((InputMethodManager) mActivity.getSystemService(Context.INPUT_METHOD_SERVICE)).hideSoftInputFromWindow(
                 mBinding.etAmount.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+    }
+
+    private long getTimeInterval() {
+        return NetWorkUtils.isWifiConnected(mContext) ? AppConfig.TimeInterval_WiFi : AppConfig.TimeInterval_NetWork;
+    }
+
+    private void queryQuotation() {
+        HashMap<String, String> params = new HashMap<>();
+        params.put("contractId", mContractID);
+
+        sendRequest(MarketService.getInstance().queryQuotation, params, false, false, false);
     }
 
     private void getAccount() {
@@ -613,6 +635,22 @@ public class CreateConditionSheetFragment extends JMEBaseFragment {
                 }
 
                 break;
+            case "QueryQuotation":
+                if (head.isSuccess()) {
+                    try {
+                        mTenSpeedVo = (TenSpeedVo) response;
+                    } catch (Exception e) {
+                        mTenSpeedVo = null;
+
+                        e.printStackTrace();
+                    }
+
+                    mHandler.sendEmptyMessageDelayed(Constants.Msg.MSG_MARKET_UPDATE, getTimeInterval());
+                }
+
+                setMarketData();
+
+                break;
             case "Account":
                 if (head.isSuccess()) {
                     try {
@@ -693,8 +731,8 @@ public class CreateConditionSheetFragment extends JMEBaseFragment {
 
                     bFlag = true;
 
-                    if (null != mFiveSpeedVo && mFiveSpeedVo.getContractId().equals(mContractID))
-                        mBinding.etPrice.setText(MarketUtil.formatValue(mFiveSpeedVo.getLatestPriceValue(), mLength));
+                    if (null != mTenSpeedVo && mTenSpeedVo.getContractId().equals(mContractID))
+                        mBinding.etPrice.setText(MarketUtil.formatValue(mTenSpeedVo.getLatestPriceValue(), mLength));
 
                     calculateMaxAmount();
 
@@ -728,8 +766,8 @@ public class CreateConditionSheetFragment extends JMEBaseFragment {
             mType = TYPE_BUY_MORE;
             bFlag = true;
 
-            if (null != mFiveSpeedVo && mFiveSpeedVo.getContractId().equals(mContractID))
-                mBinding.etPrice.setText(MarketUtil.formatValue(mFiveSpeedVo.getLatestPriceValue(), mLength));
+            if (null != mTenSpeedVo && mTenSpeedVo.getContractId().equals(mContractID))
+                mBinding.etPrice.setText(MarketUtil.formatValue(mTenSpeedVo.getLatestPriceValue(), mLength));
 
             setMarketType();
             setConditionSheetDetail();
@@ -743,8 +781,8 @@ public class CreateConditionSheetFragment extends JMEBaseFragment {
             mType = TYPE_SELL_EMPTY;
             bFlag = true;
 
-            if (null != mFiveSpeedVo && mFiveSpeedVo.getContractId().equals(mContractID))
-                mBinding.etPrice.setText(MarketUtil.formatValue(mFiveSpeedVo.getLatestPriceValue(), mLength));
+            if (null != mTenSpeedVo && mTenSpeedVo.getContractId().equals(mContractID))
+                mBinding.etPrice.setText(MarketUtil.formatValue(mTenSpeedVo.getLatestPriceValue(), mLength));
 
             setMarketType();
             setConditionSheetDetail();
@@ -761,8 +799,8 @@ public class CreateConditionSheetFragment extends JMEBaseFragment {
 
             float value = new BigDecimal(price).subtract(new BigDecimal(mPriceMove)).floatValue();
 
-            if (mFiveSpeedVo.getContractId().equals(mContractID)) {
-                String minPrice = mType == TYPE_BUY_MORE ? mFiveSpeedVo.getLowerLimitPrice() : mFiveSpeedVo.getLatestPriceValue();
+            if (mTenSpeedVo.getContractId().equals(mContractID)) {
+                String minPrice = mType == TYPE_BUY_MORE ? mTenSpeedVo.getLowerLimitPrice() : mTenSpeedVo.getLatestPriceValue();
 
                 if (new BigDecimal(String.valueOf(value)).compareTo(new BigDecimal(minPrice)) == -1) {
                     showShortToast(R.string.transaction_sheet_limit_down_price_error);
@@ -794,8 +832,8 @@ public class CreateConditionSheetFragment extends JMEBaseFragment {
 
             float value = new BigDecimal(price).add(new BigDecimal(mPriceMove)).floatValue();
 
-            if (mFiveSpeedVo.getContractId().equals(mContractID)) {
-                String maxPrice = mType == TYPE_BUY_MORE ? mFiveSpeedVo.getLatestPriceValue() : mFiveSpeedVo.getHighLimitPrice();
+            if (mTenSpeedVo.getContractId().equals(mContractID)) {
+                String maxPrice = mType == TYPE_BUY_MORE ? mTenSpeedVo.getLatestPriceValue() : mTenSpeedVo.getHighLimitPrice();
 
                 if (new BigDecimal(String.valueOf(value)).compareTo(new BigDecimal(maxPrice)) == 1) {
                     showShortToast(R.string.transaction_sheet_limit_up_price_error);
@@ -906,18 +944,18 @@ public class CreateConditionSheetFragment extends JMEBaseFragment {
                 showShortToast(R.string.transaction_contract_error);
             else if (TextUtils.isEmpty(price))
                 showShortToast(R.string.transaction_price_error);
-            else if (mType == TYPE_BUY_MORE && new BigDecimal(price).compareTo(new BigDecimal(mFiveSpeedVo.getLowerLimitPrice())) == -1)
+            else if (mType == TYPE_BUY_MORE && new BigDecimal(price).compareTo(new BigDecimal(mTenSpeedVo.getLowerLimitPrice())) == -1)
                 showShortToast(String.format(mContext.getResources().getString(R.string.transaction_price_setting_range),
-                        mFiveSpeedVo.getLowerLimitPrice(), mFiveSpeedVo.getLatestPriceValue()));
-            else if (mType == TYPE_BUY_MORE && new BigDecimal(price).compareTo(new BigDecimal(mFiveSpeedVo.getLatestPriceValue())) == 1)
+                        mTenSpeedVo.getLowerLimitPrice(), mTenSpeedVo.getLatestPriceValue()));
+            else if (mType == TYPE_BUY_MORE && new BigDecimal(price).compareTo(new BigDecimal(mTenSpeedVo.getLatestPriceValue())) == 1)
                 showShortToast(String.format(mContext.getResources().getString(R.string.transaction_price_setting_range),
-                        mFiveSpeedVo.getLowerLimitPrice(), mFiveSpeedVo.getLatestPriceValue()));
-            else if (mType == TYPE_SELL_EMPTY && new BigDecimal(price).compareTo(new BigDecimal(mFiveSpeedVo.getLatestPriceValue())) == -1)
+                        mTenSpeedVo.getLowerLimitPrice(), mTenSpeedVo.getLatestPriceValue()));
+            else if (mType == TYPE_SELL_EMPTY && new BigDecimal(price).compareTo(new BigDecimal(mTenSpeedVo.getLatestPriceValue())) == -1)
                 showShortToast(String.format(mContext.getResources().getString(R.string.transaction_price_setting_range),
-                        mFiveSpeedVo.getLatestPriceValue(), mFiveSpeedVo.getHighLimitPrice()));
-            else if (mType == TYPE_SELL_EMPTY && new BigDecimal(price).compareTo(new BigDecimal(mFiveSpeedVo.getHighLimitPrice())) == 1)
+                        mTenSpeedVo.getLatestPriceValue(), mTenSpeedVo.getHighLimitPrice()));
+            else if (mType == TYPE_SELL_EMPTY && new BigDecimal(price).compareTo(new BigDecimal(mTenSpeedVo.getHighLimitPrice())) == 1)
                 showShortToast(String.format(mContext.getResources().getString(R.string.transaction_price_setting_range),
-                        mFiveSpeedVo.getLatestPriceValue(), mFiveSpeedVo.getHighLimitPrice()));
+                        mTenSpeedVo.getLatestPriceValue(), mTenSpeedVo.getHighLimitPrice()));
             else if (TextUtils.isEmpty(amount))
                 showShortToast(R.string.transaction_number_error);
             else if (new BigDecimal(amount).compareTo(new BigDecimal(0)) == 0)

@@ -675,6 +675,18 @@ public class TenSpeedVo implements Serializable {
         this.quoteTime = quoteTime;
     }
 
+    public String getLatestPriceValue() {
+        return MarketUtil.getPriceValue(latestPrice);
+    }
+
+    public String getUpDownValue() {
+        return MarketUtil.getPriceValue(upDown);
+    }
+
+    public String getUpDownRateValue() {
+        return MarketUtil.getRateValue(upDownRate);
+    }
+
     public List<String[]> getFiveAskLists() {
         List<String[]> list = new ArrayList<>();
 

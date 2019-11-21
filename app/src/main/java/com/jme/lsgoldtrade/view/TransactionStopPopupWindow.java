@@ -21,13 +21,12 @@ import com.jme.common.util.DensityUtil;
 import com.jme.common.util.RxBus;
 import com.jme.lsgoldtrade.R;
 import com.jme.lsgoldtrade.base.JMEBasePopupWindow;
-import com.jme.lsgoldtrade.config.AppConfig;
 import com.jme.lsgoldtrade.config.Constants;
 import com.jme.lsgoldtrade.databinding.PopupwindowTransactionStopBinding;
 import com.jme.lsgoldtrade.domain.ConditionOrderInfoVo;
 import com.jme.lsgoldtrade.domain.ContractInfoVo;
-import com.jme.lsgoldtrade.domain.FiveSpeedVo;
 import com.jme.lsgoldtrade.domain.PositionVo;
+import com.jme.lsgoldtrade.domain.TenSpeedVo;
 import com.jme.lsgoldtrade.util.MarketUtil;
 
 import java.math.BigDecimal;
@@ -49,7 +48,7 @@ public class TransactionStopPopupWindow extends JMEBasePopupWindow {
     private String mIDCard;
 
     private View mView;
-    private FiveSpeedVo mFiveSpeedVo;
+    private TenSpeedVo mTenSpeedVo;
     private PositionVo mPositionVo;
     private ContractInfoVo mContractInfoVo;
     private ConditionOrderInfoVo mConditionOrderInfoVo;
@@ -191,11 +190,10 @@ public class TransactionStopPopupWindow extends JMEBasePopupWindow {
         });
     }
 
-    public void setData(boolean stopOrderFlag, String contractId, FiveSpeedVo fiveSpeedVo, PositionVo positionVo,
+    public void setData(boolean stopOrderFlag, String contractId, PositionVo positionVo,
                         ContractInfoVo contractInfoVo, ConditionOrderInfoVo conditionOrderInfoVo,
                         String name, String idCard) {
         mContractID = contractId;
-        mFiveSpeedVo = fiveSpeedVo;
         mPositionVo = positionVo;
         mContractInfoVo = contractInfoVo;
         mConditionOrderInfoVo = conditionOrderInfoVo;
@@ -249,31 +247,32 @@ public class TransactionStopPopupWindow extends JMEBasePopupWindow {
         }
     }
 
-    public void setFiveSpeedVo(List<FiveSpeedVo> fiveSpeedVoList) {
-        if (null != fiveSpeedVoList && 0 != fiveSpeedVoList.size()) {
-            for (FiveSpeedVo fiveSpeedVo : fiveSpeedVoList) {
-                if (null != fiveSpeedVo && fiveSpeedVo.getContractId().equals(mContractID))
-                    mFiveSpeedVo = fiveSpeedVo;
-            }
-        }
+    public void setTenSpeedVo(TenSpeedVo tenSpeedVo) {
+        if (null != tenSpeedVo && tenSpeedVo.getContractId().equals(mContractID))
+            mTenSpeedVo = tenSpeedVo;
+        else
+            mTenSpeedVo = null;
 
         setStopPriceTitle();
     }
 
     private void setStopPriceTitle() {
+        if (null == mTenSpeedVo)
+            return;
+
         mBinding.tvStopProfitPriceTitle.setText(TextUtils.isEmpty(mType) ? mContext.getResources().getString(R.string.transaction_stop_profit_price_title)
-                : mType.equals("多") ? String.format(mContext.getResources().getString(R.string.transaction_stop_profit_price), ">=", mFiveSpeedVo.getLatestPriceValue())
-                : String.format(mContext.getResources().getString(R.string.transaction_stop_profit_price), "<=", mFiveSpeedVo.getLatestPriceValue()));
+                : mType.equals("多") ? String.format(mContext.getResources().getString(R.string.transaction_stop_profit_price), ">=", mTenSpeedVo.getLatestPriceValue())
+                : String.format(mContext.getResources().getString(R.string.transaction_stop_profit_price), "<=", mTenSpeedVo.getLatestPriceValue()));
         mBinding.tvStopLossPriceTitle.setText(TextUtils.isEmpty(mType) ? mContext.getResources().getString(R.string.transaction_stop_loss_price_title)
-                : mType.equals("多") ? String.format(mContext.getResources().getString(R.string.transaction_stop_loss_price), "<=", mFiveSpeedVo.getLatestPriceValue())
-                : String.format(mContext.getResources().getString(R.string.transaction_stop_loss_price), ">=", mFiveSpeedVo.getLatestPriceValue()));
+                : mType.equals("多") ? String.format(mContext.getResources().getString(R.string.transaction_stop_loss_price), "<=", mTenSpeedVo.getLatestPriceValue())
+                : String.format(mContext.getResources().getString(R.string.transaction_stop_loss_price), ">=", mTenSpeedVo.getLatestPriceValue()));
     }
 
     private String getProfitPrice() {
         String profitPrice = mBinding.etProfitPrice.getText().toString();
 
         if (TextUtils.isEmpty(profitPrice))
-            return mFiveSpeedVo.getLatestPriceValue();
+            return mTenSpeedVo.getLatestPriceValue();
 
         if (profitPrice.endsWith("."))
             profitPrice = profitPrice.substring(0, profitPrice.length() - 1);
@@ -285,7 +284,7 @@ public class TransactionStopPopupWindow extends JMEBasePopupWindow {
         String lossPrice = mBinding.etLossPrice.getText().toString();
 
         if (TextUtils.isEmpty(lossPrice))
-            return mFiveSpeedVo.getLatestPriceValue();
+            return mTenSpeedVo.getLatestPriceValue();
 
         if (lossPrice.endsWith("."))
             lossPrice = lossPrice.substring(0, lossPrice.length() - 1);
@@ -333,7 +332,7 @@ public class TransactionStopPopupWindow extends JMEBasePopupWindow {
                 return;
 
             float value = new BigDecimal(price).subtract(new BigDecimal(mPriceMove)).floatValue();
-            String minPrice = mType.equals("多") ? mFiveSpeedVo.getLatestPriceValue() : mFiveSpeedVo.getLowerLimitPrice();
+            String minPrice = mType.equals("多") ? mTenSpeedVo.getLatestPriceValue() : mTenSpeedVo.getLowerLimitPrice();
 
             if (new BigDecimal(String.valueOf(value)).compareTo(new BigDecimal(minPrice)) == -1) {
                 Toast.makeText(mContext, mType.equals("多") ? R.string.transaction_sheet_limit_down_price_error2
@@ -356,7 +355,7 @@ public class TransactionStopPopupWindow extends JMEBasePopupWindow {
                 return;
 
             float value = new BigDecimal(price).add(new BigDecimal(mPriceMove)).floatValue();
-            String maxPrice = mType.equals("多") ? mFiveSpeedVo.getHighLimitPrice() : mFiveSpeedVo.getLatestPriceValue();
+            String maxPrice = mType.equals("多") ? mTenSpeedVo.getHighLimitPrice() : mTenSpeedVo.getLatestPriceValue();
 
             if (new BigDecimal(String.valueOf(value)).compareTo(new BigDecimal(maxPrice)) == 1) {
                 Toast.makeText(mContext, mType.equals("多") ? R.string.transaction_sheet_limit_up_price_error2
@@ -379,7 +378,7 @@ public class TransactionStopPopupWindow extends JMEBasePopupWindow {
                 return;
 
             float value = new BigDecimal(price).subtract(new BigDecimal(mPriceMove)).floatValue();
-            String minPrice = mType.equals("多") ? mFiveSpeedVo.getLowerLimitPrice() : mFiveSpeedVo.getLatestPriceValue();
+            String minPrice = mType.equals("多") ? mTenSpeedVo.getLowerLimitPrice() : mTenSpeedVo.getLatestPriceValue();
 
             if (new BigDecimal(String.valueOf(value)).compareTo(new BigDecimal(minPrice)) == -1) {
                 Toast.makeText(mContext, mType.equals("多") ? R.string.transaction_sheet_limit_down_price_error3
@@ -402,7 +401,7 @@ public class TransactionStopPopupWindow extends JMEBasePopupWindow {
                 return;
 
             float value = new BigDecimal(price).add(new BigDecimal(mPriceMove)).floatValue();
-            String maxPrice = mType.equals("多") ? mFiveSpeedVo.getLatestPriceValue() : mFiveSpeedVo.getHighLimitPrice();
+            String maxPrice = mType.equals("多") ? mTenSpeedVo.getLatestPriceValue() : mTenSpeedVo.getHighLimitPrice();
 
             if (new BigDecimal(String.valueOf(value)).compareTo(new BigDecimal(maxPrice)) == 1) {
                 Toast.makeText(mContext, mType.equals("多") ? R.string.transaction_sheet_limit_up_price_error3
@@ -479,30 +478,30 @@ public class TransactionStopPopupWindow extends JMEBasePopupWindow {
 
             if (TextUtils.isEmpty(profitPrice) && TextUtils.isEmpty(lossPrice))
                 Toast.makeText(mContext, R.string.transaction_stop_price_empty, Toast.LENGTH_SHORT).show();
-            else if (!TextUtils.isEmpty(profitPrice) && mType.equals("多") && new BigDecimal(profitPrice).compareTo(new BigDecimal(mFiveSpeedVo.getLatestPriceValue())) == -1)
+            else if (!TextUtils.isEmpty(profitPrice) && mType.equals("多") && new BigDecimal(profitPrice).compareTo(new BigDecimal(mTenSpeedVo.getLatestPriceValue())) == -1)
                 Toast.makeText(mContext, String.format(mContext.getResources().getString(R.string.transaction_stop_profit_price_range),
-                        mFiveSpeedVo.getLatestPriceValue(), mFiveSpeedVo.getHighLimitPrice()), Toast.LENGTH_SHORT).show();
-            else if (!TextUtils.isEmpty(profitPrice) && mType.equals("多") && new BigDecimal(profitPrice).compareTo(new BigDecimal(mFiveSpeedVo.getHighLimitPrice())) == 1)
+                        mTenSpeedVo.getLatestPriceValue(), mTenSpeedVo.getHighLimitPrice()), Toast.LENGTH_SHORT).show();
+            else if (!TextUtils.isEmpty(profitPrice) && mType.equals("多") && new BigDecimal(profitPrice).compareTo(new BigDecimal(mTenSpeedVo.getHighLimitPrice())) == 1)
                 Toast.makeText(mContext, String.format(mContext.getResources().getString(R.string.transaction_stop_profit_price_range),
-                        mFiveSpeedVo.getLatestPriceValue(), mFiveSpeedVo.getHighLimitPrice()), Toast.LENGTH_SHORT).show();
-            else if (!TextUtils.isEmpty(profitPrice) && mType.equals("空") && new BigDecimal(profitPrice).compareTo(new BigDecimal(mFiveSpeedVo.getLowerLimitPrice())) == -1)
+                        mTenSpeedVo.getLatestPriceValue(), mTenSpeedVo.getHighLimitPrice()), Toast.LENGTH_SHORT).show();
+            else if (!TextUtils.isEmpty(profitPrice) && mType.equals("空") && new BigDecimal(profitPrice).compareTo(new BigDecimal(mTenSpeedVo.getLowerLimitPrice())) == -1)
                 Toast.makeText(mContext, String.format(mContext.getResources().getString(R.string.transaction_stop_profit_price_range),
-                        mFiveSpeedVo.getLowerLimitPrice(), mFiveSpeedVo.getLatestPriceValue()), Toast.LENGTH_SHORT).show();
-            else if (!TextUtils.isEmpty(profitPrice) && mType.equals("空") && new BigDecimal(profitPrice).compareTo(new BigDecimal(mFiveSpeedVo.getLatestPriceValue())) == 1)
+                        mTenSpeedVo.getLowerLimitPrice(), mTenSpeedVo.getLatestPriceValue()), Toast.LENGTH_SHORT).show();
+            else if (!TextUtils.isEmpty(profitPrice) && mType.equals("空") && new BigDecimal(profitPrice).compareTo(new BigDecimal(mTenSpeedVo.getLatestPriceValue())) == 1)
                 Toast.makeText(mContext, String.format(mContext.getResources().getString(R.string.transaction_stop_profit_price_range),
-                        mFiveSpeedVo.getLowerLimitPrice(), mFiveSpeedVo.getLatestPriceValue()), Toast.LENGTH_SHORT).show();
-            else if (!TextUtils.isEmpty(lossPrice) && mType.equals("多") && new BigDecimal(lossPrice).compareTo(new BigDecimal(mFiveSpeedVo.getLowerLimitPrice())) == -1)
+                        mTenSpeedVo.getLowerLimitPrice(), mTenSpeedVo.getLatestPriceValue()), Toast.LENGTH_SHORT).show();
+            else if (!TextUtils.isEmpty(lossPrice) && mType.equals("多") && new BigDecimal(lossPrice).compareTo(new BigDecimal(mTenSpeedVo.getLowerLimitPrice())) == -1)
                 Toast.makeText(mContext, String.format(mContext.getResources().getString(R.string.transaction_stop_loss_price_range),
-                        mFiveSpeedVo.getLowerLimitPrice(), mFiveSpeedVo.getLatestPriceValue()), Toast.LENGTH_SHORT).show();
-            else if (!TextUtils.isEmpty(lossPrice) && mType.equals("多") && new BigDecimal(lossPrice).compareTo(new BigDecimal(mFiveSpeedVo.getLatestPriceValue())) == 1)
+                        mTenSpeedVo.getLowerLimitPrice(), mTenSpeedVo.getLatestPriceValue()), Toast.LENGTH_SHORT).show();
+            else if (!TextUtils.isEmpty(lossPrice) && mType.equals("多") && new BigDecimal(lossPrice).compareTo(new BigDecimal(mTenSpeedVo.getLatestPriceValue())) == 1)
                 Toast.makeText(mContext, String.format(mContext.getResources().getString(R.string.transaction_stop_loss_price_range),
-                        mFiveSpeedVo.getLowerLimitPrice(), mFiveSpeedVo.getLatestPriceValue()), Toast.LENGTH_SHORT).show();
-            else if (!TextUtils.isEmpty(lossPrice) && mType.equals("空") && new BigDecimal(lossPrice).compareTo(new BigDecimal(mFiveSpeedVo.getLatestPriceValue())) == -1)
+                        mTenSpeedVo.getLowerLimitPrice(), mTenSpeedVo.getLatestPriceValue()), Toast.LENGTH_SHORT).show();
+            else if (!TextUtils.isEmpty(lossPrice) && mType.equals("空") && new BigDecimal(lossPrice).compareTo(new BigDecimal(mTenSpeedVo.getLatestPriceValue())) == -1)
                 Toast.makeText(mContext, String.format(mContext.getResources().getString(R.string.transaction_stop_loss_price_range),
-                        mFiveSpeedVo.getLatestPriceValue(), mFiveSpeedVo.getHighLimitPrice()), Toast.LENGTH_SHORT).show();
-            else if (!TextUtils.isEmpty(lossPrice) && mType.equals("空") && new BigDecimal(lossPrice).compareTo(new BigDecimal(mFiveSpeedVo.getHighLimitPrice())) == 1)
+                        mTenSpeedVo.getLatestPriceValue(), mTenSpeedVo.getHighLimitPrice()), Toast.LENGTH_SHORT).show();
+            else if (!TextUtils.isEmpty(lossPrice) && mType.equals("空") && new BigDecimal(lossPrice).compareTo(new BigDecimal(mTenSpeedVo.getHighLimitPrice())) == 1)
                 Toast.makeText(mContext, String.format(mContext.getResources().getString(R.string.transaction_stop_loss_price_range),
-                        mFiveSpeedVo.getLatestPriceValue(), mFiveSpeedVo.getHighLimitPrice()), Toast.LENGTH_SHORT).show();
+                        mTenSpeedVo.getLatestPriceValue(), mTenSpeedVo.getHighLimitPrice()), Toast.LENGTH_SHORT).show();
             else if (TextUtils.isEmpty(amount))
                 Toast.makeText(mContext, R.string.transaction_number_error, Toast.LENGTH_SHORT).show();
             else if (new BigDecimal(amount).compareTo(new BigDecimal(0)) == 0)
@@ -548,30 +547,30 @@ public class TransactionStopPopupWindow extends JMEBasePopupWindow {
 
             if (TextUtils.isEmpty(profitPrice) && TextUtils.isEmpty(lossPrice))
                 Toast.makeText(mContext, R.string.transaction_stop_price_empty, Toast.LENGTH_SHORT).show();
-            else if (!TextUtils.isEmpty(profitPrice) && mType.equals("多") && new BigDecimal(profitPrice).compareTo(new BigDecimal(mFiveSpeedVo.getLatestPriceValue())) == -1)
+            else if (!TextUtils.isEmpty(profitPrice) && mType.equals("多") && new BigDecimal(profitPrice).compareTo(new BigDecimal(mTenSpeedVo.getLatestPriceValue())) == -1)
                 Toast.makeText(mContext, String.format(mContext.getResources().getString(R.string.transaction_stop_profit_price_range),
-                        mFiveSpeedVo.getLatestPriceValue(), mFiveSpeedVo.getHighLimitPrice()), Toast.LENGTH_SHORT).show();
-            else if (!TextUtils.isEmpty(profitPrice) && mType.equals("多") && new BigDecimal(profitPrice).compareTo(new BigDecimal(mFiveSpeedVo.getHighLimitPrice())) == 1)
+                        mTenSpeedVo.getLatestPriceValue(), mTenSpeedVo.getHighLimitPrice()), Toast.LENGTH_SHORT).show();
+            else if (!TextUtils.isEmpty(profitPrice) && mType.equals("多") && new BigDecimal(profitPrice).compareTo(new BigDecimal(mTenSpeedVo.getHighLimitPrice())) == 1)
                 Toast.makeText(mContext, String.format(mContext.getResources().getString(R.string.transaction_stop_profit_price_range),
-                        mFiveSpeedVo.getLatestPriceValue(), mFiveSpeedVo.getHighLimitPrice()), Toast.LENGTH_SHORT).show();
-            else if (!TextUtils.isEmpty(profitPrice) && mType.equals("空") && new BigDecimal(profitPrice).compareTo(new BigDecimal(mFiveSpeedVo.getLowerLimitPrice())) == -1)
+                        mTenSpeedVo.getLatestPriceValue(), mTenSpeedVo.getHighLimitPrice()), Toast.LENGTH_SHORT).show();
+            else if (!TextUtils.isEmpty(profitPrice) && mType.equals("空") && new BigDecimal(profitPrice).compareTo(new BigDecimal(mTenSpeedVo.getLowerLimitPrice())) == -1)
                 Toast.makeText(mContext, String.format(mContext.getResources().getString(R.string.transaction_stop_profit_price_range),
-                        mFiveSpeedVo.getLowerLimitPrice(), mFiveSpeedVo.getLatestPriceValue()), Toast.LENGTH_SHORT).show();
-            else if (!TextUtils.isEmpty(profitPrice) && mType.equals("空") && new BigDecimal(profitPrice).compareTo(new BigDecimal(mFiveSpeedVo.getLatestPriceValue())) == 1)
+                        mTenSpeedVo.getLowerLimitPrice(), mTenSpeedVo.getLatestPriceValue()), Toast.LENGTH_SHORT).show();
+            else if (!TextUtils.isEmpty(profitPrice) && mType.equals("空") && new BigDecimal(profitPrice).compareTo(new BigDecimal(mTenSpeedVo.getLatestPriceValue())) == 1)
                 Toast.makeText(mContext, String.format(mContext.getResources().getString(R.string.transaction_stop_profit_price_range),
-                        mFiveSpeedVo.getLowerLimitPrice(), mFiveSpeedVo.getLatestPriceValue()), Toast.LENGTH_SHORT).show();
-            else if (!TextUtils.isEmpty(lossPrice) && mType.equals("多") && new BigDecimal(lossPrice).compareTo(new BigDecimal(mFiveSpeedVo.getLowerLimitPrice())) == -1)
+                        mTenSpeedVo.getLowerLimitPrice(), mTenSpeedVo.getLatestPriceValue()), Toast.LENGTH_SHORT).show();
+            else if (!TextUtils.isEmpty(lossPrice) && mType.equals("多") && new BigDecimal(lossPrice).compareTo(new BigDecimal(mTenSpeedVo.getLowerLimitPrice())) == -1)
                 Toast.makeText(mContext, String.format(mContext.getResources().getString(R.string.transaction_stop_loss_price_range),
-                        mFiveSpeedVo.getLowerLimitPrice(), mFiveSpeedVo.getLatestPriceValue()), Toast.LENGTH_SHORT).show();
-            else if (!TextUtils.isEmpty(lossPrice) && mType.equals("多") && new BigDecimal(lossPrice).compareTo(new BigDecimal(mFiveSpeedVo.getLatestPriceValue())) == 1)
+                        mTenSpeedVo.getLowerLimitPrice(), mTenSpeedVo.getLatestPriceValue()), Toast.LENGTH_SHORT).show();
+            else if (!TextUtils.isEmpty(lossPrice) && mType.equals("多") && new BigDecimal(lossPrice).compareTo(new BigDecimal(mTenSpeedVo.getLatestPriceValue())) == 1)
                 Toast.makeText(mContext, String.format(mContext.getResources().getString(R.string.transaction_stop_loss_price_range),
-                        mFiveSpeedVo.getLowerLimitPrice(), mFiveSpeedVo.getLatestPriceValue()), Toast.LENGTH_SHORT).show();
-            else if (!TextUtils.isEmpty(lossPrice) && mType.equals("空") && new BigDecimal(lossPrice).compareTo(new BigDecimal(mFiveSpeedVo.getLatestPriceValue())) == -1)
+                        mTenSpeedVo.getLowerLimitPrice(), mTenSpeedVo.getLatestPriceValue()), Toast.LENGTH_SHORT).show();
+            else if (!TextUtils.isEmpty(lossPrice) && mType.equals("空") && new BigDecimal(lossPrice).compareTo(new BigDecimal(mTenSpeedVo.getLatestPriceValue())) == -1)
                 Toast.makeText(mContext, String.format(mContext.getResources().getString(R.string.transaction_stop_loss_price_range),
-                        mFiveSpeedVo.getLatestPriceValue(), mFiveSpeedVo.getHighLimitPrice()), Toast.LENGTH_SHORT).show();
-            else if (!TextUtils.isEmpty(lossPrice) && mType.equals("空") && new BigDecimal(lossPrice).compareTo(new BigDecimal(mFiveSpeedVo.getHighLimitPrice())) == 1)
+                        mTenSpeedVo.getLatestPriceValue(), mTenSpeedVo.getHighLimitPrice()), Toast.LENGTH_SHORT).show();
+            else if (!TextUtils.isEmpty(lossPrice) && mType.equals("空") && new BigDecimal(lossPrice).compareTo(new BigDecimal(mTenSpeedVo.getHighLimitPrice())) == 1)
                 Toast.makeText(mContext, String.format(mContext.getResources().getString(R.string.transaction_stop_loss_price_range),
-                        mFiveSpeedVo.getLatestPriceValue(), mFiveSpeedVo.getHighLimitPrice()), Toast.LENGTH_SHORT).show();
+                        mTenSpeedVo.getLatestPriceValue(), mTenSpeedVo.getHighLimitPrice()), Toast.LENGTH_SHORT).show();
             else if (TextUtils.isEmpty(amount))
                 Toast.makeText(mContext, R.string.transaction_number_error, Toast.LENGTH_SHORT).show();
             else if (new BigDecimal(amount).compareTo(new BigDecimal(0)) == 0)

@@ -1,8 +1,6 @@
 package com.jme.lsgoldtrade.ui.transaction;
 
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,21 +11,12 @@ import androidx.fragment.app.Fragment;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.google.android.material.tabs.TabLayout;
-import com.jme.common.network.DTRequest;
-import com.jme.common.network.Head;
-import com.jme.common.util.NetWorkUtils;
 import com.jme.common.util.RxBus;
 import com.jme.lsgoldtrade.R;
 import com.jme.lsgoldtrade.base.JMEBaseActivity;
 import com.jme.lsgoldtrade.base.TabViewPagerAdapter;
-import com.jme.lsgoldtrade.config.AppConfig;
 import com.jme.lsgoldtrade.config.Constants;
 import com.jme.lsgoldtrade.databinding.ActivityConditionSheetBinding;
-import com.jme.lsgoldtrade.domain.FiveSpeedVo;
-import com.jme.lsgoldtrade.service.MarketService;
-
-import java.util.HashMap;
-import java.util.List;
 
 import rx.Subscription;
 
@@ -43,22 +32,6 @@ public class ConditionSheetActivity extends JMEBaseActivity {
 
     private TabViewPagerAdapter mAdapter;
     private Subscription mRxbus;
-
-    private Handler mHandler = new Handler() {
-        public void handleMessage(Message msg) {
-
-            switch (msg.what) {
-                case Constants.Msg.MSG_MARKET_UPDATE:
-                    mHandler.removeMessages(Constants.Msg.MSG_MARKET_UPDATE);
-
-                    getFiveSpeedQuotes();
-
-                    break;
-            }
-
-            super.handleMessage(msg);
-        }
-    };
 
     @Override
     protected int getContentViewId() {
@@ -100,20 +73,6 @@ public class ConditionSheetActivity extends JMEBaseActivity {
         super.initBinding();
 
         mBinding = (ActivityConditionSheetBinding) mBindingUtil;
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-
-        getFiveSpeedQuotes();
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-
-        mHandler.removeMessages(Constants.Msg.MSG_MARKET_UPDATE);
     }
 
     private void initRxBus() {
@@ -198,43 +157,6 @@ public class ConditionSheetActivity extends JMEBaseActivity {
         textView.setText(mTabTitles[mTabTitles.length - 1]);
 
         return view;
-    }
-
-    private long getTimeInterval() {
-        return NetWorkUtils.isWifiConnected(mContext) ? AppConfig.TimeInterval_WiFi : AppConfig.TimeInterval_NetWork;
-    }
-
-    private void getFiveSpeedQuotes() {
-        HashMap<String, String> params = new HashMap<>();
-        params.put("list", "");
-
-        sendRequest(MarketService.getInstance().getFiveSpeedQuotes, params, false, false, false);
-    }
-
-    @Override
-    protected void DataReturn(DTRequest request, Head head, Object response) {
-        super.DataReturn(request, head, response);
-
-        switch (request.getApi().getName()) {
-            case "GetFiveSpeedQuotes":
-                if (head.isSuccess()) {
-                    List<FiveSpeedVo> fiveSpeedVoList;
-
-                    try {
-                        fiveSpeedVoList = (List<FiveSpeedVo>) response;
-                    } catch (Exception e) {
-                        fiveSpeedVoList = null;
-
-                        e.printStackTrace();
-                    }
-
-                    RxBus.getInstance().post(Constants.RxBusConst.RXBUS_TRANSACTION_CONDITION_SHEET_FIVESPEED, fiveSpeedVoList);
-
-                    mHandler.sendEmptyMessageDelayed(Constants.Msg.MSG_MARKET_UPDATE, getTimeInterval());
-                }
-
-                break;
-        }
     }
 
     @Override
