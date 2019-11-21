@@ -81,17 +81,12 @@ public class PersonalFragment extends JMEBaseFragment {
             mBinding.layoutLoginMessage.setVisibility(View.GONE);
             mBinding.layoutOpenAccount.setVisibility(TextUtils.isEmpty(mUser.getAccountID()) ? View.VISIBLE : View.GONE);
 
-            getUserAddedServicesStatus();
             getListExt();
         }
     }
 
     private void getUserPasswordSettingInfo() {
         sendRequest(ManagementService.getInstance().getUserPasswordSettingInfo, new HashMap<>(), true);
-    }
-
-    private void getUserAddedServicesStatus() {
-        sendRequest(ManagementService.getInstance().getUserAddedServicesStatus, new HashMap<>(), false, false, false);
     }
 
     private void getListExt() {
@@ -128,18 +123,6 @@ public class PersonalFragment extends JMEBaseFragment {
                     else
                         ARouter.getInstance().build(Constants.ARouterUriConst.ACCOUNTSECURITY).navigation();
                 }
-
-                break;
-            case "GetUserAddedServicesStatus":
-                if (null == response)
-                    mIncrementState = "";
-                else
-                    mIncrementState = response.toString();
-
-                mBinding.tvIncrementState.setText(mIncrementState.equals("T") ? R.string.personal_increment_state_open
-                        : R.string.personal_increment_state_unopen);
-                mBinding.tvIncrementState.setTextColor(mIncrementState.equals("T") ? ContextCompat.getColor(mContext, R.color.color_text_black)
-                        : ContextCompat.getColor(mContext, R.color.color_red));
 
                 break;
             case "GetListExt":
@@ -200,14 +183,10 @@ public class PersonalFragment extends JMEBaseFragment {
         }
 
         public void onClickIncrement() {
-            if (null == mUser || !mUser.isLogin()) {
+            if (null == mUser || !mUser.isLogin())
                 gotoLogin();
-            } else {
-                if (mIncrementState.equals("T"))
-                    ARouter.getInstance().build(Constants.ARouterUriConst.CHECKSERVICE).navigation();
-                else
-                    ARouter.getInstance().build(Constants.ARouterUriConst.VALUEADDEDSERVICE).navigation();
-            }
+            else
+                ARouter.getInstance().build(Constants.ARouterUriConst.CHECKSERVICE).navigation();
         }
 
         public void onClickCustomerService() {
