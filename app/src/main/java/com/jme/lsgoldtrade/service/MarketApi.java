@@ -63,4 +63,7 @@ public interface MarketApi {
     @GET("/gold-hq/v1.0.0/android/{type}")
     Call<DTResponse> getKChartQuotes(@Path("type") String type, @QueryMap Map<String, String> map);
 
+    @GET("/gold-hq/v1.0.0/android/queryQuotation")
+    Call<DTResponse> queryQuotation(@Query("contractId") String contractId);
+
 }

@@ -144,7 +144,6 @@ public class Constants {
         public static final String RXBUS_TRANSACTION_HOLDPOSITIONS_REFRESH = "transactionHoldPositionsRefresh";
         public static final String RXBUS_TRANSACTION_CONDITION_ORDER_RUN = "transactionConditionOrderRun";
         public static final String RXBUS_TRANSACTION_CONDITION_SHEET_MODIFY = "transactionConditionSheetModify";
-        public static final String RXBUS_TRANSACTION_CONDITION_SHEET_FIVESPEED = "transactionConditionSheetFiveSpeed";
         public static final String RXBUS_TRANSACTION_CONDITION_OWN = "transactionConditionOwn";
         public static final String RXBUS_TRANSACTION_STOP_SHEET_UPDATE = "transactionStopSheetUpdate";
         public static final String RXBUS_TRANSACTION_STOP_SHEET_CANCEL_ORDER = "transactionStopSheetCancelOrder";

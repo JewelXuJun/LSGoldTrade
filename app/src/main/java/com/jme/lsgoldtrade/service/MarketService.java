@@ -110,4 +110,13 @@ public class MarketService extends IService<MarketApi> {
         }
     };
 
+    public API queryQuotation = new API<TenSpeedVo>("QueryQuotation") {
+        @Override
+        public Call<DTResponse> request(HashMap<String, String> params) {
+            String contractId = params.get("contractId");
+
+            return mApi.queryQuotation(contractId);
+        }
+    };
+
 }

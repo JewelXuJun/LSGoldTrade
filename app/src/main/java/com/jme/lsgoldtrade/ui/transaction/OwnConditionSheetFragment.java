@@ -3,6 +3,8 @@ package com.jme.lsgoldtrade.ui.transaction;
 import android.annotation.TargetApi;
 import android.app.DatePickerDialog;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -16,6 +18,7 @@ import com.google.gson.Gson;
 import com.jme.common.network.DTRequest;
 import com.jme.common.network.Head;
 import com.jme.common.util.DateUtil;
+import com.jme.common.util.NetWorkUtils;
 import com.jme.common.util.RxBus;
 import com.jme.lsgoldtrade.R;
 import com.jme.lsgoldtrade.base.JMEBaseFragment;
@@ -26,12 +29,13 @@ import com.jme.lsgoldtrade.domain.AccountVo;
 import com.jme.lsgoldtrade.domain.ConditionOrderInfoVo;
 import com.jme.lsgoldtrade.domain.ConditionPageVo;
 import com.jme.lsgoldtrade.domain.ConditionSheetResponse;
-import com.jme.lsgoldtrade.domain.FiveSpeedVo;
 import com.jme.lsgoldtrade.domain.IdentityInfoVo;
 import com.jme.lsgoldtrade.domain.PositionPageVo;
 import com.jme.lsgoldtrade.domain.PositionVo;
 import com.jme.lsgoldtrade.domain.QuerySetStopOrderResponse;
+import com.jme.lsgoldtrade.domain.TenSpeedVo;
 import com.jme.lsgoldtrade.service.ConditionService;
+import com.jme.lsgoldtrade.service.MarketService;
 import com.jme.lsgoldtrade.service.TradeService;
 import com.jme.lsgoldtrade.view.ConfirmPopupwindow;
 import com.jme.lsgoldtrade.view.SheetModifyPopUpWindow;
@@ -65,16 +69,18 @@ public class OwnConditionSheetFragment extends JMEBaseFragment implements OnRefr
     private boolean bQueryFlag = false;
     private boolean bAccountVoFlag = false;
     private boolean bPositionVoFlag = false;
+    private boolean bQueryQuotationFlag = false;
     private String mSetDate = "";
+    private String mContractID;
     private String mName;
     private String mIDCard;
 
     private List<Boolean> mList;
-    private List<FiveSpeedVo> mFiveSpeedVoList;
 
     private ConditionOrderInfoVo mConditionOrderInfoVo;
     private AccountVo mAccountVo;
     private PositionVo mPositionVo;
+    private TenSpeedVo mTenSpeedVo;
     private ConditionSheetAdapter mAdapter;
     private DatePickerDialog mDatePickerDialog;
     private SheetModifyPopUpWindow mSheetModifyPopUpWindow;
@@ -84,6 +90,22 @@ public class OwnConditionSheetFragment extends JMEBaseFragment implements OnRefr
 
     private static final int TIME_START = 0;
     private static final int TIME_END = 1;
+
+    private Handler mHandler = new Handler() {
+        public void handleMessage(Message msg) {
+
+            switch (msg.what) {
+                case Constants.Msg.MSG_MARKET_UPDATE:
+                    mHandler.removeMessages(Constants.Msg.MSG_MARKET_UPDATE);
+
+                    queryQuotation();
+
+                    break;
+            }
+
+            super.handleMessage(msg);
+        }
+    };
 
     @Override
     protected int getContentViewId() {
@@ -130,13 +152,17 @@ public class OwnConditionSheetFragment extends JMEBaseFragment implements OnRefr
 
             switch (view.getId()) {
                 case R.id.btn_modify:
+                    mContractID = conditionOrderInfoVo.getContractId();
+
                     bQueryFlag = false;
                     bAccountVoFlag = false;
                     bPositionVoFlag = false;
+                    bQueryQuotationFlag = false;
 
                     queryConditionOrderById(String.valueOf(conditionOrderInfoVo.getId()));
                     getAccount();
                     getPosition();
+                    queryQuotation();
 
                     break;
                 case R.id.btn_cancel:
@@ -155,7 +181,19 @@ public class OwnConditionSheetFragment extends JMEBaseFragment implements OnRefr
             }
         });
 
-        mSheetModifyPopUpWindow.setOnDismissListener(() -> initConditionOrderPage(true));
+        mSheetModifyPopUpWindow.setOnDismissListener(() -> {
+            bQueryFlag = false;
+            bAccountVoFlag = false;
+            bPositionVoFlag = false;
+            bQueryQuotationFlag = false;
+
+            mHandler.removeMessages(Constants.Msg.MSG_MARKET_UPDATE);
+
+            mTenSpeedVo = null;
+            mSheetModifyPopUpWindow.setTenSpeedVo(null);
+
+            initConditionOrderPage(true);
+        });
     }
 
     @Override
@@ -186,18 +224,6 @@ public class OwnConditionSheetFragment extends JMEBaseFragment implements OnRefr
                         return;
 
                     updateConditionOrder(list.get(0), list.get(1), list.get(2), list.get(3));
-
-                    break;
-                case Constants.RxBusConst.RXBUS_TRANSACTION_CONDITION_SHEET_FIVESPEED:
-                    Object fiveSpeedObject = message.getObject2();
-
-                    if (null == fiveSpeedObject)
-                        return;
-
-                    mFiveSpeedVoList = (List<FiveSpeedVo>) fiveSpeedObject;
-
-                    if (null != mSheetModifyPopUpWindow)
-                        mSheetModifyPopUpWindow.setFiveSpeedVo(mFiveSpeedVoList);
 
                     break;
                 case Constants.RxBusConst.RXBUS_TRANSACTION_CONDITION_OWN:
@@ -319,16 +345,14 @@ public class OwnConditionSheetFragment extends JMEBaseFragment implements OnRefr
     private void showModifyPopUpWindow() {
         ConditionOrderInfoVo conditionOrderInfoVo = mConditionOrderInfoVo;
 
-        if (bQueryFlag && bAccountVoFlag && bPositionVoFlag && null != conditionOrderInfoVo
-                && null != mSheetModifyPopUpWindow && !mSheetModifyPopUpWindow.isShowing()) {
-            FiveSpeedVo fiveSpeedVoValue = null;
+        if (bQueryFlag && bAccountVoFlag && bPositionVoFlag && bQueryQuotationFlag
+                && null != conditionOrderInfoVo && null != mSheetModifyPopUpWindow && !mSheetModifyPopUpWindow.isShowing()) {
+            TenSpeedVo tenSpeedVoValue = null;
 
-            for (FiveSpeedVo fiveSpeedVo : mFiveSpeedVoList) {
-                if (null != fiveSpeedVo && fiveSpeedVo.getContractId().equals(conditionOrderInfoVo.getContractId()))
-                    fiveSpeedVoValue = fiveSpeedVo;
-            }
+            if (null != mTenSpeedVo && mTenSpeedVo.getContractId().equals(conditionOrderInfoVo.getContractId()))
+                tenSpeedVoValue = mTenSpeedVo;
 
-            mSheetModifyPopUpWindow.setData(fiveSpeedVoValue, mAccountVo, mPositionVo,
+            mSheetModifyPopUpWindow.setData(tenSpeedVoValue, mAccountVo, mPositionVo,
                     null == mContract ? null : mContract.getContractInfoFromID(conditionOrderInfoVo.getContractId()),
                     conditionOrderInfoVo, mName, mIDCard);
             mSheetModifyPopUpWindow.showAtLocation(mBinding.tvStartTime, Gravity.BOTTOM, 0, 0);
@@ -402,6 +426,10 @@ public class OwnConditionSheetFragment extends JMEBaseFragment implements OnRefr
                 OnResult(request, head, null);
             }
         });
+    }
+
+    private long getTimeInterval() {
+        return NetWorkUtils.isWifiConnected(mContext) ? AppConfig.TimeInterval_WiFi : AppConfig.TimeInterval_NetWork;
     }
 
     private void getWhetherIdCard() {
@@ -519,6 +547,13 @@ public class OwnConditionSheetFragment extends JMEBaseFragment implements OnRefr
         params.put("pagingKey", "");
 
         sendRequest(TradeService.getInstance().position, params, false);
+    }
+
+    private void queryQuotation() {
+        HashMap<String, String> params = new HashMap<>();
+        params.put("contractId", mContractID);
+
+        sendRequest(MarketService.getInstance().queryQuotation, params, false, false, false);
     }
 
     @Override
@@ -691,6 +726,26 @@ public class OwnConditionSheetFragment extends JMEBaseFragment implements OnRefr
 
                         showModifyPopUpWindow();
                     }
+                }
+
+                break;
+            case "QueryQuotation":
+                if (head.isSuccess()) {
+                    try {
+                        mTenSpeedVo = (TenSpeedVo) response;
+                    } catch (Exception e) {
+                        mTenSpeedVo = null;
+
+                        e.printStackTrace();
+                    }
+
+                    bQueryQuotationFlag = true;
+
+                    showModifyPopUpWindow();
+
+                    mSheetModifyPopUpWindow.setTenSpeedVo(mTenSpeedVo);
+
+                    mHandler.sendEmptyMessageDelayed(Constants.Msg.MSG_MARKET_UPDATE, getTimeInterval());
                 }
 
                 break;

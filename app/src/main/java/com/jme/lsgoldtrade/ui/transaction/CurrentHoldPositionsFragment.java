@@ -1,6 +1,8 @@
 package com.jme.lsgoldtrade.ui.transaction;
 
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -14,9 +16,11 @@ import com.alibaba.android.arouter.launcher.ARouter;
 import com.google.gson.Gson;
 import com.jme.common.network.DTRequest;
 import com.jme.common.network.Head;
+import com.jme.common.util.NetWorkUtils;
 import com.jme.common.util.RxBus;
 import com.jme.lsgoldtrade.R;
 import com.jme.lsgoldtrade.base.JMEBaseFragment;
+import com.jme.lsgoldtrade.config.AppConfig;
 import com.jme.lsgoldtrade.config.Constants;
 import com.jme.lsgoldtrade.databinding.FragmentCurrentHoldPositionsBinding;
 import com.jme.lsgoldtrade.domain.ConditionOrderInfoVo;
@@ -25,7 +29,9 @@ import com.jme.lsgoldtrade.domain.FiveSpeedVo;
 import com.jme.lsgoldtrade.domain.IdentityInfoVo;
 import com.jme.lsgoldtrade.domain.PositionVo;
 import com.jme.lsgoldtrade.domain.QuerySetStopOrderResponse;
+import com.jme.lsgoldtrade.domain.TenSpeedVo;
 import com.jme.lsgoldtrade.service.ConditionService;
+import com.jme.lsgoldtrade.service.MarketService;
 import com.jme.lsgoldtrade.service.TradeService;
 import com.jme.lsgoldtrade.view.ConfirmPopupwindow;
 import com.jme.lsgoldtrade.view.EveningUpPopupWindow;
@@ -48,6 +54,7 @@ public class CurrentHoldPositionsFragment extends JMEBaseFragment {
 
     private String mName;
     private String mIDCard;
+    private String mContractID;
 
     private List<FiveSpeedVo> mFiveSpeedVoList;
 
@@ -58,6 +65,22 @@ public class CurrentHoldPositionsFragment extends JMEBaseFragment {
     private TransactionStopPopupWindow mTransactionStopPopupWindow;
     private View mEmptyView;
     private Subscription mRxbus;
+
+    private Handler mHandler = new Handler() {
+        public void handleMessage(Message msg) {
+
+            switch (msg.what) {
+                case Constants.Msg.MSG_MARKET_UPDATE:
+                    mHandler.removeMessages(Constants.Msg.MSG_MARKET_UPDATE);
+
+                    queryQuotation();
+
+                    break;
+            }
+
+            super.handleMessage(msg);
+        }
+    };
 
     @Override
     protected int getContentViewId() {
@@ -99,6 +122,7 @@ public class CurrentHoldPositionsFragment extends JMEBaseFragment {
 
             switch (view.getId()) {
                 case R.id.layout_stop_transaction:
+                    mContractID = mPositionVo.getContractId();
                     String stopOrderFlag = mPositionVo.getStopOrderFlag();
 
                     if (!TextUtils.isEmpty(stopOrderFlag) && stopOrderFlag.equals("Y"))
@@ -114,7 +138,13 @@ public class CurrentHoldPositionsFragment extends JMEBaseFragment {
             }
         });
 
-        mTransactionStopPopupWindow.setOnDismissListener(() -> RxBus.getInstance().post(Constants.RxBusConst.RXBUS_TRANSACTION_HOLD_POSITIONS_UPDATE, null));
+        mTransactionStopPopupWindow.setOnDismissListener(() -> {
+            mHandler.removeMessages(Constants.Msg.MSG_MARKET_UPDATE);
+
+            mTransactionStopPopupWindow.setTenSpeedVo(null);
+
+            RxBus.getInstance().post(Constants.RxBusConst.RXBUS_TRANSACTION_HOLD_POSITIONS_UPDATE, null);
+        });
     }
 
     @Override
@@ -198,15 +228,6 @@ public class CurrentHoldPositionsFragment extends JMEBaseFragment {
 
     public void setFloatingList(List<String> list) {
         mAdapter.setList(list);
-    }
-
-    public void setFiveSpeedVoList(List<FiveSpeedVo> fiveSpeedVoList) {
-        mFiveSpeedVoList = fiveSpeedVoList;
-
-        mAdapter.setFiveSpeedVoList(fiveSpeedVoList);
-
-        if (null != mTransactionStopPopupWindow && mTransactionStopPopupWindow.isShowing())
-            mTransactionStopPopupWindow.setFiveSpeedVo(mFiveSpeedVoList);
     }
 
     public void setCurrentHoldPositionsData(List<PositionVo> positionVoList) {
@@ -307,22 +328,28 @@ public class CurrentHoldPositionsFragment extends JMEBaseFragment {
 
     private void showTransactionStopPopupWindow(boolean stopOrderFlag, String contractID, ConditionOrderInfoVo conditionOrderInfoVo) {
         if (null != mTransactionStopPopupWindow && !mTransactionStopPopupWindow.isShowing()) {
-            FiveSpeedVo fiveSpeedVo = null;
+            queryQuotation();
 
-            for (FiveSpeedVo fiveSpeedVoValue : mFiveSpeedVoList) {
-                if (null != fiveSpeedVoValue && fiveSpeedVoValue.getContractId().equals(contractID))
-                    fiveSpeedVo = fiveSpeedVoValue;
-            }
-
-            mTransactionStopPopupWindow.setData(stopOrderFlag, mPositionVo.getContractId(), fiveSpeedVo,
+            mTransactionStopPopupWindow.setData(stopOrderFlag, mPositionVo.getContractId(),
                     mPositionVo, null == mContract ? null : mContract.getContractInfoFromID(contractID),
                     conditionOrderInfoVo, mName, mIDCard);
             mTransactionStopPopupWindow.showAtLocation(mBinding.tvGotoTransaction, Gravity.BOTTOM, 0, 0);
         }
     }
 
+    private long getTimeInterval() {
+        return NetWorkUtils.isWifiConnected(mContext) ? AppConfig.TimeInterval_WiFi : AppConfig.TimeInterval_NetWork;
+    }
+
     private void getWhetherIdCard() {
         sendRequest(TradeService.getInstance().whetherIdCard, new HashMap<>(), true);
+    }
+
+    private void queryQuotation() {
+        HashMap<String, String> params = new HashMap<>();
+        params.put("contractId", mContractID);
+
+        sendRequest(MarketService.getInstance().queryQuotation, params, false, false, false);
     }
 
     private void limitOrder(String contractId, String price, String amount, int bsFlag, int ocFlag) {
@@ -479,6 +506,24 @@ public class CurrentHoldPositionsFragment extends JMEBaseFragment {
 
                     mName = identityInfoVo.getName();
                     mIDCard = identityInfoVo.getIdCard();
+                }
+
+                break;
+            case "QueryQuotation":
+                if (head.isSuccess()) {
+                    TenSpeedVo tenSpeedVo;
+
+                    try {
+                        tenSpeedVo = (TenSpeedVo) response;
+                    } catch (Exception e) {
+                        tenSpeedVo = null;
+
+                        e.printStackTrace();
+                    }
+
+                    mTransactionStopPopupWindow.setTenSpeedVo(tenSpeedVo);
+
+                    mHandler.sendEmptyMessageDelayed(Constants.Msg.MSG_MARKET_UPDATE, getTimeInterval());
                 }
 
                 break;

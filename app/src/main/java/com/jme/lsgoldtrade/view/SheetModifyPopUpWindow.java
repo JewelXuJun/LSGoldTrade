@@ -19,14 +19,13 @@ import com.jme.common.util.DensityUtil;
 import com.jme.common.util.RxBus;
 import com.jme.lsgoldtrade.R;
 import com.jme.lsgoldtrade.base.JMEBasePopupWindow;
-import com.jme.lsgoldtrade.config.AppConfig;
 import com.jme.lsgoldtrade.config.Constants;
 import com.jme.lsgoldtrade.databinding.PopupwindowSheetModifyBinding;
 import com.jme.lsgoldtrade.domain.AccountVo;
 import com.jme.lsgoldtrade.domain.ConditionOrderInfoVo;
 import com.jme.lsgoldtrade.domain.ContractInfoVo;
-import com.jme.lsgoldtrade.domain.FiveSpeedVo;
 import com.jme.lsgoldtrade.domain.PositionVo;
+import com.jme.lsgoldtrade.domain.TenSpeedVo;
 import com.jme.lsgoldtrade.util.MarketUtil;
 
 import java.math.BigDecimal;
@@ -37,7 +36,7 @@ public class SheetModifyPopUpWindow extends JMEBasePopupWindow {
 
     private PopupwindowSheetModifyBinding mBinding;
 
-    private FiveSpeedVo mFiveSpeedVo;
+    private TenSpeedVo mTenSpeedVo;
     private AccountVo mAccount;
     private PositionVo mPositionVo;
     private ContractInfoVo mContractInfoVo;
@@ -164,10 +163,10 @@ public class SheetModifyPopUpWindow extends JMEBasePopupWindow {
         });
     }
 
-    public void setData(FiveSpeedVo fiveSpeedVo, AccountVo accountVo, PositionVo positionVo,
+    public void setData(TenSpeedVo tenSpeedVo, AccountVo accountVo, PositionVo positionVo,
                         ContractInfoVo contractInfoVo, ConditionOrderInfoVo conditionOrderInfoVo,
                         String name, String idCard) {
-        mFiveSpeedVo = fiveSpeedVo;
+        mTenSpeedVo = tenSpeedVo;
         mAccount = accountVo;
         mPositionVo = positionVo;
         mContractInfoVo = contractInfoVo;
@@ -177,8 +176,8 @@ public class SheetModifyPopUpWindow extends JMEBasePopupWindow {
         mOcFlag = conditionOrderInfoVo.getOcFlag();
         mEffectiveTimeFlag = conditionOrderInfoVo.getEffectiveTimeFlag();
         mPriceMove = null == mContractInfoVo ? 0.01f : new BigDecimal(mContractInfoVo.getMinPriceMove()).divide(new BigDecimal(100)).floatValue();
-        mLowerLimitPrice = fiveSpeedVo.getLowerLimitPrice();
-        mHighLimitPrice = fiveSpeedVo.getHighLimitPrice();
+        mLowerLimitPrice = mTenSpeedVo.getLowerLimitPrice();
+        mHighLimitPrice = mTenSpeedVo.getHighLimitPrice();
         mMinOrderQty = null == mContractInfoVo ? 0 : mContractInfoVo.getMinOrderQty();
         mMaxOrderQty = null == mContractInfoVo ? 0 : mContractInfoVo.getMaxOrderQty();
         mMaxHoldQty = null == mContractInfoVo ? 0 : mContractInfoVo.getMaxHoldQty();
@@ -203,13 +202,11 @@ public class SheetModifyPopUpWindow extends JMEBasePopupWindow {
         calculateMaxAmount();
     }
 
-    public void setFiveSpeedVo(List<FiveSpeedVo> fiveSpeedVoList) {
-        if (null != fiveSpeedVoList && 0 != fiveSpeedVoList.size()) {
-            for (FiveSpeedVo fiveSpeedVo : fiveSpeedVoList) {
-                if (null != fiveSpeedVo && !TextUtils.isEmpty(mContractID) && mContractID.equals(fiveSpeedVo.getContractId()))
-                    mFiveSpeedVo = fiveSpeedVo;
-            }
-        }
+    public void setTenSpeedVo(TenSpeedVo tenSpeedVo) {
+        if (null != tenSpeedVo && !TextUtils.isEmpty(mContractID) && mContractID.equals(tenSpeedVo.getContractId()))
+            mTenSpeedVo = tenSpeedVo;
+        else
+            mTenSpeedVo = null;
     }
 
     private String getTriggerPriceValue(int bsFlag, int ocFlag) {
@@ -234,10 +231,10 @@ public class SheetModifyPopUpWindow extends JMEBasePopupWindow {
     }
 
     private void calculateMaxAmount() {
-        if (TextUtils.isEmpty(mContractID) || null == mFiveSpeedVo || null == mAccount || null == mContractInfoVo) {
+        if (TextUtils.isEmpty(mContractID) || null == mTenSpeedVo || null == mAccount || null == mContractInfoVo) {
             mMaxAmount = 0;
         } else {
-            String price = mFiveSpeedVo.getHighLimitPrice();
+            String price = mTenSpeedVo.getHighLimitPrice();
 
             if (TextUtils.isEmpty(price)) {
                 mMaxAmount = mMaxOrderQty;
@@ -393,16 +390,16 @@ public class SheetModifyPopUpWindow extends JMEBasePopupWindow {
                 Toast.makeText(mContext, R.string.transaction_price_error, Toast.LENGTH_SHORT).show();
             else if (mBsFlag == 1 && new BigDecimal(price).compareTo(new BigDecimal(mLowerLimitPrice)) == -1)
                 Toast.makeText(mContext, String.format(mContext.getResources().getString(R.string.transaction_price_setting_range),
-                        mLowerLimitPrice, mFiveSpeedVo.getLatestPriceValue()), Toast.LENGTH_SHORT).show();
-            else if (mBsFlag == 1 && new BigDecimal(price).compareTo(new BigDecimal(mFiveSpeedVo.getLatestPriceValue())) == 1)
+                        mLowerLimitPrice, mTenSpeedVo.getLatestPriceValue()), Toast.LENGTH_SHORT).show();
+            else if (mBsFlag == 1 && new BigDecimal(price).compareTo(new BigDecimal(mTenSpeedVo.getLatestPriceValue())) == 1)
                 Toast.makeText(mContext, String.format(mContext.getResources().getString(R.string.transaction_price_setting_range),
-                        mLowerLimitPrice, mFiveSpeedVo.getLatestPriceValue()), Toast.LENGTH_SHORT).show();
-            else if (mBsFlag == 2 && new BigDecimal(price).compareTo(new BigDecimal(mFiveSpeedVo.getLatestPriceValue())) == -1)
+                        mLowerLimitPrice, mTenSpeedVo.getLatestPriceValue()), Toast.LENGTH_SHORT).show();
+            else if (mBsFlag == 2 && new BigDecimal(price).compareTo(new BigDecimal(mTenSpeedVo.getLatestPriceValue())) == -1)
                 Toast.makeText(mContext, String.format(mContext.getResources().getString(R.string.transaction_price_setting_range),
-                        mFiveSpeedVo.getLatestPriceValue(), mHighLimitPrice), Toast.LENGTH_SHORT).show();
+                        mTenSpeedVo.getLatestPriceValue(), mHighLimitPrice), Toast.LENGTH_SHORT).show();
             else if (mBsFlag == 2 && new BigDecimal(price).compareTo(new BigDecimal(mHighLimitPrice)) == 1)
                 Toast.makeText(mContext, String.format(mContext.getResources().getString(R.string.transaction_price_setting_range),
-                        mFiveSpeedVo.getLatestPriceValue(), mHighLimitPrice), Toast.LENGTH_SHORT).show();
+                        mTenSpeedVo.getLatestPriceValue(), mHighLimitPrice), Toast.LENGTH_SHORT).show();
             else if (TextUtils.isEmpty(amount))
                 Toast.makeText(mContext, R.string.transaction_number_error, Toast.LENGTH_SHORT).show();
             else if (new BigDecimal(amount).compareTo(new BigDecimal(0)) == 0)
