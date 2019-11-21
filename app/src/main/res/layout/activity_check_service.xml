@@ -156,6 +156,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/common_area_margin_tiny"
                     android:background="@color/white"
+                    android:onClick="@{() -> handlers.onClickWithholdContract()}"
                     android:paddingLeft="@dimen/common_area_margin"
                     android:paddingTop="@dimen/common_page_padding"
                     android:paddingRight="@dimen/common_area_margin"
@@ -175,7 +176,7 @@
                         android:layout_marginLeft="@dimen/margin_middle"
                         android:lineSpacingExtra="@dimen/lineSpacingExtra_small"
                         android:textColor="@color/color_message_red"
-                        android:textSize="@dimen/sp_14" />
+                        android:textSize="@dimen/size_middle" />
 
                 </LinearLayout>
 

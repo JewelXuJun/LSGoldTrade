@@ -24,14 +24,9 @@ import com.jme.lsgoldtrade.service.ManagementService;
 import java.util.HashMap;
 import java.util.List;
 
-/**
- * 我的
- */
 public class PersonalFragment extends JMEBaseFragment {
 
     private FragmentPersonalBinding mBinding;
-
-    private String mIncrementState;
 
     @Override
     protected int getContentViewId() {
