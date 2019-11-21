@@ -222,48 +222,46 @@ public class EntrustRiskManagementActivity extends JMEBaseActivity {
     }
 
     private void calculateValue() {
-        if (null != mList && 0 != mList.size()) {
-            BigDecimal floatTotal = new BigDecimal(0);
+        BigDecimal floatTotal = new BigDecimal(0);
 
-            for (String value : mList) {
-                if (!TextUtils.isEmpty(value))
-                    floatTotal = floatTotal.add(new BigDecimal(value));
-            }
+        for (String value : mList) {
+            if (!TextUtils.isEmpty(value))
+                floatTotal = floatTotal.add(new BigDecimal(value));
+        }
 
-            if (null != mAccountVo) {
-                mTotal = new BigDecimal(mAccountVo.getTransactionBalanceStr())
-                        .add(new BigDecimal(mAccountVo.getFreezeBalanceStr()))
-                        .add(floatTotal)
-                        .add(new BigDecimal(mAccountVo.getPositionMarginStr()))
-                        .add(mUnliquidatedProfitTotal.compareTo(new BigDecimal(0)) == -1 ? new BigDecimal(0) : mUnliquidatedProfitTotal)
-                        .subtract(new BigDecimal(mAccountVo.getFee()))
-                        .toPlainString();
-                String minReserveFund = mAccountVo.getMinReserveFundStr();
-                String runtimeFee = mAccountVo.getRuntimeFeeStr();
+        if (null != mAccountVo) {
+            mTotal = new BigDecimal(mAccountVo.getTransactionBalanceStr())
+                    .add(new BigDecimal(mAccountVo.getFreezeBalanceStr()))
+                    .add(floatTotal)
+                    .add(new BigDecimal(mAccountVo.getPositionMarginStr()))
+                    .add(mUnliquidatedProfitTotal.compareTo(new BigDecimal(0)) == -1 ? new BigDecimal(0) : mUnliquidatedProfitTotal)
+                    .subtract(new BigDecimal(mAccountVo.getFee()))
+                    .toPlainString();
+            String minReserveFund = mAccountVo.getMinReserveFundStr();
+            String runtimeFee = mAccountVo.getRuntimeFeeStr();
 
-                if (new BigDecimal(minReserveFund).compareTo(new BigDecimal(0)) == 0) {
+            if (new BigDecimal(minReserveFund).compareTo(new BigDecimal(0)) == 0) {
+                mBinding.tvRiskRate.setText("0.00");
+            } else {
+                BigDecimal fee = new BigDecimal(minReserveFund).add(new BigDecimal(runtimeFee));
+
+                if (fee.compareTo(new BigDecimal(0)) == 0) {
                     mBinding.tvRiskRate.setText("0.00");
                 } else {
-                    BigDecimal fee = new BigDecimal(minReserveFund).add(new BigDecimal(runtimeFee));
+                    String minReserveFundStr = mAccountVo.getMinReserveFundStr();
+                    float riskRate;
 
-                    if (fee.compareTo(new BigDecimal(0)) == 0) {
-                        mBinding.tvRiskRate.setText("0.00");
+                    if (TextUtils.isEmpty(minReserveFundStr)) {
+                        riskRate = 0.00f;
                     } else {
-                        String minReserveFundStr = mAccountVo.getMinReserveFundStr();
-                        float riskRate;
-
-                        if (TextUtils.isEmpty(minReserveFundStr)) {
+                        if (new BigDecimal(minReserveFundStr).compareTo(new BigDecimal(0)) == 0)
                             riskRate = 0.00f;
-                        } else {
-                            if (new BigDecimal(minReserveFundStr).compareTo(new BigDecimal(0)) == 0)
-                                riskRate = 0.00f;
-                            else
-                                riskRate = Math.min(new BigDecimal(mTotal).divide(new BigDecimal(minReserveFundStr), 4, BigDecimal.ROUND_HALF_UP)
-                                        .multiply(new BigDecimal(100)).floatValue(), 10000.00f);
-                        }
-
-                        mBinding.tvRiskRate.setText(BigDecimalUtil.formatRate(String.valueOf(riskRate)));
+                        else
+                            riskRate = Math.min(new BigDecimal(mTotal).divide(new BigDecimal(minReserveFundStr), 4, BigDecimal.ROUND_HALF_UP)
+                                    .multiply(new BigDecimal(100)).floatValue(), 10000.00f);
                     }
+
+                    mBinding.tvRiskRate.setText(BigDecimalUtil.formatRate(String.valueOf(riskRate)));
                 }
             }
         }

@@ -38,7 +38,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class TransactionStopSheetFragment extends JMEBaseFragment implements OnRefreshListener, BaseQuickAdapter.RequestLoadMoreListener{
+public class TransactionStopSheetFragment extends JMEBaseFragment implements OnRefreshListener, BaseQuickAdapter.RequestLoadMoreListener {
 
     private FragmentTransactionStopSheetBinding mBinding;
 
@@ -369,11 +369,10 @@ public class TransactionStopSheetFragment extends JMEBaseFragment implements OnR
 
                 break;
             case "RevokeConditionOrder":
-                if (head.isSuccess()) {
+                if (head.isSuccess())
                     showShortToast(R.string.transaction_cancel_success);
 
-                    initConditionOrderPage(true);
-                }
+                initConditionOrderPage(true);
 
                 break;
         }
