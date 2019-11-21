@@ -588,6 +588,8 @@ public class HoldPositionsFragment extends JMEBaseFragment implements OnRefreshL
                         e.getMessage();
                     }
 
+                    mCurrentHoldPositionsFragment.setFiveSpeedVoList(mFiveSpeedVoList);
+
                     if (bFlag)
                         initValue(false);
                     else
