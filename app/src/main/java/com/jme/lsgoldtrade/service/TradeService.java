@@ -14,11 +14,11 @@ import com.jme.lsgoldtrade.domain.ContractInfoVo;
 import com.jme.lsgoldtrade.domain.DailyStatementVo;
 import com.jme.lsgoldtrade.domain.DealHistoryPageVo;
 import com.jme.lsgoldtrade.domain.DealPageVo;
-import com.jme.lsgoldtrade.domain.ErUserInfoResponse;
 import com.jme.lsgoldtrade.domain.InOutTurnOverVo;
 import com.jme.lsgoldtrade.domain.LoginResponse;
 import com.jme.lsgoldtrade.domain.OrderHisPageVo;
 import com.jme.lsgoldtrade.domain.OrderPageVo;
+import com.jme.lsgoldtrade.domain.PasswordSettingVo;
 import com.jme.lsgoldtrade.domain.PositionPageVo;
 import com.jme.lsgoldtrade.domain.IdentityInfoVo;
 import com.jme.lsgoldtrade.domain.TransactionDetailVo;
@@ -313,6 +313,14 @@ public class TradeService extends IService<TradeApi> {
         public Call<DTResponse> request(HashMap<String, String> params) {
 
             return mApi.checkUserIsTJS(params);
+        }
+    };
+
+    public API whetherChangeLoginPwd = new API<PasswordSettingVo>("WhetherChangeLoginPwd") {
+        @Override
+        public Call<DTResponse> request(HashMap<String, String> params) {
+
+            return mApi.whetherChangeLoginPwd(params);
         }
     };
 

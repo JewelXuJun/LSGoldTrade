@@ -51,8 +51,7 @@ public class SetLoginPasswordSuccessActivity extends JMEBaseActivity {
     public class ClickHandlers {
 
         public void onClickGotoTrade() {
-            RxBus.getInstance().post(Constants.RxBusConst.RXBUS_TRANSACTION_HOLD_POSITIONS, null);
-            ARouter.getInstance().build(Constants.ARouterUriConst.MAIN).navigation();
+            ARouter.getInstance().build(Constants.ARouterUriConst.WITHHOLDCONTRACT).navigation();
 
             finish();
         }

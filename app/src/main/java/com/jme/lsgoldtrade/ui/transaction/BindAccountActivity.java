@@ -1,10 +1,7 @@
 package com.jme.lsgoldtrade.ui.transaction;
 
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
 import android.text.TextUtils;
-import android.view.Gravity;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
@@ -17,14 +14,11 @@ import com.jme.common.util.StringUtils;
 import com.jme.lsgoldtrade.R;
 import com.jme.lsgoldtrade.base.JMEBaseActivity;
 import com.jme.lsgoldtrade.config.Constants;
-import com.jme.lsgoldtrade.config.User;
 import com.jme.lsgoldtrade.databinding.ActivityBindAccountBinding;
 import com.jme.lsgoldtrade.domain.BindAccountResponse;
 import com.jme.lsgoldtrade.domain.BindAccountVo;
-import com.jme.lsgoldtrade.domain.LoginResponse;
+import com.jme.lsgoldtrade.domain.PasswordSettingVo;
 import com.jme.lsgoldtrade.service.TradeService;
-import com.jme.lsgoldtrade.service.UserService;
-import com.jme.lsgoldtrade.view.BindSuccessPopupWindow;
 
 import java.net.ConnectException;
 import java.util.HashMap;
@@ -33,9 +27,6 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-/**
- * 账号绑定
- */
 @Route(path = Constants.ARouterUriConst.BINDACCOUNT)
 public class BindAccountActivity extends JMEBaseActivity {
 
@@ -43,44 +34,10 @@ public class BindAccountActivity extends JMEBaseActivity {
 
     private JMECountDownTimer mCountDownTimer;
 
-    private BindSuccessPopupWindow mWindow;
-
     private String mName;
     private String mIDCard;
     private boolean bFlag = false;
     private boolean bAgreeFlag = true;
-    private int mTime = 3;
-
-    public Handler mHandler = new Handler() {
-        @Override
-        public void handleMessage(Message msg) {
-            super.handleMessage(msg);
-
-            switch (msg.what) {
-                case Constants.Msg.MSG_BING_ACCOUNT_SUCCESS:
-                    if (null != mWindow) {
-                        if (mTime == 0) {
-                            mWindow.setData(String.valueOf(mTime));
-                            mHandler.removeCallbacksAndMessages(null);
-                            mWindow.dismiss();
-
-                            RxBus.getInstance().post(Constants.RxBusConst.RXBUS_BIND_SUCCESS, null);
-                            ARouter.getInstance().build(Constants.ARouterUriConst.SETLOGINPASSWORD).navigation();
-
-                            finish();
-                        } else {
-                            mWindow.setData(String.valueOf(mTime));
-                            mHandler.removeCallbacksAndMessages(null);
-                            mHandler.sendEmptyMessageDelayed(Constants.Msg.MSG_BING_ACCOUNT_SUCCESS, 1000);
-
-                            --mTime;
-                        }
-                    }
-
-                    break;
-            }
-        }
-    };
 
     @Override
     protected int getContentViewId() {
@@ -105,8 +62,6 @@ public class BindAccountActivity extends JMEBaseActivity {
 
         mBinding.tvName.setText(mName);
         mBinding.tvIdCard.setText(StringUtils.formatIDCardNumber(mIDCard));
-
-        mWindow = new BindSuccessPopupWindow(mContext);
 
         mCountDownTimer = new JMECountDownTimer(60000, 1000,
                 mBinding.btnVerificationCode, getString(R.string.transaction_get_verification_code));
@@ -208,6 +163,10 @@ public class BindAccountActivity extends JMEBaseActivity {
         });
     }
 
+    private void whetherChangeLoginPwd() {
+        sendRequest(TradeService.getInstance().whetherChangeLoginPwd, new HashMap<>(), true);
+    }
+
     @Override
     protected void DataReturn(DTRequest request, Head head, Object response) {
         super.DataReturn(request, head, response);
@@ -239,14 +198,32 @@ public class BindAccountActivity extends JMEBaseActivity {
                         mUser.setAccount(bindAccountVo.getAccount());
                     }
 
-                    if (null != mWindow && !mWindow.isShowing()) {
-                        mWindow.setData(String.valueOf(mTime));
-                        mWindow.showAtLocation(mBinding.btnBind, Gravity.CENTER, 0, 0);
+                    RxBus.getInstance().post(Constants.RxBusConst.RXBUS_BIND_SUCCESS, null);
 
-                        mHandler.sendEmptyMessageDelayed(Constants.Msg.MSG_BING_ACCOUNT_SUCCESS, 1000);
+                    whetherChangeLoginPwd();
+                }
 
-                        --mTime;
+                break;
+            case "WhetherChangeLoginPwd":
+                if (head.isSuccess()) {
+                    PasswordSettingVo passwordSettingVo;
+
+                    try {
+                        passwordSettingVo = (PasswordSettingVo) response;
+                    } catch (Exception e) {
+                        passwordSettingVo = null;
+
+                        e.printStackTrace();
                     }
+
+                    String flag = passwordSettingVo.getFlag();
+
+                    if (TextUtils.isEmpty(flag) || flag.equals("N"))
+                        ARouter.getInstance().build(Constants.ARouterUriConst.SETLOGINPASSWORD).navigation();
+                    else
+                        ARouter.getInstance().build(Constants.ARouterUriConst.WITHHOLDCONTRACT).navigation();
+
+                    finish();
                 }
 
                 break;
@@ -313,11 +290,6 @@ public class BindAccountActivity extends JMEBaseActivity {
 
         if (null != mCountDownTimer)
             mCountDownTimer.cancel();
-
-        if (null != mHandler) {
-            mHandler.removeCallbacksAndMessages(null);
-            mHandler = null;
-        }
     }
 
 }

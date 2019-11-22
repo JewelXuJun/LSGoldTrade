@@ -111,4 +111,7 @@ public interface TradeApi {
     @GET("/gold-trade/v1.0.0/android/checkUserIsTJS")
     Call<DTResponse> checkUserIsTJS(@QueryMap Map<String, String> map);
 
+    @GET("/gold-trade/v1.0.0/android/whetherChangeLoginPwd")
+    Call<DTResponse> whetherChangeLoginPwd(@QueryMap Map<String, String> map);
+
 }
