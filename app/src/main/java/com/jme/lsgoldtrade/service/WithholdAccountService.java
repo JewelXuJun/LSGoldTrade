@@ -61,4 +61,11 @@ public class WithholdAccountService extends IService<WithholdAccountApi> {
             return mApi.sign(params);
         }
     };
+
+    public API getCustomerSignBankList = new API<BankVo>("GetCustomerSignBankList") {
+        @Override
+        public Call<DTResponse> request(HashMap<String, String> params) {
+            return mApi.getCustomerSignBankList(params);
+        }
+    };
 }

@@ -24,4 +24,7 @@ public interface PaymentApi {
     @POST("/payment/api/v1/android/wxPay/withdrawApply")
     Call<DTResponse> withdrawApply(@Body Map<String, String> map);
 
+    @POST("/payment/api/v1/android/wxPay/serviceFeePay")
+    Call<DTResponse> serviceFeePay(@Body Map<String, String> map);
+
 }
