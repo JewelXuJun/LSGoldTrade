@@ -21,6 +21,7 @@ import com.jme.lsgoldtrade.domain.UsernameVo;
 import com.jme.lsgoldtrade.service.AccountService;
 import com.jme.lsgoldtrade.service.ManagementService;
 import com.jme.lsgoldtrade.service.UserService;
+import com.jme.lsgoldtrade.util.MarketUtil;
 import com.jme.lsgoldtrade.view.ConfirmPopupwindow;
 import com.jme.lsgoldtrade.view.TransactionMessagePopUpWindow;
 import com.jme.lsgoldtrade.view.WithholdMessagePopUpWindow;
@@ -93,6 +94,8 @@ public class CheckServiceActivity extends JMEBaseActivity {
 
         if (TextUtils.isEmpty(isSign) || isSign.equals("N"))
             queryLoginResult();
+        else
+            getCustomerArrearage();
 
         getUserInfo();
     }
@@ -175,6 +178,10 @@ public class CheckServiceActivity extends JMEBaseActivity {
         sendRequest(AccountService.getInstance().hasWeChatWithdrawAuth, new HashMap<>(), true);
     }
 
+    private void getCustomerArrearage() {
+        sendRequest(ManagementService.getInstance().getCustomerArrearage, new HashMap<>(), true);
+    }
+
     @Override
     protected void DataReturn(DTRequest request, Head head, Object response) {
         super.DataReturn(request, head, response);
@@ -221,6 +228,8 @@ public class CheckServiceActivity extends JMEBaseActivity {
                             mBinding.layoutNotSigned.setVisibility(View.GONE);
                             mBinding.layoutSigned.setVisibility(View.VISIBLE);
                         }
+
+                        getCustomerArrearage();
                     }
                 }
 
@@ -288,6 +297,14 @@ public class CheckServiceActivity extends JMEBaseActivity {
                         ARouter.getInstance().build(Constants.ARouterUriConst.WITHDRAW).navigation();
                     else
                         ARouter.getInstance().build(Constants.ARouterUriConst.CHECKUSERINFO).navigation();
+                }
+
+                break;
+            case "GetCustomerArrearage":
+                if (head.isSuccess()) {
+                    String money = response.toString();
+
+                    mBinding.tvMoney.setText(TextUtils.isEmpty(money) ? "" : MarketUtil.decimalFormatMoney(MarketUtil.getPriceValue(money)));
                 }
 
                 break;

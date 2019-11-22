@@ -223,7 +223,6 @@
                             android:layout_toLeftOf="@+id/img_next"
                             android:layout_toRightOf="@+id/tv_bankcard_title"
                             android:paddingLeft="@dimen/common_page_padding"
-                            android:text="6228****3456"
                             android:textColor="@color/black_deep"
                             android:textSize="@dimen/common_font_size" />
 
@@ -285,7 +284,6 @@
                             android:layout_toLeftOf="@+id/tv_pay"
                             android:layout_toRightOf="@+id/layout_money_pay"
                             android:paddingLeft="@dimen/common_area_margin_tiny"
-                            android:text="1988.88"
                             android:textColor="@color/black_deep"
                             android:textSize="@dimen/common_font_size" />
 
