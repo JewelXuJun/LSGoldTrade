@@ -24,7 +24,7 @@ public class WithholdContractActivity extends JMEBaseActivity {
     protected void initView() {
         super.initView();
 
-        initToolbar(R.string.incrementaccount_withhold_contract, true);
+        initToolbar(R.string.increment_account_withhold_contract, true);
     }
 
     @Override

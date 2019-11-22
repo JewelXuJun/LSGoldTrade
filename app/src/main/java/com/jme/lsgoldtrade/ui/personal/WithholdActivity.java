@@ -1,11 +1,10 @@
 package com.jme.lsgoldtrade.ui.personal;
 
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-
-import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
@@ -17,6 +16,7 @@ import com.jme.lsgoldtrade.config.AppConfig;
 import com.jme.lsgoldtrade.config.Constants;
 import com.jme.lsgoldtrade.databinding.ActivityWithholdBinding;
 import com.jme.lsgoldtrade.service.ManagementService;
+import com.jme.lsgoldtrade.util.MarketUtil;
 import com.tencent.mm.opensdk.openapi.IWXAPI;
 import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 
@@ -27,7 +27,8 @@ public class WithholdActivity extends JMEBaseActivity {
 
     private ActivityWithholdBinding mBinding;
 
-    private WithholdAdapter mAdapter;
+    private String mMoney;
+
     private IWXAPI mWxapi;
 
     @Override
@@ -39,22 +40,16 @@ public class WithholdActivity extends JMEBaseActivity {
     protected void initView() {
         super.initView();
 
-        initToolbar(R.string.incrementaccount_pay_title, true);
+        initToolbar(R.string.increment_account_pay_title, true);
     }
 
     @Override
     protected void initData(Bundle savedInstanceState) {
         super.initData(savedInstanceState);
 
-        mAdapter = new WithholdAdapter(null);
-
-        mBinding.recyclerView.setHasFixedSize(false);
-        mBinding.recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        mBinding.recyclerView.setAdapter(mAdapter);
-
         mWxapi = WXAPIFactory.createWXAPI(this, AppConfig.WECHATAPPID, true);
 
-        getPayIcon();
+        getCustomerArrearage();
     }
 
     @Override
@@ -67,6 +62,7 @@ public class WithholdActivity extends JMEBaseActivity {
         super.initBinding();
 
         mBinding = (ActivityWithholdBinding) mBindingUtil;
+        mBinding.setHandlers(new ClickHandlers());
     }
 
     private void showPaymentBottomDialog(String money) {
@@ -78,7 +74,7 @@ public class WithholdActivity extends JMEBaseActivity {
         TextView tvPay = paymentView.findViewById(R.id.tv_pay);
 
         imgWechatSelect.setVisibility(View.VISIBLE);
-        tvPay.setText(String.format(getResources().getString(R.string.incrementaccount_pay_money), money));
+        tvPay.setText(String.format(getResources().getString(R.string.increment_account_pay_money), money));
 
         imgCancel.setOnClickListener(v -> dialog.dismiss());
 
@@ -103,6 +99,10 @@ public class WithholdActivity extends JMEBaseActivity {
 
     }
 
+    private void getCustomerArrearage() {
+        sendRequest(ManagementService.getInstance().getCustomerArrearage, new HashMap<>(), true);
+    }
+
     private void getPayIcon() {
         sendRequest(ManagementService.getInstance().getPayIcon, new HashMap<>(), true);
     }
@@ -112,7 +112,23 @@ public class WithholdActivity extends JMEBaseActivity {
         super.DataReturn(request, head, response);
 
         switch (request.getApi().getName()) {
+            case "GetCustomerArrearage":
+                if (head.isSuccess()) {
+                    mMoney = response.toString();
 
+                    mBinding.tvMoney.setText(TextUtils.isEmpty(mMoney) ? "" :
+                            MarketUtil.decimalFormatMoney(MarketUtil.getPriceValue(mMoney)) + getResources().getString(R.string.text_money_unit));
+                }
+
+                break;
+        }
+    }
+
+    public class ClickHandlers {
+
+        public void onClickPay() {
+            if (!TextUtils.isEmpty(mMoney))
+                getPayIcon();
         }
     }
 

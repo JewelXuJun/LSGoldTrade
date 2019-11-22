@@ -24,7 +24,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/color_text_normal"
-                android:text="@string/incrementaccount_singed_bankcard"
+                android:text="@string/increment_account_singed_bankcard"
                 android:textSize="@dimen/size_normal"/>
 
             <TextView

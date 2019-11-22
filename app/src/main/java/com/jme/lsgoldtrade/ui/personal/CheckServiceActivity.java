@@ -89,10 +89,14 @@ public class CheckServiceActivity extends JMEBaseActivity {
 
         String isSign = mUser.getCurrentUser().getIsSign();
 
-        if (TextUtils.isEmpty(isSign) || isSign.equals("N"))
+        if (TextUtils.isEmpty(isSign) || isSign.equals("N")) {
             queryLoginResult();
-        else
+        } else {
+            mBinding.layoutNotSigned.setVisibility(View.GONE);
+            mBinding.layoutSigned.setVisibility(View.VISIBLE);
+
             getCustomerArrearage();
+        }
 
         getUserInfo();
     }
@@ -213,7 +217,7 @@ public class CheckServiceActivity extends JMEBaseActivity {
                             if (null != mWithholdMessagePopUpWindow && !mWithholdMessagePopUpWindow.isShowing()) {
                                 bClickFlag = false;
 
-                                mWithholdMessagePopUpWindow.setData(getResources().getString(R.string.incrementaccount_withhold_signed),
+                                mWithholdMessagePopUpWindow.setData(getResources().getString(R.string.increment_account_withhold_signed),
                                         (view) -> mWithholdMessagePopUpWindow.dismiss());
                                 mWithholdMessagePopUpWindow.showAtLocation(mBinding.tvAvailableFunds, Gravity.CENTER, 0, 0);
                             }
@@ -271,6 +275,7 @@ public class CheckServiceActivity extends JMEBaseActivity {
                 if (head.isSuccess()) {
                     String money = response.toString();
 
+                    mBinding.layoutPay.setVisibility(TextUtils.isEmpty(money) || new BigDecimal(money).compareTo(BigDecimal.ZERO) == 0 ? View.GONE : View.VISIBLE);
                     mBinding.tvMoney.setText(TextUtils.isEmpty(money) ? "" : MarketUtil.decimalFormatMoney(MarketUtil.getPriceValue(money)));
                 }
 
@@ -319,7 +324,7 @@ public class CheckServiceActivity extends JMEBaseActivity {
 
         public void onClickPaidPrompt() {
             if (null != mConfirmPopupwindow && !mConfirmPopupwindow.isShowing()) {
-                mConfirmPopupwindow.setData(getResources().getString(R.string.incrementaccount_paid_prompt),
+                mConfirmPopupwindow.setData(getResources().getString(R.string.increment_account_paid_prompt),
                         getResources().getString(R.string.text_confirm), (view) -> mConfirmPopupwindow.dismiss());
                 mConfirmPopupwindow.showAtLocation(mBinding.tvAvailableFunds, Gravity.CENTER, 0, 0);
             }

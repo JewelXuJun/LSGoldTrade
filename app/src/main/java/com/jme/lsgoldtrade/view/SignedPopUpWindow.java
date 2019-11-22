@@ -53,7 +53,7 @@ public class SignedPopUpWindow extends JMEBasePopupWindow {
     }
 
     public void setData(String remainTradeDay) {
-        mBinding.tvSignedMessage.setText(String.format(mContext.getResources().getString(R.string.incrementaccount_singed_message), remainTradeDay));
+        mBinding.tvSignedMessage.setText(String.format(mContext.getResources().getString(R.string.increment_account_singed_message), remainTradeDay));
     }
 
 }

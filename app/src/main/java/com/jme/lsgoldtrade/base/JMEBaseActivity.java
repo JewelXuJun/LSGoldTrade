@@ -151,6 +151,8 @@ public abstract class JMEBaseActivity<T> extends BaseActivity {
             if (!currentClass().equals(SplashActivity.class.getName()) && !currentClass().equals(AccountLoginActivity.class.getName())
                     && !currentClass().equals(MobileLoginActivity.class.getName()))
                 showLoginDialog(head.getMsg());
+        } else if (head.getCode().equals("-2011")) {
+
         } else {
             handleErrorInfo(request, head);
         }
