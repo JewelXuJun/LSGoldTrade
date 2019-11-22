@@ -16,6 +16,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.core.content.FileProvider;
@@ -56,6 +57,7 @@ import com.jme.lsgoldtrade.service.TradeService;
 import com.jme.lsgoldtrade.tabhost.MainTab;
 import com.jme.lsgoldtrade.view.ConfirmSimplePopupwindow;
 import com.jme.lsgoldtrade.view.ProtocolUpdatePopUpWindow;
+import com.jme.lsgoldtrade.view.SignedPopUpWindow;
 
 import java.io.File;
 import java.util.HashMap;
@@ -63,9 +65,6 @@ import java.util.List;
 
 import rx.Subscription;
 
-/**
- * Created by XuJun on 2018/11/7.
- */
 @Route(path = Constants.ARouterUriConst.MAIN)
 public class MainActivity extends JMEBaseActivity implements TabHost.OnTabChangeListener {
 
@@ -77,6 +76,7 @@ public class MainActivity extends JMEBaseActivity implements TabHost.OnTabChange
     private String mDesc;
     private String mUrl;
     private String mValues;
+    private String mRemainTradeDay;
 
     private ProgressDialog mProgressDialog;
     private LocalBroadcastManager mLocalBroadcastManager;
@@ -86,6 +86,7 @@ public class MainActivity extends JMEBaseActivity implements TabHost.OnTabChange
     private ProtocolUpdatePopUpWindow mProtocolUpdatePopUpWindow;
     private ConfirmSimplePopupwindow mConfirmSimplePopupwindow;
     private ConfirmSimplePopupwindow mTradingPasswordConfirmSimplePopupwindow;
+    private SignedPopUpWindow mSignedPopUpWindow;
     private IntentFilter mIntentFilter;
     private NetStateReceiver mStateReceiver;
     private Subscription mRxbus;
@@ -155,9 +156,6 @@ public class MainActivity extends JMEBaseActivity implements TabHost.OnTabChange
         super.initView();
 
         setTabHost();
-
-        if (!TextUtils.isEmpty(SharedPreUtils.getString(mContext, SharedPreUtils.Token)))
-            getProtocolVersion();
     }
 
     @Override
@@ -183,8 +181,15 @@ public class MainActivity extends JMEBaseActivity implements TabHost.OnTabChange
         mTradingPasswordConfirmSimplePopupwindow.setOutsideTouchable(false);
         mTradingPasswordConfirmSimplePopupwindow.setFocusable(false);
 
+        mSignedPopUpWindow = new SignedPopUpWindow(this);
+
         registerReceiver(mStateReceiver, mIntentFilter);
         initDownLoadData();
+
+        if (!TextUtils.isEmpty(SharedPreUtils.getString(mContext, SharedPreUtils.Token))) {
+            new Handler().postDelayed(() -> checkIsSign(), 1000);
+            getProtocolVersion();
+        }
 
         if (null != mUser && mUser.isLogin())
             checkUserIsTJS();
@@ -226,6 +231,7 @@ public class MainActivity extends JMEBaseActivity implements TabHost.OnTabChange
 
                     break;
                 case Constants.RxBusConst.RXBUS_LOGIN_SUCCESS:
+                    checkIsSign();
                     getProtocolVersion();
 
                     if (null != mUser && mUser.isLogin() && !TextUtils.isEmpty(mUser.getIsFromTjs()) && mUser.getIsFromTjs().equals("true"))
@@ -576,6 +582,11 @@ public class MainActivity extends JMEBaseActivity implements TabHost.OnTabChange
         startService(intent);
     }
 
+    private void checkIsSign() {
+        if (!TextUtils.isEmpty(mUser.getAccountID()))
+            getRemainTradeDay();
+    }
+
     private void getUpDateInfo() {
         HashMap<String, String> params = new HashMap<>();
         params.put("code", String.valueOf(AppInfoUtil.getVersionCode(this)));
@@ -597,6 +608,10 @@ public class MainActivity extends JMEBaseActivity implements TabHost.OnTabChange
 
     private void getWhetherIdCard() {
         sendRequest(TradeService.getInstance().whetherIdCard, new HashMap<>(), false, false, false);
+    }
+
+    private void getRemainTradeDay() {
+        sendRequest(ManagementService.getInstance().getRemainTradeDay, new HashMap<>(), false);
     }
 
     private void insertRatifyAccord() {
@@ -728,6 +743,21 @@ public class MainActivity extends JMEBaseActivity implements TabHost.OnTabChange
                         if (null != mProtocolUpdatePopUpWindow && !mProtocolUpdatePopUpWindow.isShowing()) {
                             mProtocolUpdatePopUpWindow.setData(mProtocolVoList, identityInfoVo.getName(), identityInfoVo.getIdCard(), (view) -> insertRatifyAccord());
                             mProtocolUpdatePopUpWindow.showAtLocation(mBinding.tabhost, Gravity.CENTER, 0, 0);
+                        }
+                    }
+                }
+
+                break;
+            case "GetRemainTradeDay":
+                if (head.isSuccess()) {
+                    mRemainTradeDay = response.toString();
+
+                    String isSign = mUser.getCurrentUser().getIsSign();
+
+                    if (TextUtils.isEmpty(isSign) || isSign.equals("N")) {
+                        if (null != mSignedPopUpWindow && !mSignedPopUpWindow.isShowing()) {
+                            mSignedPopUpWindow.setData(mRemainTradeDay);
+                            mSignedPopUpWindow.showAtLocation(mBinding.tabhost, Gravity.CENTER, 0, 0);
                         }
                     }
                 }
