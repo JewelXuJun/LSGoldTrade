@@ -335,8 +335,8 @@ public class CheckServiceActivity extends JMEBaseActivity {
 
         public void onClickPaidPrompt() {
             if (null != mConfirmPopupwindow && !mConfirmPopupwindow.isShowing()) {
-                mConfirmPopupwindow.setData(getResources().getString(R.string.incrementaccount_error),
-                        getResources().getString(R.string.increment_recharge_pay), null);
+                mConfirmPopupwindow.setData(getResources().getString(R.string.incrementaccount_paid_prompt),
+                        getResources().getString(R.string.text_confirm), (view) -> mConfirmPopupwindow.dismiss());
                 mConfirmPopupwindow.showAtLocation(mBinding.tvAvailableFunds, Gravity.CENTER, 0, 0);
             }
         }

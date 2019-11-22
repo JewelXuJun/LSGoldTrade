@@ -17,7 +17,7 @@
             android:paddingRight="@dimen/margin_normal"
             android:paddingBottom="@dimen/margin_big"
             android:textColor="@color/black"
-            android:textSize="@dimen/sp_16" />
+            android:textSize="@dimen/size_normal" />
 
         <include layout="@layout/item_line_vertical_list" />
 

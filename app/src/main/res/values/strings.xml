@@ -696,5 +696,6 @@
     <string name="incrementaccount_withhold_success">您的代扣签约成功!</string>
     <string name="incrementaccount_withhold_fail">您的代扣签约失败!</string>
     <string name="incrementaccount_withhold_signed">您已签约代扣!</string>
+    <string name="incrementaccount_paid_prompt">待支付金额为您使用增值服务后尚未结清的增值服务费，若您未结清该笔费用，将无法继续使用服务。</string>
 
 </resources>

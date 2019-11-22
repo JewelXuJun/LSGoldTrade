@@ -100,53 +100,53 @@
                     android:layout_height="wrap_content"
                     android:background="@color/white"
                     android:orientation="horizontal"
-                    android:paddingLeft="10dp"
-                    android:paddingRight="10dp"
-                    android:paddingBottom="20dp">
+                    android:paddingLeft="@dimen/common_page_padding"
+                    android:paddingRight="@dimen/common_page_padding"
+                    android:paddingBottom="@dimen/common_area_margin_big">
 
                     <Button
                         android:layout_width="0dp"
-                        android:layout_height="35dp"
-                        android:layout_margin="5dp"
+                        android:layout_height="@dimen/common_item_height_small"
+                        android:layout_margin="@dimen/common_area_margin_tiny"
                         android:layout_weight="1"
                         android:background="@drawable/selector_btn"
                         android:onClick="@{() -> handlers.onClickRecharge()}"
                         android:text="@string/increment_recharge"
                         android:textColor="@color/white"
-                        android:textSize="@dimen/size_normal" />
+                        android:textSize="@dimen/sp_14" />
 
                     <Button
                         android:layout_width="0dp"
-                        android:layout_height="35dp"
-                        android:layout_margin="5dp"
+                        android:layout_height="@dimen/common_item_height_small"
+                        android:layout_margin="@dimen/common_area_margin_tiny"
                         android:layout_weight="1"
                         android:background="@drawable/selector_btn"
                         android:onClick="@{() -> handlers.onClickWithdraw()}"
                         android:text="@string/increment_withdrawal"
                         android:textColor="@color/white"
-                        android:textSize="@dimen/size_normal" />
+                        android:textSize="@dimen/sp_14" />
 
                     <Button
                         android:layout_width="0dp"
-                        android:layout_height="35dp"
-                        android:layout_margin="5dp"
+                        android:layout_height="@dimen/common_item_height_small"
+                        android:layout_margin="@dimen/common_area_margin_tiny"
                         android:layout_weight="1"
                         android:background="@drawable/selector_btn"
                         android:onClick="@{() -> handlers.onClickThaw()}"
                         android:text="@string/increment_thaw"
                         android:textColor="@color/white"
-                        android:textSize="@dimen/size_normal" />
+                        android:textSize="@dimen/sp_14" />
 
                     <Button
                         android:layout_width="0dp"
-                        android:layout_height="35dp"
-                        android:layout_margin="5dp"
+                        android:layout_height="@dimen/common_item_height_small"
+                        android:layout_margin="@dimen/common_area_margin_tiny"
                         android:layout_weight="1"
                         android:background="@drawable/selector_btn"
                         android:onClick="@{() -> handlers.onClickDetailed()}"
                         android:text="@string/increment_account_detail"
                         android:textColor="@color/white"
-                        android:textSize="@dimen/size_normal" />
+                        android:textSize="@dimen/sp_14" />
 
                 </LinearLayout>
 
@@ -237,32 +237,28 @@
                         android:paddingLeft="@dimen/margin_normal"
                         android:paddingRight="@dimen/common_area_margin">
 
+                        <TextView
+                            android:id="@+id/tv_increment_money_pay_title"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:text="@string/increment_money_pay"
+                            android:textColor="@color/color_text_normal"
+                            android:textSize="@dimen/size_normal" />
+
                         <LinearLayout
                             android:id="@+id/layout_money_pay"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_centerVertical="true"
-                            android:orientation="horizontal">
+                            android:layout_toRightOf="@+id/tv_increment_money_pay_title"
+                            android:onClick="@{() -> handlers.onClickPaidPrompt()}"
+                            android:padding="@dimen/common_area_margin_tiny">
 
-                            <TextView
+                            <ImageView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="@string/increment_money_pay"
-                                android:textColor="@color/color_text_normal"
-                                android:textSize="@dimen/size_normal" />
-
-                            <LinearLayout
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:onClick="@{() -> handlers.onClickPaidPrompt()}"
-                                android:padding="@dimen/common_area_margin_tiny">
-
-                                <ImageView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:background="@mipmap/ic_prompt" />
-
-                            </LinearLayout>
+                                android:background="@mipmap/ic_prompt" />
 
                         </LinearLayout>
 
