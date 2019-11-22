@@ -20,6 +20,7 @@ import android.view.inputmethod.InputMethodManager;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
+import com.google.gson.Gson;
 import com.jme.common.network.DTRequest;
 import com.jme.common.network.Head;
 import com.jme.lsgoldtrade.R;
@@ -28,21 +29,30 @@ import com.jme.lsgoldtrade.config.Constants;
 import com.jme.lsgoldtrade.config.User;
 import com.jme.lsgoldtrade.databinding.ActivityPlaceOrderBinding;
 import com.jme.lsgoldtrade.domain.AccountVo;
+import com.jme.lsgoldtrade.domain.LoginResponse;
 import com.jme.lsgoldtrade.domain.OrderVo;
 import com.jme.lsgoldtrade.domain.TenSpeedVo;
 import com.jme.lsgoldtrade.domain.TradingBoxInfoVo;
+import com.jme.lsgoldtrade.domain.UserInfoVo;
 import com.jme.lsgoldtrade.service.ManagementService;
 import com.jme.lsgoldtrade.service.MarketService;
 import com.jme.lsgoldtrade.service.TradeService;
+import com.jme.lsgoldtrade.service.UserService;
 import com.jme.lsgoldtrade.view.ConfirmPopupwindow;
 import com.jme.lsgoldtrade.view.RulePopupwindow;
+import com.jme.lsgoldtrade.view.SignedPopUpWindow;
 import com.jme.lsgoldtrade.view.TransactionMessagePopUpWindow;
 import com.jme.lsgoldtrade.util.MarketUtil;
 import com.jme.lsgoldtrade.view.MessagePopupwindow;
 
 import java.math.BigDecimal;
+import java.net.ConnectException;
 import java.util.HashMap;
 import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 @Route(path = Constants.ARouterUriConst.PLACEORDER)
 public class PlaceOrderActivity extends JMEBaseActivity {
@@ -53,9 +63,11 @@ public class PlaceOrderActivity extends JMEBaseActivity {
     private TransactionMessagePopUpWindow mTransactionMessagePopUpWindow;
     private MessagePopupwindow mMessagePopupwindow;
     private ConfirmPopupwindow mConfirmPopupwindow;
+    private SignedPopUpWindow mSignedPopUpWindow;
 
     private String mDirection;
     private String mTradeId;
+    private String mRemainTradeDay;
     private String mVariety;
     private String mID;
     private String mOpenTimeStart;
@@ -84,6 +96,7 @@ public class PlaceOrderActivity extends JMEBaseActivity {
         mTransactionMessagePopUpWindow = new TransactionMessagePopUpWindow(mContext);
         mMessagePopupwindow = new MessagePopupwindow(mContext);
         mConfirmPopupwindow = new ConfirmPopupwindow(mContext);
+        mSignedPopUpWindow = new SignedPopUpWindow(mContext);
     }
 
     @Override
@@ -100,6 +113,7 @@ public class PlaceOrderActivity extends JMEBaseActivity {
         if (TextUtils.isEmpty(mTradeId))
             return;
 
+        getRemainTradeDay();
         getBoxInfo();
     }
 
@@ -200,6 +214,10 @@ public class PlaceOrderActivity extends JMEBaseActivity {
         mBinding.tvBalanceMessage.setText(spannableString);
     }
 
+    private void getRemainTradeDay() {
+        sendRequest(ManagementService.getInstance().getRemainTradeDay, new HashMap<>(), false);
+    }
+
     private void getAccount() {
         if (null == mUser || !mUser.isLogin())
             return;
@@ -224,12 +242,74 @@ public class PlaceOrderActivity extends JMEBaseActivity {
         sendRequest(MarketService.getInstance().getTenSpeedQuotes, params, false, false, false);
     }
 
+    private void queryLoginResult() {
+        DTRequest request = new DTRequest(UserService.getInstance().queryLoginResult, new HashMap<>(), true, true);
+
+        Call restResponse = request.getApi().request(request.getParams());
+
+        restResponse.enqueue(new Callback() {
+            @Override
+            public void onResponse(Call call, Response response) {
+                Head head = new Head();
+                Object body = "";
+
+                if (response.raw().code() != 200) {
+                    head.setSuccess(false);
+                    head.setCode("" + response.raw().code());
+                    head.setMsg("服务器异常");
+                } else {
+                    if (!request.getApi().isResponseJson()) {
+                        body = response.body();
+                        head.setSuccess(true);
+                        head.setCode("0");
+                        head.setMsg("成功");
+                    } else {
+                        LoginResponse dtResponse = (LoginResponse) response.body();
+
+                        head = new Head();
+                        head.setCode(dtResponse.getCode());
+                        head.setMsg(dtResponse.getMsg());
+
+                        try {
+                            body = new Gson().fromJson(dtResponse.getBodyToString(),
+                                    request.getApi().getEntryType());
+                        } catch (Exception e) {
+                            body = dtResponse.getBodyToString();
+                        }
+                    }
+                }
+
+                OnResult(request, head, body);
+            }
+
+            @Override
+            public void onFailure(Call call, Throwable t) {
+                Head head = new Head();
+                final Throwable cause = t.getCause() != null ? t.getCause() : t;
+
+                if (cause != null) {
+                    if (cause instanceof ConnectException) {
+                        head.setSuccess(false);
+                        head.setCode("500");
+                        head.setMsg(getResources().getString(com.jme.common.R.string.text_error_server));
+                    } else {
+                        head.setSuccess(false);
+                        head.setCode("408");
+                        head.setMsg(getResources().getString(com.jme.common.R.string.text_error_timeout));
+                    }
+                }
+
+                OnResult(request, head, null);
+            }
+        });
+    }
+
     private void getUserAddedServicesStatus() {
-        sendRequest(ManagementService.getInstance().getUserAddedServicesStatus, new HashMap<>(), true);
+        sendRequest(ManagementService.getInstance().getUserAddedServicesStatus, new HashMap<>(), false);
     }
 
     private void getStatus() {
-        sendRequest(ManagementService.getInstance().getStatus, new HashMap<>(), false);
+        sendRequest(ManagementService.getInstance().getStatus, new HashMap<>(), true);
     }
 
     private void checkOrder() {
@@ -259,6 +339,11 @@ public class PlaceOrderActivity extends JMEBaseActivity {
         super.DataReturn(request, head, response);
 
         switch (request.getApi().getName()) {
+            case "GetRemainTradeDay":
+                if (head.isSuccess())
+                    mRemainTradeDay = response.toString();
+
+                break;
             case "GetBoxInfo":
                 if (head.isSuccess()) {
                     TradingBoxInfoVo tradingBoxInfoVo;
@@ -350,6 +435,31 @@ public class PlaceOrderActivity extends JMEBaseActivity {
                     bCalculateFlag = true;
 
                     calculateMoneyEnough(mBinding.etAmount.getText().toString().trim());
+                }
+
+                break;
+            case "QueryLoginResult":
+                if (head.isSuccess()) {
+                    UserInfoVo userInfoVo;
+
+                    try {
+                        userInfoVo = (UserInfoVo) response;
+                    } catch (Exception e) {
+                        userInfoVo = null;
+
+                        e.printStackTrace();
+                    }
+
+                    String isSign = userInfoVo.getIsSign();
+
+                    if (TextUtils.isEmpty(isSign) || isSign.equals("N")) {
+                        if (null != mSignedPopUpWindow && !mSignedPopUpWindow.isShowing()) {
+                            mSignedPopUpWindow.setData(mRemainTradeDay);
+                            mSignedPopUpWindow.showAtLocation(mBinding.tvBalanceMessage, Gravity.CENTER, 0, 0);
+                        }
+                    } else {
+                        getUserAddedServicesStatus();
+                    }
                 }
 
                 break;
@@ -569,7 +679,7 @@ public class PlaceOrderActivity extends JMEBaseActivity {
             else if (!bEnoughFlag)
                 showShortToast(R.string.trading_box_balance_not_enough_message);
             else
-                getUserAddedServicesStatus();
+                queryLoginResult();
         }
     }
 

@@ -19,6 +19,7 @@ import androidx.core.content.ContextCompat;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.datai.common.charts.fchart.FChart;
 import com.datai.common.charts.fchart.FData;
+import com.google.gson.Gson;
 import com.jme.common.network.DTRequest;
 import com.jme.common.network.Head;
 import com.jme.common.util.NetWorkUtils;
@@ -31,22 +32,30 @@ import com.jme.lsgoldtrade.databinding.FragmentPlaceOrderBinding;
 import com.jme.lsgoldtrade.domain.ConditionOrderRunVo;
 import com.jme.lsgoldtrade.domain.ContractInfoVo;
 import com.jme.lsgoldtrade.domain.FiveSpeedVo;
+import com.jme.lsgoldtrade.domain.LoginResponse;
 import com.jme.lsgoldtrade.domain.PositionPageVo;
 import com.jme.lsgoldtrade.domain.PositionVo;
+import com.jme.lsgoldtrade.domain.UserInfoVo;
 import com.jme.lsgoldtrade.service.ConditionService;
 import com.jme.lsgoldtrade.service.ManagementService;
 import com.jme.lsgoldtrade.service.MarketService;
 import com.jme.lsgoldtrade.service.TradeService;
+import com.jme.lsgoldtrade.service.UserService;
 import com.jme.lsgoldtrade.util.MarketUtil;
 import com.jme.lsgoldtrade.view.ConfirmPopupwindow;
 import com.jme.lsgoldtrade.view.PlaceOrderPopupWindow;
+import com.jme.lsgoldtrade.view.SignedPopUpWindow;
 import com.jme.lsgoldtrade.view.TransactionMessagePopUpWindow;
 
 import java.math.BigDecimal;
+import java.net.ConnectException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 import rx.Subscription;
 
 public class PlaceOrderFragment extends JMEBaseFragment implements FChart.OnPriceClickListener {
@@ -64,6 +73,7 @@ public class PlaceOrderFragment extends JMEBaseFragment implements FChart.OnPric
     private long mMaxOrderQty = 0;
     private long mMaxHoldQty = 0;
 
+    private String mRemainTradeDay;
     private String mLowerLimitPrice;
     private String mHighLimitPrice;
     private String mPlaceOrderPrice;
@@ -74,6 +84,7 @@ public class PlaceOrderFragment extends JMEBaseFragment implements FChart.OnPric
 
     private TransactionMessagePopUpWindow mTransactionMessagePopUpWindow;
     private ConfirmPopupwindow mConfirmPopupwindow;
+    private SignedPopUpWindow mSignedPopUpWindow;
     private PlaceOrderPopupWindow mPlaceOrderPopupWindow;
     private Subscription mRxbus;
     private ContractInfoVo mContractInfoVo;
@@ -108,6 +119,7 @@ public class PlaceOrderFragment extends JMEBaseFragment implements FChart.OnPric
 
         mTransactionMessagePopUpWindow = new TransactionMessagePopUpWindow(mContext);
         mConfirmPopupwindow = new ConfirmPopupwindow(mContext);
+        mSignedPopUpWindow = new SignedPopUpWindow(mContext);
         mPlaceOrderPopupWindow = new PlaceOrderPopupWindow(mContext);
 
         mBinding.fchartSale.setSize(12, 11);
@@ -119,6 +131,7 @@ public class PlaceOrderFragment extends JMEBaseFragment implements FChart.OnPric
         super.initData(savedInstanceState);
 
         initContractNameValue();
+        getRemainTradeDay();
     }
 
     @Override
@@ -406,7 +419,7 @@ public class PlaceOrderFragment extends JMEBaseFragment implements FChart.OnPric
         else if (mMaxHoldQty != -1 && new BigDecimal(holdAmount).compareTo(new BigDecimal(mMaxHoldQty)) == 1)
             showShortToast(R.string.transaction_limit_max_amount_error2);
         else
-            showPlaceOrderPopupWindow(contractID, mPlaceOrderPrice, amount, mBsFlag);
+            queryLoginResult();
     }
 
     private String getPrice() {
@@ -445,6 +458,10 @@ public class PlaceOrderFragment extends JMEBaseFragment implements FChart.OnPric
         return NetWorkUtils.isWifiConnected(mContext) ? AppConfig.TimeInterval_WiFi : AppConfig.TimeInterval_NetWork;
     }
 
+    private void getRemainTradeDay() {
+        sendRequest(ManagementService.getInstance().getRemainTradeDay, new HashMap<>(), false);
+    }
+
     private void queryConditionOrderRun() {
         if (null == mUser || !mUser.isLogin())
             return;
@@ -468,6 +485,68 @@ public class PlaceOrderFragment extends JMEBaseFragment implements FChart.OnPric
         params.put("pagingKey", mPagingKey);
 
         sendRequest(TradeService.getInstance().position, params, false, false, false);
+    }
+
+    private void queryLoginResult() {
+        DTRequest request = new DTRequest(UserService.getInstance().queryLoginResult, new HashMap<>(), true, true);
+
+        Call restResponse = request.getApi().request(request.getParams());
+
+        restResponse.enqueue(new Callback() {
+            @Override
+            public void onResponse(Call call, Response response) {
+                Head head = new Head();
+                Object body = "";
+
+                if (response.raw().code() != 200) {
+                    head.setSuccess(false);
+                    head.setCode("" + response.raw().code());
+                    head.setMsg("服务器异常");
+                } else {
+                    if (!request.getApi().isResponseJson()) {
+                        body = response.body();
+                        head.setSuccess(true);
+                        head.setCode("0");
+                        head.setMsg("成功");
+                    } else {
+                        LoginResponse dtResponse = (LoginResponse) response.body();
+
+                        head = new Head();
+                        head.setCode(dtResponse.getCode());
+                        head.setMsg(dtResponse.getMsg());
+
+                        try {
+                            body = new Gson().fromJson(dtResponse.getBodyToString(),
+                                    request.getApi().getEntryType());
+                        } catch (Exception e) {
+                            body = dtResponse.getBodyToString();
+                        }
+                    }
+                }
+
+                OnResult(request, head, body);
+            }
+
+            @Override
+            public void onFailure(Call call, Throwable t) {
+                Head head = new Head();
+                final Throwable cause = t.getCause() != null ? t.getCause() : t;
+
+                if (cause != null) {
+                    if (cause instanceof ConnectException) {
+                        head.setSuccess(false);
+                        head.setCode("500");
+                        head.setMsg(getResources().getString(com.jme.common.R.string.text_error_server));
+                    } else {
+                        head.setSuccess(false);
+                        head.setCode("408");
+                        head.setMsg(getResources().getString(com.jme.common.R.string.text_error_timeout));
+                    }
+                }
+
+                OnResult(request, head, null);
+            }
+        });
     }
 
     private void getStatus() {
@@ -495,6 +574,11 @@ public class PlaceOrderFragment extends JMEBaseFragment implements FChart.OnPric
         super.DataReturn(request, head, response);
 
         switch (request.getApi().getName()) {
+            case "GetRemainTradeDay":
+                if (head.isSuccess())
+                    mRemainTradeDay = response.toString();
+
+                break;
             case "QueryConditionOrderRun":
                 if (head.isSuccess()) {
                     ConditionOrderRunVo conditionOrderRunVo;
@@ -623,6 +707,31 @@ public class PlaceOrderFragment extends JMEBaseFragment implements FChart.OnPric
 
                     if (hasNext)
                         getPosition();
+                }
+
+                break;
+            case "QueryLoginResult":
+                if (head.isSuccess()) {
+                    UserInfoVo userInfoVo;
+
+                    try {
+                        userInfoVo = (UserInfoVo) response;
+                    } catch (Exception e) {
+                        userInfoVo = null;
+
+                        e.printStackTrace();
+                    }
+
+                    String isSign = userInfoVo.getIsSign();
+
+                    if (TextUtils.isEmpty(isSign) || isSign.equals("N")) {
+                        if (null != mSignedPopUpWindow && !mSignedPopUpWindow.isShowing()) {
+                            mSignedPopUpWindow.setData(mRemainTradeDay);
+                            mSignedPopUpWindow.showAtLocation(mBinding.etAmount, Gravity.CENTER, 0, 0);
+                        }
+                    } else {
+                        showPlaceOrderPopupWindow(mBinding.tvContractId.getText().toString(), mPlaceOrderPrice, mBinding.etAmount.getText().toString(), mBsFlag);
+                    }
                 }
 
                 break;

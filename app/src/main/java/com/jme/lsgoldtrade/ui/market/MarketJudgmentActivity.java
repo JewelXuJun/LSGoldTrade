@@ -11,6 +11,7 @@ import androidx.fragment.app.FragmentPagerAdapter;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.google.android.material.tabs.TabLayout;
+import com.google.gson.Gson;
 import com.jme.common.network.DTRequest;
 import com.jme.common.network.Head;
 import com.jme.common.util.RxBus;
@@ -22,24 +23,29 @@ import com.jme.lsgoldtrade.databinding.ActivityMarketJudgmentBinding;
 import com.jme.lsgoldtrade.domain.AccountVo;
 import com.jme.lsgoldtrade.domain.AnalystVo;
 import com.jme.lsgoldtrade.domain.ContractInfoVo;
+import com.jme.lsgoldtrade.domain.LoginResponse;
 import com.jme.lsgoldtrade.domain.PositionPageVo;
 import com.jme.lsgoldtrade.domain.PositionVo;
 import com.jme.lsgoldtrade.domain.TenSpeedVo;
+import com.jme.lsgoldtrade.domain.UserInfoVo;
 import com.jme.lsgoldtrade.service.ManagementService;
 import com.jme.lsgoldtrade.service.TradeService;
+import com.jme.lsgoldtrade.service.UserService;
+import com.jme.lsgoldtrade.view.SignedPopUpWindow;
 import com.jme.lsgoldtrade.view.TransactionMessagePopUpWindow;
 import com.jme.lsgoldtrade.view.ConfirmPopupwindow;
 
 import java.math.BigDecimal;
+import java.net.ConnectException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 import rx.Subscription;
 
-/**
- * 行情研判
- */
 @Route(path = Constants.ARouterUriConst.MARKETJUDGMENT)
 public class MarketJudgmentActivity extends JMEBaseActivity {
 
@@ -50,6 +56,7 @@ public class MarketJudgmentActivity extends JMEBaseActivity {
     private List<MarketJudgmentFragment> mFragmentList = new ArrayList<>();
 
     private String mContractID;
+    private String mRemainTradeDay;
     private int mBsFlag = 0;
     private int mOcFlag = 0;
 
@@ -61,6 +68,7 @@ public class MarketJudgmentActivity extends JMEBaseActivity {
     private TransactionMessagePopUpWindow mTransactionMessagePopUpWindow;
     private MarketTradePopupWindow mMarketTradePopupWindow;
     private ConfirmPopupwindow mConfirmPopupwindow;
+    private SignedPopUpWindow mSignedPopUpWindow;
 
     private Subscription mRxbus;
 
@@ -75,15 +83,17 @@ public class MarketJudgmentActivity extends JMEBaseActivity {
 
         initToolbar(R.string.market_judgment, true);
 
-        mTransactionMessagePopUpWindow = new TransactionMessagePopUpWindow(mContext);
-        mMarketTradePopupWindow = new MarketTradePopupWindow(mContext);
-        mConfirmPopupwindow = new ConfirmPopupwindow(mContext);
+        mTransactionMessagePopUpWindow = new TransactionMessagePopUpWindow(this);
+        mMarketTradePopupWindow = new MarketTradePopupWindow(this);
+        mConfirmPopupwindow = new ConfirmPopupwindow(this);
+        mSignedPopUpWindow = new SignedPopUpWindow(this);
     }
 
     @Override
     protected void initData(Bundle savedInstanceState) {
         super.initData(savedInstanceState);
 
+        getRemainTradeDay();
         getAnalystList();
     }
 
@@ -139,8 +149,74 @@ public class MarketJudgmentActivity extends JMEBaseActivity {
         mBinding.tablayout.setupWithViewPager(mBinding.tabViewpager);
     }
 
+    private void getRemainTradeDay() {
+        sendRequest(ManagementService.getInstance().getRemainTradeDay, new HashMap<>(), false);
+    }
+
     private void getAnalystList() {
         sendRequest(ManagementService.getInstance().analystList, new HashMap<>(), true);
+    }
+
+    private void queryLoginResult() {
+        DTRequest request = new DTRequest(UserService.getInstance().queryLoginResult, new HashMap<>(), true, true);
+
+        Call restResponse = request.getApi().request(request.getParams());
+
+        restResponse.enqueue(new Callback() {
+            @Override
+            public void onResponse(Call call, Response response) {
+                Head head = new Head();
+                Object body = "";
+
+                if (response.raw().code() != 200) {
+                    head.setSuccess(false);
+                    head.setCode("" + response.raw().code());
+                    head.setMsg("服务器异常");
+                } else {
+                    if (!request.getApi().isResponseJson()) {
+                        body = response.body();
+                        head.setSuccess(true);
+                        head.setCode("0");
+                        head.setMsg("成功");
+                    } else {
+                        LoginResponse dtResponse = (LoginResponse) response.body();
+
+                        head = new Head();
+                        head.setCode(dtResponse.getCode());
+                        head.setMsg(dtResponse.getMsg());
+
+                        try {
+                            body = new Gson().fromJson(dtResponse.getBodyToString(),
+                                    request.getApi().getEntryType());
+                        } catch (Exception e) {
+                            body = dtResponse.getBodyToString();
+                        }
+                    }
+                }
+
+                OnResult(request, head, body);
+            }
+
+            @Override
+            public void onFailure(Call call, Throwable t) {
+                Head head = new Head();
+                final Throwable cause = t.getCause() != null ? t.getCause() : t;
+
+                if (cause != null) {
+                    if (cause instanceof ConnectException) {
+                        head.setSuccess(false);
+                        head.setCode("500");
+                        head.setMsg(getResources().getString(com.jme.common.R.string.text_error_server));
+                    } else {
+                        head.setSuccess(false);
+                        head.setCode("408");
+                        head.setMsg(getResources().getString(com.jme.common.R.string.text_error_timeout));
+                    }
+                }
+
+                OnResult(request, head, null);
+            }
+        });
     }
 
     private void getStatus() {
@@ -196,6 +272,11 @@ public class MarketJudgmentActivity extends JMEBaseActivity {
         super.DataReturn(request, head, response);
 
         switch (request.getApi().getName()) {
+            case "GetRemainTradeDay":
+                if (head.isSuccess())
+                    mRemainTradeDay = response.toString();
+
+                break;
             case "AnalystList":
                 if (head.isSuccess()) {
                     try {
@@ -219,6 +300,31 @@ public class MarketJudgmentActivity extends JMEBaseActivity {
                     }
 
                     initTabLayout();
+                }
+
+                break;
+            case "QueryLoginResult":
+                if (head.isSuccess()) {
+                    UserInfoVo userInfoVo;
+
+                    try {
+                        userInfoVo = (UserInfoVo) response;
+                    } catch (Exception e) {
+                        userInfoVo = null;
+
+                        e.printStackTrace();
+                    }
+
+                    String isSign = userInfoVo.getIsSign();
+
+                    if (TextUtils.isEmpty(isSign) || isSign.equals("N")) {
+                        if (null != mSignedPopUpWindow && !mSignedPopUpWindow.isShowing()) {
+                            mSignedPopUpWindow.setData(mRemainTradeDay);
+                            mSignedPopUpWindow.showAtLocation(mBinding.tablayout, Gravity.CENTER, 0, 0);
+                        }
+                    } else {
+                        getStatus();
+                    }
                 }
 
                 break;
@@ -342,7 +448,7 @@ public class MarketJudgmentActivity extends JMEBaseActivity {
                 mBsFlag = 1;
                 mOcFlag = 0;
 
-                getStatus();
+                queryLoginResult();
             }
         }
 
@@ -368,7 +474,7 @@ public class MarketJudgmentActivity extends JMEBaseActivity {
                 mBsFlag = 2;
                 mOcFlag = 0;
 
-                getStatus();
+                queryLoginResult();
             }
         }
 

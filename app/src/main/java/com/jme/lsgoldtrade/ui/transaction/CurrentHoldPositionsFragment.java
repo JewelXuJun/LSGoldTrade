@@ -27,14 +27,19 @@ import com.jme.lsgoldtrade.domain.ConditionOrderInfoVo;
 import com.jme.lsgoldtrade.domain.ContractInfoVo;
 import com.jme.lsgoldtrade.domain.FiveSpeedVo;
 import com.jme.lsgoldtrade.domain.IdentityInfoVo;
+import com.jme.lsgoldtrade.domain.LoginResponse;
 import com.jme.lsgoldtrade.domain.PositionVo;
 import com.jme.lsgoldtrade.domain.QuerySetStopOrderResponse;
 import com.jme.lsgoldtrade.domain.TenSpeedVo;
+import com.jme.lsgoldtrade.domain.UserInfoVo;
 import com.jme.lsgoldtrade.service.ConditionService;
+import com.jme.lsgoldtrade.service.ManagementService;
 import com.jme.lsgoldtrade.service.MarketService;
 import com.jme.lsgoldtrade.service.TradeService;
+import com.jme.lsgoldtrade.service.UserService;
 import com.jme.lsgoldtrade.view.ConfirmPopupwindow;
 import com.jme.lsgoldtrade.view.EveningUpPopupWindow;
+import com.jme.lsgoldtrade.view.SignedPopUpWindow;
 import com.jme.lsgoldtrade.view.TransactionStopPopupWindow;
 
 import java.math.BigDecimal;
@@ -52,16 +57,19 @@ public class CurrentHoldPositionsFragment extends JMEBaseFragment {
 
     private FragmentCurrentHoldPositionsBinding mBinding;
 
+    private String mRemainTradeDay;
     private String mName;
     private String mIDCard;
     private String mContractID;
 
+    private List<String> mList;
     private List<FiveSpeedVo> mFiveSpeedVoList;
 
     private PositionVo mPositionVo;
     private HoldPositionsAdapter mAdapter;
     private EveningUpPopupWindow mEveningUpPopupWindow;
     private ConfirmPopupwindow mConfirmPopupwindow;
+    private SignedPopUpWindow mSignedPopUpWindow;
     private TransactionStopPopupWindow mTransactionStopPopupWindow;
     private View mEmptyView;
     private Subscription mRxbus;
@@ -99,12 +107,14 @@ public class CurrentHoldPositionsFragment extends JMEBaseFragment {
         mAdapter = new HoldPositionsAdapter(mContext, null);
         mEveningUpPopupWindow = new EveningUpPopupWindow(mContext);
         mConfirmPopupwindow = new ConfirmPopupwindow(mContext);
+        mSignedPopUpWindow = new SignedPopUpWindow(mContext);
         mTransactionStopPopupWindow = new TransactionStopPopupWindow(mContext, mBinding.tvGotoTransaction);
 
         mBinding.recyclerView.setHasFixedSize(false);
         mBinding.recyclerView.setLayoutManager(new LinearLayoutManager(mContext));
         mBinding.recyclerView.setAdapter(mAdapter);
 
+        getRemainTradeDay();
         getWhetherIdCard();
     }
 
@@ -169,12 +179,12 @@ public class CurrentHoldPositionsFragment extends JMEBaseFragment {
                     if (null == object)
                         return;
 
-                    List<String> list = (List<String>) object;
+                    mList = (List<String>) object;
 
-                    if (null == list || 7 != list.size())
+                    if (null == mList || 7 != mList.size())
                         return;
 
-                    entrustConditionOrder(list);
+                    queryLoginResult();
 
                     break;
                 case Constants.RxBusConst.RXBUS_TRANSACTION_STOP_SHEET_CANCEL_ORDER:
@@ -347,6 +357,10 @@ public class CurrentHoldPositionsFragment extends JMEBaseFragment {
         return NetWorkUtils.isWifiConnected(mContext) ? AppConfig.TimeInterval_WiFi : AppConfig.TimeInterval_NetWork;
     }
 
+    private void getRemainTradeDay() {
+        sendRequest(ManagementService.getInstance().getRemainTradeDay, new HashMap<>(), false);
+    }
+
     private void getWhetherIdCard() {
         sendRequest(TradeService.getInstance().whetherIdCard, new HashMap<>(), true);
     }
@@ -356,6 +370,68 @@ public class CurrentHoldPositionsFragment extends JMEBaseFragment {
         params.put("contractId", mContractID);
 
         sendRequest(MarketService.getInstance().queryQuotation, params, false, false, false);
+    }
+
+    private void queryLoginResult() {
+        DTRequest request = new DTRequest(UserService.getInstance().queryLoginResult, new HashMap<>(), true, true);
+
+        Call restResponse = request.getApi().request(request.getParams());
+
+        restResponse.enqueue(new Callback() {
+            @Override
+            public void onResponse(Call call, Response response) {
+                Head head = new Head();
+                Object body = "";
+
+                if (response.raw().code() != 200) {
+                    head.setSuccess(false);
+                    head.setCode("" + response.raw().code());
+                    head.setMsg("服务器异常");
+                } else {
+                    if (!request.getApi().isResponseJson()) {
+                        body = response.body();
+                        head.setSuccess(true);
+                        head.setCode("0");
+                        head.setMsg("成功");
+                    } else {
+                        LoginResponse dtResponse = (LoginResponse) response.body();
+
+                        head = new Head();
+                        head.setCode(dtResponse.getCode());
+                        head.setMsg(dtResponse.getMsg());
+
+                        try {
+                            body = new Gson().fromJson(dtResponse.getBodyToString(),
+                                    request.getApi().getEntryType());
+                        } catch (Exception e) {
+                            body = dtResponse.getBodyToString();
+                        }
+                    }
+                }
+
+                OnResult(request, head, body);
+            }
+
+            @Override
+            public void onFailure(Call call, Throwable t) {
+                Head head = new Head();
+                final Throwable cause = t.getCause() != null ? t.getCause() : t;
+
+                if (cause != null) {
+                    if (cause instanceof ConnectException) {
+                        head.setSuccess(false);
+                        head.setCode("500");
+                        head.setMsg(getResources().getString(com.jme.common.R.string.text_error_server));
+                    } else {
+                        head.setSuccess(false);
+                        head.setCode("408");
+                        head.setMsg(getResources().getString(com.jme.common.R.string.text_error_timeout));
+                    }
+                }
+
+                OnResult(request, head, null);
+            }
+        });
     }
 
     private void limitOrder(String contractId, String price, String amount, int bsFlag, int ocFlag) {
@@ -490,6 +566,11 @@ public class CurrentHoldPositionsFragment extends JMEBaseFragment {
         super.DataReturn(request, head, response);
 
         switch (request.getApi().getName()) {
+            case "GetRemainTradeDay":
+                if (head.isSuccess())
+                    mRemainTradeDay = response.toString();
+
+                break;
             case "WhetherIdCard":
                 if (head.isSuccess()) {
                     IdentityInfoVo identityInfoVo;
@@ -530,6 +611,31 @@ public class CurrentHoldPositionsFragment extends JMEBaseFragment {
                     mTransactionStopPopupWindow.setTenSpeedVo(tenSpeedVo);
 
                     mHandler.sendEmptyMessageDelayed(Constants.Msg.MSG_MARKET_UPDATE, getTimeInterval());
+                }
+
+                break;
+            case "QueryLoginResult":
+                if (head.isSuccess()) {
+                    UserInfoVo userInfoVo;
+
+                    try {
+                        userInfoVo = (UserInfoVo) response;
+                    } catch (Exception e) {
+                        userInfoVo = null;
+
+                        e.printStackTrace();
+                    }
+
+                    String isSign = userInfoVo.getIsSign();
+
+                    if (TextUtils.isEmpty(isSign) || isSign.equals("N")) {
+                        if (null != mSignedPopUpWindow && !mSignedPopUpWindow.isShowing()) {
+                            mSignedPopUpWindow.setData(mRemainTradeDay);
+                            mSignedPopUpWindow.showAtLocation(mBinding.tvGotoTransaction, Gravity.CENTER, 0, 0);
+                        }
+                    } else {
+                        entrustConditionOrder(mList);
+                    }
                 }
 
                 break;

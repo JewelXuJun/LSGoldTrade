@@ -15,6 +15,7 @@ import android.view.WindowManager;
 import androidx.core.content.ContextCompat;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
+import com.google.gson.Gson;
 import com.jme.common.network.DTRequest;
 import com.jme.common.network.Head;
 import com.jme.common.util.BigDecimalUtil;
@@ -26,19 +27,29 @@ import com.jme.lsgoldtrade.config.Constants;
 import com.jme.lsgoldtrade.databinding.ActivityEntrustRiskManagementBinding;
 import com.jme.lsgoldtrade.domain.AccountVo;
 import com.jme.lsgoldtrade.domain.FiveSpeedVo;
+import com.jme.lsgoldtrade.domain.LoginResponse;
 import com.jme.lsgoldtrade.domain.PositionPageVo;
 import com.jme.lsgoldtrade.domain.PositionVo;
+import com.jme.lsgoldtrade.domain.UserInfoVo;
+import com.jme.lsgoldtrade.service.ManagementService;
 import com.jme.lsgoldtrade.service.MarketService;
 import com.jme.lsgoldtrade.service.TradeService;
+import com.jme.lsgoldtrade.service.UserService;
 import com.jme.lsgoldtrade.util.MarketUtil;
 import com.jme.lsgoldtrade.view.ConfirmSimplePopupwindow;
 import com.jme.lsgoldtrade.view.GuaranteeFundPopUpWindow;
 import com.jme.lsgoldtrade.view.GuaranteeFundSettingPopUpWindow;
+import com.jme.lsgoldtrade.view.SignedPopUpWindow;
 
 import java.math.BigDecimal;
+import java.net.ConnectException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 @Route(path = Constants.ARouterUriConst.ENTRUSTRISKMANAGEMENT)
 public class EntrustRiskManagementActivity extends JMEBaseActivity {
@@ -48,6 +59,7 @@ public class EntrustRiskManagementActivity extends JMEBaseActivity {
     private boolean bFlag = true;
     private float mWarnth;
     private float mForcecloseth;
+    private String mRemainTradeDay;
     private String mPagingKey = "";
     private String mTotal;
     private String mGuaranteeFund;
@@ -62,6 +74,7 @@ public class EntrustRiskManagementActivity extends JMEBaseActivity {
     private GuaranteeFundSettingPopUpWindow mGuaranteeFundSettingPopUpWindow;
     private GuaranteeFundPopUpWindow mGuaranteeFundPopUpWindow;
     private ConfirmSimplePopupwindow mConfirmSimplePopupwindow;
+    private SignedPopUpWindow mSignedPopUpWindow;
 
     private Handler mHandler = new Handler() {
         public void handleMessage(Message msg) {
@@ -104,6 +117,7 @@ public class EntrustRiskManagementActivity extends JMEBaseActivity {
 
         mGuaranteeFundPopUpWindow = new GuaranteeFundPopUpWindow(this);
         mConfirmSimplePopupwindow = new ConfirmSimplePopupwindow(this);
+        mSignedPopUpWindow = new SignedPopUpWindow(this);
     }
 
     @Override
@@ -111,6 +125,8 @@ public class EntrustRiskManagementActivity extends JMEBaseActivity {
         super.initData(savedInstanceState);
 
         mList = new ArrayList<>();
+
+        getRemainTradeDay();
     }
 
     @Override
@@ -303,8 +319,68 @@ public class EntrustRiskManagementActivity extends JMEBaseActivity {
         }
     }
 
+    private void showGuaranteeFundSettingPopUpWindow() {
+        if (null != mGuaranteeFundSettingPopUpWindow && !mGuaranteeFundSettingPopUpWindow.isShowing()
+                && null != mGuaranteeFundPopUpWindow && !mGuaranteeFundPopUpWindow.isShowing()) {
+            mGuaranteeFundSettingPopUpWindow.setData((view) -> {
+                if (TextUtils.isEmpty(mTotal)) {
+                    showShortToast(R.string.transaction_guarantee_total_error);
+                } else {
+                    mGuaranteeFund = mGuaranteeFundSettingPopUpWindow.getGuaranteeFund();
+                    String message;
+
+                    if (TextUtils.isEmpty(mGuaranteeFund)) {
+                        showShortToast(R.string.transaction_guarantee_fund_message1);
+                    } else {
+                        if (mGuaranteeFund.endsWith("."))
+                            mGuaranteeFund = mGuaranteeFund.substring(0, mGuaranteeFund.length() - 1);
+
+                        if (new BigDecimal(mGuaranteeFund).compareTo(new BigDecimal(mTotal)) == 1) {
+                            message = getString(R.string.transaction_guarantee_fund_message5);
+                        } else {
+                            BigDecimal riskRate;
+
+                            if (new BigDecimal(mGuaranteeFund).compareTo(new BigDecimal(0)) == 0)
+                                riskRate = new BigDecimal(0);
+                            else
+                                riskRate = new BigDecimal(mTotal).divide(new BigDecimal(mGuaranteeFund), 4, BigDecimal.ROUND_HALF_UP);
+
+                            if (riskRate.compareTo(new BigDecimal(0)) == 0) {
+                                message = getString(R.string.transaction_guarantee_fund_message0);
+                            } else {
+                                String riskRateValue = BigDecimalUtil.formatRate(riskRate.multiply(new BigDecimal(100)).toPlainString());
+
+                                if (riskRate.compareTo(new BigDecimal(mForcecloseth)) == -1)
+                                    message = String.format(getString(R.string.transaction_guarantee_fund_message2), riskRateValue);
+                                else if (riskRate.compareTo(new BigDecimal(mForcecloseth)) == 1 && riskRate.compareTo(new BigDecimal(mWarnth)) == -1)
+                                    message = String.format(getString(R.string.transaction_guarantee_fund_message3), riskRateValue);
+                                else
+                                    message = String.format(getString(R.string.transaction_guarantee_fund_message4), riskRateValue);
+                            }
+                        }
+
+                        mGuaranteeFundSettingPopUpWindow.dismiss();
+                        mGuaranteeFundSettingPopUpWindow.hiddenSoftKeyboard();
+
+                        mGuaranteeFundPopUpWindow.setData(message, (v) -> {
+                            getMinReserveFund();
+
+                            mGuaranteeFundPopUpWindow.dismiss();
+                        });
+                        mGuaranteeFundPopUpWindow.showAtLocation(mBinding.tvMessage, Gravity.CENTER, 0, 0);
+                    }
+                }
+            });
+            mGuaranteeFundSettingPopUpWindow.showAtLocation(mBinding.tvMessage, Gravity.BOTTOM, 0, 0);
+        }
+    }
+
     private long getTimeInterval() {
         return NetWorkUtils.isWifiConnected(mContext) ? AppConfig.TimeInterval_WiFi : AppConfig.TimeInterval_NetWork;
+    }
+
+    private void getRemainTradeDay() {
+        sendRequest(ManagementService.getInstance().getRemainTradeDay, new HashMap<>(), false);
     }
 
     private void getMarket() {
@@ -339,6 +415,68 @@ public class EntrustRiskManagementActivity extends JMEBaseActivity {
         sendRequest(TradeService.getInstance().position, params, false, false, false);
     }
 
+    private void queryLoginResult() {
+        DTRequest request = new DTRequest(UserService.getInstance().queryLoginResult, new HashMap<>(), true, true);
+
+        Call restResponse = request.getApi().request(request.getParams());
+
+        restResponse.enqueue(new Callback() {
+            @Override
+            public void onResponse(Call call, Response response) {
+                Head head = new Head();
+                Object body = "";
+
+                if (response.raw().code() != 200) {
+                    head.setSuccess(false);
+                    head.setCode("" + response.raw().code());
+                    head.setMsg("服务器异常");
+                } else {
+                    if (!request.getApi().isResponseJson()) {
+                        body = response.body();
+                        head.setSuccess(true);
+                        head.setCode("0");
+                        head.setMsg("成功");
+                    } else {
+                        LoginResponse dtResponse = (LoginResponse) response.body();
+
+                        head = new Head();
+                        head.setCode(dtResponse.getCode());
+                        head.setMsg(dtResponse.getMsg());
+
+                        try {
+                            body = new Gson().fromJson(dtResponse.getBodyToString(),
+                                    request.getApi().getEntryType());
+                        } catch (Exception e) {
+                            body = dtResponse.getBodyToString();
+                        }
+                    }
+                }
+
+                OnResult(request, head, body);
+            }
+
+            @Override
+            public void onFailure(Call call, Throwable t) {
+                Head head = new Head();
+                final Throwable cause = t.getCause() != null ? t.getCause() : t;
+
+                if (cause != null) {
+                    if (cause instanceof ConnectException) {
+                        head.setSuccess(false);
+                        head.setCode("500");
+                        head.setMsg(getResources().getString(com.jme.common.R.string.text_error_server));
+                    } else {
+                        head.setSuccess(false);
+                        head.setCode("408");
+                        head.setMsg(getResources().getString(com.jme.common.R.string.text_error_timeout));
+                    }
+                }
+
+                OnResult(request, head, null);
+            }
+        });
+    }
+
     private void getMinReserveFund() {
         if (null == mUser || !mUser.isLogin())
             return;
@@ -355,6 +493,11 @@ public class EntrustRiskManagementActivity extends JMEBaseActivity {
         super.DataReturn(request, head, response);
 
         switch (request.getApi().getName()) {
+            case "GetRemainTradeDay":
+                if (head.isSuccess())
+                    mRemainTradeDay = response.toString();
+
+                break;
             case "GetFiveSpeedQuotes":
                 if (head.isSuccess()) {
                     try {
@@ -451,6 +594,31 @@ public class EntrustRiskManagementActivity extends JMEBaseActivity {
                 }
 
                 break;
+            case "QueryLoginResult":
+                if (head.isSuccess()) {
+                    UserInfoVo userInfoVo;
+
+                    try {
+                        userInfoVo = (UserInfoVo) response;
+                    } catch (Exception e) {
+                        userInfoVo = null;
+
+                        e.printStackTrace();
+                    }
+
+                    String isSign = userInfoVo.getIsSign();
+
+                    if (TextUtils.isEmpty(isSign) || isSign.equals("N")) {
+                        if (null != mSignedPopUpWindow && !mSignedPopUpWindow.isShowing()) {
+                            mSignedPopUpWindow.setData(mRemainTradeDay);
+                            mSignedPopUpWindow.showAtLocation(mBinding.tvMessage, Gravity.CENTER, 0, 0);
+                        }
+                    } else {
+                        showGuaranteeFundSettingPopUpWindow();
+                    }
+                }
+
+                break;
             case "MinReserveFund":
                 if (head.isSuccess()) {
                     showShortToast(R.string.transaction_guarantee_fund_success);
@@ -465,59 +633,7 @@ public class EntrustRiskManagementActivity extends JMEBaseActivity {
     public class ClickHandlers {
 
         public void onClickEntrustRiskManagementSetting() {
-            if (null != mGuaranteeFundSettingPopUpWindow && !mGuaranteeFundSettingPopUpWindow.isShowing()
-                    && null != mGuaranteeFundPopUpWindow && !mGuaranteeFundPopUpWindow.isShowing()) {
-                mGuaranteeFundSettingPopUpWindow.setData((view) -> {
-                    if (TextUtils.isEmpty(mTotal)) {
-                        showShortToast(R.string.transaction_guarantee_total_error);
-                    } else {
-                        mGuaranteeFund = mGuaranteeFundSettingPopUpWindow.getGuaranteeFund();
-                        String message;
-
-                        if (TextUtils.isEmpty(mGuaranteeFund)) {
-                            showShortToast(R.string.transaction_guarantee_fund_message1);
-                        } else {
-                            if (mGuaranteeFund.endsWith("."))
-                                mGuaranteeFund = mGuaranteeFund.substring(0, mGuaranteeFund.length() - 1);
-
-                            if (new BigDecimal(mGuaranteeFund).compareTo(new BigDecimal(mTotal)) == 1) {
-                                message = getString(R.string.transaction_guarantee_fund_message5);
-                            } else {
-                                BigDecimal riskRate;
-
-                                if (new BigDecimal(mGuaranteeFund).compareTo(new BigDecimal(0)) == 0)
-                                    riskRate = new BigDecimal(0);
-                                else
-                                    riskRate = new BigDecimal(mTotal).divide(new BigDecimal(mGuaranteeFund), 4, BigDecimal.ROUND_HALF_UP);
-
-                                if (riskRate.compareTo(new BigDecimal(0)) == 0) {
-                                    message = getString(R.string.transaction_guarantee_fund_message0);
-                                } else {
-                                    String riskRateValue = BigDecimalUtil.formatRate(riskRate.multiply(new BigDecimal(100)).toPlainString());
-
-                                    if (riskRate.compareTo(new BigDecimal(mForcecloseth)) == -1)
-                                        message = String.format(getString(R.string.transaction_guarantee_fund_message2), riskRateValue);
-                                    else if (riskRate.compareTo(new BigDecimal(mForcecloseth)) == 1 && riskRate.compareTo(new BigDecimal(mWarnth)) == -1)
-                                        message = String.format(getString(R.string.transaction_guarantee_fund_message3), riskRateValue);
-                                    else
-                                        message = String.format(getString(R.string.transaction_guarantee_fund_message4), riskRateValue);
-                                }
-                            }
-
-                            mGuaranteeFundSettingPopUpWindow.dismiss();
-                            mGuaranteeFundSettingPopUpWindow.hiddenSoftKeyboard();
-
-                            mGuaranteeFundPopUpWindow.setData(message, (v) -> {
-                                getMinReserveFund();
-
-                                mGuaranteeFundPopUpWindow.dismiss();
-                            });
-                            mGuaranteeFundPopUpWindow.showAtLocation(mBinding.tvMessage, Gravity.CENTER, 0, 0);
-                        }
-                    }
-                });
-                mGuaranteeFundSettingPopUpWindow.showAtLocation(mBinding.tvMessage, Gravity.BOTTOM, 0, 0);
-            }
+            queryLoginResult();
         }
 
         public void onClickRiskRateTips() {

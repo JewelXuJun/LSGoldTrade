@@ -21,6 +21,7 @@ import android.widget.Toast;
 import androidx.core.content.ContextCompat;
 
 import com.alibaba.android.arouter.launcher.ARouter;
+import com.google.gson.Gson;
 import com.jme.common.network.DTRequest;
 import com.jme.common.network.Head;
 import com.jme.common.util.NetWorkUtils;
@@ -34,21 +35,30 @@ import com.jme.lsgoldtrade.domain.AccountVo;
 import com.jme.lsgoldtrade.domain.ConditionOrderRunVo;
 import com.jme.lsgoldtrade.domain.ContractInfoVo;
 import com.jme.lsgoldtrade.domain.IdentityInfoVo;
+import com.jme.lsgoldtrade.domain.LoginResponse;
 import com.jme.lsgoldtrade.domain.PositionPageVo;
 import com.jme.lsgoldtrade.domain.PositionVo;
 import com.jme.lsgoldtrade.domain.TenSpeedVo;
+import com.jme.lsgoldtrade.domain.UserInfoVo;
 import com.jme.lsgoldtrade.service.ConditionService;
+import com.jme.lsgoldtrade.service.ManagementService;
 import com.jme.lsgoldtrade.service.MarketService;
 import com.jme.lsgoldtrade.service.TradeService;
+import com.jme.lsgoldtrade.service.UserService;
 import com.jme.lsgoldtrade.util.MarketUtil;
 import com.jme.lsgoldtrade.view.ConfirmDetailPopupwindow;
 import com.jme.lsgoldtrade.view.RulePopupwindow;
+import com.jme.lsgoldtrade.view.SignedPopUpWindow;
 
 import java.math.BigDecimal;
+import java.net.ConnectException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 import rx.Subscription;
 
 public class CreateConditionSheetFragment extends JMEBaseFragment {
@@ -66,6 +76,7 @@ public class CreateConditionSheetFragment extends JMEBaseFragment {
     private long mMaxOrderQty = 0;
     private long mMaxHoldQty = 0;
     private String mContractID = "";
+    private String mRemainTradeDay;
     private String mPagingKey = "";
     private String mName;
     private String mIDCard;
@@ -75,6 +86,7 @@ public class CreateConditionSheetFragment extends JMEBaseFragment {
 
     private RulePopupwindow mRulePopupwindow;
     private ConfirmDetailPopupwindow mConfirmDetailPopupwindow;
+    private SignedPopUpWindow mSignedPopUpWindow;
     private TenSpeedVo mTenSpeedVo;
     private AccountVo mAccountVo;
     private ContractInfoVo mContractInfoVo;
@@ -116,11 +128,13 @@ public class CreateConditionSheetFragment extends JMEBaseFragment {
 
         mRulePopupwindow = new RulePopupwindow(mContext);
         mConfirmDetailPopupwindow = new ConfirmDetailPopupwindow(mContext);
+        mSignedPopUpWindow = new SignedPopUpWindow(mContext);
         mType = TYPE_BUY_MORE;
 
         initContractNameValue();
         setContractNameData();
         setMarketType();
+        getRemainTradeDay();
         getWhetherIdCard();
     }
 
@@ -530,6 +544,10 @@ public class CreateConditionSheetFragment extends JMEBaseFragment {
         return NetWorkUtils.isWifiConnected(mContext) ? AppConfig.TimeInterval_WiFi : AppConfig.TimeInterval_NetWork;
     }
 
+    private void getRemainTradeDay() {
+        sendRequest(ManagementService.getInstance().getRemainTradeDay, new HashMap<>(), false);
+    }
+
     private void queryQuotation() {
         HashMap<String, String> params = new HashMap<>();
         params.put("contractId", mContractID);
@@ -571,6 +589,68 @@ public class CreateConditionSheetFragment extends JMEBaseFragment {
         sendRequest(TradeService.getInstance().whetherIdCard, new HashMap<>(), true);
     }
 
+    private void queryLoginResult() {
+        DTRequest request = new DTRequest(UserService.getInstance().queryLoginResult, new HashMap<>(), true, true);
+
+        Call restResponse = request.getApi().request(request.getParams());
+
+        restResponse.enqueue(new Callback() {
+            @Override
+            public void onResponse(Call call, Response response) {
+                Head head = new Head();
+                Object body = "";
+
+                if (response.raw().code() != 200) {
+                    head.setSuccess(false);
+                    head.setCode("" + response.raw().code());
+                    head.setMsg("服务器异常");
+                } else {
+                    if (!request.getApi().isResponseJson()) {
+                        body = response.body();
+                        head.setSuccess(true);
+                        head.setCode("0");
+                        head.setMsg("成功");
+                    } else {
+                        LoginResponse dtResponse = (LoginResponse) response.body();
+
+                        head = new Head();
+                        head.setCode(dtResponse.getCode());
+                        head.setMsg(dtResponse.getMsg());
+
+                        try {
+                            body = new Gson().fromJson(dtResponse.getBodyToString(),
+                                    request.getApi().getEntryType());
+                        } catch (Exception e) {
+                            body = dtResponse.getBodyToString();
+                        }
+                    }
+                }
+
+                OnResult(request, head, body);
+            }
+
+            @Override
+            public void onFailure(Call call, Throwable t) {
+                Head head = new Head();
+                final Throwable cause = t.getCause() != null ? t.getCause() : t;
+
+                if (cause != null) {
+                    if (cause instanceof ConnectException) {
+                        head.setSuccess(false);
+                        head.setCode("500");
+                        head.setMsg(getResources().getString(com.jme.common.R.string.text_error_server));
+                    } else {
+                        head.setSuccess(false);
+                        head.setCode("408");
+                        head.setMsg(getResources().getString(com.jme.common.R.string.text_error_timeout));
+                    }
+                }
+
+                OnResult(request, head, null);
+            }
+        });
+    }
+
     private void entrustConditionOrder(String price, String amount) {
         if (null == mUser || !mUser.isLogin())
             return;
@@ -599,6 +679,11 @@ public class CreateConditionSheetFragment extends JMEBaseFragment {
         super.DataReturn(request, head, response);
 
         switch (request.getApi().getName()) {
+            case "GetRemainTradeDay":
+                if (head.isSuccess())
+                    mRemainTradeDay = response.toString();
+
+                break;
             case "QueryConditionOrderRun":
                 if (head.isSuccess()) {
                     ConditionOrderRunVo conditionOrderRunVo;
@@ -722,6 +807,31 @@ public class CreateConditionSheetFragment extends JMEBaseFragment {
 
                     mName = identityInfoVo.getName();
                     mIDCard = identityInfoVo.getIdCard();
+                }
+
+                break;
+            case "QueryLoginResult":
+                if (head.isSuccess()) {
+                    UserInfoVo userInfoVo;
+
+                    try {
+                        userInfoVo = (UserInfoVo) response;
+                    } catch (Exception e) {
+                        userInfoVo = null;
+
+                        e.printStackTrace();
+                    }
+
+                    String isSign = userInfoVo.getIsSign();
+
+                    if (TextUtils.isEmpty(isSign) || isSign.equals("N")) {
+                        if (null != mSignedPopUpWindow && !mSignedPopUpWindow.isShowing()) {
+                            mSignedPopUpWindow.setData(mRemainTradeDay);
+                            mSignedPopUpWindow.showAtLocation(mBinding.etPrice, Gravity.CENTER, 0, 0);
+                        }
+                    } else {
+                        showConfirmPopupWindow(mBinding.etPrice.getText().toString(), mBinding.etAmount.getText().toString());
+                    }
                 }
 
                 break;
@@ -965,7 +1075,7 @@ public class CreateConditionSheetFragment extends JMEBaseFragment {
             else if (!mBinding.checkboxAgree.isChecked())
                 Toast.makeText(mContext, R.string.transaction_condition_sheet_risk_agree, Toast.LENGTH_SHORT).show();
             else
-                showConfirmPopupWindow(price, amount);
+                queryLoginResult();
         }
 
     }

@@ -46,7 +46,7 @@
             android:layout_marginBottom="@dimen/margin_normal"
             android:lineSpacingExtra="@dimen/lineSpacingExtra_small"
             android:textColor="@color/color_text_normal"
-            android:textSize="@dimen/size_normal" />
+            android:textSize="@dimen/sp_14" />
 
         <Button
             android:id="@+id/btn_signed"

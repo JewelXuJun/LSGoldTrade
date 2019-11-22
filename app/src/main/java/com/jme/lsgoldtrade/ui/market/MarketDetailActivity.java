@@ -5,7 +5,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+
 import androidx.core.content.ContextCompat;
+
 import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.KeyEvent;
@@ -23,6 +25,7 @@ import com.datai.common.charts.kchart.KData;
 import com.datai.common.charts.kchart.OnKChartListener;
 import com.datai.common.charts.kchart.OnKChartSelectedListener;
 import com.datai.common.charts.tchart.TChart;
+import com.google.gson.Gson;
 import com.jme.common.network.DTRequest;
 import com.jme.common.network.Head;
 import com.jme.common.util.DateUtil;
@@ -41,29 +44,34 @@ import com.jme.lsgoldtrade.databinding.ActivityMarketDetailBinding;
 import com.jme.lsgoldtrade.domain.AccountVo;
 import com.jme.lsgoldtrade.domain.ContractInfoVo;
 import com.jme.lsgoldtrade.domain.DetailVo;
+import com.jme.lsgoldtrade.domain.LoginResponse;
 import com.jme.lsgoldtrade.domain.PositionPageVo;
 import com.jme.lsgoldtrade.domain.PositionVo;
 import com.jme.lsgoldtrade.domain.SectionVo;
 import com.jme.lsgoldtrade.domain.TenSpeedVo;
+import com.jme.lsgoldtrade.domain.UserInfoVo;
 import com.jme.lsgoldtrade.service.ManagementService;
 import com.jme.lsgoldtrade.service.MarketService;
 import com.jme.lsgoldtrade.service.TradeService;
+import com.jme.lsgoldtrade.service.UserService;
+import com.jme.lsgoldtrade.view.SignedPopUpWindow;
 import com.jme.lsgoldtrade.view.TransactionMessagePopUpWindow;
 import com.jme.lsgoldtrade.util.MarketUtil;
 import com.jme.lsgoldtrade.view.ConfirmPopupwindow;
 
 import java.math.BigDecimal;
+import java.net.ConnectException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 import rx.Subscription;
 
-/**
- * K线图
- */
 @Route(path = Constants.ARouterUriConst.MARKETDETAIL)
 public class MarketDetailActivity extends JMEBaseActivity implements FChart.OnPriceClickListener, OnKChartSelectedListener {
 
@@ -75,6 +83,7 @@ public class MarketDetailActivity extends JMEBaseActivity implements FChart.OnPr
     private MarketTradePopupWindow mMarketTradePopupWindow;
     private TransactionMessagePopUpWindow mTransactionMessagePopUpWindow;
     private ConfirmPopupwindow mConfirmPopupwindow;
+    private SignedPopUpWindow mSignedPopUpWindow;
     private Chart mChart;
     private TChart mTChart;
     private KChart mKChart;
@@ -88,6 +97,7 @@ public class MarketDetailActivity extends JMEBaseActivity implements FChart.OnPr
     private static final String COUNT_KCHART = "200";
 
     private String mContractId;
+    private String mRemainTradeDay;
     private boolean bFlag = true;
     private boolean bHighlight = false;
     private boolean bHasMoreKDataFlag = true;
@@ -145,9 +155,10 @@ public class MarketDetailActivity extends JMEBaseActivity implements FChart.OnPr
         mTChart = mChart.getTChart();
         mKChart = mChart.getKChart();
 
-        mTransactionMessagePopUpWindow = new TransactionMessagePopUpWindow(mContext);
-        mMarketTradePopupWindow = new MarketTradePopupWindow(mContext);
-        mConfirmPopupwindow = new ConfirmPopupwindow(mContext);
+        mTransactionMessagePopUpWindow = new TransactionMessagePopUpWindow(this);
+        mMarketTradePopupWindow = new MarketTradePopupWindow(this);
+        mConfirmPopupwindow = new ConfirmPopupwindow(this);
+        mSignedPopUpWindow = new SignedPopUpWindow(this);
     }
 
     @Override
@@ -160,6 +171,7 @@ public class MarketDetailActivity extends JMEBaseActivity implements FChart.OnPr
 
         initTChart();
         initKChart();
+        getRemainTradeDay();
     }
 
     @Override
@@ -594,6 +606,10 @@ public class MarketDetailActivity extends JMEBaseActivity implements FChart.OnPr
         mBinding.tvLow.setTextColor(ContextCompat.getColor(this, MarketUtil.getMarketStateColor(new BigDecimal(lowestPrice).compareTo(new BigDecimal(preClose)))));
     }
 
+    private void getRemainTradeDay() {
+        sendRequest(ManagementService.getInstance().getRemainTradeDay, new HashMap<>(), false);
+    }
+
     private void getTenSpeedQuotes(boolean enable) {
         if (TextUtils.isEmpty(mContractId))
             return;
@@ -651,6 +667,68 @@ public class MarketDetailActivity extends JMEBaseActivity implements FChart.OnPr
         params.put("count", COUNT_KCHART);
 
         sendRequest(MarketService.getInstance().getKChartQuotes, params, false, false, false);
+    }
+
+    private void queryLoginResult() {
+        DTRequest request = new DTRequest(UserService.getInstance().queryLoginResult, new HashMap<>(), true, true);
+
+        Call restResponse = request.getApi().request(request.getParams());
+
+        restResponse.enqueue(new Callback() {
+            @Override
+            public void onResponse(Call call, Response response) {
+                Head head = new Head();
+                Object body = "";
+
+                if (response.raw().code() != 200) {
+                    head.setSuccess(false);
+                    head.setCode("" + response.raw().code());
+                    head.setMsg("服务器异常");
+                } else {
+                    if (!request.getApi().isResponseJson()) {
+                        body = response.body();
+                        head.setSuccess(true);
+                        head.setCode("0");
+                        head.setMsg("成功");
+                    } else {
+                        LoginResponse dtResponse = (LoginResponse) response.body();
+
+                        head = new Head();
+                        head.setCode(dtResponse.getCode());
+                        head.setMsg(dtResponse.getMsg());
+
+                        try {
+                            body = new Gson().fromJson(dtResponse.getBodyToString(),
+                                    request.getApi().getEntryType());
+                        } catch (Exception e) {
+                            body = dtResponse.getBodyToString();
+                        }
+                    }
+                }
+
+                OnResult(request, head, body);
+            }
+
+            @Override
+            public void onFailure(Call call, Throwable t) {
+                Head head = new Head();
+                final Throwable cause = t.getCause() != null ? t.getCause() : t;
+
+                if (cause != null) {
+                    if (cause instanceof ConnectException) {
+                        head.setSuccess(false);
+                        head.setCode("500");
+                        head.setMsg(getResources().getString(com.jme.common.R.string.text_error_server));
+                    } else {
+                        head.setSuccess(false);
+                        head.setCode("408");
+                        head.setMsg(getResources().getString(com.jme.common.R.string.text_error_timeout));
+                    }
+                }
+
+                OnResult(request, head, null);
+            }
+        });
     }
 
     private void getStatus() {
@@ -714,6 +792,11 @@ public class MarketDetailActivity extends JMEBaseActivity implements FChart.OnPr
         super.DataReturn(request, head, response);
 
         switch (request.getApi().getName()) {
+            case "GetRemainTradeDay":
+                if (head.isSuccess())
+                    mRemainTradeDay = response.toString();
+
+                break;
             case "GetTenSpeedQuotes":
                 if (head.isSuccess()) {
                     List<TenSpeedVo> list;
@@ -828,6 +911,31 @@ public class MarketDetailActivity extends JMEBaseActivity implements FChart.OnPr
                 }
 
                 iRequestKDataFlag = NONE;
+
+                break;
+            case "QueryLoginResult":
+                if (head.isSuccess()) {
+                    UserInfoVo userInfoVo;
+
+                    try {
+                        userInfoVo = (UserInfoVo) response;
+                    } catch (Exception e) {
+                        userInfoVo = null;
+
+                        e.printStackTrace();
+                    }
+
+                    String isSign = userInfoVo.getIsSign();
+
+                    if (TextUtils.isEmpty(isSign) || isSign.equals("N")) {
+                        if (null != mSignedPopUpWindow && !mSignedPopUpWindow.isShowing()) {
+                            mSignedPopUpWindow.setData(mRemainTradeDay);
+                            mSignedPopUpWindow.showAtLocation(mBinding.tvHigh, Gravity.CENTER, 0, 0);
+                        }
+                    } else {
+                        getStatus();
+                    }
+                }
 
                 break;
             case "GetStatus":
@@ -1036,7 +1144,7 @@ public class MarketDetailActivity extends JMEBaseActivity implements FChart.OnPr
                     mBsFlag = 1;
                     mOcFlag = 0;
 
-                    getStatus();
+                    queryLoginResult();
                 }
             }
         }
@@ -1060,7 +1168,7 @@ public class MarketDetailActivity extends JMEBaseActivity implements FChart.OnPr
                     mBsFlag = 2;
                     mOcFlag = 0;
 
-                    getStatus();
+                    queryLoginResult();
                 }
             }
         }

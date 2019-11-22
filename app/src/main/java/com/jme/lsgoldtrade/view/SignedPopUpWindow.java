@@ -45,11 +45,15 @@ public class SignedPopUpWindow extends JMEBasePopupWindow {
         setContentView(mBinding.getRoot());
 
         mBinding.layoutCancel.setOnClickListener((view) -> dismiss());
-        mBinding.btnSigned.setOnClickListener((view) -> ARouter.getInstance().build(Constants.ARouterUriConst.WITHHOLDCONTRACT).navigation());
+        mBinding.btnSigned.setOnClickListener((view) -> {
+            ARouter.getInstance().build(Constants.ARouterUriConst.WITHHOLDCONTRACT).navigation();
+
+            dismiss();
+        });
     }
 
-    public void setData(int day) {
-        mBinding.tvSignedMessage.setText(String.format(mContext.getResources().getString(R.string.incrementaccount_singed_message), day));
+    public void setData(String remainTradeDay) {
+        mBinding.tvSignedMessage.setText(String.format(mContext.getResources().getString(R.string.incrementaccount_singed_message), remainTradeDay));
     }
 
 }
