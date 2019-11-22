@@ -207,7 +207,10 @@ public class CheckServiceActivity extends JMEBaseActivity {
                         if (bClickFlag) {
                             bClickFlag = false;
 
-                            ARouter.getInstance().build(Constants.ARouterUriConst.WITHHOLDCONTRACT).navigation();
+                            ARouter.getInstance()
+                                    .build(Constants.ARouterUriConst.WITHHOLDCONTRACT)
+                                    .withString("Resource", "Else")
+                                    .navigation();
                         } else {
                             mBinding.layoutNotSigned.setVisibility(View.VISIBLE);
                             mBinding.layoutSigned.setVisibility(View.GONE);

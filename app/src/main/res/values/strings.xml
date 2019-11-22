@@ -528,6 +528,7 @@
     <string name="login_set_password_success">密码已设置成功，请妥善保存。</string>
     <string name="login_set_password_success_account">您的交易账号为%1$s。</string>
     <string name="login_set_password_success_trade">前往交易</string>
+    <string name="login_register_message">还没有账号?立即注册</string>
 
     <!-- Register -->
     <string name="register">注册</string>
@@ -681,7 +682,6 @@
     <string name="increment_account_withhold_contract">代扣签约</string>
     <string name="increment_account_withhold_contract_bankcard_hint">暂只支持借记卡</string>
     <string name="increment_account_withhold_contract_bank_name">银行名称</string>
-    <string name="increment_account_withhold_contract_bank_name_hint">请选择银行</string>
     <string name="increment_account_withhold_contract_mobile">预留手机号</string>
     <string name="increment_account_withhold_contract_mobile_hint">请输入银行预留手机号</string>
     <string name="increment_account_withhold_verification_code">验证码</string>
@@ -693,5 +693,8 @@
     <string name="increment_account_withhold_signed">您已签约代扣!</string>
     <string name="increment_account_paid_prompt">待支付金额为您使用增值服务后尚未结清的增值服务费，若您未结清该笔费用，将无法继续使用服务。</string>
     <string name="increment_company">江苏泰金所互联网金融信息服务有限公司</string>
+    <string name="increment_identity_information_error">身份信息有误，请重新进入页面！</string>
+    <string name="increment_bank_card_input">请输入13-19位银行卡号</string>
+    <string name="increment_aggrement_message">请先同意并勾选《华兴银行代扣协议》、《泰金所平台增值服务协议》</string>
 
 </resources>

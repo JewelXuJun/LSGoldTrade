@@ -46,6 +46,7 @@
     <dimen name="height_item_condition_sheet">94dp</dimen>
     <dimen name="height_condition_sheet_setting_popupwindow">440dp</dimen>
     <dimen name="height_increment_item">100dp</dimen>
+    <dimen name="height_withhold_item">66dp</dimen>
 
     <dimen name="width_market_item">46dp</dimen>
     <dimen name="width_item_title">74dp</dimen>

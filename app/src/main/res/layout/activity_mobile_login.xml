@@ -254,7 +254,7 @@
                             android:layout_marginBottom="@dimen/common_area_margin_big"
                             android:background="@drawable/bg_btn_blue_hollow"
                             android:onClick="@{() -> handlers.onClickRegister()}"
-                            android:text="还没有账号?立即注册"
+                            android:text="@string/login_register_message"
                             android:textColor="@color/color_blue"
                             android:textSize="@dimen/common_font_size" />
 

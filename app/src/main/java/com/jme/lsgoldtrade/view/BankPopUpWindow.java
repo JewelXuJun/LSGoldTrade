@@ -5,12 +5,14 @@ import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
 import androidx.databinding.DataBindingUtil;
-import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.GridLayoutManager;
 
 import com.jme.common.util.DensityUtil;
 import com.jme.lsgoldtrade.R;
 import com.jme.lsgoldtrade.base.JMEBasePopupWindow;
 import com.jme.lsgoldtrade.databinding.PopupwindowBankBinding;
+import com.jme.lsgoldtrade.domain.BankVo;
 import com.jme.lsgoldtrade.ui.personal.BankAdapter;
 
 import java.util.List;
@@ -19,10 +21,14 @@ public class BankPopUpWindow extends JMEBasePopupWindow {
 
     private PopupwindowBankBinding mBinding;
 
+    private Context mContext;
+
     private BankAdapter mAdapter;
 
     public BankPopUpWindow(Context context) {
         super(context);
+
+        mContext = context;
     }
 
     @Override
@@ -44,14 +50,26 @@ public class BankPopUpWindow extends JMEBasePopupWindow {
 
         setContentView(mBinding.getRoot());
 
+        mBinding.setHandlers(new ClickHandlers());
+
         mAdapter = new BankAdapter(mContext, null);
 
-        mBinding.recyclerView.setHasFixedSize(false);
-        mBinding.recyclerView.setLayoutManager(new LinearLayoutManager(mContext));
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 2);
+        mBinding.recyclerView.setLayoutManager(gridLayoutManager);
         mBinding.recyclerView.setAdapter(mAdapter);
+        mBinding.recyclerView.setHasFixedSize(true);
+        mBinding.recyclerView.setItemAnimator(new DefaultItemAnimator());
     }
 
-    public void setData(List<String> list) {
+    public void setData(List<BankVo> bankVoList) {
+        mAdapter.setNewData(bankVoList);
+    }
+
+    public class ClickHandlers {
+
+        public void onClickClose() {
+            dismiss();
+        }
 
     }
 

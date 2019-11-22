@@ -46,7 +46,10 @@ public class SignedPopUpWindow extends JMEBasePopupWindow {
 
         mBinding.layoutCancel.setOnClickListener((view) -> dismiss());
         mBinding.btnSigned.setOnClickListener((view) -> {
-            ARouter.getInstance().build(Constants.ARouterUriConst.WITHHOLDCONTRACT).navigation();
+            ARouter.getInstance()
+                    .build(Constants.ARouterUriConst.WITHHOLDCONTRACT)
+                    .withString("Resource", "Else")
+                    .navigation();
 
             dismiss();
         });

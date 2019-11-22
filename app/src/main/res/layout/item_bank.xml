@@ -17,9 +17,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/common_area_margin_middle"
-        android:layout_marginTop="@dimen/margin_middle"
-        android:layout_marginBottom="@dimen/margin_middle"
+        android:layout_marginTop="@dimen/common_page_margin"
+        android:layout_marginBottom="@dimen/common_page_margin"
         android:textColor="@color/black"
-        android:textSize="@dimen/sp_16" />
+        android:textSize="@dimen/size_normal" />
 
 </LinearLayout>

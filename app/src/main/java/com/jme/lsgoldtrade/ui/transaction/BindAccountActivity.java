@@ -221,7 +221,10 @@ public class BindAccountActivity extends JMEBaseActivity {
                     if (TextUtils.isEmpty(flag) || flag.equals("N"))
                         ARouter.getInstance().build(Constants.ARouterUriConst.SETLOGINPASSWORD).navigation();
                     else
-                        ARouter.getInstance().build(Constants.ARouterUriConst.WITHHOLDCONTRACT).navigation();
+                        ARouter.getInstance()
+                                .build(Constants.ARouterUriConst.WITHHOLDCONTRACT)
+                                .withString("Resource", "Trade")
+                                .navigation();
 
                     finish();
                 }

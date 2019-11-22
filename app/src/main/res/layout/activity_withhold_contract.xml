@@ -31,7 +31,7 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/height_order_item"
+                    android:layout_height="@dimen/height_withhold_item"
                     android:background="@color/white"
                     android:gravity="center_vertical"
                     android:orientation="horizontal">
@@ -52,9 +52,8 @@
                         android:layout_marginLeft="@dimen/common_area_margin_middle"
                         android:layout_marginRight="@dimen/common_area_margin"
                         android:gravity="center_vertical"
-                        android:text="**霞"
                         android:textColor="@color/black_deep"
-                        android:textSize="@dimen/sp_16" />
+                        android:textSize="@dimen/size_normal" />
 
                 </LinearLayout>
 
@@ -62,7 +61,7 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/height_order_item"
+                    android:layout_height="@dimen/height_withhold_item"
                     android:background="@color/white"
                     android:gravity="center_vertical"
                     android:orientation="horizontal">
@@ -83,9 +82,8 @@
                         android:layout_marginLeft="@dimen/common_area_margin_middle"
                         android:layout_marginRight="@dimen/common_area_margin"
                         android:gravity="center_vertical"
-                        android:text="320***********3627"
                         android:textColor="@color/black_deep"
-                        android:textSize="@dimen/sp_16" />
+                        android:textSize="@dimen/size_normal" />
 
                 </LinearLayout>
 
@@ -93,7 +91,7 @@
 
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/height_order_item"
+                    android:layout_height="@dimen/height_withhold_item"
                     android:background="@color/white"
                     android:gravity="center_vertical">
 
@@ -120,10 +118,12 @@
                         android:background="@null"
                         android:gravity="center_vertical"
                         android:hint="@string/increment_account_withhold_contract_bankcard_hint"
-                        android:inputType="numberDecimal"
+                        android:inputType="number"
+                        android:maxLength="19"
+                        android:maxLines="1"
                         android:textColor="@color/black_deep"
                         android:textColorHint="@color/color_text_hint"
-                        android:textSize="@dimen/sp_16" />
+                        android:textSize="@dimen/size_normal" />
 
                     <LinearLayout
                         android:id="@+id/layout_tips"
@@ -132,7 +132,7 @@
                         android:layout_alignParentRight="true"
                         android:layout_centerVertical="true"
                         android:layout_marginRight="@dimen/common_page_margin"
-                        android:onClick="@{() -> handlers.onClickTips()}"
+                        android:onClick="@{() -> handlers.onClickBankList()}"
                         android:padding="@dimen/common_area_margin_tiny">
 
                         <ImageView
@@ -148,7 +148,7 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/height_order_item"
+                    android:layout_height="@dimen/height_withhold_item"
                     android:background="@color/white"
                     android:gravity="center_vertical"
                     android:orientation="horizontal">
@@ -162,18 +162,16 @@
                         android:textColor="@color/black_deep"
                         android:textSize="@dimen/sp_14" />
 
-                    <EditText
-                        android:id="@+id/et_bank_name"
+                    <TextView
+                        android:id="@+id/tv_bank_name"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="@dimen/common_area_margin_middle"
                         android:layout_marginRight="@dimen/common_area_margin"
-                        android:background="@null"
                         android:gravity="center_vertical"
-                        android:hint="@string/increment_account_withhold_contract_bank_name_hint"
                         android:textColor="@color/black_deep"
                         android:textColorHint="@color/color_text_hint"
-                        android:textSize="@dimen/sp_16" />
+                        android:textSize="@dimen/size_normal" />
 
                 </LinearLayout>
 
@@ -181,7 +179,7 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/height_order_item"
+                    android:layout_height="@dimen/height_withhold_item"
                     android:background="@color/white"
                     android:gravity="center_vertical"
                     android:orientation="horizontal">
@@ -204,9 +202,12 @@
                         android:background="@null"
                         android:gravity="center_vertical"
                         android:hint="@string/increment_account_withhold_contract_mobile_hint"
+                        android:inputType="number"
+                        android:maxLength="11"
+                        android:maxLines="1"
                         android:textColor="@color/black_deep"
                         android:textColorHint="@color/color_text_hint"
-                        android:textSize="@dimen/sp_16" />
+                        android:textSize="@dimen/size_normal" />
 
                 </LinearLayout>
 
@@ -214,7 +215,7 @@
 
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/height_order_item"
+                    android:layout_height="@dimen/height_withhold_item"
                     android:background="@color/white"
                     android:gravity="center">
 
@@ -241,9 +242,10 @@
                         android:hint="@string/login_reset_password_verification_code_input"
                         android:inputType="number"
                         android:maxLength="6"
+                        android:maxLines="1"
                         android:textColor="@color/color_text_normal"
                         android:textColorHint="@color/color_text_hint"
-                        android:textSize="@dimen/sp_16" />
+                        android:textSize="@dimen/size_normal" />
 
                     <Button
                         android:id="@+id/btn_verification_code"

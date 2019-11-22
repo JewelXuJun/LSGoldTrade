@@ -51,7 +51,10 @@ public class SetLoginPasswordSuccessActivity extends JMEBaseActivity {
     public class ClickHandlers {
 
         public void onClickGotoTrade() {
-            ARouter.getInstance().build(Constants.ARouterUriConst.WITHHOLDCONTRACT).navigation();
+            ARouter.getInstance()
+                    .build(Constants.ARouterUriConst.WITHHOLDCONTRACT)
+                    .withString("Resource", "Trade")
+                    .navigation();
 
             finish();
         }
