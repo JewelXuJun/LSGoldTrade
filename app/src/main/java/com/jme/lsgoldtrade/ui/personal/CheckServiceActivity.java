@@ -23,7 +23,6 @@ import com.jme.lsgoldtrade.service.ManagementService;
 import com.jme.lsgoldtrade.service.UserService;
 import com.jme.lsgoldtrade.util.MarketUtil;
 import com.jme.lsgoldtrade.view.ConfirmPopupwindow;
-import com.jme.lsgoldtrade.view.TransactionMessagePopUpWindow;
 import com.jme.lsgoldtrade.view.WithholdMessagePopUpWindow;
 
 import java.math.BigDecimal;
@@ -41,7 +40,6 @@ public class CheckServiceActivity extends JMEBaseActivity {
 
     private boolean bClickFlag = false;
 
-    private TransactionMessagePopUpWindow mTransactionMessagePopUpWindow;
     private ConfirmPopupwindow mConfirmPopupwindow;
     private WithholdMessagePopUpWindow mWithholdMessagePopUpWindow;
 
@@ -61,7 +59,6 @@ public class CheckServiceActivity extends JMEBaseActivity {
     protected void initData(Bundle savedInstanceState) {
         super.initData(savedInstanceState);
 
-        mTransactionMessagePopUpWindow = new TransactionMessagePopUpWindow(this);
         mConfirmPopupwindow = new ConfirmPopupwindow(this);
         mWithholdMessagePopUpWindow = new WithholdMessagePopUpWindow(this);
 
@@ -170,10 +167,6 @@ public class CheckServiceActivity extends JMEBaseActivity {
         sendRequest(AccountService.getInstance().getUserInfo, new HashMap<>(), false);
     }
 
-    private void getStatus() {
-        sendRequest(ManagementService.getInstance().getStatus, new HashMap<>(), true);
-    }
-
     private void hasWeChatWithdrawAuth() {
         sendRequest(AccountService.getInstance().hasWeChatWithdrawAuth, new HashMap<>(), true);
     }
@@ -255,32 +248,6 @@ public class CheckServiceActivity extends JMEBaseActivity {
                 }
 
                 break;
-            case "GetStatus":
-                if (head.isSuccess()) {
-                    String status;
-
-                    if (null == response)
-                        status = "";
-                    else
-                        status = response.toString();
-
-                    if (status.equals("1")) {
-                        if (null != mTransactionMessagePopUpWindow && !mTransactionMessagePopUpWindow.isShowing()) {
-                            mTransactionMessagePopUpWindow.setData(mContext.getResources().getString(R.string.transaction_account_error),
-                                    mContext.getResources().getString(R.string.transaction_account_goto_recharge),
-                                    (view) -> {
-                                        ARouter.getInstance().build(Constants.ARouterUriConst.RECHARGE).navigation();
-
-                                        mTransactionMessagePopUpWindow.dismiss();
-                                    });
-                            mTransactionMessagePopUpWindow.showAtLocation(mBinding.tvAvailableFunds, Gravity.CENTER, 0, 0);
-                        }
-                    } else {
-                        hasWeChatWithdrawAuth();
-                    }
-                }
-
-                break;
             case "HasWeChatWithdrawAuth":
                 if (head.isSuccess()) {
                     String authFlag;
@@ -320,7 +287,7 @@ public class CheckServiceActivity extends JMEBaseActivity {
         }
 
         public void onClickWithdraw() {
-            getStatus();
+            hasWeChatWithdrawAuth();
         }
 
         public void onClickThaw() {

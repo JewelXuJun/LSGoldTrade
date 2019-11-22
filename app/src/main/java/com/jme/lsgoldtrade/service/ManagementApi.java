@@ -73,9 +73,6 @@ public interface ManagementApi {
     @GET("/tjsmanage/infoapi/v1/android/questionType/getQuestionListByType")
     Call<DTResponse> getQuestionListByType(@QueryMap Map<String, String> map);
 
-    @GET("/tjsmanage/infoapi/v1/android/getUserAddedServicesStatus")
-    Call<DTResponse> getUserAddedServicesStatus(@QueryMap Map<String, String> map);
-
     @POST("/tjsmanage/infoapi/v1/android/vote/add")
     Call<DTResponse> add(@Body Map<String, String> map);
 
@@ -84,9 +81,6 @@ public interface ManagementApi {
 
     @POST("/tjsmanage/infoapi/v1/android/openValueAddedServices")
     Call<DTResponse> openValueAddedServices(@QueryMap Map<String, String> map);
-
-    @GET("/tjsmanage/infoapi/v1/android/getStatus")
-    Call<DTResponse> getStatus(@QueryMap Map<String, String> map);
 
     @GET("/tjsmanage/infoapi/v1/android/checkOrder")
     Call<DTResponse> checkOrder(@QueryMap Map<String, String> map);

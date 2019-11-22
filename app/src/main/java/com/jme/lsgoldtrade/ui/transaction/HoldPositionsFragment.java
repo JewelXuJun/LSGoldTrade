@@ -26,12 +26,10 @@ import com.jme.lsgoldtrade.domain.AccountVo;
 import com.jme.lsgoldtrade.domain.FiveSpeedVo;
 import com.jme.lsgoldtrade.domain.PositionPageVo;
 import com.jme.lsgoldtrade.domain.PositionVo;
-import com.jme.lsgoldtrade.service.ManagementService;
 import com.jme.lsgoldtrade.service.MarketService;
 import com.jme.lsgoldtrade.service.TradeService;
 import com.jme.lsgoldtrade.util.MarketUtil;
 import com.jme.lsgoldtrade.view.ConfirmSimplePopupwindow;
-import com.jme.lsgoldtrade.view.TransactionMessagePopUpWindow;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 
@@ -69,7 +67,6 @@ public class HoldPositionsFragment extends JMEBaseFragment implements OnRefreshL
     private CurrentEntrustFragment mCurrentEntrustFragment;
     private TabViewPagerAdapter mAdapter;
     private AccountVo mAccountVo;
-    private TransactionMessagePopUpWindow mTransactionMessagePopUpWindow;
     private ConfirmSimplePopupwindow mConfirmSimplePopupwindow;
     private Subscription mRxbus;
 
@@ -107,7 +104,6 @@ public class HoldPositionsFragment extends JMEBaseFragment implements OnRefreshL
     protected void initView() {
         super.initView();
 
-        mTransactionMessagePopUpWindow = new TransactionMessagePopUpWindow(mContext);
         mConfirmSimplePopupwindow = new ConfirmSimplePopupwindow(mContext);
     }
 
@@ -476,14 +472,6 @@ public class HoldPositionsFragment extends JMEBaseFragment implements OnRefreshL
         sendRequest(MarketService.getInstance().getFiveSpeedQuotes, params, false);
     }
 
-    private void getUserAddedServicesStatus() {
-        sendRequest(ManagementService.getInstance().getUserAddedServicesStatus, new HashMap<>(), false);
-    }
-
-    private void getStatus() {
-        sendRequest(ManagementService.getInstance().getStatus, new HashMap<>(), true);
-    }
-
     @Override
     protected void DataReturn(DTRequest request, Head head, Object response) {
         super.DataReturn(request, head, response);
@@ -597,56 +585,6 @@ public class HoldPositionsFragment extends JMEBaseFragment implements OnRefreshL
                 }
 
                 break;
-            case "GetUserAddedServicesStatus":
-                String incrementState;
-
-                if (null == response)
-                    incrementState = "";
-                else
-                    incrementState = response.toString();
-
-                if (incrementState.equals("T")) {
-                    getStatus();
-                } else {
-                    if (null != mTransactionMessagePopUpWindow && !mTransactionMessagePopUpWindow.isShowing()) {
-                        mTransactionMessagePopUpWindow.setData(mContext.getResources().getString(R.string.transaction_increment_error),
-                                mContext.getResources().getString(R.string.transaction_increment_goto_open),
-                                (view) -> {
-                                    ARouter.getInstance().build(Constants.ARouterUriConst.VALUEADDEDSERVICE).navigation();
-
-                                    mTransactionMessagePopUpWindow.dismiss();
-                                });
-                        mTransactionMessagePopUpWindow.showAtLocation(mBinding.tvRiskRate, Gravity.CENTER, 0, 0);
-                    }
-                }
-
-                break;
-            case "GetStatus":
-                if (head.isSuccess()) {
-                    String status;
-
-                    if (null == response)
-                        status = "";
-                    else
-                        status = response.toString();
-
-                    if (status.equals("1")) {
-                        if (null != mTransactionMessagePopUpWindow && !mTransactionMessagePopUpWindow.isShowing()) {
-                            mTransactionMessagePopUpWindow.setData(mContext.getResources().getString(R.string.transaction_account_error),
-                                    mContext.getResources().getString(R.string.transaction_account_goto_recharge),
-                                    (view) -> {
-                                        ARouter.getInstance().build(Constants.ARouterUriConst.RECHARGE).navigation();
-
-                                        mTransactionMessagePopUpWindow.dismiss();
-                                    });
-                            mTransactionMessagePopUpWindow.showAtLocation(mBinding.tvRiskRate, Gravity.CENTER, 0, 0);
-                        }
-                    } else {
-                        ARouter.getInstance().build(Constants.ARouterUriConst.ENTRUSTRISKMANAGEMENT).navigation();
-                    }
-                }
-
-                break;
         }
     }
 
@@ -695,7 +633,7 @@ public class HoldPositionsFragment extends JMEBaseFragment implements OnRefreshL
             if (null == mUser || !mUser.isLogin())
                 gotoLogin();
             else
-                getUserAddedServicesStatus();
+                ARouter.getInstance().build(Constants.ARouterUriConst.ENTRUSTRISKMANAGEMENT).navigation();
         }
 
         public void onClickRiskRateTips() {
@@ -708,39 +646,52 @@ public class HoldPositionsFragment extends JMEBaseFragment implements OnRefreshL
         }
 
         public void onClickQuery() {
-            ARouter.getInstance()
-                    .build(Constants.ARouterUriConst.QUERY)
-                    .withInt("Type", 0)
-                    .navigation();
+            if (null == mUser || !mUser.isLogin())
+                gotoLogin();
+            else
+                ARouter.getInstance()
+                        .build(Constants.ARouterUriConst.QUERY)
+                        .withInt("Type", 0)
+                        .navigation();
         }
 
         public void onClickInOutMoney() {
-            if (null == mUser || null == mUser.getCurrentUser())
-                return;
-
-            if (!TextUtils.isEmpty(mUser.getIsFromTjs()) && mUser.getIsFromTjs().equals("true")) {
-                if (mUser.getCurrentUser().getCardType().equals("2") && mUser.getCurrentUser().getReserveFlag().equals("N"))
-                    ARouter.getInstance().build(Constants.ARouterUriConst.BANKRESERVE).navigation();
-                else
-                    ARouter.getInstance().build(Constants.ARouterUriConst.CAPITALTRANSFER).navigation();
+            if (null == mUser || !mUser.isLogin()) {
+                gotoLogin();
             } else {
-                ARouter.getInstance().build(Constants.ARouterUriConst.CAPITALTRANSFER).navigation();
+                if (!TextUtils.isEmpty(mUser.getIsFromTjs()) && mUser.getIsFromTjs().equals("true")) {
+                    if (mUser.getCurrentUser().getCardType().equals("2") && mUser.getCurrentUser().getReserveFlag().equals("N"))
+                        ARouter.getInstance().build(Constants.ARouterUriConst.BANKRESERVE).navigation();
+                    else
+                        ARouter.getInstance().build(Constants.ARouterUriConst.CAPITALTRANSFER).navigation();
+                } else {
+                    ARouter.getInstance().build(Constants.ARouterUriConst.CAPITALTRANSFER).navigation();
+                }
             }
         }
 
         public void onClickEntrustRiskManagement() {
-            ARouter.getInstance().build(Constants.ARouterUriConst.ENTRUSTRISKMANAGEMENT).navigation();
+            if (null == mUser || !mUser.isLogin())
+                gotoLogin();
+            else
+                ARouter.getInstance().build(Constants.ARouterUriConst.ENTRUSTRISKMANAGEMENT).navigation();
         }
 
         public void onClickDailyStatementSheet() {
-            ARouter.getInstance().build(Constants.ARouterUriConst.DAILYSTATEMENT).navigation();
+            if (null == mUser || !mUser.isLogin())
+                gotoLogin();
+            else
+                ARouter.getInstance().build(Constants.ARouterUriConst.DAILYSTATEMENT).navigation();
         }
 
         public void onClickConditionSheet() {
-            ARouter.getInstance()
-                    .build(Constants.ARouterUriConst.CONDITIONSHEET)
-                    .withInt("Type", 0)
-                    .navigation();
+            if (null == mUser || !mUser.isLogin())
+                gotoLogin();
+            else
+                ARouter.getInstance()
+                        .build(Constants.ARouterUriConst.CONDITIONSHEET)
+                        .withInt("Type", 0)
+                        .navigation();
         }
 
     }

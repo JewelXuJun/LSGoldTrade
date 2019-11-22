@@ -149,13 +149,6 @@ public class ManagementService extends IService<ManagementApi> {
         }
     };
 
-    public API getUserAddedServicesStatus = new API<String>("GetUserAddedServicesStatus") {
-        @Override
-        public Call<DTResponse> request(HashMap<String, String> params) {
-            return mApi.getUserAddedServicesStatus(params);
-        }
-    };
-
     public API analystList = new API<List<AnalystVo>>("AnalystList") {
         @Override
         public Call<DTResponse> request(HashMap<String, String> params) {
@@ -237,13 +230,6 @@ public class ManagementService extends IService<ManagementApi> {
         @Override
         public Call<DTResponse> request(HashMap<String, String> params) {
             return mApi.openValueAddedServices(params);
-        }
-    };
-
-    public API getStatus = new API<String>("GetStatus") {
-        @Override
-        public Call<DTResponse> request(HashMap<String, String> params) {
-            return mApi.getStatus(params);
         }
     };
 

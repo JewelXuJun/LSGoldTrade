@@ -45,7 +45,6 @@ import com.jme.lsgoldtrade.util.MarketUtil;
 import com.jme.lsgoldtrade.view.ConfirmPopupwindow;
 import com.jme.lsgoldtrade.view.PlaceOrderPopupWindow;
 import com.jme.lsgoldtrade.view.SignedPopUpWindow;
-import com.jme.lsgoldtrade.view.TransactionMessagePopUpWindow;
 
 import java.math.BigDecimal;
 import java.net.ConnectException;
@@ -82,7 +81,6 @@ public class PlaceOrderFragment extends JMEBaseFragment implements FChart.OnPric
 
     private List<PositionVo> mPositionVoList = new ArrayList<>();
 
-    private TransactionMessagePopUpWindow mTransactionMessagePopUpWindow;
     private ConfirmPopupwindow mConfirmPopupwindow;
     private SignedPopUpWindow mSignedPopUpWindow;
     private PlaceOrderPopupWindow mPlaceOrderPopupWindow;
@@ -117,7 +115,6 @@ public class PlaceOrderFragment extends JMEBaseFragment implements FChart.OnPric
     protected void initView() {
         super.initView();
 
-        mTransactionMessagePopUpWindow = new TransactionMessagePopUpWindow(mContext);
         mConfirmPopupwindow = new ConfirmPopupwindow(mContext);
         mSignedPopUpWindow = new SignedPopUpWindow(mContext);
         mPlaceOrderPopupWindow = new PlaceOrderPopupWindow(mContext);
@@ -367,7 +364,7 @@ public class PlaceOrderFragment extends JMEBaseFragment implements FChart.OnPric
             return;
 
         mPlaceOrderPopupWindow.setData(mUser.getAccount(), contractID, price, amount, String.valueOf(bsFlag), (view) -> {
-            getStatus();
+            limitOrder(contractID, mPlaceOrderPrice, amount, mBsFlag, mOcFlag);
 
             mPlaceOrderPopupWindow.dismiss();
         });
@@ -549,10 +546,6 @@ public class PlaceOrderFragment extends JMEBaseFragment implements FChart.OnPric
         });
     }
 
-    private void getStatus() {
-        sendRequest(ManagementService.getInstance().getStatus, new HashMap<>(), true);
-    }
-
     private void limitOrder(String contractId, String price, String amount, int bsFlag, int ocFlag) {
         if (null == mUser || !mUser.isLogin())
             return;
@@ -731,32 +724,6 @@ public class PlaceOrderFragment extends JMEBaseFragment implements FChart.OnPric
                         }
                     } else {
                         showPlaceOrderPopupWindow(mBinding.tvContractId.getText().toString(), mPlaceOrderPrice, mBinding.etAmount.getText().toString(), mBsFlag);
-                    }
-                }
-
-                break;
-            case "GetStatus":
-                if (head.isSuccess()) {
-                    String status;
-
-                    if (null == response)
-                        status = "";
-                    else
-                        status = response.toString();
-
-                    if (status.equals("1")) {
-                        if (null != mTransactionMessagePopUpWindow && !mTransactionMessagePopUpWindow.isShowing()) {
-                            mTransactionMessagePopUpWindow.setData(mContext.getResources().getString(R.string.transaction_account_error),
-                                    mContext.getResources().getString(R.string.transaction_account_goto_recharge),
-                                    (view) -> {
-                                        ARouter.getInstance().build(Constants.ARouterUriConst.RECHARGE).navigation();
-
-                                        mTransactionMessagePopUpWindow.dismiss();
-                                    });
-                            mTransactionMessagePopUpWindow.showAtLocation(mBinding.etAmount, Gravity.CENTER, 0, 0);
-                        }
-                    } else {
-                        limitOrder(mBinding.tvContractId.getText().toString(), mPlaceOrderPrice, mBinding.etAmount.getText().toString(), mBsFlag, mOcFlag);
                     }
                 }
 

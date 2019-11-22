@@ -41,7 +41,6 @@ import com.jme.lsgoldtrade.service.UserService;
 import com.jme.lsgoldtrade.view.ConfirmPopupwindow;
 import com.jme.lsgoldtrade.view.RulePopupwindow;
 import com.jme.lsgoldtrade.view.SignedPopUpWindow;
-import com.jme.lsgoldtrade.view.TransactionMessagePopUpWindow;
 import com.jme.lsgoldtrade.util.MarketUtil;
 import com.jme.lsgoldtrade.view.MessagePopupwindow;
 
@@ -60,7 +59,6 @@ public class PlaceOrderActivity extends JMEBaseActivity {
     private ActivityPlaceOrderBinding mBinding;
 
     private RulePopupwindow mWindow;
-    private TransactionMessagePopUpWindow mTransactionMessagePopUpWindow;
     private MessagePopupwindow mMessagePopupwindow;
     private ConfirmPopupwindow mConfirmPopupwindow;
     private SignedPopUpWindow mSignedPopUpWindow;
@@ -93,7 +91,6 @@ public class PlaceOrderActivity extends JMEBaseActivity {
         initToolbar(R.string.trading_box_prepaid_bill, true);
 
         mWindow = new RulePopupwindow(this);
-        mTransactionMessagePopUpWindow = new TransactionMessagePopUpWindow(mContext);
         mMessagePopupwindow = new MessagePopupwindow(mContext);
         mConfirmPopupwindow = new ConfirmPopupwindow(mContext);
         mSignedPopUpWindow = new SignedPopUpWindow(mContext);
@@ -304,14 +301,6 @@ public class PlaceOrderActivity extends JMEBaseActivity {
         });
     }
 
-    private void getUserAddedServicesStatus() {
-        sendRequest(ManagementService.getInstance().getUserAddedServicesStatus, new HashMap<>(), false);
-    }
-
-    private void getStatus() {
-        sendRequest(ManagementService.getInstance().getStatus, new HashMap<>(), true);
-    }
-
     private void checkOrder() {
         sendRequest(ManagementService.getInstance().checkOrder, new HashMap<>(), false);
     }
@@ -456,56 +445,6 @@ public class PlaceOrderActivity extends JMEBaseActivity {
                         if (null != mSignedPopUpWindow && !mSignedPopUpWindow.isShowing()) {
                             mSignedPopUpWindow.setData(mRemainTradeDay);
                             mSignedPopUpWindow.showAtLocation(mBinding.tvBalanceMessage, Gravity.CENTER, 0, 0);
-                        }
-                    } else {
-                        getUserAddedServicesStatus();
-                    }
-                }
-
-                break;
-            case "GetUserAddedServicesStatus":
-                String incrementState;
-
-                if (null == response)
-                    incrementState = "";
-                else
-                    incrementState = response.toString();
-
-                if (incrementState.equals("T")) {
-                    getStatus();
-                } else {
-                    if (null != mTransactionMessagePopUpWindow && !mTransactionMessagePopUpWindow.isShowing()) {
-                        mTransactionMessagePopUpWindow.setData(mContext.getResources().getString(R.string.transaction_increment_error),
-                                mContext.getResources().getString(R.string.transaction_increment_goto_open),
-                                (view) -> {
-                                    ARouter.getInstance().build(Constants.ARouterUriConst.VALUEADDEDSERVICE).navigation();
-
-                                    mTransactionMessagePopUpWindow.dismiss();
-                                });
-                        mTransactionMessagePopUpWindow.showAtLocation(mBinding.tvBalanceMessage, Gravity.CENTER, 0, 0);
-                    }
-                }
-
-                break;
-            case "GetStatus":
-                if (head.isSuccess()) {
-                    String status;
-
-                    if (null == response)
-                        status = "";
-                    else
-                        status = response.toString();
-
-                    if (status.equals("1")) {
-                        if (null != mTransactionMessagePopUpWindow && !mTransactionMessagePopUpWindow.isShowing()) {
-                            mTransactionMessagePopUpWindow.setData(mContext.getResources().getString(R.string.transaction_account_error),
-                                    mContext.getResources().getString(R.string.transaction_account_goto_recharge),
-                                    (view) -> {
-                                        ARouter.getInstance().build(Constants.ARouterUriConst.RECHARGE).navigation();
-
-                                        mTransactionMessagePopUpWindow.dismiss();
-                                    });
-                            mTransactionMessagePopUpWindow.showAtLocation(mBinding.tvBalanceMessage, Gravity.CENTER, 0, 0);
                         }
                     } else {
                         checkOrder();

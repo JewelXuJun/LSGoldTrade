@@ -32,7 +32,6 @@ import com.jme.lsgoldtrade.service.ManagementService;
 import com.jme.lsgoldtrade.service.TradeService;
 import com.jme.lsgoldtrade.service.UserService;
 import com.jme.lsgoldtrade.view.SignedPopUpWindow;
-import com.jme.lsgoldtrade.view.TransactionMessagePopUpWindow;
 import com.jme.lsgoldtrade.view.ConfirmPopupwindow;
 
 import java.math.BigDecimal;
@@ -65,7 +64,6 @@ public class MarketJudgmentActivity extends JMEBaseActivity {
     private AccountVo mAccountVo;
 
     private MarketJudgmentPagerAdapter mAdapter;
-    private TransactionMessagePopUpWindow mTransactionMessagePopUpWindow;
     private MarketTradePopupWindow mMarketTradePopupWindow;
     private ConfirmPopupwindow mConfirmPopupwindow;
     private SignedPopUpWindow mSignedPopUpWindow;
@@ -83,7 +81,6 @@ public class MarketJudgmentActivity extends JMEBaseActivity {
 
         initToolbar(R.string.market_judgment, true);
 
-        mTransactionMessagePopUpWindow = new TransactionMessagePopUpWindow(this);
         mMarketTradePopupWindow = new MarketTradePopupWindow(this);
         mConfirmPopupwindow = new ConfirmPopupwindow(this);
         mSignedPopUpWindow = new SignedPopUpWindow(this);
@@ -219,10 +216,6 @@ public class MarketJudgmentActivity extends JMEBaseActivity {
         });
     }
 
-    private void getStatus() {
-        sendRequest(ManagementService.getInstance().getStatus, new HashMap<>(), true);
-    }
-
     private void getAccount() {
         if (null == mUser || !mUser.isLogin())
             return;
@@ -321,33 +314,6 @@ public class MarketJudgmentActivity extends JMEBaseActivity {
                         if (null != mSignedPopUpWindow && !mSignedPopUpWindow.isShowing()) {
                             mSignedPopUpWindow.setData(mRemainTradeDay);
                             mSignedPopUpWindow.showAtLocation(mBinding.tablayout, Gravity.CENTER, 0, 0);
-                        }
-                    } else {
-                        getStatus();
-                    }
-                }
-
-                break;
-            case "GetStatus":
-                if (head.isSuccess()) {
-
-                    String status;
-
-                    if (null == response)
-                        status = "";
-                    else
-                        status = response.toString();
-
-                    if (status.equals("1")) {
-                        if (null != mTransactionMessagePopUpWindow && !mTransactionMessagePopUpWindow.isShowing()) {
-                            mTransactionMessagePopUpWindow.setData(mContext.getResources().getString(R.string.transaction_account_error),
-                                    mContext.getResources().getString(R.string.transaction_account_goto_recharge),
-                                    (view) -> {
-                                        ARouter.getInstance().build(Constants.ARouterUriConst.RECHARGE).navigation();
-
-                                        mTransactionMessagePopUpWindow.dismiss();
-                                    });
-                            mTransactionMessagePopUpWindow.showAtLocation(mBinding.tablayout, Gravity.CENTER, 0, 0);
                         }
                     } else {
                         getAccount();

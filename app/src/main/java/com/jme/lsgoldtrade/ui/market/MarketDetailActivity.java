@@ -10,7 +10,6 @@ import androidx.core.content.ContextCompat;
 
 import android.text.TextUtils;
 import android.view.Gravity;
-import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
 
@@ -55,7 +54,6 @@ import com.jme.lsgoldtrade.service.MarketService;
 import com.jme.lsgoldtrade.service.TradeService;
 import com.jme.lsgoldtrade.service.UserService;
 import com.jme.lsgoldtrade.view.SignedPopUpWindow;
-import com.jme.lsgoldtrade.view.TransactionMessagePopUpWindow;
 import com.jme.lsgoldtrade.util.MarketUtil;
 import com.jme.lsgoldtrade.view.ConfirmPopupwindow;
 
@@ -81,7 +79,6 @@ public class MarketDetailActivity extends JMEBaseActivity implements FChart.OnPr
     private AccountVo mAccountVo;
     private ContractInfoVo mContractInfoVo;
     private MarketTradePopupWindow mMarketTradePopupWindow;
-    private TransactionMessagePopUpWindow mTransactionMessagePopUpWindow;
     private ConfirmPopupwindow mConfirmPopupwindow;
     private SignedPopUpWindow mSignedPopUpWindow;
     private Chart mChart;
@@ -155,7 +152,6 @@ public class MarketDetailActivity extends JMEBaseActivity implements FChart.OnPr
         mTChart = mChart.getTChart();
         mKChart = mChart.getKChart();
 
-        mTransactionMessagePopUpWindow = new TransactionMessagePopUpWindow(this);
         mMarketTradePopupWindow = new MarketTradePopupWindow(this);
         mConfirmPopupwindow = new ConfirmPopupwindow(this);
         mSignedPopUpWindow = new SignedPopUpWindow(this);
@@ -731,10 +727,6 @@ public class MarketDetailActivity extends JMEBaseActivity implements FChart.OnPr
         });
     }
 
-    private void getStatus() {
-        sendRequest(ManagementService.getInstance().getStatus, new HashMap<>(), true);
-    }
-
     private void getAccount() {
         if (null == mUser || !mUser.isLogin())
             return;
@@ -931,32 +923,6 @@ public class MarketDetailActivity extends JMEBaseActivity implements FChart.OnPr
                         if (null != mSignedPopUpWindow && !mSignedPopUpWindow.isShowing()) {
                             mSignedPopUpWindow.setData(mRemainTradeDay);
                             mSignedPopUpWindow.showAtLocation(mBinding.tvHigh, Gravity.CENTER, 0, 0);
-                        }
-                    } else {
-                        getStatus();
-                    }
-                }
-
-                break;
-            case "GetStatus":
-                if (head.isSuccess()) {
-                    String status;
-
-                    if (null == response)
-                        status = "";
-                    else
-                        status = response.toString();
-
-                    if (status.equals("1")) {
-                        if (null != mTransactionMessagePopUpWindow && !mTransactionMessagePopUpWindow.isShowing()) {
-                            mTransactionMessagePopUpWindow.setData(mContext.getResources().getString(R.string.transaction_account_error),
-                                    mContext.getResources().getString(R.string.transaction_account_goto_recharge),
-                                    (view) -> {
-                                        ARouter.getInstance().build(Constants.ARouterUriConst.RECHARGE).navigation();
-
-                                        mTransactionMessagePopUpWindow.dismiss();
-                                    });
-                            mTransactionMessagePopUpWindow.showAtLocation(mBinding.tvHigh, Gravity.CENTER, 0, 0);
                         }
                     } else {
                         getAccount();
@@ -1209,25 +1175,4 @@ public class MarketDetailActivity extends JMEBaseActivity implements FChart.OnPr
         }
     }
 
-    @Override
-    public boolean dispatchTouchEvent(MotionEvent event) {
-        if (null != mTransactionMessagePopUpWindow && mTransactionMessagePopUpWindow.isShowing())
-            return false;
-
-        return super.dispatchTouchEvent(event);
-    }
-
-    @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if (KeyEvent.KEYCODE_BACK == keyCode) {
-            if (null != mTransactionMessagePopUpWindow && mTransactionMessagePopUpWindow.isShowing())
-                mTransactionMessagePopUpWindow.dismiss();
-            else
-                finish();
-
-            return true;
-        }
-
-        return super.onKeyDown(keyCode, event);
-    }
 }

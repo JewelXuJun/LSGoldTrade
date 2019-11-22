@@ -99,8 +99,6 @@
     <string name="transaction_entrust_hands_number">委托手数</string>
     <string name="transaction_latest">最新</string>
     <string name="transaction_max_order_number">单笔最大下单量：</string>
-    <string name="transaction_account_error">您当前有服务费未缴纳，无法使用交易、增值服务、出金等功能，请先进行欠费补缴后再使用。</string>
-    <string name="transaction_account_goto_recharge">去充值</string>
     <string name="transaction_money_error">您的可用资金不足</string>
     <string name="transaction_money_in">入金</string>
     <string name="transaction_money_out">出金</string>
@@ -346,8 +344,6 @@
     <string name="transaction_stop_current_setting_type">当前设置%1$s</string>
     <string name="transaction_evening_up">平仓</string>
     <string name="transaction_cancel_order_success">撤单成功</string>
-    <string name="transaction_increment_error">您尚未开通增值服务，请开通后使用该服务。</string>
-    <string name="transaction_increment_goto_open">去开通</string>
     <string name="transaction_time_rule">T+0交易</string>
     <string name="transaction_time_rule_message">当日即买即卖</string>
     <string name="transaction_side_rule">双向交易</string>

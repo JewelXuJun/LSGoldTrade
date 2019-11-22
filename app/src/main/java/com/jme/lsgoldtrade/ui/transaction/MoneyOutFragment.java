@@ -4,23 +4,18 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
-import android.view.Gravity;
 
 import androidx.annotation.NonNull;
 
-import com.alibaba.android.arouter.launcher.ARouter;
 import com.jme.common.network.DTRequest;
 import com.jme.common.network.Head;
 import com.jme.common.util.RxBus;
 import com.jme.lsgoldtrade.R;
 import com.jme.lsgoldtrade.base.JMEBaseFragment;
-import com.jme.lsgoldtrade.config.AppConfig;
 import com.jme.lsgoldtrade.config.Constants;
 import com.jme.lsgoldtrade.databinding.FragmentMoneyOutBinding;
 import com.jme.lsgoldtrade.domain.AccountVo;
-import com.jme.lsgoldtrade.service.ManagementService;
 import com.jme.lsgoldtrade.service.TradeService;
-import com.jme.lsgoldtrade.view.TransactionMessagePopUpWindow;
 import com.jme.lsgoldtrade.util.MarketUtil;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
@@ -38,7 +33,6 @@ public class MoneyOutFragment extends JMEBaseFragment implements OnRefreshListen
     private String mMaxBalance;
 
     private Subscription mRxbus;
-    private TransactionMessagePopUpWindow mTransactionMessagePopUpWindow;
 
     @Override
     protected int getContentViewId() {
@@ -48,8 +42,6 @@ public class MoneyOutFragment extends JMEBaseFragment implements OnRefreshListen
     @Override
     protected void initView() {
         super.initView();
-
-        mTransactionMessagePopUpWindow = new TransactionMessagePopUpWindow(mContext);
     }
 
     @Override
@@ -170,7 +162,7 @@ public class MoneyOutFragment extends JMEBaseFragment implements OnRefreshListen
         else if (new BigDecimal(amount).compareTo(new BigDecimal(mMaxBalance)) == 1)
             showShortToast(R.string.transaction_money_out_max_error);
         else
-            getStatus();
+            inoutMoney(mBinding.etTransferAmount.getText().toString());
     }
 
     private void getAccount(boolean enable) {
@@ -181,10 +173,6 @@ public class MoneyOutFragment extends JMEBaseFragment implements OnRefreshListen
         params.put("accountId", mUser.getAccountID());
 
         sendRequest(TradeService.getInstance().account, params, enable);
-    }
-
-    private void getStatus() {
-        sendRequest(ManagementService.getInstance().getStatus, new HashMap<>(), true);
     }
 
     private void inoutMoney(String amount) {
@@ -234,32 +222,6 @@ public class MoneyOutFragment extends JMEBaseFragment implements OnRefreshListen
                     mBinding.tvMoneyOutMax.setText(MarketUtil.decimalFormatMoney(mMaxBalance));
                 } else {
                     mBinding.swipeRefreshLayout.finishRefresh(false);
-                }
-
-                break;
-            case "GetStatus":
-                if (head.isSuccess()) {
-                    String status;
-
-                    if (null == response)
-                        status = "";
-                    else
-                        status = response.toString();
-
-                    if (status.equals("1")) {
-                        if (null != mTransactionMessagePopUpWindow && !mTransactionMessagePopUpWindow.isShowing()) {
-                            mTransactionMessagePopUpWindow.setData(mContext.getResources().getString(R.string.transaction_account_error),
-                                    mContext.getResources().getString(R.string.transaction_account_goto_recharge),
-                                    (view) -> {
-                                        ARouter.getInstance().build(Constants.ARouterUriConst.RECHARGE).navigation();
-
-                                        mTransactionMessagePopUpWindow.dismiss();
-                                    });
-                            mTransactionMessagePopUpWindow.showAtLocation(mBinding.etTransferAmount, Gravity.CENTER, 0, 0);
-                        }
-                    } else {
-                        inoutMoney(mBinding.etTransferAmount.getText().toString());
-                    }
                 }
 
                 break;
