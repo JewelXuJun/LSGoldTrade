@@ -154,14 +154,12 @@ public interface ManagementApi {
     @POST("/tjsmanage/infoapi/v1/android/tradeSafety/unlockTradePassword")
     Call<DTResponse> unlockTradePassword(@Body Map<String, String> map);
 
-    @GET("/tjsmanage/infoapi/v1/ios/getRemainTradeDay")
+    @GET("/tjsmanage/infoapi/v1/android/getRemainTradeDay")
     Call<DTResponse> getRemainTradeDay(@QueryMap Map<String, String> map);
 
-    //获取支付列表
-    @GET("/tjsmanage/infoapi/v1/ios/getPayIcon")
+    @GET("/tjsmanage/infoapi/v1/android/getPayIcon")
     Call<DTResponse> getPayIcon(@QueryMap Map<String, String> map);
 
-    //获取欠费金额
-    @GET("/tjsmanage/infoapi/v1/ios/getCustomerArrearage")
+    @GET("/tjsmanage/infoapi/v1/android/getCustomerArrearage")
     Call<DTResponse> getCustomerArrearage(@QueryMap Map<String, String> map);
 }

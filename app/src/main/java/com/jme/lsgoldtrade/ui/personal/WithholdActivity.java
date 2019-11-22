@@ -5,6 +5,8 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.recyclerview.widget.LinearLayoutManager;
+
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.jme.common.network.DTRequest;
@@ -14,14 +16,18 @@ import com.jme.lsgoldtrade.base.JMEBaseActivity;
 import com.jme.lsgoldtrade.config.AppConfig;
 import com.jme.lsgoldtrade.config.Constants;
 import com.jme.lsgoldtrade.databinding.ActivityWithholdBinding;
+import com.jme.lsgoldtrade.service.ManagementService;
 import com.tencent.mm.opensdk.openapi.IWXAPI;
 import com.tencent.mm.opensdk.openapi.WXAPIFactory;
+
+import java.util.HashMap;
 
 @Route(path = Constants.ARouterUriConst.WITHHOLD)
 public class WithholdActivity extends JMEBaseActivity {
 
     private ActivityWithholdBinding mBinding;
 
+    private WithholdAdapter mAdapter;
     private IWXAPI mWxapi;
 
     @Override
@@ -40,7 +46,15 @@ public class WithholdActivity extends JMEBaseActivity {
     protected void initData(Bundle savedInstanceState) {
         super.initData(savedInstanceState);
 
+        mAdapter = new WithholdAdapter(null);
+
+        mBinding.recyclerView.setHasFixedSize(false);
+        mBinding.recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        mBinding.recyclerView.setAdapter(mAdapter);
+
         mWxapi = WXAPIFactory.createWXAPI(this, AppConfig.WECHATAPPID, true);
+
+        getPayIcon();
     }
 
     @Override
@@ -53,7 +67,6 @@ public class WithholdActivity extends JMEBaseActivity {
         super.initBinding();
 
         mBinding = (ActivityWithholdBinding) mBindingUtil;
-        mBinding.setHandlers(new ClickHandlers());
     }
 
     private void showPaymentBottomDialog(String money) {
@@ -90,16 +103,17 @@ public class WithholdActivity extends JMEBaseActivity {
 
     }
 
+    private void getPayIcon() {
+        sendRequest(ManagementService.getInstance().getPayIcon, new HashMap<>(), true);
+    }
+
     @Override
     protected void DataReturn(DTRequest request, Head head, Object response) {
         super.DataReturn(request, head, response);
-    }
 
-    public class ClickHandlers {
-
-        public void onClickPay() {
+        switch (request.getApi().getName()) {
 
         }
-
     }
+
 }
