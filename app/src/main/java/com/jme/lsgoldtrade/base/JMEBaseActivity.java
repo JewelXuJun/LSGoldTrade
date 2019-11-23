@@ -8,6 +8,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.text.TextUtils;
+import android.view.Display;
+import android.view.WindowManager;
 
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.jme.common.network.DTRequest;
@@ -23,15 +25,13 @@ import com.jme.lsgoldtrade.config.User;
 import com.jme.lsgoldtrade.ui.login.AccountLoginActivity;
 import com.jme.lsgoldtrade.ui.login.MobileLoginActivity;
 import com.jme.lsgoldtrade.ui.splash.SplashActivity;
+import com.jme.lsgoldtrade.view.ArrearsDialog;
 import com.umeng.socialize.UMShareAPI;
 
 import java.util.List;
 
 import rx.Subscription;
 
-/**
- * Created by XuJun on 2018/11/7.
- */
 public abstract class JMEBaseActivity<T> extends BaseActivity {
 
     protected boolean isFinishing = false;
@@ -40,9 +40,10 @@ public abstract class JMEBaseActivity<T> extends BaseActivity {
     protected User mUser;
     protected Contract mContract;
 
-    private Subscription mRxbus;
-
     protected static Dialog mDialog;
+
+    private ArrearsDialog mArrearsDialog;
+    private Subscription mRxbus;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -123,10 +124,12 @@ public abstract class JMEBaseActivity<T> extends BaseActivity {
                     mUser.logout();
 
                     SharedPreUtils.setString(this, SharedPreUtils.Token, "");
-
                     RxBus.getInstance().post(Constants.RxBusConst.RXBUS_LOGOUT_SUCCESS, null);
-
                     showLoginDialog(message.getObject2().toString());
+
+                    break;
+                case Constants.RxBusConst.RXBUS_INCREMENT_ARREARS:
+                    showArrearsDialog();
 
                     break;
             }
@@ -152,7 +155,7 @@ public abstract class JMEBaseActivity<T> extends BaseActivity {
                     && !currentClass().equals(MobileLoginActivity.class.getName()))
                 showLoginDialog(head.getMsg());
         } else if (head.getCode().equals("-2011")) {
-
+            showArrearsDialog();
         } else {
             handleErrorInfo(request, head);
         }
@@ -218,6 +221,24 @@ public abstract class JMEBaseActivity<T> extends BaseActivity {
                 ARouter.getInstance().build(Constants.ARouterUriConst.ACCOUNTLOGIN).navigation();
             else if (loginType.equals("Mobile"))
                 ARouter.getInstance().build(Constants.ARouterUriConst.MOBILELOGIN).navigation();
+        }
+    }
+
+    private void showArrearsDialog() {
+        if (isFinishing)
+            return;
+
+        if (null == mArrearsDialog)
+            mArrearsDialog = new ArrearsDialog(mContext);
+
+        if (!mArrearsDialog.isShowing()) {
+            mArrearsDialog.show();
+
+            WindowManager windowManager = getWindowManager();
+            Display display = windowManager.getDefaultDisplay();
+            WindowManager.LayoutParams params = mArrearsDialog.getWindow().getAttributes();
+            params.width = (int) (display.getWidth() * 0.75);
+            mArrearsDialog.getWindow().setAttributes(params);
         }
     }
 

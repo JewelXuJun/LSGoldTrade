@@ -696,5 +696,6 @@
     <string name="increment_identity_information_error">身份信息有误，请重新进入页面！</string>
     <string name="increment_bank_card_input">请输入13-19位银行卡号</string>
     <string name="increment_aggrement_message">请先同意并勾选《华兴银行代扣协议》、《泰金所平台增值服务协议》</string>
+    <string name="increment_arrears">您当前有服务费未缴纳，请结清后再使用该服务</string>
 
 </resources>

@@ -113,9 +113,9 @@ public abstract class JMEBaseFragment<T> extends BaseFragment {
 
         if (head.getCode().equals("-2000"))
             RxBus.getInstance().post(Constants.RxBusConst.RXBUS_SYNTIME, head.getMsg());
-        else if (head.getCode().equals("-2011")) {
-
-        } else
+        else if (head.getCode().equals("-2011"))
+            RxBus.getInstance().post(Constants.RxBusConst.RXBUS_INCREMENT_ARREARS, null);
+        else
             handleErrorInfo(request, head);
     }
 
