@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/common_item_height_big"
+        android:paddingRight="@dimen/common_page_padding">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="@string/increment_recharge_type_select"
+            android:textColor="@color/black_deep"
+            android:textSize="@dimen/common_font_size" />
+
+        <ImageView
+            android:id="@+id/img_cancel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:padding="8dp"
+            android:src="@mipmap/ic_close_blue" />
+
+    </RelativeLayout>
+
+    <include layout="@layout/item_line_vertical" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scrollbars="none" />
+
+    <TextView
+        android:id="@+id/tv_pay"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/height_btn"
+        android:layout_marginLeft="@dimen/common_area_margin"
+        android:layout_marginTop="@dimen/common_area_margin_big"
+        android:layout_marginRight="@dimen/common_area_margin"
+        android:layout_marginBottom="@dimen/common_area_margin"
+        android:background="@drawable/selector_btn"
+        android:gravity="center"
+        android:textColor="@color/white"
+        android:textSize="@dimen/common_font_size" />
+
+</LinearLayout>

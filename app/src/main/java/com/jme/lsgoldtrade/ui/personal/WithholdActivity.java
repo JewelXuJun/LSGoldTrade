@@ -6,6 +6,9 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.jme.common.network.DTRequest;
@@ -15,12 +18,15 @@ import com.jme.lsgoldtrade.base.JMEBaseActivity;
 import com.jme.lsgoldtrade.config.AppConfig;
 import com.jme.lsgoldtrade.config.Constants;
 import com.jme.lsgoldtrade.databinding.ActivityWithholdBinding;
+import com.jme.lsgoldtrade.domain.PayIconVo;
 import com.jme.lsgoldtrade.service.ManagementService;
+import com.jme.lsgoldtrade.service.PaymentService;
 import com.jme.lsgoldtrade.util.MarketUtil;
 import com.tencent.mm.opensdk.openapi.IWXAPI;
 import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 
 import java.util.HashMap;
+import java.util.List;
 
 @Route(path = Constants.ARouterUriConst.WITHHOLD)
 public class WithholdActivity extends JMEBaseActivity {
@@ -28,6 +34,8 @@ public class WithholdActivity extends JMEBaseActivity {
     private ActivityWithholdBinding mBinding;
 
     private String mMoney;
+
+    private List<PayIconVo> mPayIconVoList;
 
     private IWXAPI mWxapi;
 
@@ -50,6 +58,7 @@ public class WithholdActivity extends JMEBaseActivity {
         mWxapi = WXAPIFactory.createWXAPI(this, AppConfig.WECHATAPPID, true);
 
         getCustomerArrearage();
+        getPayIcon();
     }
 
     @Override
@@ -67,36 +76,39 @@ public class WithholdActivity extends JMEBaseActivity {
 
     private void showPaymentBottomDialog(String money) {
         BottomSheetDialog dialog = new BottomSheetDialog(this);
-        View paymentView = View.inflate(this, R.layout.bottom_dialog_payment, null);
+        View paymentView = View.inflate(this, R.layout.bottom_dialog_pay_list, null);
 
-        ImageView imgCancel = paymentView.findViewById(R.id.iv_cancel);
-        ImageView imgWechatSelect = paymentView.findViewById(R.id.iv_wechat_select);
+        ImageView imgCancel = paymentView.findViewById(R.id.img_cancel);
+        RecyclerView recyclerView = paymentView.findViewById(R.id.recyclerView);
         TextView tvPay = paymentView.findViewById(R.id.tv_pay);
 
-        imgWechatSelect.setVisibility(View.VISIBLE);
-        tvPay.setText(String.format(getResources().getString(R.string.increment_account_pay_money), money));
+        PayTypeAdapter adapter = new PayTypeAdapter(this, null);
+
+        recyclerView.setHasFixedSize(false);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.setAdapter(adapter);
+
+        tvPay.setText(String.format(getResources().getString(R.string.increment_account_pay_money),
+                MarketUtil.decimalFormatMoney(MarketUtil.getPriceValue(money))));
+        adapter.setNewData(mPayIconVoList);
 
         imgCancel.setOnClickListener(v -> dialog.dismiss());
 
         tvPay.setOnClickListener(v -> {
             dialog.dismiss();
 
-            gotoPayment();
+            gotoPayment(money);
         });
 
         dialog.setContentView(paymentView);
         dialog.show();
     }
 
-    private void gotoPayment() {
+    private void gotoPayment(String money) {
         if (mWxapi.isWXAppInstalled())
-            wechatPay();
+            serviceFeePay(money);
         else
             showShortToast(R.string.text_wechat_uninstalled);
-    }
-
-    private void wechatPay() {
-
     }
 
     private void getCustomerArrearage() {
@@ -104,7 +116,14 @@ public class WithholdActivity extends JMEBaseActivity {
     }
 
     private void getPayIcon() {
-        sendRequest(ManagementService.getInstance().getPayIcon, new HashMap<>(), true);
+        sendRequest(ManagementService.getInstance().getPayIcon, new HashMap<>(), false);
+    }
+
+    private void serviceFeePay(String money) {
+        HashMap<String, String> params = new HashMap<>();
+        params.put("", money);
+
+        sendRequest(PaymentService.getInstance().serviceFeePay, params, true);
     }
 
     @Override
@@ -121,6 +140,24 @@ public class WithholdActivity extends JMEBaseActivity {
                 }
 
                 break;
+            case "GetPayIcon":
+                if (head.isSuccess()) {
+                    try {
+                        mPayIconVoList = (List<PayIconVo>) response;
+                    } catch (Exception e) {
+                        mPayIconVoList = null;
+
+                        e.printStackTrace();
+                    }
+                }
+
+                break;
+            case "ServiceFeePay":
+                if (head.isSuccess()) {
+
+                }
+
+                break;
         }
     }
 
@@ -128,7 +165,7 @@ public class WithholdActivity extends JMEBaseActivity {
 
         public void onClickPay() {
             if (!TextUtils.isEmpty(mMoney))
-                getPayIcon();
+                showPaymentBottomDialog(mMoney);
         }
     }
 
