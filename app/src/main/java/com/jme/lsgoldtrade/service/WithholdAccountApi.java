@@ -21,6 +21,6 @@ public interface WithholdAccountApi {
     @POST("/fundAccount/api/v1/android/withhold/sign")
     Call<DTResponse> sign(@Body Map<String, String> map);
 
-    @GET("/fundAccount/api/v1/android/getCustomerSignBankList/getBanks")
+    @GET("/fundAccount/api/v1/android/withhold/getCustomerSignBankList")
     Call<DTResponse> getCustomerSignBankList(@QueryMap Map<String, String> map);
 }

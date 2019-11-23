@@ -182,7 +182,7 @@ public class WithholdContractActivity extends JMEBaseActivity {
                     mName = identityInfoVo.getName();
                     mIDCard = identityInfoVo.getIdCard();
 
-                    mBinding.tvName.setText(StringUtils.fromatName(mName));
+                    mBinding.tvName.setText(StringUtils.formatName(mName));
                     mBinding.tvIdCard.setText(StringUtils.formatIDCardNumber(mIDCard));
                 }
 

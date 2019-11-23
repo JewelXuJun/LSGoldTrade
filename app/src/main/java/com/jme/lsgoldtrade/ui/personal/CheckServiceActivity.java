@@ -280,6 +280,8 @@ public class CheckServiceActivity extends JMEBaseActivity {
 
                     mBinding.layoutPay.setVisibility(TextUtils.isEmpty(money) || new BigDecimal(money).compareTo(BigDecimal.ZERO) == 0 ? View.GONE : View.VISIBLE);
                     mBinding.tvMoney.setText(TextUtils.isEmpty(money) ? "" : MarketUtil.decimalFormatMoney(MarketUtil.getPriceValue(money)));
+                } else {
+                    mBinding.layoutPay.setVisibility(View.GONE);
                 }
 
                 break;
@@ -334,7 +336,7 @@ public class CheckServiceActivity extends JMEBaseActivity {
         }
 
         public void onClickPay() {
-
+            ARouter.getInstance().build(Constants.ARouterUriConst.WITHHOLD).navigation();
         }
 
         public void onClickService() {

@@ -11,39 +11,11 @@
 
         <include layout="@layout/item_line_vertical" />
 
-        <LinearLayout
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerView"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/height_order_item"
-            android:background="@color/white"
-            android:gravity="center_vertical"
-            android:paddingLeft="@dimen/common_area_margin"
-            android:paddingRight="@dimen/common_area_margin"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@color/color_text_normal"
-                android:text="@string/increment_account_singed_bankcard"
-                android:textSize="@dimen/size_normal"/>
-
-            <TextView
-                android:id="@+id/tv_bank"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/common_area_margin_large"
-                android:textColor="@color/black_deep"
-                android:textSize="@dimen/common_font_size"/>
-
-            <TextView
-                android:id="@+id/tv_bankcard"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/common_area_margin"
-                android:textColor="@color/black_deep"
-                android:textSize="@dimen/common_font_size"/>
-
-        </LinearLayout>
+            android:layout_height="wrap_content"
+            android:scrollbars="none"/>
 
     </LinearLayout>
 

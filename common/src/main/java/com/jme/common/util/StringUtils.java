@@ -44,7 +44,7 @@ public class StringUtils {
         return "****" + bankCard.substring(length - 4, length);
     }
 
-    public static String fromatBankCard(String bankCard) {
+    public static String formatBankCardDefault(String bankCard) {
         if (TextUtils.isEmpty(bankCard))
             return "";
 
@@ -53,23 +53,14 @@ public class StringUtils {
         if (length < 8)
             return "";
 
-        return bankCard.substring(0, 4) + " **** **** " + bankCard.substring(length - 4, length);
+        return bankCard.substring(0, 4) + "****" + bankCard.substring(length - 4, length);
     }
 
-    public static String fromatName(String name) {
+    public static String formatName(String name) {
         if (TextUtils.isEmpty(name))
             return "";
         else
             return "**" + name.substring(name.length() - 1);
-    }
-
-    public static boolean checkBankCardLength(String bankCard) {
-        int length = bankCard.length();
-
-        if (length < 13 || length > 19)
-            return false;
-
-        return true;
     }
 
     public static String formatUpperCase(String value) {
