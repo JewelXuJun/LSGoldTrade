@@ -20,7 +20,7 @@ public class Constants {
         public static final int SECURITY = 5;
         public static final int SECURITY_WAN = 6;
 
-        public static int Envi = SECURITY_WAN;
+        public static int Envi = PREPRODUCE;
 
         private HttpConst() {
 
@@ -87,6 +87,7 @@ public class Constants {
                 URL_BASE_MARKET = "http://180.97.47.179:18080";
                 URL_BASE_TRADE = "http://180.97.47.179:18080";
                 URL_BASE_ACCOUNT = "http://180.97.47.179:18080";
+                URL_BASE_CONDOTION = "http://180.97.47.179:18080";
                 URL_BASE_MANAGEMENT = "http://180.97.47.179:18080";
                 URL_INFO = "http://180.97.47.179:18080/tjsmanage/infoapi/v1/android/cmsComtentTxt/get?contentId=";
                 URL_TRADINGBOX = "http://180.97.47.179:18080/tjsmanage/openacct/wap/tradingBox.html";

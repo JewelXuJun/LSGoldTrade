@@ -188,7 +188,7 @@ public class CreateConditionSheetFragment extends JMEBaseFragment {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-
+                mBinding.etAmount.setSelection(s.length());
             }
 
             @Override
@@ -328,7 +328,7 @@ public class CreateConditionSheetFragment extends JMEBaseFragment {
             mMaxOrderQty = mContractInfoVo.getMaxOrderQty();
             mMaxHoldQty = mContractInfoVo.getMaxHoldQty();
 
-            mBinding.etAmount.setText(mMinOrderQty == -1 ? "1" : String.valueOf(mMinOrderQty));
+            mBinding.etAmount.setText("1");
         }
     }
 
@@ -506,7 +506,6 @@ public class CreateConditionSheetFragment extends JMEBaseFragment {
         }
 
         mBinding.tvCount.setText(mMaxAmount + mContext.getResources().getString(R.string.text_amount_unit));
-        mBinding.etAmount.setText(0 == mMaxAmount ? "0" : "1");
     }
 
     private void showConfirmPopupWindow(String price, String amount) {
@@ -769,6 +768,8 @@ public class CreateConditionSheetFragment extends JMEBaseFragment {
             if (null != mTenSpeedVo && mTenSpeedVo.getContractId().equals(mContractID))
                 mBinding.etPrice.setText(MarketUtil.formatValue(mTenSpeedVo.getLatestPriceValue(), mLength));
 
+            mBinding.etAmount.setText("1");
+
             setMarketType();
             setConditionSheetDetail();
             calculateMaxAmount();
@@ -783,6 +784,8 @@ public class CreateConditionSheetFragment extends JMEBaseFragment {
 
             if (null != mTenSpeedVo && mTenSpeedVo.getContractId().equals(mContractID))
                 mBinding.etPrice.setText(MarketUtil.formatValue(mTenSpeedVo.getLatestPriceValue(), mLength));
+
+            mBinding.etAmount.setText("1");
 
             setMarketType();
             setConditionSheetDetail();
