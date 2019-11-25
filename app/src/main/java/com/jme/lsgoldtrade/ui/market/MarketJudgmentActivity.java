@@ -359,11 +359,15 @@ public class MarketJudgmentActivity extends JMEBaseActivity {
                         if (null != positionVoList && 0 != positionVoList.size()) {
                             for (PositionVo positionVo : positionVoList) {
                                 if (null != positionVo && positionVo.getContractId().equals(mContractID)) {
-                                    if (mBsFlag == 1 && positionVo.getType().equals("多")) {
-                                        mPositionVo = positionVo;
+                                    if (positionVo.getType().equals("多")) {
+                                        if (mBsFlag == 1)
+                                            mPositionVo = positionVo;
+
                                         mLongPositionMargin = positionVo.getPositionMargin();
-                                    } else if (mBsFlag == 2 && positionVo.getType().equals("空")) {
-                                        mPositionVo = positionVo;
+                                    } else if (positionVo.getType().equals("空")) {
+                                        if (mBsFlag == 2)
+                                            mPositionVo = positionVo;
+
                                         mShortPositionMargin = positionVo.getPositionMargin();
                                     }
                                 }

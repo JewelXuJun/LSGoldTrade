@@ -25,7 +25,7 @@ public class Constants {
         public static String URL_BASE_MARKET;                   // 行情
         public static String URL_BASE_TRADE;                    // 交易
         public static String URL_BASE_ACCOUNT;                  // 增值服务
-        public static String URL_BASE_WITHHOLD_ACCOUNT;         // 增值服务
+        public static String URL_BASE_WITHHOLD_ACCOUNT;         // 签约代扣
         public static String URL_BASE_CONDOTION;                // 条件单
         public static String URL_BASE_MANAGEMENT;               // 管理后台 banner 资讯等
         public static String URL_INFO;                          // 资讯详情

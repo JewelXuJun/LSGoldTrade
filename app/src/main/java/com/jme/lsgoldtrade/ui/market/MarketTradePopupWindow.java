@@ -204,7 +204,7 @@ public class MarketTradePopupWindow extends JMEBasePopupWindow {
                     BigDecimal handWeightMoney = new BigDecimal(price).multiply(new BigDecimal(handWeightValue));
                     BigDecimal fee = handWeightMoney.multiply(feeRate);
                     BigDecimal contractFee = bankMarginRateValue.add(bankFeeRateValue).add(exchangeFeeRateValue);
-                    BigDecimal money = new BigDecimal(transactionBalance).add(new BigDecimal(mPositionMargin));
+                    BigDecimal money = new BigDecimal(transactionBalance).add(new BigDecimal(MarketUtil.getPriceValue(mPositionMargin)));
                     BigDecimal contractMoney = handWeightMoney.multiply(contractFee);
                     BigDecimal totalAmount = money.divide(contractMoney, 0, BigDecimal.ROUND_DOWN);
 

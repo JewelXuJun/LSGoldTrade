@@ -487,11 +487,15 @@ public class CreateConditionSheetFragment extends JMEBaseFragment {
                     if (null != mPositionVoList && 0 != mPositionVoList.size()) {
                         for (PositionVo positionVo : mPositionVoList) {
                             if (null != positionVo && positionVo.getContractId().equals(mContractID)) {
-                                if (mType == TYPE_BUY_MORE && positionVo.getType().equals("多")) {
-                                    positionVoValue = positionVo;
+                                if (positionVo.getType().equals("多")) {
+                                    if (mType == TYPE_BUY_MORE)
+                                        positionVoValue = positionVo;
+
                                     longPositionMargin = positionVo.getPositionMargin();
-                                } else if (mType == TYPE_SELL_EMPTY && positionVo.getType().equals("空")) {
-                                    positionVoValue = positionVo;
+                                } else if (positionVo.getType().equals("空")) {
+                                    if (mType == TYPE_SELL_EMPTY)
+                                        positionVoValue = positionVo;
+
                                     shortPositionMargin = positionVo.getPositionMargin();
                                 }
                             }
@@ -517,7 +521,7 @@ public class CreateConditionSheetFragment extends JMEBaseFragment {
                     BigDecimal handWeightMoney = new BigDecimal(price).multiply(new BigDecimal(handWeightValue));
                     BigDecimal fee = handWeightMoney.multiply(feeRate);
                     BigDecimal contractFee = bankMarginRateValue.add(bankFeeRateValue).add(exchangeFeeRateValue);
-                    BigDecimal money = new BigDecimal(transactionBalance).add(new BigDecimal(positionMargin));
+                    BigDecimal money = new BigDecimal(transactionBalance).add(new BigDecimal(MarketUtil.getPriceValue(positionMargin)));
                     BigDecimal contractMoney = handWeightMoney.multiply(contractFee);
                     BigDecimal totalAmount = money.divide(contractMoney, 0, BigDecimal.ROUND_DOWN);
 
