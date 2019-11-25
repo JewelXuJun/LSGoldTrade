@@ -42,8 +42,7 @@ public class DetailsAdapter extends BaseQuickAdapter<UserDetailsVo, BaseViewHold
         }
 
         helper.setText(R.id.tv_money, BigDecimalUtil.formatMoney(new BigDecimal(item.getAmount()).divide(new BigDecimal(100)).toPlainString()))
-                .setText(R.id.tv_type, item.getOperateType())
-                .setText(R.id.tv_status, item.getStatusStr());
+                .setText(R.id.tv_type, item.getOperateType());
     }
 }
 

@@ -99,7 +99,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:gravity="center"
+                android:gravity="center|left"
+                android:paddingLeft="@dimen/common_area_margin"
                 android:text="@string/increment_time"
                 android:textColor="@color/color_text_normal"
                 android:textSize="@dimen/sp_12" />
@@ -117,17 +118,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:gravity="center"
+                android:gravity="center|right"
+                android:paddingRight="@dimen/common_area_margin"
                 android:text="@string/transaction_type"
-                android:textColor="@color/color_text_normal"
-                android:textSize="@dimen/sp_12" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:text="@string/transaction_state"
                 android:textColor="@color/color_text_normal"
                 android:textSize="@dimen/sp_12" />
 

@@ -30,9 +30,6 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
-/**
- * 账户明细
- */
 @Route(path = Constants.ARouterUriConst.DETAILS)
 public class DetailsActivity extends JMEBaseActivity implements OnRefreshListener, BaseQuickAdapter.RequestLoadMoreListener {
 
