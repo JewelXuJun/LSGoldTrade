@@ -202,7 +202,7 @@ public class CreateConditionSheetFragment extends JMEBaseFragment {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-
+                mBinding.etAmount.setSelection(s.length());
             }
 
             @Override
