@@ -1,15 +1,11 @@
 package com.jme.lsgoldtrade.config;
 
-/**
- * 网络配置
- */
 public class Constants {
 
     private Constants() {
 
     }
 
-    // Http常量配置
     public static final class HttpConst {
 
         public static final int TEST_WAN = 0;
@@ -93,6 +89,7 @@ public class Constants {
                 URL_BASE_TRADE = "http://180.97.47.179:18080";
                 URL_BASE_ACCOUNT = "http://180.97.47.179:18080";
                 URL_BASE_WITHHOLD_ACCOUNT = "http://180.97.47.179:18080";
+                URL_BASE_CONDOTION = "http://180.97.47.179:18080";
                 URL_BASE_MANAGEMENT = "http://180.97.47.179:18080";
                 URL_INFO = "http://180.97.47.179:18080/tjsmanage/infoapi/v1/android/cmsComtentTxt/get?contentId=";
                 URL_TRADINGBOX = "http://180.97.47.179:18080/tjsmanage/openacct/wap/tradingBox.html";
@@ -121,7 +118,6 @@ public class Constants {
 
     }
 
-    // RxBus常量配置
     public static final class RxBusConst {
 
         private RxBusConst() {
@@ -175,10 +171,9 @@ public class Constants {
         public static final int MSG_TRADE_POSITION_UPDATE_DATA = 7;
         public static final int MSG_SYNTIME = 8;
         public static final int MSG_TRADE_POSITION_UPDATE_ACCOUNT_DATA = 9;
-        public static final int MSG_BING_ACCOUNT_SUCCESS = 10;
-        public static final int MSG_JUDGEMENT_UPDATE_DATA = 11;
-        public static final int MSG_JUDGEMENT_RELOAD_DATA = 12;
-        public static final int MSG_UARNING_PDATE_DATA = 13;
+        public static final int MSG_JUDGEMENT_UPDATE_DATA = 10;
+        public static final int MSG_JUDGEMENT_RELOAD_DATA = 11;
+        public static final int MSG_UARNING_PDATE_DATA = 12;
 
     }
 
