@@ -344,6 +344,7 @@ public class CreateConditionSheetFragment extends JMEBaseFragment {
 
                 mBinding.tvContractId.setText(mContractID);
                 mBinding.etPrice.setInputType(mContractID.equals("Ag(T+D)") ? InputType.TYPE_CLASS_NUMBER : EditorInfo.TYPE_CLASS_NUMBER | EditorInfo.TYPE_NUMBER_FLAG_DECIMAL);
+                mBinding.etAmount.setText("1");
 
                 mHandler.removeMessages(Constants.Msg.MSG_MARKET_UPDATE);
 
