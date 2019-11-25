@@ -103,7 +103,7 @@ public class WithholdContractActivity extends JMEBaseActivity {
                 } else {
                     int length = bankCard.length();
 
-                    if (length == 6)
+                    if (length >= 6)
                         getBanks(bankCard);
                     else if (length < 6)
                         mBinding.tvBankName.setText("");

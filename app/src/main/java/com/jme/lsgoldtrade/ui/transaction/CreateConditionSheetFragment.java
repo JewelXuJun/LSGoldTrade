@@ -291,6 +291,7 @@ public class CreateConditionSheetFragment extends JMEBaseFragment {
 
             switch (callType) {
                 case Constants.RxBusConst.RXBUS_ORDER_SUCCESS:
+                    mPagingKey = "";
                     mPositionVoList.clear();
 
                     getAccount();
@@ -480,39 +481,48 @@ public class CreateConditionSheetFragment extends JMEBaseFragment {
                     mMaxAmount = mMaxOrderQty;
                 } else {
                     PositionVo positionVoValue = null;
+                    long longPositionMargin = 0;
+                    long shortPositionMargin = 0;
 
                     if (null != mPositionVoList && 0 != mPositionVoList.size()) {
                         for (PositionVo positionVo : mPositionVoList) {
                             if (null != positionVo && positionVo.getContractId().equals(mContractID)) {
-                                if (mType == TYPE_BUY_MORE && positionVo.getType().equals("多"))
+                                if (mType == TYPE_BUY_MORE && positionVo.getType().equals("多")) {
                                     positionVoValue = positionVo;
-                                else if (mType == TYPE_SELL_EMPTY && positionVo.getType().equals("空"))
+                                    longPositionMargin = positionVo.getPositionMargin();
+                                } else if (mType == TYPE_SELL_EMPTY && positionVo.getType().equals("空")) {
                                     positionVoValue = positionVo;
+                                    shortPositionMargin = positionVo.getPositionMargin();
+                                }
                             }
                         }
                     }
 
                     String transactionBalance = mAccountVo.getTransactionBalanceStr();
-                    String positionMargin = null == mAccountVo ? "0" : mAccountVo.getPositionMarginStr();
 
+                    long positionMargin = Math.abs(longPositionMargin - shortPositionMargin);
                     long bankLongMarginRate = mContractInfoVo.getBankLongMarginRate();
                     long bankShortMarginRate = mContractInfoVo.getBankShortMarginRate();
                     long bankFeeRate = mContractInfoVo.getBankFeeRate();
                     long exchangeFeeRate = mContractInfoVo.getExchangeFeeRate();
                     long handWeight = MarketUtil.getHandWeight(mContractInfoVo.getHandWeight());
+                    long handWeightValue = mContractID.equals("Ag(T+D)") ?
+                            new BigDecimal(handWeight).divide(new BigDecimal(1000), 0, BigDecimal.ROUND_HALF_UP).longValue() : handWeight;
                     long bankMarginRate = mType == TYPE_BUY_MORE ? bankLongMarginRate : bankShortMarginRate;
 
-                    BigDecimal money = new BigDecimal(transactionBalance).add(new BigDecimal(positionMargin));
-                    BigDecimal contractMoney = new BigDecimal(price).multiply(new BigDecimal(mContractID.equals("Ag(T+D)") ?
-                            new BigDecimal(handWeight).divide(new BigDecimal(1000), 0, BigDecimal.ROUND_HALF_UP).longValue() : handWeight));
-                    BigDecimal bankMarginRateValue = new BigDecimal(bankMarginRate).divide(new BigDecimal(10000));
                     BigDecimal bankFeeRateValue = new BigDecimal(bankFeeRate).divide(new BigDecimal(10000)).divide(new BigDecimal(10000));
                     BigDecimal exchangeFeeRateValue = new BigDecimal(exchangeFeeRate).divide(new BigDecimal(10000)).divide(new BigDecimal(10000));
-                    BigDecimal feeRate = bankMarginRateValue.add(bankFeeRateValue).add(exchangeFeeRateValue);
-                    BigDecimal totalAmount = money.divide(contractMoney.multiply(feeRate), 0, BigDecimal.ROUND_DOWN);
+                    BigDecimal feeRate = bankFeeRateValue.add(exchangeFeeRateValue);
+                    BigDecimal bankMarginRateValue = new BigDecimal(bankMarginRate).divide(new BigDecimal(10000));
+                    BigDecimal handWeightMoney = new BigDecimal(price).multiply(new BigDecimal(handWeightValue));
+                    BigDecimal fee = handWeightMoney.multiply(feeRate);
+                    BigDecimal contractFee = bankMarginRateValue.add(bankFeeRateValue).add(exchangeFeeRateValue);
+                    BigDecimal money = new BigDecimal(transactionBalance).add(new BigDecimal(positionMargin));
+                    BigDecimal contractMoney = handWeightMoney.multiply(contractFee);
+                    BigDecimal totalAmount = money.divide(contractMoney, 0, BigDecimal.ROUND_DOWN);
 
-                    mMaxAmount = (new BigDecimal(Math.min(totalAmount.longValue(), mMaxOrderQty))
-                            .subtract(null == positionVoValue ? BigDecimal.ZERO : new BigDecimal(positionVoValue.getPosition()))).longValue();
+                    mMaxAmount = Math.min(Math.min(totalAmount.subtract(null == positionVoValue ? BigDecimal.ZERO : new BigDecimal(positionVoValue.getPosition())).longValue(),
+                            mMaxOrderQty), new BigDecimal(transactionBalance).divide(fee, 0, BigDecimal.ROUND_DOWN).longValue());
 
                     if (new BigDecimal(mMaxAmount).compareTo(new BigDecimal(0)) == -1)
                         mMaxAmount = 0;

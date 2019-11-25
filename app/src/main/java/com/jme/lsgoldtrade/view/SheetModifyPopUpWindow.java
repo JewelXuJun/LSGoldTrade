@@ -48,6 +48,7 @@ public class SheetModifyPopUpWindow extends JMEBasePopupWindow {
     private String mHighLimitPrice;
     private String mName;
     private String mIDCard;
+    private long mPositionMargin = 0;
     private long mMinOrderQty = 0;
     private long mMaxOrderQty = 0;
     private long mMaxHoldQty = 0;
@@ -165,7 +166,7 @@ public class SheetModifyPopUpWindow extends JMEBasePopupWindow {
 
     public void setData(TenSpeedVo tenSpeedVo, AccountVo accountVo, PositionVo positionVo,
                         ContractInfoVo contractInfoVo, ConditionOrderInfoVo conditionOrderInfoVo,
-                        String name, String idCard) {
+                        long positionMargin, String name, String idCard) {
         mTenSpeedVo = tenSpeedVo;
         mAccount = accountVo;
         mPositionVo = positionVo;
@@ -182,6 +183,7 @@ public class SheetModifyPopUpWindow extends JMEBasePopupWindow {
         mMaxOrderQty = null == mContractInfoVo ? 0 : mContractInfoVo.getMaxOrderQty();
         mMaxHoldQty = null == mContractInfoVo ? 0 : mContractInfoVo.getMaxHoldQty();
         mLength = mContractID.equals("Ag(T+D)") ? 0 : 2;
+        mPositionMargin = positionMargin;
         mName = name;
         mIDCard = idCard;
 
@@ -243,26 +245,29 @@ public class SheetModifyPopUpWindow extends JMEBasePopupWindow {
                     mMaxAmount = mMaxOrderQty;
                 } else {
                     String transactionBalance = mAccount.getTransactionBalanceStr();
-                    String positionMargin = null == mAccount ? "0" : mAccount.getPositionMarginStr();
 
                     long bankLongMarginRate = mContractInfoVo.getBankLongMarginRate();
                     long bankShortMarginRate = mContractInfoVo.getBankShortMarginRate();
                     long bankFeeRate = mContractInfoVo.getBankFeeRate();
                     long exchangeFeeRate = mContractInfoVo.getExchangeFeeRate();
                     long handWeight = MarketUtil.getHandWeight(mContractInfoVo.getHandWeight());
+                    long handWeightValue = mContractID.equals("Ag(T+D)") ?
+                            new BigDecimal(handWeight).divide(new BigDecimal(1000), 0, BigDecimal.ROUND_HALF_UP).longValue() : handWeight;
                     long bankMarginRate = mBsFlag == 1 ? bankLongMarginRate : bankShortMarginRate;
 
-                    BigDecimal money = new BigDecimal(transactionBalance).add(new BigDecimal(positionMargin));
-                    BigDecimal contractMoney = new BigDecimal(price).multiply(new BigDecimal(mContractID.equals("Ag(T+D)") ?
-                            new BigDecimal(handWeight).divide(new BigDecimal(1000), 0, BigDecimal.ROUND_HALF_UP).longValue() : handWeight));
-                    BigDecimal bankMarginRateValue = new BigDecimal(bankMarginRate).divide(new BigDecimal(10000));
                     BigDecimal bankFeeRateValue = new BigDecimal(bankFeeRate).divide(new BigDecimal(10000)).divide(new BigDecimal(10000));
                     BigDecimal exchangeFeeRateValue = new BigDecimal(exchangeFeeRate).divide(new BigDecimal(10000)).divide(new BigDecimal(10000));
-                    BigDecimal feeRate = bankMarginRateValue.add(bankFeeRateValue).add(exchangeFeeRateValue);
-                    BigDecimal totalAmount = money.divide(contractMoney.multiply(feeRate), 0, BigDecimal.ROUND_DOWN);
+                    BigDecimal feeRate = bankFeeRateValue.add(exchangeFeeRateValue);
+                    BigDecimal bankMarginRateValue = new BigDecimal(bankMarginRate).divide(new BigDecimal(10000));
+                    BigDecimal handWeightMoney = new BigDecimal(price).multiply(new BigDecimal(handWeightValue));
+                    BigDecimal fee = handWeightMoney.multiply(feeRate);
+                    BigDecimal contractFee = bankMarginRateValue.add(bankFeeRateValue).add(exchangeFeeRateValue);
+                    BigDecimal money = new BigDecimal(transactionBalance).add(new BigDecimal(mPositionMargin));
+                    BigDecimal contractMoney = handWeightMoney.multiply(contractFee);
+                    BigDecimal totalAmount = money.divide(contractMoney, 0, BigDecimal.ROUND_DOWN);
 
-                    mMaxAmount = (new BigDecimal(Math.min(totalAmount.longValue(), mMaxOrderQty))
-                            .subtract(null == mPositionVo ? BigDecimal.ZERO : new BigDecimal(mPositionVo.getPosition()))).longValue();
+                    mMaxAmount = Math.min(Math.min(totalAmount.subtract(null == mPositionVo ? BigDecimal.ZERO : new BigDecimal(mPositionVo.getPosition())).longValue(),
+                            mMaxOrderQty), new BigDecimal(transactionBalance).divide(fee, 0, BigDecimal.ROUND_DOWN).longValue());
 
                     if (new BigDecimal(mMaxAmount).compareTo(new BigDecimal(0)) == -1)
                         mMaxAmount = 0;

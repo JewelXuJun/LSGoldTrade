@@ -61,6 +61,7 @@ public class OwnConditionSheetFragment extends JMEBaseFragment implements OnRefr
 
     private long mStartTime = 0;
     private long mEndTime = 0;
+    private long mPositionMargin = 0;
     private int mYear;
     private int mMonth;
     private int mDayOfMonth;
@@ -354,7 +355,7 @@ public class OwnConditionSheetFragment extends JMEBaseFragment implements OnRefr
 
             mSheetModifyPopUpWindow.setData(tenSpeedVoValue, mAccountVo, mPositionVo,
                     null == mContract ? null : mContract.getContractInfoFromID(conditionOrderInfoVo.getContractId()),
-                    conditionOrderInfoVo, mName, mIDCard);
+                    conditionOrderInfoVo, mPositionMargin, mName, mIDCard);
             mSheetModifyPopUpWindow.showAtLocation(mBinding.tvStartTime, Gravity.BOTTOM, 0, 0);
         }
     }
@@ -703,16 +704,24 @@ public class OwnConditionSheetFragment extends JMEBaseFragment implements OnRefr
                     if (null != positionPageVo) {
                         List<PositionVo> positionVoList = positionPageVo.getPositionList();
 
+                        long longPositionMargin = 0;
+                        long shortPositionMargin = 0;
+
                         if (null != positionVoList && 0 != positionVoList.size()) {
                             for (PositionVo positionVo : positionVoList) {
                                 if (null != positionVo && positionVo.getContractId().equals(mConditionOrderInfoVo.getContractId())) {
-                                    if (mConditionOrderInfoVo.getBsFlag() == 1 && positionVo.getType().equals("多"))
+                                    if (mConditionOrderInfoVo.getBsFlag() == 1 && positionVo.getType().equals("多")) {
                                         mPositionVo = positionVo;
-                                    else if (mConditionOrderInfoVo.getBsFlag() == 2 && positionVo.getType().equals("空"))
+                                        longPositionMargin = positionVo.getPositionMargin();
+                                    } else if (mConditionOrderInfoVo.getBsFlag() == 2 && positionVo.getType().equals("空")) {
                                         mPositionVo = positionVo;
+                                        shortPositionMargin = positionVo.getPositionMargin();
+                                    }
                                 }
                             }
                         }
+
+                        mPositionMargin = Math.abs(longPositionMargin - shortPositionMargin);
 
                         if (positionPageVo.isHasNext()) {
                             getPosition();

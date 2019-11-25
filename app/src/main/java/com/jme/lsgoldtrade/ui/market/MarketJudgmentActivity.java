@@ -56,12 +56,18 @@ public class MarketJudgmentActivity extends JMEBaseActivity {
 
     private String mContractID;
     private String mRemainTradeDay;
+    private String mPagingKey = "";
     private int mBsFlag = 0;
     private int mOcFlag = 0;
+    private long mLongPositionMargin = 0;
+    private long mShortPositionMargin = 0;
+
+    private List<String> mList;
 
     private ContractInfoVo mContractInfoVo;
     private TenSpeedVo mTenSpeedVo;
     private AccountVo mAccountVo;
+    private PositionVo mPositionVo;
 
     private MarketJudgmentPagerAdapter mAdapter;
     private MarketTradePopupWindow mMarketTradePopupWindow;
@@ -123,12 +129,12 @@ public class MarketJudgmentActivity extends JMEBaseActivity {
                     if (null == object)
                         return;
 
-                    List<String> list = (List<String>) object;
+                    mList = (List<String>) object;
 
-                    if (null == list || 5 != list.size())
+                    if (null == mList || 5 != mList.size())
                         return;
 
-                    limitOrder(list.get(0), list.get(1), list.get(2), list.get(3), list.get(4));
+                    queryLoginResult();
 
                     break;
             }
@@ -242,7 +248,7 @@ public class MarketJudgmentActivity extends JMEBaseActivity {
 
         HashMap<String, String> params = new HashMap<>();
         params.put("accountId", accountID);
-        params.put("pagingKey", "");
+        params.put("pagingKey", mPagingKey);
 
         sendRequest(TradeService.getInstance().position, params, false);
     }
@@ -316,7 +322,7 @@ public class MarketJudgmentActivity extends JMEBaseActivity {
                             mSignedPopUpWindow.showAtLocation(mBinding.tablayout, Gravity.CENTER, 0, 0);
                         }
                     } else {
-                        getAccount();
+                        limitOrder(mList.get(0), mList.get(1), mList.get(2), mList.get(3), mList.get(4));
                     }
                 }
 
@@ -347,27 +353,35 @@ public class MarketJudgmentActivity extends JMEBaseActivity {
                         e.printStackTrace();
                     }
 
-                    PositionVo positionVoValue = null;
-
                     if (null != positionPageVo) {
                         List<PositionVo> positionVoList = positionPageVo.getPositionList();
 
                         if (null != positionVoList && 0 != positionVoList.size()) {
                             for (PositionVo positionVo : positionVoList) {
                                 if (null != positionVo && positionVo.getContractId().equals(mContractID)) {
-                                    if (mBsFlag == 1 && positionVo.getType().equals("多"))
-                                        positionVoValue = positionVo;
-                                    else if (mBsFlag == 2 && positionVo.getType().equals("空"))
-                                        positionVoValue = positionVo;
+                                    if (mBsFlag == 1 && positionVo.getType().equals("多")) {
+                                        mPositionVo = positionVo;
+                                        mLongPositionMargin = positionVo.getPositionMargin();
+                                    } else if (mBsFlag == 2 && positionVo.getType().equals("空")) {
+                                        mPositionVo = positionVo;
+                                        mShortPositionMargin = positionVo.getPositionMargin();
+                                    }
                                 }
                             }
                         }
-                    }
 
-                    if (null != mMarketTradePopupWindow && !mMarketTradePopupWindow.isShowing()) {
-                        mMarketTradePopupWindow.setData(mTenSpeedVo, mAccountVo, positionVoValue, mContractInfoVo,
-                                mUser.getAccount(), mBsFlag, mOcFlag);
-                        mMarketTradePopupWindow.showAtLocation(mBinding.tablayout, Gravity.BOTTOM, 0, 0);
+                        boolean hasNext = positionPageVo.isHasNext();
+                        mPagingKey = positionPageVo.getPagingKey();
+
+                        if (hasNext) {
+                            position();
+                        } else {
+                            if (null != mMarketTradePopupWindow && !mMarketTradePopupWindow.isShowing()) {
+                                mMarketTradePopupWindow.setData(mTenSpeedVo, mAccountVo, mPositionVo, mContractInfoVo,
+                                        mUser.getAccount(), Math.abs(mLongPositionMargin - mShortPositionMargin), mBsFlag, mOcFlag);
+                                mMarketTradePopupWindow.showAtLocation(mBinding.tablayout, Gravity.BOTTOM, 0, 0);
+                            }
+                        }
                     }
                 }
 
@@ -413,8 +427,9 @@ public class MarketJudgmentActivity extends JMEBaseActivity {
 
                 mBsFlag = 1;
                 mOcFlag = 0;
+                mPagingKey = "";
 
-                queryLoginResult();
+                getAccount();
             }
         }
 
@@ -439,8 +454,9 @@ public class MarketJudgmentActivity extends JMEBaseActivity {
 
                 mBsFlag = 2;
                 mOcFlag = 0;
+                mPagingKey = "";
 
-                queryLoginResult();
+                getAccount();
             }
         }
 

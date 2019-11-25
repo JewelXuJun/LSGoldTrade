@@ -77,6 +77,7 @@ public class MarketDetailActivity extends JMEBaseActivity implements FChart.OnPr
 
     private TenSpeedVo mTenSpeedVo;
     private AccountVo mAccountVo;
+    private PositionVo mPositionVo;
     private ContractInfoVo mContractInfoVo;
     private MarketTradePopupWindow mMarketTradePopupWindow;
     private ConfirmPopupwindow mConfirmPopupwindow;
@@ -95,6 +96,7 @@ public class MarketDetailActivity extends JMEBaseActivity implements FChart.OnPr
 
     private String mContractId;
     private String mRemainTradeDay;
+    private String mPagingKey = "";
     private boolean bFlag = true;
     private boolean bHighlight = false;
     private boolean bHasMoreKDataFlag = true;
@@ -104,7 +106,11 @@ public class MarketDetailActivity extends JMEBaseActivity implements FChart.OnPr
     private int mTChartCount;
     private int mBsFlag = 0;
     private int mOcFlag = 0;
+    private long mLongPositionMargin = 0;
+    private long mShortPositionMargin = 0;
     private String[] mContractIdList;
+
+    private List<String> mList;
 
     private Subscription mRxbus;
 
@@ -289,12 +295,12 @@ public class MarketDetailActivity extends JMEBaseActivity implements FChart.OnPr
                     if (null == object)
                         return;
 
-                    List<String> list = (List<String>) object;
+                    mList = (List<String>) object;
 
-                    if (null == list || 5 != list.size())
+                    if (null == mList || 5 != mList.size())
                         return;
 
-                    limitOrder(list.get(0), list.get(1), list.get(2), list.get(3), list.get(4));
+                    queryLoginResult();
 
                     break;
                 case Constants.RxBusConst.RXBUS_LOGIN_SUCCESS:
@@ -753,7 +759,7 @@ public class MarketDetailActivity extends JMEBaseActivity implements FChart.OnPr
 
         HashMap<String, String> params = new HashMap<>();
         params.put("accountId", accountID);
-        params.put("pagingKey", "");
+        params.put("pagingKey", mPagingKey);
 
         sendRequest(TradeService.getInstance().position, params, false);
     }
@@ -925,7 +931,7 @@ public class MarketDetailActivity extends JMEBaseActivity implements FChart.OnPr
                             mSignedPopUpWindow.showAtLocation(mBinding.tvHigh, Gravity.CENTER, 0, 0);
                         }
                     } else {
-                        getAccount();
+                        limitOrder(mList.get(0), mList.get(1), mList.get(2), mList.get(3), mList.get(4));
                     }
                 }
 
@@ -956,27 +962,35 @@ public class MarketDetailActivity extends JMEBaseActivity implements FChart.OnPr
                         e.printStackTrace();
                     }
 
-                    PositionVo positionVoValue = null;
-
                     if (null != positionPageVo) {
                         List<PositionVo> positionVoList = positionPageVo.getPositionList();
 
                         if (null != positionVoList && 0 != positionVoList.size()) {
                             for (PositionVo positionVo : positionVoList) {
                                 if (null != positionVo && positionVo.getContractId().equals(mContractId)) {
-                                    if (mBsFlag == 1 && positionVo.getType().equals("多"))
-                                        positionVoValue = positionVo;
-                                    else if (mBsFlag == 2 && positionVo.getType().equals("空"))
-                                        positionVoValue = positionVo;
+                                    if (mBsFlag == 1 && positionVo.getType().equals("多")) {
+                                        mPositionVo = positionVo;
+                                        mLongPositionMargin = positionVo.getPositionMargin();
+                                    } else if (mBsFlag == 2 && positionVo.getType().equals("空")) {
+                                        mPositionVo = positionVo;
+                                        mShortPositionMargin = positionVo.getPositionMargin();
+                                    }
                                 }
                             }
                         }
-                    }
 
-                    if (null != mMarketTradePopupWindow && !mMarketTradePopupWindow.isShowing()) {
-                        mMarketTradePopupWindow.setData(mTenSpeedVo, mAccountVo, positionVoValue, mContractInfoVo,
-                                mUser.getAccount(), mBsFlag, mOcFlag);
-                        mMarketTradePopupWindow.showAtLocation(mBinding.tvHigh, Gravity.BOTTOM, 0, 0);
+                        boolean hasNext = positionPageVo.isHasNext();
+                        mPagingKey = positionPageVo.getPagingKey();
+
+                        if (hasNext) {
+                            position();
+                        } else {
+                            if (null != mMarketTradePopupWindow && !mMarketTradePopupWindow.isShowing()) {
+                                mMarketTradePopupWindow.setData(mTenSpeedVo, mAccountVo, mPositionVo, mContractInfoVo,
+                                        mUser.getAccount(), Math.abs(mLongPositionMargin - mShortPositionMargin), mBsFlag, mOcFlag);
+                                mMarketTradePopupWindow.showAtLocation(mBinding.tvHigh, Gravity.BOTTOM, 0, 0);
+                            }
+                        }
                     }
                 }
 
@@ -1109,8 +1123,9 @@ public class MarketDetailActivity extends JMEBaseActivity implements FChart.OnPr
 
                     mBsFlag = 1;
                     mOcFlag = 0;
+                    mPagingKey = "";
 
-                    queryLoginResult();
+                    getAccount();
                 }
             }
         }
@@ -1133,8 +1148,9 @@ public class MarketDetailActivity extends JMEBaseActivity implements FChart.OnPr
 
                     mBsFlag = 2;
                     mOcFlag = 0;
+                    mPagingKey = "";
 
-                    queryLoginResult();
+                    getAccount();
                 }
             }
         }
