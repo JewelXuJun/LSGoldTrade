@@ -36,147 +36,58 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
-                <LinearLayout
+                <ImageView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@color/white"
-                    android:orientation="horizontal"
-                    android:padding="@dimen/common_area_margin">
-
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:gravity="center_vertical"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/increment_available_funds"
-                            android:textColor="@color/black_pale"
-                            android:textSize="@dimen/sp_12" />
-
-                        <TextView
-                            android:id="@+id/tv_available_funds"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/common_area_margin_tiny"
-                            android:text="@string/text_no_data_default"
-                            android:textColor="@color/color_red"
-                            android:textSize="@dimen/common_font_size_big" />
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:gravity="center_vertical"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/increment_frozen_funds"
-                            android:textColor="@color/black_pale"
-                            android:textSize="@dimen/sp_12" />
-
-                        <TextView
-                            android:id="@+id/tv_frozen_funds"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/common_area_margin_tiny"
-                            android:text="@string/text_no_data_default"
-                            android:textColor="@color/color_blue_deep"
-                            android:textSize="@dimen/common_font_size_big" />
-
-                    </LinearLayout>
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@color/white"
-                    android:orientation="horizontal"
-                    android:paddingLeft="@dimen/common_page_padding"
-                    android:paddingRight="@dimen/common_page_padding"
-                    android:paddingBottom="@dimen/common_area_margin_big">
-
-                    <Button
-                        android:layout_width="0dp"
-                        android:layout_height="@dimen/common_item_height_small"
-                        android:layout_margin="@dimen/common_area_margin_tiny"
-                        android:layout_weight="1"
-                        android:background="@drawable/selector_btn"
-                        android:onClick="@{() -> handlers.onClickRecharge()}"
-                        android:text="@string/increment_recharge"
-                        android:textColor="@color/white"
-                        android:textSize="@dimen/sp_14" />
-
-                    <Button
-                        android:layout_width="0dp"
-                        android:layout_height="@dimen/common_item_height_small"
-                        android:layout_margin="@dimen/common_area_margin_tiny"
-                        android:layout_weight="1"
-                        android:background="@drawable/selector_btn"
-                        android:onClick="@{() -> handlers.onClickWithdraw()}"
-                        android:text="@string/increment_withdrawal"
-                        android:textColor="@color/white"
-                        android:textSize="@dimen/sp_14" />
-
-                    <Button
-                        android:layout_width="0dp"
-                        android:layout_height="@dimen/common_item_height_small"
-                        android:layout_margin="@dimen/common_area_margin_tiny"
-                        android:layout_weight="1"
-                        android:background="@drawable/selector_btn"
-                        android:onClick="@{() -> handlers.onClickThaw()}"
-                        android:text="@string/increment_thaw"
-                        android:textColor="@color/white"
-                        android:textSize="@dimen/sp_14" />
-
-                    <Button
-                        android:layout_width="0dp"
-                        android:layout_height="@dimen/common_item_height_small"
-                        android:layout_margin="@dimen/common_area_margin_tiny"
-                        android:layout_weight="1"
-                        android:background="@drawable/selector_btn"
-                        android:onClick="@{() -> handlers.onClickDetailed()}"
-                        android:text="@string/increment_account_detail"
-                        android:textColor="@color/white"
-                        android:textSize="@dimen/sp_14" />
-
-                </LinearLayout>
+                    android:background="@mipmap/ic_increment_characteristic" />
 
                 <LinearLayout
                     android:id="@+id/layout_not_signed"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/common_area_margin_tiny"
-                    android:background="@color/white"
-                    android:onClick="@{() -> handlers.onClickWithholdContract()}"
-                    android:paddingLeft="@dimen/common_area_margin"
-                    android:paddingTop="@dimen/common_page_padding"
-                    android:paddingRight="@dimen/common_area_margin"
-                    android:paddingBottom="@dimen/common_page_padding"
+                    android:orientation="vertical"
                     android:visibility="gone">
 
-                    <ImageView
-                        android:layout_width="wrap_content"
+                    <LinearLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/margin_small_middle"
-                        android:background="@mipmap/ic_message" />
+                        android:background="@color/white"
+                        android:orientation="horizontal"
+                        android:paddingLeft="@dimen/common_area_margin"
+                        android:paddingTop="@dimen/common_page_padding"
+                        android:paddingRight="@dimen/common_area_margin"
+                        android:paddingBottom="@dimen/common_page_padding">
 
-                    <TextView
-                        android:id="@+id/tv_not_signed_message"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="@dimen/margin_middle"
-                        android:lineSpacingExtra="@dimen/lineSpacingExtra_small"
-                        android:textColor="@color/color_message_red"
-                        android:textSize="@dimen/size_middle" />
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/margin_small_middle"
+                            android:background="@mipmap/ic_message" />
+
+                        <TextView
+                            android:id="@+id/tv_not_signed_message"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/margin_middle"
+                            android:lineSpacingExtra="@dimen/lineSpacingExtra_small"
+                            android:textColor="@color/color_message_red"
+                            android:textSize="@dimen/size_middle" />
+
+                    </LinearLayout>
+
+                    <Button
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/height_btn"
+                        android:layout_marginLeft="@dimen/margin_login"
+                        android:layout_marginTop="@dimen/common_page_margin"
+                        android:layout_marginRight="@dimen/margin_login"
+                        android:layout_marginBottom="@dimen/common_area_margin_big"
+                        android:background="@drawable/bg_btn_blue_solid"
+                        android:gravity="center"
+                        android:onClick="@{() -> handlers.onClickWithholdContract()}"
+                        android:text="@string/increment_sign_immediately"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/common_font_size" />
 
                 </LinearLayout>
 
@@ -184,14 +95,58 @@
                     android:id="@+id/layout_signed"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/common_area_margin_tiny"
-                    android:background="@color/white"
                     android:orientation="vertical"
                     android:visibility="gone">
 
                     <RelativeLayout
                         android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/white"
+                        android:paddingLeft="@dimen/common_area_margin"
+                        android:paddingTop="@dimen/common_page_padding"
+                        android:paddingRight="@dimen/common_area_margin"
+                        android:paddingBottom="@dimen/common_page_padding">
+
+                        <ImageView
+                            android:id="@+id/img_horn"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_marginTop="@dimen/margin_small_middle"
+                            android:background="@mipmap/ic_message" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_marginLeft="@dimen/common_page_margin"
+                            android:layout_marginRight="@dimen/common_area_margin"
+                            android:layout_toLeftOf="@+id/tv_trade"
+                            android:layout_toRightOf="@+id/img_horn"
+                            android:text="@string/increment_trade_message"
+                            android:textColor="@color/color_message_red"
+                            android:textSize="@dimen/sp_14" />
+
+                        <TextView
+                            android:id="@+id/tv_trade"
+                            android:layout_width="@dimen/width_item_middle"
+                            android:layout_height="@dimen/common_item_height_small"
+                            android:layout_alignParentRight="true"
+                            android:layout_centerVertical="true"
+                            android:background="@drawable/bg_btn_blue_solid"
+                            android:gravity="center"
+                            android:onClick="@{() -> handlers.onClickTrde()}"
+                            android:text="@string/transaction_goto"
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/sp_14" />
+
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
                         android:layout_height="@dimen/height_order_item"
+                        android:layout_marginTop="@dimen/common_area_margin_tiny"
+                        android:background="@color/white"
                         android:onClick="@{() -> handlers.onClickBankCard()}"
                         android:paddingLeft="@dimen/margin_normal"
                         android:paddingRight="@dimen/common_area_margin">
@@ -232,6 +187,7 @@
                         android:id="@+id/layout_pay"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:background="@color/white"
                         android:orientation="vertical"
                         android:visibility="gone">
 
@@ -297,161 +253,6 @@
                         </RelativeLayout>
 
                     </LinearLayout>
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/height_increment_item"
-                    android:layout_marginTop="@dimen/common_area_margin_tiny"
-                    android:background="@color/white"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal"
-                    android:paddingLeft="@dimen/margin_normal"
-                    android:paddingRight="@dimen/common_area_margin">
-
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@mipmap/ic_box" />
-
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="@dimen/common_area_margin_big"
-                        android:layout_weight="1"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/trading_box_title"
-                            android:textColor="@color/black"
-                            android:textSize="@dimen/size_normal"
-                            android:textStyle="bold" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/common_area_margin_tiny"
-                            android:text="@string/increment_trading_box_message"
-                            android:textColor="@color/black"
-                            android:textSize="@dimen/sp_14" />
-
-                    </LinearLayout>
-
-                    <TextView
-                        android:layout_width="@dimen/width_item_middle"
-                        android:layout_height="@dimen/common_item_height_small"
-                        android:layout_gravity="center"
-                        android:background="@drawable/bg_btn_blue_stroke"
-                        android:gravity="center"
-                        android:onClick="@{() -> handlers.onClickTradingBox()}"
-                        android:text="@string/increment_use"
-                        android:textColor="@color/color_blue_deep"
-                        android:textSize="@dimen/sp_14" />
-
-                </LinearLayout>
-
-                <include layout="@layout/item_line_vertical_margin" />
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/height_increment_item"
-                    android:background="@color/white"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal"
-                    android:paddingLeft="@dimen/margin_normal"
-                    android:paddingRight="@dimen/common_area_margin">
-
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@mipmap/ic_entrust_risk" />
-
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="@dimen/common_area_margin_big"
-                        android:layout_weight="1"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/transaction_entrust_risk_management"
-                            android:textColor="@color/black"
-                            android:textSize="@dimen/size_normal"
-                            android:textStyle="bold" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="5dp"
-                            android:text="@string/increment_entrust_risk_message"
-                            android:textColor="@color/black"
-                            android:textSize="@dimen/sp_14" />
-
-                    </LinearLayout>
-
-                    <TextView
-                        android:layout_width="@dimen/width_item_middle"
-                        android:layout_height="@dimen/common_item_height_small"
-                        android:layout_gravity="center"
-                        android:background="@drawable/bg_btn_blue_stroke"
-                        android:gravity="center"
-                        android:onClick="@{() -> handlers.onClickEntrust()}"
-                        android:text="@string/increment_use"
-                        android:textColor="@color/color_blue_deep"
-                        android:textSize="@dimen/sp_14" />
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/height_increment_item"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal"
-                    android:paddingLeft="@dimen/margin_normal"
-                    android:paddingRight="@dimen/common_area_margin"
-                    android:visibility="gone">
-
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
-
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/increment_strategy"
-                            android:textColor="@color/black"
-                            android:textSize="@dimen/size_normal" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/increment_strategy_message"
-                            android:textColor="@color/black"
-                            android:textSize="@dimen/sp_14" />
-
-                    </LinearLayout>
-
-                    <TextView
-                        android:layout_width="@dimen/width_item_middle"
-                        android:layout_height="@dimen/common_item_height_small"
-                        android:layout_gravity="center"
-                        android:background="@drawable/bg_btn_blue_stroke"
-                        android:gravity="center"
-                        android:onClick="@{() -> handlers.onClickService()}"
-                        android:text="@string/increment_use"
-                        android:textColor="@color/color_blue_deep"
-                        android:textSize="@dimen/common_font_size" />
 
                 </LinearLayout>
 

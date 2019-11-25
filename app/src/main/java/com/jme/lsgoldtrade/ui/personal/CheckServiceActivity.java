@@ -10,15 +10,13 @@ import com.alibaba.android.arouter.launcher.ARouter;
 import com.google.gson.Gson;
 import com.jme.common.network.DTRequest;
 import com.jme.common.network.Head;
-import com.jme.common.util.BigDecimalUtil;
+import com.jme.common.util.RxBus;
 import com.jme.lsgoldtrade.R;
 import com.jme.lsgoldtrade.base.JMEBaseActivity;
 import com.jme.lsgoldtrade.config.Constants;
 import com.jme.lsgoldtrade.databinding.ActivityCheckServiceBinding;
 import com.jme.lsgoldtrade.domain.LoginResponse;
 import com.jme.lsgoldtrade.domain.UserInfoVo;
-import com.jme.lsgoldtrade.domain.UsernameVo;
-import com.jme.lsgoldtrade.service.AccountService;
 import com.jme.lsgoldtrade.service.ManagementService;
 import com.jme.lsgoldtrade.service.UserService;
 import com.jme.lsgoldtrade.util.MarketUtil;
@@ -95,10 +93,15 @@ public class CheckServiceActivity extends JMEBaseActivity {
             mBinding.layoutNotSigned.setVisibility(View.GONE);
             mBinding.layoutSigned.setVisibility(View.VISIBLE);
 
+            gotoDetail();
             getCustomerArrearage();
         }
 
-        getUserInfo();
+    }
+
+    private void gotoDetail() {
+        setRightNavigation(getResources().getString(R.string.transaction_transfer_icbc_electronic_card_detail), 0, R.style.ToolbarThemeBlue,
+                () -> ARouter.getInstance().build(Constants.ARouterUriConst.DETAILS).navigation());
     }
 
     private void getRemainTradeDay() {
@@ -167,14 +170,6 @@ public class CheckServiceActivity extends JMEBaseActivity {
         });
     }
 
-    private void getUserInfo() {
-        sendRequest(AccountService.getInstance().getUserInfo, new HashMap<>(), false);
-    }
-
-    private void hasWeChatWithdrawAuth() {
-        sendRequest(AccountService.getInstance().hasWeChatWithdrawAuth, new HashMap<>(), true);
-    }
-
     private void getCustomerArrearage() {
         sendRequest(ManagementService.getInstance().getCustomerArrearage, new HashMap<>(), true);
     }
@@ -222,55 +217,16 @@ public class CheckServiceActivity extends JMEBaseActivity {
 
                                 mWithholdMessagePopUpWindow.setData(getResources().getString(R.string.increment_account_withhold_signed),
                                         (view) -> mWithholdMessagePopUpWindow.dismiss());
-                                mWithholdMessagePopUpWindow.showAtLocation(mBinding.tvAvailableFunds, Gravity.CENTER, 0, 0);
+                                mWithholdMessagePopUpWindow.showAtLocation(mBinding.tvBankcard, Gravity.CENTER, 0, 0);
                             }
                         } else {
                             mBinding.layoutNotSigned.setVisibility(View.GONE);
                             mBinding.layoutSigned.setVisibility(View.VISIBLE);
                         }
 
+                        gotoDetail();
                         getCustomerArrearage();
                     }
-                }
-
-                break;
-            case "GetUserInfo":
-                if (head.isSuccess()) {
-                    UsernameVo usernameVo;
-
-                    try {
-                        usernameVo = (UsernameVo) response;
-                    } catch (Exception e) {
-                        usernameVo = null;
-                        e.printStackTrace();
-                    }
-
-                    if (null == usernameVo)
-                        return;
-
-                    mBinding.tvAvailableFunds.setText(TextUtils.isEmpty(usernameVo.getBalance()) ? getString(R.string.text_no_data_default) :
-                            BigDecimalUtil.formatMoney(new BigDecimal(usernameVo.getBalance()).divide(new BigDecimal(100)).toPlainString()));
-                    mBinding.tvFrozenFunds.setText(TextUtils.isEmpty(usernameVo.getFrozenBalance()) ? getString(R.string.text_no_data_default) :
-                            BigDecimalUtil.formatMoney(new BigDecimal(usernameVo.getFrozenBalance()).divide(new BigDecimal(100)).toPlainString()));
-                }
-
-                break;
-            case "HasWeChatWithdrawAuth":
-                if (head.isSuccess()) {
-                    String authFlag;
-                    try {
-                        authFlag = (String) response;
-                    } catch (Exception e) {
-                        authFlag = null;
-                        e.printStackTrace();
-                    }
-                    if (TextUtils.isEmpty(authFlag))
-                        return;
-
-                    if (authFlag.equals("T"))   // 非首次
-                        ARouter.getInstance().build(Constants.ARouterUriConst.WITHDRAW).navigation();
-                    else
-                        ARouter.getInstance().build(Constants.ARouterUriConst.CHECKUSERINFO).navigation();
                 }
 
                 break;
@@ -290,37 +246,10 @@ public class CheckServiceActivity extends JMEBaseActivity {
 
     public class ClickHandlers {
 
-        public void onClickRecharge() {
-            ARouter.getInstance()
-                    .build(Constants.ARouterUriConst.RECHARGE)
-                    .navigation();
-        }
-
-        public void onClickWithdraw() {
-            hasWeChatWithdrawAuth();
-        }
-
-        public void onClickThaw() {
-            showShortToast(R.string.personal_expect);
-//            ARouter.getInstance().build(Constants.ARouterUriConst.THAW).navigation();
-        }
-
-        public void onClickDetailed() {
-            ARouter.getInstance().build(Constants.ARouterUriConst.DETAILS).navigation();
-        }
-
         public void onClickWithholdContract() {
             bClickFlag = true;
 
             queryLoginResult();
-        }
-
-        public void onClickTradingBox() {
-            ARouter.getInstance().build(Constants.ARouterUriConst.TRADINGBOX).navigation();
-        }
-
-        public void onClickEntrust() {
-            ARouter.getInstance().build(Constants.ARouterUriConst.ENTRUSTRISKMANAGEMENT).navigation();
         }
 
         public void onClickBankCard() {
@@ -331,16 +260,20 @@ public class CheckServiceActivity extends JMEBaseActivity {
             if (null != mConfirmPopupwindow && !mConfirmPopupwindow.isShowing()) {
                 mConfirmPopupwindow.setData(getResources().getString(R.string.increment_account_paid_prompt),
                         getResources().getString(R.string.text_confirm), (view) -> mConfirmPopupwindow.dismiss());
-                mConfirmPopupwindow.showAtLocation(mBinding.tvAvailableFunds, Gravity.CENTER, 0, 0);
+                mConfirmPopupwindow.showAtLocation(mBinding.tvBankcard, Gravity.CENTER, 0, 0);
             }
+        }
+
+        public void onClickTrde() {
+            RxBus.getInstance().post(Constants.RxBusConst.RXBUS_TRANSACTION_PLACE_ORDER, null);
+            ARouter.getInstance().build(Constants.ARouterUriConst.MAIN).navigation();
+
+            finish();
         }
 
         public void onClickPay() {
             ARouter.getInstance().build(Constants.ARouterUriConst.WITHHOLD).navigation();
         }
 
-        public void onClickService() {
-
-        }
     }
 }

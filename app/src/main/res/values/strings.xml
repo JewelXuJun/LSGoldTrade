@@ -661,16 +661,8 @@
     <string name="increment_money">金额(元)</string>
     <string name="increment_account_detail">账户明细</string>
     <string name="increment_mine">我的增值服务</string>
-    <string name="increment_available_funds">可用余额（元）</string>
-    <string name="increment_frozen_funds">冻结资金（元）</string>
     <string name="increment_recharge">充值</string>
     <string name="increment_withdrawal">提现</string>
-    <string name="increment_thaw">申请解冻</string>
-    <string name="increment_trading_box_message">把握非农，一键下单</string>
-    <string name="increment_use">去使用</string>
-    <string name="increment_entrust_risk_message">实时监控，交易安全</string>
-    <string name="increment_strategy">策略共建服务</string>
-    <string name="increment_strategy_message">黄金交易实战、技术分析、指标解读、沙盘实战等系列服务</string>
     <string name="increment_not_signed_message">您尚未签约增值服务，立即签约享%1$s个交易日的免增值服务费试用期。</string>
     <string name="increment_bankcard">我的银行卡</string>
     <string name="increment_money_pay">待支付金额</string>
@@ -697,5 +689,7 @@
     <string name="increment_bank_card_input">请输入13-19位银行卡号</string>
     <string name="increment_aggrement_message">请先同意并勾选《华兴银行代扣协议》、《泰金所平台增值服务协议》</string>
     <string name="increment_arrears">您当前有服务费未缴纳，请结清后再使用该服务</string>
+    <string name="increment_sign_immediately">立即签约</string>
+    <string name="increment_trade_message">更多增值服务，请前往交易使用。</string>
 
 </resources>
