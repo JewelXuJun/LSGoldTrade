@@ -19,9 +19,11 @@ import com.jme.lsgoldtrade.config.AppConfig;
 import com.jme.lsgoldtrade.config.Constants;
 import com.jme.lsgoldtrade.databinding.ActivityWithholdBinding;
 import com.jme.lsgoldtrade.domain.PayIconVo;
+import com.jme.lsgoldtrade.domain.WechatPayVo;
 import com.jme.lsgoldtrade.service.ManagementService;
 import com.jme.lsgoldtrade.service.PaymentService;
 import com.jme.lsgoldtrade.util.MarketUtil;
+import com.jme.lsgoldtrade.util.PaymentHelper;
 import com.tencent.mm.opensdk.openapi.IWXAPI;
 import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 
@@ -38,6 +40,7 @@ public class WithholdActivity extends JMEBaseActivity {
     private List<PayIconVo> mPayIconVoList;
 
     private IWXAPI mWxapi;
+    private PaymentHelper mPaymentHelper;
 
     @Override
     protected int getContentViewId() {
@@ -56,6 +59,7 @@ public class WithholdActivity extends JMEBaseActivity {
         super.initData(savedInstanceState);
 
         mWxapi = WXAPIFactory.createWXAPI(this, AppConfig.WECHATAPPID, true);
+        mPaymentHelper = new PaymentHelper();
 
         getCustomerArrearage();
         getPayIcon();
@@ -121,7 +125,7 @@ public class WithholdActivity extends JMEBaseActivity {
 
     private void serviceFeePay(String money) {
         HashMap<String, String> params = new HashMap<>();
-        params.put("", money);
+        params.put("totalFee", money);
 
         sendRequest(PaymentService.getInstance().serviceFeePay, params, true);
     }
@@ -154,7 +158,19 @@ public class WithholdActivity extends JMEBaseActivity {
                 break;
             case "ServiceFeePay":
                 if (head.isSuccess()) {
+                    WechatPayVo wechatPayVo;
 
+                    try {
+                        wechatPayVo = (WechatPayVo) response;
+                    } catch (Exception e) {
+                        wechatPayVo = null;
+                        e.printStackTrace();
+                    }
+
+                    if (wechatPayVo == null)
+                        return;
+
+                    mPaymentHelper.startWeChatPay(this, wechatPayVo);
                 }
 
                 break;

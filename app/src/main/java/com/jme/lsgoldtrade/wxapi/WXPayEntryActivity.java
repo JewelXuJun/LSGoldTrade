@@ -28,6 +28,7 @@ public class WXPayEntryActivity extends JMEBaseActivity implements IWXAPIEventHa
     @Override
     protected void initView() {
         super.initView();
+
         iwxapi = WXAPIFactory.createWXAPI(this, AppConfig.WECHATAPPID);
         iwxapi.handleIntent(getIntent(), this);
     }
@@ -35,7 +36,9 @@ public class WXPayEntryActivity extends JMEBaseActivity implements IWXAPIEventHa
     @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
+
         setIntent(intent);
+
         iwxapi.handleIntent(intent, this);
     }
 
@@ -46,28 +49,29 @@ public class WXPayEntryActivity extends JMEBaseActivity implements IWXAPIEventHa
 
     @Override
     public void onResp(BaseResp resp) {
-        Log.d(TAG, "onPayFinish, errCode = " + resp.errCode);
         if (resp.getType() == ConstantsAPI.COMMAND_PAY_BY_WX) {
             int code = resp.errCode;
             String result = "";
+
             switch (code) {
                 case 0:
-                    result = "充值成功";
+                    result = "支付成功";
                     break;
                 case -1:
-                    result = "充值失败";
+                    result = "支付失败";
                     break;
                 case -2:
-                    result = "充值取消";
+                    result = "支付取消";
                     break;
             }
-            DialogHelp.getMessageDialog(this, "提示", result, (dialog, which) -> {
+
+            DialogHelp.getMessageDialog(this, getResources().getString(R.string.text_tip), result, (dialog, which) -> {
                 if (code == 0) {
                     Intent intent = new Intent(this, CheckServiceActivity.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivity(intent);
                 } else {
-                    this.finish();
+                    finish();
                 }
             }).setCancelable(false).show();
         }

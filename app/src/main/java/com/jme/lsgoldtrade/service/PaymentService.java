@@ -60,7 +60,7 @@ public class PaymentService extends IService<PaymentApi> {
         }
     };
 
-    public API serviceFeePay = new API<String>("ServiceFeePay") {
+    public API serviceFeePay = new API<WechatPayVo>("ServiceFeePay") {
         @Override
         public Call<DTResponse> request(HashMap<String, String> params) {
             return mApi.serviceFeePay(params);
