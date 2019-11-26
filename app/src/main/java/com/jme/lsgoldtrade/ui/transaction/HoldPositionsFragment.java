@@ -46,7 +46,6 @@ public class HoldPositionsFragment extends JMEBaseFragment implements OnRefreshL
 
     private boolean bFlag = true;
     private boolean bVisibleToUser = false;
-    private boolean bHasNext = false;
     private boolean bHiddenStatus = false;
     private String mPagingKey = "";
     private String mTotal;
@@ -522,30 +521,16 @@ public class HoldPositionsFragment extends JMEBaseFragment implements OnRefreshL
                         e.printStackTrace();
                     }
 
-                    if (null == positionPageVo) {
-                        calculateValue();
-                    } else {
-                        bHasNext = positionPageVo.isHasNext();
+                    if (null != positionPageVo) {
+                        boolean hasNext = positionPageVo.isHasNext();
                         mPagingKey = positionPageVo.getPagingKey();
+
                         List<PositionVo> positionVoList = positionPageVo.getPositionList();
 
-                        if (null != positionVoList && 0 != positionVoList.size()) {
-                            for (PositionVo positionVo : positionVoList) {
-                                if (null != positionVo) {
-                                    boolean isContains = false;
+                        if (null != positionVoList && 0 != positionVoList.size())
+                            mPositionVoList.addAll(positionVoList);
 
-                                    for (PositionVo value : mPositionVoList) {
-                                        if (null != value && value.getContractId().equals(positionVo.getContractId()) && value.getType().equals(positionVo.getType()))
-                                            isContains = true;
-                                    }
-
-                                    if (!isContains)
-                                        mPositionVoList.add(positionVo);
-                                }
-                            }
-                        }
-
-                        if (bHasNext) {
+                        if (hasNext) {
                             getPosition(false);
                         } else {
                             mCurrentHoldPositionsFragment.setCurrentHoldPositionsData(mPositionVoList);
