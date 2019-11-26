@@ -58,4 +58,11 @@ public class PaymentService extends IService<PaymentApi> {
         }
     };
 
+    public API goldGoodsPay = new API<WechatPayVo>("GoldGoodsPay") {
+        @Override
+        public Call<DTResponse> request(HashMap<String, String> params) {
+            return mApi.goldGoodsPay(params);
+        }
+    };
+
 }

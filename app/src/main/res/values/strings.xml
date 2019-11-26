@@ -377,6 +377,7 @@
     <string name="transaction_bind_success">恭喜您已绑定成功！</string>
     <string name="transaction_bind_success_time">%1$s秒后自动关闭</string>
     <string name="transaction_about_amount">约可交易手数</string>
+    <string name="transaction_metal">实物贵金属</string>
 
     <!-- Personal -->
     <string name="personal_login">登录/注册</string>

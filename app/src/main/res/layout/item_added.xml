@@ -29,13 +29,14 @@
         <TextView
             android:id="@+id/tv_tab_name"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="@dimen/height_item_tiny"
             android:layout_below="@+id/layout_img"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="@dimen/margin_line"
             android:layout_marginBottom="@dimen/common_area_margin_tiny"
+            android:gravity="center"
             android:textColor="@color/black"
-            android:textSize="@dimen/sp_14" />
+            android:textSize="@dimen/size_middle" />
 
         <LinearLayout
             android:id="@+id/layout_delete"

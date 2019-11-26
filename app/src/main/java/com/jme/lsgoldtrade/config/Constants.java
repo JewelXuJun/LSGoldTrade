@@ -32,6 +32,7 @@ public class Constants {
         public static String URL_BASE_CONDOTION;      // 条件单
         public static String URL_BASE_MANAGEMENT;     // 管理后台 banner 资讯等
         public static String URL_INFO;                // 资讯详情
+        public static String URL_METAL_PAY;
         public static String URL_REGISTER_AGGREMENT = "http://www.taijs.com/upload/yhxy.htm";
         public static String URL_DISCLAIMER = "http://www.taijs.com/upload/mianze.html";
         public static String URL_PRIVACY_POLICY = "http://www.taijs.com/upload/yszc.htm";
@@ -57,6 +58,7 @@ public class Constants {
                 URL_BASE_ACCOUNT = "http://tjs418008.developer.jsdttec.com";
                 URL_BASE_MANAGEMENT = "http://tjs.developer.jsdttec.com";
                 URL_INFO = "http://tjs.developer.jsdttec.com/tjsmanage/infoapi/v1/android/cmsComtentTxt/get?contentId=";
+                URL_METAL_PAY = "http://uuat.taijs.com/swhj/navigate/index?token=";
                 URL_TRADINGBOX = "http://192.168.10.171:18080/tjsmanage/openacct/wap/tradingBox.html";
                 URL_TRADINGBOXINFO = "http://192.168.10.171:18080/tjsmanage/openacct/wap/tradingBoxDetail.html?tradeId=";
             } else if (Envi == TEST_LAN) {
@@ -65,6 +67,7 @@ public class Constants {
                 URL_BASE_ACCOUNT = "http://192.168.10.41:8008";
                 URL_BASE_MANAGEMENT = "http://tjs.developer.jsdttec.com";
                 URL_INFO = "http://tjs.developer.jsdttec.com/tjsmanage/infoapi/v1/android/cmsComtentTxt/get?contentId=";
+                URL_METAL_PAY = "http://uuat.taijs.com/swhj/navigate/index?token=";
                 URL_TRADINGBOX = "http://192.168.10.171:18080/tjsmanage/openacct/wap/tradingBox.html";
                 URL_TRADINGBOXINFO = "http://192.168.10.171:18080/tjsmanage/openacct/wap/tradingBoxDetail.html?tradeId=";
             } else if (Envi == PRODUCE) {
@@ -73,6 +76,7 @@ public class Constants {
                 URL_BASE_ACCOUNT = "https://180.96.49.165:18001";
                 URL_BASE_MANAGEMENT = "https://www.taijs.com";
                 URL_INFO = "https://www.taijs.com/tjsmanage/infoapi/v1/android/cmsComtentTxt/get?contentId=";
+                URL_METAL_PAY = "https://goldmall.taijs.com/swhj/navigate/index?token=";
                 URL_TRADINGBOX = "https://www.taijs.com/tjsmanage/openacct/wap/tradingBox.html";
                 URL_TRADINGBOXINFO = "https://www.taijs.com/tjsmanage/openacct/wap/tradingBoxDetail.html?tradeId=";
             } else if (Envi == UAT) {
@@ -81,6 +85,7 @@ public class Constants {
                 URL_BASE_ACCOUNT = "https://wxtest.jsdttec.com";
                 URL_BASE_MANAGEMENT = "http://tjsuat.developer.jsdttec.com";
                 URL_INFO = "http://tjsuat.developer.jsdttec.com/tjsmanage/infoapi/v1/android/cmsComtentTxt/get?contentId=";
+                URL_METAL_PAY = "http://uuat.taijs.com/swhj/navigate/index?token=";
                 URL_TRADINGBOX = "http://tjsuat.developer.jsdttec.com/tjsmanage/openacct/wap/tradingBox.html";
                 URL_TRADINGBOXINFO = "http://tjsuat.developer.jsdttec.com/tjsmanage/openacct/wap/tradingBoxDetail.html?tradeId=";
             } else if (Envi == PREPRODUCE) {
@@ -90,6 +95,7 @@ public class Constants {
                 URL_BASE_CONDOTION = "http://180.97.47.179:18080";
                 URL_BASE_MANAGEMENT = "http://180.97.47.179:18080";
                 URL_INFO = "http://180.97.47.179:18080/tjsmanage/infoapi/v1/android/cmsComtentTxt/get?contentId=";
+                URL_METAL_PAY = "http://180.97.47.179:18080/swhj/navigate/index?token=";
                 URL_TRADINGBOX = "http://180.97.47.179:18080/tjsmanage/openacct/wap/tradingBox.html";
                 URL_TRADINGBOXINFO = "http://180.97.47.179:18080/tjsmanage/openacct/wap/tradingBoxDetail.html?tradeId=";
             } else if (Envi == SECURITY) {
@@ -98,6 +104,7 @@ public class Constants {
                 URL_BASE_ACCOUNT = "http://222.190.245.2:18038";
                 URL_BASE_MANAGEMENT = "http://222.190.245.2:18038";
                 URL_INFO = "http://222.190.245.2:18038/tjsmanage/infoapi/v1/android/cmsComtentTxt/get?contentId=";
+                URL_METAL_PAY = "http://uuat.taijs.com/swhj/navigate/index?token=";
                 URL_TRADINGBOX = "http://222.190.245.2:18038/tjsmanage/openacct/wap/tradingBox.html";
                 URL_TRADINGBOXINFO = "http://222.190.245.2:18038/tjsmanage/openacct/wap/tradingBoxDetail.html?tradeId=";
             } else if (Envi == SECURITY_WAN) {
@@ -107,6 +114,7 @@ public class Constants {
                 URL_BASE_CONDOTION = "http://1778088.developer.jsdttec.com";
                 URL_BASE_MANAGEMENT = "http://17818090.developer.jsdttec.com";
                 URL_INFO = "http://17818090.developer.jsdttec.com/tjsmanage/infoapi/v1/android/cmsComtentTxt/get?contentId=";
+                URL_METAL_PAY = "http://uuat.taijs.com/swhj/navigate/index?token=";
                 URL_TRADINGBOX = "http://17818081.developer.jsdttec.com/tjsmanage/openacct/wap/tradingBox.html";
                 URL_TRADINGBOXINFO = "http://17818081.developer.jsdttec.com/tjsmanage/openacct/wap/tradingBoxDetail.html?tradeId=";
             }
@@ -149,6 +157,8 @@ public class Constants {
         public static final String RXBUS_TRANSACTION_STOP_SHEET_UPDATE = "transactionStopSheetUpdate";
         public static final String RXBUS_TRANSACTION_STOP_SHEET_CANCEL_ORDER = "transactionStopSheetCancelOrder";
         public static final String RXBUS_TRANSACTION_STOP_SHEET_MODIFY_ORDER = "transactionStopSheetModifyOrder";
+        public static final String RXBUS_METAL_PAY = "metalPay";
+        public static final String RXBUS_METAL_PAY_SUCCESS = "metalPaySuccess";
     }
 
     public static final class Msg {
@@ -246,6 +256,7 @@ public class Constants {
         public static final String ONLINEDURATION = "/AccountSecurityActivity/OnlineDurationActivity";
         public static final String UNLOCKTRADINGPASSWORD = "/TransactionFragment/UnlockTradingPasswordActivity";
         public static final String CONDITIONSHEET = "/TransactionFragment/ConditionSheetActivity";
+        public static final String METAL = "/JMEBase/MetalActivity";
     }
 
     public static final long SPLASH_DELAY_MILLIS = 2000;

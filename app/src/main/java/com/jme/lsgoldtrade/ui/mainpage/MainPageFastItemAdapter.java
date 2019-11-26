@@ -1,6 +1,7 @@
 package com.jme.lsgoldtrade.ui.mainpage;
 
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 
@@ -31,5 +32,6 @@ public class MainPageFastItemAdapter extends BaseQuickAdapter<NavigatorVo.Naviga
 
         helper.setText(R.id.tv_tab_name, item.getName());
 
+        ((TextView) helper.getView(R.id.tv_tab_name)).setTextSize(item.getName().length() > 4 ? 12 : 13);
     }
 }
