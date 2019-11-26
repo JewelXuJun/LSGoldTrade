@@ -231,6 +231,10 @@ public class HoldPositionsFragment extends JMEBaseFragment implements OnRefreshL
                 case Constants.RxBusConst.RXBUS_ORDER_SUCCESS:
                 case Constants.RxBusConst.RXBUS_CAPITALTRANSFER_SUCCESS:
                 case Constants.RxBusConst.RXBUS_LOGIN_SUCCESS:
+                case Constants.RxBusConst.RXBUS_TRANSACTION_HOLD_POSITIONS_UPDATE:
+                    mHandler.removeMessages(Constants.Msg.MSG_TRADE_POSITION_UPDATE_DATA);
+                    mHandler.removeMessages(Constants.Msg.MSG_TRADE_POSITION_UPDATE_ACCOUNT_DATA);
+
                     bFlag = true;
 
                     getMarket();
@@ -246,11 +250,6 @@ public class HoldPositionsFragment extends JMEBaseFragment implements OnRefreshL
                     break;
                 case Constants.RxBusConst.RXBUS_TRANSACTION_CANCEL_ORDER:
                     mActivity.runOnUiThread(() -> mBinding.tabViewpager.setCurrentItem(1));
-
-                    break;
-                case Constants.RxBusConst.RXBUS_TRANSACTION_HOLD_POSITIONS_UPDATE:
-                    getAccount(false);
-                    initPosition(true);
 
                     break;
             }
