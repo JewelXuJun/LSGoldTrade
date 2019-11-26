@@ -77,9 +77,7 @@ public class SettingActivity extends JMEBaseActivity {
     private void setLogoutLayout() {
         mUser.logout();
 
-        SharedPreUtils.setString(this, SharedPreUtils.MaxMatchNo, "");
         SharedPreUtils.setString(this, SharedPreUtils.Token, "");
-
         RxBus.getInstance().post(Constants.RxBusConst.RXBUS_LOGOUT_SUCCESS, null);
 
         dismissLoginDialog();

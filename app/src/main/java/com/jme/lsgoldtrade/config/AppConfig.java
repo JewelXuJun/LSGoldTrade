@@ -14,7 +14,7 @@ public class AppConfig {
     public static final long HOUR = 60 * Minute;
     public static final long DAY = 24 * HOUR;
 
-    public static final long TimeInterval_SYNC = 5 * Second;
+    public static final long TimeInterval_SYNC = 3 * Second;
 
     public static long TimeInterval_NetWork = Second5;
     public static long TimeInterval_WiFi = Second2;

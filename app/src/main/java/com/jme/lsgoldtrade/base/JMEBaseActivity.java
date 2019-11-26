@@ -123,7 +123,6 @@ public abstract class JMEBaseActivity<T> extends BaseActivity {
                 case Constants.RxBusConst.RXBUS_SYNTIME:
                     mUser.logout();
 
-                    SharedPreUtils.setString(this, SharedPreUtils.MaxMatchNo, "");
                     SharedPreUtils.setString(this, SharedPreUtils.Token, "");
                     RxBus.getInstance().post(Constants.RxBusConst.RXBUS_LOGOUT_SUCCESS, null);
                     showLoginDialog(message.getObject2().toString());
@@ -148,9 +147,7 @@ public abstract class JMEBaseActivity<T> extends BaseActivity {
         if (head.getCode().equals("-2000")) {
             mUser.logout();
 
-            SharedPreUtils.setString(this, SharedPreUtils.MaxMatchNo, "");
             SharedPreUtils.setString(this, SharedPreUtils.Token, "");
-
             RxBus.getInstance().post(Constants.RxBusConst.RXBUS_LOGOUT_SUCCESS, null);
 
             if (!currentClass().equals(SplashActivity.class.getName()) && !currentClass().equals(AccountLoginActivity.class.getName())

@@ -16,7 +16,7 @@ public class Constants {
         public static final int SECURITY = 5;
         public static final int SECURITY_WAN = 6;
 
-        public static int Envi = SECURITY_WAN;
+        public static int Envi = PREPRODUCE;
 
         private HttpConst() {
 
@@ -42,8 +42,6 @@ public class Constants {
         public static String URL_ECONOMIC_CALENDAR = "https://rili-d.jin10.com/open.php?fontSize=14px&theme=primary";
         public static String URL_NEWS = "https://www.jin10.com/example/jin10.com.html?fontSize=14px&theme=white";
         public static String URL_MORE_ICON = "https://tjshj.oss-cn-beijing.aliyuncs.com/prod/syscofig/app/gengduo.png";
-        public static String URL_CONDITION_SHEET = "http://www.taijs.com/upload/tjdfwxy.html";
-        public static String URL_TRANSACTION_STOP = "http://www.taijs.com/upload/zyzsfwxy.html";
         public static String URL_CONDITION_SHEET_EXPLAIN = "http://www.taijs.com/upload/tjdsysm.html";
         public static String URL_TRADINGBOX;
         public static String URL_TRADINGBOXINFO;

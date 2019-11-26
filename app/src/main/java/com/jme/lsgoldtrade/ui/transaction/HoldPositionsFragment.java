@@ -55,7 +55,6 @@ public class HoldPositionsFragment extends JMEBaseFragment implements OnRefreshL
 
     private BigDecimal mUnliquidatedProfitTotal = new BigDecimal(0);
     private BigDecimal mFloatTotal;
-
     private Fragment[] mFragmentArrays;
     private String[] mTabTitles;
     private List<String> mList;
@@ -436,6 +435,8 @@ public class HoldPositionsFragment extends JMEBaseFragment implements OnRefreshL
     }
 
     private void getAccount(boolean enable) {
+        mAccountVo = null;
+
         String accountID = mUser.getAccountID();
 
         if (TextUtils.isEmpty(accountID))
@@ -523,8 +524,21 @@ public class HoldPositionsFragment extends JMEBaseFragment implements OnRefreshL
 
                         List<PositionVo> positionVoList = positionPageVo.getPositionList();
 
-                        if (null != positionVoList && 0 != positionVoList.size())
-                            mPositionVoList.addAll(positionVoList);
+                        if (null != positionVoList && 0 != positionVoList.size()) {
+                            for (PositionVo positionVo : positionVoList) {
+                                if (null != positionVo) {
+                                    boolean isContains = false;
+
+                                    for (PositionVo value : mPositionVoList) {
+                                        if (null != value && value.getContractId().equals(positionVo.getContractId()) && value.getType().equals(positionVo.getType()))
+                                            isContains = true;
+                                    }
+
+                                    if (!isContains)
+                                        mPositionVoList.add(positionVo);
+                                }
+                            }
+                        }
 
                         if (hasNext) {
                             getPosition(false);
