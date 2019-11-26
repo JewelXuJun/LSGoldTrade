@@ -253,7 +253,7 @@
                         android:background="@null"
                         android:gravity="center"
                         android:hint="@string/transaction_not_setting"
-                        android:inputType="numberDecimal"
+                        android:inputType="number"
                         android:maxLines="1"
                         android:textColor="@color/color_blue_deep"
                         android:textColorHint="@color/color_text_hint"
