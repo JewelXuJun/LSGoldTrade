@@ -328,7 +328,7 @@
     <string name="transaction_sheet_limit_up_price_error">不可高于最高价！</string>
     <string name="transaction_sheet_limit_up_price_error2">不可高于涨停价！</string>
     <string name="transaction_sheet_limit_up_price_error3">不可高于最新价！</string>
-    <string name="transaction_market_price_fak_rule">根据相关交易规则,市价FAK指令可能会导致成交价格与委托价格不一致（市价报单默认交易品种的涨停价为委托价，委托时按照委托价冻结保证金，实际成交后按照成交价调整保证金）。</string>
+    <string name="transaction_market_price_fak_rule">根据相关交易规则,市价FAK指令可能会导致成交价格与委托价格不一致。</string>
     <string name="transaction_effective_time_rule">当日有效：是指当个交易日内有效，若您下单时不在交易时段内，则默认下单后的第一个交易日内有效；若您下单时在交易时段内，则默认在当个交易日收盘之前有效。\n撤销前有效：是指在您设置条件单后，只要未撤销/未修改且条件单未触发，该条件单始终有效。</string>
     <string name="transaction_condition_sheet_confirm">条件单确认</string>
     <string name="transaction_condition_sheet_create_success">条件单创建成功</string>
