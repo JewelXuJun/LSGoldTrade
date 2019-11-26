@@ -135,6 +135,8 @@ public class MarketFragment extends JMEBaseFragment implements OnRefreshListener
         bHidden = hidden;
 
         if (!bHidden) {
+            StatusBarUtil.setStatusBarMode(mActivity, true, R.color.color_blue_deep);
+
             bFlag = true;
 
             getMarket(true);
@@ -148,6 +150,8 @@ public class MarketFragment extends JMEBaseFragment implements OnRefreshListener
         super.onResume();
 
         if (!bHidden) {
+            StatusBarUtil.setStatusBarMode(mActivity, true, R.color.color_blue_deep);
+
             bFlag = true;
 
             getMarket(true);

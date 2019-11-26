@@ -67,6 +67,8 @@ public class PersonalFragment extends JMEBaseFragment {
     public void onResume() {
         super.onResume();
 
+        StatusBarUtil.setStatusBarMode(mActivity, true, R.color.color_blue);
+
         if (null == mUser || !mUser.isLogin()) {
             mBinding.tvAccount.setVisibility(View.GONE);
             mBinding.layoutAccountSecurity.setVisibility(View.GONE);

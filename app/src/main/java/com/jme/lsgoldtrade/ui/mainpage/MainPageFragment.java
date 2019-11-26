@@ -175,6 +175,8 @@ public class MainPageFragment extends JMEBaseFragment implements OnRefreshListen
         bHidden = hidden;
 
         if (!bHidden) {
+            StatusBarUtil.setStatusBarMode(mActivity, true, R.color.color_blue_deep);
+
             bFlag = true;
 
             getMarket();
@@ -199,6 +201,8 @@ public class MainPageFragment extends JMEBaseFragment implements OnRefreshListen
         super.onResume();
 
         if (!bHidden) {
+            StatusBarUtil.setStatusBarMode(mActivity, true, R.color.color_blue_deep);
+
             bFlag = true;
 
             getMarket();
