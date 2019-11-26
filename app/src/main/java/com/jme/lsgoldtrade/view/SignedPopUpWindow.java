@@ -48,7 +48,7 @@ public class SignedPopUpWindow extends JMEBasePopupWindow {
         mBinding.btnSigned.setOnClickListener((view) -> {
             ARouter.getInstance()
                     .build(Constants.ARouterUriConst.WITHHOLDCONTRACT)
-                    .withString("Resource", "Else")
+                    .withString("Resource", "Trade")
                     .navigation();
 
             dismiss();
