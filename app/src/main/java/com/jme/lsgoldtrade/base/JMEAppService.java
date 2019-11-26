@@ -127,15 +127,20 @@ public class JMEAppService extends Service implements OnResultListener {
 
                     String maxMatchNo = synTimeVo.getMaxMatchNo();
 
-                    if (!maxMatchNo.equals(SharedPreUtils.getString(this, SharedPreUtils.MaxMatchNo))) {
-                        SharedPreUtils.setString(this, SharedPreUtils.MaxMatchNo, maxMatchNo);
+                    if (!TextUtils.isEmpty(maxMatchNo)) {
+                        String matchNo = SharedPreUtils.getString(this, SharedPreUtils.MaxMatchNo);
 
-                        RxBus.getInstance().post(Constants.RxBusConst.RXBUS_ORDER_SUCCESS, null);
+                        if (TextUtils.isEmpty(matchNo) || !TextUtils.equals(maxMatchNo, matchNo)) {
+                            SharedPreUtils.setString(this, SharedPreUtils.MaxMatchNo, maxMatchNo);
+
+                            RxBus.getInstance().post(Constants.RxBusConst.RXBUS_ORDER_SUCCESS, null);
+                        }
                     }
                 } else {
                     if (head.getCode().equals("-2000")) {
                         User.getInstance().logout();
 
+                        SharedPreUtils.setString(this, SharedPreUtils.MaxMatchNo, "");
                         SharedPreUtils.setString(this, SharedPreUtils.Token, "");
 
                         RxBus.getInstance().post(Constants.RxBusConst.RXBUS_SYNTIME, head.getMsg());

@@ -28,12 +28,6 @@ public interface UserApi {
     @GET("/gold-trade/v1.0.0/android/queryLoginResult")
     Call<LoginResponse> queryLoginResult(@QueryMap Map<String, String> map);
 
-    @POST("/gold-trade/v1.0.0/android/changeloginpassword")
-    Call<DTResponse> changeloginpassword(@Body Map<String, String> map);
-
-    @GET("/gold-trade/v1.0.0/android/fundInoutMsg")
-    Call<DTResponse> fundInoutMsg();
-
     @GET("/gold-trade/v1.0.0/android/noticepage")
     Call<DTResponse> noticepage(@QueryMap Map<String, String> map);
 

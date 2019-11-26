@@ -20,7 +20,7 @@ public class Constants {
         public static final int SECURITY = 5;
         public static final int SECURITY_WAN = 6;
 
-        public static int Envi = PREPRODUCE;
+        public static int Envi = SECURITY_WAN;
 
         private HttpConst() {
 

@@ -236,9 +236,6 @@ public class HoldPositionsFragment extends JMEBaseFragment implements OnRefreshL
                 case Constants.RxBusConst.RXBUS_CAPITALTRANSFER_SUCCESS:
                 case Constants.RxBusConst.RXBUS_LOGIN_SUCCESS:
                 case Constants.RxBusConst.RXBUS_TRANSACTION_HOLD_POSITIONS_UPDATE:
-                    mHandler.removeMessages(Constants.Msg.MSG_TRADE_POSITION_UPDATE_DATA);
-                    mHandler.removeMessages(Constants.Msg.MSG_TRADE_POSITION_UPDATE_ACCOUNT_DATA);
-
                     bFlag = true;
 
                     getMarket();
