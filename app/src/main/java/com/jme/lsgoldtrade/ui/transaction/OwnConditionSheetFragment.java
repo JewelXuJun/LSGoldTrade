@@ -29,7 +29,6 @@ import com.jme.lsgoldtrade.domain.AccountVo;
 import com.jme.lsgoldtrade.domain.ConditionOrderInfoVo;
 import com.jme.lsgoldtrade.domain.ConditionPageVo;
 import com.jme.lsgoldtrade.domain.ConditionSheetResponse;
-import com.jme.lsgoldtrade.domain.IdentityInfoVo;
 import com.jme.lsgoldtrade.domain.PositionPageVo;
 import com.jme.lsgoldtrade.domain.PositionVo;
 import com.jme.lsgoldtrade.domain.QuerySetStopOrderResponse;
@@ -72,8 +71,6 @@ public class OwnConditionSheetFragment extends JMEBaseFragment implements OnRefr
     private boolean bQueryQuotationFlag = false;
     private String mSetDate = "";
     private String mContractID;
-    private String mName;
-    private String mIDCard;
 
     private List<Boolean> mList;
 
@@ -132,7 +129,6 @@ public class OwnConditionSheetFragment extends JMEBaseFragment implements OnRefr
 
         initDate();
         initConditionOrderPage(true);
-        getWhetherIdCard();
     }
 
     @Override
@@ -353,8 +349,7 @@ public class OwnConditionSheetFragment extends JMEBaseFragment implements OnRefr
                 tenSpeedVoValue = mTenSpeedVo;
 
             mSheetModifyPopUpWindow.setData(tenSpeedVoValue, mAccountVo, mPositionVo,
-                    null == mContract ? null : mContract.getContractInfoFromID(conditionOrderInfoVo.getContractId()),
-                    conditionOrderInfoVo, mName, mIDCard);
+                    null == mContract ? null : mContract.getContractInfoFromID(conditionOrderInfoVo.getContractId()), conditionOrderInfoVo);
             mSheetModifyPopUpWindow.showAtLocation(mBinding.tvStartTime, Gravity.BOTTOM, 0, 0);
         }
     }
@@ -430,10 +425,6 @@ public class OwnConditionSheetFragment extends JMEBaseFragment implements OnRefr
 
     private long getTimeInterval() {
         return NetWorkUtils.isWifiConnected(mContext) ? AppConfig.TimeInterval_WiFi : AppConfig.TimeInterval_NetWork;
-    }
-
-    private void getWhetherIdCard() {
-        sendRequest(TradeService.getInstance().whetherIdCard, new HashMap<>(), true);
     }
 
     private void revokeConditionOrder(String id) {
@@ -611,31 +602,6 @@ public class OwnConditionSheetFragment extends JMEBaseFragment implements OnRefr
                     }
                 } else {
                     setEmptyData();
-                }
-
-                break;
-            case "WhetherIdCard":
-                if (head.isSuccess()) {
-                    IdentityInfoVo identityInfoVo;
-
-                    try {
-                        identityInfoVo = (IdentityInfoVo) response;
-                    } catch (Exception e) {
-                        identityInfoVo = null;
-
-                        e.printStackTrace();
-                    }
-
-                    if (null == identityInfoVo)
-                        return;
-
-                    String flag = identityInfoVo.getFlag();
-
-                    if (TextUtils.isEmpty(flag))
-                        return;
-
-                    mName = identityInfoVo.getName();
-                    mIDCard = identityInfoVo.getIdCard();
                 }
 
                 break;

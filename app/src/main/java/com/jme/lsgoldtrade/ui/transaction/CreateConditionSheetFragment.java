@@ -20,7 +20,6 @@ import android.widget.Toast;
 
 import androidx.core.content.ContextCompat;
 
-import com.alibaba.android.arouter.launcher.ARouter;
 import com.jme.common.network.DTRequest;
 import com.jme.common.network.Head;
 import com.jme.common.util.NetWorkUtils;
@@ -33,7 +32,6 @@ import com.jme.lsgoldtrade.databinding.FragmentCreateConditionSheetBinding;
 import com.jme.lsgoldtrade.domain.AccountVo;
 import com.jme.lsgoldtrade.domain.ConditionOrderRunVo;
 import com.jme.lsgoldtrade.domain.ContractInfoVo;
-import com.jme.lsgoldtrade.domain.IdentityInfoVo;
 import com.jme.lsgoldtrade.domain.PositionPageVo;
 import com.jme.lsgoldtrade.domain.PositionVo;
 import com.jme.lsgoldtrade.domain.TenSpeedVo;
@@ -67,8 +65,6 @@ public class CreateConditionSheetFragment extends JMEBaseFragment {
     private long mMaxHoldQty = 0;
     private String mContractID = "";
     private String mPagingKey = "";
-    private String mName;
-    private String mIDCard;
     private String[] mContracIDs;
 
     private List<PositionVo> mPositionVoList = new ArrayList<>();
@@ -121,7 +117,6 @@ public class CreateConditionSheetFragment extends JMEBaseFragment {
         initContractNameValue();
         setContractNameData();
         setMarketType();
-        getWhetherIdCard();
     }
 
     @Override
@@ -567,10 +562,6 @@ public class CreateConditionSheetFragment extends JMEBaseFragment {
         sendRequest(ConditionService.getInstance().queryConditionOrderRun, new HashMap<>(), false, false, false);
     }
 
-    private void getWhetherIdCard() {
-        sendRequest(TradeService.getInstance().whetherIdCard, new HashMap<>(), true);
-    }
-
     private void entrustConditionOrder(String price, String amount) {
         if (null == mUser || !mUser.isLogin())
             return;
@@ -697,31 +688,6 @@ public class CreateConditionSheetFragment extends JMEBaseFragment {
                     } else {
                         calculateMaxAmount();
                     }
-                }
-
-                break;
-            case "WhetherIdCard":
-                if (head.isSuccess()) {
-                    IdentityInfoVo identityInfoVo;
-
-                    try {
-                        identityInfoVo = (IdentityInfoVo) response;
-                    } catch (Exception e) {
-                        identityInfoVo = null;
-
-                        e.printStackTrace();
-                    }
-
-                    if (null == identityInfoVo)
-                        return;
-
-                    String flag = identityInfoVo.getFlag();
-
-                    if (TextUtils.isEmpty(flag))
-                        return;
-
-                    mName = identityInfoVo.getName();
-                    mIDCard = identityInfoVo.getIdCard();
                 }
 
                 break;
@@ -932,14 +898,6 @@ public class CreateConditionSheetFragment extends JMEBaseFragment {
             }
         }
 
-        public void onCliclConditionSheetRiskTips() {
-            ARouter.getInstance()
-                    .build(Constants.ARouterUriConst.JMEWEBVIEW)
-                    .withString("title", mContext.getResources().getString(R.string.transaction_condition_sheet_risk_tips_title))
-                    .withString("url", Constants.HttpConst.URL_CONDITION_SHEET + "?name=" + mName + "&cardNo=" + mIDCard)
-                    .navigation();
-        }
-
         public void onClickSubmit() {
             String price = mBinding.etPrice.getText().toString();
             String amount = mBinding.etAmount.getText().toString();
@@ -966,8 +924,6 @@ public class CreateConditionSheetFragment extends JMEBaseFragment {
                 showShortToast(String.format(mContext.getResources().getString(R.string.transaction_entrust_less), 1));
             else if (new BigDecimal(amount).compareTo(new BigDecimal(mMaxAmount)) == 1)
                 showShortToast(R.string.transaction_entrust_larger2);
-            else if (!mBinding.checkboxAgree.isChecked())
-                Toast.makeText(mContext, R.string.transaction_condition_sheet_risk_agree, Toast.LENGTH_SHORT).show();
             else
                 showConfirmPopupWindow(price, amount);
         }

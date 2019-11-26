@@ -26,7 +26,6 @@ import com.jme.lsgoldtrade.databinding.FragmentCurrentHoldPositionsBinding;
 import com.jme.lsgoldtrade.domain.ConditionOrderInfoVo;
 import com.jme.lsgoldtrade.domain.ContractInfoVo;
 import com.jme.lsgoldtrade.domain.FiveSpeedVo;
-import com.jme.lsgoldtrade.domain.IdentityInfoVo;
 import com.jme.lsgoldtrade.domain.PositionVo;
 import com.jme.lsgoldtrade.domain.QuerySetStopOrderResponse;
 import com.jme.lsgoldtrade.domain.TenSpeedVo;
@@ -52,8 +51,6 @@ public class CurrentHoldPositionsFragment extends JMEBaseFragment {
 
     private FragmentCurrentHoldPositionsBinding mBinding;
 
-    private String mName;
-    private String mIDCard;
     private String mContractID;
 
     private List<FiveSpeedVo> mFiveSpeedVoList;
@@ -104,8 +101,6 @@ public class CurrentHoldPositionsFragment extends JMEBaseFragment {
         mBinding.recyclerView.setHasFixedSize(false);
         mBinding.recyclerView.setLayoutManager(new LinearLayoutManager(mContext));
         mBinding.recyclerView.setAdapter(mAdapter);
-
-        getWhetherIdCard();
     }
 
     @Override
@@ -337,18 +332,13 @@ public class CurrentHoldPositionsFragment extends JMEBaseFragment {
             queryQuotation();
 
             mTransactionStopPopupWindow.setData(stopOrderFlag, mPositionVo.getContractId(),
-                    mPositionVo, null == mContract ? null : mContract.getContractInfoFromID(contractID),
-                    conditionOrderInfoVo, mName, mIDCard);
+                    mPositionVo, null == mContract ? null : mContract.getContractInfoFromID(contractID), conditionOrderInfoVo);
             mTransactionStopPopupWindow.showAtLocation(mBinding.tvGotoTransaction, Gravity.BOTTOM, 0, 0);
         }
     }
 
     private long getTimeInterval() {
         return NetWorkUtils.isWifiConnected(mContext) ? AppConfig.TimeInterval_WiFi : AppConfig.TimeInterval_NetWork;
-    }
-
-    private void getWhetherIdCard() {
-        sendRequest(TradeService.getInstance().whetherIdCard, new HashMap<>(), true);
     }
 
     private void queryQuotation() {
@@ -490,31 +480,6 @@ public class CurrentHoldPositionsFragment extends JMEBaseFragment {
         super.DataReturn(request, head, response);
 
         switch (request.getApi().getName()) {
-            case "WhetherIdCard":
-                if (head.isSuccess()) {
-                    IdentityInfoVo identityInfoVo;
-
-                    try {
-                        identityInfoVo = (IdentityInfoVo) response;
-                    } catch (Exception e) {
-                        identityInfoVo = null;
-
-                        e.printStackTrace();
-                    }
-
-                    if (null == identityInfoVo)
-                        return;
-
-                    String flag = identityInfoVo.getFlag();
-
-                    if (TextUtils.isEmpty(flag))
-                        return;
-
-                    mName = identityInfoVo.getName();
-                    mIDCard = identityInfoVo.getIdCard();
-                }
-
-                break;
             case "QueryQuotation":
                 if (head.isSuccess()) {
                     TenSpeedVo tenSpeedVo;
