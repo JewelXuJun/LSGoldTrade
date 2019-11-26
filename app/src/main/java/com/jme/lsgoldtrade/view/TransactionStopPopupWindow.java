@@ -16,7 +16,6 @@ import android.widget.Toast;
 
 import androidx.databinding.DataBindingUtil;
 
-import com.alibaba.android.arouter.launcher.ARouter;
 import com.jme.common.util.DensityUtil;
 import com.jme.common.util.RxBus;
 import com.jme.lsgoldtrade.R;
@@ -44,8 +43,6 @@ public class TransactionStopPopupWindow extends JMEBasePopupWindow {
     private int mLength = 2;
     private String mContractID;
     private String mType = "";
-    private String mName;
-    private String mIDCard;
 
     private View mView;
     private TenSpeedVo mTenSpeedVo;
@@ -191,15 +188,12 @@ public class TransactionStopPopupWindow extends JMEBasePopupWindow {
     }
 
     public void setData(boolean stopOrderFlag, String contractId, PositionVo positionVo,
-                        ContractInfoVo contractInfoVo, ConditionOrderInfoVo conditionOrderInfoVo,
-                        String name, String idCard) {
+                        ContractInfoVo contractInfoVo, ConditionOrderInfoVo conditionOrderInfoVo) {
         mContractID = contractId;
         mPositionVo = positionVo;
         mContractInfoVo = contractInfoVo;
         mConditionOrderInfoVo = conditionOrderInfoVo;
         mLength = mContractID.equals("Ag(T+D)") ? 0 : 2;
-        mName = name;
-        mIDCard = idCard;
 
         if (stopOrderFlag) {
             mBinding.layoutNotSetting.setVisibility(View.GONE);
@@ -241,7 +235,6 @@ public class TransactionStopPopupWindow extends JMEBasePopupWindow {
             mBinding.etAmount.setText(String.valueOf(mPosition));
             mBinding.checkboxEffectiveOnThatDay.setChecked(true);
             mBinding.checkboxEffectiveBeforeCancel.setChecked(false);
-            mBinding.checkboxAgree.setChecked(true);
 
             setStopPriceTitle();
         }
@@ -455,14 +448,6 @@ public class TransactionStopPopupWindow extends JMEBasePopupWindow {
             }
         }
 
-        public void onCliclStopRiskTips() {
-            ARouter.getInstance()
-                    .build(Constants.ARouterUriConst.JMEWEBVIEW)
-                    .withString("title", mContext.getResources().getString(R.string.transaction_stop_risk_tips_title))
-                    .withString("url", Constants.HttpConst.URL_TRANSACTION_STOP + "?name=" + mName + "&cardNo=" + mIDCard)
-                    .navigation();
-        }
-
         public void onClickCancel() {
             dismiss();
         }
@@ -508,8 +493,6 @@ public class TransactionStopPopupWindow extends JMEBasePopupWindow {
                 Toast.makeText(mContext, String.format(mContext.getResources().getString(R.string.transaction_entrust_les2), 1), Toast.LENGTH_SHORT).show();
             else if (new BigDecimal(amount).compareTo(new BigDecimal(mPosition)) == 1)
                 Toast.makeText(mContext, R.string.transaction_entrust_larger3, Toast.LENGTH_SHORT).show();
-            else if (!mBinding.checkboxAgree.isChecked())
-                Toast.makeText(mContext, R.string.transaction_transaction_stop_risk_agree, Toast.LENGTH_SHORT).show();
             else
                 sendConfirmData(profitPrice, lossPrice, amount);
         }
@@ -535,7 +518,6 @@ public class TransactionStopPopupWindow extends JMEBasePopupWindow {
             mBinding.etAmount.setText(String.valueOf(mConditionOrderInfoVo.getEntrustNumber()));
             mBinding.checkboxEffectiveOnThatDay.setChecked(mConditionOrderInfoVo.getEffectiveTimeFlag() == 0);
             mBinding.checkboxEffectiveBeforeCancel.setChecked(mConditionOrderInfoVo.getEffectiveTimeFlag() == 1);
-            mBinding.checkboxAgree.setChecked(true);
 
             setStopPriceTitle();
         }
@@ -577,8 +559,6 @@ public class TransactionStopPopupWindow extends JMEBasePopupWindow {
                 Toast.makeText(mContext, String.format(mContext.getResources().getString(R.string.transaction_entrust_les2), 1), Toast.LENGTH_SHORT).show();
             else if (new BigDecimal(amount).compareTo(new BigDecimal(mPosition)) == 1)
                 Toast.makeText(mContext, R.string.transaction_entrust_larger3, Toast.LENGTH_SHORT).show();
-            else if (!mBinding.checkboxAgree.isChecked())
-                Toast.makeText(mContext, R.string.transaction_transaction_stop_risk_agree, Toast.LENGTH_SHORT).show();
             else
                 sendModifyData(profitPrice, lossPrice, amount);
         }

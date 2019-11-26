@@ -289,10 +289,6 @@
     <string name="transaction_effective_on_that_day">当日有效</string>
     <string name="transaction_effective_before_cancel">撤销前有效</string>
     <string name="transaction_condition_sheet_detail">条件单详情</string>
-    <string name="transaction_condition_sheet_risk_tips">《条件单服务协议》</string>
-    <string name="transaction_stop_risk_tips">《止盈止损服务协议》</string>
-    <string name="transaction_condition_sheet_risk_tips_title">条件单服务协议</string>
-    <string name="transaction_stop_risk_tips_title">止盈止损服务协议</string>
     <string name="transaction_direction_amount">方向/手数</string>
     <string name="transaction_trigger_price">触发价</string>
     <string name="transaction_last_price_range">最新价</string>
@@ -321,8 +317,6 @@
     <string name="transaction_entrust_larger2">不可大于最大约可下单手数！</string>
     <string name="transaction_entrust_larger3">可用手数不足！</string>
     <string name="transaction_price_setting_range">您设置的触发价应在%1$s ~ %2$s范围内</string>
-    <string name="transaction_condition_sheet_risk_agree">请先同意并勾选《条件单服务协议》</string>
-    <string name="transaction_transaction_stop_risk_agree">请先同意并勾选《止盈止损服务协议》</string>
     <string name="transaction_modify_success">修改成功</string>
     <string name="transaction_cancel_success">撤销成功</string>
     <string name="transaction_setting_success">设置成功</string>
