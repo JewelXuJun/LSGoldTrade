@@ -114,6 +114,7 @@ public class FastManagementActivity extends JMEBaseActivity {
                         .error(R.mipmap.ic_img_default)
                         .into(img);
                 tv_tab_name.setText(fastTabBean.mTab);
+                tv_tab_name.setTextSize(fastTabBean.mTab.length() > 4 ? 12 : 13);
                 layout_delete.setVisibility(fastTabBean.bShowOperation ? View.VISIBLE : View.GONE);
 
                 layout_delete.setOnClickListener((view) -> {

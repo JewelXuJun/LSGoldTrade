@@ -1,22 +1,24 @@
 package com.jme.lsgoldtrade.wxapi;
 
 import android.content.Intent;
-import android.util.Log;
+import android.text.TextUtils;
+
 import com.jme.common.util.DialogHelp;
+import com.jme.common.util.RxBus;
 import com.jme.lsgoldtrade.R;
 import com.jme.lsgoldtrade.base.JMEBaseActivity;
 import com.jme.lsgoldtrade.config.AppConfig;
+import com.jme.lsgoldtrade.config.Constants;
 import com.jme.lsgoldtrade.ui.personal.CheckServiceActivity;
 import com.tencent.mm.opensdk.constants.ConstantsAPI;
 import com.tencent.mm.opensdk.modelbase.BaseReq;
 import com.tencent.mm.opensdk.modelbase.BaseResp;
+import com.tencent.mm.opensdk.modelpay.PayResp;
 import com.tencent.mm.opensdk.openapi.IWXAPI;
 import com.tencent.mm.opensdk.openapi.IWXAPIEventHandler;
 import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 
 public class WXPayEntryActivity extends JMEBaseActivity implements IWXAPIEventHandler {
-
-    private static final String TAG = "WXPayEntryActivity";
 
     private IWXAPI iwxapi;
 
@@ -51,25 +53,36 @@ public class WXPayEntryActivity extends JMEBaseActivity implements IWXAPIEventHa
     public void onResp(BaseResp resp) {
         if (resp.getType() == ConstantsAPI.COMMAND_PAY_BY_WX) {
             int code = resp.errCode;
+            String extData = ((PayResp) resp).extData;
+
             String result = "";
 
             switch (code) {
                 case 0:
                     result = "支付成功";
+
                     break;
                 case -1:
                     result = "支付失败";
+
                     break;
                 case -2:
                     result = "支付取消";
+
                     break;
             }
 
-            DialogHelp.getMessageDialog(this, getResources().getString(R.string.text_tip), result, (dialog, which) -> {
+            DialogHelp.getMessageDialog(this, "提示", result, (dialog, which) -> {
                 if (code == 0) {
-                    Intent intent = new Intent(this, CheckServiceActivity.class);
-                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                    startActivity(intent);
+                    if (!TextUtils.isEmpty(extData) && TextUtils.equals(extData, "GoldGoodsPay")) {
+                        RxBus.getInstance().post(Constants.RxBusConst.RXBUS_METAL_PAY_SUCCESS, null);
+
+                        finish();
+                    } else {
+                        Intent intent = new Intent(this, CheckServiceActivity.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        startActivity(intent);
+                    }
                 } else {
                     finish();
                 }

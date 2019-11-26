@@ -170,7 +170,7 @@ public class WithholdActivity extends JMEBaseActivity {
                     if (wechatPayVo == null)
                         return;
 
-                    mPaymentHelper.startWeChatPay(this, wechatPayVo);
+                    mPaymentHelper.startWeChatPay(this, wechatPayVo, "");
                 }
 
                 break;
