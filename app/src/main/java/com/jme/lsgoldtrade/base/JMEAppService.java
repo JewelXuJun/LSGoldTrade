@@ -32,6 +32,8 @@ public class JMEAppService extends Service implements OnResultListener {
 
     private SyncTimeHandler mHandler;
 
+    private String mMaxMatchNo = "";
+
     static final class SyncTimeHandler extends Handler {
 
         private WeakReference<JMEAppService> mReference;
@@ -95,13 +97,8 @@ public class JMEAppService extends Service implements OnResultListener {
     }
 
     private void syncTime() {
-        String matchNo = SharedPreUtils.getString(this, SharedPreUtils.MaxMatchNo);
-
-        if (TextUtils.isEmpty(matchNo))
-            matchNo = "";
-
         HashMap<String, String> params = new HashMap<>();
-        params.put("matchno", matchNo);
+        params.put("matchno", mMaxMatchNo);
 
         AsynCommon.SendRequest(UserService.getInstance().syntime, params, true, false, this, this);
     }
@@ -128,10 +125,8 @@ public class JMEAppService extends Service implements OnResultListener {
                     String maxMatchNo = synTimeVo.getMaxMatchNo();
 
                     if (!TextUtils.isEmpty(maxMatchNo)) {
-                        String matchNo = SharedPreUtils.getString(this, SharedPreUtils.MaxMatchNo);
-
-                        if (TextUtils.isEmpty(matchNo) || !TextUtils.equals(maxMatchNo, matchNo)) {
-                            SharedPreUtils.setString(this, SharedPreUtils.MaxMatchNo, maxMatchNo);
+                        if (TextUtils.isEmpty(mMaxMatchNo) || !TextUtils.equals(maxMatchNo, mMaxMatchNo)) {
+                            mMaxMatchNo = maxMatchNo;
 
                             RxBus.getInstance().post(Constants.RxBusConst.RXBUS_ORDER_SUCCESS, null);
                         }
@@ -140,7 +135,6 @@ public class JMEAppService extends Service implements OnResultListener {
                     if (head.getCode().equals("-2000")) {
                         User.getInstance().logout();
 
-                        SharedPreUtils.setString(this, SharedPreUtils.MaxMatchNo, "");
                         SharedPreUtils.setString(this, SharedPreUtils.Token, "");
 
                         RxBus.getInstance().post(Constants.RxBusConst.RXBUS_SYNTIME, head.getMsg());

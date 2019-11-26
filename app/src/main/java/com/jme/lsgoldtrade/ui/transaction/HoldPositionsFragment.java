@@ -57,7 +57,6 @@ public class HoldPositionsFragment extends JMEBaseFragment implements OnRefreshL
 
     private BigDecimal mUnliquidatedProfitTotal = new BigDecimal(0);
     private BigDecimal mFloatTotal;
-
     private Fragment[] mFragmentArrays;
     private String[] mTabTitles;
     private List<String> mList;
@@ -440,6 +439,8 @@ public class HoldPositionsFragment extends JMEBaseFragment implements OnRefreshL
     }
 
     private void getAccount(boolean enable) {
+        mAccountVo = null;
+
         String accountID = mUser.getAccountID();
 
         if (TextUtils.isEmpty(accountID))
