@@ -243,10 +243,12 @@ public class WithholdContractActivity extends JMEBaseActivity {
                         mWithholdMessagePopUpWindow.showAtLocation(mBinding.tvName, Gravity.CENTER, 0, 0);
                     }
                 } /*else {
-                    if (null != mWithholdMessagePopUpWindow && !mWithholdMessagePopUpWindow.isShowing()) {
-                        mWithholdMessagePopUpWindow.setData(getResources().getString(R.string.increment_account_withhold_fail),
-                                (view) -> mWithholdMessagePopUpWindow.dismiss());
-                        mWithholdMessagePopUpWindow.showAtLocation(mBinding.tvName, Gravity.CENTER, 0, 0);
+                    if (head.getCode().equals("-1")) {
+                        if (null != mWithholdMessagePopUpWindow && !mWithholdMessagePopUpWindow.isShowing()) {
+                            mWithholdMessagePopUpWindow.setData(getResources().getString(R.string.increment_account_withhold_fail),
+                                    (view) -> mWithholdMessagePopUpWindow.dismiss());
+                            mWithholdMessagePopUpWindow.showAtLocation(mBinding.tvName, Gravity.CENTER, 0, 0);
+                        }
                     }
                 }*/
 

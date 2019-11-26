@@ -11,14 +11,17 @@ import com.google.gson.Gson;
 import com.jme.common.network.DTRequest;
 import com.jme.common.network.Head;
 import com.jme.common.util.RxBus;
+import com.jme.common.util.StringUtils;
 import com.jme.lsgoldtrade.R;
 import com.jme.lsgoldtrade.base.JMEBaseActivity;
 import com.jme.lsgoldtrade.config.Constants;
 import com.jme.lsgoldtrade.databinding.ActivityCheckServiceBinding;
+import com.jme.lsgoldtrade.domain.BankVo;
 import com.jme.lsgoldtrade.domain.LoginResponse;
 import com.jme.lsgoldtrade.domain.UserInfoVo;
 import com.jme.lsgoldtrade.service.ManagementService;
 import com.jme.lsgoldtrade.service.UserService;
+import com.jme.lsgoldtrade.service.WithholdAccountService;
 import com.jme.lsgoldtrade.util.MarketUtil;
 import com.jme.lsgoldtrade.view.ConfirmPopupwindow;
 import com.jme.lsgoldtrade.view.WithholdMessagePopUpWindow;
@@ -26,6 +29,7 @@ import com.jme.lsgoldtrade.view.WithholdMessagePopUpWindow;
 import java.math.BigDecimal;
 import java.net.ConnectException;
 import java.util.HashMap;
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -94,6 +98,7 @@ public class CheckServiceActivity extends JMEBaseActivity {
             mBinding.layoutSigned.setVisibility(View.VISIBLE);
 
             gotoDetail();
+            getCustomerSignBankList();
             getCustomerArrearage();
         }
 
@@ -170,6 +175,10 @@ public class CheckServiceActivity extends JMEBaseActivity {
         });
     }
 
+    private void getCustomerSignBankList() {
+        sendRequest(WithholdAccountService.getInstance().getCustomerSignBankList, new HashMap<>(), true);
+    }
+
     private void getCustomerArrearage() {
         sendRequest(ManagementService.getInstance().getCustomerArrearage, new HashMap<>(), true);
     }
@@ -225,6 +234,7 @@ public class CheckServiceActivity extends JMEBaseActivity {
                         }
 
                         gotoDetail();
+                        getCustomerSignBankList();
                         getCustomerArrearage();
                     }
                 }
@@ -238,6 +248,30 @@ public class CheckServiceActivity extends JMEBaseActivity {
                     mBinding.tvMoney.setText(TextUtils.isEmpty(money) ? "" : MarketUtil.decimalFormatMoney(MarketUtil.getPriceValue(money)));
                 } else {
                     mBinding.layoutPay.setVisibility(View.GONE);
+                }
+
+                break;
+            case "GetCustomerSignBankList":
+                if (head.isSuccess()) {
+                    List<BankVo> bankVoList;
+
+                    try {
+                        bankVoList = (List<BankVo>) response;
+                    } catch (Exception e) {
+                        bankVoList = null;
+
+                        e.printStackTrace();
+                    }
+
+                    if (null == bankVoList || 0 == bankVoList.size())
+                        return;
+
+                    BankVo bankVo = bankVoList.get(0);
+
+                    if (null == bankVo)
+                        return;
+
+                    mBinding.tvBankcard.setText(StringUtils.formatBankCardDefault(bankVo.getBankNo()));
                 }
 
                 break;
