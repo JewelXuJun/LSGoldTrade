@@ -558,18 +558,18 @@ public class HoldPositionsFragment extends JMEBaseFragment implements OnRefreshL
                         } else {
                             mCurrentHoldPositionsFragment.setCurrentHoldPositionsData(mPositionVoList);
                             mCurrentHoldPositionsFragment.setFloatingList(mList);
-
-                            if (bFlag) {
-                                bFlag = false;
-
-                                mHandler.sendEmptyMessageDelayed(Constants.Msg.MSG_TRADE_POSITION_UPDATE_DATA, 0);
-                                mHandler.sendEmptyMessageDelayed(Constants.Msg.MSG_TRADE_POSITION_UPDATE_ACCOUNT_DATA, AppConfig.Minute);
-                            }
-
-                            calculateFloat(mFiveSpeedVoList, mPositionVoList);
                         }
                     }
                 }
+
+                if (bFlag) {
+                    bFlag = false;
+
+                    mHandler.sendEmptyMessageDelayed(Constants.Msg.MSG_TRADE_POSITION_UPDATE_DATA, 0);
+                    mHandler.sendEmptyMessageDelayed(Constants.Msg.MSG_TRADE_POSITION_UPDATE_ACCOUNT_DATA, AppConfig.Minute);
+                }
+
+                calculateFloat(mFiveSpeedVoList, mPositionVoList);
 
                 mBinding.swipeRefreshLayout.finishRefresh(true);
 
