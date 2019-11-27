@@ -672,7 +672,7 @@
     <string name="increment_account_withhold_contract_mobile">预留手机号</string>
     <string name="increment_account_withhold_contract_mobile_hint">请输入银行预留手机号</string>
     <string name="increment_account_withhold_verification_code">验证码</string>
-    <string name="increment_account_withhold_verification_aggrement">《华兴银行代扣协议》、《泰金所平台增值服务协议》</string>
+    <string name="increment_account_withhold_verification_aggrement">《华兴银行代扣协议》</string>
     <string name="increment_account_withhold_open">立即开通</string>
     <string name="increment_account_withhold_open_message">温馨提示：\n您通过平台交易产生的服务费将从您签约绑定的银行卡扣除。</string>
     <string name="increment_account_withhold_success">您的代扣签约成功!</string>
@@ -682,7 +682,7 @@
     <string name="increment_company">江苏泰金所互联网金融信息服务有限公司</string>
     <string name="increment_identity_information_error">身份信息有误，请重新进入页面！</string>
     <string name="increment_bank_card_input">请输入13-19位银行卡号</string>
-    <string name="increment_aggrement_message">请先同意并勾选《华兴银行代扣协议》、《泰金所平台增值服务协议》</string>
+    <string name="increment_aggrement_message">请先同意并勾选《华兴银行代扣协议》</string>
     <string name="increment_arrears">您当前有服务费未缴纳，请结清后再使用该服务</string>
     <string name="increment_sign_immediately">立即签约</string>
     <string name="increment_trade_message">更多增值服务，请前往交易使用。</string>
