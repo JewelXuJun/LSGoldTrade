@@ -1,7 +1,5 @@
 package com.jme.lsgoldtrade.ui.transaction;
 
-import android.content.Context;
-import android.hardware.fingerprint.FingerprintManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.SpannableString;
@@ -86,8 +84,11 @@ public class TransactionFragment extends JMEBaseFragment {
 
         bHidden = hidden;
 
-        if (!bHidden && null != mUser && !TextUtils.isEmpty(mUser.getAccountID()))
+        if (!bHidden && null != mUser && !TextUtils.isEmpty(mUser.getAccountID())) {
+            StatusBarUtil.setStatusBarMode(mActivity, true, R.color.white);
+
             getUserPasswordSettingInfo();
+        }
 
         if (null != mBinding && null != mBinding.tabViewpager && null != mAdapter)
             mAdapter.getItem(mBinding.tabViewpager.getCurrentItem()).onHiddenChanged(hidden);
@@ -99,8 +100,11 @@ public class TransactionFragment extends JMEBaseFragment {
 
         setLayout();
 
-        if (!bHidden && null != mUser && !TextUtils.isEmpty(mUser.getAccountID()))
+        if (!bHidden && null != mUser && !TextUtils.isEmpty(mUser.getAccountID())) {
+            StatusBarUtil.setStatusBarMode(mActivity, true, R.color.white);
+
             getUserPasswordSettingInfo();
+        }
     }
 
     private void initTabs() {

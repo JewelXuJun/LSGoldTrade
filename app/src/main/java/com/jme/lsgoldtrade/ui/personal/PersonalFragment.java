@@ -28,6 +28,8 @@ public class PersonalFragment extends JMEBaseFragment {
 
     private FragmentPersonalBinding mBinding;
 
+    private boolean bHidden = false;
+
     @Override
     protected int getContentViewId() {
         return R.layout.fragment_personal;
@@ -59,10 +61,21 @@ public class PersonalFragment extends JMEBaseFragment {
     }
 
     @Override
+    public void onHiddenChanged(boolean hidden) {
+        super.onHiddenChanged(hidden);
+
+        bHidden = hidden;
+
+        if (!bHidden)
+            StatusBarUtil.setStatusBarMode(mActivity, true, R.color.color_blue);
+    }
+
+    @Override
     public void onResume() {
         super.onResume();
 
-        StatusBarUtil.setStatusBarMode(mActivity, true, R.color.color_blue);
+        if (!bHidden)
+            StatusBarUtil.setStatusBarMode(mActivity, true, R.color.color_blue);
 
         if (null == mUser || !mUser.isLogin()) {
             mBinding.tvAccount.setVisibility(View.GONE);
