@@ -20,6 +20,7 @@ import com.jme.lsgoldtrade.R;
 import com.jme.lsgoldtrade.base.JMEBasePopupWindow;
 import com.jme.lsgoldtrade.config.AppConfig;
 import com.jme.lsgoldtrade.databinding.PopupwindowEveningUpBinding;
+import com.jme.lsgoldtrade.domain.FiveSpeedVo;
 import com.jme.lsgoldtrade.util.MarketUtil;
 
 import java.math.BigDecimal;
@@ -32,12 +33,15 @@ public class EveningUpPopupWindow extends JMEBasePopupWindow {
 
     private int mLength = 2;
     private float mPriceMove = 0.00f;
+    private String mType;
     private String mLowerLimitPrice;
     private String mHighLimitPrice;
     private long mMinOrderQty = 0;
     private long mMaxOrderQty = 0;
     private long mMaxHoldQty = 0;
     private long mMaxAmount = 0;
+
+    private FiveSpeedVo mFiveSpeedVo;
 
     public EveningUpPopupWindow(Context context) {
         super(context);
@@ -116,16 +120,17 @@ public class EveningUpPopupWindow extends JMEBasePopupWindow {
         });
     }
 
-    public void setData(String account, String contractID, String price, String type, float priceMove, String lowerLimitPrice,
+    public void setData(FiveSpeedVo fiveSpeedVo, String account, String contractID, String type, float priceMove, String lowerLimitPrice,
                         String highLimitPrice, long minOrderQty, long maxOrderQty, long maxHoldQty, long maxAmount,
                         View.OnClickListener confirmListener) {
+        mFiveSpeedVo = fiveSpeedVo;
         mLength = contractID.equals("Ag(T+D)") ? 0 : 2;
+        mType = type;
 
         mBinding.tvGoldAccount.setText(account);
-        mBinding.tvBusinessType.setText(type.equals("多") ? mContext.getString(R.string.transaction_buy_evening)
+        mBinding.tvBusinessType.setText(mType.equals("多") ? mContext.getString(R.string.transaction_buy_evening)
                 : mContext.getString(R.string.transaction_sale_evening));
         mBinding.tvBusinessVarieties.setText(contractID);
-        mBinding.etPrice.setText(price);
         mBinding.etPrice.setInputType(contractID.equals("Ag(T+D)") ? InputType.TYPE_CLASS_NUMBER : EditorInfo.TYPE_CLASS_NUMBER | EditorInfo.TYPE_NUMBER_FLAG_DECIMAL);
         mBinding.etAmount.setText(String.valueOf(maxAmount));
 
@@ -138,10 +143,6 @@ public class EveningUpPopupWindow extends JMEBasePopupWindow {
         mMaxAmount = maxAmount;
 
         mBinding.btnConfirm.setOnClickListener(confirmListener);
-    }
-
-    public String getPrice() {
-        return mBinding.etPrice.getText().toString();
     }
 
     public String getAmount() {
@@ -157,7 +158,7 @@ public class EveningUpPopupWindow extends JMEBasePopupWindow {
         public void onClickPriceMinus() {
             hiddenKeyBoard();
 
-            String price = getPrice(mBinding.etPrice);
+            String price = getPrice();
 
             if (TextUtils.isEmpty(price) || TextUtils.isEmpty(mLowerLimitPrice))
                 return;
@@ -178,7 +179,7 @@ public class EveningUpPopupWindow extends JMEBasePopupWindow {
         public void onClickPriceAdd() {
             hiddenKeyBoard();
 
-            String price = getPrice(mBinding.etPrice);
+            String price = getPrice();
 
             if (TextUtils.isEmpty(price) || TextUtils.isEmpty(mHighLimitPrice))
                 return;
@@ -243,11 +244,11 @@ public class EveningUpPopupWindow extends JMEBasePopupWindow {
         }
     }
 
-    private String getPrice(EditText editText) {
-        String price = editText.getText().toString();
+    public String getPrice() {
+        String price = mBinding.etPrice.getText().toString();
 
-        if (TextUtils.isEmpty(price) || price.equals(mContext.getResources().getString(R.string.text_no_data_default)))
-            return "";
+        if (TextUtils.isEmpty(price))
+            price = mType.equals("多") ? mFiveSpeedVo.getFiveBidLists().get(0)[1] : mFiveSpeedVo.getFiveAskLists().get(0)[1];
 
         if (price.endsWith("."))
             price = price.substring(0, price.length() - 1);

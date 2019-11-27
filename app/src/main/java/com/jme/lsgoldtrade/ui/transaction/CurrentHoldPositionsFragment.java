@@ -302,8 +302,7 @@ public class CurrentHoldPositionsFragment extends JMEBaseFragment {
             long maxHoldQty = contractInfoVo.getMaxHoldQty();
             long maxAmount = positionVo.getPosition();
 
-            mEveningUpPopupWindow.setData(mUser.getAccount(), contractID,
-                    type.equals("多") ? fiveSpeedVo.getFiveBidLists().get(0)[1] : fiveSpeedVo.getFiveAskLists().get(0)[1],
+            mEveningUpPopupWindow.setData(fiveSpeedVo, mUser.getAccount(), contractID,
                     type, new BigDecimal(contractInfoVo.getMinPriceMove()).divide(new BigDecimal(100)).floatValue(),
                     lowerLimitPrice, highLimitPrice, minOrderQty, maxOrderQty, maxHoldQty, maxAmount,
                     (view) -> {
@@ -327,8 +326,7 @@ public class CurrentHoldPositionsFragment extends JMEBaseFragment {
                         } else if (maxOrderQty != -1 && new BigDecimal(amount).compareTo(new BigDecimal(Math.min(maxAmount, maxOrderQty))) == 1) {
                             Toast.makeText(mContext, R.string.transaction_limit_max_amount_error_canbuy, Toast.LENGTH_SHORT).show();
                         } else {
-                            limitOrder(contractID, mEveningUpPopupWindow.getPrice(),
-                                    mEveningUpPopupWindow.getAmount(), positionVo.getType().equals("多") ? 2 : 1, 1);
+                            limitOrder(contractID, price, mEveningUpPopupWindow.getAmount(), positionVo.getType().equals("多") ? 2 : 1, 1);
 
                             mEveningUpPopupWindow.dismiss();
                         }
@@ -607,8 +605,6 @@ public class CurrentHoldPositionsFragment extends JMEBaseFragment {
             case "LimitOrder":
                 if (head.isSuccess()) {
                     showShortToast(R.string.transaction_evening_up_success);
-
-                    RxBus.getInstance().post(Constants.RxBusConst.RXBUS_TRANSACTION_HOLD_POSITIONS_UPDATE, null);
                 } else {
                     if (head.getMsg().contains("可用资金不足")) {
                         if (null != mConfirmPopupwindow && !mConfirmPopupwindow.isShowing()) {

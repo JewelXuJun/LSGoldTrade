@@ -177,11 +177,12 @@
                         android:layout_weight="3"
                         android:background="@null"
                         android:gravity="center"
+                        android:hint="@string/market_rival_price"
                         android:inputType="numberDecimal"
                         android:maxLines="1"
                         android:textColor="@color/color_blue_deep"
                         android:textColorHint="@color/color_text_hint"
-                        android:textSize="@dimen/sp_16" />
+                        android:textSize="@dimen/size_normal" />
 
                     <include layout="@layout/item_line_horizontal" />
 
@@ -252,7 +253,7 @@
                         android:maxLines="1"
                         android:textColor="@color/color_blue_deep"
                         android:textColorHint="@color/color_text_hint"
-                        android:textSize="@dimen/sp_16" />
+                        android:textSize="@dimen/size_normal" />
 
                     <include layout="@layout/item_line_horizontal" />
 

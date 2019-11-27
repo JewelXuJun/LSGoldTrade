@@ -483,24 +483,25 @@ public class HoldPositionsFragment extends JMEBaseFragment implements OnRefreshL
                         e.printStackTrace();
                     }
 
-                    if (null == mAccountVo)
-                        return;
+                    if (null == mAccountVo) {
+                        getAccount(false);
+                    } else {
+                        mAvailableFunds = MarketUtil.getPriceValue(mAccountVo.getTransactionBalance() - mAccountVo.getRuntimeFee());
+                        mMarketCapitalization = MarketUtil.getPriceValue(mAccountVo.getPositionMargin());
+                        String minReserveFund = mAccountVo.getMinReserveFundStr();
 
-                    mAvailableFunds = MarketUtil.getPriceValue(mAccountVo.getTransactionBalance() - mAccountVo.getRuntimeFee());
-                    mMarketCapitalization = MarketUtil.getPriceValue(mAccountVo.getPositionMargin());
-                    String minReserveFund = mAccountVo.getMinReserveFundStr();
+                        mBinding.tvAvailableFunds.setText(bHiddenStatus ? mContext.getResources().getString(R.string.transaction_hidden_value)
+                                : TextUtils.isEmpty(mAvailableFunds) ? mContext.getResources().getString(R.string.text_no_data_default) : MarketUtil.decimalFormatMoney(mAvailableFunds));
+                        mBinding.tvMarketCapitalization.setText(bHiddenStatus ? mContext.getResources().getString(R.string.transaction_hidden_value)
+                                : TextUtils.isEmpty(mMarketCapitalization) ? mContext.getResources().getString(R.string.text_no_data_default) : MarketUtil.decimalFormatMoney(mMarketCapitalization));
+                        mBinding.tvGuaranteeFund.setText(TextUtils.isEmpty(minReserveFund) ? getResources().getString(R.string.text_no_data_default)
+                                : new BigDecimal(minReserveFund).compareTo(BigDecimal.ZERO) == 0 ? getResources().getString(R.string.text_no_data_default) : MarketUtil.decimalFormatMoney(minReserveFund));
+                        mBinding.tvGuaranteeFundSetting.setText(TextUtils.isEmpty(minReserveFund) ? mContext.getResources().getString(R.string.transaction_goto_setting)
+                                : new BigDecimal(minReserveFund).compareTo(BigDecimal.ZERO) == 0 ? mContext.getResources().getString(R.string.transaction_goto_setting)
+                                : mContext.getResources().getString(R.string.transaction_modify));
 
-                    mBinding.tvAvailableFunds.setText(bHiddenStatus ? mContext.getResources().getString(R.string.transaction_hidden_value)
-                            : TextUtils.isEmpty(mAvailableFunds) ? mContext.getResources().getString(R.string.text_no_data_default) : MarketUtil.decimalFormatMoney(mAvailableFunds));
-                    mBinding.tvMarketCapitalization.setText(bHiddenStatus ? mContext.getResources().getString(R.string.transaction_hidden_value)
-                            : TextUtils.isEmpty(mMarketCapitalization) ? mContext.getResources().getString(R.string.text_no_data_default) : MarketUtil.decimalFormatMoney(mMarketCapitalization));
-                    mBinding.tvGuaranteeFund.setText(TextUtils.isEmpty(minReserveFund) ? getResources().getString(R.string.text_no_data_default)
-                            : new BigDecimal(minReserveFund).compareTo(BigDecimal.ZERO) == 0 ? getResources().getString(R.string.text_no_data_default) : MarketUtil.decimalFormatMoney(minReserveFund));
-                    mBinding.tvGuaranteeFundSetting.setText(TextUtils.isEmpty(minReserveFund) ? mContext.getResources().getString(R.string.transaction_goto_setting)
-                            : new BigDecimal(minReserveFund).compareTo(BigDecimal.ZERO) == 0 ? mContext.getResources().getString(R.string.transaction_goto_setting)
-                            : mContext.getResources().getString(R.string.transaction_modify));
-
-                    calculateFloat(mFiveSpeedVoList, mPositionVoList);
+                        calculateFloat(mFiveSpeedVoList, mPositionVoList);
+                    }
                 } else {
                     getAccount(false);
                 }
@@ -572,12 +573,12 @@ public class HoldPositionsFragment extends JMEBaseFragment implements OnRefreshL
                     }
 
                     mCurrentHoldPositionsFragment.setFiveSpeedVoList(mFiveSpeedVoList);
-
-                    if (bFlag)
-                        initValue(false);
-                    else
-                        calculateFloat(mFiveSpeedVoList, mPositionVoList);
                 }
+
+                if (bFlag)
+                    initValue(false);
+                else
+                    calculateFloat(mFiveSpeedVoList, mPositionVoList);
 
                 break;
         }
