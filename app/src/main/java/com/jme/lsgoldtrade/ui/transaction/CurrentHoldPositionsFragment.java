@@ -605,6 +605,8 @@ public class CurrentHoldPositionsFragment extends JMEBaseFragment {
             case "LimitOrder":
                 if (head.isSuccess()) {
                     showShortToast(R.string.transaction_evening_up_success);
+
+                    RxBus.getInstance().post(Constants.RxBusConst.RXBUS_TRANSACTION_HOLD_POSITIONS_UPDATE, null);
                 } else {
                     if (head.getMsg().contains("可用资金不足")) {
                         if (null != mConfirmPopupwindow && !mConfirmPopupwindow.isShowing()) {
