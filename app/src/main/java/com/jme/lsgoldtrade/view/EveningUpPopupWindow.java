@@ -131,6 +131,7 @@ public class EveningUpPopupWindow extends JMEBasePopupWindow {
         mBinding.tvBusinessType.setText(mType.equals("多") ? mContext.getString(R.string.transaction_buy_evening)
                 : mContext.getString(R.string.transaction_sale_evening));
         mBinding.tvBusinessVarieties.setText(contractID);
+        mBinding.etPrice.setText(type.equals("多") ? fiveSpeedVo.getFiveBidLists().get(0)[1] : fiveSpeedVo.getFiveAskLists().get(0)[1]);
         mBinding.etPrice.setInputType(contractID.equals("Ag(T+D)") ? InputType.TYPE_CLASS_NUMBER : EditorInfo.TYPE_CLASS_NUMBER | EditorInfo.TYPE_NUMBER_FLAG_DECIMAL);
         mBinding.etAmount.setText(String.valueOf(maxAmount));
 
