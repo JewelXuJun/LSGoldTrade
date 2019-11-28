@@ -185,6 +185,8 @@ public class SplashActivity extends JMEBaseActivity {
                         PushManager.getInstance().bindAlias(this, userInfoVo.getTraderId());
 
                     getContractInfo();
+                } else {
+                    SharedPreUtils.setString(this, SharedPreUtils.Token, "");
                 }
 
                 break;
