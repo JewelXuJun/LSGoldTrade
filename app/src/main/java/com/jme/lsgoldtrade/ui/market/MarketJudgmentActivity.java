@@ -62,8 +62,6 @@ public class MarketJudgmentActivity extends JMEBaseActivity {
     private long mLongPositionMargin = 0;
     private long mShortPositionMargin = 0;
 
-    private List<String> mList;
-
     private ContractInfoVo mContractInfoVo;
     private TenSpeedVo mTenSpeedVo;
     private AccountVo mAccountVo;
@@ -129,12 +127,12 @@ public class MarketJudgmentActivity extends JMEBaseActivity {
                     if (null == object)
                         return;
 
-                    mList = (List<String>) object;
+                    List<String> list = (List<String>) object;
 
-                    if (null == mList || 5 != mList.size())
+                    if (null == list || 5 != list.size())
                         return;
 
-                    queryLoginResult();
+                    limitOrder(list.get(0), list.get(1), list.get(2), list.get(3), list.get(4));
 
                     break;
             }
@@ -322,7 +320,7 @@ public class MarketJudgmentActivity extends JMEBaseActivity {
                             mSignedPopUpWindow.showAtLocation(mBinding.tablayout, Gravity.CENTER, 0, 0);
                         }
                     } else {
-                        limitOrder(mList.get(0), mList.get(1), mList.get(2), mList.get(3), mList.get(4));
+                        getAccount();
                     }
                 }
 
@@ -433,7 +431,7 @@ public class MarketJudgmentActivity extends JMEBaseActivity {
                 mOcFlag = 0;
                 mPagingKey = "";
 
-                getAccount();
+               queryLoginResult();
             }
         }
 
@@ -460,7 +458,7 @@ public class MarketJudgmentActivity extends JMEBaseActivity {
                 mOcFlag = 0;
                 mPagingKey = "";
 
-                getAccount();
+                queryLoginResult();
             }
         }
 

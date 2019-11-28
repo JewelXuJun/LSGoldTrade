@@ -110,8 +110,6 @@ public class MarketDetailActivity extends JMEBaseActivity implements FChart.OnPr
     private long mShortPositionMargin = 0;
     private String[] mContractIdList;
 
-    private List<String> mList;
-
     private Subscription mRxbus;
 
     private Handler mHandler = new Handler() {
@@ -295,12 +293,12 @@ public class MarketDetailActivity extends JMEBaseActivity implements FChart.OnPr
                     if (null == object)
                         return;
 
-                    mList = (List<String>) object;
+                    List<String> list = (List<String>) object;
 
-                    if (null == mList || 5 != mList.size())
+                    if (null == list || 5 != list.size())
                         return;
 
-                    queryLoginResult();
+                    limitOrder(list.get(0), list.get(1), list.get(2), list.get(3), list.get(4));
 
                     break;
                 case Constants.RxBusConst.RXBUS_LOGIN_SUCCESS:
@@ -931,7 +929,7 @@ public class MarketDetailActivity extends JMEBaseActivity implements FChart.OnPr
                             mSignedPopUpWindow.showAtLocation(mBinding.tvHigh, Gravity.CENTER, 0, 0);
                         }
                     } else {
-                        limitOrder(mList.get(0), mList.get(1), mList.get(2), mList.get(3), mList.get(4));
+                        getAccount();
                     }
                 }
 
@@ -1129,7 +1127,7 @@ public class MarketDetailActivity extends JMEBaseActivity implements FChart.OnPr
                     mOcFlag = 0;
                     mPagingKey = "";
 
-                    getAccount();
+                    queryLoginResult();
                 }
             }
         }
@@ -1154,7 +1152,7 @@ public class MarketDetailActivity extends JMEBaseActivity implements FChart.OnPr
                     mOcFlag = 0;
                     mPagingKey = "";
 
-                    getAccount();
+                    queryLoginResult();
                 }
             }
         }

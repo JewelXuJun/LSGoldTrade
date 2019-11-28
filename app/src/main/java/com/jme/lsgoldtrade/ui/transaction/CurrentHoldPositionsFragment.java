@@ -127,13 +127,7 @@ public class CurrentHoldPositionsFragment extends JMEBaseFragment {
 
             switch (view.getId()) {
                 case R.id.layout_stop_transaction:
-                    mContractID = mPositionVo.getContractId();
-                    String stopOrderFlag = mPositionVo.getStopOrderFlag();
-
-                    if (!TextUtils.isEmpty(stopOrderFlag) && stopOrderFlag.equals("Y"))
-                        querySetStopOrder(mPositionVo.getType().equals("多") ? 2 : 1, mPositionVo.getContractId());
-                    else
-                        showTransactionStopPopupWindow(false, mPositionVo.getContractId(), null);
+                    queryLoginResult();
 
                     break;
                 case R.id.btn_evening_up:
@@ -179,7 +173,7 @@ public class CurrentHoldPositionsFragment extends JMEBaseFragment {
                     if (null == mList || 7 != mList.size())
                         return;
 
-                    queryLoginResult();
+                    entrustConditionOrder(mList);
 
                     break;
                 case Constants.RxBusConst.RXBUS_TRANSACTION_STOP_SHEET_CANCEL_ORDER:
@@ -597,7 +591,13 @@ public class CurrentHoldPositionsFragment extends JMEBaseFragment {
                             mSignedPopUpWindow.showAtLocation(mBinding.tvGotoTransaction, Gravity.CENTER, 0, 0);
                         }
                     } else {
-                        entrustConditionOrder(mList);
+                        mContractID = mPositionVo.getContractId();
+                        String stopOrderFlag = mPositionVo.getStopOrderFlag();
+
+                        if (!TextUtils.isEmpty(stopOrderFlag) && stopOrderFlag.equals("Y"))
+                            querySetStopOrder(mPositionVo.getType().equals("多") ? 2 : 1, mPositionVo.getContractId());
+                        else
+                            showTransactionStopPopupWindow(false, mPositionVo.getContractId(), null);
                     }
                 }
 

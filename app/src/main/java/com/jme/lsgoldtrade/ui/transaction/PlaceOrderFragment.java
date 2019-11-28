@@ -416,7 +416,7 @@ public class PlaceOrderFragment extends JMEBaseFragment implements FChart.OnPric
         else if (mMaxHoldQty != -1 && new BigDecimal(holdAmount).compareTo(new BigDecimal(mMaxHoldQty)) == 1)
             showShortToast(R.string.transaction_limit_max_amount_error2);
         else
-            queryLoginResult();
+            showPlaceOrderPopupWindow(mBinding.tvContractId.getText().toString(), mPlaceOrderPrice, mBinding.etAmount.getText().toString(), mBsFlag);
     }
 
     private String getPrice() {
@@ -723,7 +723,7 @@ public class PlaceOrderFragment extends JMEBaseFragment implements FChart.OnPric
                             mSignedPopUpWindow.showAtLocation(mBinding.etAmount, Gravity.CENTER, 0, 0);
                         }
                     } else {
-                        showPlaceOrderPopupWindow(mBinding.tvContractId.getText().toString(), mPlaceOrderPrice, mBinding.etAmount.getText().toString(), mBsFlag);
+                        doTransaction();
                     }
                 }
 
@@ -902,7 +902,7 @@ public class PlaceOrderFragment extends JMEBaseFragment implements FChart.OnPric
                 mBsFlag = 1;
                 mOcFlag = 0;
 
-                doTransaction();
+               queryLoginResult();
             }
         }
 
@@ -915,7 +915,7 @@ public class PlaceOrderFragment extends JMEBaseFragment implements FChart.OnPric
                 mBsFlag = 2;
                 mOcFlag = 0;
 
-                doTransaction();
+                queryLoginResult();
             }
         }
 
