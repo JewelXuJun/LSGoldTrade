@@ -281,9 +281,16 @@ public class CheckServiceActivity extends JMEBaseActivity {
     public class ClickHandlers {
 
         public void onClickWithholdContract() {
-            bClickFlag = true;
+            if (TextUtils.isEmpty(mUser.getAccountID())) {
+                RxBus.getInstance().post(Constants.RxBusConst.RXBUS_TRANSACTION_PLACE_ORDER, null);
+                ARouter.getInstance().build(Constants.ARouterUriConst.MAIN).navigation();
 
-            queryLoginResult();
+                finish();
+            } else {
+                bClickFlag = true;
+
+                queryLoginResult();
+            }
         }
 
         public void onClickBankCard() {
