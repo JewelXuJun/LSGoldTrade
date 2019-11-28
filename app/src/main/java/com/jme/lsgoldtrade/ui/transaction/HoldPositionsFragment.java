@@ -331,22 +331,17 @@ public class HoldPositionsFragment extends JMEBaseFragment implements OnRefreshL
                         .add(mUnliquidatedProfitTotal.compareTo(new BigDecimal(0)) == -1 ? new BigDecimal(0) : mUnliquidatedProfitTotal)
                         .subtract(new BigDecimal(mAccountVo.getFee()))
                         .toPlainString();
-                mBinding.tvTotalEquity.setText(bHiddenStatus ? mContext.getResources().getString(R.string.transaction_hidden_value)
-                        : TextUtils.isEmpty(mTotal) ? mContext.getResources().getString(R.string.text_no_data_default) : MarketUtil.decimalFormatMoney(mTotal));
 
                 String minReserveFund = mAccountVo.getMinReserveFundStr();
-                mDesirableCapital = MarketUtil.getPriceValue(Math.min((new BigDecimal(mTotal).subtract(new BigDecimal(minReserveFund))).multiply(new BigDecimal(100)).longValue(),
-                        new BigDecimal(mAccountVo.getExtractableBalance()).subtract(new BigDecimal(mAccountVo.getRuntimeFee())).longValue()));
+                String runtimeFee = mAccountVo.getRuntimeFeeStr();
 
-                mBinding.tvDesirableCapital.setText(bHiddenStatus ? mContext.getResources().getString(R.string.transaction_hidden_value)
-                        : TextUtils.isEmpty(mDesirableCapital) ? mContext.getResources().getString(R.string.text_no_data_default)
-                        : new BigDecimal(mDesirableCapital).compareTo(BigDecimal.ZERO) == -1
-                        ? "0.00" : MarketUtil.decimalFormatMoney(mDesirableCapital));
+                mBinding.tvTotalEquity.setText(bHiddenStatus ? mContext.getResources().getString(R.string.transaction_hidden_value)
+                        : TextUtils.isEmpty(mTotal) ? mContext.getResources().getString(R.string.text_no_data_default) : MarketUtil.decimalFormatMoney(mTotal));
 
                 if (new BigDecimal(minReserveFund).compareTo(new BigDecimal(0)) == 0) {
                     mBinding.tvRiskRate.setText(R.string.text_no_data_default);
                 } else {
-                    BigDecimal fee = new BigDecimal(minReserveFund).add(new BigDecimal(mAccountVo.getRuntimeFeeStr()));
+                    BigDecimal fee = new BigDecimal(minReserveFund).add(new BigDecimal(runtimeFee));
 
                     if (fee.compareTo(new BigDecimal(0)) == 0) {
                         mBinding.tvRiskRate.setText(R.string.text_no_data_default);
@@ -367,6 +362,15 @@ public class HoldPositionsFragment extends JMEBaseFragment implements OnRefreshL
                         mBinding.tvRiskRate.setText(BigDecimalUtil.formatRate(String.valueOf(riskRate)));
                     }
                 }
+
+                mDesirableCapital = MarketUtil.getPriceValue(Math.min((new BigDecimal(mTotal).subtract(new BigDecimal(minReserveFund))).multiply(new BigDecimal(100)).longValue(),
+                        new BigDecimal(mAccountVo.getExtractableBalance()).subtract(new BigDecimal(mAccountVo.getRuntimeFee())).longValue()));
+
+                mBinding.tvDesirableCapital.setText(bHiddenStatus ? mContext.getResources().getString(R.string.transaction_hidden_value)
+                        : TextUtils.isEmpty(mDesirableCapital)
+                        ? mContext.getResources().getString(R.string.text_no_data_default)
+                        : new BigDecimal(mDesirableCapital).compareTo(BigDecimal.ZERO) == -1
+                        ? "0.00" : MarketUtil.decimalFormatMoney(mDesirableCapital));
             }
         } else {
             mFloatTotal = new BigDecimal(0);
@@ -387,6 +391,7 @@ public class HoldPositionsFragment extends JMEBaseFragment implements OnRefreshL
                         .add(mUnliquidatedProfitTotal.compareTo(new BigDecimal(0)) == -1 ? new BigDecimal(0) : mUnliquidatedProfitTotal)
                         .subtract(new BigDecimal(mAccountVo.getFee()))
                         .toPlainString();
+
                 String minReserveFund = mAccountVo.getMinReserveFundStr();
                 String runtimeFee = mAccountVo.getRuntimeFeeStr();
 

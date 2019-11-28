@@ -35,7 +35,6 @@ import org.json.JSONObject;
  */
 public class CustomIntentService extends GTIntentService {
 
-    private static final String TAG = "CustomIntentService";
     private static final String CHANNEL_ID = "TJSId";
     private static final String CHANNEL_NAME = "TJS";
 
@@ -48,12 +47,12 @@ public class CustomIntentService extends GTIntentService {
 
     @Override
     public void onReceiveServicePid(Context context, int pid) {
-        Log.d(TAG, "onReceiveServicePid -> " + pid);
+
     }
 
     @Override
     public void onReceiveClientId(Context context, String clientid) {
-        Log.d(TAG, "onReceiveClientId -> " + "clientid = " + clientid);
+
     }
 
     @Override
@@ -61,24 +60,10 @@ public class CustomIntentService extends GTIntentService {
         mContext = context;
         mManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
 
-        String appid = msg.getAppid();
-        String taskid = msg.getTaskId();
-        String messageid = msg.getMessageId();
         byte[] payload = msg.getPayload();
-        String pkg = msg.getPkgName();
-        String cid = msg.getClientId();
 
-        // 第三方回执调用接口，actionid范围为90000-90999，可根据业务场景执行
-        boolean result = PushManager.getInstance().sendFeedbackMessage(context, taskid, messageid, 90001);
-        Log.d(TAG, "call sendFeedbackMessage = " + (result ? "success" : "failed"));
-        Log.d(TAG, "onReceiveMessageData -> " + "appid = " + appid + "\ntaskid = " + taskid + "\nmessageid = " + messageid + "\npkg = " + pkg
-                + "\ncid = " + cid);
-
-        if (payload == null) {
-            Log.e(TAG, "receiver payload = null");
-        } else {
+        if (null != payload) {
             String data = new String(payload);
-            Log.d(TAG, "receiver payload = " + data);
 
             try {
                 JSONObject jsonObject = new JSONObject(data);
@@ -92,12 +77,6 @@ public class CustomIntentService extends GTIntentService {
         }
     }
 
-    /**
-     * 根据消息内容弹出通知框
-     *
-     * @param context
-     * @param jsonObject
-     */
     private void showNotification(Context context, JSONObject jsonObject) {
         int notificationId = (int) System.currentTimeMillis();
         Notification notification;
@@ -110,7 +89,6 @@ public class CustomIntentService extends GTIntentService {
             if (TextUtils.isEmpty(id))
                 return;
 
-            //设置点击通知后是发送广播，传递对应的数据
             Intent messageIntent = new Intent(context, NotificationReceiver.class);
             Bundle bundle = new Bundle();
             bundle.putString("id", id);
@@ -143,7 +121,6 @@ public class CustomIntentService extends GTIntentService {
             if (TextUtils.isEmpty(contractId) || TextUtils.isEmpty(latestPrice))
                 return;
 
-            //设置点击通知后是发送广播，传递对应的数据
             Intent warningIntent = new Intent(context, NotificationReceiver.class);
             Bundle bundle = new Bundle();
             bundle.putString("contractId", contractId);
@@ -171,27 +148,18 @@ public class CustomIntentService extends GTIntentService {
             }
         }
 
-        // 点击notification之后，该notification自动消失
         notification.flags |= Notification.FLAG_AUTO_CANCEL;
-        // notification被notify的时候，触发默认声音和默认震动
         notification.defaults |= Notification.DEFAULT_SOUND | Notification.DEFAULT_VIBRATE | Notification.DEFAULT_LIGHTS;
 
         mManager.notify(notificationId, notification);
     }
 
-    /**
-     * 根据消息内容弹出通知框
-     *
-     * @param context
-     * @param value
-     */
     private void showNotification(Context context, String value) {
         int notificationId = (int) System.currentTimeMillis();
         Notification notification;
 
-        String title = value.contains("条件单") ? "条件单" : "止盈止损单";
+        String title = value.contains("条件单") ? "条件单" : value.contains("止盈止损单") ? "止盈止损单" : "";
 
-        //设置点击通知后是发送广播，传递对应的数据
         Intent warningIntent = new Intent(context, NotificationReceiver.class);
         Bundle bundle = new Bundle();
         bundle.putString("sheet", title);
@@ -218,9 +186,7 @@ public class CustomIntentService extends GTIntentService {
                     .setContentIntent(warningPendingIntent).build();
         }
 
-        // 点击notification之后，该notification自动消失
         notification.flags |= Notification.FLAG_AUTO_CANCEL;
-        // notification被notify的时候，触发默认声音和默认震动
         notification.defaults |= Notification.DEFAULT_SOUND | Notification.DEFAULT_VIBRATE | Notification.DEFAULT_LIGHTS;
 
         mManager.notify(notificationId, notification);
@@ -228,12 +194,12 @@ public class CustomIntentService extends GTIntentService {
 
     @Override
     public void onReceiveOnlineState(Context context, boolean online) {
-        Log.d(TAG, "onReceiveOnlineState -> " + online);
+
     }
 
     @Override
     public void onReceiveCommandResult(Context context, GTCmdMessage cmdMessage) {
-        Log.d(TAG, "onReceiveCommandResult -> " + cmdMessage);
+
     }
 
     @Override

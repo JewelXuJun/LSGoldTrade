@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 
 import com.jme.lsgoldtrade.ui.main.MainActivity;
 import com.jme.lsgoldtrade.ui.market.MarketDetailActivity;
@@ -16,16 +15,8 @@ import com.jme.lsgoldtrade.util.SystemUtils;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by Android Studio.
- * Author : zhangzhongqiang
- * Email  : betterzhang.dev@gmail.com
- * Time   : 2019/07/29 17:29
- * Desc   : description
- */
 public class NotificationReceiver extends BroadcastReceiver {
 
-    public static final String TAG = NotificationReceiver.class.getSimpleName();
     private List<Intent> intentList;
 
     @Override
@@ -42,7 +33,6 @@ public class NotificationReceiver extends BroadcastReceiver {
             destinationIntent.putExtra("ID", Long.parseLong(id));
 
             if (SystemUtils.isAppAlive(context, context.getPackageName())) {
-                Log.i(TAG, "the app process is alive");
                 Intent mainIntent = new Intent(context, MainActivity.class);
                 mainIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 
@@ -56,8 +46,6 @@ public class NotificationReceiver extends BroadcastReceiver {
 
                 context.startActivities(intentList.toArray(new Intent[intentList.size()]));
             } else {
-                Log.i(TAG, "the app process is dead");
-
                 Intent launchIntent = context.getPackageManager().getLaunchIntentForPackage(context.getPackageName());
                 launchIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED);
                 launchIntent.putExtras(bundle);
@@ -69,7 +57,6 @@ public class NotificationReceiver extends BroadcastReceiver {
             destinationIntent.putExtra("ContractId", contractId);
 
             if (SystemUtils.isAppAlive(context, context.getPackageName())) {
-                Log.i(TAG, "the app process is alive");
                 Intent mainIntent = new Intent(context, MainActivity.class);
                 mainIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 
@@ -83,8 +70,6 @@ public class NotificationReceiver extends BroadcastReceiver {
 
                 context.startActivities(intentList.toArray(new Intent[intentList.size()]));
             } else {
-                Log.i(TAG, "the app process is dead");
-
                 Intent launchIntent = context.getPackageManager().getLaunchIntentForPackage(context.getPackageName());
                 launchIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED);
                 launchIntent.putExtras(bundle);
@@ -109,8 +94,6 @@ public class NotificationReceiver extends BroadcastReceiver {
 
                 context.startActivities(intentList.toArray(new Intent[intentList.size()]));
             } else {
-                Log.i(TAG, "the app process is dead");
-
                 Intent launchIntent = context.getPackageManager().getLaunchIntentForPackage(context.getPackageName());
                 launchIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED);
                 launchIntent.putExtras(bundle);
