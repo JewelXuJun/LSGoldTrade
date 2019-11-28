@@ -311,7 +311,7 @@ public class PlaceOrderFragment extends JMEBaseFragment implements FChart.OnPric
             mMaxOrderQty = mContractInfoVo.getMaxOrderQty();
             mMaxHoldQty = mContractInfoVo.getMaxHoldQty();
 
-            mBinding.etAmount.setText(mMinOrderQty == -1 ? "1" : String.valueOf(mMinOrderQty));
+            mBinding.etAmount.setText("1");
         }
     }
 
@@ -731,6 +731,9 @@ public class PlaceOrderFragment extends JMEBaseFragment implements FChart.OnPric
             case "LimitOrder":
                 if (head.isSuccess()) {
                     showShortToast(R.string.transaction_success);
+
+                    mBinding.etPrice.setText("");
+                    mBinding.etAmount.setText("1");
                 } else {
                     if (head.getMsg().contains("可用资金不足")) {
                         if (null != mConfirmPopupwindow && !mConfirmPopupwindow.isShowing()) {
