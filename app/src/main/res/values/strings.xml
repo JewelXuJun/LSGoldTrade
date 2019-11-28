@@ -658,7 +658,6 @@
     <string name="increment_mine">我的增值服务</string>
     <string name="increment_recharge">充值</string>
     <string name="increment_withdrawal">提现</string>
-    <string name="increment_not_signed_message">您尚未签约增值服务，立即签约享%1$s个交易日的免增值服务费试用期。</string>
     <string name="increment_bankcard">我的银行卡</string>
     <string name="increment_money_pay">待支付金额</string>
     <string name="increment_account_singed_bankcard">代扣签约银行卡</string>

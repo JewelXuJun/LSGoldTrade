@@ -190,7 +190,7 @@ public class CheckServiceActivity extends JMEBaseActivity {
         switch (request.getApi().getName()) {
             case "GetRemainTradeDay":
                 if (head.isSuccess())
-                    mBinding.tvNotSignedMessage.setText(String.format(getResources().getString(R.string.increment_not_signed_message), response.toString()));
+                    mBinding.tvNotSignedMessage.setText(String.format(getResources().getString(R.string.increment_account_singed_message), response.toString()));
 
                 break;
             case "QueryLoginResult":
