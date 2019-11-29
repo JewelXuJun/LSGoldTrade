@@ -106,7 +106,7 @@
     <string name="transaction_money_out">出金</string>
     <string name="transaction_turnover">流水</string>
     <string name="transaction_success">报单成功</string>
-    <string name="transaction_evening_up_success">平仓成功</string>
+    <string name="transaction_evening_up_success">下单成功</string>
     <string name="transaction_limit_down_price_error">您的价格低于跌停价</string>
     <string name="transaction_limit_up_price_error">您的价格高于涨停价</string>
     <string name="transaction_number_error_zero">您的数量必须大于0</string>
