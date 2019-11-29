@@ -121,7 +121,7 @@ public class EveningUpPopupWindow extends JMEBasePopupWindow {
     }
 
     public void setData(FiveSpeedVo fiveSpeedVo, String account, String contractID, String type, float priceMove, String lowerLimitPrice,
-                        String highLimitPrice, long minOrderQty, long maxOrderQty, long maxHoldQty, long maxAmount,
+                        String highLimitPrice, long minOrderQty, long maxOrderQty, long maxHoldQty, long maxAmount, long frozenAmount,
                         View.OnClickListener confirmListener) {
         mFiveSpeedVo = fiveSpeedVo;
         mLength = contractID.equals("Ag(T+D)") ? 0 : 2;
@@ -133,7 +133,7 @@ public class EveningUpPopupWindow extends JMEBasePopupWindow {
         mBinding.tvBusinessVarieties.setText(contractID);
         mBinding.etPrice.setText("");
         mBinding.etPrice.setInputType(contractID.equals("Ag(T+D)") ? InputType.TYPE_CLASS_NUMBER : EditorInfo.TYPE_CLASS_NUMBER | EditorInfo.TYPE_NUMBER_FLAG_DECIMAL);
-        mBinding.etAmount.setText(String.valueOf(maxAmount));
+        mBinding.etAmount.setText(maxAmount - frozenAmount == 0 ? "0" : String.valueOf(maxAmount));
 
         mPriceMove = priceMove;
         mLowerLimitPrice = lowerLimitPrice;
