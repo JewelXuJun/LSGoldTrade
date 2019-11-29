@@ -298,7 +298,7 @@ public class CurrentHoldPositionsFragment extends JMEBaseFragment {
 
             mEveningUpPopupWindow.setData(fiveSpeedVo, mUser.getAccount(), contractID,
                     type, new BigDecimal(contractInfoVo.getMinPriceMove()).divide(new BigDecimal(100)).floatValue(),
-                    lowerLimitPrice, highLimitPrice, minOrderQty, maxOrderQty, maxHoldQty, maxAmount,
+                    lowerLimitPrice, highLimitPrice, minOrderQty, maxOrderQty, maxHoldQty, maxAmount, positionVo.getOffsetFrozen(),
                     (view) -> {
                         String price = mEveningUpPopupWindow.getPrice();
                         String amount = mEveningUpPopupWindow.getAmount();
