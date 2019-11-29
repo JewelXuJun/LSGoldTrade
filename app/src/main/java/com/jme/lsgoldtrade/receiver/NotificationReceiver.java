@@ -9,6 +9,7 @@ import android.text.TextUtils;
 import com.jme.lsgoldtrade.ui.main.MainActivity;
 import com.jme.lsgoldtrade.ui.market.MarketDetailActivity;
 import com.jme.lsgoldtrade.ui.news.NewsDetailActivity;
+import com.jme.lsgoldtrade.ui.personal.CheckServiceActivity;
 import com.jme.lsgoldtrade.ui.transaction.ConditionSheetActivity;
 import com.jme.lsgoldtrade.util.SystemUtils;
 
@@ -24,9 +25,9 @@ public class NotificationReceiver extends BroadcastReceiver {
         Bundle bundle = intent.getExtras();
         String id = bundle.getString("id", "");
         String contractId = bundle.getString("contractId", "");
-        String sheet = bundle.getString("sheet", "");
+        String title = bundle.getString("title", "");
 
-        Intent destinationIntent;
+        Intent destinationIntent = null;
 
         if (!TextUtils.isEmpty(id)) {
             destinationIntent = new Intent(context, NewsDetailActivity.class);
@@ -36,12 +37,12 @@ public class NotificationReceiver extends BroadcastReceiver {
                 Intent mainIntent = new Intent(context, MainActivity.class);
                 mainIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 
-                if (intentList == null)
+                if (null == intentList)
                     intentList = new ArrayList<>();
 
                 intentList.add(mainIntent);
 
-                if (destinationIntent != null)
+                if (null != destinationIntent)
                     intentList.add(destinationIntent);
 
                 context.startActivities(intentList.toArray(new Intent[intentList.size()]));
@@ -60,12 +61,12 @@ public class NotificationReceiver extends BroadcastReceiver {
                 Intent mainIntent = new Intent(context, MainActivity.class);
                 mainIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 
-                if (intentList == null)
+                if (null == intentList)
                     intentList = new ArrayList<>();
 
                 intentList.add(mainIntent);
 
-                if (destinationIntent != null)
+                if (null != destinationIntent)
                     intentList.add(destinationIntent);
 
                 context.startActivities(intentList.toArray(new Intent[intentList.size()]));
@@ -76,20 +77,24 @@ public class NotificationReceiver extends BroadcastReceiver {
 
                 context.startActivity(launchIntent);
             }
-        } else if (!TextUtils.isEmpty(sheet)) {
-            destinationIntent = new Intent(context, ConditionSheetActivity.class);
-            destinationIntent.putExtra("Type", sheet.contains("条件单") ? 1 : 2);
+        } else if (!TextUtils.isEmpty(title)) {
+            if (title.equals("条件单") || title.equals("止盈止损单")) {
+                destinationIntent = new Intent(context, ConditionSheetActivity.class);
+                destinationIntent.putExtra("Type", title.contains("条件单") ? 1 : 2);
+            } else if (title.equals("服务费减免通知")) {
+                destinationIntent = new Intent(context, CheckServiceActivity.class);
+            }
 
             if (SystemUtils.isAppAlive(context, context.getPackageName())) {
                 Intent mainIntent = new Intent(context, MainActivity.class);
                 mainIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 
-                if (intentList == null)
+                if (null == intentList)
                     intentList = new ArrayList<>();
 
                 intentList.add(mainIntent);
 
-                if (destinationIntent != null)
+                if (null != destinationIntent)
                     intentList.add(destinationIntent);
 
                 context.startActivities(intentList.toArray(new Intent[intentList.size()]));
@@ -100,6 +105,7 @@ public class NotificationReceiver extends BroadcastReceiver {
 
                 context.startActivity(launchIntent);
             }
+
         }
 
     }

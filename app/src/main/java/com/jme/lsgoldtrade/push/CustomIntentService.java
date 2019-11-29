@@ -158,11 +158,14 @@ public class CustomIntentService extends GTIntentService {
         int notificationId = (int) System.currentTimeMillis();
         Notification notification;
 
-        String title = value.contains("条件单") ? "条件单" : value.contains("止盈止损单") ? "止盈止损单" : "";
+        String title = value.contains("条件单") ? "条件单"
+                : value.contains("止盈止损单") ? "止盈止损单"
+                : value.contains("服务费已减免") ? "服务费减免通知"
+                : "";
 
         Intent warningIntent = new Intent(context, NotificationReceiver.class);
         Bundle bundle = new Bundle();
-        bundle.putString("sheet", title);
+        bundle.putString("title", title);
         warningIntent.putExtras(bundle);
 
         PendingIntent warningPendingIntent = PendingIntent.getBroadcast(context, notificationId, warningIntent, PendingIntent.FLAG_UPDATE_CURRENT);
