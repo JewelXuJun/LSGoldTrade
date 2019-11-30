@@ -72,6 +72,7 @@ public class Constants {
                 URL_BASE_TRADE = "https://180.96.49.165:18001";
                 URL_BASE_ACCOUNT = "https://180.96.49.165:18001";
                 URL_BASE_WITHHOLD_ACCOUNT = "https://180.96.49.165:18001";
+                URL_BASE_CONDOTION = "https://180.96.49.165:18001";
                 URL_BASE_MANAGEMENT = "https://www.taijs.com";
                 URL_INFO = "https://www.taijs.com/tjsmanage/infoapi/v1/android/cmsComtentTxt/get?contentId=";
                 URL_METAL_PAY = "https://goldmall.taijs.com/swhj/navigate/index?token=";
