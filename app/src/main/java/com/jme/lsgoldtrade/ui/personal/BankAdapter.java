@@ -3,6 +3,7 @@ package com.jme.lsgoldtrade.ui.personal;
 import android.content.Context;
 import android.text.TextUtils;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
@@ -32,7 +33,10 @@ public class BankAdapter extends BaseQuickAdapter<BankVo, BaseViewHolder> {
         if (!TextUtils.isEmpty(logoPath))
             Picasso.with(mContext).load(logoPath).into((ImageView) helper.getView(R.id.img_bank_logo));
 
-        helper.setText(R.id.tv_bank, item.getBankName());
+        String bankName = item.getBankName();
+
+        helper.setText(R.id.tv_bank, bankName);
+        ((TextView)helper.getView(R.id.tv_bank)).setTextSize(bankName.length() > 4 ? 14 : 15);
     }
 
 }

@@ -1,5 +1,7 @@
 package com.jme.lsgoldtrade.ui.personal;
 
+import android.widget.TextView;
+
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.jme.common.util.StringUtils;
@@ -19,8 +21,12 @@ public class BankCardAdapter extends BaseQuickAdapter<BankVo, BaseViewHolder> {
         if (null == item)
             return;
 
-        helper.setText(R.id.tv_bank_name, item.getBankName())
+        String bankName = item.getBankName();
+
+        helper.setText(R.id.tv_bank_name, bankName)
                 .setText(R.id.tv_bankcard, StringUtils.formatBankCardDefault(item.getBankNo()));
+
+        ((TextView)helper.getView(R.id.tv_bank_name)).setTextSize(bankName.length() > 4 ? 14 : 15);
     }
 }
 
