@@ -24,6 +24,7 @@ import com.jme.lsgoldtrade.service.UserService;
 import com.jme.lsgoldtrade.service.WithholdAccountService;
 import com.jme.lsgoldtrade.util.MarketUtil;
 import com.jme.lsgoldtrade.view.ConfirmPopupwindow;
+import com.jme.lsgoldtrade.view.SignedPopUpWindow;
 import com.jme.lsgoldtrade.view.WithholdMessagePopUpWindow;
 
 import java.math.BigDecimal;
@@ -40,8 +41,10 @@ public class CheckServiceActivity extends JMEBaseActivity {
 
     private ActivityCheckServiceBinding mBinding;
 
-    private boolean bClickFlag = false;
+    private int bClickFlag = 0;
+    private String mRemainTradeDay;
 
+    private SignedPopUpWindow mSignedPopUpWindow;
     private ConfirmPopupwindow mConfirmPopupwindow;
     private WithholdMessagePopUpWindow mWithholdMessagePopUpWindow;
 
@@ -61,6 +64,7 @@ public class CheckServiceActivity extends JMEBaseActivity {
     protected void initData(Bundle savedInstanceState) {
         super.initData(savedInstanceState);
 
+        mSignedPopUpWindow = new SignedPopUpWindow(this);
         mConfirmPopupwindow = new ConfirmPopupwindow(this);
         mWithholdMessagePopUpWindow = new WithholdMessagePopUpWindow(this);
 
@@ -74,6 +78,10 @@ public class CheckServiceActivity extends JMEBaseActivity {
         mWithholdMessagePopUpWindow.setOnDismissListener(() -> {
             mBinding.layoutNotSigned.setVisibility(View.GONE);
             mBinding.layoutSigned.setVisibility(View.VISIBLE);
+
+            gotoDetail();
+            getCustomerSignBankList();
+            getCustomerArrearage();
         });
     }
 
@@ -189,8 +197,11 @@ public class CheckServiceActivity extends JMEBaseActivity {
 
         switch (request.getApi().getName()) {
             case "GetRemainTradeDay":
-                if (head.isSuccess())
-                    mBinding.tvNotSignedMessage.setText(String.format(getResources().getString(R.string.increment_account_singed_message), response.toString()));
+                if (head.isSuccess()) {
+                    mRemainTradeDay = response.toString();
+
+                    mBinding.tvNotSignedMessage.setText(String.format(getResources().getString(R.string.increment_account_singed_message), mRemainTradeDay));
+                }
 
                 break;
             case "QueryLoginResult":
@@ -208,9 +219,12 @@ public class CheckServiceActivity extends JMEBaseActivity {
                     String isSign = userInfoVo.getIsSign();
 
                     if (TextUtils.isEmpty(isSign) || isSign.equals("N")) {
-                        if (bClickFlag) {
-                            bClickFlag = false;
+                        mUser.getCurrentUser().setIsSign("N");
 
+                        if (0 == bClickFlag) {
+                            mBinding.layoutNotSigned.setVisibility(View.VISIBLE);
+                            mBinding.layoutSigned.setVisibility(View.GONE);
+                        } else if (1 == bClickFlag) {
                             ARouter.getInstance()
                                     .build(Constants.ARouterUriConst.WITHHOLDCONTRACT)
                                     .withString("Resource", "Else")
@@ -218,24 +232,41 @@ public class CheckServiceActivity extends JMEBaseActivity {
                         } else {
                             mBinding.layoutNotSigned.setVisibility(View.VISIBLE);
                             mBinding.layoutSigned.setVisibility(View.GONE);
-                        }
-                    } else {
-                        if (bClickFlag) {
-                            if (null != mWithholdMessagePopUpWindow && !mWithholdMessagePopUpWindow.isShowing()) {
-                                bClickFlag = false;
 
+                            if (null != mSignedPopUpWindow && !mSignedPopUpWindow.isShowing()) {
+                                mSignedPopUpWindow.setData(mRemainTradeDay);
+                                mSignedPopUpWindow.showAtLocation(mBinding.tvBankcard, Gravity.CENTER, 0, 0);
+                            }
+                        }
+
+                        bClickFlag = 0;
+                    } else {
+                        mUser.getCurrentUser().setIsSign("Y");
+
+                        if (0 == bClickFlag) {
+                            mBinding.layoutNotSigned.setVisibility(View.GONE);
+                            mBinding.layoutSigned.setVisibility(View.VISIBLE);
+
+                            gotoDetail();
+                            getCustomerSignBankList();
+                            getCustomerArrearage();
+                        } else if (1 == bClickFlag) {
+                            if (null != mWithholdMessagePopUpWindow && !mWithholdMessagePopUpWindow.isShowing()) {
                                 mWithholdMessagePopUpWindow.setData(getResources().getString(R.string.increment_account_withhold_signed),
                                         (view) -> mWithholdMessagePopUpWindow.dismiss());
                                 mWithholdMessagePopUpWindow.showAtLocation(mBinding.tvBankcard, Gravity.CENTER, 0, 0);
                             }
-                        } else {
-                            mBinding.layoutNotSigned.setVisibility(View.GONE);
-                            mBinding.layoutSigned.setVisibility(View.VISIBLE);
+                        } else if (2 == bClickFlag) {
+                            ARouter.getInstance().build(Constants.ARouterUriConst.BANKCARD).navigation();
+                        } else if (3 == bClickFlag) {
+                            ARouter.getInstance().build(Constants.ARouterUriConst.WITHHOLD).navigation();
                         }
 
-                        gotoDetail();
-                        getCustomerSignBankList();
-                        getCustomerArrearage();
+                        bClickFlag = 0;
+                    }
+                } else {
+                    if (head.getCode().equals("-2012")) {
+                        mUser.getCurrentUser().setIsSign("N");
                     }
                 }
 
@@ -287,14 +318,16 @@ public class CheckServiceActivity extends JMEBaseActivity {
 
                 finish();
             } else {
-                bClickFlag = true;
+                bClickFlag = 1;
 
                 queryLoginResult();
             }
         }
 
         public void onClickBankCard() {
-            ARouter.getInstance().build(Constants.ARouterUriConst.BANKCARD).navigation();
+            bClickFlag = 2;
+
+            queryLoginResult();
         }
 
         public void onClickPaidPrompt() {
@@ -313,7 +346,9 @@ public class CheckServiceActivity extends JMEBaseActivity {
         }
 
         public void onClickPay() {
-            ARouter.getInstance().build(Constants.ARouterUriConst.WITHHOLD).navigation();
+            bClickFlag = 3;
+
+            queryLoginResult();
         }
 
     }

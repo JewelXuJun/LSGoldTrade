@@ -805,6 +805,8 @@ public class CreateConditionSheetFragment extends JMEBaseFragment {
                     String isSign = userInfoVo.getIsSign();
 
                     if (TextUtils.isEmpty(isSign) || isSign.equals("N")) {
+                        mUser.getCurrentUser().setIsSign("N");
+
                         if (null != mSignedPopUpWindow && !mSignedPopUpWindow.isShowing()) {
                             mSignedPopUpWindow.setData(mRemainTradeDay);
                             mSignedPopUpWindow.showAtLocation(mBinding.etPrice, Gravity.CENTER, 0, 0);
@@ -812,6 +814,9 @@ public class CreateConditionSheetFragment extends JMEBaseFragment {
                     } else {
                         showConfirmPopupWindow(mBinding.etPrice.getText().toString(), mBinding.etAmount.getText().toString());
                     }
+                } else {
+                    if (head.getCode().equals("-2012"))
+                        mUser.getCurrentUser().setIsSign("N");
                 }
 
                 break;

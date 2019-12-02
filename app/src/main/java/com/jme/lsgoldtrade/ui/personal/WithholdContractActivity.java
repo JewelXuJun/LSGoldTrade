@@ -231,6 +231,7 @@ public class WithholdContractActivity extends JMEBaseActivity {
                     if (null != mWithholdMessagePopUpWindow && !mWithholdMessagePopUpWindow.isShowing()) {
                         mWithholdMessagePopUpWindow.setData(getResources().getString(R.string.increment_account_withhold_success),
                                 (view) -> {
+                                    mUser.getCurrentUser().setIsSign("Y");
                                     mWithholdMessagePopUpWindow.dismiss();
 
                                     if (mResource.equals("Trade")) {
@@ -242,15 +243,7 @@ public class WithholdContractActivity extends JMEBaseActivity {
                                 });
                         mWithholdMessagePopUpWindow.showAtLocation(mBinding.tvName, Gravity.CENTER, 0, 0);
                     }
-                } /*else {
-                    if (head.getCode().equals("-1")) {
-                        if (null != mWithholdMessagePopUpWindow && !mWithholdMessagePopUpWindow.isShowing()) {
-                            mWithholdMessagePopUpWindow.setData(getResources().getString(R.string.increment_account_withhold_fail),
-                                    (view) -> mWithholdMessagePopUpWindow.dismiss());
-                            mWithholdMessagePopUpWindow.showAtLocation(mBinding.tvName, Gravity.CENTER, 0, 0);
-                        }
-                    }
-                }*/
+                }
 
                 break;
         }

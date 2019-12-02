@@ -609,6 +609,8 @@ public class EntrustRiskManagementActivity extends JMEBaseActivity {
                     String isSign = userInfoVo.getIsSign();
 
                     if (TextUtils.isEmpty(isSign) || isSign.equals("N")) {
+                        mUser.getCurrentUser().setIsSign("N");
+
                         if (null != mSignedPopUpWindow && !mSignedPopUpWindow.isShowing()) {
                             mSignedPopUpWindow.setData(mRemainTradeDay);
                             mSignedPopUpWindow.showAtLocation(mBinding.tvMessage, Gravity.CENTER, 0, 0);
@@ -616,6 +618,9 @@ public class EntrustRiskManagementActivity extends JMEBaseActivity {
                     } else {
                         showGuaranteeFundSettingPopUpWindow();
                     }
+                } else {
+                    if (head.getCode().equals("-2012"))
+                        mUser.getCurrentUser().setIsSign("N");
                 }
 
                 break;

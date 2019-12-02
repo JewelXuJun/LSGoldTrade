@@ -442,6 +442,8 @@ public class PlaceOrderActivity extends JMEBaseActivity {
                     String isSign = userInfoVo.getIsSign();
 
                     if (TextUtils.isEmpty(isSign) || isSign.equals("N")) {
+                        mUser.getCurrentUser().setIsSign("N");
+
                         if (null != mSignedPopUpWindow && !mSignedPopUpWindow.isShowing()) {
                             mSignedPopUpWindow.setData(mRemainTradeDay);
                             mSignedPopUpWindow.showAtLocation(mBinding.tvBalanceMessage, Gravity.CENTER, 0, 0);
@@ -449,6 +451,9 @@ public class PlaceOrderActivity extends JMEBaseActivity {
                     } else {
                         checkOrder();
                     }
+                } else {
+                    if (head.getCode().equals("-2012"))
+                        mUser.getCurrentUser().setIsSign("N");
                 }
 
                 break;

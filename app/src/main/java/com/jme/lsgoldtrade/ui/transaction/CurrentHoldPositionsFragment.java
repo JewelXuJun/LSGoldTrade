@@ -586,6 +586,8 @@ public class CurrentHoldPositionsFragment extends JMEBaseFragment {
                     String isSign = userInfoVo.getIsSign();
 
                     if (TextUtils.isEmpty(isSign) || isSign.equals("N")) {
+                        mUser.getCurrentUser().setIsSign("N");
+
                         if (null != mSignedPopUpWindow && !mSignedPopUpWindow.isShowing()) {
                             mSignedPopUpWindow.setData(mRemainTradeDay);
                             mSignedPopUpWindow.showAtLocation(mBinding.tvGotoTransaction, Gravity.CENTER, 0, 0);
@@ -599,6 +601,9 @@ public class CurrentHoldPositionsFragment extends JMEBaseFragment {
                         else
                             showTransactionStopPopupWindow(false, mPositionVo.getContractId(), null);
                     }
+                } else {
+                    if (head.getCode().equals("-2012"))
+                        mUser.getCurrentUser().setIsSign("N");
                 }
 
                 break;
