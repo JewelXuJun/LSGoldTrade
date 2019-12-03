@@ -7,6 +7,7 @@ import android.graphics.drawable.Drawable;
 import android.text.Editable;
 import android.text.InputFilter;
 import android.text.TextWatcher;
+import android.text.method.PasswordTransformationMethod;
 import android.util.AttributeSet;
 import android.util.TypedValue;
 import android.view.Gravity;
@@ -21,7 +22,6 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.jme.common.R;
-import com.jme.common.util.ScreenUtil;
 
 public class VerificationCodeView extends RelativeLayout {
 
@@ -108,6 +108,7 @@ public class VerificationCodeView extends RelativeLayout {
             textView.setBackground(mEtBackgroundDrawable);
             textView.setGravity(Gravity.CENTER);
             textView.setFocusable(false);
+            textView.setTransformationMethod(PasswordTransformationMethod.getInstance());
 
             FrameLayout.LayoutParams layoutParams = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
             layoutParams.setMargins((int) dp2px(5, context), 0, (int) dp2px(5, context), 0);
