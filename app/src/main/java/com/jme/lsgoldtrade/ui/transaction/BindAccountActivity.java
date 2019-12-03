@@ -239,7 +239,7 @@ public class BindAccountActivity extends JMEBaseActivity {
             ARouter.getInstance()
                     .build(Constants.ARouterUriConst.JMEWEBVIEW)
                     .withString("title", getString(R.string.transaction_soft_aggrement_title))
-                    .withString("url", "http://www.taijs.com/upload/fwxy.htm" + "?name=" + mName + "&cardNo=" + mIDCard)
+                    .withString("url", "http://www.taijs.com/upload/fwxy.htm" + "?name=" + mName + "&cardNo=" + StringUtils.formatIDCardNumber(mIDCard))
                     .navigation();
         }
 
@@ -247,7 +247,7 @@ public class BindAccountActivity extends JMEBaseActivity {
             ARouter.getInstance()
                     .build(Constants.ARouterUriConst.JMEWEBVIEW)
                     .withString("title", getString(R.string.transaction_business_aggrement_title))
-                    .withString("url", "http://www.taijs.com/upload/dljj.htm" + "?name=" + mName + "&cardNo=" + mIDCard)
+                    .withString("url", "http://www.taijs.com/upload/dljj.htm" + "?name=" + mName + "&cardNo=" + StringUtils.formatIDCardNumber(mIDCard))
                     .navigation();
         }
 

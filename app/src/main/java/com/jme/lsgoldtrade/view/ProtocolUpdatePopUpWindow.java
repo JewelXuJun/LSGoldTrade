@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.jme.common.util.DensityUtil;
+import com.jme.common.util.StringUtils;
 import com.jme.lsgoldtrade.R;
 import com.jme.lsgoldtrade.base.JMEBasePopupWindow;
 import com.jme.lsgoldtrade.config.Constants;
@@ -82,7 +83,7 @@ public class ProtocolUpdatePopUpWindow extends JMEBasePopupWindow {
                     .build(Constants.ARouterUriConst.JMEWEBVIEW)
                     .withString("title", protocolType)
                     .withString("url", !TextUtils.isEmpty(code) && (code.equals("RJ") || code.equals("DL")) ?
-                            protocolUrl + "?name=" + mName + "&cardNo=" + mCardNo : protocolUrl)
+                            protocolUrl + "?name=" + mName + "&cardNo=" + StringUtils.formatIDCardNumber(mCardNo) : protocolUrl)
                     .navigation();
         });
     }

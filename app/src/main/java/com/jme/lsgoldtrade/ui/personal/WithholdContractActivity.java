@@ -355,7 +355,7 @@ public class WithholdContractActivity extends JMEBaseActivity {
             /*ARouter.getInstance()
                     .build(Constants.ARouterUriConst.JMEWEBVIEW)
                     .withString("title", getString(R.string.increment_aggrement_name))
-                    .withString("url", "http://www.taijs.com/upload/fwxy.htm" + "?name=" + mName + "&cardNo=" + mIDCard)
+                    .withString("url", "http://www.taijs.com/upload/fwxy.htm" + "?name=" + mName + "&cardNo=" + StringUtils.formatIDCardNumber(mIDCard))
                     .navigation();*/
         }
 

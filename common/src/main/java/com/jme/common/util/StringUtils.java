@@ -2,12 +2,6 @@ package com.jme.common.util;
 
 import android.text.TextUtils;
 
-import java.text.DecimalFormat;
-
-/**
- * Created by XuJun on 2018/11/7.
- */
-
 public class StringUtils {
 
     public static boolean validatePassword(String pass) {
