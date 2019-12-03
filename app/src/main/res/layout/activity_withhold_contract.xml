@@ -278,26 +278,19 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="@dimen/margin_withhold_checkbox"
-                        android:checked="true"
+                        android:checked="false"
                         android:gravity="center_vertical"
-                        android:scaleX="0.9"
-                        android:scaleY="0.9" />
+                        android:scaleX="0.85"
+                        android:scaleY="0.85" />
 
                     <TextView
+                        android:id="@+id/tv_aggrement"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="@dimen/common_area_margin_middle"
-                        android:text="@string/register_aggre"
+                        android:lineSpacingExtra="@dimen/lineSpacingExtra_small"
                         android:textColor="@color/color_text_normal"
-                        android:textSize="@dimen/sp_14" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:onClick="@{() -> handlers.onCliclAggrement()}"
-                        android:text="@string/increment_account_withhold_verification_aggrement"
-                        android:textColor="@color/color_blue_deep"
-                        android:textSize="@dimen/sp_14" />
+                        android:textSize="@dimen/size_middle" />
 
                 </LinearLayout>
 

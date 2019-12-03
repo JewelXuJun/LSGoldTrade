@@ -3,11 +3,20 @@ package com.jme.lsgoldtrade.ui.personal;
 import android.content.Context;
 import android.os.Bundle;
 import android.text.Editable;
+import android.text.SpannableString;
+import android.text.Spanned;
+import android.text.TextPaint;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.text.method.LinkMovementMethod;
+import android.text.style.ClickableSpan;
+import android.text.style.ForegroundColorSpan;
 import android.view.Gravity;
 import android.view.MotionEvent;
+import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+
+import androidx.core.content.ContextCompat;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
@@ -58,6 +67,8 @@ public class WithholdContractActivity extends JMEBaseActivity {
         super.initView();
 
         initToolbar(R.string.increment_account_withhold_contract, true);
+
+        setAggrementMessage();
     }
 
     @Override
@@ -118,6 +129,16 @@ public class WithholdContractActivity extends JMEBaseActivity {
 
         mBinding = (ActivityWithholdContractBinding) mBindingUtil;
         mBinding.setHandlers(new ClickHandlers());
+    }
+
+    private void setAggrementMessage() {
+        SpannableString spannableString = new SpannableString(getResources().getString(R.string.increment_aggrement));
+        spannableString.setSpan(new ForegroundColorSpan(ContextCompat.getColor(mContext, R.color.color_blue_deep)),
+                12, 29, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        spannableString.setSpan(new TextClick(), 12, 29, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+        mBinding.tvAggrement.setMovementMethod(LinkMovementMethod.getInstance());
+        mBinding.tvAggrement.setText(spannableString);
     }
 
     private void hiddenKeyBoard() {
@@ -278,10 +299,6 @@ public class WithholdContractActivity extends JMEBaseActivity {
                 sendSignMessage(mName, mIDCard, bankCard, mobile);
         }
 
-        public void onCliclAggrement() {
-
-        }
-
         public void onCliclOpen() {
             String bankCard = mBinding.etBankCard.getText().toString();
             String mobile = mBinding.etMobile.getText().toString();
@@ -330,4 +347,21 @@ public class WithholdContractActivity extends JMEBaseActivity {
         return super.dispatchTouchEvent(event);
     }
 
+
+    private class TextClick extends ClickableSpan {
+
+        @Override
+        public void onClick(View widget) {
+            /*ARouter.getInstance()
+                    .build(Constants.ARouterUriConst.JMEWEBVIEW)
+                    .withString("title", getString(R.string.increment_aggrement_name))
+                    .withString("url", "http://www.taijs.com/upload/fwxy.htm" + "?name=" + mName + "&cardNo=" + mIDCard)
+                    .navigation();*/
+        }
+
+        @Override
+        public void updateDrawState(TextPaint ds) {
+            ds.setUnderlineText(false);
+        }
+    }
 }
