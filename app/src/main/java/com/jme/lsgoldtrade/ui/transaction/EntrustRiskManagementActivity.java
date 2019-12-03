@@ -59,6 +59,7 @@ public class EntrustRiskManagementActivity extends JMEBaseActivity {
     private boolean bFlag = true;
     private float mWarnth;
     private float mForcecloseth;
+    private int mType = 0;
     private String mRemainTradeDay;
     private String mPagingKey = "";
     private String mTotal;
@@ -309,9 +310,15 @@ public class EntrustRiskManagementActivity extends JMEBaseActivity {
                 mBinding.tvGuaranteeFundSetting.setVisibility(View.VISIBLE);
                 mBinding.layoutToBeEffective.setVisibility(View.GONE);
             } else {
-                mBinding.tvGuaranteeFundToBeEffective.setText(MarketUtil.decimalFormatMoney(MarketUtil.getPriceValue(minReserveFundCust)));
-                mBinding.tvGuaranteeFundSetting.setVisibility(View.GONE);
-                mBinding.layoutToBeEffective.setVisibility(View.VISIBLE);
+                if (minReserveFund == minReserveFundCust) {
+                    mBinding.tvGuaranteeFundSetting.setText(R.string.transaction_modify);
+                    mBinding.tvGuaranteeFundSetting.setVisibility(View.VISIBLE);
+                    mBinding.layoutToBeEffective.setVisibility(View.GONE);
+                } else {
+                    mBinding.tvGuaranteeFundToBeEffective.setText(MarketUtil.decimalFormatMoney(MarketUtil.getPriceValue(minReserveFundCust)));
+                    mBinding.tvGuaranteeFundSetting.setVisibility(View.GONE);
+                    mBinding.layoutToBeEffective.setVisibility(View.VISIBLE);
+                }
             }
 
             mBinding.tvGuaranteeFund.setText(MarketUtil.decimalFormatMoney(MarketUtil.getPriceValue(minReserveFund)));
@@ -335,39 +342,46 @@ public class EntrustRiskManagementActivity extends JMEBaseActivity {
                         if (mGuaranteeFund.endsWith("."))
                             mGuaranteeFund = mGuaranteeFund.substring(0, mGuaranteeFund.length() - 1);
 
-                        if (new BigDecimal(mGuaranteeFund).compareTo(new BigDecimal(mTotal)) == 1) {
-                            message = getString(R.string.transaction_guarantee_fund_message5);
+                        String value = mType == 0 ? mBinding.tvGuaranteeFund.getText().toString() : mBinding.tvGuaranteeFundToBeEffective.getText().toString();
+
+                        if (!value.equals(getResources().getString(R.string.text_no_data_default))
+                                && new BigDecimal(value).compareTo(new BigDecimal(mGuaranteeFund)) == 0) {
+                            showShortToast(R.string.transaction_guarantee_fund_message6);
                         } else {
-                            BigDecimal riskRate;
-
-                            if (new BigDecimal(mGuaranteeFund).compareTo(new BigDecimal(0)) == 0)
-                                riskRate = new BigDecimal(0);
-                            else
-                                riskRate = new BigDecimal(mTotal).divide(new BigDecimal(mGuaranteeFund), 4, BigDecimal.ROUND_HALF_UP);
-
-                            if (riskRate.compareTo(new BigDecimal(0)) == 0) {
-                                message = getString(R.string.transaction_guarantee_fund_message0);
+                            if (new BigDecimal(mGuaranteeFund).compareTo(new BigDecimal(mTotal)) == 1) {
+                                message = getString(R.string.transaction_guarantee_fund_message5);
                             } else {
-                                String riskRateValue = BigDecimalUtil.formatRate(riskRate.multiply(new BigDecimal(100)).toPlainString());
+                                BigDecimal riskRate;
 
-                                if (riskRate.compareTo(new BigDecimal(mForcecloseth)) == -1)
-                                    message = String.format(getString(R.string.transaction_guarantee_fund_message2), riskRateValue);
-                                else if (riskRate.compareTo(new BigDecimal(mForcecloseth)) == 1 && riskRate.compareTo(new BigDecimal(mWarnth)) == -1)
-                                    message = String.format(getString(R.string.transaction_guarantee_fund_message3), riskRateValue);
+                                if (new BigDecimal(mGuaranteeFund).compareTo(new BigDecimal(0)) == 0)
+                                    riskRate = new BigDecimal(0);
                                 else
-                                    message = String.format(getString(R.string.transaction_guarantee_fund_message4), riskRateValue);
+                                    riskRate = new BigDecimal(mTotal).divide(new BigDecimal(mGuaranteeFund), 4, BigDecimal.ROUND_HALF_UP);
+
+                                if (riskRate.compareTo(new BigDecimal(0)) == 0) {
+                                    message = getString(R.string.transaction_guarantee_fund_message0);
+                                } else {
+                                    String riskRateValue = BigDecimalUtil.formatRate(riskRate.multiply(new BigDecimal(100)).toPlainString());
+
+                                    if (riskRate.compareTo(new BigDecimal(mForcecloseth)) == -1)
+                                        message = String.format(getString(R.string.transaction_guarantee_fund_message2), riskRateValue);
+                                    else if (riskRate.compareTo(new BigDecimal(mForcecloseth)) == 1 && riskRate.compareTo(new BigDecimal(mWarnth)) == -1)
+                                        message = String.format(getString(R.string.transaction_guarantee_fund_message3), riskRateValue);
+                                    else
+                                        message = String.format(getString(R.string.transaction_guarantee_fund_message4), riskRateValue);
+                                }
                             }
+
+                            mGuaranteeFundSettingPopUpWindow.dismiss();
+                            mGuaranteeFundSettingPopUpWindow.hiddenSoftKeyboard();
+
+                            mGuaranteeFundPopUpWindow.setData(message, (v) -> {
+                                getMinReserveFund();
+
+                                mGuaranteeFundPopUpWindow.dismiss();
+                            });
+                            mGuaranteeFundPopUpWindow.showAtLocation(mBinding.tvMessage, Gravity.CENTER, 0, 0);
                         }
-
-                        mGuaranteeFundSettingPopUpWindow.dismiss();
-                        mGuaranteeFundSettingPopUpWindow.hiddenSoftKeyboard();
-
-                        mGuaranteeFundPopUpWindow.setData(message, (v) -> {
-                            getMinReserveFund();
-
-                            mGuaranteeFundPopUpWindow.dismiss();
-                        });
-                        mGuaranteeFundPopUpWindow.showAtLocation(mBinding.tvMessage, Gravity.CENTER, 0, 0);
                     }
                 }
             });
@@ -637,7 +651,9 @@ public class EntrustRiskManagementActivity extends JMEBaseActivity {
 
     public class ClickHandlers {
 
-        public void onClickEntrustRiskManagementSetting() {
+        public void onClickEntrustRiskManagementSetting(int type) {
+            mType = type;
+
             queryLoginResult();
         }
 
