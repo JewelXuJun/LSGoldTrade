@@ -169,6 +169,7 @@
     <string name="transaction_guarantee_fund_message3">您设置该保底金额后当前风险率为%1$s，低于预警线，系统将限制开仓，是否继续设置？</string>
     <string name="transaction_guarantee_fund_message4">您设置该保底金额后当前风险率为%1$s，是否继续设置？</string>
     <string name="transaction_guarantee_fund_message5">您设置的保底金额超过当前总权益，将会触发平仓或无法开仓，是否继续设置？</string>
+    <string name="transaction_guarantee_fund_message6">您当前输入的保底资金未做修改，请重新输入</string>
     <string name="transaction_guarantee_fund_message">1、 委托风控是系统为用户提供的风险控制功能，用户设置保底金额后，系统实时监控用户交易的风险率，当风险率触发设定的预警线或平仓线时，系统将限制用户开仓或者发起平仓指令，防止用户产生超预期亏损，及时保障用户的资金权益。\n \n
         2、风险率=客户总权益/保底金额*%1$s。 \n \n
         3、预警线：%2$s，即当风险率&#060;预警线时，系统将限制客户开仓，并对客户进行预警提示。\n \n
