@@ -347,7 +347,6 @@ public class WithholdContractActivity extends JMEBaseActivity {
         return super.dispatchTouchEvent(event);
     }
 
-
     private class TextClick extends ClickableSpan {
 
         @Override
@@ -365,4 +364,5 @@ public class WithholdContractActivity extends JMEBaseActivity {
             ds.setUnderlineText(false);
         }
     }
+
 }
