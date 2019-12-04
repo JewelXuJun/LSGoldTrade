@@ -43,6 +43,7 @@ public class Constants {
         public static String URL_NEWS = "https://www.jin10.com/example/jin10.com.html?fontSize=14px&theme=white";
         public static String URL_MORE_ICON = "https://tjshj.oss-cn-beijing.aliyuncs.com/prod/syscofig/app/gengduo.png";
         public static String URL_CONDITION_SHEET_EXPLAIN = "http://www.taijs.com/upload/tjdsysm.html";
+        public static String URL_AGREEMENT_HUAXING = "https://www.taijs.com/upload/hxyhdkxy.htm";
         public static String URL_TRADINGBOX;
         public static String URL_TRADINGBOXINFO;
 

@@ -352,11 +352,12 @@ public class WithholdContractActivity extends JMEBaseActivity {
 
         @Override
         public void onClick(View widget) {
-            /*ARouter.getInstance()
+            ARouter.getInstance()
                     .build(Constants.ARouterUriConst.JMEWEBVIEW)
                     .withString("title", getString(R.string.increment_aggrement_name))
-                    .withString("url", "http://www.taijs.com/upload/fwxy.htm" + "?name=" + mName + "&cardNo=" + StringUtils.formatIDCardNumber(mIDCard))
-                    .navigation();*/
+                    .withString("url", Constants.HttpConst.URL_AGREEMENT_HUAXING + "?name=" + mName + "&cardNo=" + StringUtils.formatIDCardNumber(mIDCard)
+                            + "&bankCard=" + mBinding.etBankCard.getText().toString() + "&bankName=" + mBinding.tvBankName.getText().toString())
+                    .navigation();
         }
 
         @Override
