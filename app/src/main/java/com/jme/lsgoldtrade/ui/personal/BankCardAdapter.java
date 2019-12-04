@@ -27,7 +27,7 @@ public class BankCardAdapter extends BaseQuickAdapter<BankVo, BaseViewHolder> {
                 .setText(R.id.tv_bankcard, StringUtils.formatBankCardDefault(item.getBankNo()));
 
         ((TextView)helper.getView(R.id.tv_bank_name)).setTextSize(bankName.length() > 4 ? 14 : 15);
-        ((TextView)helper.getView(R.id.tv_bankcard)).setTextSize(bankName.length() > 4 ? 14 : 15);
+        ((TextView)helper.getView(R.id.tv_bankcard)).setTextSize(bankName.length() > 4 ? 13 : 15);
     }
 }
 
