@@ -12,15 +12,15 @@ import retrofit2.http.QueryMap;
 
 public interface WithholdAccountApi {
 
-    @GET("/fundAccount/api/v1/android/withhold/getBanks")
+    @GET("/bankAccount/api/v1/android/withhold/getBanks")
     Call<DTResponse> getBanks(@QueryMap Map<String, String> map);
 
-    @POST("/fundAccount/api/v1/android/withhold/sendSignMessage")
+    @POST("/bankAccount/api/v1/android/withhold/sendSignMessage")
     Call<DTResponse> sendSignMessage(@Body Map<String, String> map);
 
-    @POST("/fundAccount/api/v1/android/withhold/sign")
+    @POST("/bankAccount/api/v1/android/withhold/sign")
     Call<DTResponse> sign(@Body Map<String, String> map);
 
-    @GET("/fundAccount/api/v1/android/withhold/getCustomerSignBankList")
+    @GET("/bankAccount/api/v1/android/withhold/getCustomerSignBankList")
     Call<DTResponse> getCustomerSignBankList(@QueryMap Map<String, String> map);
 }
