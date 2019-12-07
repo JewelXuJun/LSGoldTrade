@@ -16,7 +16,7 @@ public class Constants {
         public static final int SECURITY = 5;
         public static final int SECURITY_WAN = 6;
 
-        public static int Envi = SECURITY_WAN;
+        public static int Envi = PRODUCE;
 
         private HttpConst() {
 
@@ -72,7 +72,7 @@ public class Constants {
                 URL_BASE_MARKET = "https://180.96.49.165:18002";
                 URL_BASE_TRADE = "https://180.96.49.165:18001";
                 URL_BASE_ACCOUNT = "https://180.96.49.165:18001";
-                URL_BASE_WITHHOLD_ACCOUNT = "https://180.96.49.165:18001";
+                URL_BASE_WITHHOLD_ACCOUNT = "https://www.taijs.com";
                 URL_BASE_CONDOTION = "https://180.96.49.165:18001";
                 URL_BASE_MANAGEMENT = "https://www.taijs.com";
                 URL_INFO = "https://www.taijs.com/tjsmanage/infoapi/v1/android/cmsComtentTxt/get?contentId=";
