@@ -17,12 +17,8 @@ public class SignedPopUpWindow extends JMEBasePopupWindow {
 
     private PopupwindowSignedBinding mBinding;
 
-    private Context mContext;
-
     public SignedPopUpWindow(Context context) {
         super(context);
-
-        mContext = context;
     }
 
     @Override
@@ -44,6 +40,8 @@ public class SignedPopUpWindow extends JMEBasePopupWindow {
 
         setContentView(mBinding.getRoot());
 
+        mBinding.tvSignedMessage.setText(R.string.increment_account_singed_message);
+
         mBinding.layoutCancel.setOnClickListener((view) -> dismiss());
         mBinding.btnSigned.setOnClickListener((view) -> {
             ARouter.getInstance()
@@ -53,10 +51,6 @@ public class SignedPopUpWindow extends JMEBasePopupWindow {
 
             dismiss();
         });
-    }
-
-    public void setData(String remainTradeDay) {
-        mBinding.tvSignedMessage.setText(String.format(mContext.getResources().getString(R.string.increment_account_singed_message), remainTradeDay));
     }
 
 }

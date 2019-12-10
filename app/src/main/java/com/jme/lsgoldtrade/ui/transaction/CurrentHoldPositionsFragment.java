@@ -32,7 +32,6 @@ import com.jme.lsgoldtrade.domain.QuerySetStopOrderResponse;
 import com.jme.lsgoldtrade.domain.TenSpeedVo;
 import com.jme.lsgoldtrade.domain.UserInfoVo;
 import com.jme.lsgoldtrade.service.ConditionService;
-import com.jme.lsgoldtrade.service.ManagementService;
 import com.jme.lsgoldtrade.service.MarketService;
 import com.jme.lsgoldtrade.service.TradeService;
 import com.jme.lsgoldtrade.service.UserService;
@@ -56,7 +55,6 @@ public class CurrentHoldPositionsFragment extends JMEBaseFragment {
 
     private FragmentCurrentHoldPositionsBinding mBinding;
 
-    private String mRemainTradeDay;
     private String mContractID;
 
     private List<String> mList;
@@ -110,7 +108,6 @@ public class CurrentHoldPositionsFragment extends JMEBaseFragment {
         mBinding.recyclerView.setHasFixedSize(false);
         mBinding.recyclerView.setLayoutManager(new LinearLayoutManager(mContext));
         mBinding.recyclerView.setAdapter(mAdapter);
-        getRemainTradeDay();
     }
 
     @Override
@@ -343,10 +340,6 @@ public class CurrentHoldPositionsFragment extends JMEBaseFragment {
         return NetWorkUtils.isWifiConnected(mContext) ? AppConfig.TimeInterval_WiFi : AppConfig.TimeInterval_NetWork;
     }
 
-    private void getRemainTradeDay() {
-        sendRequest(ManagementService.getInstance().getRemainTradeDay, new HashMap<>(), false);
-    }
-
     private void queryQuotation() {
         HashMap<String, String> params = new HashMap<>();
         params.put("contractId", mContractID);
@@ -548,11 +541,6 @@ public class CurrentHoldPositionsFragment extends JMEBaseFragment {
         super.DataReturn(request, head, response);
 
         switch (request.getApi().getName()) {
-            case "GetRemainTradeDay":
-                if (head.isSuccess())
-                    mRemainTradeDay = response.toString();
-
-                break;
             case "QueryQuotation":
                 if (head.isSuccess()) {
                     TenSpeedVo tenSpeedVo;
@@ -588,10 +576,8 @@ public class CurrentHoldPositionsFragment extends JMEBaseFragment {
                     if (TextUtils.isEmpty(isSign) || isSign.equals("N")) {
                         mUser.getCurrentUser().setIsSign("N");
 
-                        if (null != mSignedPopUpWindow && !mSignedPopUpWindow.isShowing()) {
-                            mSignedPopUpWindow.setData(mRemainTradeDay);
+                        if (null != mSignedPopUpWindow && !mSignedPopUpWindow.isShowing())
                             mSignedPopUpWindow.showAtLocation(mBinding.tvGotoTransaction, Gravity.CENTER, 0, 0);
-                        }
                     } else {
                         mContractID = mPositionVo.getContractId();
                         String stopOrderFlag = mPositionVo.getStopOrderFlag();

@@ -55,7 +55,6 @@ public class MarketJudgmentActivity extends JMEBaseActivity {
     private List<MarketJudgmentFragment> mFragmentList = new ArrayList<>();
 
     private String mContractID;
-    private String mRemainTradeDay;
     private String mPagingKey = "";
     private int mBsFlag = 0;
     private int mOcFlag = 0;
@@ -94,7 +93,6 @@ public class MarketJudgmentActivity extends JMEBaseActivity {
     protected void initData(Bundle savedInstanceState) {
         super.initData(savedInstanceState);
 
-        getRemainTradeDay();
         getAnalystList();
     }
 
@@ -148,10 +146,6 @@ public class MarketJudgmentActivity extends JMEBaseActivity {
         mBinding.tablayout.setTabMode(TabLayout.MODE_SCROLLABLE);
         mBinding.tablayout.setSelectedTabIndicatorHeight(4);
         mBinding.tablayout.setupWithViewPager(mBinding.tabViewpager);
-    }
-
-    private void getRemainTradeDay() {
-        sendRequest(ManagementService.getInstance().getRemainTradeDay, new HashMap<>(), false);
     }
 
     private void getAnalystList() {
@@ -269,11 +263,6 @@ public class MarketJudgmentActivity extends JMEBaseActivity {
         super.DataReturn(request, head, response);
 
         switch (request.getApi().getName()) {
-            case "GetRemainTradeDay":
-                if (head.isSuccess())
-                    mRemainTradeDay = response.toString();
-
-                break;
             case "AnalystList":
                 if (head.isSuccess()) {
                     try {
@@ -317,10 +306,8 @@ public class MarketJudgmentActivity extends JMEBaseActivity {
                     if (TextUtils.isEmpty(isSign) || isSign.equals("N")) {
                         mUser.getCurrentUser().setIsSign("N");
 
-                        if (null != mSignedPopUpWindow && !mSignedPopUpWindow.isShowing()) {
-                            mSignedPopUpWindow.setData(mRemainTradeDay);
+                        if (null != mSignedPopUpWindow && !mSignedPopUpWindow.isShowing())
                             mSignedPopUpWindow.showAtLocation(mBinding.tablayout, Gravity.CENTER, 0, 0);
-                        }
                     } else {
                         getAccount();
                     }

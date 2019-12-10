@@ -400,13 +400,6 @@ public class ManagementService extends IService<ManagementApi> {
         }
     };
 
-    public API getRemainTradeDay = new API<String>("GetRemainTradeDay") {
-        @Override
-        public Call<DTResponse> request(HashMap<String, String> params) {
-            return mApi.getRemainTradeDay(params);
-        }
-    };
-
     public API getPayIcon = new API<List<PayIconVo>>("GetPayIcon") {
         @Override
         public Call<DTResponse> request(HashMap<String, String> params) {

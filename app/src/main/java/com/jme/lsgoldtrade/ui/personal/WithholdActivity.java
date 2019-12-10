@@ -46,7 +46,6 @@ public class WithholdActivity extends JMEBaseActivity {
 
     private ActivityWithholdBinding mBinding;
 
-    private String mRemainTradeDay;
     private String mMoney;
 
     private List<PayIconVo> mPayIconVoList;
@@ -75,7 +74,6 @@ public class WithholdActivity extends JMEBaseActivity {
         mPaymentHelper = new PaymentHelper();
         mSignedPopUpWindow = new SignedPopUpWindow(this);
 
-        getRemainTradeDay();
         getCustomerArrearage();
         getPayIcon();
     }
@@ -128,10 +126,6 @@ public class WithholdActivity extends JMEBaseActivity {
             serviceFeePay(money);
         else
             showShortToast(R.string.text_wechat_uninstalled);
-    }
-
-    private void getRemainTradeDay() {
-        sendRequest(ManagementService.getInstance().getRemainTradeDay, new HashMap<>(), false);
     }
 
     private void getCustomerArrearage() {
@@ -216,11 +210,6 @@ public class WithholdActivity extends JMEBaseActivity {
         super.DataReturn(request, head, response);
 
         switch (request.getApi().getName()) {
-            case "GetRemainTradeDay":
-                if (head.isSuccess())
-                    mRemainTradeDay = response.toString();
-
-                break;
             case "GetCustomerArrearage":
                 if (head.isSuccess()) {
                     mMoney = response.toString();
@@ -259,10 +248,8 @@ public class WithholdActivity extends JMEBaseActivity {
                     if (TextUtils.isEmpty(isSign) || isSign.equals("N")) {
                         mUser.getCurrentUser().setIsSign("N");
 
-                        if (null != mSignedPopUpWindow && !mSignedPopUpWindow.isShowing()) {
-                            mSignedPopUpWindow.setData(mRemainTradeDay);
+                        if (null != mSignedPopUpWindow && !mSignedPopUpWindow.isShowing())
                             mSignedPopUpWindow.showAtLocation(mBinding.tvMoney, Gravity.CENTER, 0, 0);
-                        }
                     } else {
                         showPaymentBottomDialog(mMoney);
                     }

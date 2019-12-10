@@ -65,7 +65,6 @@ public class PlaceOrderActivity extends JMEBaseActivity {
 
     private String mDirection;
     private String mTradeId;
-    private String mRemainTradeDay;
     private String mVariety;
     private String mID;
     private String mOpenTimeStart;
@@ -110,7 +109,6 @@ public class PlaceOrderActivity extends JMEBaseActivity {
         if (TextUtils.isEmpty(mTradeId))
             return;
 
-        getRemainTradeDay();
         getBoxInfo();
     }
 
@@ -209,10 +207,6 @@ public class PlaceOrderActivity extends JMEBaseActivity {
 
         mBinding.tvBalanceMessage.setMovementMethod(LinkMovementMethod.getInstance());
         mBinding.tvBalanceMessage.setText(spannableString);
-    }
-
-    private void getRemainTradeDay() {
-        sendRequest(ManagementService.getInstance().getRemainTradeDay, new HashMap<>(), false);
     }
 
     private void getAccount() {
@@ -328,11 +322,6 @@ public class PlaceOrderActivity extends JMEBaseActivity {
         super.DataReturn(request, head, response);
 
         switch (request.getApi().getName()) {
-            case "GetRemainTradeDay":
-                if (head.isSuccess())
-                    mRemainTradeDay = response.toString();
-
-                break;
             case "GetBoxInfo":
                 if (head.isSuccess()) {
                     TradingBoxInfoVo tradingBoxInfoVo;
@@ -444,10 +433,8 @@ public class PlaceOrderActivity extends JMEBaseActivity {
                     if (TextUtils.isEmpty(isSign) || isSign.equals("N")) {
                         mUser.getCurrentUser().setIsSign("N");
 
-                        if (null != mSignedPopUpWindow && !mSignedPopUpWindow.isShowing()) {
-                            mSignedPopUpWindow.setData(mRemainTradeDay);
+                        if (null != mSignedPopUpWindow && !mSignedPopUpWindow.isShowing())
                             mSignedPopUpWindow.showAtLocation(mBinding.tvBalanceMessage, Gravity.CENTER, 0, 0);
-                        }
                     } else {
                         checkOrder();
                     }

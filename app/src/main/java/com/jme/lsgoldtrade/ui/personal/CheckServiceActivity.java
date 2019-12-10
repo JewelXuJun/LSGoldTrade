@@ -42,7 +42,6 @@ public class CheckServiceActivity extends JMEBaseActivity {
     private ActivityCheckServiceBinding mBinding;
 
     private int bClickFlag = 0;
-    private String mRemainTradeDay;
 
     private SignedPopUpWindow mSignedPopUpWindow;
     private ConfirmPopupwindow mConfirmPopupwindow;
@@ -68,7 +67,7 @@ public class CheckServiceActivity extends JMEBaseActivity {
         mConfirmPopupwindow = new ConfirmPopupwindow(this);
         mWithholdMessagePopUpWindow = new WithholdMessagePopUpWindow(this);
 
-        getRemainTradeDay();
+        mBinding.tvNotSignedMessage.setText(R.string.increment_account_singed_message);
     }
 
     @Override
@@ -115,10 +114,6 @@ public class CheckServiceActivity extends JMEBaseActivity {
     private void gotoDetail() {
         setRightNavigation(getResources().getString(R.string.transaction_transfer_icbc_electronic_card_detail), 0, R.style.ToolbarThemeBlue,
                 () -> ARouter.getInstance().build(Constants.ARouterUriConst.DETAILS).navigation());
-    }
-
-    private void getRemainTradeDay() {
-        sendRequest(ManagementService.getInstance().getRemainTradeDay, new HashMap<>(), false);
     }
 
     private void queryLoginResult() {
@@ -196,14 +191,6 @@ public class CheckServiceActivity extends JMEBaseActivity {
         super.DataReturn(request, head, response);
 
         switch (request.getApi().getName()) {
-            case "GetRemainTradeDay":
-                if (head.isSuccess()) {
-                    mRemainTradeDay = response.toString();
-
-                    mBinding.tvNotSignedMessage.setText(String.format(getResources().getString(R.string.increment_account_singed_message), mRemainTradeDay));
-                }
-
-                break;
             case "QueryLoginResult":
                 if (head.isSuccess()) {
                     UserInfoVo userInfoVo;
@@ -233,10 +220,8 @@ public class CheckServiceActivity extends JMEBaseActivity {
                             mBinding.layoutNotSigned.setVisibility(View.VISIBLE);
                             mBinding.layoutSigned.setVisibility(View.GONE);
 
-                            if (null != mSignedPopUpWindow && !mSignedPopUpWindow.isShowing()) {
-                                mSignedPopUpWindow.setData(mRemainTradeDay);
+                            if (null != mSignedPopUpWindow && !mSignedPopUpWindow.isShowing())
                                 mSignedPopUpWindow.showAtLocation(mBinding.tvBankcard, Gravity.CENTER, 0, 0);
-                            }
                         }
 
                         bClickFlag = 0;

@@ -37,7 +37,6 @@ import com.jme.lsgoldtrade.domain.PositionPageVo;
 import com.jme.lsgoldtrade.domain.PositionVo;
 import com.jme.lsgoldtrade.domain.UserInfoVo;
 import com.jme.lsgoldtrade.service.ConditionService;
-import com.jme.lsgoldtrade.service.ManagementService;
 import com.jme.lsgoldtrade.service.MarketService;
 import com.jme.lsgoldtrade.service.TradeService;
 import com.jme.lsgoldtrade.service.UserService;
@@ -72,7 +71,6 @@ public class PlaceOrderFragment extends JMEBaseFragment implements FChart.OnPric
     private long mMaxOrderQty = 0;
     private long mMaxHoldQty = 0;
 
-    private String mRemainTradeDay;
     private String mLowerLimitPrice;
     private String mHighLimitPrice;
     private String mPlaceOrderPrice;
@@ -128,7 +126,6 @@ public class PlaceOrderFragment extends JMEBaseFragment implements FChart.OnPric
         super.initData(savedInstanceState);
 
         initContractNameValue();
-        getRemainTradeDay();
     }
 
     @Override
@@ -455,10 +452,6 @@ public class PlaceOrderFragment extends JMEBaseFragment implements FChart.OnPric
         return NetWorkUtils.isWifiConnected(mContext) ? AppConfig.TimeInterval_WiFi : AppConfig.TimeInterval_NetWork;
     }
 
-    private void getRemainTradeDay() {
-        sendRequest(ManagementService.getInstance().getRemainTradeDay, new HashMap<>(), false);
-    }
-
     private void queryConditionOrderRun() {
         if (null == mUser || !mUser.isLogin())
             return;
@@ -567,11 +560,6 @@ public class PlaceOrderFragment extends JMEBaseFragment implements FChart.OnPric
         super.DataReturn(request, head, response);
 
         switch (request.getApi().getName()) {
-            case "GetRemainTradeDay":
-                if (head.isSuccess())
-                    mRemainTradeDay = response.toString();
-
-                break;
             case "QueryConditionOrderRun":
                 if (head.isSuccess()) {
                     ConditionOrderRunVo conditionOrderRunVo;
@@ -720,10 +708,8 @@ public class PlaceOrderFragment extends JMEBaseFragment implements FChart.OnPric
                     if (TextUtils.isEmpty(isSign) || isSign.equals("N")) {
                         mUser.getCurrentUser().setIsSign("N");
 
-                        if (null != mSignedPopUpWindow && !mSignedPopUpWindow.isShowing()) {
-                            mSignedPopUpWindow.setData(mRemainTradeDay);
+                        if (null != mSignedPopUpWindow && !mSignedPopUpWindow.isShowing())
                             mSignedPopUpWindow.showAtLocation(mBinding.etAmount, Gravity.CENTER, 0, 0);
-                        }
                     } else {
                         showPlaceOrderPopupWindow(mBinding.tvContractId.getText().toString(), mPlaceOrderPrice, mBinding.etAmount.getText().toString(), mBsFlag);
                     }

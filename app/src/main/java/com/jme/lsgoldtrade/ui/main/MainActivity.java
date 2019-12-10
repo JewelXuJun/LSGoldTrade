@@ -76,7 +76,6 @@ public class MainActivity extends JMEBaseActivity implements TabHost.OnTabChange
     private String mDesc;
     private String mUrl;
     private String mValues;
-    private String mRemainTradeDay;
 
     private ProgressDialog mProgressDialog;
     private LocalBroadcastManager mLocalBroadcastManager;
@@ -583,8 +582,14 @@ public class MainActivity extends JMEBaseActivity implements TabHost.OnTabChange
     }
 
     private void checkIsSign() {
-        if (!TextUtils.isEmpty(mUser.getAccountID()))
-            getRemainTradeDay();
+        if (!TextUtils.isEmpty(mUser.getAccountID())) {
+            String isSign = mUser.getCurrentUser().getIsSign();
+
+            if (TextUtils.isEmpty(isSign) || isSign.equals("N")) {
+                if (null != mSignedPopUpWindow && !mSignedPopUpWindow.isShowing())
+                    mSignedPopUpWindow.showAtLocation(mBinding.tabhost, Gravity.CENTER, 0, 0);
+            }
+        }
     }
 
     private void getUpDateInfo() {
@@ -608,10 +613,6 @@ public class MainActivity extends JMEBaseActivity implements TabHost.OnTabChange
 
     private void getWhetherIdCard() {
         sendRequest(TradeService.getInstance().whetherIdCard, new HashMap<>(), false, false, false);
-    }
-
-    private void getRemainTradeDay() {
-        sendRequest(ManagementService.getInstance().getRemainTradeDay, new HashMap<>(), false);
     }
 
     private void insertRatifyAccord() {
@@ -743,21 +744,6 @@ public class MainActivity extends JMEBaseActivity implements TabHost.OnTabChange
                         if (null != mProtocolUpdatePopUpWindow && !mProtocolUpdatePopUpWindow.isShowing()) {
                             mProtocolUpdatePopUpWindow.setData(mProtocolVoList, identityInfoVo.getName(), identityInfoVo.getIdCard(), (view) -> insertRatifyAccord());
                             mProtocolUpdatePopUpWindow.showAtLocation(mBinding.tabhost, Gravity.CENTER, 0, 0);
-                        }
-                    }
-                }
-
-                break;
-            case "GetRemainTradeDay":
-                if (head.isSuccess()) {
-                    mRemainTradeDay = response.toString();
-
-                    String isSign = mUser.getCurrentUser().getIsSign();
-
-                    if (TextUtils.isEmpty(isSign) || isSign.equals("N")) {
-                        if (null != mSignedPopUpWindow && !mSignedPopUpWindow.isShowing()) {
-                            mSignedPopUpWindow.setData(mRemainTradeDay);
-                            mSignedPopUpWindow.showAtLocation(mBinding.tabhost, Gravity.CENTER, 0, 0);
                         }
                     }
                 }

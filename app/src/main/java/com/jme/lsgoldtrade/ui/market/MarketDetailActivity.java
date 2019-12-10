@@ -95,7 +95,6 @@ public class MarketDetailActivity extends JMEBaseActivity implements FChart.OnPr
     private static final String COUNT_KCHART = "200";
 
     private String mContractId;
-    private String mRemainTradeDay;
     private String mPagingKey = "";
     private boolean bFlag = true;
     private boolean bHighlight = false;
@@ -171,7 +170,6 @@ public class MarketDetailActivity extends JMEBaseActivity implements FChart.OnPr
 
         initTChart();
         initKChart();
-        getRemainTradeDay();
     }
 
     @Override
@@ -606,10 +604,6 @@ public class MarketDetailActivity extends JMEBaseActivity implements FChart.OnPr
         mBinding.tvLow.setTextColor(ContextCompat.getColor(this, MarketUtil.getMarketStateColor(new BigDecimal(lowestPrice).compareTo(new BigDecimal(preClose)))));
     }
 
-    private void getRemainTradeDay() {
-        sendRequest(ManagementService.getInstance().getRemainTradeDay, new HashMap<>(), false);
-    }
-
     private void getTenSpeedQuotes(boolean enable) {
         if (TextUtils.isEmpty(mContractId))
             return;
@@ -788,11 +782,6 @@ public class MarketDetailActivity extends JMEBaseActivity implements FChart.OnPr
         super.DataReturn(request, head, response);
 
         switch (request.getApi().getName()) {
-            case "GetRemainTradeDay":
-                if (head.isSuccess())
-                    mRemainTradeDay = response.toString();
-
-                break;
             case "GetTenSpeedQuotes":
                 if (head.isSuccess()) {
                     List<TenSpeedVo> list;
@@ -926,10 +915,8 @@ public class MarketDetailActivity extends JMEBaseActivity implements FChart.OnPr
                     if (TextUtils.isEmpty(isSign) || isSign.equals("N")) {
                         mUser.getCurrentUser().setIsSign("N");
 
-                        if (null != mSignedPopUpWindow && !mSignedPopUpWindow.isShowing()) {
-                            mSignedPopUpWindow.setData(mRemainTradeDay);
+                        if (null != mSignedPopUpWindow && !mSignedPopUpWindow.isShowing())
                             mSignedPopUpWindow.showAtLocation(mBinding.tvHigh, Gravity.CENTER, 0, 0);
-                        }
                     } else {
                         getAccount();
                     }
