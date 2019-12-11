@@ -136,8 +136,8 @@ public class WithholdActivity extends JMEBaseActivity {
         sendRequest(ManagementService.getInstance().getPayIcon, new HashMap<>(), false);
     }
 
-    private void queryLoginResult() {
-        DTRequest request = new DTRequest(UserService.getInstance().queryLoginResult, new HashMap<>(), true, true);
+    private void queryLoginResult(boolean enable) {
+        DTRequest request = new DTRequest(UserService.getInstance().queryLoginResult, new HashMap<>(), enable, true);
 
         Call restResponse = request.getApi().request(request.getParams());
 
@@ -216,6 +216,9 @@ public class WithholdActivity extends JMEBaseActivity {
 
                     mBinding.tvMoney.setText(TextUtils.isEmpty(mMoney) ? "" :
                             MarketUtil.decimalFormatMoney(MarketUtil.getPriceValue(mMoney)) + getResources().getString(R.string.text_money_unit));
+
+                    if (!TextUtils.isEmpty(mMoney))
+                        queryLoginResult(false);
                 }
 
                 break;
@@ -284,7 +287,7 @@ public class WithholdActivity extends JMEBaseActivity {
 
         public void onClickPay() {
             if (!TextUtils.isEmpty(mMoney))
-                queryLoginResult();
+                queryLoginResult(true);
         }
     }
 
