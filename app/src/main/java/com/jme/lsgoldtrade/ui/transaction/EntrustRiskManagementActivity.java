@@ -8,6 +8,7 @@ import android.text.Spanned;
 import android.text.TextUtils;
 import android.text.method.LinkMovementMethod;
 import android.text.style.ForegroundColorSpan;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.WindowManager;
@@ -284,10 +285,13 @@ public class EntrustRiskManagementActivity extends JMEBaseActivity {
         if (null == mAccountVo)
             return;
 
-        long minReserveFund = mAccountVo.getMinReserveFund();
-        long minReserveFundCust = mAccountVo.getMinReserveFundCust();
+        long minReserveFund = mAccountVo.getMinReserveFund();  //已生效
+        long minReserveFundCust = mAccountVo.getMinReserveFundCust(); //待生效
 
         if (0 == minReserveFund) {
+
+
+
             if (0 == minReserveFundCust) {
                 mBinding.tvGuaranteeFund.setText(R.string.text_no_data_default);
                 mBinding.imgToBeEffective.setVisibility(View.GONE);
@@ -301,11 +305,12 @@ public class EntrustRiskManagementActivity extends JMEBaseActivity {
             mBinding.tvGuaranteeFundSetting.setVisibility(View.VISIBLE);
             mBinding.layoutToBeEffective.setVisibility(View.GONE);
         } else {
-            if (0 == minReserveFundCust) {
-                mBinding.tvGuaranteeFundSetting.setText(R.string.transaction_modify);
-                mBinding.tvGuaranteeFundSetting.setVisibility(View.VISIBLE);
-                mBinding.layoutToBeEffective.setVisibility(View.GONE);
-            } else {
+//            if (0 == minReserveFundCust) {
+//
+//                mBinding.tvGuaranteeFundSetting.setText(R.string.transaction_modify);
+//                mBinding.tvGuaranteeFundSetting.setVisibility(View.VISIBLE);
+//                mBinding.layoutToBeEffective.setVisibility(View.GONE);
+//            } else {
                 if (minReserveFund == minReserveFundCust) {
                     mBinding.tvGuaranteeFundSetting.setText(R.string.transaction_modify);
                     mBinding.tvGuaranteeFundSetting.setVisibility(View.VISIBLE);
@@ -315,7 +320,7 @@ public class EntrustRiskManagementActivity extends JMEBaseActivity {
                     mBinding.tvGuaranteeFundSetting.setVisibility(View.GONE);
                     mBinding.layoutToBeEffective.setVisibility(View.VISIBLE);
                 }
-            }
+//            }
 
             mBinding.tvGuaranteeFund.setText(MarketUtil.decimalFormatMoney(MarketUtil.getPriceValue(minReserveFund)));
             mBinding.imgToBeEffective.setVisibility(View.GONE);
@@ -338,10 +343,9 @@ public class EntrustRiskManagementActivity extends JMEBaseActivity {
                         if (mGuaranteeFund.endsWith("."))
                             mGuaranteeFund = mGuaranteeFund.substring(0, mGuaranteeFund.length() - 1);
 
-                        String value = mType == 0 ? mBinding.tvGuaranteeFund.getText().toString() : mBinding.tvGuaranteeFundToBeEffective.getText().toString();
-
+                        String value = mType == 0 ? trimComma(mBinding.tvGuaranteeFund.getText().toString()) : trimComma(mBinding.tvGuaranteeFundToBeEffective.getText().toString());
                         if (!value.equals(getResources().getString(R.string.text_no_data_default))
-                                && new BigDecimal(value).compareTo(new BigDecimal(mGuaranteeFund)) == 0) {
+                                && !value.equals("0")&&new BigDecimal(value).compareTo(new BigDecimal(mGuaranteeFund)) == 0) {
                             showShortToast(R.string.transaction_guarantee_fund_message6);
                         } else {
                             if (new BigDecimal(mGuaranteeFund).compareTo(new BigDecimal(mTotal)) == 1) {
@@ -494,6 +498,12 @@ public class EntrustRiskManagementActivity extends JMEBaseActivity {
         sendRequest(TradeService.getInstance().minReserveFund, params, true);
     }
 
+    private String trimComma(String str){
+        if(str==null)
+            return "";
+        return str.replaceAll(",","");
+    }
+
     @Override
     protected void DataReturn(DTRequest request, Head head, Object response) {
         super.DataReturn(request, head, response);
@@ -607,19 +617,19 @@ public class EntrustRiskManagementActivity extends JMEBaseActivity {
                         e.printStackTrace();
                     }
 
-                    String isSign = userInfoVo.getIsSign();
-
-                    if (TextUtils.isEmpty(isSign) || isSign.equals("N")) {
-                        mUser.getCurrentUser().setIsSign("N");
-
-                        if (null != mSignedPopUpWindow && !mSignedPopUpWindow.isShowing())
-                            mSignedPopUpWindow.showAtLocation(mBinding.tvMessage, Gravity.CENTER, 0, 0);
-                    } else {
+//                    String isSign = userInfoVo.getIsSign();
+//
+//                    if (TextUtils.isEmpty(isSign) || isSign.equals("N")) {
+//                        mUser.getCurrentUser().setIsSign("N");
+//
+//                        if (null != mSignedPopUpWindow && !mSignedPopUpWindow.isShowing())
+//                            mSignedPopUpWindow.showAtLocation(mBinding.tvMessage, Gravity.CENTER, 0, 0);
+//                    } else {
                         showGuaranteeFundSettingPopUpWindow();
-                    }
+//                    }
                 } else {
-                    if (head.getCode().equals("-2012"))
-                        mUser.getCurrentUser().setIsSign("N");
+//                    if (head.getCode().equals("-2012"))
+//                        mUser.getCurrentUser().setIsSign("N");
                 }
 
                 break;

@@ -181,7 +181,6 @@
                     style="@style/CustomPayCheckBoxTheme"
                     android:layout_width="@dimen/icon_checkbox"
                     android:layout_height="@dimen/icon_checkbox"
-                    android:layout_marginLeft="@dimen/margin_checkbox"
                     android:gravity="center_vertical" />
 
                 <TextView
@@ -190,7 +189,7 @@
                     android:layout_marginLeft="@dimen/common_area_margin_middle"
                     android:text="@string/register_aggre"
                     android:textColor="@color/color_text_normal"
-                    android:textSize="@dimen/sp_14" />
+                    android:textSize="@dimen/sp_12" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -198,25 +197,14 @@
                     android:onClick="@{() -> handlers.onClickSoftWareAgreement()}"
                     android:text="@string/transaction_soft_aggrement"
                     android:textColor="@color/color_blue_deep"
-                    android:textSize="@dimen/sp_14" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/margin_checkbox_text"
-                android:layout_marginTop="@dimen/margin_tiny"
-                android:layout_marginBottom="@dimen/common_area_margin_big"
-                android:orientation="horizontal">
-
+                    android:textSize="10sp" />
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/common_area_margin_middle"
+                    android:layout_marginLeft="5dp"
                     android:text="@string/transaction_and"
                     android:textColor="@color/color_text_normal"
-                    android:textSize="@dimen/sp_14" />
+                    android:textSize="@dimen/sp_12" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -224,8 +212,30 @@
                     android:onClick="@{() -> handlers.onClickBusinessAgreement()}"
                     android:text="@string/transaction_business_aggrement"
                     android:textColor="@color/color_blue_deep"
-                    android:textSize="@dimen/sp_14" />
+                    android:textSize="10sp" />
 
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="@dimen/common_area_margin_big"
+                android:orientation="horizontal">
+                <CheckBox
+                    android:id="@+id/checkbox_increment_agree"
+                    style="@style/CustomPayCheckBoxTheme"
+                    android:layout_width="@dimen/icon_checkbox"
+                    android:layout_height="@dimen/icon_checkbox"
+                    android:gravity="center_vertical" />
+                <TextView
+                    android:id="@+id/tv_increment_agree"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/common_area_margin_middle"
+                    android:lineSpacingExtra="@dimen/lineSpacingExtra_small"
+                    android:textColor="@color/color_text_normal"
+                    android:textSize="@dimen/sp_12" />
             </LinearLayout>
 
         </LinearLayout>

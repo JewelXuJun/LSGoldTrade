@@ -414,4 +414,11 @@ public class ManagementService extends IService<ManagementApi> {
         }
     };
 
+    public API checkValueAddedServicesForClose = new API<String>("CheckValueAddedServicesForClose") {
+        @Override
+        public Call<DTResponse> request(HashMap<String, String> params) {
+            return mApi.checkValueAddedServicesForClose(params);
+        }
+    };
+
 }

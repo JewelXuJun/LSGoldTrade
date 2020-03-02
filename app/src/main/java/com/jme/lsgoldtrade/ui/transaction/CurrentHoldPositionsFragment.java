@@ -571,14 +571,14 @@ public class CurrentHoldPositionsFragment extends JMEBaseFragment {
                         e.printStackTrace();
                     }
 
-                    String isSign = userInfoVo.getIsSign();
-
-                    if (TextUtils.isEmpty(isSign) || isSign.equals("N")) {
-                        mUser.getCurrentUser().setIsSign("N");
-
-                        if (null != mSignedPopUpWindow && !mSignedPopUpWindow.isShowing())
-                            mSignedPopUpWindow.showAtLocation(mBinding.tvGotoTransaction, Gravity.CENTER, 0, 0);
-                    } else {
+//                    String isSign = userInfoVo.getIsSign();
+//
+//                    if (TextUtils.isEmpty(isSign) || isSign.equals("N")) {
+//                        mUser.getCurrentUser().setIsSign("N");
+//
+//                        if (null != mSignedPopUpWindow && !mSignedPopUpWindow.isShowing())
+//                            mSignedPopUpWindow.showAtLocation(mBinding.tvGotoTransaction, Gravity.CENTER, 0, 0);
+//                    } else {
                         mContractID = mPositionVo.getContractId();
                         String stopOrderFlag = mPositionVo.getStopOrderFlag();
 
@@ -586,10 +586,10 @@ public class CurrentHoldPositionsFragment extends JMEBaseFragment {
                             querySetStopOrder(mPositionVo.getType().equals("多") ? 2 : 1, mPositionVo.getContractId());
                         else
                             showTransactionStopPopupWindow(false, mPositionVo.getContractId(), null);
-                    }
+//                    }
                 } else {
-                    if (head.getCode().equals("-2012"))
-                        mUser.getCurrentUser().setIsSign("N");
+//                    if (head.getCode().equals("-2012"))
+//                        mUser.getCurrentUser().setIsSign("N");
                 }
 
                 break;

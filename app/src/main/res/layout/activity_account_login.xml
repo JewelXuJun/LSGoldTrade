@@ -208,16 +208,23 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
-                            android:layout_marginTop="@dimen/margin_big"
+                            android:layout_marginTop="20dp"
                             android:onClick="@{() -> handlers.onClickLoginMobile()}"
                             android:text="@string/login_mobile"
                             android:textColor="@color/color_blue"
                             android:textSize="@dimen/sp_16" />
-
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="@dimen/sp_12"
+                            android:textColor="@color/color_text_account_login_describe"
+                            android:text="@string/login_account_text_describe"
+                            android:layout_marginTop="20dp"
+                            />
                         <Button
                             android:layout_width="match_parent"
                             android:layout_height="@dimen/height_login_btn"
-                            android:layout_marginTop="@dimen/margin_large"
+                            android:layout_marginTop="20dp"
                             android:layout_marginBottom="@dimen/common_area_margin_big"
                             android:background="@drawable/bg_btn_blue_hollow"
                             android:onClick="@{() -> handlers.onClickRegister()}"

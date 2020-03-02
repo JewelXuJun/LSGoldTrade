@@ -5,6 +5,7 @@ import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
@@ -12,6 +13,7 @@ import com.jme.common.network.DTRequest;
 import com.jme.common.network.Head;
 import com.jme.common.ui.adapter.TextWatcherAdapter;
 import com.jme.common.ui.base.JMECountDownTimer;
+import com.jme.common.util.IDUtils;
 import com.jme.lsgoldtrade.R;
 import com.jme.lsgoldtrade.base.JMEBaseActivity;
 import com.jme.lsgoldtrade.config.Constants;
@@ -103,7 +105,8 @@ public class TradingPasswordValidateActivity extends JMEBaseActivity {
 
     private void validateLoginPassword(String password, String verificationCode) {
         HashMap<String, String> params = new HashMap<>();
-        params.put("password", AESUtil.encryptString2Base64(password, "0J4S9B5C0J4S9B5C", "16-Bytes--String").trim());
+//        params.put("password", AESUtil.encryptString2Base64(password, "0J4S9B5C0J4S9B5C", "16-Bytes--String").trim());
+        params.put("idNo", password);
         params.put("smsCode", verificationCode);
 
         sendRequest(ManagementService.getInstance().validateLoginPassword, params, true);
@@ -145,12 +148,17 @@ public class TradingPasswordValidateActivity extends JMEBaseActivity {
             String mobile = mBinding.tvMobileNumber.getText().toString();
             String verificationCode = mBinding.etVerificationCode.getText().toString();
 
-            if (TextUtils.isEmpty(mobile))
+            String errorMsg = IDUtils.IDCardValidate(password);
+            if(TextUtils.isEmpty(password))
+                showShortToast(R.string.transaction_id_card_hint);
+            else if (TextUtils.isEmpty(mobile))
                 showShortToast(R.string.transaction_mobile_error);
             else if (!bFlag)
                 showShortToast(R.string.login_verification_code_unget);
             else if (verificationCode.length() < 6)
                 showShortToast(R.string.login_verification_code_error);
+            else if (!TextUtils.isEmpty(errorMsg))
+                showShortToast(errorMsg);
             else
                 validateLoginPassword(password, verificationCode);
         }

@@ -428,19 +428,19 @@ public class PlaceOrderActivity extends JMEBaseActivity {
                         e.printStackTrace();
                     }
 
-                    String isSign = userInfoVo.getIsSign();
-
-                    if (TextUtils.isEmpty(isSign) || isSign.equals("N")) {
-                        mUser.getCurrentUser().setIsSign("N");
-
-                        if (null != mSignedPopUpWindow && !mSignedPopUpWindow.isShowing())
-                            mSignedPopUpWindow.showAtLocation(mBinding.tvBalanceMessage, Gravity.CENTER, 0, 0);
-                    } else {
+//                    String isSign = userInfoVo.getIsSign();
+//
+//                    if (TextUtils.isEmpty(isSign) || isSign.equals("N")) {
+//                        mUser.getCurrentUser().setIsSign("N");
+//
+//                        if (null != mSignedPopUpWindow && !mSignedPopUpWindow.isShowing())
+//                            mSignedPopUpWindow.showAtLocation(mBinding.tvBalanceMessage, Gravity.CENTER, 0, 0);
+//                    } else {
                         checkOrder();
-                    }
+//                    }
                 } else {
-                    if (head.getCode().equals("-2012"))
-                        mUser.getCurrentUser().setIsSign("N");
+//                    if (head.getCode().equals("-2012"))
+//                        mUser.getCurrentUser().setIsSign("N");
                 }
 
                 break;

@@ -246,19 +246,19 @@ public class WithholdActivity extends JMEBaseActivity {
                         e.printStackTrace();
                     }
 
-                    String isSign = userInfoVo.getIsSign();
+//                    String isSign = userInfoVo.getIsSign();
 
-                    if (TextUtils.isEmpty(isSign) || isSign.equals("N")) {
-                        mUser.getCurrentUser().setIsSign("N");
-
-                        if (null != mSignedPopUpWindow && !mSignedPopUpWindow.isShowing())
-                            mSignedPopUpWindow.showAtLocation(mBinding.tvMoney, Gravity.CENTER, 0, 0);
-                    } else {
+//                    if (TextUtils.isEmpty(isSign) || isSign.equals("N")) {
+//                        mUser.getCurrentUser().setIsSign("N");
+//
+//                        if (null != mSignedPopUpWindow && !mSignedPopUpWindow.isShowing())
+//                            mSignedPopUpWindow.showAtLocation(mBinding.tvMoney, Gravity.CENTER, 0, 0);
+//                    } else {
                         showPaymentBottomDialog(mMoney);
-                    }
+//                    }
                 } else {
-                    if (head.getCode().equals("-2012"))
-                        mUser.getCurrentUser().setIsSign("N");
+//                    if (head.getCode().equals("-2012"))
+//                        mUser.getCurrentUser().setIsSign("N");
                 }
 
                 break;

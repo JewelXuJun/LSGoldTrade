@@ -2,16 +2,19 @@ package com.jme.lsgoldtrade.ui.mainpage;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
+import androidx.core.hardware.fingerprint.FingerprintManagerCompat;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,12 +34,14 @@ import com.jme.lsgoldtrade.R;
 import com.jme.lsgoldtrade.base.JMEBaseFragment;
 import com.jme.lsgoldtrade.config.AppConfig;
 import com.jme.lsgoldtrade.config.Constants;
+import com.jme.lsgoldtrade.config.User;
 import com.jme.lsgoldtrade.databinding.FragmentMainPageBinding;
 import com.jme.lsgoldtrade.domain.AdvertisementVo;
 import com.jme.lsgoldtrade.domain.BannerVo;
 import com.jme.lsgoldtrade.domain.ChannelVo;
 import com.jme.lsgoldtrade.domain.FiveSpeedVo;
 import com.jme.lsgoldtrade.domain.NavigatorVo;
+import com.jme.lsgoldtrade.domain.PasswordInfoVo;
 import com.jme.lsgoldtrade.service.ManagementService;
 import com.jme.lsgoldtrade.service.MarketService;
 import com.makeramen.roundedimageview.RoundedImageView;
@@ -77,6 +82,7 @@ public class MainPageFragment extends JMEBaseFragment implements OnRefreshListen
 
     private boolean bHidden = false;
     private boolean bFlag = true;
+    private int mCallEntry = 0;
 
     private Subscription mRxbus;
 
@@ -225,8 +231,73 @@ public class MainPageFragment extends JMEBaseFragment implements OnRefreshListen
                     getNavigatorList();
 
                     break;
+
+                case Constants.RxBusConst.RXBUS_ZJHZ_SETPASSWORD:
+                    mCallEntry = 1;
+                    getUserPasswordSettingInfo();
+                    break;
+                case Constants.RxBusConst.RXBUS_ZJHZ_SETPASSWORD_SUCCESS:
+                    User user = User.getInstance();
+                    if (!TextUtils.isEmpty(user.getIsFromTjs()) && user.getIsFromTjs().equals("true")) {
+                        if (user.getCurrentUser().getCardType().equals("2") && user.getCurrentUser().getReserveFlag().equals("N"))
+                            ARouter.getInstance().build(Constants.ARouterUriConst.BANKRESERVE).navigation();
+                        else
+                            ARouter.getInstance().build(Constants.ARouterUriConst.CAPITALTRANSFER).navigation();
+                    } else {
+                        ARouter.getInstance().build(Constants.ARouterUriConst.CAPITALTRANSFER).navigation();
+                    }
+                    break;
+                case Constants.RxBusConst.RXBUS_WDDY_SETPASSWORD:
+                        if(isForeground()) {
+                            mCallEntry = 2;
+                            getUserPasswordSettingInfo();
+                        }
+
+                    break;
+                case Constants.RxBusConst.RXBUS_WDDY_SETPASSWORD_SUCCESS:
+                    if(isForeground()) {
+                        ARouter.getInstance().build(Constants.ARouterUriConst.TRADINGBOX).navigation();
+                    }
+                    break;
+                case Constants.RxBusConst.RXBUS_MAIN_PAGE_TRAIN_BOX_SETPASSWORD:
+                    if(isForeground()) {
+                        mCallEntry = 5;
+                        getUserPasswordSettingInfo();
+                    }
+                    break;
+                case Constants.RxBusConst.RXBUS_MAIN_PAGE_TRAIN_BOX_SETPASSWORD_SUCCESS:
+                    if(isForeground()) {
+                        ARouter.getInstance().build(Constants.ARouterUriConst.TRADINGBOX).navigation();
+                    }
+                    break;
+                case Constants.RxBusConst.RXBUS_CJRL_SETPASSWORD:
+                    if(isForeground()) {
+                        mCallEntry = 6;
+                        getUserPasswordSettingInfo();
+                    }
+                    break;
+                case Constants.RxBusConst.RXBUS_CJRL_SETPASSWORD_SUCCESS:
+                    if(isForeground()) {
+                        ARouter.getInstance().build(Constants.ARouterUriConst.ECONOMICCALENDAR).navigation();
+                    }
+                    break;
+                case Constants.RxBusConst.RXBUS_HQYP_SETPASSWORD:
+                    if(isForeground()) {
+                        mCallEntry = 7;
+                        getUserPasswordSettingInfo();
+                    }
+                    break;
+                case Constants.RxBusConst.RXBUS_HQYP_SETPASSWORD_SUCCESS:
+                    if(isForeground()) {
+                        ARouter.getInstance().build(Constants.ARouterUriConst.MARKETJUDGMENT).navigation();
+                    }
+                    break;
             }
         });
+    }
+
+    private void getUserPasswordSettingInfo() {
+        sendRequest(ManagementService.getInstance().getUserPasswordSettingInfo, new HashMap<>(), true, false, false);
     }
 
     private NavigatorVo.NavigatorVoBean getDefaultFastManagement() {
@@ -534,6 +605,84 @@ public class MainPageFragment extends JMEBaseFragment implements OnRefreshListen
                     mBinding.tabViewpager.removeAllViewsInLayout();
                     mBinding.tabViewpager.setAdapter(mInfoPagerAdapter);
                     mBinding.tablayout.setupWithViewPager(mBinding.tabViewpager);
+                }
+
+                break;
+
+            case "GetUserPasswordSettingInfo":
+                if (head.isSuccess()) {
+                    PasswordInfoVo passwordInfoVo;
+
+                    try {
+                        passwordInfoVo = (PasswordInfoVo) response;
+                    } catch (Exception e) {
+                        passwordInfoVo = null;
+
+                        e.printStackTrace();
+                    }
+
+                    if (null == passwordInfoVo)
+                        return;
+
+                    String hasTimeout = passwordInfoVo.getHasTimeout();
+                    String hasSettingDigital = passwordInfoVo.getHasSettingDigital();
+                    String hasOpenFingerPrint = passwordInfoVo.getHasOpenFingerPrint();
+                    String hasOpenGestures = passwordInfoVo.getHasOpenGestures();
+                    if (TextUtils.isEmpty(hasSettingDigital) || hasSettingDigital.equals("N")) {
+                        RxBus.getInstance().post(Constants.RxBusConst.RXBUS_TRADING_PASSWORD_SETTING, null);
+                    } else {
+
+                        if (TextUtils.isEmpty(hasTimeout) || hasTimeout.equals("N")){
+                            if(mCallEntry == 1){
+                                //资金划转
+                                RxBus.getInstance().post(Constants.RxBusConst.RXBUS_ZJHZ_SETPASSWORD_SUCCESS, null);
+                            }else if(mCallEntry == 2){
+                                //首页过来的 我的订阅
+                                RxBus.getInstance().post(Constants.RxBusConst.RXBUS_WDDY_SETPASSWORD_SUCCESS, null);
+                            }else if(mCallEntry == 5){
+                                //首页进入交易匣子
+                                RxBus.getInstance().post(Constants.RxBusConst.RXBUS_MAIN_PAGE_TRAIN_BOX_SETPASSWORD_SUCCESS, null);
+                            }else if(mCallEntry == 6){
+                                //首页进入 财金日历
+                                RxBus.getInstance().post(Constants.RxBusConst.RXBUS_CJRL_SETPASSWORD_SUCCESS, null);
+                            }else if(mCallEntry == 7){
+                                //首页进入 行情研判
+                                RxBus.getInstance().post(Constants.RxBusConst.RXBUS_HQYP_SETPASSWORD_SUCCESS, null);
+                            }
+
+                            return;
+                        }
+
+
+                        int type = 1;
+                        if (!TextUtils.isEmpty(hasOpenFingerPrint) && hasOpenFingerPrint.equals("Y")) {
+                            boolean isCanUseFingerPrint = false;
+
+                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                                if (FingerprintManagerCompat.from(mContext).isHardwareDetected()
+                                        && FingerprintManagerCompat.from(mContext).hasEnrolledFingerprints())
+                                    isCanUseFingerPrint = true;
+                            }
+
+                            if (isCanUseFingerPrint) {
+                                type = 2;
+                            } else {
+                                if (!TextUtils.isEmpty(hasOpenGestures) && hasOpenGestures.equals("Y"))
+                                    type = 3;
+                                else
+                                    type = 1;
+                            }
+                        } else if (!TextUtils.isEmpty(hasOpenGestures) && hasOpenGestures.equals("Y")) {
+                            type = 3;
+                        } else if (passwordInfoVo.getHasTimeout().equals("Y")) {
+                            type = 1;
+                        }
+                        ARouter.getInstance()
+                                .build(Constants.ARouterUriConst.UNLOCKTRADINGPASSWORD)
+                                .withInt("Type", type)
+                                .withInt("callEntry",mCallEntry)
+                                .navigation();
+                    }
                 }
 
                 break;

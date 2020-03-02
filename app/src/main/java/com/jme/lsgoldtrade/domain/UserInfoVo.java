@@ -41,6 +41,8 @@ public class UserInfoVo {
 
     private String isSign;
 
+    private String isOpen;
+
     public String getTraderId() {
         return traderId;
     }
@@ -135,5 +137,13 @@ public class UserInfoVo {
 
     public void setIsSign(String isSign) {
         this.isSign = isSign;
+    }
+
+    public String getIsOpen() {
+        return isOpen;
+    }
+
+    public void setIsOpen(String isOpen) {
+        this.isOpen = isOpen;
     }
 }

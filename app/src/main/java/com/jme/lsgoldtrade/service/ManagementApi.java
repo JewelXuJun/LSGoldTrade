@@ -91,7 +91,7 @@ public interface ManagementApi {
     @POST("/tjsmanage/infoapi/v1/android/timeLine/save")
     Call<DTResponse> timeLineSave(@Body Map<String, String> map);
 
-    @GET("/tjsmanage/infoapi/v1/android/getProtocolVersion")
+    @GET("/tjsmanage/infoapi/v1/android/getProtocolVersionsList")
     Call<DTResponse> getProtocolVersion(@QueryMap Map<String, String> map);
 
     @POST("/tjsmanage/infoapi/v1/android/insertRatifyAccord")
@@ -153,4 +153,7 @@ public interface ManagementApi {
 
     @GET("/tjsmanage/infoapi/v1/android/getCustomerArrearage")
     Call<DTResponse> getCustomerArrearage(@QueryMap Map<String, String> map);
+
+    @POST("/tjsmanage/infoapi/v1/android/checkValueAddedServicesForClose")
+    Call<DTResponse> checkValueAddedServicesForClose(@Body Map<String, String> map);
 }

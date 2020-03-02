@@ -21,11 +21,11 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-
+        <activity android:name=".ui.personal.OpenIncrementActivity"></activity>
+        <activity android:name=".ui.personal.SelectBankCardActivity" />
         <activity
             android:name=".ui.mainpage.EconomicCalendarActivity"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".ui.splash.SplashActivity"
             android:screenOrientation="portrait">
@@ -35,287 +35,219 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".ui.main.MainActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan|stateHidden" />
-
         <activity
             android:name=".ui.login.AccountLoginActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".ui.login.MobileLoginActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".ui.security.AccountSecurityActivity"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".ui.security.TradingPasswordValidateActivity"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".ui.security.TradingPasswordSettingActivity"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".ui.security.TradingPasswordSettingConfirmActivity"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".ui.security.FingerprintActivity"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".ui.security.GestureActivity"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".ui.security.GestureSettingActivity"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".ui.security.GestureSettingValidateActivity"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".ui.security.OnlineDurationActivity"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".ui.security.UnlockTradingPasswordActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".ui.market.MarketDetailActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize" />
-
         <activity
             android:name=".ui.market.MarketDetailLandscapeActivity"
             android:screenOrientation="landscape" />
-
         <activity
             android:name=".ui.market.MarketEditSortActivity"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".ui.transaction.EntrustRiskManagementActivity"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".ui.transaction.QueryActivity"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".ui.transaction.CapitalTransferActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustUnspecified|stateHidden" />
-
         <activity
             android:name=".ui.transaction.BankReserveActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustUnspecified|stateHidden" />
-
         <activity
             android:name=".ui.transaction.ElectronicCardTransferActivity"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".ui.transaction.ElectronicCardInOutMoneyActivity"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".ui.transaction.DailyStatementActivity"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".ui.transaction.MetalActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" />
-
         <activity
             android:name=".ui.personal.FeedBackActivity"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".ui.personal.SettingActivity"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".ui.personal.MarketRefreshActivity"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".ui.personal.AboutActivity"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".ui.news.NewsCenterActivity"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".ui.news.NewsDetailActivity"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".ui.news.BeginnersActivity"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".base.JMEBaseWebViewActivity"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".ui.personal.DetailsActivity"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".ui.personal.ThawActivity"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".ui.personal.ApplicationForCashActivity"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".ui.personal.CashActivity"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".ui.personal.CheckServiceActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".ui.personal.RechargeActivity"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".ui.personal.ValueServiceSuccessActivity"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".ui.personal.ValueAddedServiceActivity"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".ui.personal.BankCardActivity"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".ui.personal.WithholdActivity"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".ui.personal.WithholdContractActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan|stateHidden" />
-
         <activity
             android:name=".ui.transaction.AuthenticationActivity"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".ui.login.SetLoginPasswordActivity"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".ui.login.SetLoginPasswordSuccessActivity"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".ui.transaction.BindAccountActivity"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".ui.personal.MySubscribeActivity"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".ui.login.RegisterSuccessActivity"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".ui.personal.QuestionAboutActivity"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".ui.personal.CustomerServiceActivity"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".ui.login.RegisterActivity"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".ui.login.ForgetPasswordActivity"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".ui.market.WarningActivity"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".ui.market.MarketJudgmentActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize" />
-
         <activity
             android:name=".ui.mainpage.DeferredActivity"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".ui.personal.FastManagementActivity"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".ui.order.OrderDetailsActivity"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".ui.tradingbox.TradingBoxOrderActivity"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".ui.tradingbox.TradingBoxHistroyActivity"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".ui.tradingbox.PlaceOrderActivity"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".ui.tradingbox.RelevantInfoActivity"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".ui.tradingbox.TradingBoxDetailActivity"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".ui.tradingbox.TradingBoxActivity"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".ui.personal.CheckUserInfoActivity"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".ui.personal.WithdrawActivity"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".ui.personal.WithdrawResultActivity"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".ui.transaction.ConditionSheetActivity"
             android:screenOrientation="portrait" />
@@ -323,12 +255,9 @@
         <service
             android:name=".base.JMEAppService"
             android:exported="false" />
-
         <service
             android:name=".push.CustomIntentService"
-            android:permission="android.permission.BIND_JOB_SERVICE" />
-
-        <!-- 配置SDK核心服务 -->
+            android:permission="android.permission.BIND_JOB_SERVICE" /> <!-- 配置SDK核心服务 -->
         <!-- process必须指定为":pushservice"，切勿随意更改 -->
         <service
             android:name=".push.CustomPushService"
@@ -340,19 +269,16 @@
             android:name="com.umeng.socialize.editorpage.ShareActivity"
             android:excludeFromRecents="true"
             android:theme="@android:style/Theme.NoTitleBar" />
-
         <activity
             android:name=".wxapi.WXEntryActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:exported="true"
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
-
         <activity
             android:name=".wxapi.WXPayEntryActivity"
             android:exported="true"
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
-
         <activity
             android:name="com.tencent.tauth.AuthActivity"
             android:launchMode="singleTask"
@@ -366,12 +292,9 @@
                 <data android:scheme="tencent1108077613" />
             </intent-filter>
         </activity>
-
         <activity
             android:name="com.tencent.connect.common.AssistActivity"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
-
-        <!--接收推送通知点击处理的receiver-->
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" /> <!-- 接收推送通知点击处理的receiver -->
         <receiver android:name=".receiver.NotificationReceiver" />
 
         <provider
@@ -387,7 +310,6 @@
         <service
             android:name=".ui.main.DownLoadService"
             android:exported="false" />
-
     </application>
 
 </manifest>

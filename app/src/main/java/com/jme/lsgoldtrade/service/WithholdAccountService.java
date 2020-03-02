@@ -6,6 +6,7 @@ import com.jme.common.network.IService;
 import com.jme.lsgoldtrade.config.Constants;
 import com.jme.lsgoldtrade.config.User;
 import com.jme.lsgoldtrade.domain.BankVo;
+import com.jme.lsgoldtrade.domain.CheckCanChangeBankResponse;
 import com.jme.lsgoldtrade.domain.SignMessageVo;
 import com.jme.lsgoldtrade.domain.SignVo;
 
@@ -66,6 +67,34 @@ public class WithholdAccountService extends IService<WithholdAccountApi> {
         @Override
         public Call<DTResponse> request(HashMap<String, String> params) {
             return mApi.getCustomerSignBankList(params);
+        }
+    };
+
+    public API checkCanChangeBankCard = new API<String>("checkCanChangeBankCard") {
+        @Override
+        public Call<DTResponse> request(HashMap<String, String> params) {
+            return mApi.checkCanChangeBankCard(params);
+        }
+    };
+
+    public API changeSignBankCard = new API<SignVo>("changeSignBankCard") {
+        @Override
+        public Call<DTResponse> request(HashMap<String, String> params) {
+            return mApi.changeSignBankCard(params);
+        }
+    };
+
+    public API closeValueAddedServices = new API<String>("CloseValueAddedServices") {
+        @Override
+        public Call<DTResponse> request(HashMap<String, String> params) {
+            return mApi.closeValueAddedServices(params);
+        }
+    };
+
+    public API openValueAddedServices = new API<String>("OpenValueAddedServices") {
+        @Override
+        public Call<DTResponse> request(HashMap<String, String> params) {
+            return mApi.openValueAddedServices(params);
         }
     };
 }

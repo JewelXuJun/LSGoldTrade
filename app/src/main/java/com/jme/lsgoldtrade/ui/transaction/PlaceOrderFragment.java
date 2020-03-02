@@ -703,19 +703,19 @@ public class PlaceOrderFragment extends JMEBaseFragment implements FChart.OnPric
                         e.printStackTrace();
                     }
 
-                    String isSign = userInfoVo.getIsSign();
-
-                    if (TextUtils.isEmpty(isSign) || isSign.equals("N")) {
-                        mUser.getCurrentUser().setIsSign("N");
-
-                        if (null != mSignedPopUpWindow && !mSignedPopUpWindow.isShowing())
-                            mSignedPopUpWindow.showAtLocation(mBinding.etAmount, Gravity.CENTER, 0, 0);
-                    } else {
+//                    String isSign = userInfoVo.getIsSign();
+//
+//                    if (TextUtils.isEmpty(isSign) || isSign.equals("N")) {
+//                        mUser.getCurrentUser().setIsSign("N");
+//
+//                        if (null != mSignedPopUpWindow && !mSignedPopUpWindow.isShowing())
+//                            mSignedPopUpWindow.showAtLocation(mBinding.etAmount, Gravity.CENTER, 0, 0);
+//                    } else {
                         showPlaceOrderPopupWindow(mBinding.tvContractId.getText().toString(), mPlaceOrderPrice, mBinding.etAmount.getText().toString(), mBsFlag);
-                    }
+//                    }
                 } else {
-                    if (head.getCode().equals("-2012"))
-                        mUser.getCurrentUser().setIsSign("N");
+//                    if (head.getCode().equals("-2012"))
+//                        mUser.getCurrentUser().setIsSign("N");
                 }
 
                 break;

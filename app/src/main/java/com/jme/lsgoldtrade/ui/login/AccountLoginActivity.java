@@ -8,6 +8,7 @@ import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.Base64;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.EditText;
 
@@ -32,6 +33,7 @@ import com.jme.lsgoldtrade.service.TradeService;
 import com.jme.lsgoldtrade.service.UserService;
 import com.jme.lsgoldtrade.util.AESUtil;
 import com.jme.lsgoldtrade.util.ValueUtils;
+import com.jme.lsgoldtrade.view.StockUserPopUpWindow;
 
 import java.net.ConnectException;
 import java.util.HashMap;
@@ -53,6 +55,7 @@ public class AccountLoginActivity extends JMEBaseActivity {
     private String mKaptchaId;
 
     private TextWatcher mWatcher;
+    private StockUserPopUpWindow mStockUserPopUpWindow;
 
     @Override
     protected int getContentViewId() {
@@ -69,6 +72,10 @@ public class AccountLoginActivity extends JMEBaseActivity {
         mBinding.etAccount.setText(account);
         mBinding.etAccount.setSelection(TextUtils.isEmpty(account) ? 0 : account.length());
         mBinding.tvLoginMobile.getPaint().setFlags(Paint.UNDERLINE_TEXT_FLAG);
+
+        mStockUserPopUpWindow = new StockUserPopUpWindow(this);
+        mStockUserPopUpWindow.setOutsideTouchable(false);
+        mStockUserPopUpWindow.setFocusable(false);
     }
 
     @Override
@@ -342,7 +349,9 @@ public class AccountLoginActivity extends JMEBaseActivity {
 
                 dismissLoginDialog();
 
+
                 finish();
+
 
                 break;
         }

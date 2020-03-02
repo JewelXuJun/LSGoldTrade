@@ -116,11 +116,12 @@
                             android:background="@mipmap/ic_message" />
 
                         <TextView
+                            android:id="@+id/tv_increment_describe"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_centerVertical="true"
                             android:layout_marginLeft="@dimen/common_page_margin"
-                            android:layout_marginRight="@dimen/common_area_margin"
+
                             android:layout_toLeftOf="@+id/tv_trade"
                             android:layout_toRightOf="@+id/img_horn"
                             android:text="@string/increment_trade_message"
@@ -133,6 +134,7 @@
                             android:layout_height="@dimen/common_item_height_small"
                             android:layout_alignParentRight="true"
                             android:layout_centerVertical="true"
+                            android:layout_marginLeft="15dp"
                             android:background="@drawable/bg_btn_blue_solid"
                             android:gravity="center"
                             android:onClick="@{() -> handlers.onClickTrde()}"
@@ -143,12 +145,14 @@
                     </RelativeLayout>
 
                     <RelativeLayout
+                        android:id="@+id/layout_bank"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/height_order_item"
                         android:layout_marginTop="@dimen/common_area_margin_tiny"
                         android:background="@color/white"
                         android:onClick="@{() -> handlers.onClickBankCard()}"
                         android:paddingLeft="@dimen/margin_normal"
+                        android:visibility="gone"
                         android:paddingRight="@dimen/common_area_margin">
 
                         <TextView
@@ -255,7 +259,21 @@
                     </LinearLayout>
 
                 </LinearLayout>
-
+                <Button
+                    android:id="@+id/btn_increment_confirm"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/height_btn"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginTop="@dimen/common_page_margin"
+                    android:layout_marginRight="15dp"
+                    android:layout_marginBottom="@dimen/common_area_margin_big"
+                    android:background="@drawable/bg_btn_blue_solid"
+                    android:gravity="center"
+                    android:onClick="@{() -> handlers.onClickWithholdContract()}"
+                    android:text="@string/increment_sign_immediately"
+                    android:textColor="@color/white"
+                    android:visibility="gone"
+                    android:textSize="@dimen/common_font_size" />
             </LinearLayout>
 
         </androidx.core.widget.NestedScrollView>

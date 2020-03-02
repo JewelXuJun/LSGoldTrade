@@ -1,7 +1,20 @@
 package com.jme.lsgoldtrade.ui.transaction;
 
 import android.os.Bundle;
+import android.text.SpannableString;
+import android.text.Spanned;
+import android.text.TextPaint;
 import android.text.TextUtils;
+import android.text.method.LinkMovementMethod;
+import android.text.style.AbsoluteSizeSpan;
+import android.text.style.ClickableSpan;
+import android.text.style.ForegroundColorSpan;
+import android.util.Log;
+import android.view.Gravity;
+import android.view.View;
+import android.widget.TextView;
+
+import androidx.core.content.ContextCompat;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
@@ -38,6 +51,8 @@ public class BindAccountActivity extends JMEBaseActivity {
     private String mIDCard;
     private boolean bFlag = false;
     private boolean bAgreeFlag = true;
+    private boolean isbAgreeIncrementFlag = true;
+    private IncrementExplainPopUpWindow mIncrementExplainPopUpWindow;
 
     @Override
     protected int getContentViewId() {
@@ -51,6 +66,8 @@ public class BindAccountActivity extends JMEBaseActivity {
         initToolbar(R.string.transaction_bind_account, true);
 
         mBinding.checkboxAgree.setChecked(true);
+        mBinding.checkboxIncrementAgree.setChecked(true);
+        setAggrementMessage();
     }
 
     @Override
@@ -65,6 +82,10 @@ public class BindAccountActivity extends JMEBaseActivity {
 
         mCountDownTimer = new JMECountDownTimer(60000, 1000,
                 mBinding.btnVerificationCode, getString(R.string.transaction_get_verification_code));
+
+        mIncrementExplainPopUpWindow = new IncrementExplainPopUpWindow(this);
+        mIncrementExplainPopUpWindow.setOutsideTouchable(false);
+        mIncrementExplainPopUpWindow.setFocusable(false);
     }
 
     @Override
@@ -72,6 +93,7 @@ public class BindAccountActivity extends JMEBaseActivity {
         super.initListener();
 
         mBinding.checkboxAgree.setOnCheckedChangeListener((compoundButton, isChecked) -> bAgreeFlag = isChecked);
+        mBinding.checkboxIncrementAgree.setOnCheckedChangeListener((compoundButton,isChecked) ->isbAgreeIncrementFlag = isChecked);
     }
 
     @Override
@@ -92,6 +114,22 @@ public class BindAccountActivity extends JMEBaseActivity {
 
         sendRequest(TradeService.getInstance().icbcMsg, params, true);
     }
+
+    private void setAggrementMessage() {
+        SpannableString spannableString = new SpannableString(getResources().getString(R.string.transaction_bind_account_increment_agreement));
+        spannableString.setSpan(new ForegroundColorSpan(ContextCompat.getColor(mContext, R.color.color_blue_deep)),
+                4, 12, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        spannableString.setSpan(new TextClick1(), 4, 12, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        spannableString.setSpan(new AbsoluteSizeSpan(10, true), 4, 12, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+        spannableString.setSpan(new ForegroundColorSpan(ContextCompat.getColor(mContext, R.color.color_blue_deep)),
+                17, 21, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        spannableString.setSpan(new TextClick2(), 17, 21, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+//        spannableString.setSpan(new AbsoluteSizeSpan(10, true), 17, 21, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        mBinding.tvIncrementAgree.setMovementMethod(LinkMovementMethod.getInstance());
+        mBinding.tvIncrementAgree.setText(spannableString);
+    }
+
 
     private void bindAccount(String name, String namecard, String glodaccount, String verifyCode) {
         HashMap<String, String> params = new HashMap<>();
@@ -200,7 +238,16 @@ public class BindAccountActivity extends JMEBaseActivity {
 
                     RxBus.getInstance().post(Constants.RxBusConst.RXBUS_BIND_SUCCESS, null);
 
-                    whetherChangeLoginPwd();
+//                    whetherChangeLoginPwd();
+                    if(isbAgreeIncrementFlag){
+                        ARouter.getInstance()
+                                .build(Constants.ARouterUriConst.WITHHOLDCONTRACT)
+                                .withString("Resource", "Trade")
+                                .withBoolean("isBindAccount",true)
+                                .navigation();
+                    }
+                    finish();
+
                 }
 
                 break;
@@ -265,6 +312,7 @@ public class BindAccountActivity extends JMEBaseActivity {
         }
 
         public void onClickBind() {
+
             String goldAccount = mBinding.etGoldAccount.getText().toString().trim();
             String verifyCode = mBinding.etVerifyCode.getText().toString();
 
@@ -293,6 +341,53 @@ public class BindAccountActivity extends JMEBaseActivity {
 
         if (null != mCountDownTimer)
             mCountDownTimer.cancel();
+    }
+    private class TextClick1 extends ClickableSpan {
+
+        @Override
+        public void onClick(View widget) {
+
+            avoidHintColor(widget);
+            ARouter.getInstance()
+                    .build(Constants.ARouterUriConst.JMEWEBVIEW)
+                    .withString("title", getString(R.string.increment_agreement))
+                    .withString("url", "http://www.taijs.com/upload/zzfwxy.htm")
+                    .navigation();
+        }
+
+        @Override
+        public void updateDrawState(TextPaint ds) {
+            ds.setUnderlineText(false);
+            ds.clearShadowLayer();
+        }
+    }
+
+    private class TextClick2 extends ClickableSpan {
+
+        @Override
+        public void onClick(View widget) {
+            avoidHintColor(widget);
+            if (null != mIncrementExplainPopUpWindow && !mIncrementExplainPopUpWindow.isShowing()) {
+                mIncrementExplainPopUpWindow.setData((agreement)->{
+                    mBinding.checkboxIncrementAgree.setChecked(true);
+                    mIncrementExplainPopUpWindow.dismiss();
+                },(later)->{
+                    mBinding.checkboxIncrementAgree.setChecked(false);
+                    mIncrementExplainPopUpWindow.dismiss();
+                });
+                mIncrementExplainPopUpWindow.showAtLocation(mBinding.getRoot(), Gravity.CENTER, 0, 0);
+            }
+        }
+
+        @Override
+        public void updateDrawState(TextPaint ds) {
+            ds.setUnderlineText(false);
+            ds.clearShadowLayer();
+        }
+    }
+    private void avoidHintColor(View view){
+        if(view instanceof TextView)
+            ((TextView)view).setHighlightColor(getResources().getColor(android.R.color.transparent));
     }
 
 }

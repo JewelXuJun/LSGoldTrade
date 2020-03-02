@@ -12,6 +12,8 @@ public class BankVo implements Serializable {
 
     private String logoPath;
 
+    private boolean isSelection;
+
     public String getBankNo() {
         return bankNo;
     }
@@ -42,5 +44,13 @@ public class BankVo implements Serializable {
 
     public void setLogoPath(String logoPath) {
         this.logoPath = logoPath;
+    }
+
+    public boolean isSelection() {
+        return isSelection;
+    }
+
+    public void setSelection(boolean selection) {
+        isSelection = selection;
     }
 }

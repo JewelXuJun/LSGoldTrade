@@ -23,11 +23,14 @@ import androidx.core.content.FileProvider;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import android.text.TextUtils;
+import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.TabHost;
 import android.widget.TextView;
 
@@ -58,6 +61,7 @@ import com.jme.lsgoldtrade.tabhost.MainTab;
 import com.jme.lsgoldtrade.view.ConfirmSimplePopupwindow;
 import com.jme.lsgoldtrade.view.ProtocolUpdatePopUpWindow;
 import com.jme.lsgoldtrade.view.SignedPopUpWindow;
+import com.jme.lsgoldtrade.view.StockUserDialog;
 
 import java.io.File;
 import java.util.HashMap;
@@ -94,6 +98,7 @@ public class MainActivity extends JMEBaseActivity implements TabHost.OnTabChange
 
     private static final int MSG_DOWNLOAD_ERROR = 1;
     private final static int REQUEST_CODE_ASK_WRITE_EXTERNAL_STORAGE = 121;
+    private StockUserDialog mStockUserDialog;
 
     private Handler handler = new Handler() {
         @Override
@@ -186,7 +191,7 @@ public class MainActivity extends JMEBaseActivity implements TabHost.OnTabChange
         initDownLoadData();
 
         if (!TextUtils.isEmpty(SharedPreUtils.getString(mContext, SharedPreUtils.Token))) {
-            new Handler().postDelayed(() -> checkIsSign(), 1000);
+//            new Handler().postDelayed(() -> checkIsSign(), 1000);
             getProtocolVersion();
         }
 
@@ -230,7 +235,10 @@ public class MainActivity extends JMEBaseActivity implements TabHost.OnTabChange
 
                     break;
                 case Constants.RxBusConst.RXBUS_LOGIN_SUCCESS:
-                    checkIsSign();
+//                    checkIsSign();
+                    if(isOpenStockUser())
+                        showStockUserDialog();
+
                     getProtocolVersion();
 
                     if (null != mUser && mUser.isLogin() && !TextUtils.isEmpty(mUser.getIsFromTjs()) && mUser.getIsFromTjs().equals("true"))
@@ -249,6 +257,9 @@ public class MainActivity extends JMEBaseActivity implements TabHost.OnTabChange
                         mTradingPasswordConfirmSimplePopupwindow.showAtLocation(mBinding.tabhost, Gravity.CENTER, 0, 0);
                     }
 
+                    break;
+                case Constants.RxBusConst.RXBUS_PERSON_WDDY_SETPASSWORD_SUCCESS:
+                    ARouter.getInstance().build(Constants.ARouterUriConst.TRADINGBOX).navigation();
                     break;
             }
         });
@@ -581,16 +592,16 @@ public class MainActivity extends JMEBaseActivity implements TabHost.OnTabChange
         startService(intent);
     }
 
-    private void checkIsSign() {
-        if (!TextUtils.isEmpty(mUser.getAccountID())) {
-            String isSign = mUser.getCurrentUser().getIsSign();
-
-            if (TextUtils.isEmpty(isSign) || isSign.equals("N")) {
-                if (null != mSignedPopUpWindow && !mSignedPopUpWindow.isShowing())
-                    mSignedPopUpWindow.showAtLocation(mBinding.tabhost, Gravity.CENTER, 0, 0);
-            }
-        }
-    }
+//    private void checkIsSign() {
+//        if (!TextUtils.isEmpty(mUser.getAccountID())) {
+//            String isSign = mUser.getCurrentUser().getIsSign();
+//
+//            if (TextUtils.isEmpty(isSign) || isSign.equals("N")) {
+//                if (null != mSignedPopUpWindow && !mSignedPopUpWindow.isShowing())
+//                    mSignedPopUpWindow.showAtLocation(mBinding.tabhost, Gravity.CENTER, 0, 0);
+//            }
+//        }
+//    }
 
     private void getUpDateInfo() {
         HashMap<String, String> params = new HashMap<>();
@@ -845,6 +856,34 @@ public class MainActivity extends JMEBaseActivity implements TabHost.OnTabChange
             return false;
 
         return super.dispatchTouchEvent(event);
+    }
+
+    private void showStockUserDialog() {
+        if (isFinishing)
+            return;
+
+        if (!isForeground())
+            return;
+
+        if (null == mStockUserDialog)
+            mStockUserDialog = new StockUserDialog(mContext);
+
+        if (!mStockUserDialog.isShowing()) {
+            mStockUserDialog.show();
+            DisplayMetrics dm = new DisplayMetrics();
+            getWindowManager().getDefaultDisplay().getMetrics(dm);
+            WindowManager.LayoutParams lp = mStockUserDialog.getWindow().getAttributes();
+            lp.width = (int) (dm.widthPixels*0.75); //设置宽度
+            mStockUserDialog.getWindow().setAttributes(lp);
+
+        }
+    }
+    private boolean isOpenStockUser(){
+        if(!TextUtils.isEmpty(mUser.getAccountID())&&mUser.getCurrentUser()!=null&&mUser.getCurrentUser().getIsOpen()!=null&&"-2017".equals(mUser.getCurrentUser().getIsOpen())){
+            return true;
+        }else{
+            return false;
+        }
     }
 
 }

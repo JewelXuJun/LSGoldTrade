@@ -1,6 +1,9 @@
 package com.jme.lsgoldtrade.ui.login;
 
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
+import android.util.Log;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.jme.lsgoldtrade.R;
@@ -48,15 +51,32 @@ public class RegisterSuccessActivity extends JMEBaseActivity {
     }
 
     public class ClickHandlers {
-
+        private long mLastClickTime;
+        private long timeInterval = 1000L;
         public void onClickOpenAccount() {
-            if (IntentUtils.isWeChatAvilible(RegisterSuccessActivity.this)) {
-                IntentUtils.intentICBCSmall(RegisterSuccessActivity.this);
-
-                finish();
-            } else {
-                showShortToast(R.string.text_wechat_uninstalled);
+            long nowTime = System.currentTimeMillis();
+            if(nowTime-mLastClickTime>timeInterval) {
+                mLastClickTime = nowTime;
+                if (IntentUtils.isWeChatAvilible(RegisterSuccessActivity.this)) {
+                    IntentUtils.intentICBCSmall(RegisterSuccessActivity.this);
+                    finish();
+//                    mHandler.sendEmptyMessageDelayed(Constants.Msg.MSG_WXXCX, 1500);
+                } else {
+                    showShortToast(R.string.text_wechat_uninstalled);
+                }
             }
         }
     }
+
+//    private Handler mHandler = new Handler() {
+//        public void handleMessage(Message msg) {
+//            switch (msg.what) {
+//                case Constants.Msg.MSG_WXXCX:
+//                    mHandler.removeMessages(Constants.Msg.MSG_TRADE_POSITION_UPDATE_DATA);
+//                    if(!isFinishing)
+//                        finish();
+//                    break;
+//            }
+//        }
+//    };
 }

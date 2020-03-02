@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:background="@drawable/bg_white"
+    android:layout_height="wrap_content">
+
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        android:paddingLeft="20dp"
+        android:paddingTop="@dimen/margin_trade_rule"
+        android:paddingRight="20dp"
+
+        android:text="@string/increment_arrears_pay"
+        android:textColor="@color/black"
+        android:textSize="@dimen/sp_16" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="18dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginBottom="18dp"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/btn_arrears_pay_cancel"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginRight="@dimen/common_area_margin_middle"
+            android:layout_weight="1"
+            android:background="@drawable/bg_btn_blue_stroke"
+            android:text="@string/text_cancel"
+            android:textColor="@color/color_blue_deep"
+            android:textSize="@dimen/common_font_size" />
+
+        <Button
+            android:id="@+id/btn_arrears_pay_confirm"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/common_area_margin_middle"
+            android:layout_weight="1"
+            android:background="@drawable/bg_btn_blue_solid"
+            android:text="@string/increment_recharge_pay"
+            android:textColor="@color/white"
+            android:textSize="@dimen/common_font_size" />
+
+    </LinearLayout>
+    <TextView
+        android:id="@+id/tv_arrears_pay_close_increment"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:text="@string/increment_arrears_pay_close_increment"
+        android:textColor="@color/color_blue_deep"
+        android:layout_marginBottom="10dp"
+        />
+</LinearLayout>

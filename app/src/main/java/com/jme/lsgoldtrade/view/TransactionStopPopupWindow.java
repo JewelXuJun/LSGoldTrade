@@ -6,6 +6,7 @@ import android.text.InputType;
 import android.text.SpannableString;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -328,14 +329,17 @@ public class TransactionStopPopupWindow extends JMEBasePopupWindow {
             String minPrice = mType.equals("多") ? mTenSpeedVo.getLatestPriceValue() : mTenSpeedVo.getLowerLimitPrice();
 
             if (new BigDecimal(String.valueOf(value)).compareTo(new BigDecimal(minPrice)) == -1) {
+                if(!TextUtils.isEmpty(mBinding.etProfitPrice.getText().toString()))
                 Toast.makeText(mContext, mType.equals("多") ? R.string.transaction_sheet_limit_down_price_error2
                         : R.string.transaction_sheet_limit_down_price_error3, Toast.LENGTH_SHORT).show();
 
                 mBinding.etProfitPrice.setText(price);
             } else {
                 String valueStr = MarketUtil.formatValue(String.valueOf(value), mLength);
-
-                mBinding.etProfitPrice.setText(valueStr);
+                if(TextUtils.isEmpty(mBinding.etProfitPrice.getText().toString()))
+                    mBinding.etProfitPrice.setText(price);
+                else
+                    mBinding.etProfitPrice.setText(valueStr);
             }
         }
 
@@ -351,14 +355,17 @@ public class TransactionStopPopupWindow extends JMEBasePopupWindow {
             String maxPrice = mType.equals("多") ? mTenSpeedVo.getHighLimitPrice() : mTenSpeedVo.getLatestPriceValue();
 
             if (new BigDecimal(String.valueOf(value)).compareTo(new BigDecimal(maxPrice)) == 1) {
+                if(!TextUtils.isEmpty(mBinding.etProfitPrice.getText().toString()))
                 Toast.makeText(mContext, mType.equals("多") ? R.string.transaction_sheet_limit_up_price_error2
                         : R.string.transaction_sheet_limit_up_price_error3, Toast.LENGTH_SHORT).show();
 
                 mBinding.etProfitPrice.setText(price);
             } else {
                 String valueStr = MarketUtil.formatValue(String.valueOf(value), mLength);
-
-                mBinding.etProfitPrice.setText(valueStr);
+                if(TextUtils.isEmpty(mBinding.etProfitPrice.getText().toString()))
+                    mBinding.etProfitPrice.setText(price);
+                else
+                    mBinding.etProfitPrice.setText(valueStr);
             }
         }
 
@@ -374,14 +381,17 @@ public class TransactionStopPopupWindow extends JMEBasePopupWindow {
             String minPrice = mType.equals("多") ? mTenSpeedVo.getLowerLimitPrice() : mTenSpeedVo.getLatestPriceValue();
 
             if (new BigDecimal(String.valueOf(value)).compareTo(new BigDecimal(minPrice)) == -1) {
+                if(!TextUtils.isEmpty(mBinding.etLossPrice.getText().toString()))
                 Toast.makeText(mContext, mType.equals("多") ? R.string.transaction_sheet_limit_down_price_error3
                         : R.string.transaction_sheet_limit_down_price_error2, Toast.LENGTH_SHORT).show();
 
                 mBinding.etLossPrice.setText(price);
             } else {
                 String valueStr = MarketUtil.formatValue(String.valueOf(value), mLength);
-
-                mBinding.etLossPrice.setText(valueStr);
+                if(TextUtils.isEmpty(mBinding.etLossPrice.getText().toString()))
+                    mBinding.etLossPrice.setText(price);
+                else
+                    mBinding.etLossPrice.setText(valueStr);
             }
         }
 
@@ -395,16 +405,19 @@ public class TransactionStopPopupWindow extends JMEBasePopupWindow {
 
             float value = new BigDecimal(price).add(new BigDecimal(mPriceMove)).floatValue();
             String maxPrice = mType.equals("多") ? mTenSpeedVo.getLatestPriceValue() : mTenSpeedVo.getHighLimitPrice();
-
+            Log.i("testXin","======="+value+"====="+maxPrice);
             if (new BigDecimal(String.valueOf(value)).compareTo(new BigDecimal(maxPrice)) == 1) {
+                if(!TextUtils.isEmpty(mBinding.etLossPrice.getText().toString()))
                 Toast.makeText(mContext, mType.equals("多") ? R.string.transaction_sheet_limit_up_price_error3
                         : R.string.transaction_sheet_limit_up_price_error2, Toast.LENGTH_SHORT).show();
 
                 mBinding.etLossPrice.setText(price);
             } else {
                 String valueStr = MarketUtil.formatValue(String.valueOf(value), mLength);
-
-                mBinding.etLossPrice.setText(valueStr);
+                if(TextUtils.isEmpty(mBinding.etLossPrice.getText().toString()))
+                    mBinding.etLossPrice.setText(price);
+                else
+                    mBinding.etLossPrice.setText(valueStr);
             }
         }
 

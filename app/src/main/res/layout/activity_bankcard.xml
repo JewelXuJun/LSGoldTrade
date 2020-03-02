@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android">
-
+    <data>
+        <variable
+            name="handlers"
+            type="com.jme.lsgoldtrade.ui.personal.BankCardActivity.ClickHandlers" />
+    </data>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -16,7 +20,22 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:scrollbars="none"/>
-
+        <Button
+            android:id="@+id/btn_check_can_change_bank"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/height_btn"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="@dimen/common_page_margin"
+            android:layout_marginRight="10dp"
+            android:background="@drawable/bg_btn_blue_solid"
+            android:text="变更"
+            android:textColor="@color/white"
+            android:visibility="gone"
+            android:textSize="@dimen/common_font_size"
+            android:layout_marginBottom="10dp"
+            android:layout_alignParentBottom="true"
+            android:onClick="@{()->handlers.onClickChange()}"
+            />
     </LinearLayout>
 
 </layout>

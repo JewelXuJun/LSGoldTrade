@@ -1,9 +1,11 @@
 package com.jme.lsgoldtrade.ui.market;
 
+import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.Gravity;
 
+import androidx.core.hardware.fingerprint.FingerprintManagerCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
@@ -24,6 +26,7 @@ import com.jme.lsgoldtrade.domain.AccountVo;
 import com.jme.lsgoldtrade.domain.AnalystVo;
 import com.jme.lsgoldtrade.domain.ContractInfoVo;
 import com.jme.lsgoldtrade.domain.LoginResponse;
+import com.jme.lsgoldtrade.domain.PasswordInfoVo;
 import com.jme.lsgoldtrade.domain.PositionPageVo;
 import com.jme.lsgoldtrade.domain.PositionVo;
 import com.jme.lsgoldtrade.domain.TenSpeedVo;
@@ -31,6 +34,7 @@ import com.jme.lsgoldtrade.domain.UserInfoVo;
 import com.jme.lsgoldtrade.service.ManagementService;
 import com.jme.lsgoldtrade.service.TradeService;
 import com.jme.lsgoldtrade.service.UserService;
+import com.jme.lsgoldtrade.view.ConfirmSimplePopupwindow;
 import com.jme.lsgoldtrade.view.SignedPopUpWindow;
 import com.jme.lsgoldtrade.view.ConfirmPopupwindow;
 
@@ -72,7 +76,8 @@ public class MarketJudgmentActivity extends JMEBaseActivity {
     private SignedPopUpWindow mSignedPopUpWindow;
 
     private Subscription mRxbus;
-
+    private int mCallEntry = 0;
+    private ConfirmSimplePopupwindow mTradingPasswordConfirmSimplePopupwindow;
     @Override
     protected int getContentViewId() {
         return R.layout.activity_market_judgment;
@@ -92,7 +97,9 @@ public class MarketJudgmentActivity extends JMEBaseActivity {
     @Override
     protected void initData(Bundle savedInstanceState) {
         super.initData(savedInstanceState);
-
+        mTradingPasswordConfirmSimplePopupwindow = new ConfirmSimplePopupwindow(this);
+        mTradingPasswordConfirmSimplePopupwindow.setOutsideTouchable(false);
+        mTradingPasswordConfirmSimplePopupwindow.setFocusable(false);
         getAnalystList();
     }
 
@@ -132,6 +139,59 @@ public class MarketJudgmentActivity extends JMEBaseActivity {
 
                     limitOrder(list.get(0), list.get(1), list.get(2), list.get(3), list.get(4));
 
+                    break;
+                    case Constants.RxBusConst.RXBUS_HQYP_BUY_MORE:
+                        if (null == mFragmentList || 0 == mFragmentList.size())
+                            return;
+
+                        MarketJudgmentFragment marketJudgmentFragment = mFragmentList.get(mBinding.tabViewpager.getCurrentItem());
+
+                        if (null == marketJudgmentFragment)
+                            return;
+
+                        mContractID = marketJudgmentFragment.getContractID();
+                        mContractInfoVo = marketJudgmentFragment.getContractInfo();
+                        mTenSpeedVo = marketJudgmentFragment.getTenSpeedVo();
+
+                        if (TextUtils.isEmpty(mContractID) || null == mTenSpeedVo || null == mContractInfoVo)
+                            return;
+
+                        mBsFlag = 1;
+                        mOcFlag = 0;
+                        mPagingKey = "";
+
+                        queryLoginResult();
+                        break;
+                    case Constants.RxBusConst.RXBUS_HQYP_SALE_EMPTY:
+                        if (null == mFragmentList || 0 == mFragmentList.size())
+                            return;
+
+                        MarketJudgmentFragment marketJudgmentFragment2 = mFragmentList.get(mBinding.tabViewpager.getCurrentItem());
+
+                        if (null == marketJudgmentFragment2)
+                            return;
+
+                        mContractID = marketJudgmentFragment2.getContractID();
+                        mContractInfoVo = marketJudgmentFragment2.getContractInfo();
+                        mTenSpeedVo = marketJudgmentFragment2.getTenSpeedVo();
+
+                        if (TextUtils.isEmpty(mContractID) || null == mTenSpeedVo || null == mContractInfoVo)
+                            return;
+
+                        mBsFlag = 2;
+                        mOcFlag = 0;
+                        mPagingKey = "";
+
+                        queryLoginResult();
+                    break;
+                    case Constants.RxBusConst.RXBUS_HQYP_DECLARATION_FORM:
+                        getUserPasswordSettingInfo();
+                        AppConfig.Select_ContractId = "Au(T+D)";
+
+                        RxBus.getInstance().post(Constants.RxBusConst.RXBUS_TRANSACTION_PLACE_ORDER, "Au(T+D)");
+                        ARouter.getInstance().build(Constants.ARouterUriConst.MAIN).navigation();
+
+                        finish();
                     break;
             }
         });
@@ -257,6 +317,9 @@ public class MarketJudgmentActivity extends JMEBaseActivity {
 
         sendRequest(TradeService.getInstance().limitOrder, params, true);
     }
+    private void getUserPasswordSettingInfo() {
+        sendRequest(ManagementService.getInstance().getUserPasswordSettingInfo, new HashMap<>(), true, false, false);
+    }
 
     @Override
     protected void DataReturn(DTRequest request, Head head, Object response) {
@@ -300,20 +363,20 @@ public class MarketJudgmentActivity extends JMEBaseActivity {
 
                         e.printStackTrace();
                     }
-
-                    String isSign = userInfoVo.getIsSign();
-
-                    if (TextUtils.isEmpty(isSign) || isSign.equals("N")) {
-                        mUser.getCurrentUser().setIsSign("N");
-
-                        if (null != mSignedPopUpWindow && !mSignedPopUpWindow.isShowing())
-                            mSignedPopUpWindow.showAtLocation(mBinding.tablayout, Gravity.CENTER, 0, 0);
-                    } else {
+//
+//                    String isSign = userInfoVo.getIsSign();
+//
+//                    if (TextUtils.isEmpty(isSign) || isSign.equals("N")) {
+//                        mUser.getCurrentUser().setIsSign("N");
+//
+//                        if (null != mSignedPopUpWindow && !mSignedPopUpWindow.isShowing())
+//                            mSignedPopUpWindow.showAtLocation(mBinding.tablayout, Gravity.CENTER, 0, 0);
+//                    } else {
                         getAccount();
-                    }
+//                    }
                 } else {
-                    if (head.getCode().equals("-2012"))
-                        mUser.getCurrentUser().setIsSign("N");
+//                    if (head.getCode().equals("-2012"))
+//                        mUser.getCurrentUser().setIsSign("N");
                 }
 
                 break;
@@ -395,6 +458,86 @@ public class MarketJudgmentActivity extends JMEBaseActivity {
                 }
 
                 break;
+            case "GetUserPasswordSettingInfo":
+                if (head.isSuccess()) {
+                    PasswordInfoVo passwordInfoVo;
+
+                    try {
+                        passwordInfoVo = (PasswordInfoVo) response;
+                    } catch (Exception e) {
+                        passwordInfoVo = null;
+
+                        e.printStackTrace();
+                    }
+
+                    if (null == passwordInfoVo)
+                        return;
+
+                    String hasTimeout = passwordInfoVo.getHasTimeout();
+                    String hasSettingDigital = passwordInfoVo.getHasSettingDigital();
+                    String hasOpenFingerPrint = passwordInfoVo.getHasOpenFingerPrint();
+                    String hasOpenGestures = passwordInfoVo.getHasOpenGestures();
+                    if (TextUtils.isEmpty(hasSettingDigital) || hasSettingDigital.equals("N")) {
+                        if (null != mTradingPasswordConfirmSimplePopupwindow && !mTradingPasswordConfirmSimplePopupwindow.isShowing()) {
+                            mTradingPasswordConfirmSimplePopupwindow.setData(mContext.getResources().getString(R.string.security_setting_tips),
+                                    mContext.getResources().getString(R.string.personal_setting),
+                                    (view) -> {
+                                        ARouter.getInstance().build(Constants.ARouterUriConst.TRADINGPASSWORDSETTING).navigation();
+
+                                        mTradingPasswordConfirmSimplePopupwindow.dismiss();
+                                    });
+                            mTradingPasswordConfirmSimplePopupwindow.showAtLocation(mBinding.getRoot(), Gravity.CENTER, 0, 0);
+                        }
+                    } else {
+
+                        if (TextUtils.isEmpty(hasTimeout) || hasTimeout.equals("N")){
+                            if(mCallEntry == 10){
+                                //行情研判 买多
+                                RxBus.getInstance().post(Constants.RxBusConst.RXBUS_HQYP_BUY_MORE, null);
+                            }else if(mCallEntry == 11){
+                                //行情研判 卖空
+                                RxBus.getInstance().post(Constants.RxBusConst.RXBUS_HQYP_SALE_EMPTY, null);
+                            }else if(mCallEntry == 12){
+                                //行情研判 报单
+                                RxBus.getInstance().post(Constants.RxBusConst.RXBUS_HQYP_DECLARATION_FORM, null);
+                            }
+
+                            return;
+                        }
+
+
+                        int type = 1;
+                        if (!TextUtils.isEmpty(hasOpenFingerPrint) && hasOpenFingerPrint.equals("Y")) {
+                            boolean isCanUseFingerPrint = false;
+
+                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                                if (FingerprintManagerCompat.from(mContext).isHardwareDetected()
+                                        && FingerprintManagerCompat.from(mContext).hasEnrolledFingerprints())
+                                    isCanUseFingerPrint = true;
+                            }
+
+                            if (isCanUseFingerPrint) {
+                                type = 2;
+                            } else {
+                                if (!TextUtils.isEmpty(hasOpenGestures) && hasOpenGestures.equals("Y"))
+                                    type = 3;
+                                else
+                                    type = 1;
+                            }
+                        } else if (!TextUtils.isEmpty(hasOpenGestures) && hasOpenGestures.equals("Y")) {
+                            type = 3;
+                        } else if (passwordInfoVo.getHasTimeout().equals("Y")) {
+                            type = 1;
+                        }
+                        ARouter.getInstance()
+                                .build(Constants.ARouterUriConst.UNLOCKTRADINGPASSWORD)
+                                .withInt("Type", type)
+                                .withInt("callEntry",mCallEntry)
+                                .navigation();
+                    }
+                }
+
+                break;
         }
     }
 
@@ -404,26 +547,10 @@ public class MarketJudgmentActivity extends JMEBaseActivity {
             if (null == mUser || !mUser.isLogin()) {
                 gotoLogin();
             } else {
-                if (null == mFragmentList || 0 == mFragmentList.size())
-                    return;
+                //买多
+                mCallEntry = 10;
+                getUserPasswordSettingInfo();
 
-                MarketJudgmentFragment marketJudgmentFragment = mFragmentList.get(mBinding.tabViewpager.getCurrentItem());
-
-                if (null == marketJudgmentFragment)
-                    return;
-
-                mContractID = marketJudgmentFragment.getContractID();
-                mContractInfoVo = marketJudgmentFragment.getContractInfo();
-                mTenSpeedVo = marketJudgmentFragment.getTenSpeedVo();
-
-                if (TextUtils.isEmpty(mContractID) || null == mTenSpeedVo || null == mContractInfoVo)
-                    return;
-
-                mBsFlag = 1;
-                mOcFlag = 0;
-                mPagingKey = "";
-
-                queryLoginResult();
             }
         }
 
@@ -431,26 +558,10 @@ public class MarketJudgmentActivity extends JMEBaseActivity {
             if (null == mUser || !mUser.isLogin()) {
                 gotoLogin();
             } else {
-                if (null == mFragmentList || 0 == mFragmentList.size())
-                    return;
+                //卖空
+                mCallEntry = 11;
+                getUserPasswordSettingInfo();
 
-                MarketJudgmentFragment marketJudgmentFragment = mFragmentList.get(mBinding.tabViewpager.getCurrentItem());
-
-                if (null == marketJudgmentFragment)
-                    return;
-
-                mContractID = marketJudgmentFragment.getContractID();
-                mContractInfoVo = marketJudgmentFragment.getContractInfo();
-                mTenSpeedVo = marketJudgmentFragment.getTenSpeedVo();
-
-                if (TextUtils.isEmpty(mContractID) || null == mTenSpeedVo || null == mContractInfoVo)
-                    return;
-
-                mBsFlag = 2;
-                mOcFlag = 0;
-                mPagingKey = "";
-
-                queryLoginResult();
             }
         }
 
@@ -458,12 +569,9 @@ public class MarketJudgmentActivity extends JMEBaseActivity {
             if (null == mUser || !mUser.isLogin()) {
                 gotoLogin();
             } else {
-                AppConfig.Select_ContractId = "Au(T+D)";
-
-                RxBus.getInstance().post(Constants.RxBusConst.RXBUS_TRANSACTION_PLACE_ORDER, "Au(T+D)");
-                ARouter.getInstance().build(Constants.ARouterUriConst.MAIN).navigation();
-
-                finish();
+                //报单
+                mCallEntry = 12;
+                getUserPasswordSettingInfo();
             }
         }
     }

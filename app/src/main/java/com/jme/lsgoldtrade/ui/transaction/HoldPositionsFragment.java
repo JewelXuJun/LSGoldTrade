@@ -4,7 +4,9 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.text.TextUtils;
+import android.util.DisplayMetrics;
 import android.view.Gravity;
+import android.view.WindowManager;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -30,6 +32,7 @@ import com.jme.lsgoldtrade.service.MarketService;
 import com.jme.lsgoldtrade.service.TradeService;
 import com.jme.lsgoldtrade.util.MarketUtil;
 import com.jme.lsgoldtrade.view.ConfirmSimplePopupwindow;
+import com.jme.lsgoldtrade.view.StockUserDialog;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 
@@ -67,6 +70,7 @@ public class HoldPositionsFragment extends JMEBaseFragment implements OnRefreshL
     private AccountVo mAccountVo;
     private ConfirmSimplePopupwindow mConfirmSimplePopupwindow;
     private Subscription mRxbus;
+    private StockUserDialog mStockUserDialog;
 
     private Handler mHandler = new Handler() {
         public void handleMessage(Message msg) {
@@ -229,12 +233,19 @@ public class HoldPositionsFragment extends JMEBaseFragment implements OnRefreshL
             switch (callType) {
                 case Constants.RxBusConst.RXBUS_ORDER_SUCCESS:
                 case Constants.RxBusConst.RXBUS_CAPITALTRANSFER_SUCCESS:
-                case Constants.RxBusConst.RXBUS_LOGIN_SUCCESS:
                 case Constants.RxBusConst.RXBUS_TRANSACTION_HOLD_POSITIONS_UPDATE:
                     bFlag = true;
 
                     getMarket();
 
+                    break;
+                case Constants.RxBusConst.RXBUS_LOGIN_SUCCESS:
+                    if(isOpenStockUser())
+                        showStockUserDialog();
+
+                    bFlag = true;
+
+                    getMarket();
                     break;
                 case Constants.RxBusConst.RXBUS_LOGOUT_SUCCESS:
                     setInitData();
@@ -330,6 +341,7 @@ public class HoldPositionsFragment extends JMEBaseFragment implements OnRefreshL
                         .add(new BigDecimal(mAccountVo.getPositionMarginStr()))
                         .add(mUnliquidatedProfitTotal.compareTo(new BigDecimal(0)) == -1 ? new BigDecimal(0) : mUnliquidatedProfitTotal)
                         .subtract(new BigDecimal(mAccountVo.getFee()))
+                        .subtract(new BigDecimal(MarketUtil.getPriceValue(mAccountVo.getOwingAmount())))
                         .toPlainString();
 
                 String minReserveFund = mAccountVo.getMinReserveFundStr();
@@ -390,6 +402,7 @@ public class HoldPositionsFragment extends JMEBaseFragment implements OnRefreshL
                         .add(new BigDecimal(mAccountVo.getPositionMarginStr()))
                         .add(mUnliquidatedProfitTotal.compareTo(new BigDecimal(0)) == -1 ? new BigDecimal(0) : mUnliquidatedProfitTotal)
                         .subtract(new BigDecimal(mAccountVo.getFee()))
+                        .subtract(new BigDecimal(MarketUtil.getPriceValue(mAccountVo.getOwingAmount())))
                         .toPlainString();
 
                 String minReserveFund = mAccountVo.getMinReserveFundStr();
@@ -703,6 +716,35 @@ public class HoldPositionsFragment extends JMEBaseFragment implements OnRefreshL
 
         if (!mRxbus.isUnsubscribed())
             mRxbus.unsubscribe();
+    }
+
+    private void showStockUserDialog() {
+        if (isFinishing)
+            return;
+
+        if (!isForeground())
+            return;
+
+        if (null == mStockUserDialog)
+            mStockUserDialog = new StockUserDialog(mContext);
+
+        if (!mStockUserDialog.isShowing()) {
+            mStockUserDialog.show();
+            DisplayMetrics dm = new DisplayMetrics();
+            mActivity.getWindowManager().getDefaultDisplay().getMetrics(dm);
+            WindowManager.LayoutParams lp = mStockUserDialog.getWindow().getAttributes();
+            lp.width = (int) (dm.widthPixels*0.75); //设置宽度
+            mStockUserDialog.getWindow().setAttributes(lp);
+
+        }
+    }
+
+    private boolean isOpenStockUser(){
+        if(!TextUtils.isEmpty(mUser.getAccountID())&&mUser.getCurrentUser()!=null&&mUser.getCurrentUser().getIsOpen()!=null&&"-2017".equals(mUser.getCurrentUser().getIsOpen())){
+            return true;
+        }else{
+            return false;
+        }
     }
 
 }

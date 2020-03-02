@@ -61,10 +61,13 @@ public class IntentUtils {
 
                 break;
             case "CJRL":  //财经日历
+
+//                RxBus.getInstance().post(Constants.RxBusConst.RXBUS_CJRL_SETPASSWORD, null);
                 ARouter.getInstance().build(Constants.ARouterUriConst.ECONOMICCALENDAR).navigation();
 
                 break;
             case "HQYP":  //行情研判
+//                RxBus.getInstance().post(Constants.RxBusConst.RXBUS_HQYP_SETPASSWORD, null);
                 ARouter.getInstance().build(Constants.ARouterUriConst.MARKETJUDGMENT).navigation();
 
                 break;
@@ -72,14 +75,15 @@ public class IntentUtils {
                 if (null == user || !user.isLogin()) {
                     gotoLogin(context);
                 } else {
-                    if (!TextUtils.isEmpty(user.getIsFromTjs()) && user.getIsFromTjs().equals("true")) {
-                        if (user.getCurrentUser().getCardType().equals("2") && user.getCurrentUser().getReserveFlag().equals("N"))
-                            ARouter.getInstance().build(Constants.ARouterUriConst.BANKRESERVE).navigation();
-                        else
-                            ARouter.getInstance().build(Constants.ARouterUriConst.CAPITALTRANSFER).navigation();
-                    } else {
-                        ARouter.getInstance().build(Constants.ARouterUriConst.CAPITALTRANSFER).navigation();
-                    }
+                    RxBus.getInstance().post(Constants.RxBusConst.RXBUS_ZJHZ_SETPASSWORD, null);
+//                    if (!TextUtils.isEmpty(user.getIsFromTjs()) && user.getIsFromTjs().equals("true")) {
+//                        if (user.getCurrentUser().getCardType().equals("2") && user.getCurrentUser().getReserveFlag().equals("N"))
+//                            ARouter.getInstance().build(Constants.ARouterUriConst.BANKRESERVE).navigation();
+//                        else
+//                            ARouter.getInstance().build(Constants.ARouterUriConst.CAPITALTRANSFER).navigation();
+//                    } else {
+//                        ARouter.getInstance().build(Constants.ARouterUriConst.CAPITALTRANSFER).navigation();
+//                    }
                 }
 
                 break;
@@ -132,7 +136,8 @@ public class IntentUtils {
                 if (null == user || !user.isLogin())
                     gotoLogin(context);
                 else
-                    ARouter.getInstance().build(Constants.ARouterUriConst.TRADINGBOX).navigation();
+                    RxBus.getInstance().post(Constants.RxBusConst.RXBUS_WDDY_SETPASSWORD, null);
+//                    ARouter.getInstance().build(Constants.ARouterUriConst.TRADINGBOX).navigation();
 
                 break;
             case "LXKF":  //联系客服

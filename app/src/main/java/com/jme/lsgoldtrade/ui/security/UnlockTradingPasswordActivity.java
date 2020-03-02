@@ -49,6 +49,7 @@ public class UnlockTradingPasswordActivity extends JMEBaseActivity {
     private FingerprintVerifyManager.Builder mBuilder;
     private ConfirmSimplePopupwindow mConfirmSimplePopupwindow;
     private Subscription mRxbus;
+    private int mCallEntry;
 
     @Override
     protected int getContentViewId() {
@@ -62,6 +63,7 @@ public class UnlockTradingPasswordActivity extends JMEBaseActivity {
         StatusBarUtil.setStatusBarMode(this, true, R.color.color_blue_deep);
 
         mType = getIntent().getIntExtra("Type", 1);
+        mCallEntry = getIntent().getIntExtra("callEntry",0);
 
         mBuilder = new FingerprintVerifyManager.Builder(this);
         mBuilder.enableAndroidP(false);
@@ -266,6 +268,43 @@ public class UnlockTradingPasswordActivity extends JMEBaseActivity {
         switch (request.getApi().getName()) {
             case "UnlockTradePassword":
                 if (head.isSuccess()) {
+                    if(mCallEntry == 1){
+                        //资金划转
+                        RxBus.getInstance().post(Constants.RxBusConst.RXBUS_ZJHZ_SETPASSWORD_SUCCESS, null);
+                    }else if(mCallEntry == 2){
+                        //首页过来的 我的订阅
+                        RxBus.getInstance().post(Constants.RxBusConst.RXBUS_WDDY_SETPASSWORD_SUCCESS, null);
+                    }else if(mCallEntry == 3){
+                        //买多
+                        RxBus.getInstance().post(Constants.RxBusConst.RXBUS_BUY_MORE_SETPASSWORD_SUCCESS, null);
+                    }else if(mCallEntry == 4){
+                        //卖空
+                        RxBus.getInstance().post(Constants.RxBusConst.RXBUS_SALE_EMPTY_SETPASSWORD_SUCCESS, null);
+                    }else if(mCallEntry == 5){
+                        //首页进入交易匣子
+                        RxBus.getInstance().post(Constants.RxBusConst.RXBUS_MAIN_PAGE_TRAIN_BOX_SETPASSWORD_SUCCESS, null);
+                    }else if(mCallEntry == 6){
+                        //首页进入 财金日历
+                        RxBus.getInstance().post(Constants.RxBusConst.RXBUS_CJRL_SETPASSWORD_SUCCESS, null);
+                    }else if(mCallEntry == 7){
+                        //首页进入 行情研判
+                        RxBus.getInstance().post(Constants.RxBusConst.RXBUS_HQYP_SETPASSWORD_SUCCESS, null);
+                    }else if(mCallEntry == 8){
+                        //我的进入 我的订阅
+                        RxBus.getInstance().post(Constants.RxBusConst.RXBUS_PERSON_WDDY_SETPASSWORD_SUCCESS, null);
+                    }else if(mCallEntry == 9){
+                        //报单
+                        RxBus.getInstance().post(Constants.RxBusConst.RXBUS_DECLARATION_FORM_SETPASSWORD_SUCCESS, null);
+                    }else  if(mCallEntry == 10){
+                        //行情研判 买多
+                        RxBus.getInstance().post(Constants.RxBusConst.RXBUS_HQYP_BUY_MORE, null);
+                    }else if(mCallEntry == 11){
+                        //行情研判 卖空
+                        RxBus.getInstance().post(Constants.RxBusConst.RXBUS_HQYP_SALE_EMPTY, null);
+                    }else if(mCallEntry == 12){
+                        //行情研判 报单
+                        RxBus.getInstance().post(Constants.RxBusConst.RXBUS_HQYP_DECLARATION_FORM, null);
+                    }
                     finish();
                 } else {
                     if (mType == 1) {

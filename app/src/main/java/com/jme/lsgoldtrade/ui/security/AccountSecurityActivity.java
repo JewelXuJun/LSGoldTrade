@@ -18,7 +18,9 @@ import com.jme.lsgoldtrade.config.Constants;
 import com.jme.lsgoldtrade.databinding.ActivityAccountSecurityBinding;
 import com.jme.lsgoldtrade.domain.OnlineTimeVo;
 import com.jme.lsgoldtrade.domain.PasswordInfoVo;
+import com.jme.lsgoldtrade.domain.PasswordSettingVo;
 import com.jme.lsgoldtrade.service.ManagementService;
+import com.jme.lsgoldtrade.service.TradeService;
 import com.jme.lsgoldtrade.view.ConfirmSimplePopupwindow;
 
 import java.util.HashMap;
@@ -40,7 +42,6 @@ public class AccountSecurityActivity extends JMEBaseActivity {
         super.initView();
 
         initToolbar(R.string.personal_account_security, true);
-
         mConfirmSimplePopupwindow = new ConfirmSimplePopupwindow(this);
         mConfirmSimplePopupwindow.setOutsideTouchable(true);
         mConfirmSimplePopupwindow.setFocusable(true);
@@ -77,6 +78,7 @@ public class AccountSecurityActivity extends JMEBaseActivity {
 
         getUserPasswordSettingInfo();
         getUserOnlineTime();
+        whetherChangeLoginPwd();
     }
 
     private void getUserPasswordSettingInfo() {
@@ -85,6 +87,9 @@ public class AccountSecurityActivity extends JMEBaseActivity {
 
     private void getUserOnlineTime() {
         sendRequest(ManagementService.getInstance().getUserOnlineTime, new HashMap<>(), false);
+    }
+    private void whetherChangeLoginPwd() {
+        sendRequest(TradeService.getInstance().whetherChangeLoginPwd, new HashMap<>(), true);
     }
 
     @Override
@@ -136,6 +141,29 @@ public class AccountSecurityActivity extends JMEBaseActivity {
                 }
 
                 break;
+            case "WhetherChangeLoginPwd":
+                if (head.isSuccess()) {
+                    PasswordSettingVo passwordSettingVo;
+
+                    try {
+                        passwordSettingVo = (PasswordSettingVo) response;
+                    } catch (Exception e) {
+                        passwordSettingVo = null;
+
+                        e.printStackTrace();
+                    }
+
+                    String flag = passwordSettingVo.getFlag();
+
+                    if (TextUtils.isEmpty(flag) || flag.equals("N"))
+                        mBinding.layoutLoginPassword.setVisibility(View.VISIBLE);
+                    else
+                    mBinding.layoutLoginPassword.setVisibility(View.GONE);
+
+
+                }
+
+                break;
         }
     }
 
@@ -164,6 +192,10 @@ public class AccountSecurityActivity extends JMEBaseActivity {
 
         public void onClickOnlineDuration() {
             ARouter.getInstance().build(Constants.ARouterUriConst.ONLINEDURATION).navigation();
+        }
+
+        public void onClickLoginPassword(){
+            ARouter.getInstance().build(Constants.ARouterUriConst.SETLOGINPASSWORD).navigation();
         }
 
     }

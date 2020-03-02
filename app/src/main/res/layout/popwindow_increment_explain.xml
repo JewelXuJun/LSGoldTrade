@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    >
+    <data>
+        <variable
+            name="handlers"
+            type="com.jme.lsgoldtrade.ui.transaction.IncrementExplainPopUpWindow.ClickHandlers" />
+    </data>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/common_area_margin_tiny">
+
+            <LinearLayout
+                android:id="@+id/layout_cancel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_marginTop="10dp"
+                android:onClick="@{() -> handlers.onClickClose()}"
+                android:padding="@dimen/common_area_margin_tiny">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@mipmap/ic_close_blue" />
+
+            </LinearLayout>
+
+        </RelativeLayout>
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_marginTop="20dp"
+            android:layout_height="320dp">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                >
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/transaction_bind_increment_explain"
+                    android:textColor="#4d4d4d"
+                    android:textSize="@dimen/sp_14"
+                    />
+            </LinearLayout>
+
+
+        </androidx.core.widget.NestedScrollView>
+        <Button
+            android:id="@+id/btn_agreement_increment_pop"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:background="@drawable/bg_btn_blue_solid"
+            android:text="继续开通"
+            android:textColor="@color/white"
+            android:textSize="@dimen/common_font_size"
+            />
+        <TextView
+            android:id="@+id/tv_talk_later_pop"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/color_blue"
+            android:textSize="@dimen/sp_14"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="15dp"
+            android:text="以后再开通"
+            android:layout_marginBottom="21dp"
+            />
+    </LinearLayout>
+
+
+
+</layout>

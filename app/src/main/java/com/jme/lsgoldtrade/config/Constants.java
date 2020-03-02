@@ -16,7 +16,7 @@ public class Constants {
         public static final int SECURITY = 5;
         public static final int SECURITY_WAN = 6;
 
-        public static int Envi = PRODUCE;
+        public static int Envi = SECURITY_WAN;
 
         private HttpConst() {
 
@@ -163,6 +163,29 @@ public class Constants {
         public static final String RXBUS_INCREMENT_ARREARS = "incrementArrears";
         public static final String RXBUS_METAL_PAY = "metalPay";
         public static final String RXBUS_METAL_PAY_SUCCESS = "metalPaySuccess";
+        public static final String RXBUS_SELECT_BANK_CARD_SUCCESS = "selectBankCardSuccess";
+        public static final String RXBUS_INCREMENT_ARREARS2012 = "incrementArrears2012";
+        public static final String RXBUS_INCREMENT_ARREARS2013 = "incrementArrears2013";
+        public static final String RXBUS_INCREMENT_ARREARS2014 = "incrementArrears2014";
+        public static final String RXBUS_INCREMENT_ARREARS2015 = "incrementArrears2015";
+        public static final String RXBUS_INCREMENT_ARREARS2016 = "incrementArrears2016";
+        public static final String RXBUS_ZJHZ_SETPASSWORD = "zjhzSetpassword";
+        public static final String RXBUS_ZJHZ_SETPASSWORD_SUCCESS = "zjhzSetPasswordSuccess";
+        public static final String RXBUS_WDDY_SETPASSWORD  = "wddySetPassword";
+        public static final String RXBUS_WDDY_SETPASSWORD_SUCCESS  = "wddySetPasswordSuccess";
+        public static final String RXBUS_BUY_MORE_SETPASSWORD_SUCCESS  = "buyMoreSetPasswordSuccess";
+        public static final String RXBUS_SALE_EMPTY_SETPASSWORD_SUCCESS  = "saleEmptySetPasswordSuccess";
+        public static final String RXBUS_DECLARATION_FORM_SETPASSWORD_SUCCESS  = "declarationSetPasswordSuccess";
+        public static final String RXBUS_MAIN_PAGE_TRAIN_BOX_SETPASSWORD  = "mainPageTrainBoxSetPassword";
+        public static final String RXBUS_MAIN_PAGE_TRAIN_BOX_SETPASSWORD_SUCCESS  = "mainPageTrainBoxSetPasswordSuccess";
+        public static final String RXBUS_CJRL_SETPASSWORD  = "cjrlSetPassword";
+        public static final String RXBUS_CJRL_SETPASSWORD_SUCCESS  = "cjrlSetPasswordSuccess";
+        public static final String RXBUS_HQYP_SETPASSWORD  = "hqypSetPassword";
+        public static final String RXBUS_HQYP_SETPASSWORD_SUCCESS  = "hqypSetPasswordSuccess";
+        public static final String RXBUS_PERSON_WDDY_SETPASSWORD_SUCCESS  = "personWddySetPasswordSuccess";
+        public static final String RXBUS_HQYP_BUY_MORE = "hqypBuyMore";
+        public static final String RXBUS_HQYP_SALE_EMPTY = "hqypSaleEmpty";
+        public static final String RXBUS_HQYP_DECLARATION_FORM = "hqypDeclarationForm";
     }
 
     public static final class Msg {
@@ -184,6 +207,7 @@ public class Constants {
         public static final int MSG_JUDGEMENT_UPDATE_DATA = 10;
         public static final int MSG_JUDGEMENT_RELOAD_DATA = 11;
         public static final int MSG_UARNING_PDATE_DATA = 12;
+        public static final int MSG_WXXCX = 13;
 
     }
 
@@ -263,6 +287,8 @@ public class Constants {
         public static final String UNLOCKTRADINGPASSWORD = "/TransactionFragment/UnlockTradingPasswordActivity";
         public static final String CONDITIONSHEET = "/TransactionFragment/ConditionSheetActivity";
         public static final String METAL = "/JMEBase/MetalActivity";
+        public static final String SELECTBANKCARD = "/Personal/SelectBankCardActivity";
+        public static final String OPENINCREMENT = "/Personal/OpenIncrementActivity";
     }
 
     public static final long SPLASH_DELAY_MILLIS = 2000;

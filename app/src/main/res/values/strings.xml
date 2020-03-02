@@ -364,16 +364,23 @@
     <string name="transaction_business_aggrement">《业务服务协议》</string>
     <string name="transaction_business_aggrement_title">业务服务协议</string>
     <string name="transaction_bind_account">账号绑定</string>
+    <string name="transaction_bind_account_increment_agreement">我已阅读《增值服务协议》，同意开通增值服务。</string>
     <string name="transaction_bind">立即绑定</string>
     <string name="transaction_bind_success">恭喜您已绑定成功！</string>
     <string name="transaction_bind_success_time">%1$s秒后自动关闭</string>
     <string name="transaction_about_amount">约可交易手数</string>
     <string name="transaction_metal">实物贵金属</string>
+    <string name="transaction_bind_increment_explain">&#160;&#160;增值服务是泰金所平台提供的特色服务，包括交易匣子、委托风控、止盈止损、条件单等产品服务以及后期推出的其他增值服务。\n\n
+    &#160;&#160;(1）交易匣子服务是为用户提供的优质场景化服务，使用交易匣子您有机会把握非农/国际重要指标带来的交易机会。在可能影响贵金属现货递延产品价格的国内外重大数据公布时，黄金分析师发布交易匣子，您可以自主选择是否参考分析师建议独立作出交易决策，实现一键预埋，在触发条件时系统根据您的交易决策执行指令。\n\n
+        &#160;&#160;(2）条件单服务是您在使用泰金所软件进行贵金属现货竞价交易时，可以提前设置包含多空方向、建仓价格、交易手数的建仓指令。市场行情达到您自主设置的建仓价格时，系统将以市价FAK的方式进行建仓操作。\n\n
+        &#160;&#160;(3）止盈止损服务是您在使用泰金所软件进行贵金属现货竞价交易时，针对已经持仓的交易，自主进行止盈价格、止损价格、手数、时效性的设置，市场行情在触发您自主设置的止盈价格、止损价格时，系统将根据您的委托指令以市价FAK的报单方式进行平仓操作。\n\n
+        &#160;&#160;(4）委托风控服务是为您提供的风险控制功能，您可以通过泰金所交易软件预先自主设定保底资金金额，系统将实时监控您的风险率，当风险率触发设定的预警线或平仓线时，系统将限制您开仓或者发起平仓指令，防止您产生超预期亏损，及时保障您的资金权益。
+    </string>
 
     <!-- Personal -->
     <string name="personal_login">登录/注册</string>
     <string name="personal_login_message">马上登录享受更多服务</string>
-    <string name="personal_account_security">账号信息与交易安全管理</string>
+    <string name="personal_account_security">账户管理</string>
     <string name="personal_open_account">免费开户</string>
     <string name="personal_increment">我的增值服务</string>
     <string name="personal_customer_service">在线客服</string>
@@ -438,6 +445,7 @@
     <string name="security_tjs_account">泰金所交易账号</string>
     <string name="security_trading_password_setting">设置交易密码</string>
     <string name="security_trading_password_modify">修改交易密码</string>
+    <string name="security_login_password_modify">登录密码设置</string>
     <string name="security_login_fingerprint">指纹登录</string>
     <string name="security_login_gesture">手势登录</string>
     <string name="security_online_duration">在线时长</string>
@@ -447,6 +455,7 @@
     <string name="security_enable_fail">验证失败，未能开启指纹登录</string>
     <string name="security_account_security_tips">该交易账号是用于您在泰金所APP或者PC客户端登录的交易账号</string>
     <string name="security_password">登录密码</string>
+    <string name="security_identity_tx">身份证号</string>
     <string name="security_password_input">请输入6位数字交易密码</string>
     <string name="security_password_input_confirm">请再次输入6位数字交易密码</string>
     <string name="security_password_setting_success">交易密码设置成功！</string>
@@ -491,6 +500,7 @@
     <string name="login_title">登录</string>
     <string name="login_account_hint">输入您的交易账号/手机号</string>
     <string name="login_password_hint">输入您的登录密码</string>
+    <string name="login_password_authentic_hint">输入您的身份证号</string>
     <string name="login_img_verify_code_hint">输入图形验证码</string>
     <string name="login_account_error">请输入正确的交易账号</string>
     <string name="login_password_error">请输入正确的交易密码</string>
@@ -502,6 +512,7 @@
     <string name="login_verification_code_unget">您还没有获取验证码</string>
     <string name="login_verification_code_error">请输入6位验证码</string>
     <string name="login_mobile">使用手机验证码登录</string>
+    <string name="login_account_text_describe">若您尚未设置登录密码，可使用手机号验证码登录后在泰金所APP—我的账户管理进行登录密码设置。</string>
     <string name="login_account">使用账号密码登录</string>
     <string name="login_register">还没有账号？立即开户</string>
     <string name="login_success">登录成功</string>
@@ -657,6 +668,7 @@
     <string name="increment_money">金额(元)</string>
     <string name="increment_account_detail">账户明细</string>
     <string name="increment_mine">我的增值服务</string>
+    <string name="increment_agreement">增值服务协议</string>
     <string name="increment_recharge">充值</string>
     <string name="increment_withdrawal">提现</string>
     <string name="increment_bankcard">我的银行卡</string>
@@ -667,7 +679,9 @@
     <string name="increment_account_pay_money">支付%1$s元</string>
     <string name="increment_account_pay_title">支付</string>
     <string name="increment_account_withhold_contract">代扣签约</string>
-    <string name="increment_account_withhold_contract_bankcard_hint">暂只支持借记卡</string>
+    <string name="increment_account_withhold_change_bank">变更银行卡</string>
+    <string name="increment_account_withhold_contract_bankcard_hint">请输入您的银行储蓄卡卡号</string>
+    <string name="increment_account_withhold_contract_bankcard_gh_hint">请输入您开户时预留的工行储蓄卡卡号</string>
     <string name="increment_account_withhold_contract_bank_name">银行名称</string>
     <string name="increment_account_withhold_contract_mobile">预留手机号</string>
     <string name="increment_account_withhold_contract_mobile_hint">请输入银行预留手机号</string>
@@ -686,7 +700,29 @@
     <string name="increment_aggrement">本人已认真阅读并完全理解《广东华兴银行代扣协议书（三方）》，同意接受协议条款。</string>
     <string name="increment_aggrement_message">请先阅读并勾选《广东华兴银行代扣协议书》</string>
     <string name="increment_arrears">您当前有服务费未缴纳，请结清后再使用该服务</string>
+    <string name="increment_arrears_minimalism">您当前有服务费未缴纳，请您先结清费用再开通增值服务。</string>
+    <string name="increment_arrears_pay">您当前有服务费未缴纳，您可以主动结清费用后再使用，或者关闭增值服务后进行交易。</string>
+    <string name="increnemt_later_stage_dialog">您当前尚未开通增值服务，请开通后再使用该功能。</string>
+    <string name="increment_arrears_pay_close_increment">关闭增值服务</string>
     <string name="increment_sign_immediately">立即签约</string>
     <string name="increment_trade_message">更多增值服务，请前往交易使用。</string>
+    <string name="close_increment_pop">若您关闭增值服务，您将无法继续使用平台提供的以下服务:\n\n1.交易匣子\n\n2.委托风控\n\n3.止盈止损\n\n4.条件单\n\n
+    且平台将不再为您提供以上增值服务。\n\n申请关闭增值服务后，平台将对您的申请进行审核，审核通过后方能视为关闭生效，若审核失败，则视为未关闭增值服务；审核期间若您发生交易仍然会收取服务费。\n\n
+    请您再次确认是否继续关闭增值服务？</string>
+    <string name="close_increment_pop_cancel">取消</string>
+    <string name="close_increment_pop_sure">确定</string>
+    <string name="stock_user_pop_tx">尊敬的用户您好，平台最新推出了交易匣子、条件单、止盈止损等增值功能，您可前往开通增值服务后使用。</string>
+
+    <!--选择银行卡-->
+    <string name="select_bank_card_title">请选择银行</string>
+    <string name="select_bank_card_default">（推荐）</string>
+
+    <!--开通增值服务-->
+    <string name="open_increment_title">开通增值服务</string>
+    <string name="open_increment_btn">立即开通</string>
+    <string name="open_increment_dialog_btn">确定</string>
+
+    <!--更改银行卡-->
+    <string name="change_bind_bank_toast">更改成功</string>
 
 </resources>

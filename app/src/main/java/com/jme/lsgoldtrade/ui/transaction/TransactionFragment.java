@@ -9,7 +9,10 @@ import android.text.TextUtils;
 import android.text.method.LinkMovementMethod;
 import android.text.style.ClickableSpan;
 import android.text.style.ForegroundColorSpan;
+import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
 
 import androidx.core.content.ContextCompat;
 import androidx.core.hardware.fingerprint.FingerprintManagerCompat;
@@ -29,6 +32,7 @@ import com.jme.lsgoldtrade.domain.IdentityInfoVo;
 import com.jme.lsgoldtrade.domain.PasswordInfoVo;
 import com.jme.lsgoldtrade.service.ManagementService;
 import com.jme.lsgoldtrade.service.TradeService;
+import com.jme.lsgoldtrade.view.StockUserDialog;
 
 import java.util.HashMap;
 
@@ -45,6 +49,7 @@ public class TransactionFragment extends JMEBaseFragment {
 
     private TabViewPagerAdapter mAdapter;
     private Subscription mRxBus;
+    private StockUserDialog mStockUserDialog;
 
     @Override
     protected int getContentViewId() {
@@ -121,6 +126,7 @@ public class TransactionFragment extends JMEBaseFragment {
         mBinding.tabViewpager.removeAllViewsInLayout();
         mBinding.tabViewpager.setAdapter(mAdapter);
         mBinding.tablayout.setupWithViewPager(mBinding.tabViewpager);
+
     }
 
     private void initRxBus() {
@@ -132,6 +138,9 @@ public class TransactionFragment extends JMEBaseFragment {
 
             switch (callType) {
                 case Constants.RxBusConst.RXBUS_LOGIN_SUCCESS:
+                    if(mBinding.layoutNoLogin.getVisibility()==View.VISIBLE&&isOpenStockUser()){
+                        showStockUserDialog();
+                    }
                     setLayout();
 
                     break;
@@ -290,7 +299,8 @@ public class TransactionFragment extends JMEBaseFragment {
     }
 
     public class ClicKHandlers {
-
+        private long mLastClickTime;
+        private long timeInterval = 1000L;
         public void onClickNews() {
             if (null == mUser || !mUser.isLogin())
                 gotoLogin();
@@ -307,33 +317,52 @@ public class TransactionFragment extends JMEBaseFragment {
         }
 
         public void onClickOpenAccountFree() {
-            if (null == mUser || !mUser.isLogin())
-                gotoLogin();
-            else
-                ARouter.getInstance()
-                        .build(Constants.ARouterUriConst.AUTHENTICATION)
-                        .withString("Type", "1")
-                        .navigation();
+
+            long nowTime = System.currentTimeMillis();
+            if(nowTime-mLastClickTime>timeInterval) {
+                mLastClickTime = nowTime;
+                if (null == mUser || !mUser.isLogin())
+                    gotoLogin();
+                else
+                    ARouter.getInstance()
+                            .build(Constants.ARouterUriConst.AUTHENTICATION)
+                            .withString("Type", "1")
+                            .navigation();
+
+            }
         }
 
         public void onClickBind() {
-            if (null == mUser || !mUser.isLogin())
-                gotoLogin();
-            else
-                getWhetherIdCard();
+            long nowTime = System.currentTimeMillis();
+            if(nowTime-mLastClickTime>timeInterval) {
+                mLastClickTime = nowTime;
+
+                if (null == mUser || !mUser.isLogin())
+                    gotoLogin();
+                else
+                    getWhetherIdCard();
+
+            }
         }
 
     }
 
     private class TextClick extends ClickableSpan {
+        private long mLastClickTime;
+        private long timeInterval = 1000L;
+
 
         @Override
         public void onClick(View widget) {
-            ARouter.getInstance()
-                    .build(Constants.ARouterUriConst.JMEWEBVIEW)
-                    .withString("title", mContext.getResources().getString(R.string.transaction_open_account_course_title))
-                    .withString("url", Constants.HttpConst.URL_OPEN_ACCOUNT_COURSE)
-                    .navigation();
+            long nowTime = System.currentTimeMillis();
+            if (nowTime - mLastClickTime > timeInterval) {
+                mLastClickTime = nowTime;
+                ARouter.getInstance()
+                        .build(Constants.ARouterUriConst.JMEWEBVIEW)
+                        .withString("title", mContext.getResources().getString(R.string.transaction_open_account_course_title))
+                        .withString("url", Constants.HttpConst.URL_OPEN_ACCOUNT_COURSE)
+                        .navigation();
+            }
         }
 
         @Override
@@ -348,6 +377,34 @@ public class TransactionFragment extends JMEBaseFragment {
 
         if (!mRxBus.isUnsubscribed())
             mRxBus.unsubscribe();
+    }
+
+    private void showStockUserDialog() {
+        if (isFinishing)
+            return;
+
+        if (!isForeground())
+            return;
+
+        if (null == mStockUserDialog)
+            mStockUserDialog = new StockUserDialog(mContext);
+
+        if (!mStockUserDialog.isShowing()) {
+            mStockUserDialog.show();
+            DisplayMetrics dm = new DisplayMetrics();
+            mActivity.getWindowManager().getDefaultDisplay().getMetrics(dm);
+            WindowManager.LayoutParams lp = mStockUserDialog.getWindow().getAttributes();
+            lp.width = (int) (dm.widthPixels*0.75); //设置宽度
+            mStockUserDialog.getWindow().setAttributes(lp);
+
+        }
+    }
+    private boolean isOpenStockUser(){
+        if(!TextUtils.isEmpty(mUser.getAccountID())&&mUser.getCurrentUser()!=null&&mUser.getCurrentUser().getIsOpen()!=null&&"-2017".equals(mUser.getCurrentUser().getIsOpen())){
+            return true;
+        }else{
+            return false;
+        }
     }
 
 }

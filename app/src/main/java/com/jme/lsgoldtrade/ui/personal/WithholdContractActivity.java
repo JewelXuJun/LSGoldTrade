@@ -9,11 +9,15 @@ import android.text.TextPaint;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.text.method.LinkMovementMethod;
+import android.text.style.AbsoluteSizeSpan;
 import android.text.style.ClickableSpan;
 import android.text.style.ForegroundColorSpan;
+import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 
 import androidx.core.content.ContextCompat;
@@ -35,11 +39,14 @@ import com.jme.lsgoldtrade.service.TradeService;
 import com.jme.lsgoldtrade.service.WithholdAccountService;
 import com.jme.lsgoldtrade.util.ValueUtils;
 import com.jme.lsgoldtrade.view.BankPopUpWindow;
+import com.jme.lsgoldtrade.view.IncrementAlertDialog;
 import com.jme.lsgoldtrade.view.WithholdMessagePopUpWindow;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+
+import rx.Subscription;
 
 @Route(path = Constants.ARouterUriConst.WITHHOLDCONTRACT)
 public class WithholdContractActivity extends JMEBaseActivity {
@@ -56,6 +63,10 @@ public class WithholdContractActivity extends JMEBaseActivity {
     private BankPopUpWindow mBankPopUpWindow;
     private WithholdMessagePopUpWindow mWithholdMessagePopUpWindow;
     private JMECountDownTimer mCountDownTimer;
+    private boolean isChangeBank = false;
+    private boolean isBindAccount = false;
+    private IncrementAlertDialog mWithholdAlertDialog;
+    private Subscription mRxbus;
 
     @Override
     protected int getContentViewId() {
@@ -66,7 +77,24 @@ public class WithholdContractActivity extends JMEBaseActivity {
     protected void initView() {
         super.initView();
 
-        initToolbar(R.string.increment_account_withhold_contract, true);
+
+        isChangeBank = getIntent().getBooleanExtra("isChangeBank",false);
+        isBindAccount = getIntent().getBooleanExtra("isBindAccount",false);
+        if(isChangeBank) {
+            initToolbar(R.string.increment_account_withhold_change_bank, true);
+            mBinding.btnWithholdContractCommit.setText("变更");
+            mBinding.tvWithholdContractDescribe.setVisibility(View.INVISIBLE);
+            mBinding.llWithholdSelectBank.setVisibility(View.VISIBLE);
+            mBinding.checkboxAgree.setChecked(true);
+            mBinding.etBankCard.setHint(R.string.increment_account_withhold_contract_bankcard_hint);
+        }else{
+            initToolbar(R.string.increment_account_withhold_contract, true);
+            mBinding.btnWithholdContractCommit.setText("立即开通");
+            mBinding.tvWithholdContractDescribe.setVisibility(View.VISIBLE);
+            mBinding.llWithholdSelectBank.setVisibility(View.GONE);
+            mBinding.checkboxAgree.setChecked(false);
+            mBinding.etBankCard.setHint(R.string.increment_account_withhold_contract_bankcard_gh_hint);
+        }
 
         setAggrementMessage();
     }
@@ -76,6 +104,10 @@ public class WithholdContractActivity extends JMEBaseActivity {
         super.initData(savedInstanceState);
 
         mResource = getIntent().getStringExtra("Resource");
+        String bankName = getIntent().getStringExtra("bankName");
+        if(!TextUtils.isEmpty(bankName)){
+            mBinding.tvBankName.setText(bankName);
+        }
 
         mBankPopUpWindow = new BankPopUpWindow(this);
 
@@ -87,40 +119,43 @@ public class WithholdContractActivity extends JMEBaseActivity {
                 mBinding.btnVerificationCode, getString(R.string.transaction_get_verification_code));
 
         getWhetherIdCard();
-        getBanks("");
+
+
+//        getBanks("");
     }
 
     @Override
     protected void initListener() {
         super.initListener();
 
-        mBinding.etBankCard.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence value, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence value, int start, int before, int count) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-                String bankCard = editable.toString();
-
-                if (TextUtils.isEmpty(bankCard)) {
-                    mBinding.tvBankName.setText("");
-                } else {
-                    int length = bankCard.length();
-
-                    if (length >= 6)
-                        getBanks(bankCard);
-                    else if (length < 6)
-                        mBinding.tvBankName.setText("");
-                }
-            }
-        });
+//        mBinding.etBankCard.addTextChangedListener(new TextWatcher() {
+//            @Override
+//            public void beforeTextChanged(CharSequence value, int start, int count, int after) {
+//
+//            }
+//
+//            @Override
+//            public void onTextChanged(CharSequence value, int start, int before, int count) {
+//
+//            }
+//
+//            @Override
+//            public void afterTextChanged(Editable editable) {
+//                String bankCard = editable.toString();
+//
+//                if (TextUtils.isEmpty(bankCard)) {
+//                    mBinding.tvBankName.setText("");
+//                } else {
+//                    int length = bankCard.length();
+//
+//                    if (length >= 6)
+//                        getBanks(bankCard);
+//                    else if (length < 6)
+//                        mBinding.tvBankName.setText("");
+//                }
+//            }
+//        });
+        initRxBus();
     }
 
     @Override
@@ -131,12 +166,32 @@ public class WithholdContractActivity extends JMEBaseActivity {
         mBinding.setHandlers(new ClickHandlers());
     }
 
+    private void initRxBus() {
+        mRxbus = RxBus.getInstance().toObserverable(RxBus.Message.class).subscribe(message -> {
+            String callType = message.getObject().toString();
+
+            if (TextUtils.isEmpty(callType))
+                return;
+
+            switch (callType) {
+                case Constants.RxBusConst.RXBUS_SELECT_BANK_CARD_SUCCESS:
+                    Object object = message.getObject2();
+
+                    if (null == object)
+                        return;
+
+                    mBinding.tvBankName.setText(object.toString());
+                    break;
+            }
+        });
+    }
+
     private void setAggrementMessage() {
         SpannableString spannableString = new SpannableString(getResources().getString(R.string.increment_aggrement));
         spannableString.setSpan(new ForegroundColorSpan(ContextCompat.getColor(mContext, R.color.color_blue_deep)),
                 12, 29, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         spannableString.setSpan(new TextClick(), 12, 29, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-
+        spannableString.setSpan(new AbsoluteSizeSpan(10, true), 12, 29, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         mBinding.tvAggrement.setMovementMethod(LinkMovementMethod.getInstance());
         mBinding.tvAggrement.setText(spannableString);
     }
@@ -176,8 +231,24 @@ public class WithholdContractActivity extends JMEBaseActivity {
         params.put("acNo", bankCard);
         params.put("mobile", mobile);
         params.put("validateCode", verifyCode);
+        params.put("acBankName",mBinding.tvBankName.getText().toString());
+        if(isBindAccount)
+            params.put("openType", "1");
+        else
+            params.put("openType", "2");
 
-        sendRequest(WithholdAccountService.getInstance().sign, params, true);
+        sendRequest(WithholdAccountService.getInstance().sign, params, true,false,false);
+    }
+
+    private void changeBankCard(String bankCard, String mobile, String verifyCode) {
+        HashMap<String, String> params = new HashMap<>();
+
+        params.put("acNo", bankCard);
+        params.put("mobile", mobile);
+        params.put("validateCode", verifyCode);
+        params.put("acBankName",mBinding.tvBankName.getText().toString());
+
+        sendRequest(WithholdAccountService.getInstance().changeSignBankCard, params, true,false,false);
     }
 
     @Override
@@ -252,7 +323,7 @@ public class WithholdContractActivity extends JMEBaseActivity {
                     if (null != mWithholdMessagePopUpWindow && !mWithholdMessagePopUpWindow.isShowing()) {
                         mWithholdMessagePopUpWindow.setData(getResources().getString(R.string.increment_account_withhold_success),
                                 (view) -> {
-                                    mUser.getCurrentUser().setIsSign("Y");
+//                                    mUser.getCurrentUser().setIsSign("Y");
                                     mWithholdMessagePopUpWindow.dismiss();
 
                                     if (mResource.equals("Trade")) {
@@ -264,8 +335,38 @@ public class WithholdContractActivity extends JMEBaseActivity {
                                 });
                         mWithholdMessagePopUpWindow.showAtLocation(mBinding.tvName, Gravity.CENTER, 0, 0);
                     }
+                }else{
+                    if("1001".equals(head.getCode())) {
+                        showWithholdAlertDialog("请您确认填写的信息是否准确，稍后再尝试。", (v) -> {
+                            mBinding.llWithholdSelectBank.setVisibility(View.VISIBLE);
+                            if (TextUtils.isEmpty(mBinding.tvBankName.getText().toString())) {
+                                mBinding.tvBankName.setText("工商银行");
+                                mBinding.etBankCard.setHint(R.string.increment_account_withhold_contract_bankcard_hint);
+                            }
+                            mWithholdAlertDialog.dismiss();
+                        });
+                    }else{
+                        showShortToast(head.getMsg());
+                    }
                 }
 
+                break;
+            case "changeSignBankCard":
+                if (head.isSuccess()) {
+//                    showShortToast(R.string.change_bind_bank_toast);
+                    showWithholdAlertDialog("变更成功",(v)->{
+                        mWithholdAlertDialog.dismiss();
+                        finish();
+                    });
+                }else{
+                    if("1001".equals(head.getCode())) {
+                        showWithholdAlertDialog("请您确认填写的信息是否准确，稍后再尝试。", (v) -> {
+                            mWithholdAlertDialog.dismiss();
+                        });
+                    }else{
+                        showShortToast(head.getMsg());
+                    }
+                }
                 break;
         }
     }
@@ -275,10 +376,15 @@ public class WithholdContractActivity extends JMEBaseActivity {
         public void onClickBankList() {
             hiddenKeyBoard();
 
-            if (null != mBankPopUpWindow && !mBankPopUpWindow.isShowing()) {
-                mBankPopUpWindow.setData(mBankVoList);
-                mBankPopUpWindow.showAtLocation(mBinding.tvBankName, Gravity.CENTER, 0, 0);
-            }
+//            if (null != mBankPopUpWindow && !mBankPopUpWindow.isShowing()) {
+//                mBankPopUpWindow.setData(mBankVoList);
+//                mBankPopUpWindow.showAtLocation(mBinding.tvBankName, Gravity.CENTER, 0, 0);
+//            }
+
+            ARouter.getInstance().build(Constants.ARouterUriConst.SELECTBANKCARD)
+                    .withString("bankName",mBinding.tvBankName.getText().toString())
+                    .navigation();
+
         }
 
         public void onClickGetVerificationCode() {
@@ -304,22 +410,27 @@ public class WithholdContractActivity extends JMEBaseActivity {
             String mobile = mBinding.etMobile.getText().toString();
             String verifyCode = mBinding.etVerifyCode.getText().toString();
 
-            if (TextUtils.isEmpty(mName) || TextUtils.isEmpty(mIDCard))
+            if (TextUtils.isEmpty(mName) || TextUtils.isEmpty(mIDCard)) {
                 showShortToast(R.string.increment_identity_information_error);
-            else if (TextUtils.isEmpty(bankCard))
+            }else if (TextUtils.isEmpty(bankCard)) {
                 showShortToast(R.string.increment_bank_card_input);
-            else if (bankCard.length() < 13)
+            }else if (bankCard.length() < 13){
                 showShortToast(R.string.increment_bank_card_input);
-            else if (!ValueUtils.isPhoneNumber(mobile))
+            }else if (!ValueUtils.isPhoneNumber(mobile)) {
                 showShortToast(R.string.login_mobile_error);
-            else if (!bFlag)
+            }else if (!bFlag) {
                 showShortToast(R.string.login_verification_code_unget);
-            else if (verifyCode.length() < 6)
+            }else if (verifyCode.length() < 6) {
                 showShortToast(R.string.login_verification_code_error);
-            else if (!mBinding.checkboxAgree.isChecked())
+            }else if (!mBinding.checkboxAgree.isChecked()) {
                 showShortToast(R.string.increment_aggrement_message);
-            else
-                sign(mName, mIDCard, bankCard, mobile, verifyCode);
+            }else {
+                if(isChangeBank){
+                    changeBankCard(bankCard, mobile, verifyCode);
+                }else {
+                    sign(mName, mIDCard, bankCard, mobile, verifyCode);
+                }
+            }
         }
 
     }
@@ -337,6 +448,9 @@ public class WithholdContractActivity extends JMEBaseActivity {
 
         if (null != mCountDownTimer)
             mCountDownTimer.cancel();
+
+        if (!mRxbus.isUnsubscribed())
+            mRxbus.unsubscribe();
     }
 
     @Override
@@ -362,6 +476,25 @@ public class WithholdContractActivity extends JMEBaseActivity {
         @Override
         public void updateDrawState(TextPaint ds) {
             ds.setUnderlineText(false);
+        }
+    }
+
+    private void showWithholdAlertDialog(String tx, View.OnClickListener click) {
+        if (isFinishing)
+            return;
+
+//        if (null == mWithholdAlertDialog)
+            mWithholdAlertDialog = new IncrementAlertDialog(mContext,tx,click);
+
+        if (!mWithholdAlertDialog.isShowing()) {
+            mWithholdAlertDialog.show();
+
+            DisplayMetrics dm = new DisplayMetrics();
+            getWindowManager().getDefaultDisplay().getMetrics(dm);
+            WindowManager.LayoutParams lp = mWithholdAlertDialog.getWindow().getAttributes();
+            lp.width = (int) (dm.widthPixels*0.75); //设置宽度
+            mWithholdAlertDialog.getWindow().setAttributes(lp);
+
         }
     }
 
