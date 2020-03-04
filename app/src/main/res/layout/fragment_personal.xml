@@ -169,7 +169,8 @@
                     android:layout_height="@dimen/height_item_normal"
                     android:onClick="@{() -> handlers.onClickIncrement()}"
                     android:paddingLeft="@dimen/common_area_margin_big"
-                    android:paddingRight="@dimen/common_area_margin">
+                    android:paddingRight="@dimen/common_area_margin"
+                    android:visibility="gone">
 
                     <ImageView
                         android:id="@+id/img_increment"

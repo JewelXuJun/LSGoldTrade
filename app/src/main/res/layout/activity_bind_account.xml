@@ -198,6 +198,7 @@
                     android:text="@string/transaction_soft_aggrement"
                     android:textColor="@color/color_blue_deep"
                     android:textSize="10sp" />
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -221,13 +222,16 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:layout_marginBottom="@dimen/common_area_margin_big"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:visibility="gone">
+
                 <CheckBox
                     android:id="@+id/checkbox_increment_agree"
                     style="@style/CustomPayCheckBoxTheme"
                     android:layout_width="@dimen/icon_checkbox"
                     android:layout_height="@dimen/icon_checkbox"
                     android:gravity="center_vertical" />
+
                 <TextView
                     android:id="@+id/tv_increment_agree"
                     android:layout_width="wrap_content"

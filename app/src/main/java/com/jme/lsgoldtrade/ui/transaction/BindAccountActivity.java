@@ -9,7 +9,6 @@ import android.text.method.LinkMovementMethod;
 import android.text.style.AbsoluteSizeSpan;
 import android.text.style.ClickableSpan;
 import android.text.style.ForegroundColorSpan;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.TextView;
@@ -51,7 +50,8 @@ public class BindAccountActivity extends JMEBaseActivity {
     private String mIDCard;
     private boolean bFlag = false;
     private boolean bAgreeFlag = true;
-    private boolean isbAgreeIncrementFlag = true;
+//    private boolean isbAgreeIncrementFlag = true;
+
     private IncrementExplainPopUpWindow mIncrementExplainPopUpWindow;
 
     @Override
@@ -66,8 +66,9 @@ public class BindAccountActivity extends JMEBaseActivity {
         initToolbar(R.string.transaction_bind_account, true);
 
         mBinding.checkboxAgree.setChecked(true);
-        mBinding.checkboxIncrementAgree.setChecked(true);
-        setAggrementMessage();
+//        mBinding.checkboxIncrementAgree.setChecked(true);
+
+//        setAggrementMessage();
     }
 
     @Override
@@ -93,7 +94,7 @@ public class BindAccountActivity extends JMEBaseActivity {
         super.initListener();
 
         mBinding.checkboxAgree.setOnCheckedChangeListener((compoundButton, isChecked) -> bAgreeFlag = isChecked);
-        mBinding.checkboxIncrementAgree.setOnCheckedChangeListener((compoundButton,isChecked) ->isbAgreeIncrementFlag = isChecked);
+//        mBinding.checkboxIncrementAgree.setOnCheckedChangeListener((compoundButton, isChecked) -> isbAgreeIncrementFlag = isChecked);
     }
 
     @Override
@@ -238,14 +239,14 @@ public class BindAccountActivity extends JMEBaseActivity {
 
                     RxBus.getInstance().post(Constants.RxBusConst.RXBUS_BIND_SUCCESS, null);
 
-//                    whetherChangeLoginPwd();
-                    if(isbAgreeIncrementFlag){
+                   /* if (isbAgreeIncrementFlag) {
                         ARouter.getInstance()
                                 .build(Constants.ARouterUriConst.WITHHOLDCONTRACT)
                                 .withString("Resource", "Trade")
-                                .withBoolean("isBindAccount",true)
+                                .withBoolean("isBindAccount", true)
                                 .navigation();
-                    }
+                    }*/
+
                     finish();
 
                 }
@@ -342,6 +343,7 @@ public class BindAccountActivity extends JMEBaseActivity {
         if (null != mCountDownTimer)
             mCountDownTimer.cancel();
     }
+
     private class TextClick1 extends ClickableSpan {
 
         @Override
@@ -367,14 +369,16 @@ public class BindAccountActivity extends JMEBaseActivity {
         @Override
         public void onClick(View widget) {
             avoidHintColor(widget);
+
             if (null != mIncrementExplainPopUpWindow && !mIncrementExplainPopUpWindow.isShowing()) {
-                mIncrementExplainPopUpWindow.setData((agreement)->{
+                mIncrementExplainPopUpWindow.setData((agreement) -> {
                     mBinding.checkboxIncrementAgree.setChecked(true);
                     mIncrementExplainPopUpWindow.dismiss();
-                },(later)->{
+                }, (later) -> {
                     mBinding.checkboxIncrementAgree.setChecked(false);
                     mIncrementExplainPopUpWindow.dismiss();
                 });
+
                 mIncrementExplainPopUpWindow.showAtLocation(mBinding.getRoot(), Gravity.CENTER, 0, 0);
             }
         }
@@ -385,9 +389,10 @@ public class BindAccountActivity extends JMEBaseActivity {
             ds.clearShadowLayer();
         }
     }
-    private void avoidHintColor(View view){
-        if(view instanceof TextView)
-            ((TextView)view).setHighlightColor(getResources().getColor(android.R.color.transparent));
+
+    private void avoidHintColor(View view) {
+        if (view instanceof TextView)
+            ((TextView) view).setHighlightColor(getResources().getColor(android.R.color.transparent));
     }
 
 }
