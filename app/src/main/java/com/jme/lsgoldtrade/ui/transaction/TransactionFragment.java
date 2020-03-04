@@ -318,7 +318,7 @@ public class TransactionFragment extends JMEBaseFragment {
         }
 
         public void onClickOpenAccountFree() {
-            long nowTime = System.currentTimeMillis();
+           /* long nowTime = System.currentTimeMillis();
 
             if (nowTime - mLastClickTime > timeInterval) {
                 mLastClickTime = nowTime;
@@ -330,8 +330,12 @@ public class TransactionFragment extends JMEBaseFragment {
                             .build(Constants.ARouterUriConst.AUTHENTICATION)
                             .withString("Type", "1")
                             .navigation();
+            }*/
 
-            }
+            ARouter.getInstance()
+                    .build(Constants.ARouterUriConst.OPENACCOUNTCHANNEL)
+                    .withString("Type", "1")
+                    .navigation();
         }
 
         public void onClickBind() {

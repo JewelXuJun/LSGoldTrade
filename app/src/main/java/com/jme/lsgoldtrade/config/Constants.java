@@ -289,6 +289,7 @@ public class Constants {
         public static final String METAL = "/JMEBase/MetalActivity";
         public static final String SELECTBANKCARD = "/Personal/SelectBankCardActivity";
         public static final String OPENINCREMENT = "/Personal/OpenIncrementActivity";
+        public static final String OPENACCOUNTCHANNEL = "/TransactionFragment/OpenAccountChannelActivity";
     }
 
     public static final long SPLASH_DELAY_MILLIS = 2000;
