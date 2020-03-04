@@ -232,10 +232,12 @@
                                 <LinearLayout
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
+                                    android:layout_marginBottom="@dimen/common_area_margin_tiny"
                                     android:background="@color/white"
                                     android:orientation="horizontal"
                                     android:paddingTop="@dimen/common_page_margin"
-                                    android:paddingBottom="@dimen/common_area_margin">
+                                    android:paddingBottom="@dimen/common_area_margin"
+                                    android:visibility="gone">
 
                                     <LinearLayout
                                         android:layout_width="match_parent"
@@ -343,7 +345,6 @@
                                 <LinearLayout
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:layout_marginTop="@dimen/common_area_margin_tiny"
                                     android:background="@color/white"
                                     android:orientation="horizontal"
                                     android:paddingLeft="@dimen/common_page_padding"
@@ -403,7 +404,8 @@
                                         android:layout_weight="1"
                                         android:gravity="center_horizontal"
                                         android:onClick="@{() -> handlers.onClickEntrustRiskManagement()}"
-                                        android:orientation="vertical">
+                                        android:orientation="vertical"
+                                        android:visibility="gone">
 
                                         <ImageView
                                             android:layout_width="wrap_content"
