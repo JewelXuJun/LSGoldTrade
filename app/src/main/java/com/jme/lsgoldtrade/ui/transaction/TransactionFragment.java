@@ -138,7 +138,7 @@ public class TransactionFragment extends JMEBaseFragment {
 
             switch (callType) {
                 case Constants.RxBusConst.RXBUS_LOGIN_SUCCESS:
-                    if(mBinding.layoutNoLogin.getVisibility()==View.VISIBLE&&isOpenStockUser()){
+                    if (mBinding.layoutNoLogin.getVisibility() == View.VISIBLE && isOpenStockUser()) {
                         showStockUserDialog();
                     }
                     setLayout();
@@ -301,6 +301,7 @@ public class TransactionFragment extends JMEBaseFragment {
     public class ClicKHandlers {
         private long mLastClickTime;
         private long timeInterval = 1000L;
+
         public void onClickNews() {
             if (null == mUser || !mUser.isLogin())
                 gotoLogin();
@@ -317,10 +318,11 @@ public class TransactionFragment extends JMEBaseFragment {
         }
 
         public void onClickOpenAccountFree() {
-
             long nowTime = System.currentTimeMillis();
-            if(nowTime-mLastClickTime>timeInterval) {
+
+            if (nowTime - mLastClickTime > timeInterval) {
                 mLastClickTime = nowTime;
+
                 if (null == mUser || !mUser.isLogin())
                     gotoLogin();
                 else
@@ -334,7 +336,7 @@ public class TransactionFragment extends JMEBaseFragment {
 
         public void onClickBind() {
             long nowTime = System.currentTimeMillis();
-            if(nowTime-mLastClickTime>timeInterval) {
+            if (nowTime - mLastClickTime > timeInterval) {
                 mLastClickTime = nowTime;
 
                 if (null == mUser || !mUser.isLogin())
@@ -394,15 +396,16 @@ public class TransactionFragment extends JMEBaseFragment {
             DisplayMetrics dm = new DisplayMetrics();
             mActivity.getWindowManager().getDefaultDisplay().getMetrics(dm);
             WindowManager.LayoutParams lp = mStockUserDialog.getWindow().getAttributes();
-            lp.width = (int) (dm.widthPixels*0.75); //设置宽度
+            lp.width = (int) (dm.widthPixels * 0.75); //设置宽度
             mStockUserDialog.getWindow().setAttributes(lp);
 
         }
     }
-    private boolean isOpenStockUser(){
-        if(!TextUtils.isEmpty(mUser.getAccountID())&&mUser.getCurrentUser()!=null&&mUser.getCurrentUser().getIsOpen()!=null&&"-2017".equals(mUser.getCurrentUser().getIsOpen())){
+
+    private boolean isOpenStockUser() {
+        if (!TextUtils.isEmpty(mUser.getAccountID()) && mUser.getCurrentUser() != null && mUser.getCurrentUser().getIsOpen() != null && "-2017".equals(mUser.getCurrentUser().getIsOpen())) {
             return true;
-        }else{
+        } else {
             return false;
         }
     }
