@@ -90,9 +90,9 @@
                         android:id="@+id/img_account_security"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
                         android:layout_marginLeft="@dimen/margin_tiny"
                         android:layout_marginRight="@dimen/margin_tiny_small"
-                        android:layout_centerVertical="true"
                         android:background="@mipmap/ic_account_security" />
 
                     <TextView
@@ -169,8 +169,7 @@
                     android:layout_height="@dimen/height_item_normal"
                     android:onClick="@{() -> handlers.onClickIncrement()}"
                     android:paddingLeft="@dimen/common_area_margin_big"
-                    android:paddingRight="@dimen/common_area_margin"
-                    android:visibility="gone">
+                    android:paddingRight="@dimen/common_area_margin">
 
                     <ImageView
                         android:id="@+id/img_increment"
@@ -204,8 +203,8 @@
                         android:layout_centerVertical="true"
                         android:layout_marginLeft="@dimen/common_area_margin"
                         android:layout_marginRight="@dimen/common_page_margin"
-                        android:text=""
                         android:layout_toLeftOf="@+id/img_increment_next"
+                        android:text=""
                         android:textColor="@color/color_red"
                         android:textSize="@dimen/size_normal" />
 

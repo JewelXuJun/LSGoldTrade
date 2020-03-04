@@ -269,7 +269,8 @@
                 android:layout_gravity="center"
                 android:layout_marginTop="@dimen/common_area_margin"
                 android:textColor="@color/black"
-                android:textSize="@dimen/sp_14" />
+                android:textSize="@dimen/sp_14"
+                android:visibility="gone" />
 
             <Button
                 android:layout_width="match_parent"
@@ -282,7 +283,8 @@
                 android:onClick="@{() -> handlers.onClickBind()}"
                 android:text="@string/transaction_open_account_bind"
                 android:textColor="@color/color_blue_deep"
-                android:textSize="@dimen/common_font_size" />
+                android:textSize="@dimen/common_font_size"
+                android:visibility="gone" />
 
         </LinearLayout>
 
