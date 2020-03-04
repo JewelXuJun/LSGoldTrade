@@ -19,17 +19,394 @@
 
         <include layout="@layout/item_line_vertical" />
 
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/common_item_height_middle"
+            android:background="@color/white">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/common_area_margin_big"
+                android:layout_marginRight="@dimen/common_area_margin_big"
+                android:text="@string/transaction_open_account_prepare"
+                android:textColor="@color/black_deep"
+                android:textSize="@dimen/sp_14" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="@dimen/common_area_margin_big"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginRight="@dimen/common_area_margin_big"
+                    android:drawableLeft="@mipmap/ic_bankcard"
+                    android:drawablePadding="@dimen/common_area_margin_tiny"
+                    android:text="@string/transaction_open_account_bankcard"
+                    android:textColor="@color/black_deep"
+                    android:textSize="@dimen/sp_12" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:drawableLeft="@mipmap/ic_id_card"
+                    android:drawablePadding="@dimen/common_area_margin_tiny"
+                    android:text="@string/transaction_open_account_id_card"
+                    android:textColor="@color/black_deep"
+                    android:textSize="@dimen/sp_12" />
+
+            </LinearLayout>
+
+        </RelativeLayout>
+
         <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:scrollbars="none"
-            android:fillViewport="true">
+            android:fillViewport="true"
+            android:scrollbars="none">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical">
 
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/common_area_margin_big"
+                    android:layout_marginTop="@dimen/common_page_margin"
+                    android:layout_marginRight="@dimen/common_area_margin_big"
+                    android:layout_marginBottom="@dimen/common_page_margin"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/height_bank_item"
+                        android:background="@drawable/bg_blue"
+                        android:orientation="vertical">
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:background="@mipmap/ic_bank_bg"
+                                android:orientation="horizontal">
+
+                                <LinearLayout
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:layout_marginLeft="@dimen/common_area_margin"
+                                    android:orientation="horizontal">
+
+                                    <ImageView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_gravity="center"
+                                        android:background="@mipmap/ic_bank_logo_hf" />
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_gravity="center"
+                                        android:layout_marginLeft="@dimen/margin_tiny"
+                                        android:text="@string/transaction_open_account_bank_hf"
+                                        android:textColor="@color/white"
+                                        android:textSize="@dimen/sp_12" />
+
+                                </LinearLayout>
+
+                                <Button
+                                    android:layout_width="@dimen/width_amount"
+                                    android:layout_height="@dimen/height_item_tiny"
+                                    android:layout_gravity="center"
+                                    android:layout_marginLeft="@dimen/common_area_margin"
+                                    android:background="@drawable/bg_btn_violet"
+                                    android:onClick="@{() -> handlers.onClickOpenAccountHF()}"
+                                    android:text="@string/register_open_account"
+                                    android:textColor="@color/white"
+                                    android:textSize="@dimen/sp_12" />
+
+                            </LinearLayout>
+
+                            <TextView
+                                android:layout_width="@dimen/width_item_small"
+                                android:layout_height="@dimen/common_item_height_tiny"
+                                android:layout_alignParentRight="true"
+                                android:layout_marginRight="@dimen/common_page_margin"
+                                android:background="@drawable/bg_blue_dark"
+                                android:gravity="center"
+                                android:text="@string/transaction_open_account_recommend"
+                                android:textColor="@color/color_orange_loght"
+                                android:textSize="@dimen/sp_12" />
+
+                        </RelativeLayout>
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent">
+
+                            <Button
+                                android:id="@+id/btn_open_account_hf"
+                                android:layout_width="@dimen/width_item_middle"
+                                android:layout_height="@dimen/height_tabhost"
+                                android:layout_alignParentRight="true"
+                                android:layout_marginRight="@dimen/common_area_margin_big"
+                                android:background="@drawable/bg_white"
+                                android:onClick="@{() -> handlers.onClickOpenAccountHF()}"
+                                android:text="@string/register_open_account"
+                                android:textColor="@color/color_blue_deep"
+                                android:textSize="@dimen/sp_14" />
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_toLeftOf="@+id/btn_open_account_hf"
+                                android:orientation="vertical"
+                                android:paddingLeft="@dimen/common_area_margin_big"
+                                android:paddingRight="@dimen/common_area_margin_big">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="@dimen/common_area_margin_tiny"
+                                    android:text="@string/transaction_open_account_support_bank"
+                                    android:textColor="@color/white"
+                                    android:textSize="@dimen/common_font_size_exiguity" />
+
+                                <TextView
+                                    android:id="@+id/tv_support_bank_hf"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="@dimen/margin_tiny"
+                                    android:text="中行、工行、农行等X家银行"
+                                    android:textColor="@color/white"
+                                    android:textSize="@dimen/sp_12" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="@dimen/common_page_margin"
+                                    android:text="@string/transaction_open_account_bond_proportion"
+                                    android:textColor="@color/white"
+                                    android:textSize="@dimen/common_font_size_exiguity" />
+
+                                <TextView
+                                    android:id="@+id/tv_bond_proportion_hf"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="@dimen/margin_tiny"
+                                    android:text="黄金9% 白银10%"
+                                    android:textColor="@color/white"
+                                    android:textSize="@dimen/sp_12" />
+
+                            </LinearLayout>
+
+                        </RelativeLayout>
+
+                    </LinearLayout>
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentRight="true"
+                            android:background="@mipmap/ic_course_bg">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:layout_marginLeft="@dimen/margin_course"
+                                android:drawableRight="@mipmap/ic_see"
+                                android:drawablePadding="@dimen/common_area_margin_tiny"
+                                android:onClick="@{() -> handlers.onClickCourseHF()}"
+                                android:text="@string/transaction_open_account_course_hf"
+                                android:textColor="@color/black_pale"
+                                android:textSize="@dimen/sp_12" />
+
+                        </LinearLayout>
+
+                    </RelativeLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/common_area_margin_big"
+                    android:layout_marginTop="@dimen/common_page_margin"
+                    android:layout_marginRight="@dimen/common_area_margin_big"
+                    android:layout_marginBottom="@dimen/common_page_margin"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/height_bank_item"
+                        android:background="@drawable/bg_white"
+                        android:orientation="vertical">
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:background="@mipmap/ic_bank_bg"
+                                android:orientation="horizontal">
+
+                                <LinearLayout
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:layout_marginLeft="@dimen/common_area_margin"
+                                    android:orientation="horizontal">
+
+                                    <ImageView
+                                        android:layout_width="@dimen/icon_bank_logo"
+                                        android:layout_height="@dimen/icon_bank_logo"
+                                        android:layout_gravity="center"
+                                        android:background="@mipmap/ic_bank_logo_icbc" />
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_gravity="center"
+                                        android:layout_marginLeft="@dimen/common_page_margin"
+                                        android:text="@string/transaction_open_account_bank_icbc"
+                                        android:textColor="@color/black_deep"
+                                        android:textSize="@dimen/sp_12"
+                                        android:textStyle="bold" />
+
+                                </LinearLayout>
+
+                            </LinearLayout>
+
+                        </RelativeLayout>
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent">
+
+                            <LinearLayout
+                                android:id="@+id/layout_icbc"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentRight="true"
+                                android:layout_marginRight="@dimen/common_area_margin_big"
+                                android:orientation="vertical">
+
+                                <Button
+                                    android:layout_width="@dimen/width_item_middle"
+                                    android:layout_height="@dimen/height_tabhost"
+                                    android:layout_gravity="right"
+                                    android:background="@drawable/bg_btn_blue_solid"
+                                    android:onClick="@{() -> handlers.onClickOpenAccountICBC()}"
+                                    android:text="@string/register_open_account"
+                                    android:textColor="@color/white"
+                                    android:textSize="@dimen/sp_14" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="@dimen/margin_normal"
+                                    android:onClick="@{() -> handlers.onClickBindAccountICBC()}"
+                                    android:text="@string/transaction_open_account_goto_bind"
+                                    android:textColor="@color/color_blue_deep"
+                                    android:textSize="@dimen/sp_12" />
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_toLeftOf="@+id/layout_icbc"
+                                android:orientation="vertical"
+                                android:paddingLeft="@dimen/common_area_margin_big"
+                                android:paddingRight="@dimen/common_area_margin_big">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="@dimen/common_area_margin_tiny"
+                                    android:text="@string/transaction_open_account_support_bank"
+                                    android:textColor="@color/black_pale"
+                                    android:textSize="@dimen/common_font_size_exiguity" />
+
+                                <TextView
+                                    android:id="@+id/tv_support_bank_icbc"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="@dimen/margin_tiny"
+                                    android:text="中行、工行、农行等X家银行"
+                                    android:textColor="@color/black_deep"
+                                    android:textSize="@dimen/sp_12" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="@dimen/common_page_margin"
+                                    android:text="@string/transaction_open_account_bond_proportion"
+                                    android:textColor="@color/black_pale"
+                                    android:textSize="@dimen/common_font_size_exiguity" />
+
+                                <TextView
+                                    android:id="@+id/tv_bond_proportion_icbc"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="@dimen/margin_tiny"
+                                    android:text="黄金9% 白银10%"
+                                    android:textColor="@color/black_deep"
+                                    android:textSize="@dimen/sp_12" />
+
+                            </LinearLayout>
+
+                        </RelativeLayout>
+
+                    </LinearLayout>
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentRight="true"
+                            android:background="@mipmap/ic_course_bg">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:layout_marginLeft="@dimen/margin_course"
+                                android:drawableRight="@mipmap/ic_see"
+                                android:drawablePadding="@dimen/common_area_margin_tiny"
+                                android:onClick="@{() -> handlers.onClickCourseICBC()}"
+                                android:text="@string/transaction_open_account_course_icbc"
+                                android:textColor="@color/black_pale"
+                                android:textSize="@dimen/sp_12" />
+
+                        </LinearLayout>
+
+                    </RelativeLayout>
+
+                </LinearLayout>
 
             </LinearLayout>
 

@@ -377,6 +377,17 @@
         &#160;&#160;(4）委托风控服务是为您提供的风险控制功能，您可以通过泰金所交易软件预先自主设定保底资金金额，系统将实时监控您的风险率，当风险率触发设定的预警线或平仓线时，系统将限制您开仓或者发起平仓指令，防止您产生超预期亏损，及时保障您的资金权益。
     </string>
     <string name="transaction_select_open_account_channel">选择开户渠道</string>
+    <string name="transaction_open_account_prepare">开户准备</string>
+    <string name="transaction_open_account_id_card">身份证</string>
+    <string name="transaction_open_account_bankcard">银行卡</string>
+    <string name="transaction_open_account_bank_hf">恒丰银行</string>
+    <string name="transaction_open_account_recommend">推荐</string>
+    <string name="transaction_open_account_support_bank">支持银行</string>
+    <string name="transaction_open_account_bond_proportion">保证金比例</string>
+    <string name="transaction_open_account_course_hf">查看恒丰开户教程</string>
+    <string name="transaction_open_account_bank_icbc">工商银行</string>
+    <string name="transaction_open_account_goto_bind">已有账号？去绑定</string>
+    <string name="transaction_open_account_course_icbc">查看工行开户教程</string>
 
     <!-- Personal -->
     <string name="personal_login">登录/注册</string>

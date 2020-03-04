@@ -48,7 +48,7 @@
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="@dimen/margin_big"
                 android:layout_marginRight="@dimen/common_area_margin_large"
-                android:src="@mipmap/ic_gonghang" />
+                android:src="@mipmap/ic_bank_logo_icbc" />
 
             <LinearLayout
                 android:layout_width="wrap_content"

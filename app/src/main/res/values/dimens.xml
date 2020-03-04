@@ -47,6 +47,7 @@
     <dimen name="height_condition_sheet_setting_popupwindow">440dp</dimen>
     <dimen name="height_increment_item">100dp</dimen>
     <dimen name="height_withhold_item">66dp</dimen>
+    <dimen name="height_bank_item">168dp</dimen>
 
     <dimen name="width_market_item">46dp</dimen>
     <dimen name="width_item_title">74dp</dimen>
@@ -57,6 +58,7 @@
     <dimen name="width_shelves">25dp</dimen>
     <dimen name="width_amount">60dp</dimen>
     <dimen name="width_empty">30dp</dimen>
+    <dimen name="width_item_small">40dp</dimen>
     <dimen name="width_item_middle">70dp</dimen>
     <dimen name="width_item_normal">75dp</dimen>
     <dimen name="width_item">82dp</dimen>
@@ -112,6 +114,7 @@
     <dimen name="margin_condition_sheet_modify">85dp</dimen>
     <dimen name="margin_transaction_setting">120dp</dimen>
     <dimen name="margin_withhold_checkbox">70dp</dimen>
+    <dimen name="margin_course">33dp</dimen>
 
     <dimen name="size_exiguity_tiny">7sp</dimen>
     <dimen name="size_exiguity">8sp</dimen>
@@ -141,6 +144,7 @@
     <dimen name="icon_middle">30dp</dimen>
     <dimen name="icon_time">22dp</dimen>
     <dimen name="icon_trading_box_arrow">7.5dp</dimen>
+    <dimen name="icon_bank_logo">24dp</dimen>
 
     <dimen name="radius_small">2dp</dimen>
     <dimen name="radius_middle">3dp</dimen>

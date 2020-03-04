@@ -45,5 +45,25 @@ public class OpenAccountChannelActivity extends JMEBaseActivity {
 
     public class ClickHandlers {
 
+        public void onClickOpenAccountHF() {
+
+        }
+
+        public void onClickOpenAccountICBC() {
+
+        }
+
+        public void onClickBindAccountICBC() {
+
+        }
+
+        public void onClickCourseHF() {
+
+        }
+
+        public void onClickCourseICBC() {
+
+        }
+
     }
 }

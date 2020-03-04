@@ -35,6 +35,9 @@
     <color name="color_message_red">#D73030</color>
     <color name="color_btn_gray_stroke">#CBCBCB</color>
     <color name="color_text_account_login_describe">#929292</color>
+    <color name="color_violet">#3B43DE</color>
+    <color name="color_violet_dark">#373B81</color>
+    <color name="color_orange_loght">#FFD493</color>
 
     <drawable name="drawable_white">#FFFFFF</drawable>
     <drawable name="drawable_blue">#4285f4</drawable>
