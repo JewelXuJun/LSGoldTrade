@@ -3,29 +3,24 @@ package com.jme.lsgoldtrade.ui.transaction;
 import android.os.Bundle;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
-import com.alibaba.android.arouter.launcher.ARouter;
 import com.jme.common.network.DTRequest;
 import com.jme.common.network.Head;
 import com.jme.lsgoldtrade.R;
 import com.jme.lsgoldtrade.base.JMEBaseActivity;
 import com.jme.lsgoldtrade.config.Constants;
-import com.jme.lsgoldtrade.databinding.ActivityOpenAccountChannelBinding;
 
-@Route(path = Constants.ARouterUriConst.OPENACCOUNTCHANNEL)
-public class OpenAccountChannelActivity extends JMEBaseActivity {
-
-    private ActivityOpenAccountChannelBinding mBinding;
-
+@Route(path = Constants.ARouterUriConst.BINDACCOUNTHF)
+public class BindAccountHFActivity extends JMEBaseActivity {
     @Override
     protected int getContentViewId() {
-        return R.layout.activity_open_account_channel;
+        return R.layout.activity_bind_account_hf;
     }
 
     @Override
     protected void initView() {
         super.initView();
 
-        initToolbar(R.string.transaction_select_open_account_channel, true);
+        initToolbar(R.string.transaction_bind_account, true);
     }
 
     @Override
@@ -41,9 +36,6 @@ public class OpenAccountChannelActivity extends JMEBaseActivity {
     @Override
     protected void initBinding() {
         super.initBinding();
-
-        mBinding = (ActivityOpenAccountChannelBinding) mBindingUtil;
-        mBinding.setHandlers(new ClickHandlers());
     }
 
     @Override
@@ -53,25 +45,20 @@ public class OpenAccountChannelActivity extends JMEBaseActivity {
 
     public class ClickHandlers {
 
-        public void onClickOpenAccountHF() {
-            ARouter.getInstance().build(Constants.ARouterUriConst.BINDACCOUNTHF).navigation();
-        }
-
-        public void onClickOpenAccountICBC() {
+        public void onClickSoftWareAgreement() {
 
         }
 
-        public void onClickBindAccountICBC() {
+        public void onClickBusinessAgreement() {
 
         }
 
-        public void onClickCourseHF() {
+        public void onClickGetVerificationCode() {
 
         }
 
-        public void onClickCourseICBC() {
+        public void onClickBind() {
 
         }
-
     }
 }
