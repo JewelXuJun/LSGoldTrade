@@ -172,6 +172,10 @@ public class AuthenticationActivity extends JMEBaseActivity {
             else
                 verifyIdCard(name, mIDCard);
         }
+
+        public void onClickModify() {
+
+        }
     }
 
     @Override
