@@ -330,7 +330,7 @@ public class BindAccountActivity extends JMEBaseActivity {
             else if (verifyCode.length() < 6)
                 showShortToast(R.string.login_verification_code_error);
             else if (!bAgreeFlag)
-                showShortToast(R.string.register_aggrement_unread);
+                showShortToast(R.string.transaction_bind_aggrement_message);
             else
                 bindAccount(mBinding.tvName.getText().toString().trim(), mIDCard, goldAccount, verifyCode);
         }
