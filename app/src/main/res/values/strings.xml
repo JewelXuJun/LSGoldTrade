@@ -392,6 +392,7 @@
     <string name="transaction_open_account_hf_success">恭喜您已完成开户，请复制以下开户链接，通过电脑端打开链接下载恒丰金客户端进行交易。若有疑问请联系客服电话400-800-0000.</string>
     <string name="transaction_open_account_hf_fail">很抱歉您开户失败，请联系客服400-800-0000.</string>
     <string name="transaction_open_account_hf_download">点击复制下载链接</string>
+    <string name="transaction_open_account_hf_message">交易功能即将上线，敬请期待。请您先通过恒丰金客户端交易。</string>
 
     <!-- Personal -->
     <string name="personal_login">登录/注册</string>
