@@ -164,11 +164,6 @@ public class Constants {
         public static final String RXBUS_METAL_PAY = "metalPay";
         public static final String RXBUS_METAL_PAY_SUCCESS = "metalPaySuccess";
         public static final String RXBUS_SELECT_BANK_CARD_SUCCESS = "selectBankCardSuccess";
-        public static final String RXBUS_INCREMENT_ARREARS2012 = "incrementArrears2012";
-        public static final String RXBUS_INCREMENT_ARREARS2013 = "incrementArrears2013";
-        public static final String RXBUS_INCREMENT_ARREARS2014 = "incrementArrears2014";
-        public static final String RXBUS_INCREMENT_ARREARS2015 = "incrementArrears2015";
-        public static final String RXBUS_INCREMENT_ARREARS2016 = "incrementArrears2016";
         public static final String RXBUS_ZJHZ_SETPASSWORD = "zjhzSetpassword";
         public static final String RXBUS_ZJHZ_SETPASSWORD_SUCCESS = "zjhzSetPasswordSuccess";
         public static final String RXBUS_WDDY_SETPASSWORD  = "wddySetPassword";
