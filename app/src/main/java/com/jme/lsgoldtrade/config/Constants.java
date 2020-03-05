@@ -286,6 +286,7 @@ public class Constants {
         public static final String OPENINCREMENT = "/Personal/OpenIncrementActivity";
         public static final String OPENACCOUNTCHANNEL = "/TransactionFragment/OpenAccountChannelActivity";
         public static final String BINDACCOUNTHF = "/OpenAccountChannelActivity/BindAccountHFActivity";
+        public static final String BINDSTATUSHF = "/BindAccountHFActivity/BindStatusHFActivity";
     }
 
     public static final long SPLASH_DELAY_MILLIS = 2000;

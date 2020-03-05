@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+
+    <data>
+
+        <variable
+            name="handlers"
+            type="com.jme.lsgoldtrade.ui.transaction.BindStatusHFActivity.ClickHandlers" />
+
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/common_background"
+        android:orientation="vertical">
+
+        <include layout="@layout/layout_toolbar" />
+
+        <include layout="@layout/item_line_vertical" />
+
+        <LinearLayout
+            android:id="@+id/layout_success"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="@dimen/margin_large_middle"
+                    android:background="@mipmap/ic_register_success" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="@dimen/margin_login"
+                    android:layout_marginTop="@dimen/common_page_margin"
+                    android:layout_marginRight="@dimen/margin_login"
+                    android:lineSpacingExtra="@dimen/lineSpacingExtra_normal"
+                    android:paddingBottom="@dimen/margin_normal"
+                    android:text="@string/transaction_open_account_hf_success"
+                    android:textColor="@color/black_deep"
+                    android:textSize="@dimen/sp_16" />
+
+            </LinearLayout>
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/height_login_btn"
+                android:layout_marginLeft="@dimen/common_area_margin_large"
+                android:layout_marginTop="@dimen/common_area_margin"
+                android:layout_marginRight="@dimen/common_area_margin_large"
+                android:background="@drawable/bg_btn_blue_solid"
+                android:onClick="@{() -> handlers.onClickCopy()}"
+                android:text="@string/transaction_open_account_hf_download"
+                android:textColor="@color/white"
+                android:textSize="@dimen/common_font_size" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/layout_fail"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:visibility="visible">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="@dimen/margin_large_middle"
+                    android:background="@mipmap/ic_fail" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="@dimen/common_area_margin_large"
+                    android:layout_marginTop="@dimen/common_page_margin"
+                    android:layout_marginRight="@dimen/common_area_margin_large"
+                    android:lineSpacingExtra="@dimen/lineSpacingExtra_normal"
+                    android:paddingBottom="@dimen/margin_large_middle"
+                    android:text="@string/transaction_open_account_hf_fail"
+                    android:textColor="@color/black_deep"
+                    android:textSize="@dimen/sp_16" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</layout>

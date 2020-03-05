@@ -257,6 +257,9 @@
         <activity
             android:name=".ui.transaction.BindAccountHFActivity"
             android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.transaction.BindStatusHFActivity"
+            android:screenOrientation="portrait" />
 
         <service
             android:name=".base.JMEAppService"
