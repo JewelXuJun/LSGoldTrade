@@ -248,49 +248,45 @@ public class MainPageFragment extends JMEBaseFragment implements OnRefreshListen
                     }
                     break;
                 case Constants.RxBusConst.RXBUS_WDDY_SETPASSWORD:
-                        if(isForeground()) {
-                            mCallEntry = 2;
-                            getUserPasswordSettingInfo();
-                        }
+                    if (isForeground()) {
+                        mCallEntry = 2;
+                        getUserPasswordSettingInfo();
+                    }
 
                     break;
                 case Constants.RxBusConst.RXBUS_WDDY_SETPASSWORD_SUCCESS:
-                    if(isForeground()) {
-                        ARouter.getInstance().build(Constants.ARouterUriConst.TRADINGBOX).navigation();
-                    }
+                    ARouter.getInstance().build(Constants.ARouterUriConst.TRADINGBOX).navigation();
+
                     break;
                 case Constants.RxBusConst.RXBUS_MAIN_PAGE_TRAIN_BOX_SETPASSWORD:
-                    if(isForeground()) {
+                    if (isForeground()) {
                         mCallEntry = 5;
                         getUserPasswordSettingInfo();
                     }
                     break;
                 case Constants.RxBusConst.RXBUS_MAIN_PAGE_TRAIN_BOX_SETPASSWORD_SUCCESS:
-                    if(isForeground()) {
-                        ARouter.getInstance().build(Constants.ARouterUriConst.TRADINGBOX).navigation();
-                    }
+                    ARouter.getInstance().build(Constants.ARouterUriConst.TRADINGBOX).navigation();
+
                     break;
                 case Constants.RxBusConst.RXBUS_CJRL_SETPASSWORD:
-                    if(isForeground()) {
+                    if (isForeground()) {
                         mCallEntry = 6;
                         getUserPasswordSettingInfo();
                     }
                     break;
                 case Constants.RxBusConst.RXBUS_CJRL_SETPASSWORD_SUCCESS:
-                    if(isForeground()) {
-                        ARouter.getInstance().build(Constants.ARouterUriConst.ECONOMICCALENDAR).navigation();
-                    }
+                    ARouter.getInstance().build(Constants.ARouterUriConst.ECONOMICCALENDAR).navigation();
+
                     break;
                 case Constants.RxBusConst.RXBUS_HQYP_SETPASSWORD:
-                    if(isForeground()) {
+                    if (isForeground()) {
                         mCallEntry = 7;
                         getUserPasswordSettingInfo();
                     }
                     break;
                 case Constants.RxBusConst.RXBUS_HQYP_SETPASSWORD_SUCCESS:
-                    if(isForeground()) {
-                        ARouter.getInstance().build(Constants.ARouterUriConst.MARKETJUDGMENT).navigation();
-                    }
+                    ARouter.getInstance().build(Constants.ARouterUriConst.MARKETJUDGMENT).navigation();
+
                     break;
             }
         });
@@ -632,20 +628,20 @@ public class MainPageFragment extends JMEBaseFragment implements OnRefreshListen
                         RxBus.getInstance().post(Constants.RxBusConst.RXBUS_TRADING_PASSWORD_SETTING, null);
                     } else {
 
-                        if (TextUtils.isEmpty(hasTimeout) || hasTimeout.equals("N")){
-                            if(mCallEntry == 1){
+                        if (TextUtils.isEmpty(hasTimeout) || hasTimeout.equals("N")) {
+                            if (mCallEntry == 1) {
                                 //资金划转
                                 RxBus.getInstance().post(Constants.RxBusConst.RXBUS_ZJHZ_SETPASSWORD_SUCCESS, null);
-                            }else if(mCallEntry == 2){
+                            } else if (mCallEntry == 2) {
                                 //首页过来的 我的订阅
                                 RxBus.getInstance().post(Constants.RxBusConst.RXBUS_WDDY_SETPASSWORD_SUCCESS, null);
-                            }else if(mCallEntry == 5){
+                            } else if (mCallEntry == 5) {
                                 //首页进入交易匣子
                                 RxBus.getInstance().post(Constants.RxBusConst.RXBUS_MAIN_PAGE_TRAIN_BOX_SETPASSWORD_SUCCESS, null);
-                            }else if(mCallEntry == 6){
+                            } else if (mCallEntry == 6) {
                                 //首页进入 财金日历
                                 RxBus.getInstance().post(Constants.RxBusConst.RXBUS_CJRL_SETPASSWORD_SUCCESS, null);
-                            }else if(mCallEntry == 7){
+                            } else if (mCallEntry == 7) {
                                 //首页进入 行情研判
                                 RxBus.getInstance().post(Constants.RxBusConst.RXBUS_HQYP_SETPASSWORD_SUCCESS, null);
                             }
@@ -680,7 +676,7 @@ public class MainPageFragment extends JMEBaseFragment implements OnRefreshListen
                         ARouter.getInstance()
                                 .build(Constants.ARouterUriConst.UNLOCKTRADINGPASSWORD)
                                 .withInt("Type", type)
-                                .withInt("callEntry",mCallEntry)
+                                .withInt("callEntry", mCallEntry)
                                 .navigation();
                     }
                 }
