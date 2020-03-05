@@ -366,6 +366,7 @@
     <string name="transaction_bind_account">账号绑定</string>
     <string name="transaction_bind_account_increment_agreement">我已阅读《增值服务协议》，同意开通增值服务。</string>
     <string name="transaction_bind">立即绑定</string>
+    <string name="transaction_bind_aggrement_message">请先阅读并同意《软件服务协议》和《业务服务协议》!</string>
     <string name="transaction_bind_success">恭喜您已绑定成功！</string>
     <string name="transaction_bind_success_time">%1$s秒后自动关闭</string>
     <string name="transaction_about_amount">约可交易手数</string>
