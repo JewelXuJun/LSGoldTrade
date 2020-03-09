@@ -223,7 +223,8 @@ public class Constants {
         public static final String MARKETDETAIL = "/MarketFragment/MarketDetailActivity";
         public static final String MARKETDETAILLANDSCAPE = "/MarketDetailActivity/MarketDetailLandscapeActivity";
         public static final String MARKETEDITSORT = "/MarketDetailActivity/MarketEditSortActivity";
-        public static final String CAPITALTRANSFER = "/FragmentHoldPositionBinding/CapitalTransferActivity";
+        public static final String CAPITALTRANSFER = "/HoldPositionsFragment/CapitalTransferActivity";
+        public static final String INOUTMONEYHF = "/HoldPositionsFragment/InOutMoneyHFActivity";
         public static final String ELECTRONICCARDTRANSFER = "/CapitalTransferActivity/ElectronicCardTransferActivity";
         public static final String ELECTRONICCARDINOUTMONEY = "/CapitalTransferActivity/ElectronicCardInOutMoneyActivity";
         public static final String BANKRESERVE = "/CapitalTransferActivity/BankReserveActivity";
