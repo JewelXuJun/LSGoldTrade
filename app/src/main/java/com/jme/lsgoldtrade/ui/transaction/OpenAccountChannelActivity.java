@@ -14,6 +14,8 @@ import com.jme.lsgoldtrade.databinding.ActivityOpenAccountChannelBinding;
 @Route(path = Constants.ARouterUriConst.OPENACCOUNTCHANNEL)
 public class OpenAccountChannelActivity extends JMEBaseActivity {
 
+    ///getHFBankOpenAccountUrl?customerName=%@&idCode=%@。获取恒丰开户h5链接的
+
     private ActivityOpenAccountChannelBinding mBinding;
 
     @Override

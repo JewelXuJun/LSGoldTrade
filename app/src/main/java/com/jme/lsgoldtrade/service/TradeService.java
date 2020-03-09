@@ -14,6 +14,7 @@ import com.jme.lsgoldtrade.domain.ContractInfoVo;
 import com.jme.lsgoldtrade.domain.DailyStatementVo;
 import com.jme.lsgoldtrade.domain.DealHistoryPageVo;
 import com.jme.lsgoldtrade.domain.DealPageVo;
+import com.jme.lsgoldtrade.domain.HFBBindVo;
 import com.jme.lsgoldtrade.domain.InOutTurnOverVo;
 import com.jme.lsgoldtrade.domain.LoginResponse;
 import com.jme.lsgoldtrade.domain.OrderHisPageVo;
@@ -24,8 +25,10 @@ import com.jme.lsgoldtrade.domain.IdentityInfoVo;
 import com.jme.lsgoldtrade.domain.TransactionDetailVo;
 import com.jme.lsgoldtrade.domain.UserInfoVo;
 import com.jme.lsgoldtrade.domain.WarnVo;
+
 import java.util.HashMap;
 import java.util.List;
+
 import okhttp3.Interceptor;
 import okhttp3.Request;
 import okhttp3.Response;
@@ -321,6 +324,22 @@ public class TradeService extends IService<TradeApi> {
         public Call<DTResponse> request(HashMap<String, String> params) {
 
             return mApi.whetherChangeLoginPwd(params);
+        }
+    };
+
+    public API hfbBindMsg = new API<String>("HfbBindMsg") {
+        @Override
+        public Call<DTResponse> request(HashMap<String, String> params) {
+
+            return mApi.hfbBindMsg(params);
+        }
+    };
+
+    public API HFBBind = new API<HFBBindVo>("HFBBind") {
+        @Override
+        public Call<DTResponse> request(HashMap<String, String> params) {
+
+            return mApi.HFBBind(params);
         }
     };
 

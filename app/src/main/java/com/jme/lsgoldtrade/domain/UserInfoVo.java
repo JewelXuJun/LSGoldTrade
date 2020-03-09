@@ -43,6 +43,12 @@ public class UserInfoVo {
 
     private String isOpen;
 
+    private String bankId;       // 代理银行编号
+
+    private String openStatus;   //"N"-未开户，"O"-已开户，"B"-已绑定
+
+    private String noMaskMoble;  // 无掩码手机号
+
     public String getTraderId() {
         return traderId;
     }
@@ -145,5 +151,29 @@ public class UserInfoVo {
 
     public void setIsOpen(String isOpen) {
         this.isOpen = isOpen;
+    }
+
+    public String getBankId() {
+        return bankId;
+    }
+
+    public void setBankId(String bankId) {
+        this.bankId = bankId;
+    }
+
+    public String getOpenStatus() {
+        return openStatus;
+    }
+
+    public void setOpenStatus(String openStatus) {
+        this.openStatus = openStatus;
+    }
+
+    public String getNoMaskMoble() {
+        return noMaskMoble;
+    }
+
+    public void setNoMaskMoble(String noMaskMoble) {
+        this.noMaskMoble = noMaskMoble;
     }
 }

@@ -114,4 +114,10 @@ public interface TradeApi {
     @GET("/gold-trade/v1.0.0/android/whetherChangeLoginPwd")
     Call<DTResponse> whetherChangeLoginPwd(@QueryMap Map<String, String> map);
 
+    @GET("/gold-trade/v1.0.0/android/hfbBindMsg")
+    Call<DTResponse> hfbBindMsg(@QueryMap Map<String, String> map);
+
+    @POST("/gold-trade/v1.0.0/android/HFBBind")
+    Call<DTResponse> HFBBind(@QueryMap Map<String, String> map);
+
 }

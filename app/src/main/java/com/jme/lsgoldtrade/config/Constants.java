@@ -202,7 +202,6 @@ public class Constants {
         public static final int MSG_JUDGEMENT_UPDATE_DATA = 10;
         public static final int MSG_JUDGEMENT_RELOAD_DATA = 11;
         public static final int MSG_UARNING_PDATE_DATA = 12;
-        public static final int MSG_WXXCX = 13;
 
     }
 
