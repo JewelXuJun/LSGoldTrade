@@ -252,12 +252,11 @@ public class EntrustRiskManagementActivity extends JMEBaseActivity {
                     .subtract(new BigDecimal(mAccountVo.getFee()))
                     .toPlainString();
             String minReserveFund = mAccountVo.getMinReserveFundStr();
-            String runtimeFee = mAccountVo.getRuntimeFeeStr();
 
             if (new BigDecimal(minReserveFund).compareTo(new BigDecimal(0)) == 0) {
                 mBinding.tvRiskRate.setText(R.string.text_no_data_default);
             } else {
-                BigDecimal fee = new BigDecimal(minReserveFund).add(new BigDecimal(runtimeFee));
+                BigDecimal fee = new BigDecimal(minReserveFund);
 
                 if (fee.compareTo(new BigDecimal(0)) == 0) {
                     mBinding.tvRiskRate.setText(R.string.text_no_data_default);

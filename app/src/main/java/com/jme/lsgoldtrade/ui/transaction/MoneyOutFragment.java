@@ -209,10 +209,9 @@ public class MoneyOutFragment extends JMEBaseFragment implements OnRefreshListen
                     BigDecimal total = new BigDecimal(accountVo.getTransactionBalanceStr())
                             .add(new BigDecimal(accountVo.getFreezeBalanceStr()))
                             .add(new BigDecimal(accountVo.getPositionMarginStr()))
-                            .add(new BigDecimal(accountVo.getFloatProfitStr()))
-                            .subtract(new BigDecimal(accountVo.getRuntimeFeeStr()));
+                            .add(new BigDecimal(accountVo.getFloatProfitStr()));
                     BigDecimal totalProfit = total.subtract(new BigDecimal(accountVo.getMinReserveFundStr()));
-                    BigDecimal extractableBalance = new BigDecimal(accountVo.getExtractableBalanceStr()).subtract(new BigDecimal(accountVo.getRuntimeFeeStr()));
+                    BigDecimal extractableBalance = new BigDecimal(accountVo.getExtractableBalanceStr());
 
                     mMaxBalance = String.valueOf(Math.min(totalProfit.doubleValue(), extractableBalance.doubleValue()));
 

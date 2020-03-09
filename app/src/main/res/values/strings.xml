@@ -463,6 +463,7 @@
     <string name="security_tjs_account">泰金所交易账号</string>
     <string name="security_trading_password_setting">设置交易密码</string>
     <string name="security_trading_password_modify">修改交易密码</string>
+    <string name="security_trading_password_validate">验证交易密码</string>
     <string name="security_login_password_modify">登录密码设置</string>
     <string name="security_login_fingerprint">指纹登录</string>
     <string name="security_login_gesture">手势登录</string>

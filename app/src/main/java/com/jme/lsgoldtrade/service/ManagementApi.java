@@ -133,6 +133,9 @@ public interface ManagementApi {
     @GET("/tjsmanage/infoapi/v1/android/tradeSafety/getUserPasswordSettingInfo")
     Call<DTResponse> getUserPasswordSettingInfo(@QueryMap Map<String, String> map);
 
+    @GET("/tjsmanage/infoapi/v1/android/tradeSafety/hasSettingGesture")
+    Call<DTResponse> hasSettingGesture(@QueryMap Map<String, String> map);
+
     @POST("/tjsmanage/infoapi/v1/android/tradeSafety/updatePasswordOpenStatus")
     Call<DTResponse> updatePasswordOpenStatus(@Body Map<String, String> map);
 

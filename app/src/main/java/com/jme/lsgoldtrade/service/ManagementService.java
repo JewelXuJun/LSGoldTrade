@@ -365,6 +365,13 @@ public class ManagementService extends IService<ManagementApi> {
         }
     };
 
+    public API hasSettingGesture = new API<String>("HasSettingGesture") {
+        @Override
+        public Call<DTResponse> request(HashMap<String, String> params) {
+            return mApi.hasSettingGesture(params);
+        }
+    };
+
     public API updatePasswordOpenStatus = new API<String>("UpdatePasswordOpenStatus") {
         @Override
         public Call<DTResponse> request(HashMap<String, String> params) {

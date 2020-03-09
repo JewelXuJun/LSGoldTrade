@@ -345,7 +345,6 @@ public class HoldPositionsFragment extends JMEBaseFragment implements OnRefreshL
                         .toPlainString();
 
                 String minReserveFund = mAccountVo.getMinReserveFundStr();
-                String runtimeFee = mAccountVo.getRuntimeFeeStr();
 
                 mBinding.tvTotalEquity.setText(bHiddenStatus ? mContext.getResources().getString(R.string.transaction_hidden_value)
                         : TextUtils.isEmpty(mTotal) ? mContext.getResources().getString(R.string.text_no_data_default) : MarketUtil.decimalFormatMoney(mTotal));
@@ -353,7 +352,7 @@ public class HoldPositionsFragment extends JMEBaseFragment implements OnRefreshL
                 if (new BigDecimal(minReserveFund).compareTo(new BigDecimal(0)) == 0) {
                     mBinding.tvRiskRate.setText(R.string.text_no_data_default);
                 } else {
-                    BigDecimal fee = new BigDecimal(minReserveFund).add(new BigDecimal(runtimeFee));
+                    BigDecimal fee = new BigDecimal(minReserveFund);
 
                     if (fee.compareTo(new BigDecimal(0)) == 0) {
                         mBinding.tvRiskRate.setText(R.string.text_no_data_default);
@@ -375,8 +374,7 @@ public class HoldPositionsFragment extends JMEBaseFragment implements OnRefreshL
                     }
                 }
 
-                mDesirableCapital = MarketUtil.getPriceValue(Math.min((new BigDecimal(mTotal).subtract(new BigDecimal(minReserveFund))).multiply(new BigDecimal(100)).longValue(),
-                        new BigDecimal(mAccountVo.getExtractableBalance()).subtract(new BigDecimal(mAccountVo.getRuntimeFee())).longValue()));
+                mDesirableCapital = MarketUtil.getPriceValue(mAccountVo.getExtractableBalance());
 
                 mBinding.tvDesirableCapital.setText(bHiddenStatus ? mContext.getResources().getString(R.string.transaction_hidden_value)
                         : TextUtils.isEmpty(mDesirableCapital)
@@ -406,7 +404,6 @@ public class HoldPositionsFragment extends JMEBaseFragment implements OnRefreshL
                         .toPlainString();
 
                 String minReserveFund = mAccountVo.getMinReserveFundStr();
-                String runtimeFee = mAccountVo.getRuntimeFeeStr();
 
                 mBinding.tvTotalEquity.setText(bHiddenStatus ? mContext.getResources().getString(R.string.transaction_hidden_value)
                         : TextUtils.isEmpty(mTotal) ? mContext.getResources().getString(R.string.text_no_data_default) : MarketUtil.decimalFormatMoney(mTotal));
@@ -414,7 +411,7 @@ public class HoldPositionsFragment extends JMEBaseFragment implements OnRefreshL
                 if (new BigDecimal(minReserveFund).compareTo(new BigDecimal(0)) == 0) {
                     mBinding.tvRiskRate.setText(R.string.text_no_data_default);
                 } else {
-                    BigDecimal fee = new BigDecimal(minReserveFund).add(new BigDecimal(runtimeFee));
+                    BigDecimal fee = new BigDecimal(minReserveFund);
 
                     if (fee.compareTo(new BigDecimal(0)) == 0) {
                         mBinding.tvRiskRate.setText(R.string.text_no_data_default);
@@ -436,8 +433,7 @@ public class HoldPositionsFragment extends JMEBaseFragment implements OnRefreshL
                     }
                 }
 
-                mDesirableCapital = MarketUtil.getPriceValue(Math.min((new BigDecimal(mTotal).subtract(new BigDecimal(minReserveFund))).multiply(new BigDecimal(100)).longValue(),
-                        new BigDecimal(mAccountVo.getExtractableBalance()).subtract(new BigDecimal(mAccountVo.getRuntimeFee())).longValue()));
+                mDesirableCapital = MarketUtil.getPriceValue(mAccountVo.getExtractableBalance());
 
                 mBinding.tvDesirableCapital.setText(bHiddenStatus ? mContext.getResources().getString(R.string.transaction_hidden_value)
                         : TextUtils.isEmpty(mDesirableCapital)
@@ -504,7 +500,7 @@ public class HoldPositionsFragment extends JMEBaseFragment implements OnRefreshL
                     if (null == mAccountVo) {
                         getAccount(false);
                     } else {
-                        mAvailableFunds = MarketUtil.getPriceValue(mAccountVo.getTransactionBalance() - mAccountVo.getRuntimeFee());
+                        mAvailableFunds = MarketUtil.getPriceValue(mAccountVo.getTransactionBalance());
                         mMarketCapitalization = MarketUtil.getPriceValue(mAccountVo.getPositionMargin());
                         String minReserveFund = mAccountVo.getMinReserveFundStr();
 
