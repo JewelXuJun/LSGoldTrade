@@ -88,6 +88,11 @@ public class AccountSecurityActivity extends JMEBaseActivity {
     private void getUserOnlineTime() {
         sendRequest(ManagementService.getInstance().getUserOnlineTime, new HashMap<>(), false);
     }
+
+    private void hasSettingGesture() {
+        sendRequest(ManagementService.getInstance().hasSettingGesture, new HashMap<>(), true);
+    }
+
     private void whetherChangeLoginPwd() {
         sendRequest(TradeService.getInstance().whetherChangeLoginPwd, new HashMap<>(), true);
     }
@@ -141,6 +146,17 @@ public class AccountSecurityActivity extends JMEBaseActivity {
                 }
 
                 break;
+            case "HasSettingGesture":
+                if (head.isSuccess()) {
+                    String value = (String) response;
+
+                    if (!TextUtils.isEmpty(value) && value.equals("T"))
+                        ARouter.getInstance().build(Constants.ARouterUriConst.GESTURE).navigation();
+                    else
+                        ARouter.getInstance().build(Constants.ARouterUriConst.VALIDATETRADINGPASSWORD).navigation();
+                }
+
+                break;
             case "WhetherChangeLoginPwd":
                 if (head.isSuccess()) {
                     PasswordSettingVo passwordSettingVo;
@@ -158,9 +174,7 @@ public class AccountSecurityActivity extends JMEBaseActivity {
                     if (TextUtils.isEmpty(flag) || flag.equals("N"))
                         mBinding.layoutLoginPassword.setVisibility(View.VISIBLE);
                     else
-                    mBinding.layoutLoginPassword.setVisibility(View.GONE);
-
-
+                        mBinding.layoutLoginPassword.setVisibility(View.GONE);
                 }
 
                 break;
@@ -187,14 +201,14 @@ public class AccountSecurityActivity extends JMEBaseActivity {
         }
 
         public void onClickGesture() {
-            ARouter.getInstance().build(Constants.ARouterUriConst.GESTURE).navigation();
+            hasSettingGesture();
         }
 
         public void onClickOnlineDuration() {
             ARouter.getInstance().build(Constants.ARouterUriConst.ONLINEDURATION).navigation();
         }
 
-        public void onClickLoginPassword(){
+        public void onClickLoginPassword() {
             ARouter.getInstance().build(Constants.ARouterUriConst.SETLOGINPASSWORD).navigation();
         }
 

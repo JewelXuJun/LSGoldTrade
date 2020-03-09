@@ -73,6 +73,9 @@
             android:name=".ui.security.GestureSettingValidateActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:name=".ui.security.ValidateTradingPasswordActivity"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".ui.security.OnlineDurationActivity"
             android:screenOrientation="portrait" />
         <activity
