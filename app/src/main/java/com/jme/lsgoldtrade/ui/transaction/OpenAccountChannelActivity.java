@@ -22,8 +22,6 @@ public class OpenAccountChannelActivity extends JMEBaseActivity {
 
     private ActivityOpenAccountChannelBinding mBinding;
 
-    private IdentityInfoVo mIdentityInfoVo;
-
     @Override
     protected int getContentViewId() {
         return R.layout.activity_open_account_channel;
@@ -44,8 +42,7 @@ public class OpenAccountChannelActivity extends JMEBaseActivity {
 
         mBinding.layoutBankHf.setVisibility(!TextUtils.isEmpty(bankId) && bankId.equals("icbc") ? View.GONE : View.VISIBLE);
         mBinding.layoutBankIcbc.setVisibility(!TextUtils.isEmpty(bankId) && bankId.equals("hfb") ? View.GONE : View.VISIBLE);
-
-        getWhetherIdCard();
+        mBinding.tvRecommend.setVisibility(TextUtils.isEmpty(bankId) ? View.VISIBLE : View.GONE);
     }
 
     @Override
@@ -65,14 +62,6 @@ public class OpenAccountChannelActivity extends JMEBaseActivity {
         sendRequest(TradeService.getInstance().whetherIdCard, new HashMap<>(), true);
     }
 
-    private void getHFBankOpenAccountUrl(String customerName, String idCode) {
-        HashMap<String, String> params = new HashMap<>();
-        params.put("customerName", customerName);
-        params.put("idCode", idCode);
-
-        sendRequest(TradeService.getInstance().getHFBankOpenAccountUrl, params, true);
-    }
-
     @Override
     protected void DataReturn(DTRequest request, Head head, Object response) {
         super.DataReturn(request, head, response);
@@ -80,21 +69,37 @@ public class OpenAccountChannelActivity extends JMEBaseActivity {
         switch (request.getApi().getName()) {
             case "WhetherIdCard":
                 if (head.isSuccess()) {
+                    IdentityInfoVo identityInfoVo;
+
                     try {
-                        mIdentityInfoVo = (IdentityInfoVo) response;
+                        identityInfoVo = (IdentityInfoVo) response;
                     } catch (Exception e) {
-                        mIdentityInfoVo = null;
+                        identityInfoVo = null;
 
                         e.printStackTrace();
                     }
-                }
 
-                break;
-            case "GetHFBankOpenAccountUrl":
-                ARouter.getInstance()
-                        .build(Constants.ARouterUriConst.OPENACCOUNTHFWEBVIEW)
-                        .withString("url", (String) response)
-                        .navigation();
+                    if (null == identityInfoVo)
+                        return;
+
+                    String flag = identityInfoVo.getFlag();
+
+                    if (TextUtils.isEmpty(flag))
+                        return;
+
+                    if (flag.equals("Y"))
+                        ARouter.getInstance()
+                                .build(Constants.ARouterUriConst.BINDACCOUNT)
+                                .withString("Name", identityInfoVo.getName())
+                                .withString("IDCard", identityInfoVo.getIdCard())
+                                .navigation();
+                    else
+                        ARouter.getInstance()
+                                .build(Constants.ARouterUriConst.AUTHENTICATION)
+                                .withString("Type", "2")
+                                .withString("BankId", "icbc")
+                                .navigation();
+                }
 
                 break;
         }
@@ -106,10 +111,11 @@ public class OpenAccountChannelActivity extends JMEBaseActivity {
         private long timeInterval = 1000L;
 
         public void onClickOpenAccountHF() {
-            if (null == mIdentityInfoVo)
-                return;
-
-            getHFBankOpenAccountUrl(mIdentityInfoVo.getName(), mIdentityInfoVo.getIdCard());
+            ARouter.getInstance()
+                    .build(Constants.ARouterUriConst.AUTHENTICATION)
+                    .withString("Type", "1")
+                    .withString("BankId", "hfb")
+                    .navigation();
         }
 
         public void onClickOpenAccountICBC() {
@@ -124,6 +130,7 @@ public class OpenAccountChannelActivity extends JMEBaseActivity {
                     ARouter.getInstance()
                             .build(Constants.ARouterUriConst.AUTHENTICATION)
                             .withString("Type", "1")
+                            .withString("BankId", "icbc")
                             .navigation();
             }
         }
@@ -134,29 +141,10 @@ public class OpenAccountChannelActivity extends JMEBaseActivity {
             if (nowTime - mLastClickTime > timeInterval) {
                 mLastClickTime = nowTime;
 
-                if (null == mUser || !mUser.isLogin()) {
+                if (null == mUser || !mUser.isLogin())
                     gotoLogin();
-                } else {
-                    if (null == mIdentityInfoVo)
-                        return;
-
-                    String flag = mIdentityInfoVo.getFlag();
-
-                    if (TextUtils.isEmpty(flag))
-                        return;
-
-                    if (flag.equals("Y"))
-                        ARouter.getInstance()
-                                .build(Constants.ARouterUriConst.BINDACCOUNT)
-                                .withString("Name", mIdentityInfoVo.getName())
-                                .withString("IDCard", mIdentityInfoVo.getIdCard())
-                                .navigation();
-                    else
-                        ARouter.getInstance()
-                                .build(Constants.ARouterUriConst.AUTHENTICATION)
-                                .withString("Type", "2")
-                                .navigation();
-                }
+                else
+                    getWhetherIdCard();
             }
         }
 

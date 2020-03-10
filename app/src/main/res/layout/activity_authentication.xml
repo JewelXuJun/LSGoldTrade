@@ -92,54 +92,68 @@
             <include layout="@layout/item_line_vertical_list" />
 
             <LinearLayout
+                android:id="@+id/layout_mobile"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/common_item_height_big"
-                android:gravity="center"
-                android:orientation="horizontal">
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:visibility="gone">
 
-                <TextView
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="3"
-                    android:paddingLeft="@dimen/common_area_margin_tiny"
-                    android:text="@string/transaction_mobile_number"
-                    android:textColor="@color/color_text_normal"
-                    android:textSize="@dimen/sp_14" />
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
+                    android:layout_height="@dimen/common_item_height_big"
+                    android:gravity="center"
                     android:orientation="horizontal">
 
                     <TextView
-                        android:id="@+id/tv_modify"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
-                        android:layout_marginRight="@dimen/common_area_margin"
-                        android:gravity="right"
-                        android:onClick="@{() -> handlers.onClickModify()}"
-                        android:text="@string/transaction_modify"
-                        android:textColor="@color/color_blue"
-                        android:textSize="@dimen/sp_14" />
-
-                    <EditText
-                        android:id="@+id/et_mobile"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginRight="@dimen/common_area_margin_big"
-                        android:layout_toLeftOf="@+id/tv_modify"
-                        android:background="@null"
-                        android:paddingRight="@dimen/common_area_margin_tiny"
+                        android:layout_weight="3"
+                        android:paddingLeft="@dimen/common_area_margin_tiny"
+                        android:text="@string/transaction_mobile_number"
                         android:textColor="@color/color_text_normal"
                         android:textSize="@dimen/sp_14" />
 
-                </RelativeLayout>
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/tv_modify"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentRight="true"
+                            android:layout_marginRight="@dimen/common_area_margin"
+                            android:gravity="right"
+                            android:onClick="@{() -> handlers.onClickModify()}"
+                            android:text="@string/transaction_modify"
+                            android:textColor="@color/color_blue"
+                            android:textSize="@dimen/sp_14" />
+
+                        <EditText
+                            android:id="@+id/et_mobile"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginRight="@dimen/common_area_margin_big"
+                            android:layout_toLeftOf="@+id/tv_modify"
+                            android:background="@null"
+                            android:hint="@string/increment_account_withhold_contract_mobile_hint"
+                            android:inputType="number"
+                            android:maxLength="11"
+                            android:maxLines="1"
+                            android:paddingRight="@dimen/common_area_margin_tiny"
+                            android:textColor="@color/color_text_normal"
+                            android:textColorHint="@color/color_text_hint"
+                            android:textSize="@dimen/sp_14" />
+
+                    </RelativeLayout>
+
+                </LinearLayout>
+
+                <include layout="@layout/item_line_vertical_list" />
 
             </LinearLayout>
-
-            <include layout="@layout/item_line_vertical_list" />
 
         </LinearLayout>
 

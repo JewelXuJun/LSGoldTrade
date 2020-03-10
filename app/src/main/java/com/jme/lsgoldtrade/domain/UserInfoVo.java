@@ -47,7 +47,7 @@ public class UserInfoVo {
 
     private String openStatus;
 
-    private String noMaskMoble;
+    private String noMaskMobile;
 
     public String getTraderId() {
         return traderId;
@@ -169,11 +169,11 @@ public class UserInfoVo {
         this.openStatus = openStatus;
     }
 
-    public String getNoMaskMoble() {
-        return noMaskMoble;
+    public String getNoMaskMobile() {
+        return noMaskMobile;
     }
 
-    public void setNoMaskMoble(String noMaskMoble) {
-        this.noMaskMoble = noMaskMoble;
+    public void setNoMaskMobile(String noMaskMobile) {
+        this.noMaskMobile = noMaskMobile;
     }
 }

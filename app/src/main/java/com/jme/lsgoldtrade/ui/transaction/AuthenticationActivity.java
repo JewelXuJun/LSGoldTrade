@@ -2,6 +2,7 @@ package com.jme.lsgoldtrade.ui.transaction;
 
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.view.View;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
@@ -17,6 +18,7 @@ import com.jme.lsgoldtrade.databinding.ActivityAuthenticationBinding;
 import com.jme.lsgoldtrade.domain.IdentityInfoVo;
 import com.jme.lsgoldtrade.service.TradeService;
 import com.jme.lsgoldtrade.util.IntentUtils;
+import com.jme.lsgoldtrade.util.ValueUtils;
 
 import java.util.HashMap;
 
@@ -31,6 +33,7 @@ public class AuthenticationActivity extends JMEBaseActivity {
     private ActivityAuthenticationBinding mBinding;
 
     private String mType;
+    private String mBankId;
     private String mIDCard;
 
     private Subscription mRxbus;
@@ -52,8 +55,10 @@ public class AuthenticationActivity extends JMEBaseActivity {
         super.initData(savedInstanceState);
 
         mType = getIntent().getStringExtra("Type");
+        mBankId = getIntent().getStringExtra("BankId");
 
         mBinding.btnBind.setText(mType.equals("1") ? R.string.register_open_account : R.string.text_next);
+        mBinding.layoutMobile.setVisibility(!TextUtils.isEmpty(mBankId) && mBankId.equals("hfb") ? View.VISIBLE : View.GONE);
 
         getWhetherIdCard();
     }
@@ -101,6 +106,15 @@ public class AuthenticationActivity extends JMEBaseActivity {
         sendRequest(TradeService.getInstance().verifyIdCard, params, true);
     }
 
+    private void getHFBankOpenAccountUrl() {
+        HashMap<String, String> params = new HashMap<>();
+        params.put("customerName", mBinding.etName.getText().toString());
+        params.put("idCode", mIDCard);
+        params.put("mobile", mBinding.etMobile.getText().toString());
+
+        sendRequest(TradeService.getInstance().getHFBankOpenAccountUrl, params, true);
+    }
+
     @Override
     protected void DataReturn(DTRequest request, Head head, Object response) {
         super.DataReturn(request, head, response);
@@ -136,18 +150,32 @@ public class AuthenticationActivity extends JMEBaseActivity {
                     }
                 }
 
+                if (!TextUtils.isEmpty(mBankId) && mBankId.equals("hfb"))
+                    mBinding.etMobile.setText(mUser.getCurrentUser().getNoMaskMobile());
+
                 break;
             case "VerifyIdCard":
                 if (head.isSuccess()) {
-                    if (mType.equals("1"))
-                        IntentUtils.intentICBCSmall(this);
-                    else
+                    if (mType.equals("1")) {
+                        if (!TextUtils.isEmpty(mBankId) && mBankId.equals("hfb"))
+                            getHFBankOpenAccountUrl();
+                        else
+                            IntentUtils.intentICBCSmall(this);
+                    } else {
                         ARouter.getInstance()
                                 .build(Constants.ARouterUriConst.BINDACCOUNT)
                                 .withString("Name", mBinding.etName.getText().toString().trim())
                                 .withString("IDCard", mIDCard)
                                 .navigation();
+                    }
                 }
+
+                break;
+            case "GetHFBankOpenAccountUrl":
+                ARouter.getInstance()
+                        .build(Constants.ARouterUriConst.OPENACCOUNTHFWEBVIEW)
+                        .withString("url", (String) response)
+                        .navigation();
 
                 break;
         }
@@ -157,6 +185,7 @@ public class AuthenticationActivity extends JMEBaseActivity {
 
         public void onClickBind() {
             String name = mBinding.etName.getText().toString().trim();
+            String mobile = mBinding.etMobile.getText().toString();
 
             if (TextUtils.isEmpty(mIDCard))
                 mIDCard = mBinding.etIdCard.getText().toString().trim();
@@ -169,12 +198,14 @@ public class AuthenticationActivity extends JMEBaseActivity {
                 showShortToast(R.string.transaction_id_card_hint);
             else if (!TextUtils.isEmpty(errorMsg))
                 showShortToast(errorMsg);
+            else if (!TextUtils.isEmpty(mBankId) && mBankId.equals("hfb") && !ValueUtils.isPhoneNumber(mobile))
+                showShortToast(R.string.login_mobile_error);
             else
                 verifyIdCard(name, mIDCard);
         }
 
         public void onClickModify() {
-
+            mBinding.etMobile.setText("");
         }
     }
 

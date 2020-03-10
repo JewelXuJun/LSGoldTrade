@@ -232,6 +232,7 @@ public class TransactionFragment extends JMEBaseFragment {
                         ARouter.getInstance()
                                 .build(Constants.ARouterUriConst.AUTHENTICATION)
                                 .withString("Type", "2")
+                                .withString("BankId","icbc")
                                 .navigation();
                 }
 
@@ -336,15 +337,17 @@ public class TransactionFragment extends JMEBaseFragment {
     }
 
     private class TextClick extends ClickableSpan {
+
         private long mLastClickTime;
         private long timeInterval = 1000L;
-
 
         @Override
         public void onClick(View widget) {
             long nowTime = System.currentTimeMillis();
+
             if (nowTime - mLastClickTime > timeInterval) {
                 mLastClickTime = nowTime;
+
                 ARouter.getInstance()
                         .build(Constants.ARouterUriConst.JMEWEBVIEW)
                         .withString("title", mContext.getResources().getString(R.string.transaction_open_account_course_title))

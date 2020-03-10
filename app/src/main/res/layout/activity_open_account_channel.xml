@@ -87,7 +87,7 @@
                     android:layout_marginRight="@dimen/common_area_margin_big"
                     android:layout_marginBottom="@dimen/common_page_margin"
                     android:orientation="vertical"
-                    android:visibility="gone">
+                    android:visibility="visible">
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -135,14 +135,14 @@
                                     android:layout_gravity="center"
                                     android:layout_marginLeft="@dimen/common_area_margin"
                                     android:background="@drawable/bg_btn_violet"
-                                    android:onClick="@{() -> handlers.onClickOpenAccountHF()}"
-                                    android:text="@string/register_open_account"
+                                    android:text="@string/transaction_open_account_free"
                                     android:textColor="@color/white"
                                     android:textSize="@dimen/sp_12" />
 
                             </LinearLayout>
 
                             <TextView
+                                android:id="@+id/tv_recommend"
                                 android:layout_width="@dimen/width_item_small"
                                 android:layout_height="@dimen/common_item_height_tiny"
                                 android:layout_alignParentRight="true"
@@ -151,7 +151,8 @@
                                 android:gravity="center"
                                 android:text="@string/transaction_open_account_recommend"
                                 android:textColor="@color/color_orange_loght"
-                                android:textSize="@dimen/sp_12" />
+                                android:textSize="@dimen/sp_12"
+                                android:visibility="gone"/>
 
                         </RelativeLayout>
 

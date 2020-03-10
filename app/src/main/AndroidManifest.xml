@@ -266,6 +266,9 @@
         <activity
             android:name=".ui.transaction.InOutMoneyHFActivity"
             android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.transaction.OpenAccountHFWebviewActivity"
+            android:screenOrientation="portrait" />
 
         <service
             android:name=".base.JMEAppService"
