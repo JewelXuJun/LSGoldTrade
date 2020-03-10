@@ -343,4 +343,36 @@ public class TradeService extends IService<TradeApi> {
         }
     };
 
+    public API getHFBankOpenAccountUrl = new API<String>("GetHFBankOpenAccountUrl") {
+        @Override
+        public Call<DTResponse> request(HashMap<String, String> params) {
+
+            return mApi.getHFBankOpenAccountUrl(params);
+        }
+    };
+
+    public API getHFBankMoneyInUrl = new API<String>("GetHFBankMoneyInUrl") {
+        @Override
+        public Call<DTResponse> request(HashMap<String, String> params) {
+
+            return mApi.getHFBankMoneyInUrl(params);
+        }
+    };
+
+    public API getHFBankMoneyOutUrl = new API<String>("GetHFBankMoneyOutUrl") {
+        @Override
+        public Call<DTResponse> request(HashMap<String, String> params) {
+
+            return mApi.getHFBankMoneyOutUrl(params);
+        }
+    };
+
+    public API getHFBankQryMoneyInOutUrl = new API<String>("GetHFBankQryMoneyInOutUrl") {
+        @Override
+        public Call<DTResponse> request(HashMap<String, String> params) {
+
+            return mApi.getHFBankQryMoneyInOutUrl(params);
+        }
+    };
+
 }

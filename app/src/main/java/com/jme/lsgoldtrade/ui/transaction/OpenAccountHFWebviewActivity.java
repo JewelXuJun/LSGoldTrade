@@ -4,6 +4,7 @@ import android.graphics.Bitmap;
 import android.net.http.SslError;
 import android.os.Build;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.webkit.SslErrorHandler;
 import android.webkit.WebResourceError;
 import android.webkit.WebResourceRequest;
@@ -11,41 +12,29 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
-import androidx.fragment.app.Fragment;
-
-import com.jme.common.network.DTRequest;
-import com.jme.common.network.Head;
+import com.alibaba.android.arouter.facade.annotation.Route;
 import com.jme.lsgoldtrade.R;
-import com.jme.lsgoldtrade.base.JMEBaseFragment;
-import com.jme.lsgoldtrade.databinding.FragmentInoutMoneyHfBinding;
-import com.jme.lsgoldtrade.service.TradeService;
+import com.jme.lsgoldtrade.base.JMEBaseActivity;
+import com.jme.lsgoldtrade.config.Constants;
+import com.jme.lsgoldtrade.databinding.ActivityOpenAccountHfBinding;
 
-import java.util.HashMap;
+@Route(path = Constants.ARouterUriConst.OPENACCOUNTHFWEBVIEW)
+public class OpenAccountHFWebviewActivity extends JMEBaseActivity {
 
-public class InOutMoneyHFFragment extends JMEBaseFragment {
+    private ActivityOpenAccountHfBinding mBinding;
 
-    private FragmentInoutMoneyHfBinding mBinding;
-
-    private String mType;
-
-    public static Fragment newInstance(String type) {
-        InOutMoneyHFFragment fragment = new InOutMoneyHFFragment();
-
-        Bundle bundle = new Bundle();
-        bundle.putString("Type", type);
-        fragment.setArguments(bundle);
-
-        return fragment;
-    }
+    protected String mUrl = "";
 
     @Override
     protected int getContentViewId() {
-        return R.layout.fragment_inout_money_hf;
+        return R.layout.activity_open_account_hf;
     }
 
     @Override
     protected void initView() {
         super.initView();
+
+        initToolbar(R.string.transaction_open_account_hf, true);
 
         mBinding.webview.getSettings().setJavaScriptEnabled(true);
         mBinding.webview.getSettings().setUserAgentString(mBinding.webview.getSettings().getUserAgentString() + "LSGoldTradeAndroid");
@@ -67,22 +56,10 @@ public class InOutMoneyHFFragment extends JMEBaseFragment {
     protected void initData(Bundle savedInstanceState) {
         super.initData(savedInstanceState);
 
-        mType = getArguments().getString("Type");
+        mUrl = getIntent().getStringExtra("url");
 
-        switch (mType) {
-            case "In":
-                getHFBankMoneyInUrl();
-
-                break;
-            case "Out":
-                getHFBankMoneyOutUrl();
-
-                break;
-            case "TrunOver":
-                getHFBankQryMoneyInOutUrl();
-
-                break;
-        }
+        if (!TextUtils.isEmpty(mUrl))
+            updateData(mUrl);
     }
 
     @Override
@@ -124,46 +101,30 @@ public class InOutMoneyHFFragment extends JMEBaseFragment {
     }
 
     @Override
-    public void initBinding() {
+    protected void initBinding() {
         super.initBinding();
 
-        mBinding = (FragmentInoutMoneyHfBinding) mBindingUtil;
+        mBinding = (ActivityOpenAccountHfBinding) mBindingUtil;
     }
 
-    private void getHFBankMoneyInUrl() {
-        sendRequest(TradeService.getInstance().getHFBankMoneyInUrl, new HashMap<>(), true);
-    }
-
-    private void getHFBankMoneyOutUrl() {
-        sendRequest(TradeService.getInstance().getHFBankMoneyOutUrl, new HashMap<>(), true);
-    }
-
-    private void getHFBankQryMoneyInOutUrl() {
-        sendRequest(TradeService.getInstance().getHFBankQryMoneyInOutUrl, new HashMap<>(), true);
+    private void updateData(String url) {
+        mBinding.webview.loadUrl(url);
     }
 
     @Override
-    protected void DataReturn(DTRequest request, Head head, Object response) {
-        super.DataReturn(request, head, response);
+    public void onBackPressed() {
+        if (mBinding.webview.canGoBack())
+            mBinding.webview.goBack();
+        else
+            super.onBackPressed();
+    }
 
-        switch (request.getApi().getName()) {
-            case "GetHFBankMoneyInUrl":
-                mBinding.webview.loadUrl("https://www.baidu.com");
-
-                break;
-            case "GetHFBankMoneyOutUrl":
-                mBinding.webview.loadUrl("https://www.baidu.com");
-
-                break;
-            case "GetHFBankQryMoneyInOutUrl":
-                mBinding.webview.loadUrl("https://www.baidu.com");
-
-                break;
-        }
+    public void setBackNavigation(boolean hasBack) {
+        mToolbarHelper.setBackNavigation(hasBack, v -> onBackPressed());
     }
 
     @Override
-    public void onDestroy() {
+    protected void onDestroy() {
         mBinding.webview.onPause();
         mBinding.webview.destroy();
 

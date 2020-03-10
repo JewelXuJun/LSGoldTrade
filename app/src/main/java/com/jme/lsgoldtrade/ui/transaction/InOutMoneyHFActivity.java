@@ -64,9 +64,9 @@ public class InOutMoneyHFActivity extends JMEBaseActivity {
         mTabTitles[2] = getString(R.string.transaction_turnover);
 
         mFragmentArrays = new Fragment[3];
-        mFragmentArrays[0] = InOutMoneyHFFragment.newInstance("getHFBankMoneyInUr");
-        mFragmentArrays[1] = InOutMoneyHFFragment.newInstance("getHFBankMoneyOutUrl");
-        mFragmentArrays[2] = InOutMoneyHFFragment.newInstance("getHFBankQryMoneyInOutUrl");
+        mFragmentArrays[0] = InOutMoneyHFFragment.newInstance("In");
+        mFragmentArrays[1] = InOutMoneyHFFragment.newInstance("Out");
+        mFragmentArrays[2] = InOutMoneyHFFragment.newInstance("TrunOver");
 
         initTabLayout();
     }

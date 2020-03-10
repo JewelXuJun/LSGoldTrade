@@ -20,9 +20,9 @@ import java.util.HashMap;
 @Route(path = Constants.ARouterUriConst.OPENACCOUNTCHANNEL)
 public class OpenAccountChannelActivity extends JMEBaseActivity {
 
-    ///getHFBankOpenAccountUrl?customerName=%@&idCode=%@。获取恒丰开户h5链接的
-
     private ActivityOpenAccountChannelBinding mBinding;
+
+    private IdentityInfoVo mIdentityInfoVo;
 
     @Override
     protected int getContentViewId() {
@@ -44,6 +44,8 @@ public class OpenAccountChannelActivity extends JMEBaseActivity {
 
         mBinding.layoutBankHf.setVisibility(!TextUtils.isEmpty(bankId) && bankId.equals("icbc") ? View.GONE : View.VISIBLE);
         mBinding.layoutBankIcbc.setVisibility(!TextUtils.isEmpty(bankId) && bankId.equals("hfb") ? View.GONE : View.VISIBLE);
+
+        getWhetherIdCard();
     }
 
     @Override
@@ -63,6 +65,14 @@ public class OpenAccountChannelActivity extends JMEBaseActivity {
         sendRequest(TradeService.getInstance().whetherIdCard, new HashMap<>(), true);
     }
 
+    private void getHFBankOpenAccountUrl(String customerName, String idCode) {
+        HashMap<String, String> params = new HashMap<>();
+        params.put("customerName", customerName);
+        params.put("idCode", idCode);
+
+        sendRequest(TradeService.getInstance().getHFBankOpenAccountUrl, params, true);
+    }
+
     @Override
     protected void DataReturn(DTRequest request, Head head, Object response) {
         super.DataReturn(request, head, response);
@@ -70,36 +80,21 @@ public class OpenAccountChannelActivity extends JMEBaseActivity {
         switch (request.getApi().getName()) {
             case "WhetherIdCard":
                 if (head.isSuccess()) {
-                    IdentityInfoVo identityInfoVo;
-
                     try {
-                        identityInfoVo = (IdentityInfoVo) response;
+                        mIdentityInfoVo = (IdentityInfoVo) response;
                     } catch (Exception e) {
-                        identityInfoVo = null;
+                        mIdentityInfoVo = null;
 
                         e.printStackTrace();
                     }
-
-                    if (null == identityInfoVo)
-                        return;
-
-                    String flag = identityInfoVo.getFlag();
-
-                    if (TextUtils.isEmpty(flag))
-                        return;
-
-                    if (flag.equals("Y"))
-                        ARouter.getInstance()
-                                .build(Constants.ARouterUriConst.BINDACCOUNT)
-                                .withString("Name", identityInfoVo.getName())
-                                .withString("IDCard", identityInfoVo.getIdCard())
-                                .navigation();
-                    else
-                        ARouter.getInstance()
-                                .build(Constants.ARouterUriConst.AUTHENTICATION)
-                                .withString("Type", "2")
-                                .navigation();
                 }
+
+                break;
+            case "GetHFBankOpenAccountUrl":
+                ARouter.getInstance()
+                        .build(Constants.ARouterUriConst.OPENACCOUNTHFWEBVIEW)
+                        .withString("url", (String) response)
+                        .navigation();
 
                 break;
         }
@@ -111,7 +106,10 @@ public class OpenAccountChannelActivity extends JMEBaseActivity {
         private long timeInterval = 1000L;
 
         public void onClickOpenAccountHF() {
-            ARouter.getInstance().build(Constants.ARouterUriConst.BINDACCOUNTHF).navigation();
+            if (null == mIdentityInfoVo)
+                return;
+
+            getHFBankOpenAccountUrl(mIdentityInfoVo.getName(), mIdentityInfoVo.getIdCard());
         }
 
         public void onClickOpenAccountICBC() {
@@ -136,10 +134,29 @@ public class OpenAccountChannelActivity extends JMEBaseActivity {
             if (nowTime - mLastClickTime > timeInterval) {
                 mLastClickTime = nowTime;
 
-                if (null == mUser || !mUser.isLogin())
+                if (null == mUser || !mUser.isLogin()) {
                     gotoLogin();
-                else
-                    getWhetherIdCard();
+                } else {
+                    if (null == mIdentityInfoVo)
+                        return;
+
+                    String flag = mIdentityInfoVo.getFlag();
+
+                    if (TextUtils.isEmpty(flag))
+                        return;
+
+                    if (flag.equals("Y"))
+                        ARouter.getInstance()
+                                .build(Constants.ARouterUriConst.BINDACCOUNT)
+                                .withString("Name", mIdentityInfoVo.getName())
+                                .withString("IDCard", mIdentityInfoVo.getIdCard())
+                                .navigation();
+                    else
+                        ARouter.getInstance()
+                                .build(Constants.ARouterUriConst.AUTHENTICATION)
+                                .withString("Type", "2")
+                                .navigation();
+                }
             }
         }
 

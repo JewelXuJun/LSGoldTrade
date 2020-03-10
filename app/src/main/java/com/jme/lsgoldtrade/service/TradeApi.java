@@ -120,4 +120,15 @@ public interface TradeApi {
     @POST("/gold-trade/v1.0.0/android/HFBBind")
     Call<DTResponse> HFBBind(@QueryMap Map<String, String> map);
 
+    @GET("/gold-trade/v1.0.0/android/getHFBankOpenAccountUrl")
+    Call<DTResponse> getHFBankOpenAccountUrl(@QueryMap Map<String, String> map);
+
+    @GET("/gold-trade/v1.0.0/android/getHFBankMoneyInUrl")
+    Call<DTResponse> getHFBankMoneyInUrl(@QueryMap Map<String, String> map);
+
+    @GET("/gold-trade/v1.0.0/android/getHFBankMoneyOutUrl")
+    Call<DTResponse> getHFBankMoneyOutUrl(@QueryMap Map<String, String> map);
+
+    @GET("/gold-trade/v1.0.0/android/getHFBankQryMoneyInOutUrl")
+    Call<DTResponse> getHFBankQryMoneyInOutUrl(@QueryMap Map<String, String> map);
 }

@@ -383,6 +383,7 @@
     <string name="transaction_open_account_bankcard">银行卡</string>
     <string name="transaction_open_account_bank_hf">恒丰银行</string>
     <string name="transaction_open_account_recommend">推荐</string>
+    <string name="transaction_open_account_hf">恒丰银行开户</string>
     <string name="transaction_open_account_support_bank">支持银行</string>
     <string name="transaction_open_account_bond_proportion">保证金比例</string>
     <string name="transaction_open_account_course_hf">查看恒丰开户教程</string>

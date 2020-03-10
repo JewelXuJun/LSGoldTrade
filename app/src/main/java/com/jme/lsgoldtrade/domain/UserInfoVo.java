@@ -43,11 +43,11 @@ public class UserInfoVo {
 
     private String isOpen;
 
-    private String bankId;       // 代理银行编号
+    private String bankId;
 
-    private String openStatus;   //"N"-未开户，"O"-已开户，"B"-已绑定
+    private String openStatus;
 
-    private String noMaskMoble;  // 无掩码手机号
+    private String noMaskMoble;
 
     public String getTraderId() {
         return traderId;
