@@ -299,6 +299,7 @@ public class TransactionFragment extends JMEBaseFragment {
     }
 
     public class ClicKHandlers {
+
         private long mLastClickTime;
         private long timeInterval = 1000L;
 
@@ -327,21 +328,8 @@ public class TransactionFragment extends JMEBaseFragment {
                     gotoLogin();
                 else
                     ARouter.getInstance()
-                            .build(Constants.ARouterUriConst.AUTHENTICATION)
-                            .withString("Type", "1")
+                            .build(Constants.ARouterUriConst.OPENACCOUNTCHANNEL)
                             .navigation();
-            }
-        }
-
-        public void onClickBind() {
-            long nowTime = System.currentTimeMillis();
-            if (nowTime - mLastClickTime > timeInterval) {
-                mLastClickTime = nowTime;
-
-                if (null == mUser || !mUser.isLogin())
-                    gotoLogin();
-                else
-                    getWhetherIdCard();
             }
         }
 
