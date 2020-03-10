@@ -249,7 +249,6 @@ public class EntrustRiskManagementActivity extends JMEBaseActivity {
                     .add(floatTotal)
                     .add(new BigDecimal(mAccountVo.getPositionMarginStr()))
                     .add(mUnliquidatedProfitTotal.compareTo(new BigDecimal(0)) == -1 ? new BigDecimal(0) : mUnliquidatedProfitTotal)
-                    .subtract(new BigDecimal(mAccountVo.getFee()))
                     .toPlainString();
             String minReserveFund = mAccountVo.getMinReserveFundStr();
 

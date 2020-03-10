@@ -340,7 +340,6 @@ public class HoldPositionsFragment extends JMEBaseFragment implements OnRefreshL
                         .add(floatTotal)
                         .add(new BigDecimal(mAccountVo.getPositionMarginStr()))
                         .add(mUnliquidatedProfitTotal.compareTo(new BigDecimal(0)) == -1 ? new BigDecimal(0) : mUnliquidatedProfitTotal)
-                        .subtract(new BigDecimal(mAccountVo.getFee()))
                         .subtract(new BigDecimal(MarketUtil.getPriceValue(mAccountVo.getOwingAmount())))
                         .toPlainString();
 
@@ -399,7 +398,6 @@ public class HoldPositionsFragment extends JMEBaseFragment implements OnRefreshL
                         .add(mFloatTotal)
                         .add(new BigDecimal(mAccountVo.getPositionMarginStr()))
                         .add(mUnliquidatedProfitTotal.compareTo(new BigDecimal(0)) == -1 ? new BigDecimal(0) : mUnliquidatedProfitTotal)
-                        .subtract(new BigDecimal(mAccountVo.getFee()))
                         .subtract(new BigDecimal(MarketUtil.getPriceValue(mAccountVo.getOwingAmount())))
                         .toPlainString();
 
