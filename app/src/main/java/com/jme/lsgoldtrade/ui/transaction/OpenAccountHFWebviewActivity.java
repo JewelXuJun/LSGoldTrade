@@ -5,12 +5,16 @@ import android.net.http.SslError;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.view.View;
 import android.webkit.SslErrorHandler;
 import android.webkit.WebResourceError;
 import android.webkit.WebResourceRequest;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.TextView;
+
+import androidx.core.content.ContextCompat;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.jme.lsgoldtrade.R;
@@ -23,7 +27,9 @@ public class OpenAccountHFWebviewActivity extends JMEBaseActivity {
 
     private ActivityOpenAccountHfBinding mBinding;
 
-    protected String mUrl = "";
+    private TextView tvClose;
+
+    private String mUrl = "";
 
     @Override
     protected int getContentViewId() {
@@ -34,7 +40,11 @@ public class OpenAccountHFWebviewActivity extends JMEBaseActivity {
     protected void initView() {
         super.initView();
 
-        initToolbar(R.string.transaction_open_account_hf, true);
+        initToolbar(R.string.transaction_open_account_hf, false);
+
+        tvClose = findViewById(R.id.tv_close);
+        tvClose.setTextColor(ContextCompat.getColor(this, R.color.gray));
+        tvClose.setVisibility(View.VISIBLE);
 
         mBinding.webview.getSettings().setJavaScriptEnabled(true);
         mBinding.webview.getSettings().setUserAgentString(mBinding.webview.getSettings().getUserAgentString() + "LSGoldTradeAndroid");
@@ -65,6 +75,8 @@ public class OpenAccountHFWebviewActivity extends JMEBaseActivity {
     @Override
     protected void initListener() {
         super.initListener();
+
+        tvClose.setOnClickListener((v) -> finish());
 
         mBinding.webview.setWebViewClient(new WebViewClient() {
 
@@ -109,18 +121,6 @@ public class OpenAccountHFWebviewActivity extends JMEBaseActivity {
 
     private void updateData(String url) {
         mBinding.webview.loadUrl(url);
-    }
-
-    @Override
-    public void onBackPressed() {
-        if (mBinding.webview.canGoBack())
-            mBinding.webview.goBack();
-        else
-            super.onBackPressed();
-    }
-
-    public void setBackNavigation(boolean hasBack) {
-        mToolbarHelper.setBackNavigation(hasBack, v -> onBackPressed());
     }
 
     @Override
