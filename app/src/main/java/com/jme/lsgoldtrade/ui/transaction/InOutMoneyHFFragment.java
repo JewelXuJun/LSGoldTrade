@@ -148,15 +148,9 @@ public class InOutMoneyHFFragment extends JMEBaseFragment {
 
         switch (request.getApi().getName()) {
             case "GetHFBankMoneyInUrl":
-                mBinding.webview.loadUrl("https://www.baidu.com");
-
-                break;
             case "GetHFBankMoneyOutUrl":
-                mBinding.webview.loadUrl("https://www.baidu.com");
-
-                break;
             case "GetHFBankQryMoneyInOutUrl":
-                mBinding.webview.loadUrl("https://www.baidu.com");
+                mBinding.webview.loadUrl((String) response);
 
                 break;
         }

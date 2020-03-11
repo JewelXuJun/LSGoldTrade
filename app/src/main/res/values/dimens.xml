@@ -19,7 +19,7 @@
     <dimen name="height_market_current_state">20dp</dimen>
     <dimen name="height_btn">50dp</dimen>
     <dimen name="height_turnover_time">80dp</dimen>
-    <dimen name="height_fchart">120dp</dimen>
+    <dimen name="height_fchart">140dp</dimen>
     <dimen name="height_feedback">180dp</dimen>
     <dimen name="height_chart">400dp</dimen>
     <dimen name="height_market_detail_landscape">60dp</dimen>

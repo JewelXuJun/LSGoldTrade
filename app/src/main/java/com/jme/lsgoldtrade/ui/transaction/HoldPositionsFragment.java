@@ -667,13 +667,19 @@ public class HoldPositionsFragment extends JMEBaseFragment implements OnRefreshL
             if (null == mUser || !mUser.isLogin()) {
                 gotoLogin();
             } else {
-                if (!TextUtils.isEmpty(mUser.getIsFromTjs()) && mUser.getIsFromTjs().equals("true")) {
-                    if (mUser.getCurrentUser().getCardType().equals("2") && mUser.getCurrentUser().getReserveFlag().equals("N"))
-                        ARouter.getInstance().build(Constants.ARouterUriConst.BANKRESERVE).navigation();
-                    else
+                String bankId = mUser.getCurrentUser().getBankId();
+
+                if (bankId.equals("icbc")) {
+                    if (!TextUtils.isEmpty(mUser.getIsFromTjs()) && mUser.getIsFromTjs().equals("true")) {
+                        if (mUser.getCurrentUser().getCardType().equals("2") && mUser.getCurrentUser().getReserveFlag().equals("N"))
+                            ARouter.getInstance().build(Constants.ARouterUriConst.BANKRESERVE).navigation();
+                        else
+                            ARouter.getInstance().build(Constants.ARouterUriConst.CAPITALTRANSFER).navigation();
+                    } else {
                         ARouter.getInstance().build(Constants.ARouterUriConst.CAPITALTRANSFER).navigation();
-                } else {
-                    ARouter.getInstance().build(Constants.ARouterUriConst.CAPITALTRANSFER).navigation();
+                    }
+                } else if (bankId.equals("hfb")) {
+                    ARouter.getInstance().build( Constants.ARouterUriConst.INOUTMONEYHF).navigation();
                 }
             }
         }
