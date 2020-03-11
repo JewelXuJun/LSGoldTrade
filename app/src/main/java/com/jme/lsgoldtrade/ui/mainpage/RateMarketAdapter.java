@@ -60,7 +60,7 @@ public class RateMarketAdapter extends RecyclerView.Adapter<RateMarketAdapter.Vi
 
     @Override
     public int getItemCount() {
-        return null == mList ? 0 : mList.size() < 3 ? mList.size() : 3;
+        return null == mList ? 3 : mList.size() < 3 ? mList.size() : 3;
     }
 
     @Override
