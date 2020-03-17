@@ -293,8 +293,8 @@ public class CurrentHoldPositionsFragment extends JMEBaseFragment {
             long maxHoldQty = contractInfoVo.getMaxHoldQty();
             long maxAmount = positionVo.getPosition();
 
-            mEveningUpPopupWindow.setData(fiveSpeedVo, mUser.getAccount(), contractID,
-                    type, new BigDecimal(contractInfoVo.getMinPriceMove()).divide(new BigDecimal(100)).floatValue(),
+            mEveningUpPopupWindow.setData(fiveSpeedVo, contractID, type,
+                    new BigDecimal(contractInfoVo.getMinPriceMove()).divide(new BigDecimal(100)).floatValue(),
                     lowerLimitPrice, highLimitPrice, minOrderQty, maxOrderQty, maxHoldQty, maxAmount, positionVo.getOffsetFrozen(),
                     (view) -> {
                         String price = mEveningUpPopupWindow.getPrice();

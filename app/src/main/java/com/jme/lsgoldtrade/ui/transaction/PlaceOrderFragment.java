@@ -360,7 +360,7 @@ public class PlaceOrderFragment extends JMEBaseFragment implements FChart.OnPric
         if (null == mPlaceOrderPopupWindow || mPlaceOrderPopupWindow.isShowing())
             return;
 
-        mPlaceOrderPopupWindow.setData(mUser.getAccount(), contractID, price, amount, String.valueOf(bsFlag), (view) -> {
+        mPlaceOrderPopupWindow.setData(contractID, price, amount, String.valueOf(bsFlag), (view) -> {
             limitOrder(contractID, mPlaceOrderPrice, amount, mBsFlag, mOcFlag);
 
             mPlaceOrderPopupWindow.dismiss();
@@ -711,7 +711,7 @@ public class PlaceOrderFragment extends JMEBaseFragment implements FChart.OnPric
 //                        if (null != mSignedPopUpWindow && !mSignedPopUpWindow.isShowing())
 //                            mSignedPopUpWindow.showAtLocation(mBinding.etAmount, Gravity.CENTER, 0, 0);
 //                    } else {
-                        showPlaceOrderPopupWindow(mBinding.tvContractId.getText().toString(), mPlaceOrderPrice, mBinding.etAmount.getText().toString(), mBsFlag);
+                    showPlaceOrderPopupWindow(mBinding.tvContractId.getText().toString(), mPlaceOrderPrice, mBinding.etAmount.getText().toString(), mBsFlag);
 //                    }
                 } else {
 //                    if (head.getCode().equals("-2012"))

@@ -78,6 +78,7 @@ public class MarketJudgmentActivity extends JMEBaseActivity {
     private Subscription mRxbus;
     private int mCallEntry = 0;
     private ConfirmSimplePopupwindow mTradingPasswordConfirmSimplePopupwindow;
+
     @Override
     protected int getContentViewId() {
         return R.layout.activity_market_judgment;
@@ -140,58 +141,58 @@ public class MarketJudgmentActivity extends JMEBaseActivity {
                     limitOrder(list.get(0), list.get(1), list.get(2), list.get(3), list.get(4));
 
                     break;
-                    case Constants.RxBusConst.RXBUS_HQYP_BUY_MORE:
-                        if (null == mFragmentList || 0 == mFragmentList.size())
-                            return;
+                case Constants.RxBusConst.RXBUS_HQYP_BUY_MORE:
+                    if (null == mFragmentList || 0 == mFragmentList.size())
+                        return;
 
-                        MarketJudgmentFragment marketJudgmentFragment = mFragmentList.get(mBinding.tabViewpager.getCurrentItem());
+                    MarketJudgmentFragment marketJudgmentFragment = mFragmentList.get(mBinding.tabViewpager.getCurrentItem());
 
-                        if (null == marketJudgmentFragment)
-                            return;
+                    if (null == marketJudgmentFragment)
+                        return;
 
-                        mContractID = marketJudgmentFragment.getContractID();
-                        mContractInfoVo = marketJudgmentFragment.getContractInfo();
-                        mTenSpeedVo = marketJudgmentFragment.getTenSpeedVo();
+                    mContractID = marketJudgmentFragment.getContractID();
+                    mContractInfoVo = marketJudgmentFragment.getContractInfo();
+                    mTenSpeedVo = marketJudgmentFragment.getTenSpeedVo();
 
-                        if (TextUtils.isEmpty(mContractID) || null == mTenSpeedVo || null == mContractInfoVo)
-                            return;
+                    if (TextUtils.isEmpty(mContractID) || null == mTenSpeedVo || null == mContractInfoVo)
+                        return;
 
-                        mBsFlag = 1;
-                        mOcFlag = 0;
-                        mPagingKey = "";
+                    mBsFlag = 1;
+                    mOcFlag = 0;
+                    mPagingKey = "";
 
-                        queryLoginResult();
-                        break;
-                    case Constants.RxBusConst.RXBUS_HQYP_SALE_EMPTY:
-                        if (null == mFragmentList || 0 == mFragmentList.size())
-                            return;
-
-                        MarketJudgmentFragment marketJudgmentFragment2 = mFragmentList.get(mBinding.tabViewpager.getCurrentItem());
-
-                        if (null == marketJudgmentFragment2)
-                            return;
-
-                        mContractID = marketJudgmentFragment2.getContractID();
-                        mContractInfoVo = marketJudgmentFragment2.getContractInfo();
-                        mTenSpeedVo = marketJudgmentFragment2.getTenSpeedVo();
-
-                        if (TextUtils.isEmpty(mContractID) || null == mTenSpeedVo || null == mContractInfoVo)
-                            return;
-
-                        mBsFlag = 2;
-                        mOcFlag = 0;
-                        mPagingKey = "";
-
-                        queryLoginResult();
+                    queryLoginResult();
                     break;
-                    case Constants.RxBusConst.RXBUS_HQYP_DECLARATION_FORM:
-                        getUserPasswordSettingInfo();
-                        AppConfig.Select_ContractId = "Au(T+D)";
+                case Constants.RxBusConst.RXBUS_HQYP_SALE_EMPTY:
+                    if (null == mFragmentList || 0 == mFragmentList.size())
+                        return;
 
-                        RxBus.getInstance().post(Constants.RxBusConst.RXBUS_TRANSACTION_PLACE_ORDER, "Au(T+D)");
-                        ARouter.getInstance().build(Constants.ARouterUriConst.MAIN).navigation();
+                    MarketJudgmentFragment marketJudgmentFragment2 = mFragmentList.get(mBinding.tabViewpager.getCurrentItem());
 
-                        finish();
+                    if (null == marketJudgmentFragment2)
+                        return;
+
+                    mContractID = marketJudgmentFragment2.getContractID();
+                    mContractInfoVo = marketJudgmentFragment2.getContractInfo();
+                    mTenSpeedVo = marketJudgmentFragment2.getTenSpeedVo();
+
+                    if (TextUtils.isEmpty(mContractID) || null == mTenSpeedVo || null == mContractInfoVo)
+                        return;
+
+                    mBsFlag = 2;
+                    mOcFlag = 0;
+                    mPagingKey = "";
+
+                    queryLoginResult();
+                    break;
+                case Constants.RxBusConst.RXBUS_HQYP_DECLARATION_FORM:
+                    getUserPasswordSettingInfo();
+                    AppConfig.Select_ContractId = "Au(T+D)";
+
+                    RxBus.getInstance().post(Constants.RxBusConst.RXBUS_TRANSACTION_PLACE_ORDER, "Au(T+D)");
+                    ARouter.getInstance().build(Constants.ARouterUriConst.MAIN).navigation();
+
+                    finish();
                     break;
             }
         });
@@ -317,6 +318,7 @@ public class MarketJudgmentActivity extends JMEBaseActivity {
 
         sendRequest(TradeService.getInstance().limitOrder, params, true);
     }
+
     private void getUserPasswordSettingInfo() {
         sendRequest(ManagementService.getInstance().getUserPasswordSettingInfo, new HashMap<>(), true, false, false);
     }
@@ -372,7 +374,7 @@ public class MarketJudgmentActivity extends JMEBaseActivity {
 //                        if (null != mSignedPopUpWindow && !mSignedPopUpWindow.isShowing())
 //                            mSignedPopUpWindow.showAtLocation(mBinding.tablayout, Gravity.CENTER, 0, 0);
 //                    } else {
-                        getAccount();
+                    getAccount();
 //                    }
                 } else {
 //                    if (head.getCode().equals("-2012"))
@@ -435,7 +437,7 @@ public class MarketJudgmentActivity extends JMEBaseActivity {
                         } else {
                             if (null != mMarketTradePopupWindow && !mMarketTradePopupWindow.isShowing()) {
                                 mMarketTradePopupWindow.setData(mTenSpeedVo, mAccountVo, mPositionVo, mContractInfoVo,
-                                        mUser.getAccount(), Math.abs(mLongPositionMargin - mShortPositionMargin), mBsFlag, mOcFlag);
+                                        Math.abs(mLongPositionMargin - mShortPositionMargin), mBsFlag, mOcFlag);
                                 mMarketTradePopupWindow.showAtLocation(mBinding.tablayout, Gravity.BOTTOM, 0, 0);
                             }
                         }
@@ -490,14 +492,14 @@ public class MarketJudgmentActivity extends JMEBaseActivity {
                         }
                     } else {
 
-                        if (TextUtils.isEmpty(hasTimeout) || hasTimeout.equals("N")){
-                            if(mCallEntry == 10){
+                        if (TextUtils.isEmpty(hasTimeout) || hasTimeout.equals("N")) {
+                            if (mCallEntry == 10) {
                                 //行情研判 买多
                                 RxBus.getInstance().post(Constants.RxBusConst.RXBUS_HQYP_BUY_MORE, null);
-                            }else if(mCallEntry == 11){
+                            } else if (mCallEntry == 11) {
                                 //行情研判 卖空
                                 RxBus.getInstance().post(Constants.RxBusConst.RXBUS_HQYP_SALE_EMPTY, null);
-                            }else if(mCallEntry == 12){
+                            } else if (mCallEntry == 12) {
                                 //行情研判 报单
                                 RxBus.getInstance().post(Constants.RxBusConst.RXBUS_HQYP_DECLARATION_FORM, null);
                             }
@@ -532,7 +534,7 @@ public class MarketJudgmentActivity extends JMEBaseActivity {
                         ARouter.getInstance()
                                 .build(Constants.ARouterUriConst.UNLOCKTRADINGPASSWORD)
                                 .withInt("Type", type)
-                                .withInt("callEntry",mCallEntry)
+                                .withInt("callEntry", mCallEntry)
                                 .navigation();
                     }
                 }

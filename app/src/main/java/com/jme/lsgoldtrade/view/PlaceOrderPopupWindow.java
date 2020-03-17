@@ -1,7 +1,9 @@
 package com.jme.lsgoldtrade.view;
 
 import android.content.Context;
+
 import androidx.databinding.DataBindingUtil;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -42,10 +44,9 @@ public class PlaceOrderPopupWindow extends JMEBasePopupWindow {
         mBinding.btnCancel.setOnClickListener((view) -> dismiss());
     }
 
-    public void setData(String account, String contractID, String price, String amount, String type, View.OnClickListener confirmListener) {
+    public void setData(String contractID, String price, String amount, String type, View.OnClickListener confirmListener) {
         mBinding.tvTitle.setText(type.equals("1") ? mContext.getString(R.string.transaction_buy_more_confirm)
                 : mContext.getString(R.string.transaction_sale_empty_confirm));
-        mBinding.tvGoldAccount.setText(account);
         mBinding.tvBusinessType.setText(type.equals("1") ? mContext.getString(R.string.transaction_buy_open)
                 : mContext.getString(R.string.transaction_sale_open));
         mBinding.tvBusinessVarieties.setText(contractID);

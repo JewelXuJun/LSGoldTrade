@@ -129,7 +129,7 @@ public class MarketTradePopupWindow extends JMEBasePopupWindow {
         });
     }
 
-    public void setData(TenSpeedVo tenSpeedVo, AccountVo accountVo, PositionVo positionVo, ContractInfoVo contractInfoVo, String account,
+    public void setData(TenSpeedVo tenSpeedVo, AccountVo accountVo, PositionVo positionVo, ContractInfoVo contractInfoVo,
                         long positionMargin, int bsFlag, int ocFlag) {
         mAccount = accountVo;
         mPositionVo = positionVo;
@@ -139,7 +139,6 @@ public class MarketTradePopupWindow extends JMEBasePopupWindow {
 
         mBinding.tvTitle.setText(bsFlag == 1 ? mContext.getResources().getString(R.string.transaction_buy_more_confirm)
                 : mContext.getResources().getString(R.string.transaction_sale_empty_confirm));
-        mBinding.tvGoldAccount.setText(account);
         mBinding.tvBusinessType.setText(bsFlag == 1 ? mContext.getResources().getString(R.string.transaction_buy_open)
                 : mContext.getResources().getString(R.string.transaction_sale_open));
         mBinding.etPrice.setText(bsFlag == 1 ? tenSpeedVo.getTenAskLists().get(9)[1] : tenSpeedVo.getTenBidLists().get(0)[1]);

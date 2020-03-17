@@ -120,14 +120,13 @@ public class EveningUpPopupWindow extends JMEBasePopupWindow {
         });
     }
 
-    public void setData(FiveSpeedVo fiveSpeedVo, String account, String contractID, String type, float priceMove, String lowerLimitPrice,
+    public void setData(FiveSpeedVo fiveSpeedVo, String contractID, String type, float priceMove, String lowerLimitPrice,
                         String highLimitPrice, long minOrderQty, long maxOrderQty, long maxHoldQty, long maxAmount, long frozenAmount,
                         View.OnClickListener confirmListener) {
         mFiveSpeedVo = fiveSpeedVo;
         mLength = contractID.equals("Ag(T+D)") ? 0 : 2;
         mType = type;
 
-        mBinding.tvGoldAccount.setText(account);
         mBinding.tvBusinessType.setText(mType.equals("多") ? mContext.getString(R.string.transaction_buy_evening)
                 : mContext.getString(R.string.transaction_sale_evening));
         mBinding.tvBusinessVarieties.setText(contractID);

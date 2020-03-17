@@ -321,7 +321,7 @@ public class MarketDetailActivity extends JMEBaseActivity implements FChart.OnPr
                     break;
 
                 case Constants.RxBusConst.RXBUS_LOGIN_SUCCESS:
-                    if(isOpenStockUser())
+                    if (isOpenStockUser())
                         showStockUserDialog();
                     getTimeLineList();
                     break;
@@ -991,7 +991,7 @@ public class MarketDetailActivity extends JMEBaseActivity implements FChart.OnPr
 //                        if (null != mSignedPopUpWindow && !mSignedPopUpWindow.isShowing())
 //                            mSignedPopUpWindow.showAtLocation(mBinding.tvHigh, Gravity.CENTER, 0, 0);
 //                    } else {
-                        getAccount();
+                    getAccount();
 //                    }
                 } else {
 //                    if (head.getCode().equals("-2012"))
@@ -1054,7 +1054,7 @@ public class MarketDetailActivity extends JMEBaseActivity implements FChart.OnPr
                         } else {
                             if (null != mMarketTradePopupWindow && !mMarketTradePopupWindow.isShowing()) {
                                 mMarketTradePopupWindow.setData(mTenSpeedVo, mAccountVo, mPositionVo, mContractInfoVo,
-                                        mUser.getAccount(), Math.abs(mLongPositionMargin - mShortPositionMargin), mBsFlag, mOcFlag);
+                                        Math.abs(mLongPositionMargin - mShortPositionMargin), mBsFlag, mOcFlag);
                                 mMarketTradePopupWindow.showAtLocation(mBinding.tvHigh, Gravity.BOTTOM, 0, 0);
                             }
                         }
@@ -1127,13 +1127,13 @@ public class MarketDetailActivity extends JMEBaseActivity implements FChart.OnPr
                         }
                     } else {
                         if (TextUtils.isEmpty(hasTimeout) || hasTimeout.equals("N")) {
-                            if(mCallEntry == 3){
+                            if (mCallEntry == 3) {
                                 //买多
                                 RxBus.getInstance().post(Constants.RxBusConst.RXBUS_BUY_MORE_SETPASSWORD_SUCCESS, null);
-                            }else if(mCallEntry == 4){
+                            } else if (mCallEntry == 4) {
                                 //卖空
                                 RxBus.getInstance().post(Constants.RxBusConst.RXBUS_SALE_EMPTY_SETPASSWORD_SUCCESS, null);
-                            }else if(mCallEntry == 9){
+                            } else if (mCallEntry == 9) {
                                 //报单
                                 RxBus.getInstance().post(Constants.RxBusConst.RXBUS_DECLARATION_FORM_SETPASSWORD_SUCCESS, null);
                             }
@@ -1169,7 +1169,7 @@ public class MarketDetailActivity extends JMEBaseActivity implements FChart.OnPr
                         ARouter.getInstance()
                                 .build(Constants.ARouterUriConst.UNLOCKTRADINGPASSWORD)
                                 .withInt("Type", type)
-                                .withInt("callEntry",mCallEntry)
+                                .withInt("callEntry", mCallEntry)
                                 .navigation();
                     }
                 }
@@ -1325,15 +1325,16 @@ public class MarketDetailActivity extends JMEBaseActivity implements FChart.OnPr
             DisplayMetrics dm = new DisplayMetrics();
             getWindowManager().getDefaultDisplay().getMetrics(dm);
             WindowManager.LayoutParams lp = mStockUserDialog.getWindow().getAttributes();
-            lp.width = (int) (dm.widthPixels*0.75); //设置宽度
+            lp.width = (int) (dm.widthPixels * 0.75); //设置宽度
             mStockUserDialog.getWindow().setAttributes(lp);
 
         }
     }
-    private boolean isOpenStockUser(){
-        if(!TextUtils.isEmpty(mUser.getAccountID())&&mUser.getCurrentUser()!=null&&mUser.getCurrentUser().getIsOpen()!=null&&"-2017".equals(mUser.getCurrentUser().getIsOpen())){
+
+    private boolean isOpenStockUser() {
+        if (!TextUtils.isEmpty(mUser.getAccountID()) && mUser.getCurrentUser() != null && mUser.getCurrentUser().getIsOpen() != null && "-2017".equals(mUser.getCurrentUser().getIsOpen())) {
             return true;
-        }else{
+        } else {
             return false;
         }
     }
