@@ -48,6 +48,7 @@
     <dimen name="height_increment_item">100dp</dimen>
     <dimen name="height_withhold_item">66dp</dimen>
     <dimen name="height_bank_item">168dp</dimen>
+    <dimen name="height_statement_title">124dp</dimen>
 
     <dimen name="width_market_item">46dp</dimen>
     <dimen name="width_item_title">74dp</dimen>
