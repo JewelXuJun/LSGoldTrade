@@ -26,6 +26,7 @@ public class SharedPreUtils {
     public static final String Key_Close_Time = "CloseTime";
     public static final String Key_DownLoad_Size = "DownLoadSize";
     public static final String Key_Transaction_Hidden_Status = "TransactionHiddenStatus";
+    public static final String Key_Statement = "Statement";
 
     /**
      * 序列化对象

@@ -24,7 +24,6 @@ import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -61,6 +60,7 @@ import com.jme.lsgoldtrade.tabhost.MainTab;
 import com.jme.lsgoldtrade.view.ConfirmSimplePopupwindow;
 import com.jme.lsgoldtrade.view.ProtocolUpdatePopUpWindow;
 import com.jme.lsgoldtrade.view.SignedPopUpWindow;
+import com.jme.lsgoldtrade.view.StatementPopupWindow;
 import com.jme.lsgoldtrade.view.StockUserDialog;
 
 import java.io.File;
@@ -86,6 +86,7 @@ public class MainActivity extends JMEBaseActivity implements TabHost.OnTabChange
     private BroadcastReceiver mReceiver;
     private UpdateDialog mDialog;
     private UpdateDialog mForceDialog;
+    private StatementPopupWindow mStatementPopUpWindow;
     private ProtocolUpdatePopUpWindow mProtocolUpdatePopUpWindow;
     private ConfirmSimplePopupwindow mConfirmSimplePopupwindow;
     private ConfirmSimplePopupwindow mTradingPasswordConfirmSimplePopupwindow;
@@ -175,6 +176,10 @@ public class MainActivity extends JMEBaseActivity implements TabHost.OnTabChange
 
         mStateReceiver = new NetStateReceiver();
 
+        mStatementPopUpWindow = new StatementPopupWindow(this);
+        mStatementPopUpWindow.setOutsideTouchable(false);
+        mStatementPopUpWindow.setFocusable(false);
+
         mProtocolUpdatePopUpWindow = new ProtocolUpdatePopUpWindow(this);
         mProtocolUpdatePopUpWindow.setOutsideTouchable(false);
         mProtocolUpdatePopUpWindow.setFocusable(false);
@@ -189,6 +194,8 @@ public class MainActivity extends JMEBaseActivity implements TabHost.OnTabChange
 
         registerReceiver(mStateReceiver, mIntentFilter);
         initDownLoadData();
+
+        new Handler().postDelayed(() -> showStatementPopupWindow(), 1000);
 
         if (!TextUtils.isEmpty(SharedPreUtils.getString(mContext, SharedPreUtils.Token))) {
 //            new Handler().postDelayed(() -> checkIsSign(), 1000);
@@ -236,7 +243,7 @@ public class MainActivity extends JMEBaseActivity implements TabHost.OnTabChange
                     break;
                 case Constants.RxBusConst.RXBUS_LOGIN_SUCCESS:
 //                    checkIsSign();
-                    if(isOpenStockUser())
+                    if (isOpenStockUser())
                         showStockUserDialog();
 
                     getProtocolVersion();
@@ -335,6 +342,12 @@ public class MainActivity extends JMEBaseActivity implements TabHost.OnTabChange
                 mConfirmSimplePopupwindow.showAtLocation(mBinding.tabhost, Gravity.CENTER, 0, 0);
             }
         }
+    }
+
+    private void showStatementPopupWindow() {
+        if (!SharedPreUtils.getBoolean(this, SharedPreUtils.Key_Statement, false)
+                && null != mStatementPopUpWindow && !mStatementPopUpWindow.isShowing())
+            mStatementPopUpWindow.showAtLocation(mBinding.tabhost, Gravity.CENTER, 0, 0);
     }
 
     private void initDownLoadData() {
@@ -850,7 +863,9 @@ public class MainActivity extends JMEBaseActivity implements TabHost.OnTabChange
 
     @Override
     public boolean dispatchTouchEvent(MotionEvent event) {
-        if (null != mProtocolUpdatePopUpWindow && mProtocolUpdatePopUpWindow.isShowing())
+        if (null != mStatementPopUpWindow && mStatementPopUpWindow.isShowing())
+            return false;
+        else if (null != mProtocolUpdatePopUpWindow && mProtocolUpdatePopUpWindow.isShowing())
             return false;
         else if (null != mTradingPasswordConfirmSimplePopupwindow && mTradingPasswordConfirmSimplePopupwindow.isShowing())
             return false;
@@ -873,15 +888,16 @@ public class MainActivity extends JMEBaseActivity implements TabHost.OnTabChange
             DisplayMetrics dm = new DisplayMetrics();
             getWindowManager().getDefaultDisplay().getMetrics(dm);
             WindowManager.LayoutParams lp = mStockUserDialog.getWindow().getAttributes();
-            lp.width = (int) (dm.widthPixels*0.75); //设置宽度
+            lp.width = (int) (dm.widthPixels * 0.75); //设置宽度
             mStockUserDialog.getWindow().setAttributes(lp);
 
         }
     }
-    private boolean isOpenStockUser(){
-        if(!TextUtils.isEmpty(mUser.getAccountID())&&mUser.getCurrentUser()!=null&&mUser.getCurrentUser().getIsOpen()!=null&&"-2017".equals(mUser.getCurrentUser().getIsOpen())){
+
+    private boolean isOpenStockUser() {
+        if (!TextUtils.isEmpty(mUser.getAccountID()) && mUser.getCurrentUser() != null && mUser.getCurrentUser().getIsOpen() != null && "-2017".equals(mUser.getCurrentUser().getIsOpen())) {
             return true;
-        }else{
+        } else {
             return false;
         }
     }
