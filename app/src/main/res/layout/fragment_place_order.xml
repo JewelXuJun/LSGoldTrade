@@ -27,7 +27,7 @@
             android:paddingRight="@dimen/common_area_margin"
             android:textColor="@color/white"
             android:textSize="@dimen/size_middle"
-            android:visibility="visible" />
+            android:visibility="gone" />
 
         <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
