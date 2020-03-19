@@ -155,8 +155,8 @@ public class FiveSpeedVo implements Serializable {
         this.lastClosePrice = lastClosePrice;
     }
 
-    public long getLastSettlePrice() {
-        return lastSettlePrice;
+    public String getLastSettlePrice() {
+        return MarketUtil.getPriceValue(lastSettlePrice);
     }
 
     public void setLastSettlePrice(long lastSettlePrice) {
@@ -470,23 +470,11 @@ public class FiveSpeedVo implements Serializable {
     public List<String[]> getFiveAskLists() {
         List<String[]> list = new ArrayList<>();
 
-        String[] askValue5 = new String[3];
-        askValue5[0] = "卖5";
-        askValue5[1] = MarketUtil.getPriceValue(askPrice5);
-        askValue5[2] = String.valueOf(askVolume5);
-        list.add(askValue5);
-
-        String[] askValue4 = new String[3];
-        askValue4[0] = "卖4";
-        askValue4[1] = MarketUtil.getPriceValue(askPrice4);
-        askValue4[2] = String.valueOf(askVolume4);
-        list.add(askValue4);
-
-        String[] askValue3 = new String[3];
-        askValue3[0] = "卖3";
-        askValue3[1] = MarketUtil.getPriceValue(askPrice3);
-        askValue3[2] = String.valueOf(askVolume3);
-        list.add(askValue3);
+        String[] askValue1 = new String[3];
+        askValue1[0] = "卖1";
+        askValue1[1] = MarketUtil.getPriceValue(askPrice1);
+        askValue1[2] = String.valueOf(askVolume1);
+        list.add(askValue1);
 
         String[] askValue2 = new String[3];
         askValue2[0] = "卖2";
@@ -494,11 +482,23 @@ public class FiveSpeedVo implements Serializable {
         askValue2[2] = String.valueOf(askVolume2);
         list.add(askValue2);
 
-        String[] askValue1 = new String[3];
-        askValue1[0] = "卖1";
-        askValue1[1] = MarketUtil.getPriceValue(askPrice1);
-        askValue1[2] = String.valueOf(askVolume1);
-        list.add(askValue1);
+        String[] askValue3 = new String[3];
+        askValue3[0] = "卖3";
+        askValue3[1] = MarketUtil.getPriceValue(askPrice3);
+        askValue3[2] = String.valueOf(askVolume3);
+        list.add(askValue3);
+
+        String[] askValue4 = new String[3];
+        askValue4[0] = "卖4";
+        askValue4[1] = MarketUtil.getPriceValue(askPrice4);
+        askValue4[2] = String.valueOf(askVolume4);
+        list.add(askValue4);
+
+        String[] askValue5 = new String[3];
+        askValue5[0] = "卖5";
+        askValue5[1] = MarketUtil.getPriceValue(askPrice5);
+        askValue5[2] = String.valueOf(askVolume5);
+        list.add(askValue5);
 
         return list;
     }

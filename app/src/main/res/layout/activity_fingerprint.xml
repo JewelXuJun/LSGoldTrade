@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/common_background"
+        android:orientation="vertical">
+
+        <include layout="@layout/layout_toolbar" />
+
+        <include layout="@layout/item_line_vertical" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/height_item_normal"
+            android:background="@color/white"
+            android:paddingLeft="@dimen/common_area_margin"
+            android:paddingRight="@dimen/common_area_margin">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:text="@string/security_fingerprint_use"
+                android:textColor="@color/color_text_normal"
+                android:textSize="@dimen/size_normal" />
+
+            <Switch
+                android:id="@+id/switch_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:track="@drawable/selector_switch_track"
+                android:switchMinWidth="20dp"
+                android:textOn=" "
+                android:textOff=" "
+                android:thumb="@drawable/selector_switch_thumb"
+                android:layout_centerVertical="true" />
+
+        </RelativeLayout>
+
+        <include layout="@layout/item_line_vertical" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="@dimen/common_area_margin"
+            android:paddingRight="@dimen/common_area_margin"
+            android:paddingTop="@dimen/common_area_margin_tiny"
+            android:background="@color/white"
+            android:textColor="@color/color_text_normal"
+            android:text="@string/security_fingerprint_message"
+            android:textSize="@dimen/sp_14"
+            android:lineSpacingExtra="@dimen/lineSpacingExtra_normal"
+            android:paddingBottom="@dimen/common_area_margin_tiny"/>
+
+    </LinearLayout>
+
+</layout>

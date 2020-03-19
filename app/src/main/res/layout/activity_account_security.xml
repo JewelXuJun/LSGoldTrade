@@ -1,0 +1,244 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+        <variable
+            name="handlers"
+            type="com.jme.lsgoldtrade.ui.security.AccountSecurityActivity.ClickHandlers" />
+
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/common_background"
+        android:orientation="vertical">
+
+        <include layout="@layout/layout_toolbar" />
+
+        <include layout="@layout/item_line_vertical" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:orientation="vertical"
+            android:paddingLeft="@dimen/common_area_margin"
+            android:paddingRight="@dimen/common_area_margin">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/height_item_normal">
+
+                <TextView
+                    android:id="@+id/tv_account_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:text="@string/security_tjs_account"
+                    android:textColor="@color/color_text_normal"
+                    android:textSize="@dimen/size_normal" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_toRightOf="@+id/tv_account_title"
+                    android:onClick="@{() ->handlers.onClickTips()}"
+                    android:padding="@dimen/common_area_margin_tiny">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@mipmap/ic_tips" />
+
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/tv_account"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:textColor="@color/color_text_normal"
+                    android:textSize="@dimen/sp_16" />
+
+            </RelativeLayout>
+
+            <include layout="@layout/item_line_vertical" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/height_item_normal"
+                android:onClick="@{() -> handlers.onClickTradingPassword()}">
+
+                <TextView
+                    android:id="@+id/tv_password_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:text="@string/security_trading_password_modify"
+                    android:textColor="@color/color_text_normal"
+                    android:textSize="@dimen/size_normal" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:background="@mipmap/ic_next" />
+
+            </RelativeLayout>
+
+            <include layout="@layout/item_line_vertical" />
+            <LinearLayout
+                android:id="@+id/layout_login_password"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/height_item_normal"
+                    android:onClick="@{() -> handlers.onClickLoginPassword()}">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:text="@string/security_login_password_modify"
+                        android:textColor="@color/color_text_normal"
+                        android:textSize="@dimen/size_normal" />
+
+                    <ImageView
+
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:background="@mipmap/ic_next" />
+
+                </RelativeLayout>
+
+                <include layout="@layout/item_line_vertical" />
+
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/layout_fingerprint"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/height_item_normal"
+                    android:onClick="@{() -> handlers.onClickFingerprint()}">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:text="@string/security_login_fingerprint"
+                        android:textColor="@color/color_text_normal"
+                        android:textSize="@dimen/size_normal" />
+
+                    <ImageView
+                        android:id="@+id/img_login_fingerprint"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:background="@mipmap/ic_next" />
+
+                    <TextView
+                        android:id="@+id/tv_fingerprint_status"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="@dimen/common_area_margin_tiny"
+                        android:layout_toLeftOf="@+id/img_login_fingerprint"
+                        android:textColor="@color/color_text_normal"
+                        android:textSize="@dimen/size_normal" />
+
+                </RelativeLayout>
+
+                <include layout="@layout/item_line_vertical" />
+
+            </LinearLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/height_item_normal"
+                android:onClick="@{() -> handlers.onClickGesture()}">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:text="@string/security_login_gesture"
+                    android:textColor="@color/color_text_normal"
+                    android:textSize="@dimen/size_normal" />
+
+                <ImageView
+                    android:id="@+id/img_login_gesture"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:background="@mipmap/ic_next" />
+
+                <TextView
+                    android:id="@+id/tv_gesture_status"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="@dimen/common_area_margin_tiny"
+                    android:layout_toLeftOf="@+id/img_login_gesture"
+                    android:textColor="@color/color_text_normal"
+                    android:textSize="@dimen/size_normal" />
+
+            </RelativeLayout>
+
+            <include layout="@layout/item_line_vertical" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/height_item_normal"
+                android:onClick="@{() -> handlers.onClickOnlineDuration()}">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:text="@string/security_online_duration"
+                    android:textColor="@color/color_text_normal"
+                    android:textSize="@dimen/size_normal" />
+
+                <ImageView
+                    android:id="@+id/img_online_duration"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:background="@mipmap/ic_next" />
+
+                <TextView
+                    android:id="@+id/tv_online_duration"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="@dimen/common_area_margin_tiny"
+                    android:layout_toLeftOf="@+id/img_online_duration"
+                    android:textColor="@color/color_text_normal"
+                    android:textSize="@dimen/size_normal" />
+
+            </RelativeLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</layout>

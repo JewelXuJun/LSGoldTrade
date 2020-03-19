@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:background="@color/white"
+        android:orientation="vertical">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/ivFingerprint"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="@dimen/common_area_margin_large"
+            android:background="@drawable/ic_fingerprint" />
+
+        <TextView
+            android:id="@+id/tvTip"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/common_area_margin"
+            android:layout_marginLeft="@dimen/common_page_margin"
+            android:layout_marginRight="@dimen/common_page_margin"
+            android:gravity="center"
+            android:text="@string/fingerprint_verify"
+            android:textColor="@color/black"
+            android:textSize="13sp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/common_area_margin"
+            android:layout_marginBottom="@dimen/common_area_margin_big"
+            android:gravity="center"
+            android:text="@string/fingerprint_verify_message"
+            android:textColor="@color/gray"
+            android:textSize="13sp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="1.5px"
+            android:background="@color/common_line_divider" />
+
+        <TextView
+            android:id="@+id/tvCancel"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:gravity="center"
+            android:text="@string/fingerprint_cancel"
+            android:textColor="#0080ff"
+            android:textSize="@dimen/common_font_size_small" />
+
+    </LinearLayout>
+
+</RelativeLayout>

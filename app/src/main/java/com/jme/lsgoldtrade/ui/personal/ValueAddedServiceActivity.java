@@ -46,12 +46,7 @@ public class ValueAddedServiceActivity extends JMEBaseActivity {
         super.initData(savedInstanceState);
 
         mWindow = new OpenServicePopupWindow(mContext);
-        mWindow.setOutsideTouchable(true);
-        mWindow.setFocusable(true);
-
         mConfirmPopupwindow = new ConfirmPopupwindow(mContext);
-        mConfirmPopupwindow.setOutsideTouchable(true);
-        mConfirmPopupwindow.setFocusable(true);
 
         mBinding.cbAgree.setChecked(true);
     }
@@ -117,7 +112,7 @@ public class ValueAddedServiceActivity extends JMEBaseActivity {
                         mToast.cancel();
                         if (null != mWindow && !mWindow.isShowing()) {
                             mWindow.setData("开通增值服务需要至少完成两笔交易，您尚不满足开通增值服务条件，请满足条件后申请。", (view) -> {
-                                RxBus.getInstance().post(Constants.RxBusConst.RXBUS_TRADE, null);
+                                RxBus.getInstance().post(Constants.RxBusConst.RXBUS_TRANSACTION_PLACE_ORDER, null);
                                 ARouter.getInstance().build(Constants.ARouterUriConst.MAIN).navigation();
                             });
                             mWindow.showAtLocation(mBinding.lltitle, Gravity.CENTER, 0, 0);
@@ -126,7 +121,7 @@ public class ValueAddedServiceActivity extends JMEBaseActivity {
                         mToast.cancel();
                         if (null != mConfirmPopupwindow && !mConfirmPopupwindow.isShowing()) {
                             mConfirmPopupwindow.setData("您尚未绑定黄金账户，请先开户绑定后再使用该服务。", "确定",(view) -> {
-                                RxBus.getInstance().post(Constants.RxBusConst.RXBUS_TRADE, null);
+                                RxBus.getInstance().post(Constants.RxBusConst.RXBUS_TRANSACTION_PLACE_ORDER, null);
                                 ARouter.getInstance().build(Constants.ARouterUriConst.MAIN).navigation();
                             });
                             mConfirmPopupwindow.showAtLocation(mBinding.lltitle, Gravity.CENTER, 0, 0);

@@ -1,8 +1,9 @@
 package com.jme.lsgoldtrade.ui.mainpage;
 
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v7.widget.LinearLayoutManager;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+
 import android.text.TextUtils;
 
 import com.alibaba.android.arouter.launcher.ARouter;

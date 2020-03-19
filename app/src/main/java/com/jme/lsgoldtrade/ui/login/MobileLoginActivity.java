@@ -8,6 +8,8 @@ import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.Base64;
+import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.EditText;
 
@@ -32,7 +34,9 @@ import com.jme.lsgoldtrade.domain.UserInfoVo;
 import com.jme.lsgoldtrade.service.TradeService;
 import com.jme.lsgoldtrade.service.UserService;
 import com.jme.lsgoldtrade.util.ValueUtils;
+import com.jme.lsgoldtrade.view.StockUserPopUpWindow;
 
+import java.io.IOException;
 import java.net.ConnectException;
 import java.util.HashMap;
 import java.util.List;
@@ -55,6 +59,7 @@ public class MobileLoginActivity extends JMEBaseActivity {
 
     private TextWatcher mWatcher;
     private JMECountDownTimer mCountDownTimer;
+    private StockUserPopUpWindow mStockUserPopUpWindow;
 
     @Override
     protected int getContentViewId() {
@@ -70,6 +75,10 @@ public class MobileLoginActivity extends JMEBaseActivity {
         mBinding.etMobile.setText(mobile);
         mBinding.etMobile.setSelection(TextUtils.isEmpty(mobile) ? 0 : mobile.length());
         mBinding.tvLoginAccount.getPaint().setFlags(Paint.UNDERLINE_TEXT_FLAG);
+
+        mStockUserPopUpWindow = new StockUserPopUpWindow(this);
+        mStockUserPopUpWindow.setOutsideTouchable(false);
+        mStockUserPopUpWindow.setFocusable(false);
     }
 
     @Override
@@ -77,7 +86,7 @@ public class MobileLoginActivity extends JMEBaseActivity {
         super.initData(savedInstanceState);
 
         mCountDownTimer = new JMECountDownTimer(60000, 1000,
-                mBinding.btnVerificationCode, getString(R.string.trade_get_verification_code));
+                mBinding.btnVerificationCode, getString(R.string.transaction_get_verification_code));
     }
 
     @Override
@@ -191,8 +200,8 @@ public class MobileLoginActivity extends JMEBaseActivity {
                         head.setCode("0");
                         head.setMsg("成功");
                     } else {
-                        LoginResponse dtResponse = (LoginResponse) response.body();
 
+                        LoginResponse dtResponse = (LoginResponse) response.body();
                         head = new Head();
                         head.setCode(dtResponse.getCode());
                         head.setMsg(dtResponse.getMsg());
@@ -283,6 +292,7 @@ public class MobileLoginActivity extends JMEBaseActivity {
                         return;
 
                     mUser.login(userInfoVo);
+                    Log.i("testXin","login222==="+new Gson().toJson(userInfoVo));
 
                     SharedPreUtils.setString(this, SharedPreUtils.Token, userInfoVo.getToken());
 
@@ -380,6 +390,7 @@ public class MobileLoginActivity extends JMEBaseActivity {
                 dismissLoginDialog();
 
                 finish();
+
 
                 break;
         }

@@ -31,7 +31,7 @@ public class MarketUtil {
 
         switch (type) {
             case -1:
-                color = R.color.common_font_decrease;
+                color = R.color.color_green;
 
                 break;
             case 0:
@@ -39,7 +39,7 @@ public class MarketUtil {
 
                 break;
             case 1:
-                color = R.color.common_font_increase;
+                color = R.color.color_red;
 
                 break;
             default:
@@ -51,20 +51,37 @@ public class MarketUtil {
         return color;
     }
 
+    public static int getMarketStateBackground(int type) {
+        int drawable;
+
+        switch (type) {
+            case -1:
+                drawable = R.drawable.bg_decrease_light;
+
+                break;
+            case 1:
+                drawable = R.drawable.bg_increase_light;
+
+                break;
+            default:
+                drawable = R.drawable.bg_stable_light;
+
+                break;
+        }
+
+        return drawable;
+    }
+
     public static int getPriceStateColor(int type) {
         int color;
 
         switch (type) {
             case -1:
-                color = R.color.common_font_decrease;
-
-                break;
-            case 0:
-                color = R.color.color_text_black;
+                color = R.color.color_green;
 
                 break;
             case 1:
-                color = R.color.common_font_increase;
+                color = R.color.color_red;
 
                 break;
             default:
@@ -82,10 +99,6 @@ public class MarketUtil {
         switch (type) {
             case -1:
                 drawable = R.drawable.bg_decrease;
-
-                break;
-            case 0:
-                drawable = R.drawable.bg_stable;
 
                 break;
             case 1:
@@ -165,9 +178,9 @@ public class MarketUtil {
         int color;
 
         if (direction == 0)
-            color = R.color.common_font_increase;
+            color = R.color.color_red;
         else if (direction == 1)
-            color = R.color.common_font_decrease;
+            color = R.color.color_green;
         else
             color = R.color.color_text_black;
 
@@ -178,9 +191,9 @@ public class MarketUtil {
         int color;
 
         if (businessStatus.equals("recharge"))
-            color = R.color.common_font_increase;
+            color = R.color.color_red;
         else if (businessStatus.equals("withdraw"))
-            color = R.color.common_font_decrease;
+            color = R.color.color_green;
         else
             color = R.color.color_text_black;
 
@@ -230,13 +243,58 @@ public class MarketUtil {
         return value;
     }
 
+    public static String getTransactionState(int state) {
+        String value;
+
+        if (state == 0)
+            value = "待触发";
+        else if (state == 1)
+            value = "已触发";
+        else if (state == 2)
+            value = "已失效";
+        else if (state == 3)
+            value = "已撤销";
+        else
+            value = "";
+
+        return value;
+    }
+
+    public static int getEffectiveStateColor(int state) {
+        int color;
+
+        if (state == 0 || state == 1)
+            color = R.color.color_text_normal;
+        else if (state == 2 || state == 3)
+            color = R.color.color_text_gray_hint;
+        else
+            color = R.color.color_text_normal;
+
+        return color;
+    }
+
+    public static int getSheetStateColor(int state) {
+        int color;
+
+        if (state == 0)
+            color = R.color.color_blue_deep;
+        else if (state == 1)
+            color = R.color.color_text_normal;
+        else if (state == 2 || state == 3)
+            color = R.color.color_text_gray_hint;
+        else
+            color = R.color.color_text_normal;
+
+        return color;
+    }
+
     public static int getTradeDirectionColor(int direction) {
         int color;
 
         if (direction == 1)
-            color = R.color.common_font_increase;
+            color = R.color.color_red;
         else if (direction == 2)
-            color = R.color.common_font_decrease;
+            color = R.color.color_green;
         else
             color = R.color.color_text_black;
 
@@ -392,6 +450,9 @@ public class MarketUtil {
             }
         }
 
+        if (num == 0 && result.endsWith("."))
+            result = result.substring(0, result.length() - 1);
+
         return result;
     }
 
@@ -418,7 +479,36 @@ public class MarketUtil {
         else
             format.applyPattern("#,###,###.00");
 
-        return format.format(new BigDecimal(flag ? ("-" + value) : value));
+        return format.format(new BigDecimal(flag ? "-" + value : value));
+    }
+
+    public static String decimalFormatFloating(String money) {
+        boolean flag;
+
+        String value = formatValueNum(money, 2);
+
+        if (TextUtils.isEmpty(value))
+            return "";
+
+        DecimalFormat format = new DecimalFormat();
+
+        if (money.startsWith("-")) {
+            flag = true;
+
+            value = money.substring(1);
+        } else {
+            flag = false;
+        }
+
+        if (Double.parseDouble(value) < 1.0)
+            format.applyPattern("0.00");
+        else
+            format.applyPattern("#,###,###.00");
+
+        if (new BigDecimal(value).compareTo(new BigDecimal(0)) == 0)
+            return "0.00";
+        else
+            return (flag ? "-" : "+") + format.format(new BigDecimal(value));
     }
 
     public static String getEntrustState(int state) {

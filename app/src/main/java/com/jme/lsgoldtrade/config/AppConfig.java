@@ -11,8 +11,10 @@ public class AppConfig {
     public static final long Second10 = 10 * Second;
     public static final long Second15 = 15 * Second;
     public static final long Minute = 60 * Second;
+    public static final long HOUR = 60 * Minute;
+    public static final long DAY = 24 * HOUR;
 
-    public static final long TimeInterval_SYNC = 5 * Second;
+    public static final long TimeInterval_SYNC = 3 * Second;
 
     public static long TimeInterval_NetWork = Second5;
     public static long TimeInterval_WiFi = Second2;
@@ -21,7 +23,6 @@ public class AppConfig {
     public static final long Rate_Divisor = 1000000;
     public static final long HandWeight_Divisor = 1000000;
 
-    public static final int Length_Limit = 2;
     public static final int MaxLength = 500;
 
     public static final String CustomerServicePhone = "4008276006";

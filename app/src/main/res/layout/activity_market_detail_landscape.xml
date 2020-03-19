@@ -329,7 +329,7 @@
                         android:orientation="vertical">
 
                         <LinearLayout
-                            android:layout_width="@dimen/width_market_detail_landscape_close"
+                            android:layout_width="@dimen/common_item_height_middle"
                             android:layout_height="match_parent"
                             android:layout_weight="1"
                             android:background="@drawable/bg_btn_close"

@@ -78,7 +78,6 @@ public class SettingActivity extends JMEBaseActivity {
         mUser.logout();
 
         SharedPreUtils.setString(this, SharedPreUtils.Token, "");
-
         RxBus.getInstance().post(Constants.RxBusConst.RXBUS_LOGOUT_SUCCESS, null);
 
         dismissLoginDialog();

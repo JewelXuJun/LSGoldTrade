@@ -1,7 +1,6 @@
 package com.jme.lsgoldtrade.ui.market;
 
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
 import android.view.View;
@@ -9,6 +8,8 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.heaven7.android.dragflowlayout.DragAdapter;

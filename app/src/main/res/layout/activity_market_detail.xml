@@ -42,7 +42,7 @@
                     android:src="@mipmap/ic_back_white" />
 
                 <RelativeLayout
-                    android:layout_width="@dimen/width_market_title"
+                    android:layout_width="@dimen/width_btn_large"
                     android:layout_height="@dimen/height_tabhost"
                     android:layout_centerInParent="true">
 
@@ -157,7 +157,7 @@
 
         </LinearLayout>
 
-        <android.support.v4.widget.NestedScrollView
+        <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_above="@+id/layout_footerview"
@@ -171,7 +171,7 @@
                 <LinearLayout
                     android:id="@+id/layout_market_detail"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/height_market_current_detail"
+                    android:layout_height="@dimen/height_item_large"
                     android:background="@color/common_font_stable"
                     android:orientation="horizontal">
 
@@ -441,7 +441,7 @@
 
             </LinearLayout>
 
-        </android.support.v4.widget.NestedScrollView>
+        </androidx.core.widget.NestedScrollView>
 
     </RelativeLayout>
 

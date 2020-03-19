@@ -4,7 +4,7 @@ import com.jme.lsgoldtrade.R;
 import com.jme.lsgoldtrade.ui.mainpage.MainPageFragment;
 import com.jme.lsgoldtrade.ui.market.MarketFragment;
 import com.jme.lsgoldtrade.ui.personal.PersonalFragment;
-import com.jme.lsgoldtrade.ui.trade.TradeFragment;
+import com.jme.lsgoldtrade.ui.transaction.TransactionFragment;
 
 /**
  * Created by XuJun on 2018/11/10.
@@ -15,7 +15,7 @@ public enum MainTab {
 
     MARKET(1, R.string.main_market, R.drawable.selector_tab_market, MarketFragment.class),
 
-    TRADE(2, R.string.main_trade, R.drawable.selector_tab_trade, TradeFragment.class),
+    TRADE(2, R.string.main_trade, R.drawable.selector_tab_trade, TransactionFragment.class),
 
     PERSONAL(3, R.string.main_personal, R.drawable.selector_tab_personal, PersonalFragment.class);
 

@@ -1,7 +1,7 @@
 package com.jme.lsgoldtrade.ui.order;
 
 import android.os.Bundle;
-import android.support.v4.content.ContextCompat;
+import androidx.core.content.ContextCompat;
 import android.text.TextUtils;
 
 import com.alibaba.android.arouter.facade.annotation.Route;

@@ -96,22 +96,6 @@ public class UserService extends IService<UserApi> {
         }
     };
 
-    public API changeloginpassword = new API<String>("Changeloginpassword") {
-        @Override
-        public Call<DTResponse> request(HashMap<String, String> params) {
-
-            return mApi.changeloginpassword(params);
-        }
-    };
-
-    public API fundInoutMsg = new API<String>("FundInoutMsg") {
-        @Override
-        public Call<DTResponse> request(HashMap<String, String> params) {
-
-            return mApi.fundInoutMsg();
-        }
-    };
-
     public API noticepage = new API<NoticeVo>("NoticePage") {
         @Override
         public Call<DTResponse> request(HashMap<String, String> params) {

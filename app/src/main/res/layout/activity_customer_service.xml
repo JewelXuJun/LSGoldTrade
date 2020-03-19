@@ -19,7 +19,7 @@
 
         <include layout="@layout/item_line_vertical" />
 
-        <android.support.v4.widget.NestedScrollView
+        <androidx.core.widget.NestedScrollView
             android:id="@+id/nestedScrollView"
             android:layout_width="match_parent"
             android:layout_height="0dp"
@@ -33,10 +33,10 @@
                 android:layout_height="match_parent"
                 android:orientation="vertical">
 
-                <android.support.v7.widget.RecyclerView
+                <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/recyclerView_question_type"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/width_customer_service_item"
+                    android:layout_height="@dimen/width_item_big"
                     android:layout_marginLeft="@dimen/common_area_margin_tiny"
                     android:layout_marginTop="@dimen/common_page_margin"
                     android:layout_marginRight="@dimen/common_area_margin_tiny"
@@ -56,7 +56,7 @@
                         android:layout_height="wrap_content"
                         android:text="@string/personal_customer_service_can_help"
                         android:textColor="@color/black"
-                        android:textSize="@dimen/sp_15" />
+                        android:textSize="@dimen/size_normal" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -65,7 +65,7 @@
                         android:onClick="@{() -> handlers.onClickArtificialCustomerService()}"
                         android:text="@string/personal_customer_service_personal"
                         android:textColor="@color/color_blue_deep"
-                        android:textSize="@dimen/sp_15" />
+                        android:textSize="@dimen/size_normal" />
 
                 </LinearLayout>
 
@@ -98,13 +98,13 @@
                             android:onClick="@{() -> handlers.onClickChangeGroup()}"
                             android:text="@string/personal_customer_service_change"
                             android:textColor="@color/color_blue_deep"
-                            android:textSize="@dimen/sp_15" />
+                            android:textSize="@dimen/size_normal" />
 
                     </RelativeLayout>
 
                     <include layout="@layout/item_line_vertical_list" />
 
-                    <android.support.v7.widget.RecyclerView
+                    <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/recyclerView_question"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -113,7 +113,7 @@
 
                 </LinearLayout>
 
-                <android.support.v7.widget.RecyclerView
+                <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/recyclerView_answer"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
@@ -123,7 +123,7 @@
 
             </LinearLayout>
 
-        </android.support.v4.widget.NestedScrollView>
+        </androidx.core.widget.NestedScrollView>
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -144,7 +144,7 @@
 
             <Button
                 android:id="@+id/btn_send"
-                android:layout_width="@dimen/width_send"
+                android:layout_width="@dimen/width_btn_middle"
                 android:layout_height="@dimen/common_item_height_middle"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"

@@ -47,19 +47,11 @@ public class IntentUtils {
 
         switch (code) {
             case "MFKH":  //免费开户
-                if (null == user || !user.isLogin()) {
-                    gotoLogin(context);
-                } else {
-                    RxBus.getInstance().post(Constants.RxBusConst.RXBUS_TRADE, null);
-                    ARouter.getInstance().build(Constants.ARouterUriConst.MAIN).navigation();
-                }
-
-                break;
             case "KSXD":  //快速下单
                 if (null == user || !user.isLogin()) {
                     gotoLogin(context);
                 } else {
-                    RxBus.getInstance().post(Constants.RxBusConst.RXBUS_TRADE, null);
+                    RxBus.getInstance().post(Constants.RxBusConst.RXBUS_TRANSACTION_PLACE_ORDER, null);
                     ARouter.getInstance().build(Constants.ARouterUriConst.MAIN).navigation();
                 }
 
@@ -69,10 +61,13 @@ public class IntentUtils {
 
                 break;
             case "CJRL":  //财经日历
+
+//                RxBus.getInstance().post(Constants.RxBusConst.RXBUS_CJRL_SETPASSWORD, null);
                 ARouter.getInstance().build(Constants.ARouterUriConst.ECONOMICCALENDAR).navigation();
 
                 break;
             case "HQYP":  //行情研判
+//                RxBus.getInstance().post(Constants.RxBusConst.RXBUS_HQYP_SETPASSWORD, null);
                 ARouter.getInstance().build(Constants.ARouterUriConst.MARKETJUDGMENT).navigation();
 
                 break;
@@ -80,14 +75,15 @@ public class IntentUtils {
                 if (null == user || !user.isLogin()) {
                     gotoLogin(context);
                 } else {
-                    if (!TextUtils.isEmpty(user.getIsFromTjs()) && user.getIsFromTjs().equals("true")) {
-                        if (user.getCurrentUser().getCardType().equals("2") && user.getCurrentUser().getReserveFlag().equals("N"))
-                            ARouter.getInstance().build(Constants.ARouterUriConst.BANKRESERVE).navigation();
-                        else
-                            ARouter.getInstance().build(Constants.ARouterUriConst.CAPITALTRANSFER).navigation();
-                    } else {
-                        ARouter.getInstance().build(Constants.ARouterUriConst.CAPITALTRANSFER).navigation();
-                    }
+                    RxBus.getInstance().post(Constants.RxBusConst.RXBUS_ZJHZ_SETPASSWORD, null);
+//                    if (!TextUtils.isEmpty(user.getIsFromTjs()) && user.getIsFromTjs().equals("true")) {
+//                        if (user.getCurrentUser().getCardType().equals("2") && user.getCurrentUser().getReserveFlag().equals("N"))
+//                            ARouter.getInstance().build(Constants.ARouterUriConst.BANKRESERVE).navigation();
+//                        else
+//                            ARouter.getInstance().build(Constants.ARouterUriConst.CAPITALTRANSFER).navigation();
+//                    } else {
+//                        ARouter.getInstance().build(Constants.ARouterUriConst.CAPITALTRANSFER).navigation();
+//                    }
                 }
 
                 break;
@@ -95,73 +91,74 @@ public class IntentUtils {
                 if (null == user || !user.isLogin()) {
                     gotoLogin(context);
                 } else {
-                    RxBus.getInstance().post(Constants.RxBusConst.RXBUS_TRADEFRAGMENT_HOLD, null);
+                    RxBus.getInstance().post(Constants.RxBusConst.RXBUS_TRANSACTION_HOLD_POSITIONS, null);
                     ARouter.getInstance().build(Constants.ARouterUriConst.MAIN).navigation();
                 }
-
-                break;
-            case "DRWT":  //当日委托
-                if (null == user || !user.isLogin())
-                    gotoLogin(context);
-                else
-                    ARouter.getInstance().build(Constants.ARouterUriConst.CURRENTENTRUST).navigation();
-
-                break;
-            case "DRCC":  //当日持仓
-                if (null == user || !user.isLogin())
-                    gotoLogin(context);
-                else
-                    ARouter.getInstance().build(Constants.ARouterUriConst.CURRENTHOLDPOSITION).navigation();
 
                 break;
             case "DRCJ":  //当日成交
                 if (null == user || !user.isLogin())
                     gotoLogin(context);
                 else
-                    ARouter.getInstance().build(Constants.ARouterUriConst.CURRENTDEAL).navigation();
+                    ARouter.getInstance()
+                            .build(Constants.ARouterUriConst.QUERY)
+                            .withInt("Type", 0)
+                            .navigation();
 
                 break;
             case "LSWT":  //历史委托
                 if (null == user || !user.isLogin())
                     gotoLogin(context);
                 else
-                    ARouter.getInstance().build(Constants.ARouterUriConst.HISTORYENTRUST).navigation();
+                    ARouter.getInstance()
+                            .build(Constants.ARouterUriConst.QUERY)
+                            .withInt("Type", 2)
+                            .navigation();
 
                 break;
             case "LSCJ":  //历史成交
                 if (null == user || !user.isLogin())
                     gotoLogin(context);
                 else
-                    ARouter.getInstance().build(Constants.ARouterUriConst.HISTORYDEAL).navigation();
+                    ARouter.getInstance()
+                            .build(Constants.ARouterUriConst.QUERY)
+                            .withInt("Type", 1)
+                            .navigation();
 
                 break;
             case "RJD":   //日结单
                 if (null == user || !user.isLogin())
                     gotoLogin(context);
                 else
-                    ARouter.getInstance()
-                            .build(Constants.ARouterUriConst.DAILYSTATEMENT)
-                            .withString("time", DateUtil.dataToStringWithData2(System.currentTimeMillis()))
-                            .navigation();
+                    ARouter.getInstance().build(Constants.ARouterUriConst.DAILYSTATEMENT).navigation();
                 break;
             case "WDDY":  //我的订阅
                 if (null == user || !user.isLogin())
                     gotoLogin(context);
                 else
-                    ARouter.getInstance().build(Constants.ARouterUriConst.TRADINGBOX).navigation();
+                    RxBus.getInstance().post(Constants.RxBusConst.RXBUS_WDDY_SETPASSWORD, null);
+//                    ARouter.getInstance().build(Constants.ARouterUriConst.TRADINGBOX).navigation();
 
                 break;
             case "LXKF":  //联系客服
                 ARouter.getInstance().build(Constants.ARouterUriConst.CUSTOMSERVICE).navigation();
 
                 break;
+            case "DRWT":  //当日委托
             case "CD":  //撤单
                 if (null == user || !user.isLogin()) {
                     gotoLogin(context);
                 } else {
-                    RxBus.getInstance().post(Constants.RxBusConst.RXBUS_CANCELORDERFRAGMENT, null);
+                    RxBus.getInstance().post(Constants.RxBusConst.RXBUS_TRANSACTION_CANCEL_ORDER, null);
                     ARouter.getInstance().build(Constants.ARouterUriConst.MAIN).navigation();
                 }
+
+                break;
+            case "SWGJS": //实物贵金属
+                if (null == user || !user.isLogin())
+                    gotoLogin(context);
+                else
+                    ARouter.getInstance().build(Constants.ARouterUriConst.METAL).navigation();
 
                 break;
             case "QB":  //全部

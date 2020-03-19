@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/bg_white"
+    >
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="@dimen/margin_normal"
+        android:paddingTop="@dimen/margin_big"
+        android:paddingRight="@dimen/margin_normal"
+        android:paddingBottom="@dimen/margin_big"
+        android:text="@string/increment_arrears_minimalism"
+        android:textColor="@color/black"
+        android:textSize="@dimen/size_normal" />
+
+    <include layout="@layout/item_line_vertical_list" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/height_item_normal"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/btn_arrears_mini_cancel"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/drawable_white_solid"
+            android:text="@string/text_cancel"
+            android:textColor="@color/black"
+            android:textSize="@dimen/sp_16" />
+
+        <Button
+            android:id="@+id/btn_arrears_mini_pay"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/drawable_blue_solid"
+            android:text="@string/increment_recharge_pay"
+            android:textColor="@color/white"
+            android:textSize="@dimen/sp_16" />
+
+    </LinearLayout>
+</LinearLayout>

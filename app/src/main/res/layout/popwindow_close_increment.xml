@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+     >
+
+
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="@drawable/bg_white"
+        >
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="20dp"
+            android:text="@string/close_increment_pop"
+            android:textColor="@color/black"
+            android:textSize="@dimen/sp_14"
+            />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:layout_marginBottom="30dp"
+            android:orientation="horizontal"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            >
+            <Button
+                android:id="@+id/pop_window_btn_close_increment_cancel"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:layout_weight="1"
+                android:text="@string/close_increment_pop_cancel"
+                android:textSize="@dimen/common_font_size"
+                android:textColor="@color/white"
+                android:background="@drawable/bg_btn_blue_solid"
+                />
+            <Button
+                android:id="@+id/pop_window_btn_close_increment_sure"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:layout_weight="1"
+                android:text="@string/close_increment_pop_sure"
+                android:textSize="@dimen/common_font_size"
+                android:textColor="@color/color_text_gray_hint"
+                android:background="@drawable/shape_bg_btn_gray_stroke"
+                android:layout_marginLeft="15dp"
+                />
+        </LinearLayout>
+    </LinearLayout>
+</layout>

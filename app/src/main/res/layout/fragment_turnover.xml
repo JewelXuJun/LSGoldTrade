@@ -5,7 +5,7 @@
 
         <variable
             name="handlers"
-            type="com.jme.lsgoldtrade.ui.trade.TurnOverFragment.ClickHandlers" />
+            type="com.jme.lsgoldtrade.ui.transaction.TurnOverFragment.ClickHandlers" />
 
     </data>
 
@@ -33,7 +33,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:text="@string/trade_start_time"
+                    android:text="@string/transaction_start_time"
                     android:textColor="@color/black_pale"
                     android:textSize="@dimen/sp_12" />
 
@@ -67,7 +67,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:text="@string/trade_end_time"
+                    android:text="@string/transaction_end_time"
                     android:textColor="@color/black_pale"
                     android:textSize="@dimen/sp_12" />
 
@@ -95,7 +95,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:paddingLeft="@dimen/common_page_padding"
-                android:text="@string/trade_application_time"
+                android:text="@string/transaction_application_time"
                 android:textColor="@color/black_pale"
                 android:textSize="@dimen/sp_12" />
 
@@ -104,7 +104,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="right"
-                android:text="@string/trade_transfer_amount_unit"
+                android:text="@string/transaction_transfer_amount_unit"
                 android:paddingRight="@dimen/common_page_padding"
                 android:textColor="@color/black_pale"
                 android:textSize="@dimen/sp_12" />
@@ -114,7 +114,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="@string/trade_business_type"
+                android:text="@string/transaction_business_type"
                 android:textColor="@color/black_pale"
                 android:textSize="@dimen/sp_12" />
 
@@ -124,7 +124,7 @@
                 android:layout_weight="1"
                 android:gravity="right"
                 android:paddingRight="@dimen/common_page_padding"
-                android:text="@string/trade_state"
+                android:text="@string/transaction_state"
                 android:textColor="@color/black_pale"
                 android:textSize="@dimen/sp_12" />
 
@@ -139,7 +139,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
-            <android.support.v7.widget.RecyclerView
+            <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

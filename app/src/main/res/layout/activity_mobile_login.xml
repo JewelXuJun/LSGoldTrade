@@ -52,7 +52,7 @@
 
         <include layout="@layout/item_line_vertical" />
 
-        <android.support.v4.widget.NestedScrollView
+        <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:fillViewport="true"
@@ -110,13 +110,13 @@
 
                             <Button
                                 android:id="@+id/btn_verification_code"
-                                android:layout_width="@dimen/width_login_verification_code"
+                                android:layout_width="@dimen/width_item_big"
                                 android:layout_height="@dimen/common_item_height_middle"
                                 android:layout_alignParentRight="true"
                                 android:layout_centerVertical="true"
                                 android:background="@drawable/selector_blue"
                                 android:onClick="@{() -> handlers.onClickGetVerificationCode()}"
-                                android:text="@string/trade_get_verification_code"
+                                android:text="@string/transaction_get_verification_code"
                                 android:textColor="@drawable/selector_text"
                                 android:textSize="@dimen/size_middle" />
 
@@ -162,7 +162,7 @@
 
                             <RelativeLayout
                                 android:id="@+id/layout_img"
-                                android:layout_width="@dimen/width_login_verification_code"
+                                android:layout_width="@dimen/width_item_big"
                                 android:layout_height="@dimen/common_item_height_middle"
                                 android:layout_alignParentRight="true"
                                 android:onClick="@{() -> handlers.onClickLoadImageVerifyCode()}">
@@ -241,20 +241,27 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
-                            android:layout_marginTop="@dimen/margin_big"
+                            android:layout_marginTop="20dp"
                             android:onClick="@{() -> handlers.onClickLgoinAccount()}"
                             android:text="@string/login_account"
                             android:textColor="@color/color_blue"
                             android:textSize="@dimen/sp_16" />
-
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="@dimen/sp_12"
+                            android:textColor="@color/color_text_account_login_describe"
+                            android:text="@string/login_account_text_describe"
+                            android:layout_marginTop="20dp"
+                            />
                         <Button
                             android:layout_width="match_parent"
                             android:layout_height="@dimen/height_login_btn"
-                            android:layout_marginTop="@dimen/margin_large"
+                            android:layout_marginTop="20dp"
                             android:layout_marginBottom="@dimen/common_area_margin_big"
                             android:background="@drawable/bg_btn_blue_hollow"
                             android:onClick="@{() -> handlers.onClickRegister()}"
-                            android:text="还没有账号?立即注册"
+                            android:text="@string/login_register_message"
                             android:textColor="@color/color_blue"
                             android:textSize="@dimen/common_font_size" />
 
@@ -272,7 +279,7 @@
 
             </RelativeLayout>
 
-        </android.support.v4.widget.NestedScrollView>
+        </androidx.core.widget.NestedScrollView>
 
     </LinearLayout>
 

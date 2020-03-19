@@ -4,7 +4,8 @@ import android.app.Service;
 import android.content.Intent;
 import android.os.Environment;
 import android.os.IBinder;
-import android.support.v4.content.LocalBroadcastManager;
+
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import com.jme.common.util.SharedPreUtils;
 import com.jme.lsgoldtrade.config.Constants;

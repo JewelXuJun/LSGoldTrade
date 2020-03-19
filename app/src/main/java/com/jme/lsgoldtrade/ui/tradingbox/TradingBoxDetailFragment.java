@@ -2,7 +2,7 @@ package com.jme.lsgoldtrade.ui.tradingbox;
 
 import android.os.Bundle;
 import android.os.CountDownTimer;
-import android.support.v4.content.ContextCompat;
+import androidx.core.content.ContextCompat;
 import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.TextUtils;
@@ -21,6 +21,7 @@ import com.jme.lsgoldtrade.config.Constants;
 import com.jme.lsgoldtrade.databinding.FragmentTradingBoxDetailBinding;
 import com.jme.lsgoldtrade.domain.TradingBoxDetailsVo;
 import com.jme.lsgoldtrade.service.ManagementService;
+import com.jme.lsgoldtrade.view.RulePopupwindow;
 import com.squareup.picasso.Picasso;
 
 import java.math.BigDecimal;
@@ -40,7 +41,7 @@ public class TradingBoxDetailFragment extends JMEBaseFragment {
     private boolean bAnalystFlag = false;
 
     private CountDownTimer mCountDownTimer;
-    private TradingBoxPopupwindow mWindow;
+    private RulePopupwindow mWindow;
 
     private List<TradingBoxDetailsVo.RelevantInfoListVosBean> mRelevantInfoListVosBeanList;
 
@@ -53,9 +54,7 @@ public class TradingBoxDetailFragment extends JMEBaseFragment {
     protected void initView() {
         super.initView();
 
-        mWindow = new TradingBoxPopupwindow(mContext);
-        mWindow.setOutsideTouchable(true);
-        mWindow.setFocusable(true);
+        mWindow = new RulePopupwindow(mContext);
     }
 
     @Override
@@ -362,7 +361,6 @@ public class TradingBoxDetailFragment extends JMEBaseFragment {
                 if (head.isSuccess()) {
                     ARouter.getInstance()
                             .build(Constants.ARouterUriConst.PLACEORDER)
-                            .withString("Type", "Vote")
                             .withString("Direction", request.getParams().get("direction").equals("0") ? mDirection
                                     : mDirection.equals("0") ? "1" : "0")
                             .withString("TradeId", mTradeId)

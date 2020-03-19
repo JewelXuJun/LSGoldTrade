@@ -6,7 +6,7 @@
 
         <variable
             name="handlers"
-            type="com.jme.lsgoldtrade.ui.trade.AuthenticationActivity.ClickHandlers" />
+            type="com.jme.lsgoldtrade.ui.transaction.AuthenticationActivity.ClickHandlers" />
 
     </data>
 
@@ -40,7 +40,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="3"
                     android:paddingLeft="@dimen/common_area_margin_tiny"
-                    android:text="@string/trade_name"
+                    android:text="@string/transaction_name"
                     android:textColor="@color/color_text_normal"
                     android:textSize="@dimen/sp_14" />
 
@@ -50,7 +50,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:background="@null"
-                    android:hint="@string/trade_name_hint"
+                    android:hint="@string/transaction_name_hint"
                     android:paddingRight="@dimen/common_area_margin_tiny"
                     android:textColor="@color/color_text_normal"
                     android:textColorHint="@color/color_text_hint"
@@ -71,7 +71,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="3"
                     android:paddingLeft="@dimen/common_area_margin_tiny"
-                    android:text="@string/trade_id_card"
+                    android:text="@string/transaction_id_card"
                     android:textColor="@color/color_text_normal"
                     android:textSize="@dimen/sp_14" />
 
@@ -81,7 +81,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:background="@null"
-                    android:hint="@string/trade_id_card_hint"
+                    android:hint="@string/transaction_id_card_hint"
                     android:paddingRight="@dimen/common_area_margin_tiny"
                     android:textColor="@color/color_text_normal"
                     android:textColorHint="@color/color_text_hint"

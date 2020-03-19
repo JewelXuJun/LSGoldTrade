@@ -4,8 +4,7 @@ import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.support.design.widget.BottomSheetDialog;
-import android.support.v4.content.ContextCompat;
+import androidx.core.content.ContextCompat;
 import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.TextUtils;
@@ -17,6 +16,7 @@ import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alipay.sdk.app.PayTask;
+import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.jme.common.network.DTRequest;
 import com.jme.common.network.Head;
 import com.jme.common.util.BigDecimalUtil;
@@ -284,7 +284,7 @@ public class RechargeActivity extends JMEBaseActivity {
                     if (wechatPayVo == null)
                         return;
 
-                    mPaymentHelper.startWeChatPay(this, wechatPayVo);
+                    mPaymentHelper.startWeChatPay(this, wechatPayVo, "");
                 }
 
                 break;

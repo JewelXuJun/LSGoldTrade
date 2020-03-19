@@ -49,7 +49,7 @@ public class CheckUserInfoActivity extends JMEBaseActivity {
             mBinding.tvMobile.setText(User.getInstance().getCurrentUser().getMobile());
 
         mCountDownTimer = new JMECountDownTimer(60000, 1000,
-                mBinding.btnSendSms, getString(R.string.trade_get_verification_code));
+                mBinding.btnSendSms, getString(R.string.transaction_get_verification_code));
 
         getWithdrawFeeRate();
     }

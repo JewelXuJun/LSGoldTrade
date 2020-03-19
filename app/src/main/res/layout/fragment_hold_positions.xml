@@ -1,0 +1,515 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="handlers"
+            type="com.jme.lsgoldtrade.ui.transaction.HoldPositionsFragment.ClickHandlers" />
+
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.scwang.smartrefresh.layout.SmartRefreshLayout
+            android:id="@+id/swipeRefreshLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <com.scwang.smartrefresh.layout.header.ClassicsHeader
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/color_blue_deep"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/common_area_margin"
+                        android:layout_marginTop="@dimen/common_page_margin"
+                        android:layout_marginRight="@dimen/common_area_margin"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/common_area_margin_tiny"
+                            android:layout_marginBottom="@dimen/common_area_margin_tiny"
+                            android:text="@string/transaction_total_equity"
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/sp_12" />
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginLeft="@dimen/common_area_margin_tiny"
+                            android:onClick="@{() -> handlers.onClickHiddenTotalEquity()}"
+                            android:padding="@dimen/common_area_margin_tiny">
+
+                            <ImageView
+                                android:id="@+id/img_hidden_status"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:background="@mipmap/ic_show" />
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <FrameLayout
+                            android:layout_width="@dimen/width_floating"
+                            android:layout_height="@dimen/height_floating"
+                            android:layout_alignParentRight="true"
+                            android:alpha="0.2"
+                            android:background="@drawable/shape_floating_gradient" />
+
+                        <LinearLayout
+                            android:id="@+id/layout_floating"
+                            android:layout_width="@dimen/width_floating"
+                            android:layout_height="@dimen/height_floating"
+                            android:layout_alignParentRight="true"
+                            android:layout_marginRight="@dimen/common_area_margin"
+                            android:gravity="center_vertical|right"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/transaction_floating"
+                                android:textColor="@color/white"
+                                android:textSize="@dimen/sp_12" />
+
+                            <TextView
+                                android:id="@+id/tv_floating"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/margin_tiny"
+                                android:textColor="@color/white"
+                                android:textSize="@dimen/size_normal" />
+
+                        </LinearLayout>
+
+                        <TextView
+                            android:id="@+id/tv_total_equity"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentLeft="true"
+                            android:layout_centerVertical="true"
+                            android:layout_marginLeft="@dimen/common_area_margin"
+                            android:layout_marginRight="@dimen/common_page_margin"
+                            android:layout_toLeftOf="@+id/layout_floating"
+                            android:textColor="@color/color_yellow"
+                            android:textSize="@dimen/size_large" />
+
+                    </RelativeLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/common_area_margin"
+                        android:layout_marginTop="@dimen/common_page_margin"
+                        android:layout_marginRight="@dimen/common_area_margin"
+                        android:layout_marginBottom="@dimen/common_area_margin"
+                        android:orientation="horizontal">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/transaction_available_funds"
+                                android:textColor="@color/white"
+                                android:textSize="@dimen/sp_12" />
+
+                            <TextView
+                                android:id="@+id/tv_available_funds"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/margin_tiny"
+                                android:textColor="@color/white"
+                                android:textSize="@dimen/size_normal_middle" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="vertical"
+                            android:paddingLeft="@dimen/common_page_padding">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/transaction_desirable_capital"
+                                android:textColor="@color/white"
+                                android:textSize="@dimen/sp_12" />
+
+                            <TextView
+                                android:id="@+id/tv_desirable_capital"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/margin_tiny"
+                                android:textColor="@color/white"
+                                android:textSize="@dimen/size_normal_middle" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="vertical"
+                            android:paddingLeft="@dimen/common_page_padding">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/transaction_market_capitalization"
+                                android:textColor="@color/white"
+                                android:textSize="@dimen/sp_12" />
+
+                            <TextView
+                                android:id="@+id/tv_market_capitalization"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/margin_tiny"
+                                android:textColor="@color/white"
+                                android:textSize="@dimen/size_normal_middle" />
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <androidx.coordinatorlayout.widget.CoordinatorLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@color/common_background"
+                    android:orientation="vertical">
+
+                    <com.google.android.material.appbar.AppBarLayout
+                        android:id="@+id/app_bar"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/common_background"
+                        android:fitsSystemWindows="true"
+                        android:gravity="center_horizontal"
+                        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+
+                        <com.google.android.material.appbar.CollapsingToolbarLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            app:layout_scrollFlags="scroll|enterAlwaysCollapsed">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical">
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginBottom="@dimen/common_area_margin_tiny"
+                                    android:background="@color/white"
+                                    android:orientation="horizontal"
+                                    android:paddingTop="@dimen/common_page_margin"
+                                    android:paddingBottom="@dimen/common_area_margin"
+                                    android:visibility="gone">
+
+                                    <LinearLayout
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_weight="1"
+                                        android:orientation="vertical"
+                                        android:paddingLeft="@dimen/common_area_margin_big">
+
+                                        <TextView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:text="@string/transaction_guarantee_fund"
+                                            android:textColor="@color/color_text_normal"
+                                            android:textSize="@dimen/sp_12" />
+
+                                        <RelativeLayout
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:layout_marginTop="@dimen/margin_tiny">
+
+                                            <TextView
+                                                android:id="@+id/tv_guarantee_fund"
+                                                android:layout_width="wrap_content"
+                                                android:layout_height="wrap_content"
+                                                android:layout_centerVertical="true"
+                                                android:text="@string/text_no_data_default"
+                                                android:textColor="@color/color_blue_deep"
+                                                android:textSize="@dimen/size_big" />
+
+                                            <TextView
+                                                android:id="@+id/tv_guarantee_fund_setting"
+                                                android:layout_width="wrap_content"
+                                                android:layout_height="wrap_content"
+                                                android:layout_alignParentRight="true"
+                                                android:layout_marginTop="@dimen/margin_market_price"
+                                                android:layout_marginRight="@dimen/margin_login"
+                                                android:background="@drawable/bg_btn_blue_hollow"
+                                                android:onClick="@{() -> handlers.onClickEntrustRiskManagementSetting()}"
+                                                android:paddingLeft="@dimen/common_area_margin_tiny"
+                                                android:paddingTop="@dimen/margin_tiny"
+                                                android:paddingRight="@dimen/common_area_margin_tiny"
+                                                android:paddingBottom="@dimen/margin_tiny"
+                                                android:text="@string/transaction_goto_setting"
+                                                android:textColor="@color/color_blue"
+                                                android:textSize="@dimen/size_middle" />
+
+                                        </RelativeLayout>
+
+                                    </LinearLayout>
+
+                                    <LinearLayout
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_weight="2">
+
+                                        <LinearLayout
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:orientation="vertical">
+
+                                            <LinearLayout
+                                                android:layout_width="wrap_content"
+                                                android:layout_height="wrap_content"
+                                                android:orientation="horizontal">
+
+                                                <TextView
+                                                    android:layout_width="wrap_content"
+                                                    android:layout_height="wrap_content"
+                                                    android:text="@string/transaction_risk_rate"
+                                                    android:textColor="@color/black_pale"
+                                                    android:textSize="@dimen/sp_12" />
+
+                                                <LinearLayout
+                                                    android:layout_width="wrap_content"
+                                                    android:layout_height="wrap_content"
+                                                    android:layout_gravity="center"
+                                                    android:onClick="@{() -> handlers.onClickRiskRateTips()}"
+                                                    android:paddingLeft="@dimen/common_area_margin_tiny"
+                                                    android:paddingRight="@dimen/common_area_margin_tiny">
+
+                                                    <ImageView
+                                                        android:layout_width="wrap_content"
+                                                        android:layout_height="wrap_content"
+                                                        android:background="@mipmap/ic_tips" />
+
+                                                </LinearLayout>
+
+                                            </LinearLayout>
+
+                                            <TextView
+                                                android:id="@+id/tv_risk_rate"
+                                                android:layout_width="wrap_content"
+                                                android:layout_height="wrap_content"
+                                                android:layout_marginTop="@dimen/margin_tiny_small"
+                                                android:text="@string/text_no_data_default"
+                                                android:textColor="@color/color_orange"
+                                                android:textSize="@dimen/size_big" />
+
+                                        </LinearLayout>
+
+                                    </LinearLayout>
+
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:background="@color/white"
+                                    android:orientation="horizontal"
+                                    android:paddingLeft="@dimen/common_page_padding"
+                                    android:paddingTop="@dimen/common_area_margin"
+                                    android:paddingRight="@dimen/common_page_padding"
+                                    android:paddingBottom="@dimen/common_area_margin_tiny">
+
+                                    <LinearLayout
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_weight="1"
+                                        android:gravity="center_horizontal"
+                                        android:onClick="@{() -> handlers.onClickQuery()}"
+                                        android:orientation="vertical">
+
+                                        <ImageView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:background="@mipmap/ic_deal_query" />
+
+                                        <TextView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:layout_marginTop="@dimen/common_area_margin_tiny"
+                                            android:text="@string/transaction_deal_query"
+                                            android:textColor="@color/color_text_normal"
+                                            android:textSize="@dimen/sp_12" />
+
+                                    </LinearLayout>
+
+                                    <LinearLayout
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_weight="1"
+                                        android:gravity="center_horizontal"
+                                        android:onClick="@{() -> handlers.onClickInOutMoney()}"
+                                        android:orientation="vertical">
+
+                                        <ImageView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:background="@mipmap/ic_inout_money" />
+
+                                        <TextView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:layout_marginTop="@dimen/margin_line"
+                                            android:text="@string/transaction_inoutmoney"
+                                            android:textColor="@color/color_text_normal"
+                                            android:textSize="@dimen/sp_12" />
+
+                                    </LinearLayout>
+
+                                    <LinearLayout
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_weight="1"
+                                        android:gravity="center_horizontal"
+                                        android:onClick="@{() -> handlers.onClickEntrustRiskManagement()}"
+                                        android:orientation="vertical"
+                                        android:visibility="gone">
+
+                                        <ImageView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:background="@mipmap/ic_entrust_risk_management" />
+
+                                        <TextView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:layout_marginTop="@dimen/common_area_margin_tiny"
+                                            android:text="@string/transaction_entrust_risk_management"
+                                            android:textColor="@color/color_text_normal"
+                                            android:textSize="@dimen/sp_12" />
+
+                                    </LinearLayout>
+
+                                    <LinearLayout
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_weight="1"
+                                        android:gravity="center_horizontal"
+                                        android:onClick="@{() -> handlers.onClickDailyStatementSheet()}"
+                                        android:orientation="vertical">
+
+                                        <ImageView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:background="@mipmap/ic_daily_statement_sheet" />
+
+                                        <TextView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:layout_marginTop="@dimen/common_area_margin_tiny"
+                                            android:text="@string/transaction_daily_statement_sheet"
+                                            android:textColor="@color/color_text_normal"
+                                            android:textSize="@dimen/sp_12" />
+
+                                    </LinearLayout>
+
+                                    <LinearLayout
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_weight="1"
+                                        android:gravity="center_horizontal"
+                                        android:onClick="@{() -> handlers.onClickConditionSheet()}"
+                                        android:orientation="vertical">
+
+                                        <ImageView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:background="@mipmap/ic_condition_sheet" />
+
+                                        <TextView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:layout_marginTop="@dimen/common_area_margin_tiny"
+                                            android:text="@string/transaction_condition_sheet"
+                                            android:textColor="@color/color_text_normal"
+                                            android:textSize="@dimen/sp_12" />
+
+                                    </LinearLayout>
+
+                                </LinearLayout>
+
+                            </LinearLayout>
+
+                        </com.google.android.material.appbar.CollapsingToolbarLayout>
+
+                        <com.google.android.material.tabs.TabLayout
+                            android:id="@+id/tablayout"
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/common_item_height_normal"
+                            android:layout_marginTop="@dimen/common_area_margin_tiny"
+                            android:background="@color/white"
+                            app:tabGravity="center"
+                            app:tabIndicatorColor="@color/color_blue"
+                            app:tabIndicatorFullWidth="false"
+                            app:tabIndicatorHeight="@dimen/height_line"
+                            app:tabMaxWidth="@dimen/width_item_large"
+                            app:tabMinWidth="@dimen/width_item_middle"
+                            app:tabMode="fixed"
+                            app:tabPaddingEnd="@dimen/common_area_margin_big"
+                            app:tabPaddingStart="@dimen/common_area_margin_big"
+                            app:tabRippleColor="@null"
+                            app:tabSelectedTextColor="@color/color_blue_deep"
+                            app:tabTextAppearance="@style/TabLayoutTextStyleSmall"
+                            app:tabTextColor="@color/color_text_normal" />
+
+                        <include layout="@layout/item_line_vertical" />
+
+                    </com.google.android.material.appbar.AppBarLayout>
+
+                    <androidx.viewpager.widget.ViewPager
+                        android:id="@+id/tab_viewpager"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+
+                </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+            </LinearLayout>
+
+        </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+
+    </LinearLayout>
+
+</layout>

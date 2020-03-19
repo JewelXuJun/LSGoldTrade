@@ -7,7 +7,11 @@ import com.jme.lsgoldtrade.config.Constants;
 import com.jme.lsgoldtrade.config.User;
 import com.jme.lsgoldtrade.domain.AccountDetailVo;
 import com.jme.lsgoldtrade.domain.AdvertisementVo;
+import com.jme.lsgoldtrade.domain.OnlineTimeVo;
 import com.jme.lsgoldtrade.domain.OrderVo;
+import com.jme.lsgoldtrade.domain.PasswordInfoVo;
+import com.jme.lsgoldtrade.domain.PasswordStatusVo;
+import com.jme.lsgoldtrade.domain.PayIconVo;
 import com.jme.lsgoldtrade.domain.ProtocolVo;
 import com.jme.lsgoldtrade.domain.QuestionVo;
 import com.jme.lsgoldtrade.domain.BannerVo;
@@ -145,13 +149,6 @@ public class ManagementService extends IService<ManagementApi> {
         }
     };
 
-    public API getUserAddedServicesStatus = new API<String>("GetUserAddedServicesStatus") {
-        @Override
-        public Call<DTResponse> request(HashMap<String, String> params) {
-            return mApi.getUserAddedServicesStatus(params);
-        }
-    };
-
     public API analystList = new API<List<AnalystVo>>("AnalystList") {
         @Override
         public Call<DTResponse> request(HashMap<String, String> params) {
@@ -194,10 +191,10 @@ public class ManagementService extends IService<ManagementApi> {
         }
     };
 
-    public API diyanfangxiang = new API<String>("Agree") {
+    public API hasProfitLossRiskSign = new API<String>("HasProfitLossRiskSign") {
         @Override
         public Call<DTResponse> request(HashMap<String, String> params) {
-            return mApi.diyanfangxiang(params);
+            return mApi.hasProfitLossRiskSign(params);
         }
     };
 
@@ -233,13 +230,6 @@ public class ManagementService extends IService<ManagementApi> {
         @Override
         public Call<DTResponse> request(HashMap<String, String> params) {
             return mApi.openValueAddedServices(params);
-        }
-    };
-
-    public API getStatus = new API<String>("GetStatus") {
-        @Override
-        public Call<DTResponse> request(HashMap<String, String> params) {
-            return mApi.getStatus(params);
         }
     };
 
@@ -344,6 +334,97 @@ public class ManagementService extends IService<ManagementApi> {
         @Override
         public Call<DTResponse> request(HashMap<String, String> params) {
             return mApi.accountDetailList(params);
+        }
+    };
+
+    public API getOnlineTimeList = new API<List<OnlineTimeVo>>("GetOnlineTimeList") {
+        @Override
+        public Call<DTResponse> request(HashMap<String, String> params) {
+            return mApi.getOnlineTimeList(params);
+        }
+    };
+
+    public API setUserOnlineTime = new API<String>("SetUserOnlineTime") {
+        @Override
+        public Call<DTResponse> request(HashMap<String, String> params) {
+            return mApi.setUserOnlineTime(params);
+        }
+    };
+
+    public API getUserOnlineTime = new API<OnlineTimeVo>("GetUserOnlineTime") {
+        @Override
+        public Call<DTResponse> request(HashMap<String, String> params) {
+            return mApi.getUserOnlineTime(params);
+        }
+    };
+
+    public API getUserPasswordSettingInfo = new API<PasswordInfoVo>("GetUserPasswordSettingInfo") {
+        @Override
+        public Call<DTResponse> request(HashMap<String, String> params) {
+            return mApi.getUserPasswordSettingInfo(params);
+        }
+    };
+
+    public API hasSettingGesture = new API<String>("HasSettingGesture") {
+        @Override
+        public Call<DTResponse> request(HashMap<String, String> params) {
+            return mApi.hasSettingGesture(params);
+        }
+    };
+
+    public API updatePasswordOpenStatus = new API<String>("UpdatePasswordOpenStatus") {
+        @Override
+        public Call<DTResponse> request(HashMap<String, String> params) {
+            return mApi.updatePasswordOpenStatus(params);
+        }
+    };
+
+    public API setTradePassword = new API<PasswordStatusVo>("SetTradePassword") {
+        @Override
+        public Call<DTResponse> request(HashMap<String, String> params) {
+            return mApi.setTradePassword(params);
+        }
+    };
+
+    public API sendMessage = new API<String>("SendMessage") {
+        @Override
+        public Call<DTResponse> request(HashMap<String, String> params) {
+            return mApi.sendMessage(params);
+        }
+    };
+
+    public API validateLoginPassword = new API<String>("ValidateLoginPassword") {
+        @Override
+        public Call<DTResponse> request(HashMap<String, String> params) {
+            return mApi.validateLoginPassword(params);
+        }
+    };
+
+    public API unlockTradePassword = new API<String>("UnlockTradePassword") {
+        @Override
+        public Call<DTResponse> request(HashMap<String, String> params) {
+            return mApi.unlockTradePassword(params);
+        }
+    };
+
+    public API getPayIcon = new API<List<PayIconVo>>("GetPayIcon") {
+        @Override
+        public Call<DTResponse> request(HashMap<String, String> params) {
+            return mApi.getPayIcon(params);
+        }
+    };
+
+    public API getCustomerArrearage = new API<String>("GetCustomerArrearage") {
+        @Override
+        public Call<DTResponse> request(HashMap<String, String> params) {
+            return mApi.getCustomerArrearage(params);
+        }
+    };
+
+    public API checkValueAddedServicesForClose = new API<String>("CheckValueAddedServicesForClose") {
+        @Override
+        public Call<DTResponse> request(HashMap<String, String> params) {
+            return mApi.checkValueAddedServicesForClose(params);
         }
     };
 

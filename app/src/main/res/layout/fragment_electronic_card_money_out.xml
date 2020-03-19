@@ -5,7 +5,7 @@
 
         <variable
             name="handlers"
-            type="com.jme.lsgoldtrade.ui.trade.ElectronicCardMoneyOutFragment.ClickHanlders" />
+            type="com.jme.lsgoldtrade.ui.transaction.ElectronicCardMoneyOutFragment.ClickHanlders" />
 
     </data>
 
@@ -22,7 +22,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
-            <android.support.v4.widget.NestedScrollView
+            <androidx.core.widget.NestedScrollView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@color/common_background"
@@ -46,7 +46,7 @@
                         <TextView
                             android:layout_width="@dimen/width_item_title"
                             android:layout_height="wrap_content"
-                            android:text="@string/trade_transfer_icbc_electronic_card_money_out_avalible"
+                            android:text="@string/transaction_transfer_icbc_electronic_card_money_out_avalible"
                             android:textColor="@color/color_text_normal"
                             android:textSize="@dimen/sp_14" />
 
@@ -74,7 +74,7 @@
                             android:layout_width="@dimen/width_item_title"
                             android:layout_height="wrap_content"
                             android:layout_centerVertical="true"
-                            android:text="@string/trade_transfer_icbc_electronic_card_money_out"
+                            android:text="@string/transaction_transfer_icbc_electronic_card_money_out"
                             android:textColor="@color/color_text_normal"
                             android:textSize="@dimen/sp_14" />
 
@@ -88,7 +88,7 @@
                             android:layout_toLeftOf="@+id/tv_transfer_amount_unit"
                             android:layout_toRightOf="@+id/tv_transfer_icbc_electronic_card_money_in"
                             android:background="@null"
-                            android:hint="@string/trade_transfer_icbc_electronic_card_money_out_input"
+                            android:hint="@string/transaction_transfer_icbc_electronic_card_money_out_input"
                             android:inputType="numberDecimal"
                             android:maxLines="1"
                             android:textColor="@color/color_text_normal"
@@ -132,13 +132,13 @@
                         android:background="@drawable/selector_btn"
                         android:enabled="false"
                         android:onClick="@{() -> handlers.onClickTransferOut()}"
-                        android:text="@string/trade_transfer_icbc_electronic_card_out"
+                        android:text="@string/transaction_transfer_icbc_electronic_card_out"
                         android:textColor="@color/white"
                         android:textSize="@dimen/common_font_size" />
 
                 </LinearLayout>
 
-            </android.support.v4.widget.NestedScrollView>
+            </androidx.core.widget.NestedScrollView>
 
         </com.scwang.smartrefresh.layout.SmartRefreshLayout>
 

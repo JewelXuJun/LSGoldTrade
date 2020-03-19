@@ -19,10 +19,22 @@
     <color name="color_tab_line">#d8d8d8</color>
     <color name="color_blue_deep">#0080ff</color>
     <color name="color_blue">#4285f4</color>
-    <color name="color_orange">#ffa94c</color>
+    <color name="color_yellow">#FFF000</color>
+    <color name="color_orange">#FFA94C</color>
     <color name="color_tabhost">#fafafa</color>
     <color name="color_date_background">#e9edf2</color>
     <color name="color_bg_img">#f5f5f5</color>
+    <color name="color_switch_on">#4DD865</color>
+    <color name="color_gradient_start">#0DFFFFFF</color>
+    <color name="color_gradient_end">#FFFFFF</color>
+    <color name="color_gray">#DCDCDC</color>
+    <color name="color_line">#D5D5D5</color>
+    <color name="color_increase_light">#1Ae64020</color>
+    <color name="color_decrease_light">#1A00b767</color>
+    <color name="color_stable_light">#1A8d959a</color>
+    <color name="color_message_red">#D73030</color>
+    <color name="color_btn_gray_stroke">#CBCBCB</color>
+    <color name="color_text_account_login_describe">#929292</color>
 
     <drawable name="drawable_white">#FFFFFF</drawable>
     <drawable name="drawable_blue">#4285f4</drawable>

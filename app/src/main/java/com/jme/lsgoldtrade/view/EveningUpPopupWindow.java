@@ -1,13 +1,17 @@
 package com.jme.lsgoldtrade.view;
 
 import android.content.Context;
-import android.databinding.DataBindingUtil;
+
+import androidx.databinding.DataBindingUtil;
+
 import android.text.Editable;
+import android.text.InputType;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -16,6 +20,7 @@ import com.jme.lsgoldtrade.R;
 import com.jme.lsgoldtrade.base.JMEBasePopupWindow;
 import com.jme.lsgoldtrade.config.AppConfig;
 import com.jme.lsgoldtrade.databinding.PopupwindowEveningUpBinding;
+import com.jme.lsgoldtrade.domain.FiveSpeedVo;
 import com.jme.lsgoldtrade.util.MarketUtil;
 
 import java.math.BigDecimal;
@@ -26,13 +31,17 @@ public class EveningUpPopupWindow extends JMEBasePopupWindow {
 
     private Context mContext;
 
+    private int mLength = 2;
     private float mPriceMove = 0.00f;
+    private String mType;
     private String mLowerLimitPrice;
     private String mHighLimitPrice;
     private long mMinOrderQty = 0;
     private long mMaxOrderQty = 0;
     private long mMaxHoldQty = 0;
     private long mMaxAmount = 0;
+
+    private FiveSpeedVo mFiveSpeedVo;
 
     public EveningUpPopupWindow(Context context) {
         super(context);
@@ -75,29 +84,32 @@ public class EveningUpPopupWindow extends JMEBasePopupWindow {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if (s.toString().contains(".")) {
-                    if (s.length() - 1 - s.toString().indexOf(".") > AppConfig.Length_Limit) {
-                        s = s.toString().subSequence(0, s.toString().indexOf(".") + (AppConfig.Length_Limit + 1));
+                if (s.toString().contains(".") && !s.toString().equals(".")) {
+                    if (s.length() - 1 - s.toString().indexOf(".") > mLength) {
+                        s = s.toString().subSequence(0, s.toString().indexOf(".") + (mLength + 1));
+
+                        if (s.toString().endsWith("."))
+                            s = s.toString().substring(0, s.toString().length() - 1);
 
                         mBinding.etPrice.setText(s);
                         mBinding.etPrice.setSelection(s.length());
+                    } else {
+                        mBinding.etPrice.setSelection(s.length());
                     }
-                }
-
-                if (s.toString().trim().equals(".")) {
+                } else if (s.toString().trim().equals(".")) {
                     s = "0" + s;
 
                     mBinding.etPrice.setText(s);
                     mBinding.etPrice.setSelection(2);
-                }
-
-                if (s.toString().startsWith("0") && s.toString().trim().length() > 1) {
+                } else if (s.toString().startsWith("0") && s.toString().trim().length() > 1) {
                     if (!s.toString().substring(1, 2).equals(".")) {
                         mBinding.etPrice.setText(s.subSequence(0, 1));
                         mBinding.etPrice.setSelection(1);
 
                         return;
                     }
+                } else {
+                    mBinding.etPrice.setSelection(s.length());
                 }
             }
 
@@ -108,15 +120,20 @@ public class EveningUpPopupWindow extends JMEBasePopupWindow {
         });
     }
 
-    public void setData(String account, String contractID, String price, String type, float priceMove, String lowerLimitPrice,
-                        String highLimitPrice, long minOrderQty, long maxOrderQty, long maxHoldQty, long maxAmount,
+    public void setData(FiveSpeedVo fiveSpeedVo, String account, String contractID, String type, float priceMove, String lowerLimitPrice,
+                        String highLimitPrice, long minOrderQty, long maxOrderQty, long maxHoldQty, long maxAmount, long frozenAmount,
                         View.OnClickListener confirmListener) {
+        mFiveSpeedVo = fiveSpeedVo;
+        mLength = contractID.equals("Ag(T+D)") ? 0 : 2;
+        mType = type;
+
         mBinding.tvGoldAccount.setText(account);
-        mBinding.tvBusinessType.setText(type.equals("多") ? mContext.getString(R.string.trade_buy_evening)
-                : mContext.getString(R.string.trade_sale_evening));
+        mBinding.tvBusinessType.setText(mType.equals("多") ? mContext.getString(R.string.transaction_buy_evening)
+                : mContext.getString(R.string.transaction_sale_evening));
         mBinding.tvBusinessVarieties.setText(contractID);
-        mBinding.etPrice.setText(price);
-        mBinding.etAmount.setText(String.valueOf(maxAmount));
+        mBinding.etPrice.setText("");
+        mBinding.etPrice.setInputType(contractID.equals("Ag(T+D)") ? InputType.TYPE_CLASS_NUMBER : EditorInfo.TYPE_CLASS_NUMBER | EditorInfo.TYPE_NUMBER_FLAG_DECIMAL);
+        mBinding.etAmount.setText(maxAmount - frozenAmount == 0 ? "0" : String.valueOf(maxAmount));
 
         mPriceMove = priceMove;
         mLowerLimitPrice = lowerLimitPrice;
@@ -127,10 +144,6 @@ public class EveningUpPopupWindow extends JMEBasePopupWindow {
         mMaxAmount = maxAmount;
 
         mBinding.btnConfirm.setOnClickListener(confirmListener);
-    }
-
-    public String getPrice() {
-        return mBinding.etPrice.getText().toString();
     }
 
     public String getAmount() {
@@ -146,7 +159,7 @@ public class EveningUpPopupWindow extends JMEBasePopupWindow {
         public void onClickPriceMinus() {
             hiddenKeyBoard();
 
-            String price = getPrice(mBinding.etPrice);
+            String price = getPrice();
 
             if (TextUtils.isEmpty(price) || TextUtils.isEmpty(mLowerLimitPrice))
                 return;
@@ -154,22 +167,20 @@ public class EveningUpPopupWindow extends JMEBasePopupWindow {
             float value = new BigDecimal(price).subtract(new BigDecimal(mPriceMove)).floatValue();
 
             if (new BigDecimal(String.valueOf(value)).compareTo(new BigDecimal(mLowerLimitPrice)) == -1) {
-                Toast.makeText(mContext, R.string.trade_limit_down_price_error, Toast.LENGTH_SHORT).show();
+                Toast.makeText(mContext, R.string.transaction_limit_down_price_error, Toast.LENGTH_SHORT).show();
 
                 mBinding.etPrice.setText(price);
-                mBinding.etPrice.setSelection(price.length());
             } else {
-                String valueStr = MarketUtil.formatValue(String.valueOf(value), 2);
+                String valueStr = MarketUtil.formatValue(String.valueOf(value), mLength);
 
                 mBinding.etPrice.setText(valueStr);
-                mBinding.etPrice.setSelection(valueStr.length());
             }
         }
 
         public void onClickPriceAdd() {
             hiddenKeyBoard();
 
-            String price = getPrice(mBinding.etPrice);
+            String price = getPrice();
 
             if (TextUtils.isEmpty(price) || TextUtils.isEmpty(mHighLimitPrice))
                 return;
@@ -177,15 +188,13 @@ public class EveningUpPopupWindow extends JMEBasePopupWindow {
             float value = new BigDecimal(price).add(new BigDecimal(mPriceMove)).floatValue();
 
             if (new BigDecimal(String.valueOf(value)).compareTo(new BigDecimal(mHighLimitPrice)) == 1) {
-                Toast.makeText(mContext, R.string.trade_limit_up_price_error, Toast.LENGTH_SHORT).show();
+                Toast.makeText(mContext, R.string.transaction_limit_up_price_error, Toast.LENGTH_SHORT).show();
 
                 mBinding.etPrice.setText(price);
-                mBinding.etPrice.setSelection(price.length());
             } else {
-                String valueStr = MarketUtil.formatValue(String.valueOf(value), 2);
+                String valueStr = MarketUtil.formatValue(String.valueOf(value), mLength);
 
                 mBinding.etPrice.setText(valueStr);
-                mBinding.etPrice.setSelection(valueStr.length());
             }
         }
 
@@ -203,10 +212,10 @@ public class EveningUpPopupWindow extends JMEBasePopupWindow {
                 if (new BigDecimal(value).compareTo(new BigDecimal(0)) == 1)
                     mBinding.etAmount.setText(String.valueOf(value));
                 else
-                    Toast.makeText(mContext, R.string.trade_number_error_zero, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(mContext, R.string.transaction_number_error_zero, Toast.LENGTH_SHORT).show();
             } else {
                 if (new BigDecimal(value).compareTo(new BigDecimal(mMinOrderQty)) == -1)
-                    Toast.makeText(mContext, R.string.trade_limit_min_amount_error, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(mContext, R.string.transaction_limit_min_amount_error, Toast.LENGTH_SHORT).show();
                 else
                     mBinding.etAmount.setText(String.valueOf(value));
             }
@@ -224,23 +233,23 @@ public class EveningUpPopupWindow extends JMEBasePopupWindow {
 
             if (mMaxOrderQty == -1) {
                 if (new BigDecimal(value).compareTo(new BigDecimal(mMaxHoldQty == -1 ? mMaxAmount : Math.min(mMaxAmount, mMaxHoldQty))) == 1)
-                    Toast.makeText(mContext, R.string.trade_limit_max_amount_error_canbuy2, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(mContext, R.string.transaction_limit_max_amount_error_canbuy2, Toast.LENGTH_SHORT).show();
                 else
                     mBinding.etAmount.setText(String.valueOf(value));
             } else {
                 if (new BigDecimal(value).compareTo(new BigDecimal(Math.min(mMaxAmount, mMaxOrderQty))) == 1)
-                    Toast.makeText(mContext, R.string.trade_limit_max_amount_error_canbuy2, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(mContext, R.string.transaction_limit_max_amount_error_canbuy2, Toast.LENGTH_SHORT).show();
                 else
                     mBinding.etAmount.setText(String.valueOf(value));
             }
         }
     }
 
-    private String getPrice(EditText editText) {
-        String price = editText.getText().toString();
+    public String getPrice() {
+        String price = mBinding.etPrice.getText().toString();
 
-        if (TextUtils.isEmpty(price) || price.equals(mContext.getResources().getString(R.string.text_no_data_default)))
-            return "";
+        if (TextUtils.isEmpty(price))
+            price = mType.equals("多") ? mFiveSpeedVo.getFiveBidLists().get(0)[1] : mFiveSpeedVo.getFiveAskLists().get(0)[1];
 
         if (price.endsWith("."))
             price = price.substring(0, price.length() - 1);

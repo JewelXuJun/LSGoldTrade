@@ -2,15 +2,16 @@ package com.jme.common.ui.base;
 
 import android.content.Context;
 import android.content.Intent;
-import android.databinding.DataBindingUtil;
-import android.databinding.ViewDataBinding;
+
+import androidx.annotation.ColorInt;
+import androidx.annotation.DrawableRes;
+import androidx.annotation.StyleRes;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.databinding.DataBindingUtil;
+import androidx.databinding.ViewDataBinding;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.support.annotation.ColorInt;
-import android.support.annotation.DrawableRes;
-import android.support.annotation.StyleRes;
-import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Toast;
@@ -255,12 +256,7 @@ public abstract class BaseActivity extends AppCompatActivity implements OnResult
     public void OnResult(DTRequest request, Head head, Object response) {
         dismissLoadingDialog();
 //        handleErrorInfo(request, head);
-        DataReturn(request, head.getCode(), response);
         DataReturn(request, head, response);
-    }
-
-    protected void DataReturn(DTRequest request, String msgCode, Object response) {
-
     }
 
     protected void DataReturn(DTRequest request, Head head, Object response) {

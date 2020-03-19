@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/common_background"
+        android:orientation="vertical">
+
+        <include layout="@layout/layout_toolbar" />
+
+        <include layout="@layout/item_line_vertical" />
+
+        <com.github.ihsg.patternlocker.PatternIndicatorView
+            android:id="@+id/patternIndicatorView"
+            android:layout_width="@dimen/width_gesture_view"
+            android:layout_height="@dimen/width_gesture_view"
+            android:layout_gravity="center"
+            android:layout_marginTop="@dimen/margin_bigger"
+            app:piv_color="@color/color_tab_line"
+            app:piv_errorColor="@color/color_red"
+            app:piv_fillColor="@color/white"
+            app:piv_hitColor="@color/color_blue"
+            app:plv_lineWidth="0dp" />
+
+        <TextView
+            android:id="@+id/tv_message"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="@dimen/common_area_margin_large"
+            android:textColor="@color/color_text_normal"
+            android:text="@string/security_gesture_password_message"
+            android:textSize="@dimen/size_normal" />
+
+        <com.github.ihsg.patternlocker.PatternLockerView
+            android:id="@+id/patternLockerView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/margin_bigger"
+            android:layout_marginTop="@dimen/margin_bigger"
+            android:layout_marginRight="@dimen/margin_bigger"
+            app:plv_color="@color/color_tab_line"
+            app:plv_enableAutoClean="true"
+            app:plv_enableHapticFeedback="false"
+            app:plv_enableSkip="true"
+            app:plv_errorColor="@color/color_red"
+            app:plv_fillColor="@color/white"
+            app:plv_freezeDuration="1000"
+            app:plv_hitColor="@color/color_blue"
+            app:plv_lineWidth="@dimen/common_line_height_big" />
+
+    </LinearLayout>
+
+</layout>

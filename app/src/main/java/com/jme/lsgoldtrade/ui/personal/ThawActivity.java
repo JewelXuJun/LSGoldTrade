@@ -1,7 +1,6 @@
 package com.jme.lsgoldtrade.ui.personal;
 
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.jme.lsgoldtrade.R;

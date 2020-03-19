@@ -2,7 +2,9 @@ package com.jme.lsgoldtrade.ui.tradingbox;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.support.v4.content.ContextCompat;
+
+import androidx.core.content.ContextCompat;
+
 import android.text.Editable;
 import android.text.SpannableString;
 import android.text.Spanned;
@@ -18,6 +20,7 @@ import android.view.inputmethod.InputMethodManager;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
+import com.google.gson.Gson;
 import com.jme.common.network.DTRequest;
 import com.jme.common.network.Head;
 import com.jme.lsgoldtrade.R;
@@ -26,36 +29,42 @@ import com.jme.lsgoldtrade.config.Constants;
 import com.jme.lsgoldtrade.config.User;
 import com.jme.lsgoldtrade.databinding.ActivityPlaceOrderBinding;
 import com.jme.lsgoldtrade.domain.AccountVo;
+import com.jme.lsgoldtrade.domain.LoginResponse;
 import com.jme.lsgoldtrade.domain.OrderVo;
 import com.jme.lsgoldtrade.domain.TenSpeedVo;
 import com.jme.lsgoldtrade.domain.TradingBoxInfoVo;
+import com.jme.lsgoldtrade.domain.UserInfoVo;
 import com.jme.lsgoldtrade.service.ManagementService;
 import com.jme.lsgoldtrade.service.MarketService;
 import com.jme.lsgoldtrade.service.TradeService;
-import com.jme.lsgoldtrade.ui.trade.TradeMessagePopUpWindow;
+import com.jme.lsgoldtrade.service.UserService;
+import com.jme.lsgoldtrade.view.ConfirmPopupwindow;
+import com.jme.lsgoldtrade.view.RulePopupwindow;
+import com.jme.lsgoldtrade.view.SignedPopUpWindow;
 import com.jme.lsgoldtrade.util.MarketUtil;
 import com.jme.lsgoldtrade.view.MessagePopupwindow;
 
 import java.math.BigDecimal;
+import java.net.ConnectException;
 import java.util.HashMap;
 import java.util.List;
 
-/**
- * 预埋单
- */
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
 @Route(path = Constants.ARouterUriConst.PLACEORDER)
 public class PlaceOrderActivity extends JMEBaseActivity {
 
     private ActivityPlaceOrderBinding mBinding;
 
-    private TradingBoxPopupwindow mWindow;
-    private TradeMessagePopUpWindow mTradeMessagePopUpWindow;
+    private RulePopupwindow mWindow;
     private MessagePopupwindow mMessagePopupwindow;
+    private ConfirmPopupwindow mConfirmPopupwindow;
+    private SignedPopUpWindow mSignedPopUpWindow;
 
-    private String mType;
     private String mDirection;
     private String mTradeId;
-    private String mDirectionSelected = "";
     private String mVariety;
     private String mID;
     private String mOpenTimeStart;
@@ -80,41 +89,22 @@ public class PlaceOrderActivity extends JMEBaseActivity {
 
         initToolbar(R.string.trading_box_prepaid_bill, true);
 
-        mWindow = new TradingBoxPopupwindow(this);
-        mWindow.setOutsideTouchable(true);
-        mWindow.setFocusable(true);
-
-        mTradeMessagePopUpWindow = new TradeMessagePopUpWindow(mContext);
-        mTradeMessagePopUpWindow.setOutsideTouchable(true);
-        mTradeMessagePopUpWindow.setFocusable(true);
-
+        mWindow = new RulePopupwindow(this);
         mMessagePopupwindow = new MessagePopupwindow(mContext);
-        mMessagePopupwindow.setOutsideTouchable(true);
-        mMessagePopupwindow.setFocusable(true);
+        mConfirmPopupwindow = new ConfirmPopupwindow(mContext);
+        mSignedPopUpWindow = new SignedPopUpWindow(mContext);
     }
 
     @Override
     protected void initData(Bundle savedInstanceState) {
         super.initData(savedInstanceState);
 
-        mType = getIntent().getStringExtra("Type");
         mDirection = getIntent().getStringExtra("Direction");
         mTradeId = getIntent().getStringExtra("TradeId");
 
-        if (mType.equals("Vote")) {
-            mBinding.layoutDirection.setVisibility(View.GONE);
-            mBinding.tvDirection.setVisibility(View.VISIBLE);
-            mBinding.tvDirection.setText(mDirection.equals("0") ? R.string.text_more : R.string.text_empty);
-            mBinding.tvDirection.setTextColor(mDirection.equals("0") ? ContextCompat.getColor(this, R.color.color_red)
-                    : ContextCompat.getColor(this, R.color.color_green));
-            mDirectionSelected = mDirection;
-        } else {
-            mBinding.layoutDirection.setVisibility(View.VISIBLE);
-            mBinding.tvDirection.setVisibility(View.GONE);
-            mDirectionSelected = mDirection;
-
-            setEntrustDirectionLayout();
-        }
+        mBinding.tvDirection.setText(mDirection.equals("0") ? R.string.text_more : R.string.text_empty);
+        mBinding.tvDirection.setTextColor(mDirection.equals("0") ? ContextCompat.getColor(this, R.color.color_red)
+                : ContextCompat.getColor(this, R.color.color_green));
 
         if (TextUtils.isEmpty(mTradeId))
             return;
@@ -157,19 +147,6 @@ public class PlaceOrderActivity extends JMEBaseActivity {
         super.onResume();
 
         getAccount();
-    }
-
-    private void setEntrustDirectionLayout() {
-        mBinding.tvMore.setBackground(mDirectionSelected.equals("0") ? ContextCompat.getDrawable(this, R.drawable.bg_btn_more_fill)
-                : ContextCompat.getDrawable(this, R.drawable.bg_btn_more_solid));
-        mBinding.tvMore.setTextColor(mDirectionSelected.equals("0") ? ContextCompat.getColor(this, R.color.white)
-                : ContextCompat.getColor(this, R.color.color_red));
-        mBinding.tvEmpty.setBackground(mDirectionSelected.equals("0") ? ContextCompat.getDrawable(this, R.drawable.bg_btn_empty_solid)
-                : ContextCompat.getDrawable(this, R.drawable.bg_btn_empty_fill));
-        mBinding.tvEmpty.setTextColor(mDirectionSelected.equals("0") ? ContextCompat.getColor(this, R.color.color_green)
-                : ContextCompat.getColor(this, R.color.white));
-        mBinding.imgMore.setVisibility(mDirectionSelected.equals("0") ? View.VISIBLE : View.GONE);
-        mBinding.imgEmpty.setVisibility(mDirectionSelected.equals("0") ? View.GONE : View.VISIBLE);
     }
 
     private void calculateMoneyEnough(String number) {
@@ -256,12 +233,66 @@ public class PlaceOrderActivity extends JMEBaseActivity {
         sendRequest(MarketService.getInstance().getTenSpeedQuotes, params, false, false, false);
     }
 
-    private void getUserAddedServicesStatus() {
-        sendRequest(ManagementService.getInstance().getUserAddedServicesStatus, new HashMap<>(), true);
-    }
+    private void queryLoginResult() {
+        DTRequest request = new DTRequest(UserService.getInstance().queryLoginResult, new HashMap<>(), true, true);
 
-    private void getStatus() {
-        sendRequest(ManagementService.getInstance().getStatus, new HashMap<>(), false);
+        Call restResponse = request.getApi().request(request.getParams());
+
+        restResponse.enqueue(new Callback() {
+            @Override
+            public void onResponse(Call call, Response response) {
+                Head head = new Head();
+                Object body = "";
+
+                if (response.raw().code() != 200) {
+                    head.setSuccess(false);
+                    head.setCode("" + response.raw().code());
+                    head.setMsg("服务器异常");
+                } else {
+                    if (!request.getApi().isResponseJson()) {
+                        body = response.body();
+                        head.setSuccess(true);
+                        head.setCode("0");
+                        head.setMsg("成功");
+                    } else {
+                        LoginResponse dtResponse = (LoginResponse) response.body();
+
+                        head = new Head();
+                        head.setCode(dtResponse.getCode());
+                        head.setMsg(dtResponse.getMsg());
+
+                        try {
+                            body = new Gson().fromJson(dtResponse.getBodyToString(),
+                                    request.getApi().getEntryType());
+                        } catch (Exception e) {
+                            body = dtResponse.getBodyToString();
+                        }
+                    }
+                }
+
+                OnResult(request, head, body);
+            }
+
+            @Override
+            public void onFailure(Call call, Throwable t) {
+                Head head = new Head();
+                final Throwable cause = t.getCause() != null ? t.getCause() : t;
+
+                if (cause != null) {
+                    if (cause instanceof ConnectException) {
+                        head.setSuccess(false);
+                        head.setCode("500");
+                        head.setMsg(getResources().getString(com.jme.common.R.string.text_error_server));
+                    } else {
+                        head.setSuccess(false);
+                        head.setCode("408");
+                        head.setMsg(getResources().getString(com.jme.common.R.string.text_error_timeout));
+                    }
+                }
+
+                OnResult(request, head, null);
+            }
+        });
     }
 
     private void checkOrder() {
@@ -274,7 +305,7 @@ public class PlaceOrderActivity extends JMEBaseActivity {
         params.put("authorizedOpeningTimeEnd", mOpenTimeEnd);
         params.put("boxId", mTradeId);
         params.put("earningsLine", mEarningsLine);
-        params.put("entrustTheDirection", mDirectionSelected);
+        params.put("entrustTheDirection", mDirection);
         params.put("entrustTheHandCount", number);
         params.put("id", mID);
         params.put("lossLine", mLossLine);
@@ -385,53 +416,31 @@ public class PlaceOrderActivity extends JMEBaseActivity {
                 }
 
                 break;
-            case "GetUserAddedServicesStatus":
-                String incrementState;
-
-                if (null == response)
-                    incrementState = "";
-                else
-                    incrementState = response.toString();
-
-                if (incrementState.equals("T")) {
-                    getStatus();
-                } else {
-                    if (null != mTradeMessagePopUpWindow && !mTradeMessagePopUpWindow.isShowing()) {
-                        mTradeMessagePopUpWindow.setData(mContext.getResources().getString(R.string.trade_increment_error),
-                                mContext.getResources().getString(R.string.trade_increment_goto_open),
-                                (view) -> {
-                                    ARouter.getInstance().build(Constants.ARouterUriConst.VALUEADDEDSERVICE).navigation();
-
-                                    mTradeMessagePopUpWindow.dismiss();
-                                });
-                        mTradeMessagePopUpWindow.showAtLocation(mBinding.tvBalanceMessage, Gravity.CENTER, 0, 0);
-                    }
-                }
-
-                break;
-            case "GetStatus":
+            case "QueryLoginResult":
                 if (head.isSuccess()) {
-                    String status;
+                    UserInfoVo userInfoVo;
 
-                    if (null == response)
-                        status = "";
-                    else
-                        status = response.toString();
+                    try {
+                        userInfoVo = (UserInfoVo) response;
+                    } catch (Exception e) {
+                        userInfoVo = null;
 
-                    if (status.equals("1")) {
-                        if (null != mTradeMessagePopUpWindow && !mTradeMessagePopUpWindow.isShowing()) {
-                            mTradeMessagePopUpWindow.setData(mContext.getResources().getString(R.string.trade_account_error),
-                                    mContext.getResources().getString(R.string.trade_account_goto_recharge),
-                                    (view) -> {
-                                        ARouter.getInstance().build(Constants.ARouterUriConst.RECHARGE).navigation();
-
-                                        mTradeMessagePopUpWindow.dismiss();
-                                    });
-                            mTradeMessagePopUpWindow.showAtLocation(mBinding.tvBalanceMessage, Gravity.CENTER, 0, 0);
-                        }
-                    } else {
-                        checkOrder();
+                        e.printStackTrace();
                     }
+
+//                    String isSign = userInfoVo.getIsSign();
+//
+//                    if (TextUtils.isEmpty(isSign) || isSign.equals("N")) {
+//                        mUser.getCurrentUser().setIsSign("N");
+//
+//                        if (null != mSignedPopUpWindow && !mSignedPopUpWindow.isShowing())
+//                            mSignedPopUpWindow.showAtLocation(mBinding.tvBalanceMessage, Gravity.CENTER, 0, 0);
+//                    } else {
+                        checkOrder();
+//                    }
+                } else {
+//                    if (head.getCode().equals("-2012"))
+//                        mUser.getCurrentUser().setIsSign("N");
                 }
 
                 break;
@@ -485,16 +494,19 @@ public class PlaceOrderActivity extends JMEBaseActivity {
 
     public class ClickHandlers {
 
-        public void onClickMore() {
-            mDirectionSelected = "0";
+        public void onClickCustomTime() {
+            hiddenKeyBoard();
 
-            setEntrustDirectionLayout();
-        }
+            if (null != mConfirmPopupwindow && !mConfirmPopupwindow.isShowing()) {
+                mConfirmPopupwindow.setData(getResources().getString(R.string.trading_box_edit_time),
+                        getResources().getString(R.string.trading_box_setting_condition_sheet),
+                        (view) -> {
+                            ARouter.getInstance().build(Constants.ARouterUriConst.CONDITIONSHEET).navigation();
 
-        public void onClickEmpty() {
-            mDirectionSelected = "1";
-
-            setEntrustDirectionLayout();
+                            mConfirmPopupwindow.dismiss();
+                        });
+                mConfirmPopupwindow.showAtLocation(mBinding.etAmount, Gravity.CENTER, 0, 0);
+            }
         }
 
         public void onClickAmountMinus() {
@@ -514,7 +526,6 @@ public class PlaceOrderActivity extends JMEBaseActivity {
                 String valueStr = String.valueOf(value);
 
                 mBinding.etAmount.setText(valueStr);
-                mBinding.etAmount.setSelection(valueStr.length());
 
                 calculateMoneyEnough(valueStr);
             }
@@ -532,12 +543,13 @@ public class PlaceOrderActivity extends JMEBaseActivity {
             String valueStr = String.valueOf(value);
 
             mBinding.etAmount.setText(valueStr);
-            mBinding.etAmount.setSelection(valueStr.length());
 
             calculateMoneyEnough(valueStr);
         }
 
         public void onClickEntrustOpenTimeTips() {
+            hiddenKeyBoard();
+
             if (null != mWindow && !mWindow.isShowing()) {
                 mWindow.setData(getString(R.string.trading_box_entrust_open_time), new SpannableString(getString(R.string.trading_box_entrust_open_time_message)));
                 mWindow.showAtLocation(mBinding.etAmount, Gravity.CENTER, 0, 0);
@@ -545,9 +557,41 @@ public class PlaceOrderActivity extends JMEBaseActivity {
         }
 
         public void onClickEntrustEqualTimeTips() {
+            hiddenKeyBoard();
+
             if (null != mWindow && !mWindow.isShowing()) {
                 mWindow.setData(getString(R.string.trading_box_entrust_equal_time), new SpannableString(getString(R.string.trading_box_entrust_equal_time_message)));
                 mWindow.showAtLocation(mBinding.etAmount, Gravity.CENTER, 0, 0);
+            }
+        }
+
+        public void onClickCustomEntrustInstructions() {
+            hiddenKeyBoard();
+
+            if (null != mConfirmPopupwindow && !mConfirmPopupwindow.isShowing()) {
+                mConfirmPopupwindow.setData(getResources().getString(R.string.trading_box_edit_entrust_instructions),
+                        getResources().getString(R.string.trading_box_setting_condition_sheet),
+                        (view) -> {
+                            ARouter.getInstance().build(Constants.ARouterUriConst.CONDITIONSHEET).navigation();
+
+                            mConfirmPopupwindow.dismiss();
+                        });
+                mConfirmPopupwindow.showAtLocation(mBinding.etAmount, Gravity.CENTER, 0, 0);
+            }
+        }
+
+        public void onClickCustomFloat() {
+            hiddenKeyBoard();
+
+            if (null != mConfirmPopupwindow && !mConfirmPopupwindow.isShowing()) {
+                mConfirmPopupwindow.setData(getResources().getString(R.string.trading_box_edit_float_line),
+                        getResources().getString(R.string.trading_box_setting_condition_sheet),
+                        (view) -> {
+                            ARouter.getInstance().build(Constants.ARouterUriConst.CONDITIONSHEET).navigation();
+
+                            mConfirmPopupwindow.dismiss();
+                        });
+                mConfirmPopupwindow.showAtLocation(mBinding.etAmount, Gravity.CENTER, 0, 0);
             }
         }
 
@@ -566,7 +610,7 @@ public class PlaceOrderActivity extends JMEBaseActivity {
             else if (!bEnoughFlag)
                 showShortToast(R.string.trading_box_balance_not_enough_message);
             else
-                getUserAddedServicesStatus();
+                queryLoginResult();
         }
     }
 

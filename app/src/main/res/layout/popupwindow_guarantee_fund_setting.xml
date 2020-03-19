@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+        <variable
+            name="handlers"
+            type="com.jme.lsgoldtrade.view.GuaranteeFundSettingPopUpWindow.ClickHandlers" />
+
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_white"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/height_item_normal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_centerInParent="true"
+                android:gravity="center"
+                android:text="@string/transaction_current_guarantee_setting"
+                android:textColor="@color/black_deep"
+                android:textSize="@dimen/sp_16" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="@dimen/common_area_margin_tiny"
+                android:onClick="@{() -> handlers.onClickCancel()}"
+                android:padding="@dimen/common_area_margin_tiny">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@mipmap/ic_close_blue" />
+
+            </LinearLayout>
+
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/common_area_margin"
+            android:layout_marginTop="@dimen/common_area_margin_tiny"
+            android:layout_marginRight="@dimen/common_area_margin"
+            android:layout_marginBottom="@dimen/common_area_margin_large"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/transaction_guarantee_fund_title"
+                android:textColor="@color/color_text_normal"
+                android:textSize="@dimen/sp_14" />
+
+            <EditText
+                android:id="@+id/et_guarantee_fund"
+                android:layout_width="@dimen/width_edittext"
+                android:layout_height="@dimen/common_item_height_middle"
+                android:layout_marginLeft="@dimen/common_area_margin_big"
+                android:background="@drawable/bg_btn_white"
+                android:hint="@string/transaction_input_money"
+                android:inputType="numberDecimal"
+                android:paddingLeft="@dimen/common_page_padding"
+                android:paddingRight="@dimen/common_page_padding"
+                android:textColor="@color/color_text_normal"
+                android:textColorHint="@color/color_text_hint"
+                android:textSize="@dimen/sp_16" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/height_item_normal"
+            android:layout_marginLeft="@dimen/common_area_margin"
+            android:layout_marginTop="@dimen/common_area_margin_tiny"
+            android:layout_marginRight="@dimen/common_area_margin"
+            android:layout_marginBottom="@dimen/common_area_margin_big"
+            android:orientation="horizontal">
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginRight="@dimen/common_area_margin_middle"
+                android:layout_weight="1"
+                android:background="@drawable/bg_btn_blue_hollow"
+                android:onClick="@{() -> handlers.onClickCancel()}"
+                android:text="@string/text_cancel"
+                android:textColor="@color/color_blue"
+                android:textSize="@dimen/sp_16" />
+
+            <Button
+                android:id="@+id/btn_confirm"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="@dimen/common_area_margin_middle"
+                android:layout_weight="1"
+                android:background="@color/color_blue"
+                android:text="@string/text_confirm"
+                android:textColor="@color/white"
+                android:textSize="@dimen/sp_16" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</layout>

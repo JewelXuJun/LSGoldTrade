@@ -1,7 +1,7 @@
 package com.jme.lsgoldtrade.view;
 
 import android.content.Context;
-import android.databinding.DataBindingUtil;
+import androidx.databinding.DataBindingUtil;
 import android.view.LayoutInflater;
 
 import com.jme.common.util.DensityUtil;
@@ -42,6 +42,6 @@ public class BindSuccessPopupWindow extends JMEBasePopupWindow {
     }
 
     public void setData(String time) {
-        mBinding.tvTime.setText(String.format(mContext.getResources().getString(R.string.trade_bind_success_time), time));
+        mBinding.tvTime.setText(String.format(mContext.getResources().getString(R.string.transaction_bind_success_time), time));
     }
 }

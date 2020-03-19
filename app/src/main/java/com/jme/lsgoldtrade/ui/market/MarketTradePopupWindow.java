@@ -1,19 +1,22 @@
 package com.jme.lsgoldtrade.ui.market;
 
 import android.content.Context;
-import android.databinding.DataBindingUtil;
+
+import androidx.databinding.DataBindingUtil;
+
 import android.text.Editable;
+import android.text.InputType;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
 import com.jme.common.util.RxBus;
 import com.jme.lsgoldtrade.R;
 import com.jme.lsgoldtrade.base.JMEBasePopupWindow;
-import com.jme.lsgoldtrade.config.AppConfig;
 import com.jme.lsgoldtrade.config.Constants;
 import com.jme.lsgoldtrade.databinding.PopupwindowMarketTradeBinding;
 import com.jme.lsgoldtrade.domain.AccountVo;
@@ -40,12 +43,14 @@ public class MarketTradePopupWindow extends JMEBasePopupWindow {
     private String mContractID;
     private String mLowerLimitPrice;
     private String mHighLimitPrice;
+    private long mPositionMargin = 0;
     private long mMinOrderQty = 0;
     private long mMaxOrderQty = 0;
     private long mMaxHoldQty = 0;
     private long mMaxAmount = 0;
     private int mBsFlag = 0;
     private int mOcFlag = 0;
+    private int mLength = 2;
 
     public MarketTradePopupWindow(Context context) {
         super(context);
@@ -86,29 +91,32 @@ public class MarketTradePopupWindow extends JMEBasePopupWindow {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if (s.toString().contains(".")) {
-                    if (s.length() - 1 - s.toString().indexOf(".") > AppConfig.Length_Limit) {
-                        s = s.toString().subSequence(0, s.toString().indexOf(".") + (AppConfig.Length_Limit + 1));
+                if (s.toString().contains(".") && !s.toString().equals(".")) {
+                    if (s.length() - 1 - s.toString().indexOf(".") > mLength) {
+                        s = s.toString().subSequence(0, s.toString().indexOf(".") + (mLength + 1));
+
+                        if (s.toString().endsWith("."))
+                            s = s.toString().substring(0, s.toString().length() - 1);
 
                         mBinding.etPrice.setText(s);
                         mBinding.etPrice.setSelection(s.length());
+                    } else {
+                        mBinding.etPrice.setSelection(s.length());
                     }
-                }
-
-                if (s.toString().trim().equals(".")) {
+                } else if (s.toString().trim().equals(".")) {
                     s = "0" + s;
 
                     mBinding.etPrice.setText(s);
                     mBinding.etPrice.setSelection(2);
-                }
-
-                if (s.toString().startsWith("0") && s.toString().trim().length() > 1) {
+                } else if (s.toString().startsWith("0") && s.toString().trim().length() > 1) {
                     if (!s.toString().substring(1, 2).equals(".")) {
                         mBinding.etPrice.setText(s.subSequence(0, 1));
                         mBinding.etPrice.setSelection(1);
 
                         return;
                     }
+                } else {
+                    mBinding.etPrice.setSelection(s.length());
                 }
 
                 calculateMaxAmount();
@@ -121,26 +129,30 @@ public class MarketTradePopupWindow extends JMEBasePopupWindow {
         });
     }
 
-    public void setData(TenSpeedVo tenSpeedVo, AccountVo accountVo, PositionVo positionVo, ContractInfoVo contractInfoVo, String account, int bsFlag, int ocFlag) {
+    public void setData(TenSpeedVo tenSpeedVo, AccountVo accountVo, PositionVo positionVo, ContractInfoVo contractInfoVo, String account,
+                        long positionMargin, int bsFlag, int ocFlag) {
         mAccount = accountVo;
         mPositionVo = positionVo;
         mContractInfoVo = contractInfoVo;
+        mContractID = tenSpeedVo.getContractId();
+        mLength = mContractID.equals("Ag(T+D)") ? 0 : 2;
 
-        mBinding.tvTitle.setText(bsFlag == 1 ? mContext.getResources().getString(R.string.trade_buy_more_confirm)
-                : mContext.getResources().getString(R.string.trade_sale_empty_confirm));
+        mBinding.tvTitle.setText(bsFlag == 1 ? mContext.getResources().getString(R.string.transaction_buy_more_confirm)
+                : mContext.getResources().getString(R.string.transaction_sale_empty_confirm));
         mBinding.tvGoldAccount.setText(account);
-        mBinding.tvBusinessType.setText(bsFlag == 1 ? mContext.getResources().getString(R.string.trade_buy_open)
-                : mContext.getResources().getString(R.string.trade_sale_open));
+        mBinding.tvBusinessType.setText(bsFlag == 1 ? mContext.getResources().getString(R.string.transaction_buy_open)
+                : mContext.getResources().getString(R.string.transaction_sale_open));
         mBinding.etPrice.setText(bsFlag == 1 ? tenSpeedVo.getTenAskLists().get(9)[1] : tenSpeedVo.getTenBidLists().get(0)[1]);
+        mBinding.etPrice.setInputType(mContractID.equals("Ag(T+D)") ? InputType.TYPE_CLASS_NUMBER : EditorInfo.TYPE_CLASS_NUMBER | EditorInfo.TYPE_NUMBER_FLAG_DECIMAL);
         mBinding.etAmount.setText("1");
 
-        mContractID = tenSpeedVo.getContractId();
         mPriceMove = null == mContractInfoVo ? 0 : new BigDecimal(mContractInfoVo.getMinPriceMove()).divide(new BigDecimal(100)).floatValue();
         mLowerLimitPrice = tenSpeedVo.getLowerLimitPrice();
         mHighLimitPrice = tenSpeedVo.getHighLimitPrice();
         mMinOrderQty = null == mContractInfoVo ? 0 : mContractInfoVo.getMinOrderQty();
         mMaxOrderQty = null == mContractInfoVo ? 0 : mContractInfoVo.getMaxOrderQty();
         mMaxHoldQty = null == mContractInfoVo ? 0 : mContractInfoVo.getMaxHoldQty();
+        mPositionMargin = positionMargin;
         mBsFlag = bsFlag;
         mOcFlag = ocFlag;
 
@@ -175,23 +187,26 @@ public class MarketTradePopupWindow extends JMEBasePopupWindow {
                     mMaxAmount = mMaxOrderQty;
                 } else {
                     String transactionBalance = mAccount.getTransactionBalanceStr();
-                    String positionMargin = null == mAccount ? "0" : mAccount.getPositionMarginStr();
 
                     long bankLongMarginRate = mContractInfoVo.getBankLongMarginRate();
                     long bankShortMarginRate = mContractInfoVo.getBankShortMarginRate();
                     long bankFeeRate = mContractInfoVo.getBankFeeRate();
                     long exchangeFeeRate = mContractInfoVo.getExchangeFeeRate();
                     long handWeight = MarketUtil.getHandWeight(mContractInfoVo.getHandWeight());
+                    long handWeightValue = mContractID.equals("Ag(T+D)") ?
+                            new BigDecimal(handWeight).divide(new BigDecimal(1000), 0, BigDecimal.ROUND_HALF_UP).longValue() : handWeight;
                     long bankMarginRate = mBsFlag == 1 ? bankLongMarginRate : bankShortMarginRate;
 
-                    BigDecimal money = new BigDecimal(transactionBalance).add(new BigDecimal(positionMargin));
-                    BigDecimal contractMoney = new BigDecimal(price).multiply(new BigDecimal(mContractID.equals("Ag(T+D)") ?
-                            new BigDecimal(handWeight).divide(new BigDecimal(1000), 0, BigDecimal.ROUND_HALF_UP).longValue() : handWeight));
-                    BigDecimal bankMarginRateValue = new BigDecimal(bankMarginRate).divide(new BigDecimal(10000));
                     BigDecimal bankFeeRateValue = new BigDecimal(bankFeeRate).divide(new BigDecimal(10000)).divide(new BigDecimal(10000));
                     BigDecimal exchangeFeeRateValue = new BigDecimal(exchangeFeeRate).divide(new BigDecimal(10000)).divide(new BigDecimal(10000));
-                    BigDecimal feeRate = bankMarginRateValue.add(bankFeeRateValue).add(exchangeFeeRateValue);
-                    BigDecimal totalAmount = money.divide(contractMoney.multiply(feeRate), 0, BigDecimal.ROUND_DOWN);
+                    BigDecimal feeRate = bankFeeRateValue.add(exchangeFeeRateValue);
+                    BigDecimal bankMarginRateValue = new BigDecimal(bankMarginRate).divide(new BigDecimal(10000));
+                    BigDecimal handWeightMoney = new BigDecimal(price).multiply(new BigDecimal(handWeightValue));
+                    BigDecimal fee = handWeightMoney.multiply(feeRate);
+                    BigDecimal contractFee = bankMarginRateValue.add(bankFeeRateValue).add(exchangeFeeRateValue);
+                    BigDecimal money = new BigDecimal(transactionBalance).add(new BigDecimal(MarketUtil.getPriceValue(mPositionMargin)));
+                    BigDecimal contractMoney = handWeightMoney.multiply(contractFee);
+                    BigDecimal totalAmount = money.divide(contractMoney, 0, BigDecimal.ROUND_DOWN);
 
                     mMaxAmount = (new BigDecimal(Math.min(totalAmount.longValue(), mMaxOrderQty))
                             .subtract(new BigDecimal(null == mPositionVo ? 0 : mPositionVo.getPosition()))).longValue();
@@ -224,21 +239,21 @@ public class MarketTradePopupWindow extends JMEBasePopupWindow {
         String amount = mBinding.etAmount.getText().toString();
 
         if (TextUtils.isEmpty(price))
-            Toast.makeText(mContext, R.string.trade_price_error, Toast.LENGTH_SHORT).show();
+            Toast.makeText(mContext, R.string.transaction_price_error, Toast.LENGTH_SHORT).show();
         else if (new BigDecimal(price).compareTo(new BigDecimal(mLowerLimitPrice)) == -1)
-            Toast.makeText(mContext, R.string.trade_limit_down_price_error, Toast.LENGTH_SHORT).show();
+            Toast.makeText(mContext, R.string.transaction_limit_down_price_error, Toast.LENGTH_SHORT).show();
         else if (new BigDecimal(price).compareTo(new BigDecimal(mHighLimitPrice)) == 1)
-            Toast.makeText(mContext, R.string.trade_limit_up_price_error, Toast.LENGTH_SHORT).show();
+            Toast.makeText(mContext, R.string.transaction_limit_up_price_error, Toast.LENGTH_SHORT).show();
         else if (TextUtils.isEmpty(amount))
-            Toast.makeText(mContext, R.string.trade_number_error, Toast.LENGTH_SHORT).show();
+            Toast.makeText(mContext, R.string.transaction_number_error, Toast.LENGTH_SHORT).show();
         else if (new BigDecimal(amount).compareTo(new BigDecimal(0)) == 0)
-            Toast.makeText(mContext, R.string.trade_number_error_zero, Toast.LENGTH_SHORT).show();
+            Toast.makeText(mContext, R.string.transaction_number_error_zero, Toast.LENGTH_SHORT).show();
         else if (mMinOrderQty != -1 && new BigDecimal(amount).compareTo(new BigDecimal(mMinOrderQty)) == -1)
-            Toast.makeText(mContext, R.string.trade_limit_min_amount_error, Toast.LENGTH_SHORT).show();
+            Toast.makeText(mContext, R.string.transaction_limit_min_amount_error, Toast.LENGTH_SHORT).show();
         else if (mMaxOrderQty == -1 && new BigDecimal(amount).compareTo(new BigDecimal(mMaxHoldQty == -1 ? mMaxAmount : Math.min(mMaxAmount, mMaxHoldQty))) == 1)
-            Toast.makeText(mContext, R.string.trade_limit_max_amount_error_canbuy, Toast.LENGTH_SHORT).show();
+            Toast.makeText(mContext, R.string.transaction_limit_max_amount_error_canbuy, Toast.LENGTH_SHORT).show();
         else if (mMaxOrderQty != -1 && new BigDecimal(amount).compareTo(new BigDecimal(Math.min(mMaxAmount, mMaxOrderQty))) == 1)
-            Toast.makeText(mContext, R.string.trade_limit_max_amount_error_canbuy, Toast.LENGTH_SHORT).show();
+            Toast.makeText(mContext, R.string.transaction_limit_max_amount_error_canbuy, Toast.LENGTH_SHORT).show();
         else
             sendData(price, amount);
     }
@@ -260,15 +275,13 @@ public class MarketTradePopupWindow extends JMEBasePopupWindow {
             float value = new BigDecimal(price).subtract(new BigDecimal(mPriceMove)).floatValue();
 
             if (new BigDecimal(String.valueOf(value)).compareTo(new BigDecimal(mLowerLimitPrice)) == -1) {
-                Toast.makeText(mContext, R.string.trade_limit_down_price_error, Toast.LENGTH_SHORT).show();
+                Toast.makeText(mContext, R.string.transaction_limit_down_price_error, Toast.LENGTH_SHORT).show();
 
                 mBinding.etPrice.setText(price);
-                mBinding.etPrice.setSelection(price.length());
             } else {
-                String valueStr = MarketUtil.formatValue(String.valueOf(value), 2);
+                String valueStr = MarketUtil.formatValue(String.valueOf(value), mLength);
 
                 mBinding.etPrice.setText(valueStr);
-                mBinding.etPrice.setSelection(valueStr.length());
             }
         }
 
@@ -283,15 +296,13 @@ public class MarketTradePopupWindow extends JMEBasePopupWindow {
             float value = new BigDecimal(price).add(new BigDecimal(mPriceMove)).floatValue();
 
             if (new BigDecimal(String.valueOf(value)).compareTo(new BigDecimal(mHighLimitPrice)) == 1) {
-                Toast.makeText(mContext, R.string.trade_limit_up_price_error, Toast.LENGTH_SHORT).show();
+                Toast.makeText(mContext, R.string.transaction_limit_up_price_error, Toast.LENGTH_SHORT).show();
 
                 mBinding.etPrice.setText(price);
-                mBinding.etPrice.setSelection(price.length());
             } else {
-                String valueStr = MarketUtil.formatValue(String.valueOf(value), 2);
+                String valueStr = MarketUtil.formatValue(String.valueOf(value), mLength);
 
                 mBinding.etPrice.setText(valueStr);
-                mBinding.etPrice.setSelection(valueStr.length());
             }
         }
 
@@ -309,10 +320,10 @@ public class MarketTradePopupWindow extends JMEBasePopupWindow {
                 if (new BigDecimal(value).compareTo(new BigDecimal(0)) == 1)
                     mBinding.etAmount.setText(String.valueOf(value));
                 else
-                    Toast.makeText(mContext, R.string.trade_number_error_zero, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(mContext, R.string.transaction_number_error_zero, Toast.LENGTH_SHORT).show();
             } else {
                 if (new BigDecimal(value).compareTo(new BigDecimal(mMinOrderQty)) == -1)
-                    Toast.makeText(mContext, R.string.trade_limit_min_amount_error, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(mContext, R.string.transaction_limit_min_amount_error, Toast.LENGTH_SHORT).show();
                 else
                     mBinding.etAmount.setText(String.valueOf(value));
             }
@@ -330,12 +341,12 @@ public class MarketTradePopupWindow extends JMEBasePopupWindow {
 
             if (mMaxOrderQty == -1) {
                 if (new BigDecimal(value).compareTo(new BigDecimal(mMaxHoldQty == -1 ? mMaxAmount : Math.min(mMaxAmount, mMaxHoldQty))) == 1)
-                    Toast.makeText(mContext, R.string.trade_limit_max_amount_error_canbuy, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(mContext, R.string.transaction_limit_max_amount_error_canbuy, Toast.LENGTH_SHORT).show();
                 else
                     mBinding.etAmount.setText(String.valueOf(value));
             } else {
                 if (new BigDecimal(value).compareTo(new BigDecimal(Math.min(mMaxAmount, mMaxOrderQty))) == 1)
-                    Toast.makeText(mContext, R.string.trade_limit_max_amount_error_canbuy, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(mContext, R.string.transaction_limit_max_amount_error_canbuy, Toast.LENGTH_SHORT).show();
                 else
                     mBinding.etAmount.setText(String.valueOf(value));
             }

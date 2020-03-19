@@ -1,8 +1,9 @@
 package com.jme.lsgoldtrade.ui.mainpage;
 
 import android.content.Context;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.widget.RecyclerView;
+import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.RecyclerView;
+
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -59,7 +60,7 @@ public class RateMarketAdapter extends RecyclerView.Adapter<RateMarketAdapter.Vi
 
     @Override
     public int getItemCount() {
-        return null == mList ? 0 : mList.size() < 3 ? mList.size() : 3;
+        return null == mList ? 3 : mList.size() < 3 ? mList.size() : 3;
     }
 
     @Override

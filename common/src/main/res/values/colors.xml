@@ -20,4 +20,6 @@
     <color name="pickerview_text_center_right">#999999</color>
     <color name="pickerview_text_divider">#d4d4d4</color>
 
+    <color name="fingerprint_success">#0080ff</color>
+
 </resources>

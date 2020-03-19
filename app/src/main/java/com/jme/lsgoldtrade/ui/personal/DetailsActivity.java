@@ -3,10 +3,11 @@ package com.jme.lsgoldtrade.ui.personal;
 import android.annotation.TargetApi;
 import android.app.DatePickerDialog;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.v7.widget.LinearLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
+
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.chad.library.adapter.base.BaseQuickAdapter;
@@ -29,9 +30,6 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
-/**
- * 账户明细
- */
 @Route(path = Constants.ARouterUriConst.DETAILS)
 public class DetailsActivity extends JMEBaseActivity implements OnRefreshListener, BaseQuickAdapter.RequestLoadMoreListener {
 
@@ -148,7 +146,7 @@ public class DetailsActivity extends JMEBaseActivity implements OnRefreshListene
 
             initAccountDetail(true);
         } else {
-            showShortToast(R.string.trade_start_time_error);
+            showShortToast(R.string.transaction_start_time_error);
         }
     }
 
@@ -162,7 +160,7 @@ public class DetailsActivity extends JMEBaseActivity implements OnRefreshListene
 
             initAccountDetail(true);
         } else {
-            showShortToast(R.string.trade_end_time_error);
+            showShortToast(R.string.transaction_end_time_error);
         }
     }
 
@@ -249,7 +247,7 @@ public class DetailsActivity extends JMEBaseActivity implements OnRefreshListene
             if (mCurrentPage < mTotalPages) {
                 mCurrentPage++;
 
-                getAccountDetailList(true);
+                getAccountDetailList(false);
             } else {
                 mAdapter.loadMoreEnd(true);
             }

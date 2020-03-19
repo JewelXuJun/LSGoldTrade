@@ -2,7 +2,6 @@ package com.jme.lsgoldtrade.util;
 
 import android.app.Activity;
 import android.content.Context;
-import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.View;
@@ -10,6 +9,8 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import androidx.appcompat.app.AlertDialog;
 
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.jme.common.util.SharedPreUtils;

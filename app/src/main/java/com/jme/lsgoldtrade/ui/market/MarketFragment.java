@@ -4,9 +4,11 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.support.annotation.NonNull;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.widget.LinearLayoutManager;
+
+import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.LinearLayoutManager;
+
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -77,8 +79,6 @@ public class MarketFragment extends JMEBaseFragment implements OnRefreshListener
     protected void initView() {
         super.initView();
 
-        mBinding = (FragmentMarketBinding) mBindingUtil;
-
         StatusBarUtil.setStatusBarMode(mActivity, true, R.color.color_blue_deep);
     }
 
@@ -124,6 +124,7 @@ public class MarketFragment extends JMEBaseFragment implements OnRefreshListener
     public void initBinding() {
         super.initBinding();
 
+        mBinding = (FragmentMarketBinding) mBindingUtil;
         mBinding.setHandlers(new ClickHandlers());
     }
 
@@ -134,6 +135,8 @@ public class MarketFragment extends JMEBaseFragment implements OnRefreshListener
         bHidden = hidden;
 
         if (!bHidden) {
+            StatusBarUtil.setStatusBarMode(mActivity, true, R.color.color_blue_deep);
+
             bFlag = true;
 
             getMarket(true);
@@ -147,6 +150,8 @@ public class MarketFragment extends JMEBaseFragment implements OnRefreshListener
         super.onResume();
 
         if (!bHidden) {
+            StatusBarUtil.setStatusBarMode(mActivity, true, R.color.color_blue_deep);
+
             bFlag = true;
 
             getMarket(true);

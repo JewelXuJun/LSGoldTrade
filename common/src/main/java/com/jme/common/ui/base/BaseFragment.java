@@ -2,24 +2,25 @@ package com.jme.common.ui.base;
 
 import android.content.Context;
 import android.content.Intent;
-import android.databinding.DataBindingUtil;
-import android.databinding.ViewDataBinding;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.support.annotation.ColorInt;
-import android.support.annotation.DrawableRes;
-import android.support.annotation.MenuRes;
-import android.support.annotation.StyleRes;
-import android.support.v4.app.Fragment;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
+
+import androidx.annotation.ColorInt;
+import androidx.annotation.DrawableRes;
+import androidx.annotation.MenuRes;
+import androidx.annotation.StyleRes;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.databinding.DataBindingUtil;
+import androidx.databinding.ViewDataBinding;
+import androidx.fragment.app.Fragment;
 
 import com.jme.common.network.API;
 import com.jme.common.network.AsynCommon;
@@ -325,12 +326,7 @@ public abstract class BaseFragment<T> extends Fragment implements View.OnTouchLi
     public void OnResult(DTRequest request, Head head, Object response) {
         dismissLoadingDialog();
 //        handleErrorInfo(request, head);
-        DataReturn(request, head.getCode(), response);
         DataReturn(request, head, response);
-    }
-
-    protected void DataReturn(DTRequest request, String msgCode, Object response) {
-
     }
 
     protected void DataReturn(DTRequest request, Head head, Object response) {

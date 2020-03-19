@@ -1,7 +1,8 @@
 package com.github.mikephil.charting.components;
 
 import android.graphics.Paint;
-import android.support.annotation.ColorInt;
+
+import androidx.annotation.ColorInt;
 
 import com.github.mikephil.charting.formatter.DefaultValueFormatter;
 import com.github.mikephil.charting.formatter.DefaultYAxisValueFormatter;
@@ -465,7 +466,8 @@ public class YAxis extends AxisBase {
      *
      * @return
      */
-    public @ColorInt int getIncreasingColor() {
+    public @ColorInt
+    int getIncreasingColor() {
         return mIncreasingColor;
     }
 

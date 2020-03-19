@@ -1,9 +1,10 @@
 package com.jme.lsgoldtrade.ui.tradingbox;
 
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.v7.widget.LinearLayoutManager;
 import android.view.Gravity;
+
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
@@ -14,11 +15,9 @@ import com.jme.lsgoldtrade.R;
 import com.jme.lsgoldtrade.base.JMEBaseActivity;
 import com.jme.lsgoldtrade.config.Constants;
 import com.jme.lsgoldtrade.databinding.ActivityTradingBoxOrderBinding;
-import com.jme.lsgoldtrade.domain.LoginResponse;
 import com.jme.lsgoldtrade.domain.TradingBoxOrderVo;
 import com.jme.lsgoldtrade.domain.TradingBoxResponse;
 import com.jme.lsgoldtrade.service.ManagementService;
-import com.jme.lsgoldtrade.service.UserService;
 import com.jme.lsgoldtrade.view.EmptyView;
 import com.jme.lsgoldtrade.view.ConfirmPopupwindow;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
@@ -52,8 +51,6 @@ public class TradingBoxOrderActivity extends JMEBaseActivity implements OnRefres
         initToolbar(R.string.trading_box_order, true);
 
         mWindow = new ConfirmPopupwindow(this);
-        mWindow.setOutsideTouchable(true);
-        mWindow.setFocusable(true);
     }
 
     @Override
@@ -214,7 +211,7 @@ public class TradingBoxOrderActivity extends JMEBaseActivity implements OnRefres
                 break;
             case "Revocation":
                 if (head.isSuccess()) {
-                    showShortToast(R.string.trade_cancel_order_success);
+                    showShortToast(R.string.transaction_cancel_order_success);
 
                     getOrderList(true);
                 }

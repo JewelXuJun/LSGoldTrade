@@ -21,6 +21,9 @@ public interface TradeApi {
     @POST("/gold-trade/v1.0.0/android/inoutmoney")
     Call<DTResponse> inoutmoney(@Body Map<String, String> map);
 
+    @POST("/gold-trade/v1.0.0/android/inOutMoney2")
+    Call<DTResponse> inOutMoney(@Body Map<String, String> map);
+
     @GET("/gold-trade/v1.0.0/android/transpage")
     Call<DTResponse> transpage(@QueryMap Map<String, String> map);
 
@@ -47,9 +50,6 @@ public interface TradeApi {
 
     @POST("/gold-trade/v1.0.0/android/limitOrder")
     Call<DTResponse> limitOrder(@Body Map<String, String> map);
-
-    @POST("/gold-trade/v1.0.0/android/marketOrder")
-    Call<DTResponse> marketOrder(@Body Map<String, String> map);
 
     @POST("/gold-trade/v1.0.0/android/revocateorder")
     Call<DTResponse> revocateorder(@Body Map<String, String> map);
@@ -110,5 +110,8 @@ public interface TradeApi {
 
     @GET("/gold-trade/v1.0.0/android/checkUserIsTJS")
     Call<DTResponse> checkUserIsTJS(@QueryMap Map<String, String> map);
+
+    @GET("/gold-trade/v1.0.0/android/whetherChangeLoginPwd")
+    Call<DTResponse> whetherChangeLoginPwd(@QueryMap Map<String, String> map);
 
 }

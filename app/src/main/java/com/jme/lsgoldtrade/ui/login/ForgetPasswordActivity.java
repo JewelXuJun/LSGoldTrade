@@ -54,7 +54,7 @@ public class ForgetPasswordActivity extends JMEBaseActivity {
     protected void initData(Bundle savedInstanceState) {
         super.initData(savedInstanceState);
 
-        mCountDownTimer = new JMECountDownTimer(60000, 1000, mBinding.btnVerificationCode, getString(R.string.trade_get_verification_code));
+        mCountDownTimer = new JMECountDownTimer(60000, 1000, mBinding.btnVerificationCode, getString(R.string.transaction_get_verification_code));
 
         kaptcha();
     }

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:orientation="horizontal">
+
+    <ImageView
+        android:id="@+id/img_bank_logo"
+        android:layout_width="@dimen/icon_checkbox"
+        android:layout_height="@dimen/icon_checkbox"
+        android:layout_gravity="center_vertical"
+        android:layout_marginLeft="@dimen/common_area_margin_big" />
+
+    <TextView
+        android:id="@+id/tv_bank"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/common_area_margin_middle"
+        android:layout_marginTop="@dimen/common_page_margin"
+        android:layout_marginBottom="@dimen/common_page_margin"
+        android:textColor="@color/black"
+        android:textSize="@dimen/size_normal" />
+
+</LinearLayout>

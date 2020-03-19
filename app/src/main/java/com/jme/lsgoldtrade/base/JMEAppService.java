@@ -1,7 +1,6 @@
 package com.jme.lsgoldtrade.base;
 
 import android.app.ActivityManager;
-import android.app.Dialog;
 import android.app.Service;
 import android.content.ComponentName;
 import android.content.Context;
@@ -9,18 +8,16 @@ import android.content.Intent;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.Message;
-import android.support.annotation.Nullable;
 import android.text.TextUtils;
 
-import com.alibaba.android.arouter.launcher.ARouter;
+import androidx.annotation.Nullable;
+
 import com.jme.common.network.AsynCommon;
 import com.jme.common.network.DTRequest;
 import com.jme.common.network.Head;
 import com.jme.common.network.OnResultListener;
-import com.jme.common.util.DialogHelp;
 import com.jme.common.util.RxBus;
 import com.jme.common.util.SharedPreUtils;
-import com.jme.lsgoldtrade.R;
 import com.jme.lsgoldtrade.config.AppConfig;
 import com.jme.lsgoldtrade.config.Constants;
 import com.jme.lsgoldtrade.config.User;
@@ -34,6 +31,8 @@ import java.util.List;
 public class JMEAppService extends Service implements OnResultListener {
 
     private SyncTimeHandler mHandler;
+
+    private String mMaxMatchNo = "";
 
     static final class SyncTimeHandler extends Handler {
 
@@ -98,13 +97,8 @@ public class JMEAppService extends Service implements OnResultListener {
     }
 
     private void syncTime() {
-        String matchNo = SharedPreUtils.getString(this, SharedPreUtils.MaxMatchNo);
-
-        if (TextUtils.isEmpty(matchNo))
-            matchNo = "";
-
         HashMap<String, String> params = new HashMap<>();
-        params.put("matchno", matchNo);
+        params.put("matchno", mMaxMatchNo);
 
         AsynCommon.SendRequest(UserService.getInstance().syntime, params, true, false, this, this);
     }
@@ -130,10 +124,12 @@ public class JMEAppService extends Service implements OnResultListener {
 
                     String maxMatchNo = synTimeVo.getMaxMatchNo();
 
-                    if (!maxMatchNo.equals(SharedPreUtils.getString(this, SharedPreUtils.MaxMatchNo))) {
-                        SharedPreUtils.setString(this, SharedPreUtils.MaxMatchNo, maxMatchNo);
+                    if (!TextUtils.isEmpty(maxMatchNo)) {
+                        if (TextUtils.isEmpty(mMaxMatchNo) || !TextUtils.equals(maxMatchNo, mMaxMatchNo)) {
+                            mMaxMatchNo = maxMatchNo;
 
-                        RxBus.getInstance().post(Constants.RxBusConst.RXBUS_ORDER_SUCCESS, null);
+                            RxBus.getInstance().post(Constants.RxBusConst.RXBUS_ORDER_SUCCESS, null);
+                        }
                     }
                 } else {
                     if (head.getCode().equals("-2000")) {

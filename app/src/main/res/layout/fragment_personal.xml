@@ -9,7 +9,7 @@
 
     </data>
 
-    <android.support.v4.widget.NestedScrollView
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:clipToPadding="false"
@@ -79,6 +79,50 @@
                 android:orientation="vertical">
 
                 <RelativeLayout
+                    android:id="@+id/layout_account_security"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/height_item_normal"
+                    android:onClick="@{() -> handlers.onClickAccountSecurity()}"
+                    android:paddingLeft="@dimen/common_area_margin_big"
+                    android:paddingRight="@dimen/common_area_margin">
+
+                    <ImageView
+                        android:id="@+id/img_account_security"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="@dimen/margin_tiny"
+                        android:layout_marginRight="@dimen/margin_tiny_small"
+                        android:background="@mipmap/ic_account_security" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="@dimen/common_area_margin"
+                        android:layout_toRightOf="@+id/img_account_security"
+                        android:text="@string/personal_account_security"
+                        android:textColor="@color/color_text_black"
+                        android:textSize="@dimen/size_normal" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:background="@mipmap/ic_next" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/common_line_height"
+                        android:layout_alignParentBottom="true"
+                        android:layout_marginLeft="@dimen/common_area_margin_tiny"
+                        android:layout_toRightOf="@+id/img_account_security"
+                        android:background="@color/common_line_divider" />
+
+                </RelativeLayout>
+
+                <RelativeLayout
                     android:id="@+id/layout_open_account"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/height_item_normal"
@@ -125,7 +169,8 @@
                     android:layout_height="@dimen/height_item_normal"
                     android:onClick="@{() -> handlers.onClickIncrement()}"
                     android:paddingLeft="@dimen/common_area_margin_big"
-                    android:paddingRight="@dimen/common_area_margin">
+                    android:paddingRight="@dimen/common_area_margin"
+                    android:visibility="gone">
 
                     <ImageView
                         android:id="@+id/img_increment"
@@ -160,8 +205,9 @@
                         android:layout_marginLeft="@dimen/common_area_margin"
                         android:layout_marginRight="@dimen/common_page_margin"
                         android:layout_toLeftOf="@+id/img_increment_next"
-                        android:textColor="@color/color_text_normal"
-                        android:textSize="@dimen/sp_15" />
+                        android:text=""
+                        android:textColor="@color/color_red"
+                        android:textSize="@dimen/size_normal" />
 
                     <View
                         android:layout_width="match_parent"
@@ -339,7 +385,7 @@
                         android:layout_marginRight="@dimen/common_page_margin"
                         android:layout_toLeftOf="@+id/next"
                         android:textColor="@color/color_text_normal"
-                        android:textSize="@dimen/sp_15" />
+                        android:textSize="@dimen/size_normal" />
 
                     <View
                         android:layout_width="match_parent"
@@ -365,7 +411,8 @@
                     android:layout_height="@dimen/height_item_normal"
                     android:onClick="@{() -> handlers.onClickShare()}"
                     android:paddingLeft="@dimen/common_area_margin_big"
-                    android:paddingRight="@dimen/common_area_margin">
+                    android:paddingRight="@dimen/common_area_margin"
+                    android:visibility="gone">
 
                     <ImageView
                         android:id="@+id/img_share"
@@ -479,6 +526,6 @@
 
         </LinearLayout>
 
-    </android.support.v4.widget.NestedScrollView>
+    </androidx.core.widget.NestedScrollView>
 
 </layout>

@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="@dimen/common_area_margin_tiny"
+            android:paddingBottom="@dimen/common_area_margin_tiny">
+
+            <LinearLayout
+                android:id="@+id/layout_cancel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:padding="@dimen/common_page_padding">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@mipmap/ic_close_blue" />
+
+            </LinearLayout>
+
+        </RelativeLayout>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="@dimen/common_area_margin_tiny"
+            android:background="@mipmap/ic_signed" />
+
+        <TextView
+            android:id="@+id/tv_signed_message"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/common_area_margin"
+            android:layout_marginTop="@dimen/common_area_margin_large"
+            android:layout_marginRight="@dimen/common_area_margin"
+            android:layout_marginBottom="@dimen/margin_normal"
+            android:lineSpacingExtra="@dimen/lineSpacingExtra_small"
+            android:textColor="@color/color_text_normal"
+            android:textSize="@dimen/size_normal" />
+
+        <Button
+            android:id="@+id/btn_signed"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/height_btn"
+            android:layout_marginLeft="@dimen/common_area_margin"
+            android:layout_marginRight="@dimen/common_area_margin"
+            android:layout_marginBottom="@dimen/common_area_margin_big"
+            android:background="@drawable/bg_btn_blue_solid"
+            android:text="@string/increment_account_goto_singed"
+            android:textColor="@color/white"
+            android:textSize="@dimen/common_font_size" />
+
+    </LinearLayout>
+
+</layout>

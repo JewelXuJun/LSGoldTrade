@@ -100,7 +100,7 @@
 
             <Button
                 android:id="@+id/btn_check"
-                android:layout_width="@dimen/width_trading_box_btn"
+                android:layout_width="@dimen/width_item_large"
                 android:layout_height="@dimen/height_trading_box_btn"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="@dimen/common_page_margin"

@@ -127,6 +127,14 @@ public class PositionPageVo implements Serializable {
 
         private long shortUnliquidatedProfit;
 
+        private String longStopOrderFlag;
+
+        private String shortStopOrderFlag;
+
+        private int longCloseFrozenOrderNum;
+
+        private int shortCloseFrozenOrderNum;
+
         public String getContractId() {
             return contractId;
         }
@@ -358,6 +366,38 @@ public class PositionPageVo implements Serializable {
         public void setShortUnliquidatedProfit(long shortUnliquidatedProfit) {
             this.shortUnliquidatedProfit = shortUnliquidatedProfit;
         }
+
+        public String getLongStopOrderFlag() {
+            return longStopOrderFlag;
+        }
+
+        public void setLongStopOrderFlag(String longStopOrderFlag) {
+            this.longStopOrderFlag = longStopOrderFlag;
+        }
+
+        public String getShortStopOrderFlag() {
+            return shortStopOrderFlag;
+        }
+
+        public void setShortStopOrderFlag(String shortStopOrderFlag) {
+            this.shortStopOrderFlag = shortStopOrderFlag;
+        }
+
+        public int getLongCloseFrozenOrderNum() {
+            return longCloseFrozenOrderNum;
+        }
+
+        public void setLongCloseFrozenOrderNum(int longCloseFrozenOrderNum) {
+            this.longCloseFrozenOrderNum = longCloseFrozenOrderNum;
+        }
+
+        public int getShortCloseFrozenOrderNum() {
+            return shortCloseFrozenOrderNum;
+        }
+
+        public void setShortCloseFrozenOrderNum(int shortCloseFrozenOrderNum) {
+            this.shortCloseFrozenOrderNum = shortCloseFrozenOrderNum;
+        }
     }
 
     public List<PositionVo> getPositionList() {
@@ -385,6 +425,8 @@ public class PositionPageVo implements Serializable {
                     longPositionVo.setPositionLimit(positionBean.getLongPositionLimit());
                     longPositionVo.setFloatProfit(positionBean.getLongFloatProfit());
                     longPositionVo.setUnliquidatedProfit(positionBean.getLongUnliquidatedProfit());
+                    longPositionVo.setStopOrderFlag(positionBean.getLongStopOrderFlag());
+                    longPositionVo.setCloseFrozenOrderNum(positionBean.getLongCloseFrozenOrderNum());
 
                     positionVoList.add(longPositionVo);
 
@@ -405,6 +447,8 @@ public class PositionPageVo implements Serializable {
                     shortPositionVo.setPositionLimit(positionBean.getShortPositionLimit());
                     shortPositionVo.setFloatProfit(positionBean.getShortFloatProfit());
                     shortPositionVo.setUnliquidatedProfit(positionBean.getShortUnliquidatedProfit());
+                    shortPositionVo.setStopOrderFlag(positionBean.getShortStopOrderFlag());
+                    shortPositionVo.setCloseFrozenOrderNum(positionBean.getShortCloseFrozenOrderNum());
 
                     positionVoList.add(shortPositionVo);
                 }

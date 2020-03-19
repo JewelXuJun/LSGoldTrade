@@ -1,8 +1,9 @@
 package com.jme.lsgoldtrade.ui.personal;
 
 import android.app.Activity;
-import android.support.annotation.Nullable;
-import android.support.v4.content.ContextCompat;
+
+import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.TextPaint;
@@ -144,7 +145,7 @@ public class QuestionAnswerAdapter extends BaseQuickAdapter<List<QuestionAnswerV
                 if (null == user || !user.isLogin()) {
                     gotoLogin();
                 } else {
-                    RxBus.getInstance().post(Constants.RxBusConst.RXBUS_TRADE, null);
+                    RxBus.getInstance().post(Constants.RxBusConst.RXBUS_TRANSACTION_PLACE_ORDER, null);
                     ARouter.getInstance().build(Constants.ARouterUriConst.MAIN).navigation();
 
                     mActivity.finish();
@@ -153,7 +154,7 @@ public class QuestionAnswerAdapter extends BaseQuickAdapter<List<QuestionAnswerV
                 if (null == user || !user.isLogin()) {
                     gotoLogin();
                 } else {
-                    RxBus.getInstance().post(Constants.RxBusConst.RXBUS_CANCELORDERFRAGMENT, null);
+                    RxBus.getInstance().post(Constants.RxBusConst.RXBUS_TRANSACTION_CANCEL_ORDER, null);
                     ARouter.getInstance().build(Constants.ARouterUriConst.MAIN).navigation();
 
                     mActivity.finish();
@@ -162,7 +163,7 @@ public class QuestionAnswerAdapter extends BaseQuickAdapter<List<QuestionAnswerV
                 if (null == user || !user.isLogin()) {
                     gotoLogin();
                 } else {
-                    RxBus.getInstance().post(Constants.RxBusConst.RXBUS_TRADEFRAGMENT_HOLD, null);
+                    RxBus.getInstance().post(Constants.RxBusConst.RXBUS_TRANSACTION_HOLD_POSITIONS, null);
                     ARouter.getInstance().build(Constants.ARouterUriConst.MAIN).navigation();
 
                     mActivity.finish();

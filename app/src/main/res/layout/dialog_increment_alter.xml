@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/bg_white"
+    >
+
+
+    <TextView
+        android:id="@+id/dialog_increment_describe"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:paddingLeft="20dp"
+        android:paddingTop="18dp"
+        android:paddingRight="20dp"
+        android:paddingBottom="18dp"
+        android:text="您当前有服务费未缴纳，请结清后再使用该服务您当前有服务费未缴纳，请结清后再使用该服务您当前有服务费未缴纳，请结清后再使用该服务您当前有服务费未缴纳，请结清后再使用该服务您当前有服务费未缴纳，请结清后再使用该服务"
+        android:textColor="@color/black"
+        android:textSize="@dimen/sp_16" />
+
+    <include layout="@layout/item_line_vertical_list" />
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@drawable/shape_dialog_increment_alert_default"
+        >
+        <TextView
+            android:id="@+id/dialog_increment_sure"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="@string/open_increment_dialog_btn"
+            android:textColor="@color/color_blue_deep"
+            android:textSize="@dimen/sp_16"
+            android:layout_centerInParent="true"
+            />
+    </RelativeLayout>
+</LinearLayout>

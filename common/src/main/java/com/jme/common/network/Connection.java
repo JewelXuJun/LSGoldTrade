@@ -1,10 +1,13 @@
 package com.jme.common.network;
 
 
+import android.util.Log;
+
 import com.jme.common.BuildConfig;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.charset.Charset;
 import java.security.GeneralSecurityException;
 import java.security.KeyStore;
 import java.security.cert.Certificate;
@@ -28,8 +31,10 @@ import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
+import okhttp3.ResponseBody;
 import okhttp3.logging.HttpLoggingInterceptor;
 import okio.Buffer;
+import okio.BufferedSource;
 
 /**
  * Created by zhangzhongqiang on 2015/7/29.
@@ -67,7 +72,14 @@ public class Connection {
                     Request request = chain.request();
                     Request.Builder builder = request.newBuilder();
                     Response response = chain.proceed(builder.build());
-
+                    //读取
+//                    ResponseBody responseBody = response.body();
+//                    BufferedSource source = responseBody.source();
+//                    source.request(Long.MAX_VALUE); // Buffer the entire body.
+//                    Buffer buffer = source.buffer();
+//                    Charset UTF8 = Charset.forName("UTF-8");
+//                    Log.i("testXin", buffer.clone().readString(UTF8));
+                    //完成
                     return response;
                 }
             });

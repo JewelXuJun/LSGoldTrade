@@ -88,7 +88,7 @@
                 android:textColor="@color/black"/>
 
             <Button
-                android:layout_width="@dimen/width_trading_box_btn"
+                android:layout_width="@dimen/width_item_large"
                 android:layout_height="@dimen/common_item_height_middle"
                 android:layout_marginTop="@dimen/margin_big"
                 android:background="@drawable/bg_btn_blue_hollow"
@@ -99,7 +99,7 @@
 
         </LinearLayout>
 
-        <android.support.v4.widget.NestedScrollView
+        <androidx.core.widget.NestedScrollView
             android:id="@+id/nestedScrollView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -113,7 +113,7 @@
                 android:layout_height="match_parent"
                 android:orientation="vertical">
 
-                <android.support.v7.widget.RecyclerView
+                <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/recyclerView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -132,7 +132,7 @@
 
             </LinearLayout>
 
-        </android.support.v4.widget.NestedScrollView>
+        </androidx.core.widget.NestedScrollView>
 
     </LinearLayout>
 

@@ -2,14 +2,6 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <data>
-
-        <variable
-            name="handlers"
-            type="com.jme.lsgoldtrade.ui.trade.CapitalTransferActivity.ClickHandlers" />
-
-    </data>
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -19,7 +11,7 @@
 
         <include layout="@layout/item_line_vertical" />
 
-        <android.support.design.widget.TabLayout
+        <com.google.android.material.tabs.TabLayout
             android:id="@+id/tablayout"
             android:layout_width="match_parent"
             android:layout_height="@dimen/common_item_height_middle"
@@ -33,7 +25,7 @@
 
         <include layout="@layout/item_line_vertical" />
 
-        <android.support.v4.view.ViewPager
+        <androidx.viewpager.widget.ViewPager
             android:id="@+id/tab_viewpager"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

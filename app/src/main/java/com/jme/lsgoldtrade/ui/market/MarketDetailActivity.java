@@ -2,15 +2,20 @@ package com.jme.lsgoldtrade.ui.market;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.support.v4.content.ContextCompat;
+
+import androidx.core.content.ContextCompat;
+import androidx.core.hardware.fingerprint.FingerprintManagerCompat;
+
 import android.text.TextUtils;
+import android.util.DisplayMetrics;
 import android.view.Gravity;
-import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.WindowManager;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
@@ -23,6 +28,7 @@ import com.datai.common.charts.kchart.KData;
 import com.datai.common.charts.kchart.OnKChartListener;
 import com.datai.common.charts.kchart.OnKChartSelectedListener;
 import com.datai.common.charts.tchart.TChart;
+import com.google.gson.Gson;
 import com.jme.common.network.DTRequest;
 import com.jme.common.network.Head;
 import com.jme.common.util.DateUtil;
@@ -41,29 +47,36 @@ import com.jme.lsgoldtrade.databinding.ActivityMarketDetailBinding;
 import com.jme.lsgoldtrade.domain.AccountVo;
 import com.jme.lsgoldtrade.domain.ContractInfoVo;
 import com.jme.lsgoldtrade.domain.DetailVo;
+import com.jme.lsgoldtrade.domain.LoginResponse;
+import com.jme.lsgoldtrade.domain.PasswordInfoVo;
 import com.jme.lsgoldtrade.domain.PositionPageVo;
 import com.jme.lsgoldtrade.domain.PositionVo;
 import com.jme.lsgoldtrade.domain.SectionVo;
 import com.jme.lsgoldtrade.domain.TenSpeedVo;
+import com.jme.lsgoldtrade.domain.UserInfoVo;
 import com.jme.lsgoldtrade.service.ManagementService;
 import com.jme.lsgoldtrade.service.MarketService;
 import com.jme.lsgoldtrade.service.TradeService;
-import com.jme.lsgoldtrade.ui.trade.TradeMessagePopUpWindow;
+import com.jme.lsgoldtrade.service.UserService;
+import com.jme.lsgoldtrade.view.ConfirmSimplePopupwindow;
+import com.jme.lsgoldtrade.view.SignedPopUpWindow;
 import com.jme.lsgoldtrade.util.MarketUtil;
 import com.jme.lsgoldtrade.view.ConfirmPopupwindow;
+import com.jme.lsgoldtrade.view.StockUserDialog;
 
 import java.math.BigDecimal;
+import java.net.ConnectException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 import rx.Subscription;
 
-/**
- * K线图
- */
 @Route(path = Constants.ARouterUriConst.MARKETDETAIL)
 public class MarketDetailActivity extends JMEBaseActivity implements FChart.OnPriceClickListener, OnKChartSelectedListener {
 
@@ -71,10 +84,11 @@ public class MarketDetailActivity extends JMEBaseActivity implements FChart.OnPr
 
     private TenSpeedVo mTenSpeedVo;
     private AccountVo mAccountVo;
+    private PositionVo mPositionVo;
     private ContractInfoVo mContractInfoVo;
     private MarketTradePopupWindow mMarketTradePopupWindow;
-    private TradeMessagePopUpWindow mTradeMessagePopUpWindow;
     private ConfirmPopupwindow mConfirmPopupwindow;
+    private SignedPopUpWindow mSignedPopUpWindow;
     private Chart mChart;
     private TChart mTChart;
     private KChart mKChart;
@@ -88,6 +102,7 @@ public class MarketDetailActivity extends JMEBaseActivity implements FChart.OnPr
     private static final String COUNT_KCHART = "200";
 
     private String mContractId;
+    private String mPagingKey = "";
     private boolean bFlag = true;
     private boolean bHighlight = false;
     private boolean bHasMoreKDataFlag = true;
@@ -97,9 +112,15 @@ public class MarketDetailActivity extends JMEBaseActivity implements FChart.OnPr
     private int mTChartCount;
     private int mBsFlag = 0;
     private int mOcFlag = 0;
+    private long mLongPositionMargin = 0;
+    private long mShortPositionMargin = 0;
     private String[] mContractIdList;
 
     private Subscription mRxbus;
+    private StockUserDialog mStockUserDialog;
+
+    private int mCallEntry = 0;
+    private ConfirmSimplePopupwindow mTradingPasswordConfirmSimplePopupwindow;
 
     private Handler mHandler = new Handler() {
         public void handleMessage(Message msg) {
@@ -145,22 +166,18 @@ public class MarketDetailActivity extends JMEBaseActivity implements FChart.OnPr
         mTChart = mChart.getTChart();
         mKChart = mChart.getKChart();
 
-        mTradeMessagePopUpWindow = new TradeMessagePopUpWindow(mContext);
-        mTradeMessagePopUpWindow.setOutsideTouchable(true);
-        mTradeMessagePopUpWindow.setFocusable(true);
-
-        mMarketTradePopupWindow = new MarketTradePopupWindow(mContext);
-        mMarketTradePopupWindow.setOutsideTouchable(true);
-        mMarketTradePopupWindow.setFocusable(true);
-
-        mConfirmPopupwindow = new ConfirmPopupwindow(mContext);
-        mConfirmPopupwindow.setOutsideTouchable(true);
-        mConfirmPopupwindow.setFocusable(true);
+        mMarketTradePopupWindow = new MarketTradePopupWindow(this);
+        mConfirmPopupwindow = new ConfirmPopupwindow(this);
+        mSignedPopUpWindow = new SignedPopUpWindow(this);
     }
 
     @Override
     protected void initData(Bundle savedInstanceState) {
         super.initData(savedInstanceState);
+
+        mTradingPasswordConfirmSimplePopupwindow = new ConfirmSimplePopupwindow(this);
+        mTradingPasswordConfirmSimplePopupwindow.setOutsideTouchable(false);
+        mTradingPasswordConfirmSimplePopupwindow.setFocusable(false);
 
         mChart.initChartSort(mUser.isLogin() ? SharedPreUtils.getString(this, SharedPreUtils.MARKET_SORT_LOGIN)
                 : SharedPreUtils.getString(this, SharedPreUtils.MARKET_SORT_UNLOGIN));
@@ -297,10 +314,64 @@ public class MarketDetailActivity extends JMEBaseActivity implements FChart.OnPr
                     limitOrder(list.get(0), list.get(1), list.get(2), list.get(3), list.get(4));
 
                     break;
-                case Constants.RxBusConst.RXBUS_LOGIN_SUCCESS:
+
                 case Constants.RxBusConst.RXBUS_MARKET_UNIT_SORT_SUCCESS:
                     getTimeLineList();
 
+                    break;
+
+                case Constants.RxBusConst.RXBUS_LOGIN_SUCCESS:
+                    if(isOpenStockUser())
+                        showStockUserDialog();
+                    getTimeLineList();
+                    break;
+                case Constants.RxBusConst.RXBUS_BUY_MORE_SETPASSWORD_SUCCESS:
+                    if (TextUtils.isEmpty(mUser.getAccountID())) {
+                        RxBus.getInstance().post(Constants.RxBusConst.RXBUS_TRANSACTION_PLACE_ORDER, mContractId);
+                        ARouter.getInstance().build(Constants.ARouterUriConst.MAIN).navigation();
+                    } else {
+                        if (TextUtils.isEmpty(mContractId) || null == mTenSpeedVo || null == mContract)
+                            return;
+
+                        mContractInfoVo = mContract.getContractInfoFromID(mContractId);
+
+                        if (null == mContractInfoVo)
+                            return;
+
+                        mBsFlag = 1;
+                        mOcFlag = 0;
+                        mPagingKey = "";
+
+                        queryLoginResult();
+                    }
+                    break;
+                case Constants.RxBusConst.RXBUS_SALE_EMPTY_SETPASSWORD_SUCCESS:
+                    if (TextUtils.isEmpty(mUser.getAccountID())) {
+                        RxBus.getInstance().post(Constants.RxBusConst.RXBUS_TRANSACTION_PLACE_ORDER, mContractId);
+                        ARouter.getInstance().build(Constants.ARouterUriConst.MAIN).navigation();
+                    } else {
+                        if (TextUtils.isEmpty(mContractId) || null == mTenSpeedVo || null == mContract)
+                            return;
+
+                        mContractInfoVo = mContract.getContractInfoFromID(mContractId);
+
+                        if (null == mContractInfoVo)
+                            return;
+
+                        mBsFlag = 2;
+                        mOcFlag = 0;
+                        mPagingKey = "";
+
+                        queryLoginResult();
+                    }
+                    break;
+                case Constants.RxBusConst.RXBUS_DECLARATION_FORM_SETPASSWORD_SUCCESS:
+                    AppConfig.Select_ContractId = mContractId;
+
+                    RxBus.getInstance().post(Constants.RxBusConst.RXBUS_TRANSACTION_PLACE_ORDER, mContractId);
+                    ARouter.getInstance().build(Constants.ARouterUriConst.MAIN).navigation();
+
+                    finish();
                     break;
             }
         });
@@ -661,8 +732,70 @@ public class MarketDetailActivity extends JMEBaseActivity implements FChart.OnPr
         sendRequest(MarketService.getInstance().getKChartQuotes, params, false, false, false);
     }
 
-    private void getStatus() {
-        sendRequest(ManagementService.getInstance().getStatus, new HashMap<>(), true);
+    private void getUserPasswordSettingInfo() {
+        sendRequest(ManagementService.getInstance().getUserPasswordSettingInfo, new HashMap<>(), true, false, false);
+    }
+
+    private void queryLoginResult() {
+        DTRequest request = new DTRequest(UserService.getInstance().queryLoginResult, new HashMap<>(), true, true);
+
+        Call restResponse = request.getApi().request(request.getParams());
+
+        restResponse.enqueue(new Callback() {
+            @Override
+            public void onResponse(Call call, Response response) {
+                Head head = new Head();
+                Object body = "";
+
+                if (response.raw().code() != 200) {
+                    head.setSuccess(false);
+                    head.setCode("" + response.raw().code());
+                    head.setMsg("服务器异常");
+                } else {
+                    if (!request.getApi().isResponseJson()) {
+                        body = response.body();
+                        head.setSuccess(true);
+                        head.setCode("0");
+                        head.setMsg("成功");
+                    } else {
+                        LoginResponse dtResponse = (LoginResponse) response.body();
+
+                        head = new Head();
+                        head.setCode(dtResponse.getCode());
+                        head.setMsg(dtResponse.getMsg());
+
+                        try {
+                            body = new Gson().fromJson(dtResponse.getBodyToString(),
+                                    request.getApi().getEntryType());
+                        } catch (Exception e) {
+                            body = dtResponse.getBodyToString();
+                        }
+                    }
+                }
+
+                OnResult(request, head, body);
+            }
+
+            @Override
+            public void onFailure(Call call, Throwable t) {
+                Head head = new Head();
+                final Throwable cause = t.getCause() != null ? t.getCause() : t;
+
+                if (cause != null) {
+                    if (cause instanceof ConnectException) {
+                        head.setSuccess(false);
+                        head.setCode("500");
+                        head.setMsg(getResources().getString(com.jme.common.R.string.text_error_server));
+                    } else {
+                        head.setSuccess(false);
+                        head.setCode("408");
+                        head.setMsg(getResources().getString(com.jme.common.R.string.text_error_timeout));
+                    }
+                }
+
+                OnResult(request, head, null);
+            }
+        });
     }
 
     private void getAccount() {
@@ -691,7 +824,7 @@ public class MarketDetailActivity extends JMEBaseActivity implements FChart.OnPr
 
         HashMap<String, String> params = new HashMap<>();
         params.put("accountId", accountID);
-        params.put("pagingKey", "");
+        params.put("pagingKey", mPagingKey);
 
         sendRequest(TradeService.getInstance().position, params, false);
     }
@@ -838,29 +971,31 @@ public class MarketDetailActivity extends JMEBaseActivity implements FChart.OnPr
                 iRequestKDataFlag = NONE;
 
                 break;
-            case "GetStatus":
+            case "QueryLoginResult":
                 if (head.isSuccess()) {
-                    String status;
+                    UserInfoVo userInfoVo;
 
-                    if (null == response)
-                        status = "";
-                    else
-                        status = response.toString();
+                    try {
+                        userInfoVo = (UserInfoVo) response;
+                    } catch (Exception e) {
+                        userInfoVo = null;
 
-                    if (status.equals("1")) {
-                        if (null != mTradeMessagePopUpWindow && !mTradeMessagePopUpWindow.isShowing()) {
-                            mTradeMessagePopUpWindow.setData(mContext.getResources().getString(R.string.trade_account_error),
-                                    mContext.getResources().getString(R.string.trade_account_goto_recharge),
-                                    (view) -> {
-                                        ARouter.getInstance().build(Constants.ARouterUriConst.RECHARGE).navigation();
-
-                                        mTradeMessagePopUpWindow.dismiss();
-                                    });
-                            mTradeMessagePopUpWindow.showAtLocation(mBinding.tvHigh, Gravity.CENTER, 0, 0);
-                        }
-                    } else {
-                        getAccount();
+                        e.printStackTrace();
                     }
+
+//                    String isSign = userInfoVo.getIsSign();
+//
+//                    if (TextUtils.isEmpty(isSign) || isSign.equals("N")) {
+//                        mUser.getCurrentUser().setIsSign("N");
+//
+//                        if (null != mSignedPopUpWindow && !mSignedPopUpWindow.isShowing())
+//                            mSignedPopUpWindow.showAtLocation(mBinding.tvHigh, Gravity.CENTER, 0, 0);
+//                    } else {
+                        getAccount();
+//                    }
+                } else {
+//                    if (head.getCode().equals("-2012"))
+//                        mUser.getCurrentUser().setIsSign("N");
                 }
 
                 break;
@@ -890,27 +1025,39 @@ public class MarketDetailActivity extends JMEBaseActivity implements FChart.OnPr
                         e.printStackTrace();
                     }
 
-                    PositionVo positionVoValue = null;
-
                     if (null != positionPageVo) {
                         List<PositionVo> positionVoList = positionPageVo.getPositionList();
 
                         if (null != positionVoList && 0 != positionVoList.size()) {
                             for (PositionVo positionVo : positionVoList) {
                                 if (null != positionVo && positionVo.getContractId().equals(mContractId)) {
-                                    if (mBsFlag == 1 && positionVo.getType().equals("多"))
-                                        positionVoValue = positionVo;
-                                    else if (mBsFlag == 2 && positionVo.getType().equals("空"))
-                                        positionVoValue = positionVo;
+                                    if (positionVo.getType().equals("多")) {
+                                        if (mBsFlag == 1)
+                                            mPositionVo = positionVo;
+
+                                        mLongPositionMargin = positionVo.getPositionMargin();
+                                    } else if (positionVo.getType().equals("空")) {
+                                        if (mBsFlag == 2)
+                                            mPositionVo = positionVo;
+
+                                        mShortPositionMargin = positionVo.getPositionMargin();
+                                    }
                                 }
                             }
                         }
-                    }
 
-                    if (null != mMarketTradePopupWindow && !mMarketTradePopupWindow.isShowing()) {
-                        mMarketTradePopupWindow.setData(mTenSpeedVo, mAccountVo, positionVoValue, mContractInfoVo,
-                                mUser.getAccount(), mBsFlag, mOcFlag);
-                        mMarketTradePopupWindow.showAtLocation(mBinding.tvHigh, Gravity.BOTTOM, 0, 0);
+                        boolean hasNext = positionPageVo.isHasNext();
+                        mPagingKey = positionPageVo.getPagingKey();
+
+                        if (hasNext) {
+                            position();
+                        } else {
+                            if (null != mMarketTradePopupWindow && !mMarketTradePopupWindow.isShowing()) {
+                                mMarketTradePopupWindow.setData(mTenSpeedVo, mAccountVo, mPositionVo, mContractInfoVo,
+                                        mUser.getAccount(), Math.abs(mLongPositionMargin - mShortPositionMargin), mBsFlag, mOcFlag);
+                                mMarketTradePopupWindow.showAtLocation(mBinding.tvHigh, Gravity.BOTTOM, 0, 0);
+                            }
+                        }
                     }
                 }
 
@@ -934,12 +1081,12 @@ public class MarketDetailActivity extends JMEBaseActivity implements FChart.OnPr
                 break;
             case "LimitOrder":
                 if (head.isSuccess()) {
-                    showShortToast(R.string.trade_success);
+                    showShortToast(R.string.transaction_success);
                 } else {
                     if (head.getMsg().contains("可用资金不足")) {
                         if (null != mConfirmPopupwindow && !mConfirmPopupwindow.isShowing()) {
-                            mConfirmPopupwindow.setData(mContext.getResources().getString(R.string.trade_money_error),
-                                    mContext.getResources().getString(R.string.trade_money_in),
+                            mConfirmPopupwindow.setData(mContext.getResources().getString(R.string.transaction_money_error),
+                                    mContext.getResources().getString(R.string.transaction_money_in),
                                     (view) -> ARouter.getInstance().build(Constants.ARouterUriConst.CAPITALTRANSFER).navigation());
                             mConfirmPopupwindow.showAtLocation(mBinding.tvHigh, Gravity.CENTER, 0, 0);
                         }
@@ -947,6 +1094,88 @@ public class MarketDetailActivity extends JMEBaseActivity implements FChart.OnPr
                 }
 
                 break;
+            case "GetUserPasswordSettingInfo":
+                if (head.isSuccess()) {
+                    PasswordInfoVo passwordInfoVo;
+
+                    try {
+                        passwordInfoVo = (PasswordInfoVo) response;
+                    } catch (Exception e) {
+                        passwordInfoVo = null;
+
+                        e.printStackTrace();
+                    }
+
+                    if (null == passwordInfoVo)
+                        return;
+
+                    String hasTimeout = passwordInfoVo.getHasTimeout();
+                    String hasSettingDigital = passwordInfoVo.getHasSettingDigital();
+                    String hasOpenFingerPrint = passwordInfoVo.getHasOpenFingerPrint();
+                    String hasOpenGestures = passwordInfoVo.getHasOpenGestures();
+
+                    if (TextUtils.isEmpty(hasSettingDigital) || hasSettingDigital.equals("N")) {
+                        if (null != mTradingPasswordConfirmSimplePopupwindow && !mTradingPasswordConfirmSimplePopupwindow.isShowing()) {
+                            mTradingPasswordConfirmSimplePopupwindow.setData(mContext.getResources().getString(R.string.security_setting_tips),
+                                    mContext.getResources().getString(R.string.personal_setting),
+                                    (view) -> {
+                                        ARouter.getInstance().build(Constants.ARouterUriConst.TRADINGPASSWORDSETTING).navigation();
+
+                                        mTradingPasswordConfirmSimplePopupwindow.dismiss();
+                                    });
+                            mTradingPasswordConfirmSimplePopupwindow.showAtLocation(mBinding.getRoot(), Gravity.CENTER, 0, 0);
+                        }
+                    } else {
+                        if (TextUtils.isEmpty(hasTimeout) || hasTimeout.equals("N")) {
+                            if(mCallEntry == 3){
+                                //买多
+                                RxBus.getInstance().post(Constants.RxBusConst.RXBUS_BUY_MORE_SETPASSWORD_SUCCESS, null);
+                            }else if(mCallEntry == 4){
+                                //卖空
+                                RxBus.getInstance().post(Constants.RxBusConst.RXBUS_SALE_EMPTY_SETPASSWORD_SUCCESS, null);
+                            }else if(mCallEntry == 9){
+                                //报单
+                                RxBus.getInstance().post(Constants.RxBusConst.RXBUS_DECLARATION_FORM_SETPASSWORD_SUCCESS, null);
+                            }
+
+                            return;
+                        }
+
+                        int type = 1;
+
+                        if (!TextUtils.isEmpty(hasOpenFingerPrint) && hasOpenFingerPrint.equals("Y")) {
+                            boolean isCanUseFingerPrint = false;
+
+                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                                if (FingerprintManagerCompat.from(mContext).isHardwareDetected()
+                                        && FingerprintManagerCompat.from(mContext).hasEnrolledFingerprints())
+                                    isCanUseFingerPrint = true;
+                            }
+
+                            if (isCanUseFingerPrint) {
+                                type = 2;
+                            } else {
+                                if (!TextUtils.isEmpty(hasOpenGestures) && hasOpenGestures.equals("Y"))
+                                    type = 3;
+                                else
+                                    type = 1;
+                            }
+                        } else if (!TextUtils.isEmpty(hasOpenGestures) && hasOpenGestures.equals("Y")) {
+                            type = 3;
+                        } else if (passwordInfoVo.getHasTimeout().equals("Y")) {
+                            type = 1;
+                        }
+
+                        ARouter.getInstance()
+                                .build(Constants.ARouterUriConst.UNLOCKTRADINGPASSWORD)
+                                .withInt("Type", type)
+                                .withInt("callEntry",mCallEntry)
+                                .navigation();
+                    }
+                }
+
+                break;
+
         }
     }
 
@@ -1029,18 +1258,10 @@ public class MarketDetailActivity extends JMEBaseActivity implements FChart.OnPr
             if (null == mUser || !mUser.isLogin()) {
                 gotoLogin();
             } else {
-                if (TextUtils.isEmpty(mContractId) || null == mTenSpeedVo || null == mContract)
-                    return;
+                //买多
+                mCallEntry = 3;
+                getUserPasswordSettingInfo();
 
-                mContractInfoVo = mContract.getContractInfoFromID(mContractId);
-
-                if (null == mContractInfoVo)
-                    return;
-
-                mBsFlag = 1;
-                mOcFlag = 0;
-
-                getStatus();
             }
         }
 
@@ -1048,18 +1269,10 @@ public class MarketDetailActivity extends JMEBaseActivity implements FChart.OnPr
             if (null == mUser || !mUser.isLogin()) {
                 gotoLogin();
             } else {
-                if (TextUtils.isEmpty(mContractId) || null == mTenSpeedVo || null == mContract)
-                    return;
+                //卖空
+                mCallEntry = 4;
+                getUserPasswordSettingInfo();
 
-                mContractInfoVo = mContract.getContractInfoFromID(mContractId);
-
-                if (null == mContractInfoVo)
-                    return;
-
-                mBsFlag = 2;
-                mOcFlag = 0;
-
-                getStatus();
             }
         }
 
@@ -1067,12 +1280,10 @@ public class MarketDetailActivity extends JMEBaseActivity implements FChart.OnPr
             if (null == mUser || !mUser.isLogin()) {
                 gotoLogin();
             } else {
-                AppConfig.Select_ContractId = mContractId;
+                //报单
+                mCallEntry = 9;
+                getUserPasswordSettingInfo();
 
-                RxBus.getInstance().post(Constants.RxBusConst.RXBUS_TRADE, mContractId);
-                ARouter.getInstance().build(Constants.ARouterUriConst.MAIN).navigation();
-
-                finish();
             }
         }
 
@@ -1099,25 +1310,32 @@ public class MarketDetailActivity extends JMEBaseActivity implements FChart.OnPr
         }
     }
 
-    @Override
-    public boolean dispatchTouchEvent(MotionEvent event) {
-        if (null != mTradeMessagePopUpWindow && mTradeMessagePopUpWindow.isShowing())
-            return false;
+    private void showStockUserDialog() {
+        if (isFinishing)
+            return;
 
-        return super.dispatchTouchEvent(event);
-    }
+        if (!isForeground())
+            return;
 
-    @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if (KeyEvent.KEYCODE_BACK == keyCode) {
-            if (null != mTradeMessagePopUpWindow && mTradeMessagePopUpWindow.isShowing())
-                mTradeMessagePopUpWindow.dismiss();
-            else
-                finish();
+        if (null == mStockUserDialog)
+            mStockUserDialog = new StockUserDialog(mContext);
 
-            return true;
+        if (!mStockUserDialog.isShowing()) {
+            mStockUserDialog.show();
+            DisplayMetrics dm = new DisplayMetrics();
+            getWindowManager().getDefaultDisplay().getMetrics(dm);
+            WindowManager.LayoutParams lp = mStockUserDialog.getWindow().getAttributes();
+            lp.width = (int) (dm.widthPixels*0.75); //设置宽度
+            mStockUserDialog.getWindow().setAttributes(lp);
+
         }
-
-        return super.onKeyDown(keyCode, event);
     }
+    private boolean isOpenStockUser(){
+        if(!TextUtils.isEmpty(mUser.getAccountID())&&mUser.getCurrentUser()!=null&&mUser.getCurrentUser().getIsOpen()!=null&&"-2017".equals(mUser.getCurrentUser().getIsOpen())){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
 }

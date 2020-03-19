@@ -6,7 +6,7 @@
 
         <variable
             name="handlers"
-            type="com.jme.lsgoldtrade.ui.trade.CapitalTransferActivity.ClickHandlers" />
+            type="com.jme.lsgoldtrade.ui.transaction.CapitalTransferActivity.ClickHandlers" />
 
     </data>
 
@@ -19,13 +19,13 @@
 
         <include layout="@layout/item_line_vertical" />
 
-        <android.support.design.widget.CoordinatorLayout
+        <androidx.coordinatorlayout.widget.CoordinatorLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@color/common_background"
             android:orientation="vertical">
 
-            <android.support.design.widget.AppBarLayout
+            <com.google.android.material.appbar.AppBarLayout
                 android:id="@+id/app_bar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -34,7 +34,7 @@
                 android:gravity="center_horizontal"
                 android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
 
-                <android.support.design.widget.CollapsingToolbarLayout
+                <com.google.android.material.appbar.CollapsingToolbarLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@color/white"
@@ -64,7 +64,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="@dimen/common_area_margin_tiny"
-                                android:text="@string/trade_transfer_icbc_electronic_card_title"
+                                android:text="@string/transaction_transfer_icbc_electronic_card_title"
                                 android:textColor="@color/black_deep"
                                 android:textSize="@dimen/size_normal" />
 
@@ -103,7 +103,7 @@
                                     android:layout_height="wrap_content"
                                     android:layout_marginTop="@dimen/common_page_margin"
                                     android:layout_marginBottom="@dimen/common_page_margin"
-                                    android:text="@string/trade_transfer_icbc_electronic_card_money"
+                                    android:text="@string/transaction_transfer_icbc_electronic_card_money"
                                     android:textColor="@color/color_text_normal"
                                     android:textSize="@dimen/sp_12" />
 
@@ -147,7 +147,7 @@
                                         android:layout_height="@dimen/height_transfer_btn"
                                         android:background="@drawable/bg_btn_blue_hollow"
                                         android:onClick="@{() -> handlers.onClickTransferIn()}"
-                                        android:text="@string/trade_transfer_icbc_electronic_card_in"
+                                        android:text="@string/transaction_transfer_icbc_electronic_card_in"
                                         android:textColor="@color/color_blue"
                                         android:textSize="@dimen/sp_14" />
 
@@ -157,7 +157,7 @@
                                         android:layout_marginLeft="@dimen/common_area_margin"
                                         android:background="@drawable/bg_btn_blue_hollow"
                                         android:onClick="@{() -> handlers.onClickTransferOut()}"
-                                        android:text="@string/trade_transfer_icbc_electronic_card_out"
+                                        android:text="@string/transaction_transfer_icbc_electronic_card_out"
                                         android:textColor="@color/color_blue"
                                         android:textSize="@dimen/sp_14" />
 
@@ -173,7 +173,7 @@
                                 android:layout_marginTop="@dimen/margin_middle"
                                 android:layout_marginBottom="@dimen/common_area_margin"
                                 android:lineSpacingExtra="@dimen/lineSpacingExtra_normal"
-                                android:text="@string/trade_transfer_icbc_electronic_card_inout_message"
+                                android:text="@string/transaction_transfer_icbc_electronic_card_inout_message"
                                 android:textColor="@color/color_red"
                                 android:textSize="@dimen/sp_12" />
 
@@ -181,9 +181,9 @@
 
                     </LinearLayout>
 
-                </android.support.design.widget.CollapsingToolbarLayout>
+                </com.google.android.material.appbar.CollapsingToolbarLayout>
 
-                <android.support.design.widget.TabLayout
+                <com.google.android.material.tabs.TabLayout
                     android:id="@+id/tablayout"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/common_item_height_middle"
@@ -198,15 +198,15 @@
 
                 <include layout="@layout/item_line_vertical" />
 
-            </android.support.design.widget.AppBarLayout>
+            </com.google.android.material.appbar.AppBarLayout>
 
-            <android.support.v4.view.ViewPager
+            <androidx.viewpager.widget.ViewPager
                 android:id="@+id/tab_viewpager"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
-        </android.support.design.widget.CoordinatorLayout>
+        </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
     </LinearLayout>
 

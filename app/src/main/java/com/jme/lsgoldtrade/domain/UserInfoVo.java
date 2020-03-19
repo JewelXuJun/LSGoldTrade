@@ -14,6 +14,7 @@ public class UserInfoVo {
      * "account": "131****930"
      * "cardType": “2”,
      * "reserveFlag": “Y”
+     * "isSign":null
      */
 
     private String traderId;
@@ -37,6 +38,10 @@ public class UserInfoVo {
     private String cardType;
 
     private String reserveFlag;
+
+    private String isSign;
+
+    private String isOpen;
 
     public String getTraderId() {
         return traderId;
@@ -124,5 +129,21 @@ public class UserInfoVo {
 
     public void setReserveFlag(String reserveFlag) {
         this.reserveFlag = reserveFlag;
+    }
+
+    public String getIsSign() {
+        return isSign;
+    }
+
+    public void setIsSign(String isSign) {
+        this.isSign = isSign;
+    }
+
+    public String getIsOpen() {
+        return isOpen;
+    }
+
+    public void setIsOpen(String isOpen) {
+        this.isOpen = isOpen;
     }
 }

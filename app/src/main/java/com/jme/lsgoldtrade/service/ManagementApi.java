@@ -59,7 +59,7 @@ public interface ManagementApi {
     Call<DTResponse> revocation(@QueryMap Map<String, String> map);
 
     @GET("/tjsmanage/infoapi/v1/android/protocol/hasProfitLossRiskSign")
-    Call<DTResponse> diyanfangxiang(@QueryMap Map<String, String> map);
+    Call<DTResponse> hasProfitLossRiskSign(@QueryMap Map<String, String> map);
 
     @GET("/tjsmanage/infoapi/v1/android/customerService/getGreeting")
     Call<DTResponse> getGreeting(@QueryMap Map<String, String> map);
@@ -73,9 +73,6 @@ public interface ManagementApi {
     @GET("/tjsmanage/infoapi/v1/android/questionType/getQuestionListByType")
     Call<DTResponse> getQuestionListByType(@QueryMap Map<String, String> map);
 
-    @GET("/tjsmanage/infoapi/v1/android/getUserAddedServicesStatus")
-    Call<DTResponse> getUserAddedServicesStatus(@QueryMap Map<String, String> map);
-
     @POST("/tjsmanage/infoapi/v1/android/vote/add")
     Call<DTResponse> add(@Body Map<String, String> map);
 
@@ -84,9 +81,6 @@ public interface ManagementApi {
 
     @POST("/tjsmanage/infoapi/v1/android/openValueAddedServices")
     Call<DTResponse> openValueAddedServices(@QueryMap Map<String, String> map);
-
-    @GET("/tjsmanage/infoapi/v1/android/getStatus")
-    Call<DTResponse> getStatus(@QueryMap Map<String, String> map);
 
     @GET("/tjsmanage/infoapi/v1/android/checkOrder")
     Call<DTResponse> checkOrder(@QueryMap Map<String, String> map);
@@ -97,7 +91,7 @@ public interface ManagementApi {
     @POST("/tjsmanage/infoapi/v1/android/timeLine/save")
     Call<DTResponse> timeLineSave(@Body Map<String, String> map);
 
-    @GET("/tjsmanage/infoapi/v1/android/getProtocolVersion")
+    @GET("/tjsmanage/infoapi/v1/android/getProtocolVersionsList")
     Call<DTResponse> getProtocolVersion(@QueryMap Map<String, String> map);
 
     @POST("/tjsmanage/infoapi/v1/android/insertRatifyAccord")
@@ -127,4 +121,42 @@ public interface ManagementApi {
     @GET("/tjsmanage/infoapi/v1/android/userFund/accountDetailList")
     Call<DTResponse> accountDetailList(@QueryMap Map<String, String> map);
 
+    @GET("/tjsmanage/infoapi/v1/android/tradeSafety/getOnlineTimeList")
+    Call<DTResponse> getOnlineTimeList(@QueryMap Map<String, String> map);
+
+    @POST("/tjsmanage/infoapi/v1/android/tradeSafety/setUserOnlineTime")
+    Call<DTResponse> setUserOnlineTime(@Body Map<String, String> map);
+
+    @GET("/tjsmanage/infoapi/v1/android/tradeSafety/getUserOnlineTime")
+    Call<DTResponse> getUserOnlineTime(@QueryMap Map<String, String> map);
+
+    @GET("/tjsmanage/infoapi/v1/android/tradeSafety/getUserPasswordSettingInfo")
+    Call<DTResponse> getUserPasswordSettingInfo(@QueryMap Map<String, String> map);
+
+    @GET("/tjsmanage/infoapi/v1/android/tradeSafety/hasSettingGesture")
+    Call<DTResponse> hasSettingGesture(@QueryMap Map<String, String> map);
+
+    @POST("/tjsmanage/infoapi/v1/android/tradeSafety/updatePasswordOpenStatus")
+    Call<DTResponse> updatePasswordOpenStatus(@Body Map<String, String> map);
+
+    @POST("/tjsmanage/infoapi/v1/android/tradeSafety/setTradePassword")
+    Call<DTResponse> setTradePassword(@Body Map<String, String> map);
+
+    @GET("/tjsmanage/infoapi/v1/android/tradeSafety/sendMessage")
+    Call<DTResponse> sendMessage(@QueryMap Map<String, String> map);
+
+    @POST("/tjsmanage/infoapi/v1/android/tradeSafety/validateLoginPassword")
+    Call<DTResponse> validateLoginPassword(@Body Map<String, String> map);
+
+    @POST("/tjsmanage/infoapi/v1/android/tradeSafety/unlockTradePassword")
+    Call<DTResponse> unlockTradePassword(@Body Map<String, String> map);
+
+    @GET("/tjsmanage/infoapi/v1/android/getPayIcon")
+    Call<DTResponse> getPayIcon(@QueryMap Map<String, String> map);
+
+    @GET("/tjsmanage/infoapi/v1/android/getCustomerArrearage")
+    Call<DTResponse> getCustomerArrearage(@QueryMap Map<String, String> map);
+
+    @POST("/tjsmanage/infoapi/v1/android/checkValueAddedServicesForClose")
+    Call<DTResponse> checkValueAddedServicesForClose(@Body Map<String, String> map);
 }

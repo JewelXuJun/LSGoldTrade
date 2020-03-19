@@ -4,7 +4,9 @@ import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.support.v4.content.ContextCompat;
+
+import androidx.core.content.ContextCompat;
+
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
@@ -47,6 +49,7 @@ public class WarningActivity extends JMEBaseActivity {
     private String lowPriceIsOpen = "0";
     private String id = "";
     private boolean bFlag = false;
+    private int mLength = 2;
 
     private Handler mHandler = new Handler() {
         public void handleMessage(Message msg) {
@@ -80,6 +83,8 @@ public class WarningActivity extends JMEBaseActivity {
             mPriceMove = new BigDecimal(100).divide(new BigDecimal(100)).floatValue();
         else
             mPriceMove = new BigDecimal(1).divide(new BigDecimal(100)).floatValue();
+
+        mLength = mContractID.equals("Ag(T+D)") ? 0 : 2;
 
         mBinding.type.setText(mContractID);
     }
@@ -143,29 +148,32 @@ public class WarningActivity extends JMEBaseActivity {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if (s.toString().contains(".")) {
-                    if (s.length() - 1 - s.toString().indexOf(".") > AppConfig.Length_Limit) {
-                        s = s.toString().subSequence(0, s.toString().indexOf(".") + (AppConfig.Length_Limit + 1));
+                if (s.toString().contains(".") && !s.toString().equals(".")) {
+                    if (s.length() - 1 - s.toString().indexOf(".") > mLength) {
+                        s = s.toString().subSequence(0, s.toString().indexOf(".") + (mLength + 1));
+
+                        if (s.toString().endsWith("."))
+                            s = s.toString().substring(0, s.toString().length() - 1);
 
                         mBinding.etCeilingPrice.setText(s);
                         mBinding.etCeilingPrice.setSelection(s.length());
+                    } else {
+                        mBinding.etCeilingPrice.setSelection(s.length());
                     }
-                }
-
-                if (s.toString().trim().equals(".")) {
+                } else if (s.toString().trim().equals(".")) {
                     s = "0" + s;
 
                     mBinding.etCeilingPrice.setText(s);
                     mBinding.etCeilingPrice.setSelection(2);
-                }
-
-                if (s.toString().startsWith("0") && s.toString().trim().length() > 1) {
+                } else if (s.toString().startsWith("0") && s.toString().trim().length() > 1) {
                     if (!s.toString().substring(1, 2).equals(".")) {
                         mBinding.etCeilingPrice.setText(s.subSequence(0, 1));
                         mBinding.etCeilingPrice.setSelection(1);
 
                         return;
                     }
+                } else {
+                    mBinding.etCeilingPrice.setSelection(s.length());
                 }
             }
 
@@ -182,29 +190,32 @@ public class WarningActivity extends JMEBaseActivity {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if (s.toString().contains(".")) {
-                    if (s.length() - 1 - s.toString().indexOf(".") > AppConfig.Length_Limit) {
-                        s = s.toString().subSequence(0, s.toString().indexOf(".") + (AppConfig.Length_Limit + 1));
+                if (s.toString().contains(".") && !s.toString().equals(".")) {
+                    if (s.length() - 1 - s.toString().indexOf(".") > mLength) {
+                        s = s.toString().subSequence(0, s.toString().indexOf(".") + (mLength + 1));
+
+                        if (s.toString().endsWith("."))
+                            s = s.toString().substring(0, s.toString().length() - 1);
 
                         mBinding.etFloorPrice.setText(s);
                         mBinding.etFloorPrice.setSelection(s.length());
+                    } else {
+                        mBinding.etFloorPrice.setSelection(s.length());
                     }
-                }
-
-                if (s.toString().trim().equals(".")) {
+                } else if (s.toString().trim().equals(".")) {
                     s = "0" + s;
 
                     mBinding.etFloorPrice.setText(s);
                     mBinding.etFloorPrice.setSelection(2);
-                }
-
-                if (s.toString().startsWith("0") && s.toString().trim().length() > 1) {
+                } else if (s.toString().startsWith("0") && s.toString().trim().length() > 1) {
                     if (!s.toString().substring(1, 2).equals(".")) {
                         mBinding.etFloorPrice.setText(s.subSequence(0, 1));
                         mBinding.etFloorPrice.setSelection(1);
 
                         return;
                     }
+                } else {
+                    mBinding.etFloorPrice.setSelection(s.length());
                 }
             }
 
@@ -275,15 +286,13 @@ public class WarningActivity extends JMEBaseActivity {
             float value = new BigDecimal(price).subtract(new BigDecimal(mPriceMove)).floatValue();
 
             if (new BigDecimal(String.valueOf(value)).compareTo(new BigDecimal(0)) == -1) {
-                showShortToast(R.string.trade_limit_down_price_error);
+                showShortToast(R.string.transaction_limit_down_price_error);
 
                 mBinding.etCeilingPrice.setText(price);
-                mBinding.etCeilingPrice.setSelection(price.length());
             } else {
-                String valueStr = MarketUtil.formatValue(String.valueOf(value), 2);
+                String valueStr = MarketUtil.formatValue(String.valueOf(value), mLength);
 
                 mBinding.etCeilingPrice.setText(valueStr);
-                mBinding.etCeilingPrice.setSelection(valueStr.length());
             }
         }
 
@@ -297,10 +306,9 @@ public class WarningActivity extends JMEBaseActivity {
 
             float value = new BigDecimal(price).add(new BigDecimal(mPriceMove)).floatValue();
 
-            String valueStr = MarketUtil.formatValue(String.valueOf(value), 2);
+            String valueStr = MarketUtil.formatValue(String.valueOf(value), mLength);
 
             mBinding.etCeilingPrice.setText(valueStr);
-            mBinding.etCeilingPrice.setSelection(valueStr.length());
         }
 
         public void onClickDownMinus() {
@@ -314,15 +322,13 @@ public class WarningActivity extends JMEBaseActivity {
             float value = new BigDecimal(price).subtract(new BigDecimal(mPriceMove)).floatValue();
 
             if (new BigDecimal(String.valueOf(value)).compareTo(new BigDecimal(0)) == -1) {
-                showShortToast(R.string.trade_limit_down_price_error);
+                showShortToast(R.string.transaction_limit_down_price_error);
 
                 mBinding.etFloorPrice.setText(price);
-                mBinding.etFloorPrice.setSelection(price.length());
             } else {
-                String valueStr = MarketUtil.formatValue(String.valueOf(value), 2);
+                String valueStr = MarketUtil.formatValue(String.valueOf(value), mLength);
 
                 mBinding.etFloorPrice.setText(valueStr);
-                mBinding.etFloorPrice.setSelection(valueStr.length());
             }
         }
 
@@ -336,10 +342,9 @@ public class WarningActivity extends JMEBaseActivity {
 
             float value = new BigDecimal(price).add(new BigDecimal(mPriceMove)).floatValue();
 
-            String valueStr = MarketUtil.formatValue(String.valueOf(value), 2);
+            String valueStr = MarketUtil.formatValue(String.valueOf(value), mLength);
 
             mBinding.etFloorPrice.setText(valueStr);
-            mBinding.etFloorPrice.setSelection(valueStr.length());
         }
 
     }

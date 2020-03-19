@@ -2,7 +2,6 @@ package com.jme.lsgoldtrade.ui.main;
 
 import android.Manifest;
 import android.app.ProgressDialog;
-import android.app.Service;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -17,23 +16,27 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.support.design.widget.Snackbar;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
-import android.support.v4.content.FileProvider;
-import android.support.v4.content.LocalBroadcastManager;
+
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+import androidx.core.content.FileProvider;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
+
 import android.text.TextUtils;
+import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.inputmethod.InputMethodManager;
+import android.view.WindowManager;
 import android.widget.TabHost;
 import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
+import com.google.android.material.snackbar.Snackbar;
 import com.jme.common.network.DTRequest;
 import com.jme.common.network.Head;
 import com.jme.common.util.AppInfoUtil;
@@ -54,9 +57,11 @@ import com.jme.lsgoldtrade.domain.ProtocolVo;
 import com.jme.lsgoldtrade.domain.UpdateInfoVo;
 import com.jme.lsgoldtrade.service.ManagementService;
 import com.jme.lsgoldtrade.service.TradeService;
-import com.jme.lsgoldtrade.service.UserService;
 import com.jme.lsgoldtrade.tabhost.MainTab;
 import com.jme.lsgoldtrade.view.ConfirmSimplePopupwindow;
+import com.jme.lsgoldtrade.view.ProtocolUpdatePopUpWindow;
+import com.jme.lsgoldtrade.view.SignedPopUpWindow;
+import com.jme.lsgoldtrade.view.StockUserDialog;
 
 import java.io.File;
 import java.util.HashMap;
@@ -64,9 +69,6 @@ import java.util.List;
 
 import rx.Subscription;
 
-/**
- * Created by XuJun on 2018/11/7.
- */
 @Route(path = Constants.ARouterUriConst.MAIN)
 public class MainActivity extends JMEBaseActivity implements TabHost.OnTabChangeListener {
 
@@ -86,6 +88,8 @@ public class MainActivity extends JMEBaseActivity implements TabHost.OnTabChange
     private UpdateDialog mForceDialog;
     private ProtocolUpdatePopUpWindow mProtocolUpdatePopUpWindow;
     private ConfirmSimplePopupwindow mConfirmSimplePopupwindow;
+    private ConfirmSimplePopupwindow mTradingPasswordConfirmSimplePopupwindow;
+    private SignedPopUpWindow mSignedPopUpWindow;
     private IntentFilter mIntentFilter;
     private NetStateReceiver mStateReceiver;
     private Subscription mRxbus;
@@ -94,6 +98,7 @@ public class MainActivity extends JMEBaseActivity implements TabHost.OnTabChange
 
     private static final int MSG_DOWNLOAD_ERROR = 1;
     private final static int REQUEST_CODE_ASK_WRITE_EXTERNAL_STORAGE = 121;
+    private StockUserDialog mStockUserDialog;
 
     private Handler handler = new Handler() {
         @Override
@@ -155,9 +160,6 @@ public class MainActivity extends JMEBaseActivity implements TabHost.OnTabChange
         super.initView();
 
         setTabHost();
-
-        if (!TextUtils.isEmpty(SharedPreUtils.getString(mContext, SharedPreUtils.Token)))
-            getProtocolVersion();
     }
 
     @Override
@@ -178,11 +180,20 @@ public class MainActivity extends JMEBaseActivity implements TabHost.OnTabChange
         mProtocolUpdatePopUpWindow.setFocusable(false);
 
         mConfirmSimplePopupwindow = new ConfirmSimplePopupwindow(this);
-        mConfirmSimplePopupwindow.setOutsideTouchable(true);
-        mConfirmSimplePopupwindow.setFocusable(true);
+
+        mTradingPasswordConfirmSimplePopupwindow = new ConfirmSimplePopupwindow(this);
+        mTradingPasswordConfirmSimplePopupwindow.setOutsideTouchable(false);
+        mTradingPasswordConfirmSimplePopupwindow.setFocusable(false);
+
+        mSignedPopUpWindow = new SignedPopUpWindow(this);
 
         registerReceiver(mStateReceiver, mIntentFilter);
         initDownLoadData();
+
+        if (!TextUtils.isEmpty(SharedPreUtils.getString(mContext, SharedPreUtils.Token))) {
+//            new Handler().postDelayed(() -> checkIsSign(), 1000);
+            getProtocolVersion();
+        }
 
         if (null != mUser && mUser.isLogin())
             checkUserIsTJS();
@@ -212,22 +223,43 @@ public class MainActivity extends JMEBaseActivity implements TabHost.OnTabChange
                 return;
 
             switch (callType) {
-                case Constants.RxBusConst.RXBUS_TRADE:
-                case Constants.RxBusConst.RXBUS_CANCELORDERFRAGMENT:
-                case Constants.RxBusConst.RXBUS_TRADEFRAGMENT_HOLD:
+                case Constants.RxBusConst.RXBUS_TRANSACTION_PLACE_ORDER:
+                case Constants.RxBusConst.RXBUS_TRANSACTION_CANCEL_ORDER:
+                case Constants.RxBusConst.RXBUS_TRANSACTION_HOLD_POSITIONS:
                     runOnUiThread(() -> mBinding.tabhost.setCurrentTab(2));
 
                     break;
                 case Constants.RxBusConst.RXBUS_LOGOUT_SUCCESS:
+                case Constants.RxBusConst.RXBUS_TRADING_PASSWORD_CANCEL:
                     runOnUiThread(() -> mBinding.tabhost.setCurrentTab(0));
 
                     break;
                 case Constants.RxBusConst.RXBUS_LOGIN_SUCCESS:
+//                    checkIsSign();
+                    if(isOpenStockUser())
+                        showStockUserDialog();
+
                     getProtocolVersion();
 
                     if (null != mUser && mUser.isLogin() && !TextUtils.isEmpty(mUser.getIsFromTjs()) && mUser.getIsFromTjs().equals("true"))
                         showElectronicCardPopupWindow();
 
+                    break;
+                case Constants.RxBusConst.RXBUS_TRADING_PASSWORD_SETTING:
+                    if (null != mTradingPasswordConfirmSimplePopupwindow && !mTradingPasswordConfirmSimplePopupwindow.isShowing()) {
+                        mTradingPasswordConfirmSimplePopupwindow.setData(mContext.getResources().getString(R.string.security_setting_tips),
+                                mContext.getResources().getString(R.string.personal_setting),
+                                (view) -> {
+                                    ARouter.getInstance().build(Constants.ARouterUriConst.TRADINGPASSWORDSETTING).navigation();
+
+                                    mTradingPasswordConfirmSimplePopupwindow.dismiss();
+                                });
+                        mTradingPasswordConfirmSimplePopupwindow.showAtLocation(mBinding.tabhost, Gravity.CENTER, 0, 0);
+                    }
+
+                    break;
+                case Constants.RxBusConst.RXBUS_PERSON_WDDY_SETPASSWORD_SUCCESS:
+                    ARouter.getInstance().build(Constants.ARouterUriConst.TRADINGBOX).navigation();
                     break;
             }
         });
@@ -293,7 +325,8 @@ public class MainActivity extends JMEBaseActivity implements TabHost.OnTabChange
         if (null != mUser && null != mUser.getCurrentUser()
                 && mUser.getCurrentUser().getCardType().equals("2") && mUser.getCurrentUser().getReserveFlag().equals("N")) {
             if (null != mConfirmSimplePopupwindow && !mConfirmSimplePopupwindow.isShowing()) {
-                mConfirmSimplePopupwindow.setData(getResources().getString(R.string.trade_transfer_icbc_electronic_card_message),
+                mConfirmSimplePopupwindow.setData(getResources().getString(R.string.transaction_transfer_icbc_electronic_card_message),
+                        getResources().getString(R.string.text_confirm),
                         (view) -> {
                             mConfirmSimplePopupwindow.dismiss();
 
@@ -559,6 +592,17 @@ public class MainActivity extends JMEBaseActivity implements TabHost.OnTabChange
         startService(intent);
     }
 
+//    private void checkIsSign() {
+//        if (!TextUtils.isEmpty(mUser.getAccountID())) {
+//            String isSign = mUser.getCurrentUser().getIsSign();
+//
+//            if (TextUtils.isEmpty(isSign) || isSign.equals("N")) {
+//                if (null != mSignedPopUpWindow && !mSignedPopUpWindow.isShowing())
+//                    mSignedPopUpWindow.showAtLocation(mBinding.tabhost, Gravity.CENTER, 0, 0);
+//            }
+//        }
+//    }
+
     private void getUpDateInfo() {
         HashMap<String, String> params = new HashMap<>();
         params.put("code", String.valueOf(AppInfoUtil.getVersionCode(this)));
@@ -750,7 +794,7 @@ public class MainActivity extends JMEBaseActivity implements TabHost.OnTabChange
                 snackbar.setAction(getString(R.string.text_cancel), v -> exitTime = 0)
                         .setActionTextColor(ContextCompat.getColor(this, R.color.white));
                 View snakebarView = snackbar.getView();
-                TextView textView = snakebarView.findViewById(android.support.design.R.id.snackbar_text);
+                TextView textView = snakebarView.findViewById(R.id.snackbar_text);
                 textView.setTextColor(getResources().getColor(R.color.white));
                 snackbar.show();
 
@@ -805,11 +849,41 @@ public class MainActivity extends JMEBaseActivity implements TabHost.OnTabChange
     }
 
     @Override
-    public boolean dispatchTouchEvent(MotionEvent ev) {
+    public boolean dispatchTouchEvent(MotionEvent event) {
         if (null != mProtocolUpdatePopUpWindow && mProtocolUpdatePopUpWindow.isShowing())
             return false;
+        else if (null != mTradingPasswordConfirmSimplePopupwindow && mTradingPasswordConfirmSimplePopupwindow.isShowing())
+            return false;
 
-        return super.dispatchTouchEvent(ev);
+        return super.dispatchTouchEvent(event);
+    }
+
+    private void showStockUserDialog() {
+        if (isFinishing)
+            return;
+
+        if (!isForeground())
+            return;
+
+        if (null == mStockUserDialog)
+            mStockUserDialog = new StockUserDialog(mContext);
+
+        if (!mStockUserDialog.isShowing()) {
+            mStockUserDialog.show();
+            DisplayMetrics dm = new DisplayMetrics();
+            getWindowManager().getDefaultDisplay().getMetrics(dm);
+            WindowManager.LayoutParams lp = mStockUserDialog.getWindow().getAttributes();
+            lp.width = (int) (dm.widthPixels*0.75); //设置宽度
+            mStockUserDialog.getWindow().setAttributes(lp);
+
+        }
+    }
+    private boolean isOpenStockUser(){
+        if(!TextUtils.isEmpty(mUser.getAccountID())&&mUser.getCurrentUser()!=null&&mUser.getCurrentUser().getIsOpen()!=null&&"-2017".equals(mUser.getCurrentUser().getIsOpen())){
+            return true;
+        }else{
+            return false;
+        }
     }
 
 }

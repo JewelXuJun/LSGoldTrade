@@ -3,7 +3,7 @@ package com.jme.lsgoldtrade.ui.market;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.support.v4.content.ContextCompat;
+import androidx.core.content.ContextCompat;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
@@ -103,8 +103,6 @@ public class MarketJudgmentFragment extends JMEBaseFragment {
     protected void initView() {
         super.initView();
 
-        mBinding = (FragmentMarketJudgmentBinding) mBindingUtil;
-
         initKChart();
     }
 
@@ -127,6 +125,7 @@ public class MarketJudgmentFragment extends JMEBaseFragment {
     public void initBinding() {
         super.initBinding();
 
+        mBinding = (FragmentMarketJudgmentBinding) mBindingUtil;
         mBinding.setHandlers(new ClickHandlers());
     }
 

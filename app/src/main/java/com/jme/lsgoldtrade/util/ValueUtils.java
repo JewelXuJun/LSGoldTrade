@@ -1,8 +1,9 @@
 package com.jme.lsgoldtrade.util;
 
-import android.support.annotation.NonNull;
 import android.text.TextUtils;
 import android.util.Log;
+
+import androidx.annotation.NonNull;
 
 import java.net.Inet4Address;
 import java.net.InetAddress;
@@ -15,13 +16,20 @@ import java.util.regex.Pattern;
 
 public class ValueUtils {
 
-    public static boolean isPhoneNumber(String mobile) {
+ /*   public static boolean isPhoneNumber(String mobile) {
         if (TextUtils.isEmpty(mobile))
             return false;
 
         String REGEX_MOBILE = "^[1][3,4,5,7,8,9][0-9]{9}$";
 
         return Pattern.matches(REGEX_MOBILE, mobile);
+    }*/
+
+    public static boolean isPhoneNumber(String mobile) {
+        if (TextUtils.isEmpty(mobile))
+            return false;
+
+        return mobile.length() == 11;
     }
 
     public static boolean isPasswordRight(String password) {

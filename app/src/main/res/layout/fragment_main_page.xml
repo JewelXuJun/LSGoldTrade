@@ -60,13 +60,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
-            <android.support.design.widget.CoordinatorLayout
+            <androidx.coordinatorlayout.widget.CoordinatorLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@color/common_background"
                 android:orientation="vertical">
 
-                <android.support.design.widget.AppBarLayout
+                <com.google.android.material.appbar.AppBarLayout
                     android:id="@+id/app_bar"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -74,7 +74,7 @@
                     android:gravity="center_horizontal"
                     android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
 
-                    <android.support.design.widget.CollapsingToolbarLayout
+                    <com.google.android.material.appbar.CollapsingToolbarLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         app:layout_scrollFlags="scroll|enterAlwaysCollapsed">
@@ -134,7 +134,7 @@
                                 android:layout_height="@dimen/height_main_page_market"
                                 android:orientation="vertical">
 
-                                <android.support.v4.view.ViewPager
+                                <androidx.viewpager.widget.ViewPager
                                     android:id="@+id/view_pager_fast_management"
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
@@ -154,7 +154,7 @@
                                 android:layout_height="@dimen/height_main_page_market"
                                 android:orientation="vertical">
 
-                                <android.support.v7.widget.RecyclerView
+                                <androidx.recyclerview.widget.RecyclerView
                                     android:id="@+id/recyclerView"
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
@@ -168,9 +168,9 @@
 
                         </LinearLayout>
 
-                    </android.support.design.widget.CollapsingToolbarLayout>
+                    </com.google.android.material.appbar.CollapsingToolbarLayout>
 
-                    <android.support.design.widget.TabLayout
+                    <com.google.android.material.tabs.TabLayout
                         android:id="@+id/tablayout"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/common_item_height_middle"
@@ -181,9 +181,9 @@
 
                     <include layout="@layout/item_line_vertical" />
 
-                </android.support.design.widget.AppBarLayout>
+                </com.google.android.material.appbar.AppBarLayout>
 
-                <android.support.v4.view.ViewPager
+                <androidx.viewpager.widget.ViewPager
                     android:id="@+id/tab_viewpager"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -195,7 +195,7 @@
                     android:layout_gravity="bottom|right"
                     android:layout_marginBottom="@dimen/margin_large" />
 
-            </android.support.design.widget.CoordinatorLayout>
+            </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
         </com.scwang.smartrefresh.layout.SmartRefreshLayout>
 

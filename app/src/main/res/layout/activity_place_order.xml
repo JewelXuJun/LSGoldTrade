@@ -19,7 +19,7 @@
 
         <include layout="@layout/item_line_vertical" />
 
-        <android.support.v4.widget.NestedScrollView
+        <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:scrollbars="none">
@@ -53,7 +53,7 @@
                         android:layout_marginLeft="@dimen/common_area_margin_big"
                         android:layout_weight="1"
                         android:textColor="@color/black_deep"
-                        android:textSize="@dimen/sp_18" />
+                        android:textSize="@dimen/common_font_size" />
 
                 </LinearLayout>
 
@@ -74,81 +74,13 @@
                         android:textColor="@color/black_deep"
                         android:textSize="@dimen/sp_14" />
 
-                    <LinearLayout
-                        android:id="@+id/layout_direction"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="@dimen/common_area_margin_big"
-                        android:layout_weight="1"
-                        android:orientation="horizontal"
-                        android:visibility="gone">
-
-                        <RelativeLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="@dimen/common_item_height_middle"
-                            android:layout_marginRight="@dimen/common_area_margin_tiny"
-                            android:layout_weight="1"
-                            android:background="@drawable/bg_btn_more_solid">
-
-                            <TextView
-                                android:id="@+id/tv_more"
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:gravity="center"
-                                android:onClick="@{() -> handlers.onClickMore()}"
-                                android:text="@string/text_more"
-                                android:textColor="@color/color_red"
-                                android:textSize="@dimen/size_normal_middle" />
-
-                            <ImageView
-                                android:id="@+id/img_more"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_alignParentTop="true"
-                                android:layout_alignParentRight="true"
-                                android:background="@mipmap/ic_selected"
-                                android:visibility="gone" />
-
-                        </RelativeLayout>
-
-                        <RelativeLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="@dimen/common_item_height_middle"
-                            android:layout_marginLeft="@dimen/common_area_margin_tiny"
-                            android:layout_weight="1"
-                            android:background="@drawable/bg_btn_empty_solid">
-
-                            <TextView
-                                android:id="@+id/tv_empty"
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:gravity="center"
-                                android:onClick="@{() -> handlers.onClickEmpty()}"
-                                android:text="@string/text_empty"
-                                android:textColor="@color/color_green"
-                                android:textSize="@dimen/size_normal_middle" />
-
-                            <ImageView
-                                android:id="@+id/img_empty"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_alignParentTop="true"
-                                android:layout_alignParentRight="true"
-                                android:background="@mipmap/ic_selected"
-                                android:visibility="gone" />
-
-                        </RelativeLayout>
-
-                    </LinearLayout>
-
                     <TextView
                         android:id="@+id/tv_direction"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="@dimen/common_area_margin_big"
                         android:layout_weight="1"
-                        android:textSize="@dimen/size_normal_middle"
-                        android:visibility="gone" />
+                        android:textSize="@dimen/size_normal_middle" />
 
                 </LinearLayout>
 
@@ -194,7 +126,9 @@
                         <LinearLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:orientation="vertical">
+                            android:onClick="@{() -> handlers.onClickCustomTime()}"
+                            android:orientation="vertical"
+                            android:paddingRight="@dimen/common_area_margin_tiny">
 
                             <TextView
                                 android:id="@+id/tv_open_time_start_date"
@@ -222,7 +156,9 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_alignParentRight="true"
-                            android:orientation="vertical">
+                            android:onClick="@{() -> handlers.onClickCustomTime()}"
+                            android:orientation="vertical"
+                            android:paddingLeft="@dimen/common_area_margin_tiny">
 
                             <TextView
                                 android:id="@+id/tv_open_time_end_date"
@@ -286,7 +222,9 @@
                         <LinearLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:orientation="vertical">
+                            android:onClick="@{() -> handlers.onClickCustomTime()}"
+                            android:orientation="vertical"
+                            android:paddingRight="@dimen/common_area_margin_tiny">
 
                             <TextView
                                 android:id="@+id/tv_equal_time_start_date"
@@ -314,7 +252,9 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_alignParentRight="true"
-                            android:orientation="vertical">
+                            android:onClick="@{() -> handlers.onClickCustomTime()}"
+                            android:orientation="vertical"
+                            android:paddingLeft="@dimen/common_area_margin_tiny">
 
                             <TextView
                                 android:id="@+id/tv_equal_time_end_date"
@@ -415,8 +355,7 @@
                     android:background="@color/white"
                     android:gravity="right"
                     android:orientation="horizontal"
-                    android:paddingRight="@dimen/common_area_margin"
-                    android:paddingBottom="@dimen/common_area_margin">
+                    android:paddingRight="@dimen/common_area_margin">
 
                     <TextView
                         android:id="@+id/tv_balance_message"
@@ -424,6 +363,38 @@
                         android:layout_height="wrap_content"
                         android:textColor="@color/black_deep"
                         android:textSize="@dimen/sp_14" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/height_buy_item"
+                    android:background="@color/white"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingLeft="@dimen/common_area_margin"
+                    android:paddingRight="@dimen/common_area_margin">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="2"
+                        android:text="@string/trading_box_entrust_instructions"
+                        android:textColor="@color/black_deep"
+                        android:textSize="@dimen/sp_14" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/common_item_height_middle"
+                        android:layout_marginLeft="@dimen/common_area_margin_big"
+                        android:layout_weight="1"
+                        android:background="@drawable/bg_btn_gray_hollow"
+                        android:gravity="center"
+                        android:onClick="@{() -> handlers.onClickCustomEntrustInstructions()}"
+                        android:orientation="horizontal"
+                        android:text="@string/transaction_market_price_fak"
+                        android:textColor="@color/color_blue_deep"
+                        android:textSize="@dimen/common_font_size" />
 
                 </LinearLayout>
 
@@ -440,24 +411,44 @@
                         android:paddingLeft="@dimen/common_area_margin"
                         android:paddingRight="@dimen/common_area_margin">
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_centerVertical="true"
-                            android:text="@string/trading_box_entrust_setting"
-                            android:textColor="@color/black_deep"
-                            android:textSize="@dimen/sp_14" />
-
                         <LinearLayout
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentRight="true"
-                            android:layout_centerVertical="true"
+                            android:layout_height="match_parent"
                             android:orientation="horizontal">
 
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:layout_gravity="center_vertical"
+                                android:text="@string/trading_box_entrust_setting"
+                                android:textColor="@color/black_deep"
+                                android:textSize="@dimen/sp_14" />
+
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_vertical"
+                                android:onClick="@{() -> handlers.onClickCustomFloat()}"
+                                android:padding="@dimen/common_area_margin_tiny">
+
+                                <ImageView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:background="@mipmap/ic_place_order_edit" />
+
+                            </LinearLayout>
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_alignParentRight="true"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
                                 android:gravity="center_vertical"
                                 android:text="@string/trading_box_entrust_mechanism"
                                 android:textColor="@color/color_blue_deep"
@@ -466,8 +457,8 @@
                             <ImageView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:layout_gravity="center_vertical"
                                 android:layout_marginLeft="@dimen/common_area_margin_tiny"
-                                android:layout_marginTop="@dimen/margin_tiny"
                                 android:onClick="@{() -> handlers.onClickMechanism()}"
                                 android:src="@mipmap/ic_prompt" />
 
@@ -589,7 +580,7 @@
 
             </LinearLayout>
 
-        </android.support.v4.widget.NestedScrollView>
+        </androidx.core.widget.NestedScrollView>
 
     </LinearLayout>
 

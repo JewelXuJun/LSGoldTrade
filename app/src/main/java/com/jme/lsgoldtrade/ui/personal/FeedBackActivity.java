@@ -82,7 +82,7 @@ public class FeedBackActivity extends JMEBaseActivity {
             String suggest = mBinding.etSuggestion.getText().toString().trim();
 
             if (TextUtils.isEmpty(suggest))
-                showShortToast(R.string.setting_feedback_empty);
+                showShortToast(R.string.personal_setting_feedback_empty);
             else
                 feedBack(suggest);
         });
@@ -107,7 +107,7 @@ public class FeedBackActivity extends JMEBaseActivity {
         switch (request.getApi().getName()) {
             case "FeedBack":
                 if (head.isSuccess()) {
-                    showShortToast(R.string.setting_feedback_success);
+                    showShortToast(R.string.personal_setting_feedback_success);
 
                     mBinding.etSuggestion.setText("");
                 }
