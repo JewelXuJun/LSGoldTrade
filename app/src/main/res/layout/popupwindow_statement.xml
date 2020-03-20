@@ -106,17 +106,37 @@
 
         </LinearLayout>
 
-        <Button
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="@dimen/height_login_btn"
             android:layout_marginLeft="@dimen/common_area_margin"
             android:layout_marginRight="@dimen/common_area_margin"
             android:layout_marginBottom="@dimen/common_area_margin_large"
-            android:background="@drawable/selector_btn"
-            android:onClick="@{() -> handlers.onClickAgree()}"
-            android:text="@string/main_statement_agree"
-            android:textColor="@color/white"
-            android:textSize="@dimen/common_font_size" />
+            android:orientation="horizontal">
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginRight="@dimen/common_page_margin"
+                android:layout_weight="1"
+                android:background="@drawable/bg_btn_gray_solid"
+                android:onClick="@{() -> handlers.onClickRefuse()}"
+                android:text="@string/main_statement_refuse"
+                android:textColor="@color/white"
+                android:textSize="@dimen/sp_16" />
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="@dimen/common_page_margin"
+                android:layout_weight="1"
+                android:background="@drawable/bg_btn_blue_solid"
+                android:onClick="@{() -> handlers.onClickAgree()}"
+                android:text="@string/main_statement_agree"
+                android:textColor="@color/white"
+                android:textSize="@dimen/sp_16" />
+
+        </LinearLayout>
 
     </LinearLayout>
 
