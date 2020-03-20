@@ -74,6 +74,17 @@ public class StatementPopupWindow extends JMEBasePopupWindow {
                     .navigation();
         }
 
+        public void onClickRefuse() {
+            dismiss();
+
+            new Thread() {
+                @Override
+                public void run() {
+                    System.exit(0);
+                }
+            }.start();
+        }
+
         public void onClickAgree() {
             SharedPreUtils.setBoolean(mContext, SharedPreUtils.Key_Statement, true);
 
