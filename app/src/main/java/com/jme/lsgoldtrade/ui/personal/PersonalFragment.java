@@ -209,16 +209,18 @@ public class PersonalFragment extends JMEBaseFragment {
 //                    if (TextUtils.isEmpty(hasSettingDigital))
 //                        return;
 
-                    if (TextUtils.isEmpty(hasSettingDigital)||hasSettingDigital.equals("N")) {
+                    if (TextUtils.isEmpty(hasSettingDigital) || hasSettingDigital.equals("N")) {
                         RxBus.getInstance().post(Constants.RxBusConst.RXBUS_TRADING_PASSWORD_SETTING, null);
-                    }else {
-                        if(mCallEntry == 8){
-
-                            if (TextUtils.isEmpty(hasTimeout) || hasTimeout.equals("N")){
+                    } else {
+                        if (mCallEntry == 8) {
+                            if (TextUtils.isEmpty(hasTimeout) || hasTimeout.equals("N")) {
                                 ARouter.getInstance().build(Constants.ARouterUriConst.TRADINGBOX).navigation();
+
                                 return;
                             }
+
                             int type = 1;
+
                             if (!TextUtils.isEmpty(hasOpenFingerPrint) && hasOpenFingerPrint.equals("Y")) {
                                 boolean isCanUseFingerPrint = false;
 
@@ -241,14 +243,16 @@ public class PersonalFragment extends JMEBaseFragment {
                             } else if (passwordInfoVo.getHasTimeout().equals("Y")) {
                                 type = 1;
                             }
+
                             ARouter.getInstance()
                                     .build(Constants.ARouterUriConst.UNLOCKTRADINGPASSWORD)
                                     .withInt("Type", type)
-                                    .withInt("callEntry",mCallEntry)
+                                    .withInt("callEntry", mCallEntry)
                                     .navigation();
-                        }else {
+                        } else {
                             ARouter.getInstance().build(Constants.ARouterUriConst.ACCOUNTSECURITY).navigation();
                         }
+
                         mCallEntry = 0;
                     }
                 }
@@ -287,34 +291,34 @@ public class PersonalFragment extends JMEBaseFragment {
                 }
 
                 break;
-                case "QueryLoginResult":
-                    if (head.isSuccess()) {
-                        UserInfoVo userInfoVo;
+            case "QueryLoginResult":
+                if (head.isSuccess()) {
+                    UserInfoVo userInfoVo;
 
-                        try {
-                            userInfoVo = (UserInfoVo) response;
-                        } catch (Exception e) {
-                            userInfoVo = null;
+                    try {
+                        userInfoVo = (UserInfoVo) response;
+                    } catch (Exception e) {
+                        userInfoVo = null;
 
-                            e.printStackTrace();
-                        }
-                       String isOpen = userInfoVo.getIsOpen();
-                        if("0".equals(isOpen)||"-2015".equals(isOpen)||"-2019".equals(isOpen)) {
-                            //已开通
-                            mBinding.tvIncrementState.setText("已开通");
-                        }else if("-2013".equals(isOpen)) {
-                            //开通中
-                            mBinding.tvIncrementState.setText("开通中");
-                        }else if("-2012".equals(isOpen)||"-2016".equals(isOpen)||"-2017".equals(isOpen)||"-2018".equals(isOpen)) {
-                            //未开通
-                            mBinding.tvIncrementState.setText("未开通");
-                        }else if("-2014".equals(isOpen)) {
-                            //关闭中
-                            mBinding.tvIncrementState.setText("关闭审核中");
-                        }else {
-                            mBinding.tvIncrementState.setText("");
-                        }
+                        e.printStackTrace();
                     }
+                    String isOpen = userInfoVo.getIsOpen();
+                    if ("0".equals(isOpen) || "-2015".equals(isOpen) || "-2019".equals(isOpen)) {
+                        //已开通
+                        mBinding.tvIncrementState.setText("已开通");
+                    } else if ("-2013".equals(isOpen)) {
+                        //开通中
+                        mBinding.tvIncrementState.setText("开通中");
+                    } else if ("-2012".equals(isOpen) || "-2016".equals(isOpen) || "-2017".equals(isOpen) || "-2018".equals(isOpen)) {
+                        //未开通
+                        mBinding.tvIncrementState.setText("未开通");
+                    } else if ("-2014".equals(isOpen)) {
+                        //关闭中
+                        mBinding.tvIncrementState.setText("关闭审核中");
+                    } else {
+                        mBinding.tvIncrementState.setText("");
+                    }
+                }
                 break;
         }
     }
@@ -327,10 +331,13 @@ public class PersonalFragment extends JMEBaseFragment {
         }
 
         public void onClickAccountSecurity() {
-            if (null == mUser || !mUser.isLogin())
+            if (null == mUser || !mUser.isLogin()) {
                 gotoLogin();
-            else
+            } else {
+                mCallEntry = 0;
+
                 getUserPasswordSettingInfo();
+            }
         }
 
         public void onClickOpenAccount() {
@@ -342,13 +349,12 @@ public class PersonalFragment extends JMEBaseFragment {
 
         public void onClickIncrement() {
 //            ARouter.getInstance().build(Constants.ARouterUriConst.OPENINCREMENT).navigation();
-            if (null == mUser || !mUser.isLogin()) {
+            if (null == mUser || !mUser.isLogin())
                 gotoLogin();
-            }else if(TextUtils.isEmpty(mUser.getAccountID())){
+            else if (TextUtils.isEmpty(mUser.getAccountID()))
                 RxBus.getInstance().post(Constants.RxBusConst.RXBUS_TRANSACTION_PLACE_ORDER, null);
-            }else {
+            else
                 ARouter.getInstance().build(Constants.ARouterUriConst.CHECKSERVICE).navigation();
-            }
         }
 
         public void onClickCustomerService() {
@@ -368,8 +374,8 @@ public class PersonalFragment extends JMEBaseFragment {
 
         public void onClickSubscribe() {
             mCallEntry = 8;
-            getUserPasswordSettingInfo();
 
+            getUserPasswordSettingInfo();
 //            ARouter.getInstance().build(Constants.ARouterUriConst.TRADINGBOX).navigation();
         }
 
@@ -386,7 +392,6 @@ public class PersonalFragment extends JMEBaseFragment {
         }
 
     }
-
 
 
 }
