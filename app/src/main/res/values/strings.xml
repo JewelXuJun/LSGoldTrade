@@ -40,6 +40,7 @@
     <string name="main_statement_agreement_privacy">《隐私条款》</string>
     <string name="main_statement_agreement_use">《用户使用协议》</string>
     <string name="main_statement_agreement_responsibility">《免责声明》</string>
+    <string name="main_statement_refuse">拒绝</string>
     <string name="main_statement_agree">同意并继续</string>
 
     <!-- 版本 -->
